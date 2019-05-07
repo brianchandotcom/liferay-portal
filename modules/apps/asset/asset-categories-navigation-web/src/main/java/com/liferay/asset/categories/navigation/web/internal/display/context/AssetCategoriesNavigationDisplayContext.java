@@ -52,7 +52,7 @@ public class AssetCategoriesNavigationDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -76,8 +76,9 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _assetVocabularies;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long[] groupIds = new long[0];
 
@@ -242,8 +243,9 @@ public class AssetCategoriesNavigationDisplayContext {
 				displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
@@ -252,14 +254,16 @@ public class AssetCategoriesNavigationDisplayContext {
 	}
 
 	protected String getTitle(AssetVocabulary assetVocabulary) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String title = HtmlUtil.escape(
 			assetVocabulary.getTitle(themeDisplay.getLanguageId()));
 
 		if (assetVocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {
-			title += " (" + LanguageUtil.get(_request, "global") + ")";
+			title +=
+				" (" + LanguageUtil.get(_httpServletRequest, "global") + ")";
 		}
 
 		return title;
@@ -275,6 +279,6 @@ public class AssetCategoriesNavigationDisplayContext {
 	private long[] _availableAssetVocabularyIds;
 	private List<AssetVocabulary> _ddmTemplateAssetVocabularies;
 	private long _displayStyleGroupId;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -46,7 +46,7 @@ public class ArchivedSettingsVerticalCard implements VerticalCard {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -82,7 +82,7 @@ public class ArchivedSettingsVerticalCard implements VerticalCard {
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "x-ago-by-x",
+			_httpServletRequest, "x-ago-by-x",
 			new String[] {
 				modifiedDateDescription,
 				HtmlUtil.escape(_archivedSettings.getUserName())
@@ -97,7 +97,7 @@ public class ArchivedSettingsVerticalCard implements VerticalCard {
 	private final ArchivedSettings _archivedSettings;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -57,9 +57,9 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 		_renderResponse = renderResponse;
 		_rowChecker = rowChecker;
 
-		_request = PortalUtil.getHttpServletRequest(_renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(_renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -160,7 +160,7 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "x-ago-by-x",
+			_httpServletRequest, "x-ago-by-x",
 			new Object[] {
 				modifiedDateDescription,
 				HtmlUtil.escape(_fileEntry.getUserName())
@@ -185,7 +185,7 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 	private final FileEntry _fileEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final RowChecker _rowChecker;
 	private final ThemeDisplay _themeDisplay;
 

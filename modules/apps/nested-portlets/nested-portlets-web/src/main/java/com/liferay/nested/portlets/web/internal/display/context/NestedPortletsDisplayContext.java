@@ -41,7 +41,7 @@ public class NestedPortletsDisplayContext {
 	public NestedPortletsDisplayContext(HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -58,7 +58,7 @@ public class NestedPortletsDisplayContext {
 	 * @see com.liferay.portal.util.PortalImpl#getOriginalServletRequest
 	 */
 	public HttpServletRequest getLastForwardRequest() {
-		HttpServletRequest currentRequest = _request;
+		HttpServletRequest currentRequest = _httpServletRequest;
 		HttpServletRequestWrapper currentRequestWrapper = null;
 		HttpServletRequest originalRequest = null;
 		HttpServletRequest nextRequest = null;
@@ -126,8 +126,9 @@ public class NestedPortletsDisplayContext {
 	}
 
 	public List<LayoutTemplate> getLayoutTemplates() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<LayoutTemplate> layoutTemplates =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplates(
@@ -169,6 +170,6 @@ public class NestedPortletsDisplayContext {
 	private String _layoutTemplateId;
 	private final NestedPortletsPortletInstanceConfiguration
 		_nestedPortletsPortletInstanceConfiguration;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -51,7 +51,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 		_renderResponse = renderResponse;
 
 		_ddmTemplate = (DDMTemplate)baseModel;
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -120,10 +120,11 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 		Date createDate = _ddmTemplate.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "modified-x-ago", modifiedDateDescription);
+			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
 	}
 
 	@Override
@@ -133,6 +134,6 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 
 	private final DDMTemplate _ddmTemplate;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

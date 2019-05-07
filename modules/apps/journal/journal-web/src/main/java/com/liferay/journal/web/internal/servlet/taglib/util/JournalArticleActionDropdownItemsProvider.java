@@ -93,7 +93,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		_journalWebConfiguration =
 			(JournalWebConfiguration)_liferayPortletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -314,7 +315,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				"/copy_article.jsp", "redirect", _getRedirect(), "groupId",
 				_article.getGroupId(), "oldArticleId", _article.getArticleId(),
 				"version", _article.getVersion());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "copy"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
 	}
 
@@ -346,7 +348,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"compareVersionsURL", compareVersionsURL.toString());
 			dropdownItem.putData("redirectURL", redirectURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "compare-to"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "compare-to"));
 		};
 	}
 
@@ -374,7 +377,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				dropdownItem.putData("action", "copyArticle");
 				dropdownItem.putData(
 					"copyArticleURL", copyArticleURL.toString());
-				dropdownItem.setLabel(LanguageUtil.get(_request, "copy"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "copy"));
 			};
 		}
 
@@ -396,7 +400,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
 			dropdownItem.putData("deleteURL", deleteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -412,7 +417,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				_article.getFolderId(), "articleId", _article.getArticleId(),
 				"version", _article.getVersion());
 			dropdownItem.setIcon("edit");
-			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
 	}
 
@@ -430,7 +436,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "expireArticles");
 			dropdownItem.putData("expireURL", expireURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "expire"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "expire"));
 		};
 	}
 
@@ -444,7 +451,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				"referringPortletResource", _getReferringPortletResource(),
 				"rowIdsJournalArticle", _article.getArticleId());
 			dropdownItem.setIcon("move");
-			dropdownItem.setLabel(LanguageUtil.get(_request, "move"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "move"));
 		};
 	}
 
@@ -464,7 +472,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.putData("action", "delete");
 			dropdownItem.putData("deleteURL", deleteURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "move-to-recycle-bin"));
+				LanguageUtil.get(_httpServletRequest, "move-to-recycle-bin"));
 		};
 	}
 
@@ -476,12 +484,13 @@ public class JournalArticleActionDropdownItemsProvider {
 			StringPool.BLANK, JournalArticle.class.getName(),
 			HtmlUtil.escape(_article.getTitle(_themeDisplay.getLocale())), null,
 			String.valueOf(_article.getResourcePrimKey()),
-			LiferayWindowState.POP_UP.toString(), null, _request);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
 			dropdownItem.putData("permissionsURL", permissionsURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
@@ -508,7 +517,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				status = "preview-draft";
 			}
 
-			dropdownItem.setLabel(LanguageUtil.get(_request, status));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, status));
 		};
 	}
 
@@ -581,7 +591,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"publishArticleURL", publishArticleURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "publish-to-live"));
+				LanguageUtil.get(_httpServletRequest, "publish-to-live"));
 		};
 	}
 
@@ -629,7 +639,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				dropdownItem.putData(
 					"unsubscribeArticleURL", unsubscribeArticleURL.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(_request, "unsubscribe"));
+					LanguageUtil.get(_httpServletRequest, "unsubscribe"));
 			};
 		}
 
@@ -647,7 +657,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.putData("action", "subscribeArticle");
 			dropdownItem.putData(
 				"subscribeArticleURL", subscribeArticleURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "subscribe"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "subscribe"));
 		};
 	}
 
@@ -663,7 +674,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(viewContentURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "view-content"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "view-content"));
 		};
 	}
 
@@ -706,7 +718,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				"backURL", _getRedirect(), "referringPortletResource",
 				_getReferringPortletResource(), "articleId",
 				_article.getArticleId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "view-history"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "view-history"));
 		};
 	}
 
@@ -719,7 +732,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				"/view_asset_entry_usages.jsp", "redirect", _getRedirect(),
 				"groupId", _article.getGroupId(), "articleId",
 				_article.getArticleId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "view-usages"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};
 	}
 
@@ -819,7 +833,7 @@ public class JournalArticleActionDropdownItemsProvider {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private String _referringPortletResource;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

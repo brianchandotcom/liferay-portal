@@ -44,7 +44,7 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 		_membershipRequest = membershipRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -69,14 +69,15 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 		Date createDate = _membershipRequest.getCreateDate();
 
 		String createDateDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "x-ago", createDateDateDescription);
+			_httpServletRequest, "x-ago", createDateDateDescription);
 	}
 
 	private final MembershipRequest _membershipRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -46,7 +46,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		Portal portal, HttpServletRequest httpServletRequest) {
 
 		_portal = portal;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		String pathContext = portal.getPathContext();
 
@@ -219,7 +219,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		StringBundler sb = new StringBundler(6);
 
 		if (!ignoreCDNHost) {
-			sb.append(_getCDNHost(_request));
+			sb.append(_getCDNHost(_httpServletRequest));
 		}
 
 		if (!ignorePathProxy) {
@@ -300,6 +300,6 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	private final String _pathMain;
 	private final String _pathModule;
 	private final Portal _portal;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

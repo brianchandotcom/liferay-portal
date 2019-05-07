@@ -42,7 +42,7 @@ public class SelectAssetListDisplayContext {
 	public SelectAssetListDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 
@@ -51,7 +51,7 @@ public class SelectAssetListDisplayContext {
 			return _eventName;
 		}
 
-		_eventName = ParamUtil.getString(_request, "eventName");
+		_eventName = ParamUtil.getString(_httpServletRequest, "eventName");
 
 		return _eventName;
 	}
@@ -61,7 +61,8 @@ public class SelectAssetListDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -71,11 +72,13 @@ public class SelectAssetListDisplayContext {
 			return _searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
 			portletRequest, _getPortletURL(), null,
@@ -124,7 +127,8 @@ public class SelectAssetListDisplayContext {
 			return _assetListEntryId;
 		}
 
-		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+		_assetListEntryId = ParamUtil.getLong(
+			_httpServletRequest, "assetListEntryId");
 
 		return _assetListEntryId;
 	}
@@ -134,7 +138,7 @@ public class SelectAssetListDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -145,7 +149,7 @@ public class SelectAssetListDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -174,7 +178,7 @@ public class SelectAssetListDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

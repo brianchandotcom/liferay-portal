@@ -55,16 +55,17 @@ public class DLAdminNavigationDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
-		_request = liferayPortletRequest.getHttpServletRequest();
+		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
-		_dlRequestHelper = new DLRequestHelper(_request);
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		String navigation = ParamUtil.getString(_request, "navigation");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation");
 
 		return new NavigationItemList() {
 			{
@@ -177,7 +178,7 @@ public class DLAdminNavigationDisplayContext {
 	private final DLRequestHelper _dlRequestHelper;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

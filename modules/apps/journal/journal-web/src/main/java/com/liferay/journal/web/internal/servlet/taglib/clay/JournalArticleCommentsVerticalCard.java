@@ -41,15 +41,16 @@ public class JournalArticleCommentsVerticalCard implements VerticalCard {
 		BaseModel<?> baseModel, RenderRequest renderRequest) {
 
 		_mbMessage = (MBMessage)baseModel;
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
 	public String getImageSrc() {
 		User user = UserLocalServiceUtil.fetchUserById(_mbMessage.getUserId());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (user != null) {
 			try {
@@ -68,10 +69,11 @@ public class JournalArticleCommentsVerticalCard implements VerticalCard {
 		Date createDate = _mbMessage.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "modified-x-ago", modifiedDateDescription);
+			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
 	}
 
 	@Override
@@ -89,6 +91,6 @@ public class JournalArticleCommentsVerticalCard implements VerticalCard {
 	}
 
 	private final MBMessage _mbMessage;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

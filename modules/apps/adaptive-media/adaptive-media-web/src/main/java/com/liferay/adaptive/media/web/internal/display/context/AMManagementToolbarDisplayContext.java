@@ -45,7 +45,7 @@ public class AMManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_currentURLObj = currentURLObj;
 	}
 
@@ -60,7 +60,8 @@ public class AMManagementToolbarDisplayContext {
 					"/adaptive_media/edit_image_configuration_entry",
 					"redirect", _currentURLObj.toString());
 				dropdownItem.setLabel(
-					LanguageUtil.get(_request, "add-image-resolution"));
+					LanguageUtil.get(
+						_httpServletRequest, "add-image-resolution"));
 			});
 
 		return creationMenu;
@@ -74,7 +75,8 @@ public class AMManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-state"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-state"));
 					});
 			}
 		};
@@ -101,7 +103,8 @@ public class AMManagementToolbarDisplayContext {
 
 							labelItem.setCloseable(true);
 							labelItem.setLabel(
-								LanguageUtil.get(_request, entriesNavigation));
+								LanguageUtil.get(
+									_httpServletRequest, entriesNavigation));
 						});
 				}
 			}
@@ -109,7 +112,7 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public List<AMImageConfigurationEntry> getSelectedConfigurationEntries() {
-		return (List)_request.getAttribute(
+		return (List)_httpServletRequest.getAttribute(
 			AMWebKeys.CONFIGURATION_ENTRIES_LIST);
 	}
 
@@ -136,7 +139,8 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	private String _getEntriesNavigation() {
-		return ParamUtil.getString(_request, "entriesNavigation", "all");
+		return ParamUtil.getString(
+			_httpServletRequest, "entriesNavigation", "all");
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -157,7 +161,7 @@ public class AMManagementToolbarDisplayContext {
 							"entriesNavigation", "all");
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 
 				add(
@@ -174,7 +178,7 @@ public class AMManagementToolbarDisplayContext {
 							"entriesNavigation", "enabled");
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "enabled"));
+							LanguageUtil.get(_httpServletRequest, "enabled"));
 					});
 
 				add(
@@ -191,7 +195,7 @@ public class AMManagementToolbarDisplayContext {
 							"entriesNavigation", "disabled");
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "disabled"));
+							LanguageUtil.get(_httpServletRequest, "disabled"));
 					});
 			}
 		};
@@ -200,6 +204,6 @@ public class AMManagementToolbarDisplayContext {
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

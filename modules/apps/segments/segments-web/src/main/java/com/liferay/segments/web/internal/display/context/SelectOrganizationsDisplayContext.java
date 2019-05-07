@@ -55,7 +55,7 @@ public class SelectOrganizationsDisplayContext {
 		RenderResponse renderResponse,
 		OrganizationLocalService organizationLocalService) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_organizationLocalService = organizationLocalService;
@@ -86,7 +86,7 @@ public class SelectOrganizationsDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectEntity");
 
 		return _eventName;
@@ -100,7 +100,8 @@ public class SelectOrganizationsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -108,7 +109,7 @@ public class SelectOrganizationsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -119,11 +120,13 @@ public class SelectOrganizationsDisplayContext {
 			return _groupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}
@@ -167,8 +170,9 @@ public class SelectOrganizationsDisplayContext {
 			return _organizationSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		OrganizationSearch organizationSearchContainer = new OrganizationSearch(
 			_renderRequest, getPortletURL());
@@ -270,7 +274,8 @@ public class SelectOrganizationsDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
@@ -309,7 +314,7 @@ public class SelectOrganizationsDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(getPortletURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -325,7 +330,8 @@ public class SelectOrganizationsDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "first-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "first-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "first-name"));
 					});
 				add(
 					dropdownItem -> {
@@ -334,7 +340,8 @@ public class SelectOrganizationsDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "screen-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "screen-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "screen-name"));
 					});
 			}
 		};
@@ -350,6 +357,6 @@ public class SelectOrganizationsDisplayContext {
 	private SearchContainer _organizationSearchContainer;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -33,13 +33,14 @@ public class ServerDisplayContext {
 	public ServerDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public List<NavigationItem> getServerNavigationItems() {
-		String tabs1 = ParamUtil.getString(_request, "tabs1", "resources");
-		String tabs2 = ParamUtil.getString(_request, "tabs2");
+		String tabs1 = ParamUtil.getString(
+			_httpServletRequest, "tabs1", "resources");
+		String tabs2 = ParamUtil.getString(_httpServletRequest, "tabs2");
 
 		return new NavigationItemList() {
 			{
@@ -52,7 +53,8 @@ public class ServerDisplayContext {
 								"mvcRenderCommandName", "/server_admin/view",
 								"tabs1", tabs1Name, "tabs2", tabs2);
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, tabs1Name));
+								LanguageUtil.get(
+									_httpServletRequest, tabs1Name));
 						});
 				}
 			}
@@ -65,6 +67,6 @@ public class ServerDisplayContext {
 	};
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

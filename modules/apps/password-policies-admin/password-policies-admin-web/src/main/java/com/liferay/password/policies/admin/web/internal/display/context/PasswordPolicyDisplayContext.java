@@ -43,13 +43,15 @@ public class PasswordPolicyDisplayContext {
 	public PasswordPolicyDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
-		_passwordPolicyId = ParamUtil.getLong(_request, "passwordPolicyId");
+		_passwordPolicyId = ParamUtil.getLong(
+			_httpServletRequest, "passwordPolicyId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 	}
@@ -57,7 +59,8 @@ public class PasswordPolicyDisplayContext {
 	public List<NavigationItem> getEditPasswordPolicyAssignmentsNavigationItems(
 		PortletURL portletURL) {
 
-		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
+		String tabs2 = ParamUtil.getString(
+			_httpServletRequest, "tabs2", "users");
 
 		return new NavigationItemList() {
 			{
@@ -66,7 +69,7 @@ public class PasswordPolicyDisplayContext {
 						navigationItem.setActive(tabs2.equals("users"));
 						navigationItem.setHref(portletURL, "tabs2", "users");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "users"));
+							LanguageUtil.get(_httpServletRequest, "users"));
 					});
 				add(
 					navigationItem -> {
@@ -74,7 +77,8 @@ public class PasswordPolicyDisplayContext {
 						navigationItem.setHref(
 							portletURL, "tabs2", "organizations");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "organizations"));
+							LanguageUtil.get(
+								_httpServletRequest, "organizations"));
 					});
 			}
 		};
@@ -83,8 +87,9 @@ public class PasswordPolicyDisplayContext {
 	public List<NavigationItem> getEditPasswordPolicyNavigationItems()
 		throws PortletException {
 
-		String tabs1 = ParamUtil.getString(_request, "tabs1", "details");
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String tabs1 = ParamUtil.getString(
+			_httpServletRequest, "tabs1", "details");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -111,7 +116,8 @@ public class PasswordPolicyDisplayContext {
 							navigationItem.setHref(detailsURL.toString());
 
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "details"));
+								LanguageUtil.get(
+									_httpServletRequest, "details"));
 						});
 				}
 
@@ -131,7 +137,8 @@ public class PasswordPolicyDisplayContext {
 							navigationItem.setHref(assigneesURL.toString());
 
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "assignees"));
+								LanguageUtil.get(
+									_httpServletRequest, "assignees"));
 						});
 				}
 			}
@@ -145,7 +152,8 @@ public class PasswordPolicyDisplayContext {
 	}
 
 	public List<NavigationItem> getSelectMembersNavigationItems() {
-		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
+		String tabs2 = ParamUtil.getString(
+			_httpServletRequest, "tabs2", "users");
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
@@ -153,7 +161,8 @@ public class PasswordPolicyDisplayContext {
 
 		entriesNavigationItem.setActive(true);
 		entriesNavigationItem.setHref(StringPool.BLANK);
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, tabs2));
+		entriesNavigationItem.setLabel(
+			LanguageUtil.get(_httpServletRequest, tabs2));
 
 		navigationItems.add(entriesNavigationItem);
 
@@ -168,7 +177,7 @@ public class PasswordPolicyDisplayContext {
 		entriesNavigationItem.setActive(true);
 		entriesNavigationItem.setHref(StringPool.BLANK);
 		entriesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "password-policies"));
+			LanguageUtil.get(_httpServletRequest, "password-policies"));
 
 		navigationItems.add(entriesNavigationItem);
 
@@ -195,6 +204,6 @@ public class PasswordPolicyDisplayContext {
 	private final Long _passwordPolicyId;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

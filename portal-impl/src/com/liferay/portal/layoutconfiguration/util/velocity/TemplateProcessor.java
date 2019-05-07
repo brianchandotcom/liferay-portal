@@ -65,8 +65,8 @@ public class TemplateProcessor implements ColumnProcessor {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String portletId) {
 
-		_request = httpServletRequest;
-		_response = httpServletResponse;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
 
 		if (Validator.isNotNull(portletId)) {
 			ThemeDisplay themeDisplay =
@@ -103,8 +103,9 @@ public class TemplateProcessor implements ColumnProcessor {
 	public String processColumn(String columnId, String classNames)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -120,7 +121,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 		List<Portlet> portlets = new ArrayList<>();
 
-		String portletId = ParamUtil.getString(_request, "p_p_id");
+		String portletId = ParamUtil.getString(_httpServletRequest, "p_p_id");
 
 		try {
 			portlets.add(PortletLocalServiceUtil.getPortletById(portletId));
@@ -128,8 +129,9 @@ public class TemplateProcessor implements ColumnProcessor {
 		catch (NullPointerException npe) {
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _processColumn(
 			columnId, classNames, themeDisplay.getLayoutTypePortlet(),
@@ -139,13 +141,13 @@ public class TemplateProcessor implements ColumnProcessor {
 	@Override
 	public String processMax() throws Exception {
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(_response);
+			new BufferCacheServletResponse(_httpServletResponse);
 
 		PortletContainerUtil.renderHeaders(
-			_request, bufferCacheServletResponse, _portlet);
+			_httpServletRequest, bufferCacheServletResponse, _portlet);
 
 		PortletContainerUtil.render(
-			_request, bufferCacheServletResponse, _portlet);
+			_httpServletRequest, bufferCacheServletResponse, _portlet);
 
 		return bufferCacheServletResponse.getString();
 	}
@@ -160,8 +162,9 @@ public class TemplateProcessor implements ColumnProcessor {
 			String portletId, Map<String, ?> defaultSettingsMap)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -269,32 +272,34 @@ public class TemplateProcessor implements ColumnProcessor {
 			}
 		}
 
-		_request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
+		_httpServletRequest.setAttribute(
+			WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(_response);
+			new BufferCacheServletResponse(_httpServletResponse);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		PortletJSONUtil.populatePortletJSONObject(
-			_request, StringPool.BLANK, portlet, jsonObject);
+			_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
 
 		try {
-			PortletJSONUtil.writeHeaderPaths(_response, jsonObject);
+			PortletJSONUtil.writeHeaderPaths(_httpServletResponse, jsonObject);
 
 			HttpServletRequest request =
 				PortletContainerUtil.setupOptionalRenderParameters(
-					_request, null, null, null, null);
+					_httpServletRequest, null, null, null, null);
 
 			PortletContainerUtil.render(
 				request, bufferCacheServletResponse, portlet);
 
-			PortletJSONUtil.writeFooterPaths(_response, jsonObject);
+			PortletJSONUtil.writeFooterPaths(_httpServletResponse, jsonObject);
 
 			return bufferCacheServletResponse.getString();
 		}
 		finally {
-			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
+			_httpServletRequest.removeAttribute(
+				WebKeys.RENDER_PORTLET_RESOURCE);
 		}
 	}
 
@@ -354,7 +359,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 			if (_portletAjaxRender && (portlet.getRenderWeight() < 1)) {
 				StringBundler renderResultSB = portletRenderer.renderAjax(
-					_request, _response);
+					_httpServletRequest, _httpServletResponse);
 
 				sb.append(renderResultSB);
 			}
@@ -389,8 +394,8 @@ public class TemplateProcessor implements ColumnProcessor {
 	private final Portlet _portlet;
 	private final boolean _portletAjaxRender;
 	private final Map<Integer, List<PortletRenderer>> _portletRenderers;
-	private final HttpServletRequest _request;
-	private final HttpServletResponse _response;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 
 	private static class RenderWeightComparator implements Comparator<Integer> {
 

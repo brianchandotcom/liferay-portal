@@ -65,7 +65,7 @@ public class SharingDLViewFileVersionDisplayContext
 			_UUID, parentDLDisplayContext, httpServletRequest,
 			httpServletResponse, fileVersion);
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_fileEntry = fileEntry;
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -89,7 +89,7 @@ public class SharingDLViewFileVersionDisplayContext
 			menuItems,
 			_sharingMenuItemFactory.createShareMenuItem(
 				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _request));
+				_fileEntry.getFileEntryId(), _httpServletRequest));
 
 		return menu;
 	}
@@ -106,7 +106,7 @@ public class SharingDLViewFileVersionDisplayContext
 			toolbarItems,
 			_sharingToolbarItemFactory.createShareToolbarItem(
 				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _request));
+				_fileEntry.getFileEntryId(), _httpServletRequest));
 
 		return toolbarItems;
 	}
@@ -190,7 +190,7 @@ public class SharingDLViewFileVersionDisplayContext
 		"6d7d30de-01fa-49db-a422-d78748aa03a7");
 
 	private final FileEntry _fileEntry;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SharingConfiguration _sharingConfiguration;
 	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final SharingPermissionHelper _sharingPermissionHelper;

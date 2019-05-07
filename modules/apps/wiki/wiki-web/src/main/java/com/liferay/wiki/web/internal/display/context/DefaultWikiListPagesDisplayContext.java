@@ -96,7 +96,7 @@ public class DefaultWikiListPagesDisplayContext
 		HttpServletResponse httpServletResponse, WikiNode wikiNode,
 		TrashHelper trashHelper) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_wikiNode = wikiNode;
 		_trashHelper = trashHelper;
 
@@ -105,15 +105,17 @@ public class DefaultWikiListPagesDisplayContext
 
 	@Override
 	public String getEmptyResultsMessage() {
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			return LanguageUtil.format(
-				_request, "no-pages-were-found-that-matched-the-keywords-x",
+				_httpServletRequest,
+				"no-pages-were-found-that-matched-the-keywords-x",
 				"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
 		}
 
-		String navigation = ParamUtil.getString(_request, "navigation");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation");
 
 		if (navigation.equals("categorized-pages")) {
 			return "there-are-no-pages-with-this-category";
@@ -129,7 +131,7 @@ public class DefaultWikiListPagesDisplayContext
 				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 			return LanguageUtil.format(
-				_request, "there-is-no-x",
+				_httpServletRequest, "there-is-no-x",
 				new String[] {wikiGroupServiceConfiguration.frontPageName()},
 				false);
 		}
@@ -195,15 +197,17 @@ public class DefaultWikiListPagesDisplayContext
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
-		WikiPage page = (WikiPage)_request.getAttribute(WikiWebKeys.WIKI_PAGE);
+		WikiPage page = (WikiPage)_httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_PAGE);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
+			_httpServletRequest, "navigation", "all-pages");
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		int total = 0;
 		List<WikiPage> results = new ArrayList<>();
@@ -213,7 +217,7 @@ public class DefaultWikiListPagesDisplayContext
 				WikiPage.class);
 
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				_request);
+				_httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "more");
 			searchContext.setEnd(searchContainer.getEnd());
@@ -655,7 +659,8 @@ public class DefaultWikiListPagesDisplayContext
 			url = PermissionsURLTag.doTag(
 				null, WikiPage.class.getName(), wikiPage.getTitle(), null,
 				String.valueOf(wikiPage.getResourcePrimKey()),
-				LiferayWindowState.POP_UP.toString(), null, _request);
+				LiferayWindowState.POP_UP.toString(), null,
+				_httpServletRequest);
 		}
 		catch (Exception e) {
 			throw new SystemException("Unable to create permissions URL", e);
@@ -711,7 +716,7 @@ public class DefaultWikiListPagesDisplayContext
 			List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
-		ResultRow row = (ResultRow)_request.getAttribute(
+		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
 			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 		if (row == null) {
@@ -815,7 +820,7 @@ public class DefaultWikiListPagesDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultWikiListPagesDisplayContext.class);
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final TrashHelper _trashHelper;
 	private final WikiNode _wikiNode;
 	private final WikiRequestHelper _wikiRequestHelper;

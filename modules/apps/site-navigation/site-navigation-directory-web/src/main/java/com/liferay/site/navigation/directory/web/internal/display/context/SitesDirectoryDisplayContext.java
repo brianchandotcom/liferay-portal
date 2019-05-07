@@ -31,7 +31,7 @@ public class SitesDirectoryDisplayContext {
 	public SitesDirectoryDisplayContext(HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -50,7 +50,7 @@ public class SitesDirectoryDisplayContext {
 		}
 
 		_displayStyle = ParamUtil.getString(
-			_request, "displayStyle",
+			_httpServletRequest, "displayStyle",
 			_sitesDirectoryPortletInstanceConfiguration.displayStyle());
 
 		return _displayStyle;
@@ -62,14 +62,14 @@ public class SitesDirectoryDisplayContext {
 		}
 
 		_sites = ParamUtil.getString(
-			_request, "sites",
+			_httpServletRequest, "sites",
 			_sitesDirectoryPortletInstanceConfiguration.sites());
 
 		return _sites;
 	}
 
 	private String _displayStyle;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _sites;
 	private final SitesDirectoryPortletInstanceConfiguration
 		_sitesDirectoryPortletInstanceConfiguration;

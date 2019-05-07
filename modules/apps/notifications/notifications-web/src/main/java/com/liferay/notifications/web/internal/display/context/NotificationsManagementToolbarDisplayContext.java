@@ -45,7 +45,7 @@ public class NotificationsManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_currentURLObj = currentURLObj;
 	}
 
@@ -59,7 +59,8 @@ public class NotificationsManagementToolbarDisplayContext {
 								"action", "markNotificationsAsRead");
 							dropdownItem.setIcon("envelope-open");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "mark-as-read"));
+								LanguageUtil.get(
+									_httpServletRequest, "mark-as-read"));
 							dropdownItem.setQuickAction(true);
 						});
 					add(
@@ -68,7 +69,8 @@ public class NotificationsManagementToolbarDisplayContext {
 								"action", "markNotificationsAsUnread");
 							dropdownItem.setIcon("envelope-closed");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "mark-as-unread"));
+								LanguageUtil.get(
+									_httpServletRequest, "mark-as-unread"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -78,7 +80,7 @@ public class NotificationsManagementToolbarDisplayContext {
 						dropdownItem.putData("action", "deleteNotifications");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -104,7 +106,8 @@ public class NotificationsManagementToolbarDisplayContext {
 								_getFilterNavigationDropdownItems());
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(
-									_request, "filter-by-navigation"));
+									_httpServletRequest,
+									"filter-by-navigation"));
 						});
 				}
 
@@ -113,7 +116,7 @@ public class NotificationsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -138,7 +141,8 @@ public class NotificationsManagementToolbarDisplayContext {
 
 							labelItem.setCloseable(true);
 							labelItem.setLabel(
-								LanguageUtil.get(_request, navigation));
+								LanguageUtil.get(
+									_httpServletRequest, navigation));
 						});
 				}
 			}
@@ -146,7 +150,7 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_request, "orderByType", "desc");
+		return ParamUtil.getString(_httpServletRequest, "orderByType", "desc");
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
@@ -176,7 +180,7 @@ public class NotificationsManagementToolbarDisplayContext {
 							"navigation", "all");
 						dropdownItem.setActive(navigation.equals("all"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 				add(
 					dropdownItem -> {
@@ -187,7 +191,7 @@ public class NotificationsManagementToolbarDisplayContext {
 							"navigation", "unread");
 						dropdownItem.setActive(navigation.equals("unread"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "unread"));
+							LanguageUtil.get(_httpServletRequest, "unread"));
 					});
 				add(
 					dropdownItem -> {
@@ -198,14 +202,14 @@ public class NotificationsManagementToolbarDisplayContext {
 							"navigation", "read");
 						dropdownItem.setActive(navigation.equals("read"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "read"));
+							LanguageUtil.get(_httpServletRequest, "read"));
 					});
 			}
 		};
 	}
 
 	private String _getNavigation() {
-		return ParamUtil.getString(_request, "navigation", "all");
+		return ParamUtil.getString(_httpServletRequest, "navigation", "all");
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
@@ -216,19 +220,19 @@ public class NotificationsManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(getSortingURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "date"));
+							LanguageUtil.get(_httpServletRequest, "date"));
 					});
 			}
 		};
 	}
 
 	private boolean _isActionRequired() {
-		return ParamUtil.getBoolean(_request, "actionRequired");
+		return ParamUtil.getBoolean(_httpServletRequest, "actionRequired");
 	}
 
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

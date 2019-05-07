@@ -54,12 +54,13 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONArray vocabulariesJSONArray = _getVocabulariesJSONArray();
 
@@ -95,7 +96,7 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _categoryId;
 		}
 
-		_categoryId = ParamUtil.getLong(_request, "categoryId");
+		_categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 
 		return _categoryId;
 	}
@@ -106,7 +107,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectCategory");
 
 		return _eventName;
@@ -118,7 +119,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		}
 
 		_selectedCategories = ParamUtil.getString(
-			_request, "selectedCategories");
+			_httpServletRequest, "selectedCategories");
 
 		return _selectedCategories;
 	}
@@ -149,7 +150,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		}
 
 		_vocabularyIds = StringUtil.split(
-			ParamUtil.getString(_request, "vocabularyIds"), 0L);
+			ParamUtil.getString(_httpServletRequest, "vocabularyIds"), 0L);
 
 		return _vocabularyIds;
 	}
@@ -171,7 +172,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (assetVocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {
-			sb.append(LanguageUtil.get(_request, "global"));
+			sb.append(LanguageUtil.get(_httpServletRequest, "global"));
 		}
 		else {
 			Group group = GroupLocalServiceUtil.fetchGroup(
@@ -191,7 +192,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		}
 
 		_allowedSelectVocabularies = ParamUtil.getBoolean(
-			_request, "allowedSelectVocabularies");
+			_httpServletRequest, "allowedSelectVocabularies");
 
 		return _allowedSelectVocabularies;
 	}
@@ -201,7 +202,8 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _singleSelect;
 		}
 
-		_singleSelect = ParamUtil.getBoolean(_request, "singleSelect");
+		_singleSelect = ParamUtil.getBoolean(
+			_httpServletRequest, "singleSelect");
 
 		return _singleSelect;
 	}
@@ -212,8 +214,9 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<AssetCategory> categories =
 			AssetCategoryServiceUtil.getVocabularyCategories(
@@ -254,7 +257,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
-			_request, "allowedSelectVocabularies");
+			_httpServletRequest, "allowedSelectVocabularies");
 
 		for (long vocabularyId : getVocabularyIds()) {
 			JSONObject jsonObject = JSONUtil.put(
@@ -282,7 +285,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private String _eventName;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
 	private String _type;

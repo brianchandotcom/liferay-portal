@@ -41,9 +41,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public SelectLayoutPageTemplateEntryDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -73,7 +73,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		_layoutPageTemplateCollectionId = ParamUtil.getLong(
-			_request, "layoutPageTemplateCollectionId");
+			_httpServletRequest, "layoutPageTemplateCollectionId");
 
 		return _layoutPageTemplateCollectionId;
 	}
@@ -124,7 +124,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -135,7 +135,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		_selectedTab = ParamUtil.getString(
-			_request, "selectedTab", "basic-pages");
+			_httpServletRequest, "selectedTab", "basic-pages");
 
 		return _selectedTab;
 	}
@@ -199,7 +199,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	private Long _layoutPageTemplateCollectionId;
 	private List<String> _primaryTypes;
 	private String _redirect;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;
 	private List<String> _types;

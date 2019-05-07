@@ -59,9 +59,9 @@ public class DisplayPageActionDropdownItemsProvider {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -122,7 +122,8 @@ public class DisplayPageActionDropdownItemsProvider {
 				_themeDisplay.getURLCurrent(), "selPlid",
 				draftLayout.getPlid());
 
-			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
 	}
 
@@ -146,7 +147,8 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownItem.putData("action", "deleteDisplayPage");
 			dropdownItem.putData(
 				"deleteDisplayPageURL", deleteDisplayPageURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -178,7 +180,8 @@ public class DisplayPageActionDropdownItemsProvider {
 
 				dropdownItem.setHref(layoutFullURL);
 
-				dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
 			};
 		}
 
@@ -199,7 +202,8 @@ public class DisplayPageActionDropdownItemsProvider {
 
 			dropdownItem.setHref(layoutFullURL);
 
-			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
 	}
 
@@ -245,7 +249,7 @@ public class DisplayPageActionDropdownItemsProvider {
 							getLayoutPageTemplateEntryId())) {
 
 				message = LanguageUtil.format(
-					_request,
+					_httpServletRequest,
 					"do-you-want-to-replace-x-for-x-as-the-default-display-" +
 						"page-template",
 					new String[] {
@@ -255,7 +259,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			}
 			else if (_layoutPageTemplateEntry.isDefaultTemplate()) {
 				message = LanguageUtil.get(
-					_request, "unmark-default-confirmation");
+					_httpServletRequest, "unmark-default-confirmation");
 			}
 
 			dropdownItem.putData("message", message);
@@ -266,7 +270,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				label = "unmark-as-default";
 			}
 
-			dropdownItem.setLabel(LanguageUtil.get(_request, label));
+			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 		};
 	}
 
@@ -279,13 +283,14 @@ public class DisplayPageActionDropdownItemsProvider {
 			_layoutPageTemplateEntry.getName(), null,
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _request);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsDisplayPage");
 			dropdownItem.putData(
 				"permissionsDisplayPageURL", permissionsDisplayPageURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
@@ -320,13 +325,14 @@ public class DisplayPageActionDropdownItemsProvider {
 				_layoutPageTemplateEntry.getName());
 			dropdownItem.putData(
 				"updateDisplayPageURL", updateDisplayPageURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "rename"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "rename"));
 		};
 	}
 
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

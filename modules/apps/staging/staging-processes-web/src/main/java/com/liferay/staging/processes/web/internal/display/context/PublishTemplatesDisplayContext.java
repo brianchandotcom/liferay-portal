@@ -33,7 +33,7 @@ public class PublishTemplatesDisplayContext {
 		RenderResponse renderResponse, HttpServletRequest httpServletRequest) {
 
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -47,13 +47,14 @@ public class PublishTemplatesDisplayContext {
 							"mvcRenderCommandName",
 							"viewPublishConfigurations");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "publish-templates"));
+							LanguageUtil.get(
+								_httpServletRequest, "publish-templates"));
 					});
 			}
 		};
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

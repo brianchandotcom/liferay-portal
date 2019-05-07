@@ -32,12 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 public class GoogleMapsDisplayContext {
 
 	public GoogleMapsDisplayContext(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getCompanyGoogleMapsAPIKey() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
@@ -48,7 +49,7 @@ public class GoogleMapsDisplayContext {
 	public String getConfigurationPrefix() {
 		if (Validator.isNull(_configurationPrefix)) {
 			_configurationPrefix = GetterUtil.getString(
-				_request.getAttribute(
+				_httpServletRequest.getAttribute(
 					MapProviderWebKeys.MAP_PROVIDER_CONFIGURATION_PREFIX),
 				"TypeSettingsProperties");
 		}
@@ -77,14 +78,15 @@ public class GoogleMapsDisplayContext {
 	}
 
 	protected Group getGroup() {
-		Group group = (Group)_request.getAttribute("site.liveGroup");
+		Group group = (Group)_httpServletRequest.getAttribute("site.liveGroup");
 
 		if (group != null) {
 			return group;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		group = themeDisplay.getScopeGroup();
 
@@ -97,6 +99,6 @@ public class GoogleMapsDisplayContext {
 
 	private String _configurationPrefix;
 	private String _googleMapsAPIKey;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

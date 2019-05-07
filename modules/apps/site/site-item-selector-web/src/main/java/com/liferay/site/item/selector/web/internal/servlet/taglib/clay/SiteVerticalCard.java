@@ -44,7 +44,8 @@ public class SiteVerticalCard implements VerticalCard {
 		_groupURLProvider =
 			(GroupURLProvider)liferayPortletRequest.getAttribute(
 				SiteWebKeys.GROUP_URL_PROVIDER);
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -78,7 +79,7 @@ public class SiteVerticalCard implements VerticalCard {
 		List<Group> childSites = _group.getChildren(true);
 
 		return LanguageUtil.format(
-			_request, "x-child-sites", childSites.size());
+			_httpServletRequest, "x-child-sites", childSites.size());
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class SiteVerticalCard implements VerticalCard {
 	private final Group _group;
 	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

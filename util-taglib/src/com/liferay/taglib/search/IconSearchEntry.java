@@ -55,11 +55,11 @@ public class IconSearchEntry extends TextSearchEntry {
 	}
 
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	public ServletContext getServletContext() {
@@ -107,11 +107,11 @@ public class IconSearchEntry extends TextSearchEntry {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -127,8 +127,8 @@ public class IconSearchEntry extends TextSearchEntry {
 
 	private String _href;
 	private String _icon;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private ServletContext _servletContext;
 	private boolean _toggleRowChecker;
 

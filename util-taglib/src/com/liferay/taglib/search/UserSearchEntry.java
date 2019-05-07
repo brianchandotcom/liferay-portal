@@ -46,11 +46,11 @@ public class UserSearchEntry extends TextSearchEntry {
 	}
 
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	public ServletContext getServletContext() {
@@ -103,11 +103,11 @@ public class UserSearchEntry extends TextSearchEntry {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -126,8 +126,8 @@ public class UserSearchEntry extends TextSearchEntry {
 		"/html/taglib/ui/search_container/user.jsp";
 
 	private Date _date;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private ServletContext _servletContext;
 	private boolean _showDetails = true;
 	private long _userId;

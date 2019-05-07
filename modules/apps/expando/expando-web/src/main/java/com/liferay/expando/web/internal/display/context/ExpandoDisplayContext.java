@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExpandoDisplayContext {
 
 	public ExpandoDisplayContext(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -54,7 +54,7 @@ public class ExpandoDisplayContext {
 				add(
 					dropdownItem -> {
 						PortletResponse portletResponse =
-							(PortletResponse)_request.getAttribute(
+							(PortletResponse)_httpServletRequest.getAttribute(
 								JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 						dropdownItem.setHref(
@@ -64,7 +64,7 @@ public class ExpandoDisplayContext {
 
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -77,7 +77,7 @@ public class ExpandoDisplayContext {
 				addDropdownItem(
 					dropdownItem -> {
 						PortletResponse portletResponse =
-							(PortletResponse)_request.getAttribute(
+							(PortletResponse)_httpServletRequest.getAttribute(
 								JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 						LiferayPortletResponse liferayPortletResponse =
@@ -85,16 +85,17 @@ public class ExpandoDisplayContext {
 								portletResponse);
 
 						String modelResource = ParamUtil.getString(
-							_request, "modelResource");
+							_httpServletRequest, "modelResource");
 
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(), "mvcPath",
 							"/edit/select_field_type.jsp", "redirect",
-							PortalUtil.getCurrentURL(_request), "modelResource",
-							modelResource);
+							PortalUtil.getCurrentURL(_httpServletRequest),
+							"modelResource", modelResource);
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-custom-field"));
+							LanguageUtil.get(
+								_httpServletRequest, "add-custom-field"));
 					});
 			}
 		};
@@ -108,21 +109,22 @@ public class ExpandoDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, label));
+							LanguageUtil.get(_httpServletRequest, label));
 					});
 			}
 		};
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortletPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ExpandoPortletKeys.EXPANDO,
 			ActionKeys.ADD_EXPANDO);
 	}
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

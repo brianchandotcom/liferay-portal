@@ -42,13 +42,14 @@ public class KBAdminNavigationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
@@ -56,7 +57,8 @@ public class KBAdminNavigationDisplayContext {
 
 		navigationItem.setActive(true);
 		navigationItem.setHref(themeDisplay.getURLCurrent());
-		navigationItem.setLabel(LanguageUtil.get(_request, "details"));
+		navigationItem.setLabel(
+			LanguageUtil.get(_httpServletRequest, "details"));
 
 		navigationItems.add(navigationItem);
 
@@ -66,12 +68,13 @@ public class KBAdminNavigationDisplayContext {
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String mvcPath = ParamUtil.getString(_request, "mvcPath");
+		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
 
 		if (PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
@@ -97,7 +100,7 @@ public class KBAdminNavigationDisplayContext {
 			kbObjectsNavigationItem.setHref(viewKBObjectsURL.toString());
 
 			kbObjectsNavigationItem.setLabel(
-				LanguageUtil.get(_request, "articles"));
+				LanguageUtil.get(_httpServletRequest, "articles"));
 
 			navigationItems.add(kbObjectsNavigationItem);
 		}
@@ -126,7 +129,7 @@ public class KBAdminNavigationDisplayContext {
 			kbTemplatesNavigationItem.setHref(viewKBTemplatesURL.toString());
 
 			kbTemplatesNavigationItem.setLabel(
-				LanguageUtil.get(_request, "templates"));
+				LanguageUtil.get(_httpServletRequest, "templates"));
 
 			navigationItems.add(kbTemplatesNavigationItem);
 		}
@@ -155,7 +158,7 @@ public class KBAdminNavigationDisplayContext {
 			kbSuggestionsNavigationItem.setHref(viewKBTemplatesURL.toString());
 
 			kbSuggestionsNavigationItem.setLabel(
-				LanguageUtil.get(_request, "suggestions"));
+				LanguageUtil.get(_httpServletRequest, "suggestions"));
 
 			navigationItems.add(kbSuggestionsNavigationItem);
 		}
@@ -164,6 +167,6 @@ public class KBAdminNavigationDisplayContext {
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

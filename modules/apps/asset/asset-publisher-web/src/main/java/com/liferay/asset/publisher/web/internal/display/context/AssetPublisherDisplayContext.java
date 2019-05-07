@@ -150,7 +150,7 @@ public class AssetPublisherDisplayContext {
 			portletDisplay.getPortletInstanceConfiguration(
 				AssetPublisherPortletInstanceConfiguration.class);
 
-		_request = PortalUtil.getHttpServletRequest(portletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 	}
 
 	public AssetListEntry fetchAssetListEntry() throws PortalException {
@@ -186,7 +186,8 @@ public class AssetPublisherDisplayContext {
 
 		_allAssetCategoryIds = new long[0];
 
-		long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+		long assetCategoryId = ParamUtil.getLong(
+			_httpServletRequest, "categoryId");
 
 		String selectionStyle = getSelectionStyle();
 
@@ -212,7 +213,7 @@ public class AssetPublisherDisplayContext {
 
 		_allAssetTagNames = new String[0];
 
-		String assetTagName = ParamUtil.getString(_request, "tag");
+		String assetTagName = ParamUtil.getString(_httpServletRequest, "tag");
 
 		String selectionStyle = getSelectionStyle();
 
@@ -244,7 +245,7 @@ public class AssetPublisherDisplayContext {
 			return _assetCategoryId;
 		}
 
-		_assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+		_assetCategoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 
 		return _assetCategoryId;
 	}
@@ -333,7 +334,7 @@ public class AssetPublisherDisplayContext {
 			_themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		_assetPublisherCustomizer.setAssetEntryQueryOptions(
-			_assetEntryQuery, _request);
+			_assetEntryQuery, _httpServletRequest);
 
 		return _assetEntryQuery;
 	}
@@ -394,7 +395,7 @@ public class AssetPublisherDisplayContext {
 
 	public String getAssetListSelectorURL() throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_request, AssetListEntry.class.getName(),
+			_httpServletRequest, AssetListEntry.class.getName(),
 			PortletProvider.Action.BROWSE);
 
 		AssetListEntry assetListEntry = fetchAssetListEntry();
@@ -417,7 +418,7 @@ public class AssetPublisherDisplayContext {
 			return _assetTagName;
 		}
 
-		_assetTagName = ParamUtil.getString(_request, "tag");
+		_assetTagName = ParamUtil.getString(_httpServletRequest, "tag");
 
 		return _assetTagName;
 	}
@@ -429,7 +430,8 @@ public class AssetPublisherDisplayContext {
 
 		_attributes = new HashMap<>();
 
-		Map<String, String[]> parameters = _request.getParameterMap();
+		Map<String, String[]> parameters =
+			_httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String[] values = entry.getValue();
@@ -451,7 +453,7 @@ public class AssetPublisherDisplayContext {
 
 	public JSONArray getAutoFieldRulesJSONArray() {
 		String queryLogicIndexesParam = ParamUtil.getString(
-			_request, "queryLogicIndexes");
+			_httpServletRequest, "queryLogicIndexes");
 
 		int[] queryLogicIndexes = null;
 
@@ -463,7 +465,8 @@ public class AssetPublisherDisplayContext {
 
 			for (int i = 0; true; i++) {
 				String queryValues = PrefsParamUtil.getString(
-					_portletPreferences, _request, "queryValues" + i);
+					_portletPreferences, _httpServletRequest,
+					"queryValues" + i);
 
 				if (Validator.isNull(queryValues)) {
 					break;
@@ -481,14 +484,14 @@ public class AssetPublisherDisplayContext {
 
 		for (int queryLogicIndex : queryLogicIndexes) {
 			boolean queryAndOperator = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request,
+				_portletPreferences, _httpServletRequest,
 				"queryAndOperator" + queryLogicIndex);
 
 			JSONObject ruleJSONObject = JSONUtil.put(
 				"queryAndOperator", queryAndOperator);
 
 			boolean queryContains = PrefsParamUtil.getBoolean(
-				_portletPreferences, _request,
+				_portletPreferences, _httpServletRequest,
 				"queryContains" + queryLogicIndex, true);
 
 			ruleJSONObject.put("queryContains", queryContains);
@@ -498,12 +501,13 @@ public class AssetPublisherDisplayContext {
 					"queryValues" + queryLogicIndex, new String[0]));
 
 			String queryName = PrefsParamUtil.getString(
-				_portletPreferences, _request, "queryName" + queryLogicIndex,
-				"assetTags");
+				_portletPreferences, _httpServletRequest,
+				"queryName" + queryLogicIndex, "assetTags");
 
 			if (Objects.equals(queryName, "assetTags")) {
 				queryValues = ParamUtil.getString(
-					_request, "queryTagNames" + queryLogicIndex, queryValues);
+					_httpServletRequest, "queryTagNames" + queryLogicIndex,
+					queryValues);
 
 				queryValues = _assetPublisherWebUtil.filterAssetTagNames(
 					_themeDisplay.getScopeGroupId(), queryValues);
@@ -530,7 +534,7 @@ public class AssetPublisherDisplayContext {
 			}
 			else {
 				queryValues = ParamUtil.getString(
-					_request, "queryCategoryIds" + queryLogicIndex,
+					_httpServletRequest, "queryCategoryIds" + queryLogicIndex,
 					queryValues);
 
 				List<AssetCategory> categories = _filterAssetCategories(
@@ -592,7 +596,7 @@ public class AssetPublisherDisplayContext {
 	public String getCategorySelectorURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetCategory.class.getName(),
+				_httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -654,7 +658,8 @@ public class AssetPublisherDisplayContext {
 		_compilerTagNames = new String[0];
 
 		if (isMergeURLTags()) {
-			_compilerTagNames = ParamUtil.getParameterValues(_request, "tags");
+			_compilerTagNames = ParamUtil.getParameterValues(
+				_httpServletRequest, "tags");
 		}
 
 		return _compilerTagNames;
@@ -706,7 +711,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Integer getDelta() {
-		return _assetPublisherCustomizer.getDelta(_request);
+		return _assetPublisherCustomizer.getDelta(_httpServletRequest);
 	}
 
 	public String getDisplayStyle() {
@@ -863,8 +868,9 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getPortletName() {
-		PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (portletConfig == null) {
 			return StringPool.BLANK;
@@ -878,7 +884,8 @@ public class AssetPublisherDisplayContext {
 			return _portletResource;
 		}
 
-		_portletResource = ParamUtil.getString(_request, "portletResource");
+		_portletResource = ParamUtil.getString(
+			_httpServletRequest, "portletResource");
 
 		return _portletResource;
 	}
@@ -1056,7 +1063,7 @@ public class AssetPublisherDisplayContext {
 	public String getTagSelectorURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetTag.class.getName(),
+				_httpServletRequest, AssetTag.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -1191,7 +1198,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Boolean isEnablePermissions() {
-		return _assetPublisherCustomizer.isEnablePermissions(_request);
+		return _assetPublisherCustomizer.isEnablePermissions(
+			_httpServletRequest);
 	}
 
 	public boolean isEnablePrint() {
@@ -1309,7 +1317,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isOrderingByTitleEnabled() {
-		return _assetPublisherCustomizer.isOrderingByTitleEnabled(_request);
+		return _assetPublisherCustomizer.isOrderingByTitleEnabled(
+			_httpServletRequest);
 	}
 
 	public boolean isPaginationTypeNone() {
@@ -1484,7 +1493,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowEnableAddContentButton() {
-		return _assetPublisherCustomizer.isShowEnableAddContentButton(_request);
+		return _assetPublisherCustomizer.isShowEnableAddContentButton(
+			_httpServletRequest);
 	}
 
 	public Boolean isShowEnablePermissions() {
@@ -1496,7 +1506,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowEnableRelatedAssets() {
-		return _assetPublisherCustomizer.isShowEnableRelatedAssets(_request);
+		return _assetPublisherCustomizer.isShowEnableRelatedAssets(
+			_httpServletRequest);
 	}
 
 	public boolean isShowExpirationDate() {
@@ -1598,7 +1609,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowSubtypeFieldsFilter() {
-		return _assetPublisherCustomizer.isShowSubtypeFieldsFilter(_request);
+		return _assetPublisherCustomizer.isShowSubtypeFieldsFilter(
+			_httpServletRequest);
 	}
 
 	public boolean isShowTags() {
@@ -1708,7 +1720,8 @@ public class AssetPublisherDisplayContext {
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				defaultAssetPublisherPortletId, ActionKeys.VIEW)) {
 
-			_request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+			_httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 		}
 	}
 
@@ -1722,12 +1735,12 @@ public class AssetPublisherDisplayContext {
 				PortalUtil.setPageKeywords(
 					HtmlUtil.escape(
 						assetCategory.getTitle(_themeDisplay.getLocale())),
-					_request);
+					_httpServletRequest);
 			}
 		}
 
 		if (Validator.isNotNull(getAssetTagName())) {
-			PortalUtil.setPageKeywords(getAssetTagName(), _request);
+			PortalUtil.setPageKeywords(getAssetTagName(), _httpServletRequest);
 		}
 	}
 
@@ -1789,15 +1802,15 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_ddmStructureDisplayFieldValue = ParamUtil.getString(
-			_request, "ddmStructureDisplayFieldValue",
+			_httpServletRequest, "ddmStructureDisplayFieldValue",
 			_portletPreferences.getValue(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
 		_ddmStructureFieldName = ParamUtil.getString(
-			_request, "ddmStructureFieldName",
+			_httpServletRequest, "ddmStructureFieldName",
 			_portletPreferences.getValue(
 				"ddmStructureFieldName", StringPool.BLANK));
 		_ddmStructureFieldValue = ParamUtil.getString(
-			_request, "ddmStructureFieldValue",
+			_httpServletRequest, "ddmStructureFieldValue",
 			_portletPreferences.getValue(
 				"ddmStructureFieldValue", StringPool.BLANK));
 
@@ -1901,7 +1914,7 @@ public class AssetPublisherDisplayContext {
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
 	private long[] _referencedModelsGroupIds;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Integer _rssDelta;
 	private String _rssDisplayStyle;
 	private String _rssFeedType;

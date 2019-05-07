@@ -61,11 +61,11 @@ public class AssetListDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			_httpServletRequest);
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -192,7 +192,8 @@ public class AssetListDisplayContext {
 			return _assetListEntryId;
 		}
 
-		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+		_assetListEntryId = ParamUtil.getLong(
+			_httpServletRequest, "assetListEntryId");
 
 		return _assetListEntryId;
 	}
@@ -217,7 +218,7 @@ public class AssetListDisplayContext {
 			title = "new-manual-content-set";
 		}
 
-		return LanguageUtil.get(_request, title);
+		return LanguageUtil.get(_httpServletRequest, title);
 	}
 
 	public int getAssetListEntryType() {
@@ -228,7 +229,7 @@ public class AssetListDisplayContext {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		int assetListEntryType = ParamUtil.getInteger(
-			_request, "assetListEntryType");
+			_httpServletRequest, "assetListEntryType");
 
 		if (assetListEntry != null) {
 			assetListEntryType = assetListEntry.getType();
@@ -252,7 +253,8 @@ public class AssetListDisplayContext {
 	public String getEmptyResultMessageDescription() {
 		if (isShowAddAssetListEntryAction()) {
 			return LanguageUtil.get(
-				_request, "fortunately-it-is-very-easy-to-add-new-ones");
+				_httpServletRequest,
+				"fortunately-it-is-very-easy-to-add-new-ones");
 		}
 
 		return StringPool.BLANK;
@@ -263,14 +265,15 @@ public class AssetListDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
 				AssetListPortletKeys.ASSET_LIST, "order-by-col", "create-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -287,14 +290,15 @@ public class AssetListDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
 				AssetListPortletKeys.ASSET_LIST, "order-by-type", "asc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -336,7 +340,7 @@ public class AssetListDisplayContext {
 		}
 
 		_segmentsEntryId = ParamUtil.getLong(
-			_request, "segmentsEntryId",
+			_httpServletRequest, "segmentsEntryId",
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
 		return _segmentsEntryId;
@@ -359,7 +363,7 @@ public class AssetListDisplayContext {
 				"addAssetListEntryURL", _getAddAssetListEntryURL(type));
 			dropdownItem.putData("title", _getAddAssetListTitle(title));
 			dropdownItem.setHref("#");
-			dropdownItem.setLabel(LanguageUtil.get(_request, label));
+			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 		};
 	}
 
@@ -374,7 +378,8 @@ public class AssetListDisplayContext {
 	}
 
 	private String _getAddAssetListTitle(String title) {
-		return LanguageUtil.format(_request, "add-x-content-set", title, true);
+		return LanguageUtil.format(
+			_httpServletRequest, "add-x-content-set", title, true);
 	}
 
 	private String _getKeywords() {
@@ -382,7 +387,7 @@ public class AssetListDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -393,7 +398,7 @@ public class AssetListDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -418,7 +423,7 @@ public class AssetListDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Long _segmentsEntryId;
 	private final ThemeDisplay _themeDisplay;
 

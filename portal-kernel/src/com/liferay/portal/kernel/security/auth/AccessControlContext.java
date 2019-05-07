@@ -33,11 +33,11 @@ public class AccessControlContext {
 	}
 
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	public Map<String, Object> getSettings() {
@@ -49,11 +49,11 @@ public class AccessControlContext {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public static enum Settings {
@@ -63,8 +63,8 @@ public class AccessControlContext {
 	}
 
 	private AuthVerifierResult _authVerifierResult;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private final Map<String, Object> _settings = new HashMap<>();
 
 }

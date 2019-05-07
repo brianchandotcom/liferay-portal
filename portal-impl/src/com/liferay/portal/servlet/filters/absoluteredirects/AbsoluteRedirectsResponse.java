@@ -34,19 +34,19 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 		super(httpServletResponse);
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
 	public void sendRedirect(String redirect) throws IOException {
-		redirect = PortalUtil.getAbsoluteURL(_request, redirect);
+		redirect = PortalUtil.getAbsoluteURL(_httpServletRequest, redirect);
 
-		_request.setAttribute(
+		_httpServletRequest.setAttribute(
 			AbsoluteRedirectsResponse.class.getName(), redirect);
 
 		super.sendRedirect(redirect);
 	}
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

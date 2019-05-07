@@ -38,13 +38,14 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		throws WebDAVException {
 
 		_storage = storage;
-		_request = httpServletRequest;
-		_response = httpServletResponse;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
 		_userAgent = userAgent;
 
 		_lockUuid = WebDAVUtil.getLockUuid(httpServletRequest);
 
-		String pathInfo = HttpUtil.fixPath(_request.getPathInfo(), false, true);
+		String pathInfo = HttpUtil.fixPath(
+			_httpServletRequest.getPathInfo(), false, true);
 
 		String strippedPathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
 			pathInfo);
@@ -64,7 +65,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 		_groupId = WebDAVUtil.getGroupId(_companyId, _path);
 
-		_userId = GetterUtil.getLong(_request.getRemoteUser());
+		_userId = GetterUtil.getLong(_httpServletRequest.getRemoteUser());
 		_permissionChecker = permissionChecker;
 	}
 
@@ -80,12 +81,12 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 	@Override
 	public HttpServletRequest getHttpServletRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	@Override
 	public HttpServletResponse getHttpServletResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	@Override
@@ -165,8 +166,8 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 	private final boolean _manualCheckInRequired;
 	private final String _path;
 	private final PermissionChecker _permissionChecker;
-	private final HttpServletRequest _request;
-	private final HttpServletResponse _response;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private final WebDAVStorage _storage;
 	private final String _userAgent;
 	private final long _userId;

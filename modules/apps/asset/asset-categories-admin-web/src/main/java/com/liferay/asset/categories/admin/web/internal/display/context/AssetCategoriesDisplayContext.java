@@ -86,12 +86,13 @@ public class AssetCategoriesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_assetCategoriesAdminWebConfiguration =
-			(AssetCategoriesAdminWebConfiguration)_request.getAttribute(
-				AssetCategoriesAdminWebKeys.
-					ASSET_CATEGORIES_ADMIN_CONFIGURATION);
+			(AssetCategoriesAdminWebConfiguration)
+				_httpServletRequest.getAttribute(
+					AssetCategoriesAdminWebKeys.
+						ASSET_CATEGORIES_ADMIN_CONFIGURATION);
 	}
 
 	public List<NavigationItem> getAssetCategoriesNavigationItems() {
@@ -105,7 +106,8 @@ public class AssetCategoriesDisplayContext {
 							"/view_categories.jsp", "vocabularyId",
 							String.valueOf(getVocabularyId()));
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "categories"));
+							LanguageUtil.get(
+								_httpServletRequest, "categories"));
 					});
 			}
 		};
@@ -114,8 +116,9 @@ public class AssetCategoriesDisplayContext {
 	public String getAssetType(AssetVocabulary vocabulary)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
 		long[] selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
@@ -126,7 +129,8 @@ public class AssetCategoriesDisplayContext {
 			long classNameId = selectedClassNameIds[i];
 			long classTypePK = selectedClassTypePKs[i];
 
-			String name = LanguageUtil.get(_request, "all-asset-types");
+			String name = LanguageUtil.get(
+				_httpServletRequest, "all-asset-types");
 
 			if (classNameId != AssetCategoryConstants.ALL_CLASS_NAME_ID) {
 				if (classTypePK != -1) {
@@ -189,7 +193,8 @@ public class AssetCategoriesDisplayContext {
 						navigationItem.setHref(
 							_renderResponse.createRenderURL());
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "vocabularies"));
+							LanguageUtil.get(
+								_httpServletRequest, "vocabularies"));
 					});
 			}
 		};
@@ -242,8 +247,9 @@ public class AssetCategoriesDisplayContext {
 		List<AssetCategory> categories = null;
 		int categoriesCount = 0;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
@@ -340,7 +346,7 @@ public class AssetCategoriesDisplayContext {
 			return _categoryId;
 		}
 
-		_categoryId = ParamUtil.getLong(_request, "categoryId");
+		_categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 
 		return _categoryId;
 	}
@@ -354,7 +360,8 @@ public class AssetCategoriesDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -363,7 +370,7 @@ public class AssetCategoriesDisplayContext {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
 		long parentCategoryId = BeanParamUtil.getLong(
-			getCategory(), _request, "parentCategoryId");
+			getCategory(), _httpServletRequest, "parentCategoryId");
 
 		backURL.setParameter("mvcPath", "/view_categories.jsp");
 
@@ -385,7 +392,8 @@ public class AssetCategoriesDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 
 		return _navigation;
 	}
@@ -395,7 +403,8 @@ public class AssetCategoriesDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -405,15 +414,16 @@ public class AssetCategoriesDisplayContext {
 			return _selectCategoryURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(
 				themeDisplay.getScopeGroupId());
 
 		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
-			_request, AssetCategory.class.getName(),
+			_httpServletRequest, AssetCategory.class.getName(),
 			PortletProvider.Action.BROWSE);
 
 		selectCategoryURL.setParameter(
@@ -478,8 +488,9 @@ public class AssetCategoriesDisplayContext {
 		List<AssetVocabulary> vocabularies = null;
 		int vocabulariesCount = 0;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
@@ -548,7 +559,7 @@ public class AssetCategoriesDisplayContext {
 			return _vocabularyId;
 		}
 
-		_vocabularyId = ParamUtil.getLong(_request, "vocabularyId");
+		_vocabularyId = ParamUtil.getLong(_httpServletRequest, "vocabularyId");
 
 		return _vocabularyId;
 	}
@@ -556,8 +567,9 @@ public class AssetCategoriesDisplayContext {
 	public boolean hasPermission(AssetCategory category, String actionId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -576,8 +588,9 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean hasPermission(AssetVocabulary vocabulary, String actionId) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -608,8 +621,9 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isShowCategoriesAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (AssetCategoriesPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -651,7 +665,7 @@ public class AssetCategoriesDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -662,7 +676,7 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol",
+			_httpServletRequest, "orderByCol",
 			isFlattenedNavigationAllowed() ? "path" : "create-date");
 
 		return _orderByCol;
@@ -683,7 +697,7 @@ public class AssetCategoriesDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _selectCategoryURL;
 	private SearchContainer _vocabulariesSearchContainer;
 	private AssetVocabulary _vocabulary;

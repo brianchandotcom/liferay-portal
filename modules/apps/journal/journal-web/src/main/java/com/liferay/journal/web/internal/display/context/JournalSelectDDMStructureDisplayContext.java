@@ -48,7 +48,7 @@ public class JournalSelectDDMStructureDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public long getClassPK() {
@@ -66,8 +66,9 @@ public class JournalSelectDDMStructureDisplayContext {
 			return _ddmStructureSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer ddmStructureSearch = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-structures");
@@ -236,7 +237,7 @@ public class JournalSelectDDMStructureDisplayContext {
 		}
 
 		_searchRestrictionClassNameId = ParamUtil.getLong(
-			_request, "searchRestrictionClassNameId");
+			_httpServletRequest, "searchRestrictionClassNameId");
 
 		return _searchRestrictionClassNameId;
 	}
@@ -247,7 +248,7 @@ public class JournalSelectDDMStructureDisplayContext {
 		}
 
 		_searchRestrictionClassPK = ParamUtil.getLong(
-			_request, "searchRestrictionClassPK");
+			_httpServletRequest, "searchRestrictionClassPK");
 
 		return _searchRestrictionClassPK;
 	}
@@ -258,7 +259,7 @@ public class JournalSelectDDMStructureDisplayContext {
 		}
 
 		_searchRestriction = ParamUtil.getBoolean(
-			_request, "searchRestriction");
+			_httpServletRequest, "searchRestriction");
 
 		return _searchRestriction;
 	}
@@ -270,7 +271,7 @@ public class JournalSelectDDMStructureDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _searchRestriction;
 	private Long _searchRestrictionClassNameId;
 	private Long _searchRestrictionClassPK;

@@ -73,31 +73,31 @@ public class SelectAssetDisplayPageDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_classNameId = GetterUtil.getLong(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:classNameId"));
 		_classPK = GetterUtil.getLong(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:classPK"));
 		_classTypeId = GetterUtil.getLong(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:classTypeId"));
 		_eventName = GetterUtil.getString(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:eventName"),
 			_liferayPortletResponse.getNamespace() + "selectDisplayPage");
 		_groupId = GetterUtil.getLong(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:groupId"));
 		_showPortletLayouts = GetterUtil.getBoolean(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:showPortletLayouts"));
 		_showViewInContextLink = GetterUtil.getBoolean(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:" +
 					"showViewInContextLink"));
 	}
@@ -226,8 +226,9 @@ public class SelectAssetDisplayPageDisplayContext {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			layoutUuid, themeDisplay.getSiteGroupId(), false);
@@ -249,8 +250,9 @@ public class SelectAssetDisplayPageDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -299,8 +301,9 @@ public class SelectAssetDisplayPageDisplayContext {
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			InfoDisplayContributorTracker infoDisplayContributorTracker =
@@ -382,8 +385,9 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -392,10 +396,10 @@ public class SelectAssetDisplayPageDisplayContext {
 		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
 
 		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(_request, "private-pages"));
+			sb.append(LanguageUtil.get(_httpServletRequest, "private-pages"));
 		}
 		else {
-			sb.append(LanguageUtil.get(_request, "public-pages"));
+			sb.append(LanguageUtil.get(_httpServletRequest, "public-pages"));
 		}
 
 		sb.append(StringPool.SPACE);
@@ -426,7 +430,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	private final long _groupId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final boolean _showPortletLayouts;
 	private final boolean _showViewInContextLink;
 

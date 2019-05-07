@@ -45,7 +45,7 @@ public class EditDisplayPageMenuDisplayContext {
 	public EditDisplayPageMenuDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_infoDisplayObjectProvider =
 			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
@@ -53,7 +53,7 @@ public class EditDisplayPageMenuDisplayContext {
 		_infoEditURLProvider =
 			(InfoEditURLProvider)httpServletRequest.getAttribute(
 				AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -63,7 +63,7 @@ public class EditDisplayPageMenuDisplayContext {
 				if (_infoEditURLProvider != null) {
 					String editURL = _infoEditURLProvider.getURL(
 						_infoDisplayObjectProvider.getDisplayObject(),
-						_request);
+						_httpServletRequest);
 
 					if (Validator.isNotNull(editURL)) {
 						add(
@@ -71,7 +71,7 @@ public class EditDisplayPageMenuDisplayContext {
 								dropdownItem.setHref(editURL);
 								dropdownItem.setLabel(
 									LanguageUtil.format(
-										_request, "edit-x",
+										_httpServletRequest, "edit-x",
 										_infoDisplayObjectProvider.getTitle(
 											_themeDisplay.getLocale())));
 							});
@@ -118,7 +118,7 @@ public class EditDisplayPageMenuDisplayContext {
 
 	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
 	private final InfoEditURLProvider _infoEditURLProvider;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

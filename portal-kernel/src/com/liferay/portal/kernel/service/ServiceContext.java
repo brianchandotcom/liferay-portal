@@ -455,15 +455,15 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	@JSON(include = false)
 	public Map<String, String> getHeaders() {
-		if ((_headers == null) && (_request != null)) {
+		if ((_headers == null) && (_httpServletRequest != null)) {
 			Map<String, String> headerMap = new HashMap<>();
 
-			Enumeration<String> enu = _request.getHeaderNames();
+			Enumeration<String> enu = _httpServletRequest.getHeaderNames();
 
 			while (enu.hasMoreElements()) {
 				String header = enu.nextElement();
 
-				String value = _request.getHeader(header);
+				String value = _httpServletRequest.getHeader(header);
 
 				headerMap.put(header, value);
 			}
@@ -510,12 +510,13 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	@JSON(include = false)
 	public LiferayPortletRequest getLiferayPortletRequest() {
-		if (_request == null) {
+		if (_httpServletRequest == null) {
 			return null;
 		}
 
-		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest == null) {
 			return null;
@@ -526,12 +527,12 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	@JSON(include = false)
 	public LiferayPortletResponse getLiferayPortletResponse() {
-		if (_request == null) {
+		if (_httpServletRequest == null) {
 			return null;
 		}
 
 		PortletResponse portletResponse =
-			(PortletResponse)_request.getAttribute(
+			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse == null) {
@@ -671,7 +672,7 @@ public class ServiceContext implements Cloneable, Serializable {
 			try {
 				_portletPreferencesIds =
 					PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-						_request, _portletId);
+						_httpServletRequest, _portletId);
 			}
 			catch (PortalException pe) {
 				ReflectionUtil.throwException(pe);
@@ -703,7 +704,7 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	@JSON(include = false)
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	@JSON(include = false)
@@ -744,11 +745,12 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	public ThemeDisplay getThemeDisplay() {
-		if (_request == null) {
+		if (_httpServletRequest == null) {
 			return null;
 		}
 
-		return (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+		return (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public TimeZone getTimeZone() {
@@ -762,11 +764,11 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @see    HttpHeaders
 	 */
 	public String getUserAgent() {
-		if (_request == null) {
+		if (_httpServletRequest == null) {
 			return null;
 		}
 
-		return _request.getHeader(HttpHeaders.USER_AGENT);
+		return _httpServletRequest.getHeader(HttpHeaders.USER_AGENT);
 	}
 
 	/**
@@ -1534,7 +1536,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @param request the request
 	 */
 	public void setRequest(HttpServletRequest request) {
-		_request = request;
+		_httpServletRequest = request;
 	}
 
 	/**
@@ -1661,7 +1663,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private PortletPreferencesIds _portletPreferencesIds;
 	private String _remoteAddr;
 	private String _remoteHost;
-	private transient HttpServletRequest _request;
+	private transient HttpServletRequest _httpServletRequest;
 	private long _scopeGroupId;
 	private boolean _signedIn;
 	private TimeZone _timeZone;

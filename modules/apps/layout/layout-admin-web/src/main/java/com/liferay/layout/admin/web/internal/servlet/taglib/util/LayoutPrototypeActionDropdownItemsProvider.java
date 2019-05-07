@@ -55,9 +55,9 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		_layoutPrototype = layoutPrototype;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -109,7 +109,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 				_renderResponse.createRenderURL(), "mvcPath",
 				"/edit_layout_prototype.jsp", "layoutPrototypeId",
 				_layoutPrototype.getLayoutPrototypeId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
 	}
 
@@ -133,7 +134,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"deleteLayoutPrototypeURL",
 				deleteLayoutPrototypeURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -146,7 +148,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				layoutPrototypeGroup.getDisplayURL(_themeDisplay, true));
-			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
 	}
 
@@ -156,7 +159,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 
 		PortletURL exportLayoutPrototypeURL =
 			PortalUtil.getControlPanelPortletURL(
-				_request, ExportImportPortletKeys.EXPORT,
+				_httpServletRequest, ExportImportPortletKeys.EXPORT,
 				PortletRequest.RENDER_PHASE);
 
 		exportLayoutPrototypeURL.setParameter(
@@ -178,7 +181,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"exportLayoutPrototypeURL",
 				exportLayoutPrototypeURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "export"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 
@@ -188,7 +192,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 
 		PortletURL importLayoutPrototypeURL =
 			PortalUtil.getControlPanelPortletURL(
-				_request, ExportImportPortletKeys.IMPORT,
+				_httpServletRequest, ExportImportPortletKeys.IMPORT,
 				PortletRequest.RENDER_PHASE);
 
 		importLayoutPrototypeURL.setParameter(
@@ -210,7 +214,8 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"importLayoutPrototypeURL",
 				importLayoutPrototypeURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "import"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "import"));
 		};
 	}
 
@@ -222,19 +227,20 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			StringPool.BLANK, LayoutPrototype.class.getName(),
 			_layoutPrototype.getName(_themeDisplay.getLocale()), null,
 			String.valueOf(_layoutPrototype.getLayoutPrototypeId()),
-			LiferayWindowState.POP_UP.toString(), null, _request);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsLayoutPrototype");
 			dropdownItem.putData(
 				"permissionsLayoutPrototypeURL", permissionsLayoutPrototypeURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
 	private final LayoutPrototype _layoutPrototype;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

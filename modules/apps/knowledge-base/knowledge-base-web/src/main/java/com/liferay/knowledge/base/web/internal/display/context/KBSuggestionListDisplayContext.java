@@ -47,23 +47,25 @@ public class KBSuggestionListDisplayContext {
 		HttpServletRequest httpServletRequest, String templatePath,
 		KBArticle kbArticle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_templatePath = templatePath;
 		_kbArticle = kbArticle;
 
 		_groupId = kbArticle.getGroupId();
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 	}
 
 	public KBSuggestionListDisplayContext(
 		HttpServletRequest httpServletRequest, String templatePath,
 		long groupId) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_templatePath = templatePath;
 		_groupId = groupId;
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 	}
 
 	public int getCompletedKBCommentsCount() throws PortalException {
@@ -109,8 +111,9 @@ public class KBSuggestionListDisplayContext {
 	public String getViewSuggestionURL(PortletURL portletURL)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				KBWebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -254,7 +257,7 @@ public class KBSuggestionListDisplayContext {
 	private final long _groupId;
 	private KBArticle _kbArticle;
 	private final String _navigation;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _templatePath;
 
 }

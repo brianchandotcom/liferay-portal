@@ -59,7 +59,7 @@ public class LayoutSetPrototypeDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -71,7 +71,7 @@ public class LayoutSetPrototypeDisplayContext {
 							"action", "deleteLayoutSetPrototypes");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -79,7 +79,7 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public Boolean getActive() {
-		String status = ParamUtil.get(_request, "status", "all");
+		String status = ParamUtil.get(_httpServletRequest, "status", "all");
 
 		if (status.equals("active")) {
 			return true;
@@ -107,7 +107,7 @@ public class LayoutSetPrototypeDisplayContext {
 		addLayoutSetPrototypeRenderURL.setParameter(
 			"mvcPath", "/edit_layout_set_prototype.jsp");
 		addLayoutSetPrototypeRenderURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(_request));
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
 		return new CreationMenu() {
 			{
@@ -116,7 +116,7 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownItem.setHref(
 							addLayoutSetPrototypeRenderURL.toString());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add"));
+							LanguageUtil.get(_httpServletRequest, "add"));
 					});
 			}
 		};
@@ -128,7 +128,8 @@ public class LayoutSetPrototypeDisplayContext {
 		}
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
 
 		_displayStyle = portalPreferences.getValue(
 			LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE, "display-style",
@@ -145,14 +146,15 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-status"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-status"));
 					});
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -164,7 +166,7 @@ public class LayoutSetPrototypeDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -174,7 +176,8 @@ public class LayoutSetPrototypeDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -193,8 +196,9 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public SearchContainer getSearchContainer() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
@@ -252,7 +256,8 @@ public class LayoutSetPrototypeDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
@@ -300,8 +305,9 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public boolean isShowAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -318,21 +324,23 @@ public class LayoutSetPrototypeDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation");
+		_navigation = ParamUtil.getString(_httpServletRequest, "navigation");
 
 		return _navigation;
 	}
 
 	protected int getTotal() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return LayoutSetPrototypeLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), getActive());
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		String status = ParamUtil.getString(_request, "status", "all");
+		String status = ParamUtil.getString(
+			_httpServletRequest, "status", "all");
 
 		return new DropdownItemList() {
 			{
@@ -341,7 +349,7 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownItem.setActive(status.equals("all"));
 						dropdownItem.setHref(getPortletURL(), "status", "all");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 				add(
 					dropdownItem -> {
@@ -349,7 +357,7 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "status", "active");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "active"));
+							LanguageUtil.get(_httpServletRequest, "active"));
 					});
 				add(
 					dropdownItem -> {
@@ -357,7 +365,7 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "status", "inactive");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "inactive"));
+							LanguageUtil.get(_httpServletRequest, "inactive"));
 					});
 			}
 		};
@@ -365,7 +373,7 @@ public class LayoutSetPrototypeDisplayContext {
 
 	private String _getKeywords() {
 		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -380,7 +388,8 @@ public class LayoutSetPrototypeDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "createDate");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
+							LanguageUtil.get(
+								_httpServletRequest, "create-date"));
 					});
 			}
 		};
@@ -393,6 +402,6 @@ public class LayoutSetPrototypeDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

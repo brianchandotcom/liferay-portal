@@ -117,7 +117,7 @@ public class NavItem implements Serializable {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		Layout layout, Map<String, Object> contextObjects) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 		_layout = layout;
 		_contextObjects = contextObjects;
@@ -175,7 +175,7 @@ public class NavItem implements Serializable {
 				_themeDisplay.getPermissionChecker());
 
 			_children = _fromLayouts(
-				_request, _themeDisplay, layouts, _contextObjects);
+				_httpServletRequest, _themeDisplay, layouts, _contextObjects);
 		}
 
 		return _children;
@@ -236,15 +236,15 @@ public class NavItem implements Serializable {
 	 * @throws Exception if an exception occurred
 	 */
 	public String getRegularURL() throws Exception {
-		return _layout.getRegularURL(_request);
+		return _layout.getRegularURL(_httpServletRequest);
 	}
 
 	public String getResetLayoutURL() throws Exception {
-		return _layout.getResetLayoutURL(_request);
+		return _layout.getResetLayoutURL(_httpServletRequest);
 	}
 
 	public String getResetMaxStateURL() throws Exception {
-		return _layout.getResetMaxStateURL(_request);
+		return _layout.getResetMaxStateURL(_httpServletRequest);
 	}
 
 	/**
@@ -410,7 +410,7 @@ public class NavItem implements Serializable {
 		Layout layout, List<Layout> childLayouts,
 		Map<String, Object> contextObjects) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 		_layout = layout;
 		_contextObjects = contextObjects;
@@ -423,7 +423,7 @@ public class NavItem implements Serializable {
 	private List<NavItem> _children;
 	private final Map<String, Object> _contextObjects;
 	private final Layout _layout;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

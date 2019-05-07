@@ -29,7 +29,7 @@ public class BlogsPortletInstanceSettingsHelper {
 		HttpServletRequest httpServletRequest,
 		BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_blogsPortletInstanceConfiguration = blogsPortletInstanceConfiguration;
 	}
 
@@ -42,8 +42,9 @@ public class BlogsPortletInstanceSettingsHelper {
 			_blogsPortletInstanceConfiguration.displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
@@ -54,6 +55,6 @@ public class BlogsPortletInstanceSettingsHelper {
 	private final BlogsPortletInstanceConfiguration
 		_blogsPortletInstanceConfiguration;
 	private long _displayStyleGroupId;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

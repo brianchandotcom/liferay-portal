@@ -54,7 +54,7 @@ public class JournalMoveEntriesDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_servletRequest = PortalUtil.getHttpServletRequest(
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
 
 		processFolders(getMoveFolders());
@@ -133,7 +133,7 @@ public class JournalMoveEntriesDisplayContext {
 			_newFolderName = folder.getName();
 		}
 		else {
-			_newFolderName = LanguageUtil.get(_servletRequest, "home");
+			_newFolderName = LanguageUtil.get(_httpServletRequest, "home");
 		}
 
 		return _newFolderName;
@@ -224,7 +224,7 @@ public class JournalMoveEntriesDisplayContext {
 				(RenderResponse)_liferayPortletResponse;
 
 			renderResponse.setTitle(
-				LanguageUtil.get(_servletRequest, "move-web-content"));
+				LanguageUtil.get(_httpServletRequest, "move-web-content"));
 		}
 	}
 
@@ -236,7 +236,7 @@ public class JournalMoveEntriesDisplayContext {
 	private String _newFolderName;
 	private PermissionChecker _permissionChecker;
 	private String _redirect;
-	private final HttpServletRequest _servletRequest;
+	private final HttpServletRequest _httpServletRequest;
 	private List<JournalArticle> _validMoveArticles;
 	private List<JournalFolder> _validMoveFolders;
 

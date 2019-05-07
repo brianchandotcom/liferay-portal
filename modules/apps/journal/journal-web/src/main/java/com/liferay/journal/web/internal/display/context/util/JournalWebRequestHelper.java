@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalWebRequestHelper {
 
 	public JournalWebRequestHelper(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public JournalGroupServiceConfiguration
@@ -42,8 +42,9 @@ public class JournalWebRequestHelper {
 
 		try {
 			if (_journalGroupServiceConfiguration == null) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				PortletDisplay portletDisplay =
 					themeDisplay.getPortletDisplay();
@@ -53,7 +54,7 @@ public class JournalWebRequestHelper {
 						ConfigurationProviderUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
 							new ParameterMapSettingsLocator(
-								_request.getParameterMap(),
+								_httpServletRequest.getParameterMap(),
 								new GroupServiceSettingsLocator(
 									themeDisplay.getSiteGroupId(),
 									JournalConstants.SERVICE_NAME)));
@@ -76,6 +77,6 @@ public class JournalWebRequestHelper {
 	}
 
 	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

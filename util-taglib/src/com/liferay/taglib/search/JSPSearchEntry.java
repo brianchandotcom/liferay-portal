@@ -49,11 +49,11 @@ public class JSPSearchEntry extends SearchEntry {
 	}
 
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	public ServletContext getServletContext() {
@@ -74,7 +74,7 @@ public class JSPSearchEntry extends SearchEntry {
 					_servletContext, _path);
 
 			requestDispatcher.include(
-				_request,
+				_httpServletRequest,
 				new PipingServletResponse(httpServletResponse, writer));
 		}
 		else {
@@ -96,11 +96,11 @@ public class JSPSearchEntry extends SearchEntry {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -109,8 +109,8 @@ public class JSPSearchEntry extends SearchEntry {
 
 	private String _href;
 	private String _path;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private ServletContext _servletContext;
 
 }

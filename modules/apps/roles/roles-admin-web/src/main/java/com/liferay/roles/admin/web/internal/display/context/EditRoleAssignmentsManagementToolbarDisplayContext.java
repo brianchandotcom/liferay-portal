@@ -81,7 +81,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			RenderResponse renderResponse, String displayStyle, String tabs3)
 		throws PortalException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -102,7 +102,8 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 						"javascript:", _renderResponse.getNamespace(),
 						"unsetRoleAssignments();"));
 				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
@@ -130,12 +131,13 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 							dropdownItem.setActive(true);
 							dropdownItem.setHref(StringPool.BLANK);
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "all"));
+								LanguageUtil.get(_httpServletRequest, "all"));
 
 							return dropdownItem;
 						}));
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_request, "filter-by-navigation"));
+					LanguageUtil.get(
+						_httpServletRequest, "filter-by-navigation"));
 
 				return dropdownGroupItem;
 			},
@@ -152,12 +154,12 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								getPortletURL(), "orderByCol", "name");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "name"));
+								LanguageUtil.get(_httpServletRequest, "name"));
 
 							return dropdownItem;
 						}));
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_request, "order-by"));
+					LanguageUtil.get(_httpServletRequest, "order-by"));
 
 				return dropdownGroupItem;
 			});
@@ -176,8 +178,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
@@ -206,7 +209,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (Validator.isNull(_keywords)) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -214,7 +217,8 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public String getOrderByCol() {
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "name");
 		}
 
 		return _orderByCol;
@@ -222,7 +226,8 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public String getOrderByType() {
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+			_orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
 		}
 
 		return _orderByType;
@@ -243,8 +248,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long parentOrganizationId =
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
@@ -322,7 +328,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		portletURL.setParameter("tabs3", _tabs3);
 		portletURL.setParameter("roleId", String.valueOf(_role.getRoleId()));
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		portletURL.setParameter("redirect", redirect);
 
@@ -382,7 +388,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public String getTabs2() {
 		if (Validator.isNull(_tabs2)) {
-			_tabs2 = ParamUtil.getString(_request, "tabs2", "users");
+			_tabs2 = ParamUtil.getString(_httpServletRequest, "tabs2", "users");
 		}
 
 		return _tabs2;
@@ -401,8 +407,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
@@ -447,8 +454,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				new UnsetUserRoleChecker(_renderResponse, _role));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
@@ -490,7 +498,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final Role _role;
 	private SearchContainer _searchContainer;
 	private String _tabs2;

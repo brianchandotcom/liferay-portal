@@ -46,9 +46,9 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 		_fileEntry = fileEntry;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -86,13 +86,14 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"deleteFragmentCollectionResourceURL",
 				deleteFragmentCollectionResourceURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
 	private final FileEntry _fileEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

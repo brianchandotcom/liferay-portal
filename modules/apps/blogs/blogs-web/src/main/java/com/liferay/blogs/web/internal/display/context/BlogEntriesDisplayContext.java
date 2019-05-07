@@ -82,7 +82,7 @@ public class BlogEntriesDisplayContext {
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 
-		_request = _liferayPortletRequest.getHttpServletRequest();
+		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
@@ -90,8 +90,9 @@ public class BlogEntriesDisplayContext {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -106,8 +107,9 @@ public class BlogEntriesDisplayContext {
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Map<String, Object> context = new HashMap<>();
 
@@ -119,7 +121,8 @@ public class BlogEntriesDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = _portalPreferences.getValue(
@@ -130,7 +133,7 @@ public class BlogEntriesDisplayContext {
 				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
 				displayStyle);
 
-			_request.setAttribute(
+			_httpServletRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 		}
 
@@ -145,7 +148,7 @@ public class BlogEntriesDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation");
+			_httpServletRequest, "entriesNavigation");
 
 		portletURL.setParameter("entriesNavigation", entriesNavigation);
 
@@ -156,12 +159,12 @@ public class BlogEntriesDisplayContext {
 				"no-entries-were-found");
 
 		String orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "title");
+			_httpServletRequest, "orderByCol", "title");
 
 		entriesSearchContainer.setOrderByCol(orderByCol);
 
 		String orderByType = ParamUtil.getString(
-			_request, "orderByType", "asc");
+			_httpServletRequest, "orderByType", "asc");
 
 		entriesSearchContainer.setOrderByType(orderByType);
 
@@ -183,8 +186,9 @@ public class BlogEntriesDisplayContext {
 			return _status;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -204,15 +208,17 @@ public class BlogEntriesDisplayContext {
 	private void _populateResults(SearchContainer searchContainer)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List entriesResults = null;
 
-		long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
-		String assetTagName = ParamUtil.getString(_request, "tag");
+		long assetCategoryId = ParamUtil.getLong(
+			_httpServletRequest, "categoryId");
+		String assetTagName = ParamUtil.getString(_httpServletRequest, "tag");
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 			SearchContainerResults<AssetEntry> searchContainerResults =
@@ -232,7 +238,7 @@ public class BlogEntriesDisplayContext {
 		}
 		else if (Validator.isNull(keywords)) {
 			String entriesNavigation = ParamUtil.getString(
-				_request, "entriesNavigation");
+				_httpServletRequest, "entriesNavigation");
 
 			if (entriesNavigation.equals("mine")) {
 				searchContainer.setTotal(
@@ -267,7 +273,7 @@ public class BlogEntriesDisplayContext {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				_request);
+				_httpServletRequest);
 
 			searchContext.setAttribute(Field.STATUS, _getStatus());
 			searchContext.setEnd(searchContainer.getEnd());
@@ -276,16 +282,16 @@ public class BlogEntriesDisplayContext {
 			searchContext.setStart(searchContainer.getStart());
 
 			String entriesNavigation = ParamUtil.getString(
-				_request, "entriesNavigation");
+				_httpServletRequest, "entriesNavigation");
 
 			if (entriesNavigation.equals("mine")) {
 				searchContext.setOwnerUserId(themeDisplay.getUserId());
 			}
 
 			String orderByCol = ParamUtil.getString(
-				_request, "orderByCol", "title");
+				_httpServletRequest, "orderByCol", "title");
 			String orderByType = ParamUtil.getString(
-				_request, "orderByType", "asc");
+				_httpServletRequest, "orderByType", "asc");
 
 			Sort sort = null;
 
@@ -352,7 +358,7 @@ public class BlogEntriesDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Integer _status;
 	private final TrashHelper _trashHelper;
 

@@ -64,7 +64,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 		super(httpServletRequest);
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_portletRequest = portletRequest;
 
@@ -89,7 +89,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	@Override
 	public Object getAttribute(String name) {
 		if (_include || (name == null)) {
-			return _request.getAttribute(name);
+			return _httpServletRequest.getAttribute(name);
 		}
 
 		if (name.equals(JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH)) {
@@ -132,7 +132,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 			return _servletPath;
 		}
 
-		return _request.getAttribute(name);
+		return _httpServletRequest.getAttribute(name);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getAuthType() {
-		return _request.getAuthType();
+		return _httpServletRequest.getAuthType();
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		if (_lifecycle.equals(PortletRequest.ACTION_PHASE) ||
 			_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 
-			return _request.getCharacterEncoding();
+			return _httpServletRequest.getCharacterEncoding();
 		}
 
 		return null;
@@ -161,7 +161,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		if (_lifecycle.equals(PortletRequest.ACTION_PHASE) ||
 			_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 
-			return _request.getContentLength();
+			return _httpServletRequest.getContentLength();
 		}
 
 		return 0;
@@ -172,7 +172,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		if (_lifecycle.equals(PortletRequest.ACTION_PHASE) ||
 			_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 
-			return _request.getContentType();
+			return _httpServletRequest.getContentType();
 		}
 
 		return null;
@@ -185,7 +185,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public Cookie[] getCookies() {
-		return _request.getCookies();
+		return _httpServletRequest.getCookies();
 	}
 
 	@Override
@@ -201,17 +201,17 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getHeader(String name) {
-		return _request.getHeader(name);
+		return _httpServletRequest.getHeader(name);
 	}
 
 	@Override
 	public Enumeration<String> getHeaderNames() {
-		return _request.getHeaderNames();
+		return _httpServletRequest.getHeaderNames();
 	}
 
 	@Override
 	public Enumeration<String> getHeaders(String name) {
-		return _request.getHeaders(name);
+		return _httpServletRequest.getHeaders(name);
 	}
 
 	@Override
@@ -314,7 +314,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getPathTranslated() {
-		ServletContext servletContext = _request.getServletContext();
+		ServletContext servletContext = _httpServletRequest.getServletContext();
 
 		if ((_pathInfo != null) && (servletContext != null)) {
 			return servletContext.getRealPath(_pathInfo);
@@ -377,8 +377,8 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
-		RequestDispatcher requestDispatcher = _request.getRequestDispatcher(
-			path);
+		RequestDispatcher requestDispatcher =
+			_httpServletRequest.getRequestDispatcher(path);
 
 		if (requestDispatcher != null) {
 			requestDispatcher = new PortletRequestDispatcherImpl(
@@ -430,7 +430,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		HttpSession session = _request.getSession(create);
+		HttpSession session = _httpServletRequest.getSession(create);
 
 		if (session == null) {
 			return null;
@@ -457,12 +457,12 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public boolean isRequestedSessionIdFromCookie() {
-		return _request.isRequestedSessionIdFromCookie();
+		return _httpServletRequest.isRequestedSessionIdFromCookie();
 	}
 
 	@Override
 	public boolean isRequestedSessionIdFromURL() {
-		return _request.isRequestedSessionIdFromURL();
+		return _httpServletRequest.isRequestedSessionIdFromURL();
 	}
 
 	@Override
@@ -539,7 +539,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	private final String _pathInfo;
 	private final PortletRequest _portletRequest;
 	private final String _queryString;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _requestURI;
 	private final String _servletPath;
 

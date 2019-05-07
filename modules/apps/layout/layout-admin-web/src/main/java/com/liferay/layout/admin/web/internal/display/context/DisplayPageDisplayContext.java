@@ -45,7 +45,7 @@ public class DisplayPageDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -119,7 +119,7 @@ public class DisplayPageDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -130,7 +130,7 @@ public class DisplayPageDisplayContext {
 		}
 
 		_layoutPageTemplateEntryId = ParamUtil.getLong(
-			_request, "layoutPageTemplateEntryId");
+			_httpServletRequest, "layoutPageTemplateEntryId");
 
 		return _layoutPageTemplateEntryId;
 	}
@@ -141,7 +141,7 @@ public class DisplayPageDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -151,7 +151,8 @@ public class DisplayPageDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -199,7 +200,7 @@ public class DisplayPageDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

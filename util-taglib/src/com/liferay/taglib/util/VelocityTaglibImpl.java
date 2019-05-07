@@ -77,15 +77,15 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		Map<String, Object> contextObjects) {
 
 		_servletContext = servletContext;
-		_request = httpServletRequest;
-		_response = httpServletResponse;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
 		_contextObjects = contextObjects;
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
 		_pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(_servletContext), _request, _response, null,
-			false, 0, false);
+			new JSPSupportServlet(_servletContext), _httpServletRequest,
+			_httpServletResponse, null, false, 0, false);
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			copyCurrentRenderParameters, escapeXml, name, resourceID,
 			cacheability, plid, refererPlid, portletName, anchor, encrypt,
 			doAsGroupId, doAsUserId, portletConfiguration, parameterMap,
-			removedParameterNames, _request);
+			removedParameterNames, _httpServletRequest);
 
 		return portletURL.toString();
 	}
@@ -254,7 +254,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void doAsURL(long doAsUserId) throws Exception {
-		DoAsURLTag.doTag(doAsUserId, _request);
+		DoAsURLTag.doTag(doAsUserId, _httpServletRequest);
 	}
 
 	@Override
@@ -322,8 +322,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public String getSetting(String name) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getThemeSetting(name);
 	}
@@ -367,7 +368,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(page);
 
-		requestDispatcher.include(_request, _response);
+		requestDispatcher.include(_httpServletRequest, _httpServletResponse);
 	}
 
 	@Override
@@ -376,7 +377,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				_servletContext, page);
 
-		requestDispatcher.include(_request, _response);
+		requestDispatcher.include(_httpServletRequest, _httpServletResponse);
 	}
 
 	@Override
@@ -390,7 +391,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		journalArticleTag.setArticleId(articleId);
 		journalArticleTag.setGroupId(groupId);
-		journalArticleTag.setLanguageId(LanguageUtil.getLanguageId(_request));
+		journalArticleTag.setLanguageId(
+			LanguageUtil.getLanguageId(_httpServletRequest));
 		journalArticleTag.setDDMTemplateKey(ddmTemplateKey);
 
 		journalArticleTag.runTag();
@@ -453,7 +455,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void metaTags() throws Exception {
-		MetaTagsTag.doTag(_servletContext, _request, _response);
+		MetaTagsTag.doTag(
+			_servletContext, _httpServletRequest, _httpServletResponse);
 	}
 
 	@Override
@@ -465,7 +468,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		return PermissionsURLTag.doTag(
 			redirect, modelResource, modelResourceDescription, resourceGroupId,
-			resourcePrimKey, windowState, roleTypes, _request);
+			resourcePrimKey, windowState, roleTypes, _httpServletRequest);
 	}
 
 	@Override
@@ -570,7 +573,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			copyCurrentRenderParameters, escapeXml, name, resourceID,
 			cacheability, plid, refererPlid, portletName, anchor, encrypt,
 			doAsGroupId, doAsUserId, portletConfiguration, parameterMap,
-			removedParameterNames, _request);
+			removedParameterNames, _httpServletRequest);
 
 		return portletURL.toString();
 	}
@@ -621,7 +624,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, StringPool.BLANK,
-			null, null, true, _pageContext, _request, _response);
+			null, null, true, _pageContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	@Override
@@ -632,7 +636,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, instanceId, null,
-			null, true, _pageContext, _request, _response);
+			null, true, _pageContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	@Override
@@ -644,7 +649,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, instanceId, null,
-			defaultPreferences, true, _pageContext, _request, _response);
+			defaultPreferences, true, _pageContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	@Override
@@ -652,7 +658,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletName, queryString, _pageContext, _request, _response);
+			portletName, queryString, _pageContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	@Override
@@ -662,7 +669,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletName, queryString, defaultPreferences, _pageContext,
-			_request, _response);
+			_httpServletRequest, _httpServletResponse);
 	}
 
 	@Override
@@ -673,7 +680,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletName, instanceId, queryString, defaultPreferences,
-			_pageContext, _request, _response);
+			_pageContext, _httpServletRequest, _httpServletResponse);
 	}
 
 	@Override
@@ -715,7 +722,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		ToggleTag.doTag(
 			id, showImage, hideImage, showMessage, hideMessage,
-			defaultShowContent, null, _servletContext, _request, _response);
+			defaultShowContent, null, _servletContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	@Override
@@ -723,7 +731,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		return WrapPortletTag.doTag(
-			wrapPage, portletPage, _servletContext, _request, _response);
+			wrapPage, portletPage, _servletContext, _httpServletRequest,
+			_httpServletResponse);
 	}
 
 	protected void setUp(TagSupport tagSupport) throws Exception {
@@ -737,7 +746,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		}
 
 		if (writer == null) {
-			writer = _response.getWriter();
+			writer = _httpServletResponse.getWriter();
 		}
 
 		pageContextWrapper.pushBody(writer);
@@ -747,8 +756,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	private final Map<String, Object> _contextObjects;
 	private final PageContext _pageContext;
-	private final HttpServletRequest _request;
-	private final HttpServletResponse _response;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private final ServletContext _servletContext;
 
 }

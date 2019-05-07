@@ -48,7 +48,7 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 		_membershipRequest = membershipRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -71,15 +71,16 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 		Date replyDate = _membershipRequest.getReplyDate();
 
 		String replyDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - replyDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - replyDate.getTime(), true);
 
 		if (Validator.isNull(replier)) {
 			return LanguageUtil.format(
-				_request, "replied-x-ago", replyDateDescription);
+				_httpServletRequest, "replied-x-ago", replyDateDescription);
 		}
 
 		return LanguageUtil.format(
-			_request, "replied-by-x-x-ago",
+			_httpServletRequest, "replied-by-x-x-ago",
 			new String[] {replier, replyDateDescription});
 	}
 
@@ -110,6 +111,6 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 
 	private final MembershipRequest _membershipRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -62,13 +62,13 @@ public class KBTemplatesManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_templatePath = templatePath;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_createSearchContainer();
@@ -82,7 +82,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 						dropdownItem.putData("action", "deleteKBTemplates");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -126,12 +126,14 @@ public class KBTemplatesManagementToolbarDisplayContext {
 						addKBTemplateURL.setParameter(
 							"mvcPath", _templatePath + "edit_template.jsp");
 						addKBTemplateURL.setParameter(
-							"redirect", PortalUtil.getCurrentURL(_request));
+							"redirect",
+							PortalUtil.getCurrentURL(_httpServletRequest));
 
 						dropdownItem.setHref(addKBTemplateURL);
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-template"));
+							LanguageUtil.get(
+								_httpServletRequest, "add-template"));
 					});
 			}
 		};
@@ -145,7 +147,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -228,7 +230,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	private String _getKeywords() {
-		return ParamUtil.getString(_request, "keywords");
+		return ParamUtil.getString(_httpServletRequest, "keywords");
 	}
 
 	private String _getOrderByCol() {
@@ -259,7 +261,8 @@ public class KBTemplatesManagementToolbarDisplayContext {
 								_getCurrentSortingURL(), "orderByCol",
 								orderByColEntry.getValue());
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, orderByCol));
+								LanguageUtil.get(
+									_httpServletRequest, orderByCol));
 						});
 				}
 			}
@@ -269,7 +272,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final String _templatePath;
 	private final ThemeDisplay _themeDisplay;

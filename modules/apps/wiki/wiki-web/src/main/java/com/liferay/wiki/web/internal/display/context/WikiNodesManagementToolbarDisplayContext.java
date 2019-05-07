@@ -63,9 +63,9 @@ public class WikiNodesManagementToolbarDisplayContext {
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
 
-		_request = liferayPortletRequest.getHttpServletRequest();
+		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -82,12 +82,14 @@ public class WikiNodesManagementToolbarDisplayContext {
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, "move-to-recycle-bin"));
+									_httpServletRequest,
+									"move-to-recycle-bin"));
 						}
 						else {
 							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "delete"));
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
 						}
 
 						dropdownItem.setQuickAction(true);
@@ -137,7 +139,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 							"redirect", viewNodesURL.toString());
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-wiki"));
+							LanguageUtil.get(_httpServletRequest, "add-wiki"));
 					});
 			}
 		};
@@ -151,7 +153,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -223,7 +225,8 @@ public class WikiNodesManagementToolbarDisplayContext {
 								_getPortletURL(), "orderByCol", orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, orderByColEntry.getValue()));
+									_httpServletRequest,
+									orderByColEntry.getValue()));
 						});
 				}
 			}
@@ -247,7 +250,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 	private final String _displayStyle;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

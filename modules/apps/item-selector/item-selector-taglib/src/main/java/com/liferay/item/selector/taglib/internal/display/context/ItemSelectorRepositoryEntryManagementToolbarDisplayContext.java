@@ -48,7 +48,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
@@ -62,14 +62,14 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_request, "orderByType", "asc");
+		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
 	}
 
 	public PortletURL getSearchURL() throws PortletException {
@@ -130,7 +130,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	private String _getDisplayStyle() {
 		return GetterUtil.getString(
-			_request.getAttribute(
+			_httpServletRequest.getAttribute(
 				"liferay-item-selector:repository-entry-browser:displayStyle"));
 	}
 
@@ -139,7 +139,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(_request, "orderByCol", "title");
+		return ParamUtil.getString(_httpServletRequest, "orderByCol", "title");
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
@@ -166,7 +166,8 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, orderByColEntry.getValue()));
+									_httpServletRequest,
+									orderByColEntry.getValue()));
 						});
 				}
 			}
@@ -174,13 +175,13 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		return (PortletURL)_request.getAttribute(
+		return (PortletURL)_httpServletRequest.getAttribute(
 			"liferay-item-selector:repository-entry-browser:portletURL");
 	}
 
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

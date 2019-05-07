@@ -45,7 +45,7 @@ public class AssetTagsSelectorDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getEventName() {
@@ -54,7 +54,7 @@ public class AssetTagsSelectorDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectTag");
 
 		return _eventName;
@@ -65,7 +65,8 @@ public class AssetTagsSelectorDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -86,8 +87,9 @@ public class AssetTagsSelectorDisplayContext {
 			return _tagsSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer tagsSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-tags");
@@ -134,11 +136,12 @@ public class AssetTagsSelectorDisplayContext {
 			return _groupIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_groupIds = StringUtil.split(
-			ParamUtil.getString(_request, "groupIds"), 0L);
+			ParamUtil.getString(_httpServletRequest, "groupIds"), 0L);
 
 		if (ArrayUtil.isEmpty(_groupIds)) {
 			_groupIds = new long[] {themeDisplay.getScopeGroupId()};
@@ -152,7 +155,7 @@ public class AssetTagsSelectorDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords", null);
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords", null);
 
 		return _keywords;
 	}
@@ -162,7 +165,8 @@ public class AssetTagsSelectorDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}
@@ -184,7 +188,7 @@ public class AssetTagsSelectorDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String[] _selectedTagNames;
 	private SearchContainer _tagsSearchContainer;
 

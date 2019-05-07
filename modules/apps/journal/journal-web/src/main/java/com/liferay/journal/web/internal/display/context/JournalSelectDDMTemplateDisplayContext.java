@@ -49,7 +49,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public long getDDMStructureId() {
@@ -67,7 +67,8 @@ public class JournalSelectDDMTemplateDisplayContext {
 			return _ddmTemplateId;
 		}
 
-		_ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
+		_ddmTemplateId = ParamUtil.getLong(
+			_httpServletRequest, "ddmTemplateId");
 
 		return _ddmTemplateId;
 	}
@@ -77,7 +78,8 @@ public class JournalSelectDDMTemplateDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -88,7 +90,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectDDMTemplate");
 
 		return _eventName;
@@ -121,8 +123,9 @@ public class JournalSelectDDMTemplateDisplayContext {
 			return _templateSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer templateSearch = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-templates");
@@ -247,7 +250,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _templateSearch;
 
 }

@@ -34,7 +34,7 @@ public class StagingProcessesWebDisplayContext {
 		RenderResponse renderResponse, HttpServletRequest httpServletRequest) {
 
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -43,7 +43,7 @@ public class StagingProcessesWebDisplayContext {
 				add(
 					navigationItem -> {
 						String activeTab = ParamUtil.getString(
-							_request, "tabs1", "processes");
+							_httpServletRequest, "tabs1", "processes");
 
 						navigationItem.setActive(activeTab.equals("processes"));
 
@@ -51,13 +51,13 @@ public class StagingProcessesWebDisplayContext {
 							_renderResponse.createRenderURL(), "tabs1",
 							"processes");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "processes"));
+							LanguageUtil.get(_httpServletRequest, "processes"));
 					});
 
 				add(
 					navigationItem -> {
 						String activeTab = ParamUtil.getString(
-							_request, "tabs1", "processes");
+							_httpServletRequest, "tabs1", "processes");
 
 						navigationItem.setActive(activeTab.equals("scheduled"));
 
@@ -65,13 +65,13 @@ public class StagingProcessesWebDisplayContext {
 							_renderResponse.createRenderURL(), "tabs1",
 							"scheduled");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "scheduled"));
+							LanguageUtil.get(_httpServletRequest, "scheduled"));
 					});
 			}
 		};
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

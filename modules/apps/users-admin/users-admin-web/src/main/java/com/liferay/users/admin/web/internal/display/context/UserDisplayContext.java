@@ -68,7 +68,7 @@ public class UserDisplayContext {
 			InitDisplayContext initDisplayContext)
 		throws PortalException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_initDisplayContext = initDisplayContext;
 
 		ThemeDisplay themeDisplay =
@@ -77,7 +77,7 @@ public class UserDisplayContext {
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 
-		_renderResponse = (RenderResponse)_request.getAttribute(
+		_renderResponse = (RenderResponse)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_selUser = PortalUtil.getSelectedUser(httpServletRequest);
@@ -159,7 +159,7 @@ public class UserDisplayContext {
 		}
 		else {
 			String organizationIds = ParamUtil.getString(
-				_request, "organizationsSearchContainerPrimaryKeys");
+				_httpServletRequest, "organizationsSearchContainerPrimaryKeys");
 
 			if (Validator.isNotNull(organizationIds)) {
 				long[] organizationIdsArray = StringUtil.split(
@@ -245,7 +245,7 @@ public class UserDisplayContext {
 		return new NavigationItemList() {
 			{
 				String toolbarItem = ParamUtil.getString(
-					_request, "toolbarItem", "view-all-users");
+					_httpServletRequest, "toolbarItem", "view-all-users");
 
 				add(
 					navigationItem -> {
@@ -257,7 +257,7 @@ public class UserDisplayContext {
 							"usersListView",
 							UserConstants.LIST_VIEW_FLAT_USERS);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "users"));
+							LanguageUtil.get(_httpServletRequest, "users"));
 					});
 
 				add(
@@ -270,7 +270,8 @@ public class UserDisplayContext {
 							"usersListView",
 							UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "organizations"));
+							LanguageUtil.get(
+								_httpServletRequest, "organizations"));
 					});
 			}
 		};
@@ -329,7 +330,7 @@ public class UserDisplayContext {
 	private final InitDisplayContext _initDisplayContext;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final User _selUser;
 	private final ThemeDisplay _themeDisplay;
 

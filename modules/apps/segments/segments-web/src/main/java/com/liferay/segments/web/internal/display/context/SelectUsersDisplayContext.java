@@ -55,7 +55,7 @@ public class SelectUsersDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, UserLocalService userLocalService) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
@@ -86,7 +86,7 @@ public class SelectUsersDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectSegmentsEntryUsers");
 
 		return _eventName;
@@ -100,7 +100,8 @@ public class SelectUsersDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -108,7 +109,7 @@ public class SelectUsersDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -119,11 +120,13 @@ public class SelectUsersDisplayContext {
 			return _groupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}
@@ -221,8 +224,9 @@ public class SelectUsersDisplayContext {
 			return _userSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer userSearchContainer = new UserSearch(
 			_renderRequest, getPortletURL());
@@ -269,7 +273,8 @@ public class SelectUsersDisplayContext {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
@@ -308,7 +313,7 @@ public class SelectUsersDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(getPortletURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -324,7 +329,8 @@ public class SelectUsersDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "first-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "first-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "first-name"));
 					});
 				add(
 					dropdownItem -> {
@@ -333,7 +339,8 @@ public class SelectUsersDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "screen-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "screen-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "screen-name"));
 					});
 			}
 		};
@@ -347,7 +354,7 @@ public class SelectUsersDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final UserLocalService _userLocalService;
 	private SearchContainer _userSearchContainer;
 

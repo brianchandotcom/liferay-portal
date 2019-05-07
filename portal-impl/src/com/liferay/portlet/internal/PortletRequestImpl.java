@@ -226,7 +226,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public HttpServletRequest getOriginalHttpServletRequest() {
-		return _originalRequest;
+		return _httpServletRequest;
 	}
 
 	/**
@@ -811,7 +811,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_processCheckbox(dynamicRequest);
 
 		_request = dynamicRequest;
-		_originalRequest = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_portlet = portlet;
 		_portalContext = new PortalContextImpl();
 		_portletContext = portletContext;
@@ -1242,7 +1242,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	private boolean _invalidSession;
 	private Locale _locale;
-	private HttpServletRequest _originalRequest;
+	private HttpServletRequest _httpServletRequest;
 	private long _plid;
 	private PortalContext _portalContext;
 	private Portlet _portlet;

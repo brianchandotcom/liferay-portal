@@ -45,10 +45,10 @@ public class FragmentCollectionResourcesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_fragmentDisplayContext = fragmentDisplayContext;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -111,7 +111,7 @@ public class FragmentCollectionResourcesDisplayContext {
 	private final FragmentDisplayContext _fragmentDisplayContext;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

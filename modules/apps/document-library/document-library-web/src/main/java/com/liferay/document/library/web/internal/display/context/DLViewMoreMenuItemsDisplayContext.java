@@ -52,7 +52,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public String getClearResultsURL() {
@@ -79,7 +79,8 @@ public class DLViewMoreMenuItemsDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "document-types"));
+							LanguageUtil.get(
+								_httpServletRequest, "document-types"));
 					});
 			}
 		};
@@ -106,15 +107,17 @@ public class DLViewMoreMenuItemsDisplayContext {
 		}
 
 		SearchContainer searchContainer = new SearchContainer(
-			_renderRequest, new DisplayTerms(_request),
-			new DisplayTerms(_request), SearchContainer.DEFAULT_CUR_PARAM,
-			SearchContainer.DEFAULT_DELTA, getPortletURL(), null,
-			LanguageUtil.get(_request, "there-are-no-results"));
+			_renderRequest, new DisplayTerms(_httpServletRequest),
+			new DisplayTerms(_httpServletRequest),
+			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
+			getPortletURL(), null,
+			LanguageUtil.get(_httpServletRequest, "there-are-no-results"));
 
 		DisplayTerms searchTerms = searchContainer.getSearchTerms();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long folderId = _getPrimaryFolderId(_folderId);
 		boolean includeBasicFileEntryType = ParamUtil.getBoolean(
@@ -175,7 +178,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 	private boolean _inherited = true;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

@@ -98,10 +98,11 @@ public class WorkflowTaskDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
+			_httpServletRequest);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
@@ -110,7 +111,8 @@ public class WorkflowTaskDisplayContext {
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(_request);
+		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(
+			_httpServletRequest);
 	}
 
 	public String getActorName(long actorId) {
@@ -381,7 +383,7 @@ public class WorkflowTaskDisplayContext {
 		portletURL.setParameter("orderByCol", _getOrderByCol());
 
 		String orderByType = ParamUtil.getString(
-			_request, "orderByType", "asc");
+			_httpServletRequest, "orderByType", "asc");
 
 		portletURL.setParameter(
 			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
@@ -485,7 +487,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public Locale getTaskContentLocale() {
-		String languageId = LanguageUtil.getLanguageId(_request);
+		String languageId = LanguageUtil.getLanguageId(_httpServletRequest);
 
 		if (Validator.isNotNull(languageId)) {
 			return LocaleUtil.fromLanguageId(languageId);
@@ -871,7 +873,8 @@ public class WorkflowTaskDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 
 		return _navigation;
 	}
@@ -881,7 +884,7 @@ public class WorkflowTaskDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
@@ -889,7 +892,8 @@ public class WorkflowTaskDisplayContext {
 				"last-activity-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -926,7 +930,8 @@ public class WorkflowTaskDisplayContext {
 
 		portletURL.setParameter("tabs1", _getTabs1());
 
-		String navigation = ParamUtil.getString(_request, "navigation");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation");
 
 		if (Validator.isNotNull(navigation)) {
 			portletURL.setParameter("navigation", _getNavigation());
@@ -1131,7 +1136,7 @@ public class WorkflowTaskDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;

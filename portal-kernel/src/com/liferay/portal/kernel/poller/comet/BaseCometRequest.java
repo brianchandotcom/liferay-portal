@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseCometRequest implements CometRequest {
 
 	public BaseCometRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		setRequest(httpServletRequest);
 	}
@@ -42,7 +42,7 @@ public abstract class BaseCometRequest implements CometRequest {
 
 	@Override
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public abstract class BaseCometRequest implements CometRequest {
 
 	private long _companyId;
 	private String _pathInfo;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private long _timestamp = System.currentTimeMillis();
 	private long _userId;
 

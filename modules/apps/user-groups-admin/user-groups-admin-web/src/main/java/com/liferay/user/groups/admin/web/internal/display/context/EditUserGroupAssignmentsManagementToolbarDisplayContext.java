@@ -57,7 +57,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 			RenderResponse renderResponse, String displayStyle, String mvcPath)
 		throws PortalException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -77,7 +77,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 							dropdownItem.setHref("javascript:;");
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "remove"));
+								LanguageUtil.get(
+									_httpServletRequest, "remove"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -101,7 +102,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -109,7 +111,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -117,7 +119,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (Validator.isNull(_keywords)) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -126,7 +128,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	public String getOrderByCol() {
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = ParamUtil.getString(
-				_request, "orderByCol", "first-name");
+				_httpServletRequest, "orderByCol", "first-name");
 		}
 
 		return _orderByCol;
@@ -134,7 +136,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 
 	public String getOrderByType() {
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+			_orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
 		}
 
 		return _orderByType;
@@ -147,7 +150,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 		portletURL.setParameter(
 			"userGroupId", String.valueOf(_userGroup.getUserGroupId()));
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		portletURL.setParameter("redirect", redirect);
 
@@ -197,8 +200,9 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 				new SetUserUserGroupChecker(_renderResponse, _userGroup));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
@@ -252,7 +256,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -268,7 +272,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "first-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "first-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "first-name"));
 					});
 
 				add(
@@ -278,15 +283,17 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "screen-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "screen-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "screen-name"));
 					});
 			}
 		};
 	}
 
 	private boolean _hasAddUserGroupPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER_GROUP);
@@ -299,7 +306,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final UserGroup _userGroup;
 	private UserSearch _userSearch;
 

@@ -59,12 +59,12 @@ public class SegmentsDisplayContext {
 		RenderResponse renderResponse,
 		SegmentsEntryService segmentsEntryService) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsEntryService = segmentsEntryService;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -76,7 +76,7 @@ public class SegmentsDisplayContext {
 						dropdownItem.putData("action", "deleteSegmentsEntries");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -114,7 +114,8 @@ public class SegmentsDisplayContext {
 							"mvcRenderCommandName", "editSegmentsEntry", "type",
 							User.class.getName());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "user-segment"));
+							LanguageUtil.get(
+								_httpServletRequest, "user-segment"));
 					});
 			}
 		};
@@ -139,14 +140,15 @@ public class SegmentsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -157,7 +159,8 @@ public class SegmentsDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -265,7 +268,7 @@ public class SegmentsDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -276,7 +279,7 @@ public class SegmentsDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -326,7 +329,8 @@ public class SegmentsDisplayContext {
 						dropdownItem.setHref(
 							_getPortletURL(), "orderByCol", "modified-date");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "modified-date"));
+							LanguageUtil.get(
+								_httpServletRequest, "modified-date"));
 					});
 				add(
 					dropdownItem -> {
@@ -335,7 +339,7 @@ public class SegmentsDisplayContext {
 						dropdownItem.setHref(
 							_getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 			}
 		};
@@ -407,7 +411,7 @@ public class SegmentsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;

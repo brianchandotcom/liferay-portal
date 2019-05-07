@@ -55,9 +55,10 @@ public class DDMFormBrowserDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(_renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(_renderRequest);
 
-		_formWebRequestHelper = new DDMFormWebRequestHelper(_request);
+		_formWebRequestHelper = new DDMFormWebRequestHelper(
+			_httpServletRequest);
 	}
 
 	public String getClearResultsURL() throws PortletException {
@@ -74,7 +75,8 @@ public class DDMFormBrowserDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -85,7 +87,7 @@ public class DDMFormBrowserDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectDDMForm");
 
 		return _eventName;
@@ -168,7 +170,7 @@ public class DDMFormBrowserDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -197,7 +199,7 @@ public class DDMFormBrowserDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
+			_httpServletRequest, "orderByCol", "modified-date");
 
 		return _orderByCol;
 	}
@@ -207,7 +209,8 @@ public class DDMFormBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -362,6 +365,6 @@ public class DDMFormBrowserDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

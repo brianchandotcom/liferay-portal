@@ -61,7 +61,7 @@ public class DefaultMBAdminListDisplayContext
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long categoryId) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_categoryId = categoryId;
 	}
@@ -69,7 +69,8 @@ public class DefaultMBAdminListDisplayContext
 	@Override
 	public int getEntriesDelta() {
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
 
 		return GetterUtil.getInteger(
 			portalPreferences.getValue(
@@ -84,14 +85,14 @@ public class DefaultMBAdminListDisplayContext
 
 	@Override
 	public boolean isShowSearch() {
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			return true;
 		}
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			_request, "mvcRenderCommandName");
+			_httpServletRequest, "mvcRenderCommandName");
 
 		if (mvcRenderCommandName.equals("/message_boards/search")) {
 			return true;
@@ -104,12 +105,13 @@ public class DefaultMBAdminListDisplayContext
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (isShowSearch()) {
 			long searchCategoryId = ParamUtil.getLong(
-				_request, "searchCategoryId");
+				_httpServletRequest, "searchCategoryId");
 
 			long[] categoryIdsArray = null;
 
@@ -126,14 +128,15 @@ public class DefaultMBAdminListDisplayContext
 			Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				_request);
+				_httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "more");
 			searchContext.setCategoryIds(categoryIdsArray);
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
 
-			String keywords = ParamUtil.getString(_request, "keywords");
+			String keywords = ParamUtil.getString(
+				_httpServletRequest, "keywords");
 
 			searchContext.setKeywords(keywords);
 
@@ -166,13 +169,14 @@ public class DefaultMBAdminListDisplayContext
 			Hits hits = indexer.search(searchContext);
 
 			searchContainer.setResults(
-				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
+				SearchResultUtil.getSearchResults(
+					hits, _httpServletRequest.getLocale()));
 
 			searchContainer.setTotal(hits.getLength());
 		}
 		else {
 			String entriesNavigation = ParamUtil.getString(
-				_request, "entriesNavigation", "all");
+				_httpServletRequest, "entriesNavigation", "all");
 
 			if ("all".equals(entriesNavigation)) {
 				int status = WorkflowConstants.STATUS_APPROVED;
@@ -263,11 +267,12 @@ public class DefaultMBAdminListDisplayContext
 	@Override
 	public void setEntriesDelta(SearchContainer searchContainer) {
 		int entriesDelta = ParamUtil.getInteger(
-			_request, searchContainer.getDeltaParam());
+			_httpServletRequest, searchContainer.getDeltaParam());
 
 		if (entriesDelta > 0) {
 			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					_httpServletRequest);
 
 			portalPreferences.setValue(
 				MBPortletKeys.MESSAGE_BOARDS_ADMIN, "entriesDelta",
@@ -279,6 +284,6 @@ public class DefaultMBAdminListDisplayContext
 		"f3efa0bd-ca31-43c5-bdfe-164ee683b39e");
 
 	private final long _categoryId;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -53,7 +53,7 @@ public class SelectUserGroupsDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getDisplayStyle() {
@@ -61,7 +61,8 @@ public class SelectUserGroupsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -72,7 +73,7 @@ public class SelectUserGroupsDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectUserGroup");
 
 		return _eventName;
@@ -83,7 +84,7 @@ public class SelectUserGroupsDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -93,7 +94,8 @@ public class SelectUserGroupsDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}
@@ -103,7 +105,8 @@ public class SelectUserGroupsDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -142,7 +145,7 @@ public class SelectUserGroupsDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -162,7 +165,7 @@ public class SelectUserGroupsDisplayContext {
 			return _teamId;
 		}
 
-		_teamId = ParamUtil.getLong(_request, "teamId");
+		_teamId = ParamUtil.getLong(_httpServletRequest, "teamId");
 
 		return _teamId;
 	}
@@ -172,8 +175,9 @@ public class SelectUserGroupsDisplayContext {
 			return _userGroupSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer userGroupSearchContainer = new UserGroupSearch(
 			_renderRequest, getPortletURL());
@@ -233,7 +237,7 @@ public class SelectUserGroupsDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Team _team;
 	private Long _teamId;
 	private SearchContainer _userGroupSearchContainer;

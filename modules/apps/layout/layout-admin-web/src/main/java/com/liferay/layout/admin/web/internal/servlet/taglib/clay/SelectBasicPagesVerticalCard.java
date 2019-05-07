@@ -50,7 +50,7 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 
 		_layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(type);
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -58,7 +58,7 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 	public Map<String, Object> getDataLink() {
 		Map<String, Object> data = new HashMap<>();
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		try {
 			PortletURL addLayoutURL = _renderResponse.createRenderURL();
@@ -67,12 +67,12 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 				"mvcRenderCommandName", "/layout/add_layout");
 			addLayoutURL.setParameter("backURL", redirect);
 
-			long selPlid = ParamUtil.getLong(_request, "selPlid");
+			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
 
 			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 
 			boolean privateLayout = ParamUtil.getBoolean(
-				_request, "privateLayout");
+				_httpServletRequest, "privateLayout");
 
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
@@ -98,7 +98,7 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 	public String getImageSrc() {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(PortalUtil.getPathContext(_request));
+		sb.append(PortalUtil.getPathContext(_httpServletRequest));
 		sb.append("/images/");
 		sb.append(_type);
 		sb.append(".svg");
@@ -113,7 +113,7 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			_layoutTypeController.getClass());
 
 		return LanguageUtil.get(
-			_request, layoutTypeResourceBundle,
+			_httpServletRequest, layoutTypeResourceBundle,
 			"layout.types." + _type + ".description");
 	}
 
@@ -124,7 +124,8 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			_layoutTypeController.getClass());
 
 		return LanguageUtil.get(
-			_request, layoutTypeResourceBundle, "layout.types." + _type);
+			_httpServletRequest, layoutTypeResourceBundle,
+			"layout.types." + _type);
 	}
 
 	@Override
@@ -134,7 +135,7 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 
 	private final LayoutTypeController _layoutTypeController;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final String _type;
 

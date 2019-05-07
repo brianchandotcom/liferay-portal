@@ -46,7 +46,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, PageContext pageContext,
 		LiferayPortletResponse portletResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_pageContext = pageContext;
 
 		_portletResponse = portletResponse;
@@ -66,7 +66,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 							"javascript:" + _portletNamespace +
 								"deleteEntries();");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 					});
 			}
 		};
@@ -140,7 +140,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 								Boolean.FALSE.toString());
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, "custom-publication"));
+									_httpServletRequest, "custom-publication"));
 						});
 				}
 			}
@@ -155,7 +155,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter"));
+							LanguageUtil.get(_httpServletRequest, "filter"));
 						dropdownGroupItem.setSeparator(true);
 					});
 
@@ -164,14 +164,14 @@ public class StagingProcessesWebToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropDownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
 	}
 
 	public String getSortingOrder() {
-		return ParamUtil.getString(_request, "orderByType", "asc");
+		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
 	}
 
 	public String getSortingURL() {
@@ -199,7 +199,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	protected String getDisplayStyle() {
-		return ParamUtil.getString(_request, "displayStyle", "list");
+		return ParamUtil.getString(_httpServletRequest, "displayStyle", "list");
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -209,21 +209,22 @@ public class StagingProcessesWebToolbarDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setHref(_getNavigationURL("all"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(_getNavigationURL("completed"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "completed"));
+							LanguageUtil.get(_httpServletRequest, "completed"));
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(_getNavigationURL("in-progress"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "in-progress"));
+							LanguageUtil.get(
+								_httpServletRequest, "in-progress"));
 					});
 			}
 		};
@@ -244,21 +245,23 @@ public class StagingProcessesWebToolbarDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setHref(_getOrderByURL("name"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(_getOrderByURL("create-date"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
+							LanguageUtil.get(
+								_httpServletRequest, "create-date"));
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(_getOrderByURL("completion-date"));
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "completion-date"));
+							LanguageUtil.get(
+								_httpServletRequest, "completion-date"));
 					});
 			}
 		};
@@ -276,22 +279,28 @@ public class StagingProcessesWebToolbarDisplayContext {
 		PortletURL renderURL = _portletResponse.createRenderURL();
 
 		renderURL.setParameter(
-			"navigation", ParamUtil.getString(_request, "navigation", "all"));
+			"navigation",
+			ParamUtil.getString(_httpServletRequest, "navigation", "all"));
 		renderURL.setParameter(
-			"groupId", String.valueOf(ParamUtil.getLong(_request, "groupId")));
+			"groupId",
+			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId")));
 		renderURL.setParameter(
 			"privateLayout",
-			String.valueOf(ParamUtil.getBoolean(_request, "privateLayout")));
+			String.valueOf(
+				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")));
 		renderURL.setParameter(
 			"displayStyle",
-			ParamUtil.getString(_request, "displayStyle", "descriptive"));
+			ParamUtil.getString(
+				_httpServletRequest, "displayStyle", "descriptive"));
 		renderURL.setParameter(
-			"orderByCol", ParamUtil.getString(_request, "orderByCol"));
+			"orderByCol",
+			ParamUtil.getString(_httpServletRequest, "orderByCol"));
 		renderURL.setParameter(
-			"orderByType", ParamUtil.getString(_request, "orderByType", "asc"));
+			"orderByType",
+			ParamUtil.getString(_httpServletRequest, "orderByType", "asc"));
 		renderURL.setParameter(
 			"searchContainerId",
-			ParamUtil.getString(_request, "searchContainerId"));
+			ParamUtil.getString(_httpServletRequest, "searchContainerId"));
 
 		return renderURL;
 	}
@@ -299,6 +308,6 @@ public class StagingProcessesWebToolbarDisplayContext {
 	private final PageContext _pageContext;
 	private final String _portletNamespace;
 	private final LiferayPortletResponse _portletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

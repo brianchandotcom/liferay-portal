@@ -51,9 +51,10 @@ public class AssetEntryActionDropdownItemsProvider {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -70,7 +71,7 @@ public class AssetEntryActionDropdownItemsProvider {
 								"useDialog", Boolean.FALSE.toString());
 							dropdownItem.setHref(editAssetEntryURL.toString());
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "edit"));
+								LanguageUtil.get(_httpServletRequest, "edit"));
 						});
 				}
 
@@ -97,7 +98,7 @@ public class AssetEntryActionDropdownItemsProvider {
 							dropdownItem -> {
 								dropdownItem.setHref(
 									assetEntryAction.getDialogURL(
-										_request, _assetRenderer));
+										_httpServletRequest, _assetRenderer));
 								dropdownItem.setIcon(
 									assetEntryAction.getIcon());
 								dropdownItem.putData(
@@ -115,7 +116,7 @@ public class AssetEntryActionDropdownItemsProvider {
 
 	private PortletURL _getEditAssetEntryURL() {
 		boolean showEditURL = ParamUtil.getBoolean(
-			_request, "showEditURL", true);
+			_httpServletRequest, "showEditURL", true);
 
 		if (!showEditURL) {
 			return null;
@@ -149,7 +150,7 @@ public class AssetEntryActionDropdownItemsProvider {
 	private final String _fullContentRedirect;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

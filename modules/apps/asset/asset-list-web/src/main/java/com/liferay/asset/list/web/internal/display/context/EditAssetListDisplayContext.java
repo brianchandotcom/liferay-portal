@@ -106,16 +106,16 @@ public class EditAssetListDisplayContext {
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
-		_request = PortalUtil.getHttpServletRequest(portletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	public String encodeName(
 		long ddmStructureId, String fieldName, Locale locale) {
 
-		DDMIndexer ddmIndexer = (DDMIndexer)_request.getAttribute(
+		DDMIndexer ddmIndexer = (DDMIndexer)_httpServletRequest.getAttribute(
 			AssetListWebKeys.DDM_INDEXER);
 
 		return ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
@@ -137,7 +137,8 @@ public class EditAssetListDisplayContext {
 			return _assetListEntryId;
 		}
 
-		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
+		_assetListEntryId = ParamUtil.getLong(
+			_httpServletRequest, "assetListEntryId");
 
 		return _assetListEntryId;
 	}
@@ -166,7 +167,7 @@ public class EditAssetListDisplayContext {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		int assetListEntryType = ParamUtil.getInteger(
-			_request, "assetListEntryType");
+			_httpServletRequest, "assetListEntryType");
 
 		if (assetListEntry != null) {
 			assetListEntryType = assetListEntry.getType();
@@ -187,7 +188,8 @@ public class EditAssetListDisplayContext {
 								"openSelectSegmentsEntryDialog();");
 						dropdownItem.setLabel(
 							LanguageUtil.format(
-								_request, "new-x", "personalized-variation"));
+								_httpServletRequest, "new-x",
+								"personalized-variation"));
 					});
 			}
 		};
@@ -195,7 +197,7 @@ public class EditAssetListDisplayContext {
 
 	public JSONArray getAutoFieldRulesJSONArray() {
 		String queryLogicIndexesParam = ParamUtil.getString(
-			_request, "queryLogicIndexes");
+			_httpServletRequest, "queryLogicIndexes");
 
 		int[] queryLogicIndexes = null;
 
@@ -207,7 +209,7 @@ public class EditAssetListDisplayContext {
 
 			for (int i = 0; true; i++) {
 				String queryValues = PropertiesParamUtil.getString(
-					_properties, _request, "queryValues" + i);
+					_properties, _httpServletRequest, "queryValues" + i);
 
 				if (Validator.isNull(queryValues)) {
 					break;
@@ -225,13 +227,15 @@ public class EditAssetListDisplayContext {
 
 		for (int queryLogicIndex : queryLogicIndexes) {
 			boolean queryAndOperator = PropertiesParamUtil.getBoolean(
-				_properties, _request, "queryAndOperator" + queryLogicIndex);
+				_properties, _httpServletRequest,
+				"queryAndOperator" + queryLogicIndex);
 
 			JSONObject ruleJSONObject = JSONUtil.put(
 				"queryAndOperator", queryAndOperator);
 
 			boolean queryContains = PropertiesParamUtil.getBoolean(
-				_properties, _request, "queryContains" + queryLogicIndex, true);
+				_properties, _httpServletRequest,
+				"queryContains" + queryLogicIndex, true);
 
 			ruleJSONObject.put("queryContains", queryContains);
 
@@ -239,12 +243,13 @@ public class EditAssetListDisplayContext {
 				"queryValues" + queryLogicIndex, StringPool.BLANK);
 
 			String queryName = PropertiesParamUtil.getString(
-				_properties, _request, "queryName" + queryLogicIndex,
+				_properties, _httpServletRequest, "queryName" + queryLogicIndex,
 				"assetTags");
 
 			if (Objects.equals(queryName, "assetTags")) {
 				queryValues = ParamUtil.getString(
-					_request, "queryTagNames" + queryLogicIndex, queryValues);
+					_httpServletRequest, "queryTagNames" + queryLogicIndex,
+					queryValues);
 
 				queryValues = _filterAssetTagNames(
 					_themeDisplay.getScopeGroupId(), queryValues);
@@ -271,7 +276,7 @@ public class EditAssetListDisplayContext {
 			}
 			else {
 				queryValues = ParamUtil.getString(
-					_request, "queryCategoryIds" + queryLogicIndex,
+					_httpServletRequest, "queryCategoryIds" + queryLogicIndex,
 					queryValues);
 
 				List<AssetCategory> categories = _filterAssetCategories(
@@ -379,7 +384,7 @@ public class EditAssetListDisplayContext {
 	public String getCategorySelectorURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetCategory.class.getName(),
+				_httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -523,8 +528,9 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getGroupItemSelectorURL() {
-		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
-			AssetListWebKeys.ITEM_SELECTOR);
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				AssetListWebKeys.ITEM_SELECTOR);
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new SiteItemSelectorCriterion();
@@ -533,7 +539,7 @@ public class EditAssetListDisplayContext {
 			new SiteItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_request),
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			getSelectGroupEventName(), itemSelectorCriterion);
 
 		itemSelectorURL.setParameter(
@@ -561,7 +567,7 @@ public class EditAssetListDisplayContext {
 			}
 
 			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-				_request, curRendererFactory.getClassName(),
+				_httpServletRequest, curRendererFactory.getClassName(),
 				PortletProvider.Action.BROWSE);
 
 			if (assetBrowserURL == null) {
@@ -599,7 +605,8 @@ public class EditAssetListDisplayContext {
 
 				data.put(
 					"title",
-					LanguageUtil.format(_request, "select-x", type, false));
+					LanguageUtil.format(
+						_httpServletRequest, "select-x", type, false));
 				data.put("type", type);
 
 				manualAddIconDataMap.put(type, data);
@@ -633,7 +640,8 @@ public class EditAssetListDisplayContext {
 
 				data.put(
 					"title",
-					LanguageUtil.format(_request, "select-x", type, false));
+					LanguageUtil.format(
+						_httpServletRequest, "select-x", type, false));
 				data.put("type", type);
 
 				manualAddIconDataMap.put(type, data);
@@ -706,7 +714,7 @@ public class EditAssetListDisplayContext {
 			return _redirect;
 		}
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
 			LiferayPortletResponse liferayPortletResponse =
@@ -781,7 +789,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_segmentsEntryId = ParamUtil.getLong(
-			_request, "segmentsEntryId",
+			_httpServletRequest, "segmentsEntryId",
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
 		return _segmentsEntryId;
@@ -812,7 +820,7 @@ public class EditAssetListDisplayContext {
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				PropertiesParamUtil.getString(
-					_properties, _request, "groupIds")));
+					_properties, _httpServletRequest, "groupIds")));
 
 		if (ArrayUtil.isEmpty(groupIds)) {
 			return Collections.singletonList(_themeDisplay.getScopeGroup());
@@ -855,7 +863,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
-			_request, SegmentsEntry.class.getName(),
+			_httpServletRequest, SegmentsEntry.class.getName(),
 			PortletProvider.Action.BROWSE);
 
 		selectCategoryURL.setParameter(
@@ -873,7 +881,7 @@ public class EditAssetListDisplayContext {
 	public String getTagSelectorURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetTag.class.getName(),
+				_httpServletRequest, AssetTag.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -948,14 +956,14 @@ public class EditAssetListDisplayContext {
 		}
 
 		_ddmStructureDisplayFieldValue = ParamUtil.getString(
-			_request, "ddmStructureDisplayFieldValue",
+			_httpServletRequest, "ddmStructureDisplayFieldValue",
 			_properties.getProperty(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
 		_ddmStructureFieldName = ParamUtil.getString(
-			_request, "ddmStructureFieldName",
+			_httpServletRequest, "ddmStructureFieldName",
 			_properties.getProperty("ddmStructureFieldName", StringPool.BLANK));
 		_ddmStructureFieldValue = ParamUtil.getString(
-			_request, "ddmStructureFieldValue",
+			_httpServletRequest, "ddmStructureFieldValue",
 			_properties.getProperty(
 				"ddmStructureFieldValue", StringPool.BLANK));
 
@@ -1069,7 +1077,7 @@ public class EditAssetListDisplayContext {
 	private final UnicodeProperties _properties;
 	private String _redirect;
 	private long[] _referencedModelsGroupIds;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;

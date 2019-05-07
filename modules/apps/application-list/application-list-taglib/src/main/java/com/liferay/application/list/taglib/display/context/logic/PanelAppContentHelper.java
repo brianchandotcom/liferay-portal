@@ -47,8 +47,8 @@ public class PanelAppContentHelper {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		_request = httpServletRequest;
-		_response = httpServletResponse;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public boolean isValidPortletSelected() {
@@ -81,10 +81,10 @@ public class PanelAppContentHelper {
 			Validator.isNotNull(content)) {
 
 			HttpServletRequest request = getOriginalHttpServletRequest(
-				_request);
+				_httpServletRequest);
 
 			StringBundler sb = RuntimePageUtil.getProcessedTemplate(
-				request, _response, getPortletId(),
+				request, _httpServletResponse, getPortletId(),
 				new StringTemplateResource(velocityTemplateId, content));
 
 			if (sb != null) {
@@ -108,7 +108,7 @@ public class PanelAppContentHelper {
 
 		LiferayPortletRequest liferayPortletRequest =
 			LiferayPortletUtil.getLiferayPortletRequest(
-				(PortletRequest)_request.getAttribute(
+				(PortletRequest)_httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST));
 
 		if (liferayPortletRequest != null) {
@@ -136,7 +136,7 @@ public class PanelAppContentHelper {
 
 	protected String getPortletId() {
 		if (_portletId == null) {
-			_portletId = (String)_request.getAttribute(
+			_portletId = (String)_httpServletRequest.getAttribute(
 				"liferay-application-list:application-content:portletId");
 		}
 
@@ -144,13 +144,14 @@ public class PanelAppContentHelper {
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
-		return (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+		return (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	private Long _companyId;
 	private Portlet _portlet;
 	private String _portletId;
-	private final HttpServletRequest _request;
-	private final HttpServletResponse _response;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 
 }

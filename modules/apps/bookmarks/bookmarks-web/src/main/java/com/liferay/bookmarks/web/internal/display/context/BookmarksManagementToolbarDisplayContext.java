@@ -67,7 +67,7 @@ public class BookmarksManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_bookmarksGroupServiceOverriddenConfiguration =
 			bookmarksGroupServiceOverriddenConfiguration;
 		_portalPreferences = portalPreferences;
@@ -77,12 +77,12 @@ public class BookmarksManagementToolbarDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse);
 
 		_folderId = GetterUtil.getLong(
-			(String)_request.getAttribute("view.jsp-folderId"));
+			(String)_httpServletRequest.getAttribute("view.jsp-folderId"));
 
-		_searchContainer = (SearchContainer)_request.getAttribute(
+		_searchContainer = (SearchContainer)_httpServletRequest.getAttribute(
 			"view.jsp-bookmarksSearchContainer");
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -99,12 +99,14 @@ public class BookmarksManagementToolbarDisplayContext {
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, "move-to-recycle-bin"));
+									_httpServletRequest,
+									"move-to-recycle-bin"));
 						}
 						else {
 							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "delete"));
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
 						}
 
 						dropdownItem.setQuickAction(true);
@@ -125,8 +127,9 @@ public class BookmarksManagementToolbarDisplayContext {
 		}
 
 		BookmarksPortletToolbarContributor bookmarksPortletToolbarContributor =
-			(BookmarksPortletToolbarContributor)_request.getAttribute(
-				BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR);
+			(BookmarksPortletToolbarContributor)
+				_httpServletRequest.getAttribute(
+					BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR);
 
 		List<Menu> menus =
 			bookmarksPortletToolbarContributor.getPortletTitleMenus(
@@ -162,7 +165,8 @@ public class BookmarksManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 			}
 		};
@@ -185,7 +189,8 @@ public class BookmarksManagementToolbarDisplayContext {
 							User user = _themeDisplay.getUser();
 
 							String label = String.format(
-								"%s: %s", LanguageUtil.get(_request, "owner"),
+								"%s: %s",
+								LanguageUtil.get(_httpServletRequest, "owner"),
 								user.getFullName());
 
 							labelItem.setLabel(label);
@@ -201,7 +206,8 @@ public class BookmarksManagementToolbarDisplayContext {
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(
-								LanguageUtil.get(_request, "recent"));
+								LanguageUtil.get(
+									_httpServletRequest, "recent"));
 						});
 				}
 			}
@@ -213,14 +219,14 @@ public class BookmarksManagementToolbarDisplayContext {
 
 		searchActionURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 		searchActionURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(_request));
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 		searchActionURL.setParameter("folderId", String.valueOf(_folderId));
 
 		return searchActionURL.toString();
 	}
 
 	public String getSearchContainerId() {
-		return ParamUtil.getString(_request, "searchContainerId");
+		return ParamUtil.getString(_httpServletRequest, "searchContainerId");
 	}
 
 	public int getTotalItems() {
@@ -228,17 +234,19 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	public ViewTypeItemList getViewTypes() {
-		int curEntry = ParamUtil.getInteger(_request, "curEntry");
-		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
+		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
+		int deltaEntry = ParamUtil.getInteger(
+			_httpServletRequest, "deltaEntry");
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = _portalPreferences.getValue(
 				BookmarksPortletKeys.BOOKMARKS, "display-style", "descriptive");
 		}
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		PortletURL displayStyleURL = _liferayPortletResponse.createRenderURL();
 
@@ -337,7 +345,8 @@ public class BookmarksManagementToolbarDisplayContext {
 								navigationURL, "navigation", navigationKey);
 
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, navigationKey));
+								LanguageUtil.get(
+									_httpServletRequest, navigationKey));
 						});
 				}
 			}
@@ -345,7 +354,7 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	private String _getNavigation() {
-		return ParamUtil.getString(_request, "navigation", "all");
+		return ParamUtil.getString(_httpServletRequest, "navigation", "all");
 	}
 
 	private PortletURL _getPortletURL() {
@@ -353,7 +362,8 @@ public class BookmarksManagementToolbarDisplayContext {
 
 		portletURL.setParameter("categoryId", StringPool.BLANK);
 
-		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
+		int deltaEntry = ParamUtil.getInteger(
+			_httpServletRequest, "deltaEntry");
 
 		if (deltaEntry > 0) {
 			portletURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
@@ -384,7 +394,7 @@ public class BookmarksManagementToolbarDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

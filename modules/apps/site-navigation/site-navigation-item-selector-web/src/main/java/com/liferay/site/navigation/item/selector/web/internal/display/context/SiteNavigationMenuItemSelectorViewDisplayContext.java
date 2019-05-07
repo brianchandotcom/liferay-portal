@@ -42,7 +42,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -52,7 +52,8 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -66,7 +67,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -77,7 +78,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -87,13 +88,15 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			_portletURL.setParameter("displayStyle", getDisplayStyle());
@@ -119,8 +122,9 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			return _searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new SearchContainer(
 			_getPortletRequest(), getPortletURL(), null,
@@ -188,7 +192,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 	}
 
 	private PortletRequest _getPortletRequest() {
-		return (PortletRequest)_request.getAttribute(
+		return (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
@@ -198,7 +202,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletURL _portletURL;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

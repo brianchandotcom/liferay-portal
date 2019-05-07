@@ -39,7 +39,7 @@ public class EditContactInformationDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_className = ParamUtil.getString(httpServletRequest, "className");
 		_classPK = ParamUtil.getLong(httpServletRequest, "classPK");
@@ -48,11 +48,11 @@ public class EditContactInformationDisplayContext {
 
 		if (_primaryKey > 0) {
 			_sheetTitle = LanguageUtil.get(
-				_request, "edit-" + contactInfoTypeName);
+				_httpServletRequest, "edit-" + contactInfoTypeName);
 		}
 		else {
 			_sheetTitle = LanguageUtil.get(
-				_request, "add-" + contactInfoTypeName);
+				_httpServletRequest, "add-" + contactInfoTypeName);
 		}
 	}
 
@@ -91,13 +91,15 @@ public class EditContactInformationDisplayContext {
 					OrganizationServiceUtil.getOrganization(_classPK);
 
 				portletTitle = LanguageUtil.format(
-					_request, "edit-x", organization.getName(), false);
+					_httpServletRequest, "edit-x", organization.getName(),
+					false);
 			}
 			else if (_className.equals(Contact.class.getName())) {
 				Contact contact = ContactServiceUtil.getContact(_classPK);
 
 				portletTitle = LanguageUtil.format(
-					_request, "edit-user-x", contact.getFullName(), false);
+					_httpServletRequest, "edit-user-x", contact.getFullName(),
+					false);
 			}
 
 			_renderResponse.setTitle(portletTitle);
@@ -109,7 +111,7 @@ public class EditContactInformationDisplayContext {
 	private final long _primaryKey;
 	private final String _redirect;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _sheetTitle;
 
 }

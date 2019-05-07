@@ -59,14 +59,14 @@ public class AssetTagsDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getAssetTitle() {
 		AssetTag tag = getTag();
 
 		if (tag == null) {
-			return LanguageUtil.get(_request, "new-tag");
+			return LanguageUtil.get(_httpServletRequest, "new-tag");
 		}
 
 		return tag.getName();
@@ -77,7 +77,8 @@ public class AssetTagsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -88,8 +89,9 @@ public class AssetTagsDisplayContext {
 			WorkflowConstants.STATUS_SCHEDULED
 		};
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return AssetEntryLocalServiceUtil.searchCount(
 			tag.getCompanyId(), new long[] {themeDisplay.getScopeGroupId()},
@@ -102,7 +104,7 @@ public class AssetTagsDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords", null);
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords", null);
 
 		return _keywords;
 	}
@@ -137,7 +139,8 @@ public class AssetTagsDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}
@@ -147,7 +150,8 @@ public class AssetTagsDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -175,7 +179,7 @@ public class AssetTagsDisplayContext {
 			return _tagId;
 		}
 
-		_tagId = ParamUtil.getLong(_request, "tagId");
+		_tagId = ParamUtil.getLong(_httpServletRequest, "tagId");
 
 		return _tagId;
 	}
@@ -192,8 +196,9 @@ public class AssetTagsDisplayContext {
 		tagsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String keywords = getKeywords();
 
@@ -280,8 +285,9 @@ public class AssetTagsDisplayContext {
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -303,7 +309,7 @@ public class AssetTagsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showTagsActions;
 	private AssetTag _tag;
 	private Long _tagId;

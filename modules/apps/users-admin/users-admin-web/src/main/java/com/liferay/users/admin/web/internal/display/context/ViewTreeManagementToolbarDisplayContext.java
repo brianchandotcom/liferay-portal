@@ -72,14 +72,15 @@ public class ViewTreeManagementToolbarDisplayContext {
 		RenderResponse renderResponse, Organization organization,
 		String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_organization = organization;
 		_displayStyle = displayStyle;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 	}
@@ -96,7 +97,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 								"delete();"));
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, Constants.DELETE));
+							LanguageUtil.get(
+								_httpServletRequest, Constants.DELETE));
 						dropdownItem.setQuickAction(true);
 					});
 
@@ -111,7 +113,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 									"deleteUsers('", Constants.RESTORE, "');"));
 							dropdownItem.setIcon("undo");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, Constants.RESTORE));
+								LanguageUtil.get(
+									_httpServletRequest, Constants.RESTORE));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -130,7 +133,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 							dropdownItem.setIcon("hidden");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, Constants.DEACTIVATE));
+									_httpServletRequest, Constants.DEACTIVATE));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -189,7 +192,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 								String.valueOf(
 									_organization.getOrganizationId()));
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "new-user"));
+								LanguageUtil.get(
+									_httpServletRequest, "new-user"));
 						});
 				}
 
@@ -216,7 +220,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 								dropdownItem.setHref(addOrganizationTypeURL);
 								dropdownItem.setLabel(
 									LanguageUtil.format(
-										_request, "new-x", organizationType));
+										_httpServletRequest, "new-x",
+										organizationType));
 							});
 					}
 				}
@@ -233,7 +238,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 								String.valueOf(
 									_organization.getOrganizationId()));
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "assign-users"));
+								LanguageUtil.get(
+									_httpServletRequest, "assign-users"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -249,7 +255,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -257,7 +264,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -282,8 +289,10 @@ public class ViewTreeManagementToolbarDisplayContext {
 							labelItem.setCloseable(true);
 
 							String label = String.format(
-								"%s: %s", LanguageUtil.get(_request, "status"),
-								LanguageUtil.get(_request, navigation));
+								"%s: %s",
+								LanguageUtil.get(_httpServletRequest, "status"),
+								LanguageUtil.get(
+									_httpServletRequest, navigation));
 
 							labelItem.setLabel(label);
 						});
@@ -294,7 +303,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -336,18 +345,19 @@ public class ViewTreeManagementToolbarDisplayContext {
 			String.valueOf(_organization.getOrganizationId()));
 
 		String toolbarItem = GetterUtil.getString(
-			_request.getAttribute("view.jsp-toolbarItem"));
+			_httpServletRequest.getAttribute("view.jsp-toolbarItem"));
 
 		portletURL.setParameter("toolbarItem", toolbarItem);
 
 		String usersListView = GetterUtil.getString(
-			_request.getAttribute("view.jsp-usersListView"));
+			_httpServletRequest.getAttribute("view.jsp-usersListView"));
 
 		portletURL.setParameter("usersListView", usersListView);
 
 		portletURL.setParameter("displayStyle", _displayStyle);
 
-		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
+		String[] keywords = ParamUtil.getStringValues(
+			_httpServletRequest, "keywords");
 
 		if (ArrayUtil.isNotEmpty(keywords)) {
 			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
@@ -402,8 +412,9 @@ public class ViewTreeManagementToolbarDisplayContext {
 		int total = 0;
 		List results = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNotNull(getKeywords())) {
 			total =
@@ -513,7 +524,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 					dropdownItem.setHref(
 						getPortletURL(), "navigation", navigation);
 					dropdownItem.setLabel(
-						LanguageUtil.get(_request, navigation));
+						LanguageUtil.get(_httpServletRequest, navigation));
 				});
 		}
 
@@ -528,7 +539,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 			}
 		};
@@ -543,7 +554,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 	private final PermissionChecker _permissionChecker;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

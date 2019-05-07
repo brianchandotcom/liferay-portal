@@ -47,7 +47,7 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -62,16 +62,17 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 			addLayoutURL.setParameter(
 				"mvcRenderCommandName", "/layout/add_layout");
 
-			String redirect = ParamUtil.getString(_request, "redirect");
+			String redirect = ParamUtil.getString(
+				_httpServletRequest, "redirect");
 
 			addLayoutURL.setParameter("backURL", redirect);
 
-			long selPlid = ParamUtil.getLong(_request, "selPlid");
+			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
 
 			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 
 			boolean privateLayout = ParamUtil.getBoolean(
-				_request, "privateLayout");
+				_httpServletRequest, "privateLayout");
 
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
@@ -119,10 +120,11 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 				_layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
 
-			return LanguageUtil.get(_request, "widget-page-template");
+			return LanguageUtil.get(
+				_httpServletRequest, "widget-page-template");
 		}
 
-		return LanguageUtil.get(_request, "content-page-template");
+		return LanguageUtil.get(_httpServletRequest, "content-page-template");
 	}
 
 	@Override
@@ -137,7 +139,7 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

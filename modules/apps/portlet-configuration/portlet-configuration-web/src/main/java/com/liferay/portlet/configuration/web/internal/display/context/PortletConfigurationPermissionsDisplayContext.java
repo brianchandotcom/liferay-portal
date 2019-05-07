@@ -82,7 +82,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			HttpServletRequest httpServletRequest, RenderRequest renderRequest)
 		throws PortalException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 
 		long groupId = _getResourceGroupId();
@@ -174,12 +174,14 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public PortletURL getDefinePermissionsURL() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LiferayPortletURL liferayPortletURL =
 			(LiferayPortletURL)PortletProviderUtil.getPortletURL(
-				_request, Role.class.getName(), PortletProvider.Action.MANAGE);
+				_httpServletRequest, Role.class.getName(),
+				PortletProvider.Action.MANAGE);
 
 		liferayPortletURL.setParameter(Constants.CMD, Constants.VIEW);
 		liferayPortletURL.setParameter("backURL", themeDisplay.getURLCurrent());
@@ -192,8 +194,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public String getGroupDescriptiveName() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _group.getDescriptiveName(themeDisplay.getLocale());
 	}
@@ -230,7 +233,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 	public PortletURL getIteratorURL() throws Exception {
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_request, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
+			_httpServletRequest,
+			PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
@@ -255,7 +259,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _modelResource;
 		}
 
-		_modelResource = ParamUtil.getString(_request, "modelResource");
+		_modelResource = ParamUtil.getString(
+			_httpServletRequest, "modelResource");
 
 		return _modelResource;
 	}
@@ -266,7 +271,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		}
 
 		_modelResourceDescription = ParamUtil.getString(
-			_request, "modelResourceDescription");
+			_httpServletRequest, "modelResourceDescription");
 
 		return _modelResourceDescription;
 	}
@@ -276,8 +281,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _resource;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		int count =
 			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
@@ -304,7 +310,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _resourcePrimKey;
 		}
 
-		_resourcePrimKey = ParamUtil.getString(_request, "resourcePrimKey");
+		_resourcePrimKey = ParamUtil.getString(
+			_httpServletRequest, "resourcePrimKey");
 
 		if (Validator.isNull(_resourcePrimKey)) {
 			throw new ResourcePrimKeyException();
@@ -318,8 +325,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _roleSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<Role> roleSearchContainer = new RoleSearch(
 			_renderRequest, getIteratorURL());
@@ -529,8 +537,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _selResource;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), _getPortletResource());
@@ -547,13 +556,14 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _selResourceDescription;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), _getPortletResource());
 
-		HttpSession session = _request.getSession();
+		HttpSession session = _httpServletRequest.getSession();
 
 		ServletContext servletContext = session.getServletContext();
 
@@ -567,12 +577,13 @@ public class PortletConfigurationPermissionsDisplayContext {
 		throws ResourcePrimKeyException, WindowStateException {
 
 		int cur = ParamUtil.getInteger(
-			_request, SearchContainer.DEFAULT_CUR_PARAM);
+			_httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM);
 		int delta = ParamUtil.getInteger(
-			_request, SearchContainer.DEFAULT_DELTA_PARAM);
+			_httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_request, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
+			_httpServletRequest,
+			PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
@@ -619,7 +630,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _portletResource;
 		}
 
-		_portletResource = ParamUtil.getString(_request, "portletResource");
+		_portletResource = ParamUtil.getString(
+			_httpServletRequest, "portletResource");
 
 		return _portletResource;
 	}
@@ -629,10 +641,12 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _resourceGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		_resourceGroupId = ParamUtil.getLong(_request, "resourceGroupId");
+		_resourceGroupId = ParamUtil.getLong(
+			_httpServletRequest, "resourceGroupId");
 
 		if (_resourceGroupId == 0) {
 			_resourceGroupId = themeDisplay.getScopeGroupId();
@@ -647,7 +661,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		}
 
 		_returnToFullPageURL = ParamUtil.getString(
-			_request, "returnToFullPageURL");
+			_httpServletRequest, "returnToFullPageURL");
 
 		return _returnToFullPageURL;
 	}
@@ -657,7 +671,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _roleTypesParam;
 		}
 
-		_roleTypesParam = ParamUtil.getString(_request, "roleTypes");
+		_roleTypesParam = ParamUtil.getString(_httpServletRequest, "roleTypes");
 
 		return _roleTypesParam;
 	}
@@ -670,7 +684,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private String _modelResourceDescription;
 	private String _portletResource;
 	private final RenderRequest _renderRequest;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Resource _resource;
 	private Long _resourceGroupId;
 	private String _resourcePrimKey;

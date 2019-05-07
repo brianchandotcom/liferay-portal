@@ -55,7 +55,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -71,7 +71,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownItem.putData("action", "deleteRoles");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -109,7 +109,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						}
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, title));
+							LanguageUtil.get(_httpServletRequest, title));
 					});
 			}
 		};
@@ -123,7 +123,8 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -131,7 +132,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -139,7 +140,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (Validator.isNull(_keywords)) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -147,7 +148,8 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 	public String getOrderByCol() {
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = ParamUtil.getString(_request, "orderByCol", "title");
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "title");
 		}
 
 		return _orderByCol;
@@ -155,7 +157,8 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 	public String getOrderByType() {
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+			_orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
 		}
 
 		return _orderByType;
@@ -203,8 +206,9 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 		roleSearch.setRowChecker(new RoleChecker(_renderResponse));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
@@ -247,8 +251,9 @@ public class ViewRolesManagementToolbarDisplayContext {
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_ROLE);
@@ -262,7 +267,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -278,7 +283,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "title");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "title"));
+							LanguageUtil.get(_httpServletRequest, "title"));
 					});
 			}
 		};
@@ -290,7 +295,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private RoleSearch _roleSearch;
 	private int _type;
 

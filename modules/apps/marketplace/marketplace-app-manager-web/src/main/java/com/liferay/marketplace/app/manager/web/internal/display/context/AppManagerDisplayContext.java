@@ -34,13 +34,13 @@ public class AppManagerDisplayContext {
 	public AppManagerDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public List<NavigationItem> getModuleNavigationItems() {
 		String pluginType = ParamUtil.getString(
-			_request, "pluginType", "components");
+			_httpServletRequest, "pluginType", "components");
 
 		return new NavigationItemList() {
 			{
@@ -50,7 +50,8 @@ public class AppManagerDisplayContext {
 							pluginType.equals("components"));
 						navigationItem.setHref(_getViewModuleURL("components"));
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "components"));
+							LanguageUtil.get(
+								_httpServletRequest, "components"));
 					});
 
 				add(
@@ -58,7 +59,7 @@ public class AppManagerDisplayContext {
 						navigationItem.setActive(pluginType.equals("portlets"));
 						navigationItem.setHref(_getViewModuleURL("portlets"));
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "portlets"));
+							LanguageUtil.get(_httpServletRequest, "portlets"));
 					});
 			}
 		};
@@ -72,17 +73,19 @@ public class AppManagerDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(url);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, label));
+							LanguageUtil.get(_httpServletRequest, label));
 					});
 			}
 		};
 	}
 
 	private String _getViewModuleURL(String pluginType) {
-		String app = ParamUtil.getString(_request, "app");
-		String moduleGroup = ParamUtil.getString(_request, "moduleGroup");
-		String symbolicName = ParamUtil.getString(_request, "symbolicName");
-		String version = ParamUtil.getString(_request, "version");
+		String app = ParamUtil.getString(_httpServletRequest, "app");
+		String moduleGroup = ParamUtil.getString(
+			_httpServletRequest, "moduleGroup");
+		String symbolicName = ParamUtil.getString(
+			_httpServletRequest, "symbolicName");
+		String version = ParamUtil.getString(_httpServletRequest, "version");
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -97,6 +100,6 @@ public class AppManagerDisplayContext {
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

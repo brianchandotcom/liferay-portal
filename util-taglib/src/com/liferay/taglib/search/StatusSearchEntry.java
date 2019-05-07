@@ -44,11 +44,11 @@ public class StatusSearchEntry extends TextSearchEntry {
 	}
 
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	public ServletContext getServletContext() {
@@ -96,11 +96,11 @@ public class StatusSearchEntry extends TextSearchEntry {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -122,8 +122,8 @@ public class StatusSearchEntry extends TextSearchEntry {
 	private static final String _PAGE =
 		"/html/taglib/ui/search_container/status.jsp";
 
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
 	private ServletContext _servletContext;
 	private int _status;
 	private long _statusByUserId;

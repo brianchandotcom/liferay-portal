@@ -51,7 +51,7 @@ public class UserRolesDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -61,7 +61,8 @@ public class UserRolesDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -72,7 +73,7 @@ public class UserRolesDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectUsersRoles");
 
 		return _eventName;
@@ -83,11 +84,13 @@ public class UserRolesDisplayContext {
 			return _groupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}
@@ -164,8 +167,9 @@ public class UserRolesDisplayContext {
 			return _roleSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
 
@@ -173,8 +177,8 @@ public class UserRolesDisplayContext {
 
 		roleSearch.setRowChecker(
 			new UserGroupRoleRoleChecker(
-				_renderResponse, PortalUtil.getSelectedUser(_request, false),
-				group));
+				_renderResponse,
+				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
 
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
@@ -202,7 +206,7 @@ public class UserRolesDisplayContext {
 	}
 
 	public long getUserId() throws PortalException {
-		User selUser = PortalUtil.getSelectedUser(_request, false);
+		User selUser = PortalUtil.getSelectedUser(_httpServletRequest, false);
 
 		if (selUser != null) {
 			return selUser.getUserId();
@@ -219,7 +223,7 @@ public class UserRolesDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private RoleSearch _roleSearch;
 
 }

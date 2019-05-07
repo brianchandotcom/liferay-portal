@@ -53,12 +53,12 @@ public class RoleDisplayContext {
 	public RoleDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {
-		long roleId = ParamUtil.getLong(_request, "roleId");
+		long roleId = ParamUtil.getLong(_httpServletRequest, "roleId");
 
 		Role role = RoleServiceUtil.fetchRole(roleId);
 
@@ -66,7 +66,7 @@ public class RoleDisplayContext {
 			List<String> tabsNames = _getTabsNames();
 			Map<String, String> tabsURLs = _getTabsURLs();
 
-			String tabs1 = ParamUtil.getString(_request, "tabs1");
+			String tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1");
 
 			return new NavigationItemList() {
 				{
@@ -77,7 +77,8 @@ public class RoleDisplayContext {
 									tabsName.equals(tabs1));
 								navigationItem.setHref(tabsURLs.get(tabsName));
 								navigationItem.setLabel(
-									LanguageUtil.get(_request, tabsName));
+									LanguageUtil.get(
+										_httpServletRequest, tabsName));
 							});
 					}
 				}
@@ -91,7 +92,7 @@ public class RoleDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(_getCurrentURL());
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "details"));
+							LanguageUtil.get(_httpServletRequest, "details"));
 					});
 
 				add(
@@ -100,11 +101,12 @@ public class RoleDisplayContext {
 						navigationItem.setDisabled(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "define-permissions"));
+							LanguageUtil.get(
+								_httpServletRequest, "define-permissions"));
 					});
 
 				int type = ParamUtil.getInteger(
-					_request, "type", RoleConstants.TYPE_REGULAR);
+					_httpServletRequest, "type", RoleConstants.TYPE_REGULAR);
 
 				if (type == RoleConstants.TYPE_REGULAR) {
 					add(
@@ -113,7 +115,8 @@ public class RoleDisplayContext {
 							navigationItem.setDisabled(false);
 							navigationItem.setHref(StringPool.BLANK);
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "assignees"));
+								LanguageUtil.get(
+									_httpServletRequest, "assignees"));
 						});
 				}
 			}
@@ -124,7 +127,8 @@ public class RoleDisplayContext {
 			PortletURL portletURL)
 		throws Exception {
 
-		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
+		String tabs2 = ParamUtil.getString(
+			_httpServletRequest, "tabs2", "users");
 
 		return new NavigationItemList() {
 			{
@@ -136,7 +140,8 @@ public class RoleDisplayContext {
 							navigationItem.setHref(
 								portletURL, "tabs2", assigneeTypeName);
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, assigneeTypeName));
+								LanguageUtil.get(
+									_httpServletRequest, assigneeTypeName));
 						});
 				}
 			}
@@ -155,10 +160,10 @@ public class RoleDisplayContext {
 						navigationItem.setHref(portletURL, "tabs2", "users");
 
 						String tabs2 = ParamUtil.getString(
-							_request, "tabs2", "users");
+							_httpServletRequest, "tabs2", "users");
 
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, tabs2));
+							LanguageUtil.get(_httpServletRequest, tabs2));
 					});
 			}
 		};
@@ -169,7 +174,7 @@ public class RoleDisplayContext {
 			PortletURL portletURL)
 		throws Exception {
 
-		int type = ParamUtil.getInteger(_request, "type", 1);
+		int type = ParamUtil.getInteger(_httpServletRequest, "type", 1);
 
 		return new NavigationItemList() {
 			{
@@ -187,7 +192,8 @@ public class RoleDisplayContext {
 							RoleConstants.TYPE_REGULAR);
 
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "regular-roles"));
+							LanguageUtil.get(
+								_httpServletRequest, "regular-roles"));
 					});
 				add(
 					navigationItem -> {
@@ -203,7 +209,8 @@ public class RoleDisplayContext {
 							RoleConstants.TYPE_SITE);
 
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "site-roles"));
+							LanguageUtil.get(
+								_httpServletRequest, "site-roles"));
 					});
 				add(
 					navigationItem -> {
@@ -219,18 +226,20 @@ public class RoleDisplayContext {
 							RoleConstants.TYPE_ORGANIZATION);
 
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "organization-roles"));
+							LanguageUtil.get(
+								_httpServletRequest, "organization-roles"));
 					});
 			}
 		};
 	}
 
 	private String _getCurrentURL() {
-		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		PortletResponse portletResponse =
-			(PortletResponse)_request.getAttribute(
+			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		PortletURL currentURLObj = PortletURLUtil.getCurrent(
@@ -243,13 +252,14 @@ public class RoleDisplayContext {
 	private List<String> _getTabsNames() throws Exception {
 		List<String> tabsNames = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long roleId = ParamUtil.getLong(_request, "roleId");
+		long roleId = ParamUtil.getLong(_httpServletRequest, "roleId");
 
 		Role role = RoleServiceUtil.fetchRole(roleId);
 
@@ -296,11 +306,12 @@ public class RoleDisplayContext {
 	}
 
 	private Map<String, String> _getTabsURLs() throws Exception {
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
-		String backURL = ParamUtil.getString(_request, "backURL", redirect);
+		String backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL", redirect);
 
-		long roleId = ParamUtil.getLong(_request, "roleId");
+		long roleId = ParamUtil.getLong(_httpServletRequest, "roleId");
 
 		Role role = RoleServiceUtil.fetchRole(roleId);
 
@@ -345,6 +356,6 @@ public class RoleDisplayContext {
 	};
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

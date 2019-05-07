@@ -57,9 +57,10 @@ public class SiteActionDropdownItemsProvider {
 		_liferayPortletResponse = liferayPortletResponse;
 		_siteAdminDisplayContext = siteAdminDisplayContext;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -136,7 +137,8 @@ public class SiteActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "activateSite");
 			dropdownItem.putData("activateSiteURL", activateSiteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "activate"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "activate"));
 		};
 	}
 
@@ -149,7 +151,8 @@ public class SiteActionDropdownItemsProvider {
 				"/select_site_initializer.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "parentGroupId",
 				String.valueOf(_group.getGroupId()));
-			dropdownItem.setLabel(LanguageUtil.get(_request, "add-child-site"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "add-child-site"));
 		};
 	}
 
@@ -169,7 +172,8 @@ public class SiteActionDropdownItemsProvider {
 			dropdownItem.putData("action", "deactivateSite");
 			dropdownItem.putData(
 				"deactivateSiteURL", deactivateSiteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "deactivate"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "deactivate"));
 		};
 	}
 
@@ -187,7 +191,8 @@ public class SiteActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteSite");
 			dropdownItem.putData("deleteSiteURL", deleteSiteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -208,7 +213,8 @@ public class SiteActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "leaveSite");
 			dropdownItem.putData("leaveSiteURL", leaveSiteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "leave"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "leave"));
 		};
 	}
 
@@ -218,7 +224,7 @@ public class SiteActionDropdownItemsProvider {
 		}
 
 		_redirect = ParamUtil.getString(
-			_request, "redirect", _themeDisplay.getURLCurrent());
+			_httpServletRequest, "redirect", _themeDisplay.getURLCurrent());
 
 		return _redirect;
 	}
@@ -231,7 +237,7 @@ public class SiteActionDropdownItemsProvider {
 				_liferayPortletResponse.createRenderURL(), "backURL",
 				_getRedirect(), "groupId", String.valueOf(_group.getGroupId()));
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "view-child-sites"));
+				LanguageUtil.get(_httpServletRequest, "view-child-sites"));
 		};
 	}
 
@@ -242,7 +248,7 @@ public class SiteActionDropdownItemsProvider {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, true));
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "go-to-private-pages"));
+				LanguageUtil.get(_httpServletRequest, "go-to-private-pages"));
 		};
 	}
 
@@ -253,7 +259,7 @@ public class SiteActionDropdownItemsProvider {
 			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, false));
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "go-to-public-pages"));
+				LanguageUtil.get(_httpServletRequest, "go-to-public-pages"));
 		};
 	}
 
@@ -261,14 +267,15 @@ public class SiteActionDropdownItemsProvider {
 		_getViewSiteSettingsActionUnsafeConsumer() {
 
 		PortletURL viewSiteSettingsURL = PortalUtil.getControlPanelPortletURL(
-			_request, _group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
+			_httpServletRequest, _group, SiteAdminPortletKeys.SITE_SETTINGS, 0,
+			0, PortletRequest.RENDER_PHASE);
 
 		return dropdownItem -> {
 			dropdownItem.setHref(viewSiteSettingsURL);
 			dropdownItem.setTarget("_blank");
 			dropdownItem.setLabel(
-				LanguageUtil.format(_request, "go-to-x", "site-settings"));
+				LanguageUtil.format(
+					_httpServletRequest, "go-to-x", "site-settings"));
 		};
 	}
 
@@ -334,7 +341,7 @@ public class SiteActionDropdownItemsProvider {
 	private final Group _group;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 

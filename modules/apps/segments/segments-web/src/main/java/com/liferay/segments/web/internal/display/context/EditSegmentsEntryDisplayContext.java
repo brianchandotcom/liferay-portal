@@ -54,7 +54,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntryProvider segmentsEntryProvider,
 		SegmentsEntryService segmentsEntryService) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsCriteriaContributorRegistry =
@@ -144,7 +144,7 @@ public class EditSegmentsEntryDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		if (Validator.isNull(_redirect)) {
 			PortletURL portletURL = _renderResponse.createRenderURL();
@@ -200,7 +200,8 @@ public class EditSegmentsEntryDisplayContext {
 			return _segmentsEntryId;
 		}
 
-		_segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
+		_segmentsEntryId = ParamUtil.getLong(
+			_httpServletRequest, "segmentsEntryId");
 
 		return _segmentsEntryId;
 	}
@@ -230,7 +231,7 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return ParamUtil.getString(
-			_request, "source", SegmentsConstants.SOURCE_DEFAULT);
+			_httpServletRequest, "source", SegmentsConstants.SOURCE_DEFAULT);
 	}
 
 	public String getTitle(Locale locale) throws PortalException {
@@ -248,7 +249,7 @@ public class EditSegmentsEntryDisplayContext {
 				locale, getType());
 
 			_title = LanguageUtil.format(
-				_request, "new-x-segment", type, false);
+				_httpServletRequest, "new-x-segment", type, false);
 		}
 
 		return _title;
@@ -261,7 +262,8 @@ public class EditSegmentsEntryDisplayContext {
 			return segmentsEntry.getType();
 		}
 
-		return ParamUtil.getString(_request, "type", User.class.getName());
+		return ParamUtil.getString(
+			_httpServletRequest, "type", User.class.getName());
 	}
 
 	public boolean isShowInEditMode() {
@@ -270,7 +272,7 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		_showInEditMode = ParamUtil.getBoolean(
-			_request, "showInEditMode", true);
+			_httpServletRequest, "showInEditMode", true);
 
 		return _showInEditMode;
 	}
@@ -294,7 +296,7 @@ public class EditSegmentsEntryDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
 	private SegmentsEntry _segmentsEntry;

@@ -788,7 +788,7 @@ public class ThemeDisplay
 	 */
 	@JSON(include = false)
 	public HttpServletRequest getRequest() {
-		return _request;
+		return _httpServletRequest;
 	}
 
 	/**
@@ -798,7 +798,7 @@ public class ThemeDisplay
 	 */
 	@JSON(include = false)
 	public HttpServletResponse getResponse() {
-		return _response;
+		return _httpServletResponse;
 	}
 
 	/**
@@ -1637,11 +1637,11 @@ public class ThemeDisplay
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void setResponse(HttpServletResponse httpServletResponse) {
-		_response = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public void setScopeGroupId(long scopeGroupId) {
@@ -1985,8 +1985,8 @@ public class ThemeDisplay
 	private Group _refererGroup;
 	private long _refererGroupId;
 	private long _refererPlid;
-	private transient HttpServletRequest _request;
-	private transient HttpServletResponse _response;
+	private transient HttpServletRequest _httpServletRequest;
+	private transient HttpServletResponse _httpServletResponse;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
 	private boolean _secure;

@@ -29,7 +29,7 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 	public LiferayServletRequest(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public void cleanUp() {
@@ -41,7 +41,7 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
 		if (_lis == null) {
-			_lis = new LiferayInputStream(_request);
+			_lis = new LiferayInputStream(_httpServletRequest);
 		}
 
 		if (_finishedReadingOriginalStream) {
@@ -69,6 +69,6 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 	private ServletInputStream _cachedInputStream;
 	private boolean _finishedReadingOriginalStream;
 	private LiferayInputStream _lis;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -243,7 +243,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		when(
 			_portal, "getHttpServletRequest", _actionRequest
 		).thenReturn(
-			_request
+			_httpServletRequest
 		);
 	}
 
@@ -290,6 +290,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	private Portal _portal;
 
 	@Mock
-	private HttpServletRequest _request;
+	private HttpServletRequest _httpServletRequest;
 
 }

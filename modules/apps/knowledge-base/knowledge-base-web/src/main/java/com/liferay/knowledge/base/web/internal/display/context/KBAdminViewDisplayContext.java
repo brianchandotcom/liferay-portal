@@ -42,7 +42,7 @@ public class KBAdminViewDisplayContext {
 
 		_parentResourceClassNameId = parentResourceClassNameId;
 		_parentResourcePrimKey = parentResourcePrimKey;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
@@ -73,13 +73,14 @@ public class KBAdminViewDisplayContext {
 		if (parentResourcePrimKey ==
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			currentURL = _liferayPortletResponse.createRenderURL();
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				_request, themeDisplay.translate("home"),
+				_httpServletRequest, themeDisplay.translate("home"),
 				currentURL.toString());
 		}
 		else if (parentResourceClassNameId == kbFolderClassNameId) {
@@ -93,7 +94,7 @@ public class KBAdminViewDisplayContext {
 				currentURL);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				_request, kbFolder.getName(), currentURL.toString());
+				_httpServletRequest, kbFolder.getName(), currentURL.toString());
 		}
 		else {
 			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
@@ -104,13 +105,14 @@ public class KBAdminViewDisplayContext {
 				kbArticle.getParentResourcePrimKey(), currentURL);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				_request, kbArticle.getTitle(), currentURL.toString());
+				_httpServletRequest, kbArticle.getTitle(),
+				currentURL.toString());
 		}
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final long _parentResourceClassNameId;
 	private final long _parentResourcePrimKey;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

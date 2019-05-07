@@ -48,7 +48,7 @@ public class SiteNavigationSiteMapDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -303,7 +303,7 @@ public class SiteNavigationSiteMapDisplayContext {
 
 	private Long _displayStyleGroupId;
 	private Boolean _includeRootInTree;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;
 	private final SiteNavigationSiteMapPortletInstanceConfiguration

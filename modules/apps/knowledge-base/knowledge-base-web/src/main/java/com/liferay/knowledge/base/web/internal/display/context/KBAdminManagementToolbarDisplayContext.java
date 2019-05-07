@@ -77,12 +77,12 @@ public class KBAdminManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_createSearchContainer();
@@ -96,7 +96,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						dropdownItem.putData("action", "deleteEntries");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -144,10 +144,11 @@ public class KBAdminManagementToolbarDisplayContext {
 			KBFolderConstants.getClassName());
 
 		long parentResourceClassNameId = ParamUtil.getLong(
-			_request, "parentResourceClassNameId", kbFolderClassNameId);
+			_httpServletRequest, "parentResourceClassNameId",
+			kbFolderClassNameId);
 
 		long parentResourcePrimKey = ParamUtil.getLong(
-			_request, "parentResourcePrimKey",
+			_httpServletRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		boolean hasAddKBArticlePermission = false;
@@ -183,7 +184,8 @@ public class KBAdminManagementToolbarDisplayContext {
 					addFolderURL.setParameter(
 						"mvcPath", "/admin/common/edit_folder.jsp");
 					addFolderURL.setParameter(
-						"redirect", PortalUtil.getCurrentURL(_request));
+						"redirect",
+						PortalUtil.getCurrentURL(_httpServletRequest));
 					addFolderURL.setParameter(
 						"parentResourceClassNameId",
 						String.valueOf(
@@ -195,7 +197,8 @@ public class KBAdminManagementToolbarDisplayContext {
 
 					dropdownItem.setHref(addFolderURL);
 
-					dropdownItem.setLabel(LanguageUtil.get(_request, "folder"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "folder"));
 				});
 		}
 
@@ -215,7 +218,8 @@ public class KBAdminManagementToolbarDisplayContext {
 						"mvcPath", templatePath + "edit_article.jsp");
 
 					addBasicKBArticleURL.setParameter(
-						"redirect", PortalUtil.getCurrentURL(_request));
+						"redirect",
+						PortalUtil.getCurrentURL(_httpServletRequest));
 					addBasicKBArticleURL.setParameter(
 						"parentResourceClassNameId",
 						String.valueOf(parentResourceClassNameId));
@@ -226,7 +230,7 @@ public class KBAdminManagementToolbarDisplayContext {
 					dropdownItem.setHref(addBasicKBArticleURL);
 
 					dropdownItem.setLabel(
-						LanguageUtil.get(_request, "basic-article"));
+						LanguageUtil.get(_httpServletRequest, "basic-article"));
 				});
 
 			OrderByComparator<KBTemplate> obc =
@@ -248,7 +252,8 @@ public class KBAdminManagementToolbarDisplayContext {
 							addKBArticleURL.setParameter(
 								"mvcPath", templatePath + "edit_article.jsp");
 							addKBArticleURL.setParameter(
-								"redirect", PortalUtil.getCurrentURL(_request));
+								"redirect",
+								PortalUtil.getCurrentURL(_httpServletRequest));
 							addKBArticleURL.setParameter(
 								"parentResourceClassNameId",
 								String.valueOf(parentResourceClassNameId));
@@ -263,7 +268,8 @@ public class KBAdminManagementToolbarDisplayContext {
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, kbTemplate.getTitle()));
+									_httpServletRequest,
+									kbTemplate.getTitle()));
 						});
 				}
 			}
@@ -285,14 +291,16 @@ public class KBAdminManagementToolbarDisplayContext {
 
 					importURL.setParameter("mvcPath", "/admin/import.jsp");
 					importURL.setParameter(
-						"redirect", PortalUtil.getCurrentURL(_request));
+						"redirect",
+						PortalUtil.getCurrentURL(_httpServletRequest));
 					importURL.setParameter(
 						"parentKBFolderId",
 						String.valueOf(parentResourcePrimKey));
 
 					dropdownItem.setHref(importURL);
 
-					dropdownItem.setLabel(LanguageUtil.get(_request, "import"));
+					dropdownItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "import"));
 				});
 		}
 
@@ -307,7 +315,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -361,10 +369,11 @@ public class KBAdminManagementToolbarDisplayContext {
 			KBFolderConstants.getClassName());
 
 		long parentResourceClassNameId = ParamUtil.getLong(
-			_request, "parentResourceClassNameId", kbFolderClassNameId);
+			_httpServletRequest, "parentResourceClassNameId",
+			kbFolderClassNameId);
 
 		long parentResourcePrimKey = ParamUtil.getLong(
-			_request, "parentResourcePrimKey",
+			_httpServletRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_searchContainer = new KBObjectsSearch(
@@ -441,7 +450,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	private String _getKeywords() {
-		return ParamUtil.getString(_request, "keywords");
+		return ParamUtil.getString(_httpServletRequest, "keywords");
 	}
 
 	private String _getOrderByCol() {
@@ -472,7 +481,8 @@ public class KBAdminManagementToolbarDisplayContext {
 								orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, orderColumnsMap.get(orderByCol)));
+									_httpServletRequest,
+									orderColumnsMap.get(orderByCol)));
 						});
 				}
 			}
@@ -482,7 +492,8 @@ public class KBAdminManagementToolbarDisplayContext {
 	private String _getRedirect() {
 		return PortalUtil.escapeRedirect(
 			ParamUtil.getString(
-				_request, "redirect", PortalUtil.getCurrentURL(_request)));
+				_httpServletRequest, "redirect",
+				PortalUtil.getCurrentURL(_httpServletRequest)));
 	}
 
 	private String _getTemplatePath() {
@@ -494,7 +505,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	private final PortletConfig _portletConfig;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

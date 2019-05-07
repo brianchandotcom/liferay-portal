@@ -117,7 +117,7 @@ public class PortalResiliencyActionTest {
 			WebKeys.SPI_AGENT_RESPONSE,
 			new SPIAgentResponse(_SERVLET_CONTEXT_NAME));
 
-		_response = new MockHttpServletResponse();
+		_httpServletResponse = new MockHttpServletResponse();
 
 		HttpSession session = _mockHttpServletRequest.getSession();
 
@@ -151,11 +151,11 @@ public class PortalResiliencyActionTest {
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.ACTION);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 		Assert.assertSame(
 			_mockPortletContainer.actionResult,
@@ -172,11 +172,11 @@ public class PortalResiliencyActionTest {
 		_mockHttpServletRequest.setParameter("p_p_id", _PORTLET_ID);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 		Assert.assertSame(
 			_mockPortletContainer.actionResult,
@@ -205,11 +205,11 @@ public class PortalResiliencyActionTest {
 		_mockHttpServletRequest.setAttribute(WebKeys.SPI_AGENT_LAYOUT, layout);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 		Assert.assertSame(layout, _mockPortletContainer.layout);
 		Assert.assertSame(event, _mockPortletContainer.event);
@@ -228,11 +228,11 @@ public class PortalResiliencyActionTest {
 		_mockHttpServletRequest.setParameter("p_p_id", _PORTLET_ID);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 		Assert.assertSame(layout, _mockPortletContainer.layout);
 		Assert.assertSame(event, _mockPortletContainer.event);
@@ -252,11 +252,11 @@ public class PortalResiliencyActionTest {
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.RENDER);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 	}
 
@@ -266,11 +266,11 @@ public class PortalResiliencyActionTest {
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.RESOURCE);
 
 		_portalResiliencyAction.execute(
-			null, _mockHttpServletRequest, _response);
+			null, _mockHttpServletRequest, _httpServletResponse);
 
 		Assert.assertSame(
 			_mockHttpServletRequest, _mockPortletContainer.request);
-		Assert.assertSame(_response, _mockPortletContainer.response);
+		Assert.assertSame(_httpServletResponse, _mockPortletContainer.response);
 		Assert.assertSame(_portlet, _mockPortletContainer.portlet);
 	}
 
@@ -283,7 +283,7 @@ public class PortalResiliencyActionTest {
 
 		try {
 			_portalResiliencyAction.execute(
-				null, _mockHttpServletRequest, _response);
+				null, _mockHttpServletRequest, _httpServletResponse);
 
 			Assert.fail();
 		}
@@ -336,6 +336,6 @@ public class PortalResiliencyActionTest {
 	private final PortalResiliencyAction _portalResiliencyAction =
 		new PortalResiliencyAction();
 	private Portlet _portlet;
-	private HttpServletResponse _response;
+	private HttpServletResponse _httpServletResponse;
 
 }

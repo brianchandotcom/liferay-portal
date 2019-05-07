@@ -45,9 +45,9 @@ public class UserActionDropdownItemsProvider {
 		_teamId = teamId;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -76,12 +76,13 @@ public class UserActionDropdownItemsProvider {
 			dropdownItem.putData("action", "deleteTeamUsers");
 			dropdownItem.putData(
 				"deleteTeamUsersURL", deleteTeamUsersURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final long _teamId;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;

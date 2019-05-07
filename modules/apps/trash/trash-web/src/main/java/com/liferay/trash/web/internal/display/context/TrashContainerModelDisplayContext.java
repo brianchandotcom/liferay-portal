@@ -53,7 +53,8 @@ public class TrashContainerModelDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 	}
 
 	public String getBackURL() {
@@ -61,7 +62,8 @@ public class TrashContainerModelDisplayContext {
 			return _backURL;
 		}
 
-		_backURL = ParamUtil.getString(_request, "backURL", getRedirect());
+		_backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL", getRedirect());
 
 		return _backURL;
 	}
@@ -81,7 +83,7 @@ public class TrashContainerModelDisplayContext {
 			return _classNameId;
 		}
 
-		_classNameId = ParamUtil.getLong(_request, "classNameId");
+		_classNameId = ParamUtil.getLong(_httpServletRequest, "classNameId");
 
 		return _classNameId;
 	}
@@ -91,7 +93,7 @@ public class TrashContainerModelDisplayContext {
 			return _classPK;
 		}
 
-		_classPK = ParamUtil.getLong(_request, "classPK");
+		_classPK = ParamUtil.getLong(_httpServletRequest, "classPK");
 
 		return _classPK;
 	}
@@ -122,7 +124,7 @@ public class TrashContainerModelDisplayContext {
 		}
 
 		_containerModelClassNameId = ParamUtil.getLong(
-			_request, "containerModelClassNameId",
+			_httpServletRequest, "containerModelClassNameId",
 			PortalUtil.getClassNameId(containerModelClassName));
 
 		return _containerModelClassNameId;
@@ -133,7 +135,8 @@ public class TrashContainerModelDisplayContext {
 			return _containerModelId;
 		}
 
-		_containerModelId = ParamUtil.getLong(_request, "containerModelId");
+		_containerModelId = ParamUtil.getLong(
+			_httpServletRequest, "containerModelId");
 
 		return _containerModelId;
 	}
@@ -190,7 +193,8 @@ public class TrashContainerModelDisplayContext {
 	}
 
 	public PortletURL getContainerURL() {
-		String currentURL = (String)_request.getAttribute(WebKeys.CURRENT_URL);
+		String currentURL = (String)_httpServletRequest.getAttribute(
+			WebKeys.CURRENT_URL);
 
 		PortletURL containerURL = _liferayPortletResponse.createRenderURL();
 
@@ -210,7 +214,7 @@ public class TrashContainerModelDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_liferayPortletResponse.getNamespace() + "selectContainer");
 
 		return _eventName;
@@ -228,15 +232,16 @@ public class TrashContainerModelDisplayContext {
 		TrashRenderer trashRenderer = getTrashRenderer();
 
 		if (trashRenderer != null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			trashRendererTitle = trashRenderer.getTitle(
 				themeDisplay.getLocale());
 		}
 
 		_missingContainerMessageArguments = new Object[] {
-			LanguageUtil.get(_request, getContainerModelName()),
+			LanguageUtil.get(_httpServletRequest, getContainerModelName()),
 			HtmlUtil.escape(trashRendererTitle)
 		};
 
@@ -248,7 +253,7 @@ public class TrashContainerModelDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -338,7 +343,7 @@ public class TrashContainerModelDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Object[] _missingContainerMessageArguments;
 	private String _redirect;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private Boolean _showBackIcon;
 	private TrashHandler _trashHandler;

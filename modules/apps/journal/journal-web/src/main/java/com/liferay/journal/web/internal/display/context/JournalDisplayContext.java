@@ -119,7 +119,7 @@ public class JournalDisplayContext {
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		TrashHelper trashHelper) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_assetDisplayPageFriendlyURLProvider =
@@ -127,11 +127,11 @@ public class JournalDisplayContext {
 		_trashHelper = trashHelper;
 
 		_journalWebConfiguration =
-			(JournalWebConfiguration)_request.getAttribute(
+			(JournalWebConfiguration)_httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			_httpServletRequest);
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -141,7 +141,8 @@ public class JournalDisplayContext {
 		}
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
 
 		String key = JournalPortletUtil.getAddMenuFavItemKey(
 			_liferayPortletRequest, _liferayPortletResponse);
@@ -175,7 +176,7 @@ public class JournalDisplayContext {
 			return _article;
 		}
 
-		_article = ActionUtil.getArticle(_request);
+		_article = ActionUtil.getArticle(_httpServletRequest);
 
 		return _article;
 	}
@@ -198,9 +199,10 @@ public class JournalDisplayContext {
 			return _articleDisplay;
 		}
 
-		long groupId = ParamUtil.getLong(_request, "groupId");
-		String articleId = ParamUtil.getString(_request, "articleId");
-		double version = ParamUtil.getDouble(_request, "version");
+		long groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
+		String articleId = ParamUtil.getString(
+			_httpServletRequest, "articleId");
+		double version = ParamUtil.getDouble(_httpServletRequest, "version");
 
 		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
 			groupId, articleId, version);
@@ -209,7 +211,7 @@ public class JournalDisplayContext {
 			return _articleDisplay;
 		}
 
-		int page = ParamUtil.getInteger(_request, "page");
+		int page = ParamUtil.getInteger(_httpServletRequest, "page");
 
 		_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
 			article, article.getDDMTemplateKey(), null,
@@ -335,7 +337,8 @@ public class JournalDisplayContext {
 			return _ddmStructureKey;
 		}
 
-		_ddmStructureKey = ParamUtil.getString(_request, "ddmStructureKey");
+		_ddmStructureKey = ParamUtil.getString(
+			_httpServletRequest, "ddmStructureKey");
 
 		return _ddmStructureKey;
 	}
@@ -345,7 +348,8 @@ public class JournalDisplayContext {
 			return _ddmStructureName;
 		}
 
-		_ddmStructureName = LanguageUtil.get(_request, "basic-web-content");
+		_ddmStructureName = LanguageUtil.get(
+			_httpServletRequest, "basic-web-content");
 
 		if (Validator.isNull(getDDMStructureKey())) {
 			return _ddmStructureName;
@@ -423,9 +427,11 @@ public class JournalDisplayContext {
 		String[] displayViews = getDisplayViews();
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNull(_displayStyle)) {
 			_displayStyle = portalPreferences.getValue(
@@ -449,13 +455,14 @@ public class JournalDisplayContext {
 			return _folder;
 		}
 
-		_folder = (JournalFolder)_request.getAttribute(WebKeys.JOURNAL_FOLDER);
+		_folder = (JournalFolder)_httpServletRequest.getAttribute(
+			WebKeys.JOURNAL_FOLDER);
 
 		if (_folder != null) {
 			return _folder;
 		}
 
-		long folderId = ParamUtil.getLong(_request, "folderId");
+		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
 
 		_folder = JournalFolderLocalServiceUtil.fetchFolder(folderId);
 
@@ -481,7 +488,7 @@ public class JournalDisplayContext {
 		JournalFolder folder = getFolder();
 
 		_folderId = BeanParamUtil.getLong(
-			folder, _request, "folderId",
+			folder, _httpServletRequest, "folderId",
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
@@ -535,7 +542,7 @@ public class JournalDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "details"));
+							LanguageUtil.get(_httpServletRequest, "details"));
 					});
 			}
 		};
@@ -546,7 +553,7 @@ public class JournalDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -569,7 +576,8 @@ public class JournalDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 
 		return _navigation;
 	}
@@ -584,7 +592,8 @@ public class JournalDisplayContext {
 						navigationItem.setHref(
 							_liferayPortletResponse.createRenderURL());
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "web-content"));
+							LanguageUtil.get(
+								_httpServletRequest, "web-content"));
 					});
 
 				Group group = _themeDisplay.getScopeGroup();
@@ -598,7 +607,8 @@ public class JournalDisplayContext {
 								_liferayPortletResponse.createRenderURL(),
 								"mvcPath", "/view_ddm_structures.jsp");
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "structures"));
+								LanguageUtil.get(
+									_httpServletRequest, "structures"));
 						});
 
 					add(
@@ -609,7 +619,8 @@ public class JournalDisplayContext {
 								_liferayPortletResponse.createRenderURL(),
 								"mvcPath", "/view_ddm_templates.jsp");
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "templates"));
+								LanguageUtil.get(
+									_httpServletRequest, "templates"));
 						});
 				}
 
@@ -622,7 +633,7 @@ public class JournalDisplayContext {
 								currentItem.equals("feeds"));
 							navigationItem.setHref(_getFeedsURL());
 							navigationItem.setLabel(
-								LanguageUtil.get(_request, "feeds"));
+								LanguageUtil.get(_httpServletRequest, "feeds"));
 						});
 				}
 			}
@@ -634,14 +645,15 @@ public class JournalDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
 				JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -661,14 +673,15 @@ public class JournalDisplayContext {
 			return "desc";
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
 				JournalPortletKeys.JOURNAL, "order-by-type", "asc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -708,7 +721,7 @@ public class JournalDisplayContext {
 		}
 
 		_parentFolderId = ParamUtil.getLong(
-			_request, "parentFolderId",
+			_httpServletRequest, "parentFolderId",
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _parentFolderId;
@@ -717,7 +730,8 @@ public class JournalDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		String navigation = ParamUtil.getString(_request, "navigation");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation");
 
 		if (Validator.isNotNull(navigation)) {
 			portletURL.setParameter(
@@ -730,31 +744,33 @@ public class JournalDisplayContext {
 			portletURL.setParameter("ddmStructureKey", getDDMStructureKey());
 		}
 
-		String status = ParamUtil.getString(_request, "status");
+		String status = ParamUtil.getString(_httpServletRequest, "status");
 
 		if (Validator.isNotNull(status)) {
 			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
-		String delta = ParamUtil.getString(_request, "delta");
+		String delta = ParamUtil.getString(_httpServletRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
-		String deltaEntry = ParamUtil.getString(_request, "deltaEntry");
+		String deltaEntry = ParamUtil.getString(
+			_httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -828,7 +844,7 @@ public class JournalDisplayContext {
 
 			articleSearchContainer.setRowChecker(entriesChecker);
 
-			if (!BrowserSnifferUtil.isMobile(_request)) {
+			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
 				EntriesMover entriesMover = new EntriesMover(
 					_trashHelper.isTrashEnabled(
 						_themeDisplay.getScopeGroupId()));
@@ -1028,7 +1044,8 @@ public class JournalDisplayContext {
 			return _status;
 		}
 
-		_status = ParamUtil.getInteger(_request, "status", getDefaultStatus());
+		_status = ParamUtil.getInteger(
+			_httpServletRequest, "status", getDefaultStatus());
 
 		return _status;
 	}
@@ -1038,7 +1055,7 @@ public class JournalDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1");
+		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1");
 
 		return _tabs1;
 	}
@@ -1300,7 +1317,7 @@ public class JournalDisplayContext {
 	private String _orderByType;
 	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Integer _restrictionType;
 	private Integer _status;
 	private String _tabs1;

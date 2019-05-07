@@ -56,11 +56,12 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_searchContainer = searchContainer;
 
 		_announcementsAdminViewDisplayContext =
-			new DefaultAnnouncementsAdminViewDisplayContext(_request);
+			new DefaultAnnouncementsAdminViewDisplayContext(
+				_httpServletRequest);
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
 	}
@@ -73,7 +74,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						dropdownItem.putData("action", "deleteEntries");
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -86,8 +87,9 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -121,7 +123,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 							"mvcRenderCommandName",
 							"/announcements/edit_entry");
 						addEntryURL.setParameter(
-							"redirect", PortalUtil.getCurrentURL(_request));
+							"redirect",
+							PortalUtil.getCurrentURL(_httpServletRequest));
 
 						String navigation = _getNavigation();
 
@@ -145,7 +148,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						}
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, label));
+							LanguageUtil.get(_httpServletRequest, label));
 					});
 			}
 		};
@@ -159,7 +162,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 			}
 		};
@@ -204,7 +208,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	private String _getDistributionScope() {
-		return ParamUtil.getString(_request, "distributionScope");
+		return ParamUtil.getString(_httpServletRequest, "distributionScope");
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()
@@ -236,7 +240,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 								distributionScopeEntry.getValue());
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, distributionScopeEntry.getKey()));
+									_httpServletRequest,
+									distributionScopeEntry.getKey()));
 						});
 				}
 			}
@@ -244,7 +249,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	private String _getNavigation() {
-		return ParamUtil.getString(_request, "navigation", "announcements");
+		return ParamUtil.getString(
+			_httpServletRequest, "navigation", "announcements");
 	}
 
 	private final AnnouncementsAdminViewDisplayContext
@@ -252,7 +258,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 
 }

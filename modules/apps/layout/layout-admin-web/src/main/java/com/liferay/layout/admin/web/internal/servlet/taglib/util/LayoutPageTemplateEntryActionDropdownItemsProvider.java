@@ -65,14 +65,14 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_itemSelector = (ItemSelector)_request.getAttribute(
+		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
 		_layoutAdminWebConfiguration =
-			(LayoutAdminWebConfiguration)_request.getAttribute(
+			(LayoutAdminWebConfiguration)_httpServletRequest.getAttribute(
 				LayoutAdminWebConfiguration.class.getName());
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -141,7 +141,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "selPlid", layout.getPlid());
 
-			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
 	}
 
@@ -166,7 +167,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"deleteLayoutPageTemplateEntryURL",
 				deleteLayoutPageTemplateEntryURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -198,7 +200,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "remove-thumbnail"));
+				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
 		};
 	}
 
@@ -224,7 +226,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			new FileEntryItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_request),
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			_renderResponse.getNamespace() + "changePreview",
 			itemSelectorCriterion);
 
@@ -240,7 +242,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			_layoutPageTemplateEntry.getName(), null,
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-			LiferayWindowState.POP_UP.toString(), null, _request);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
 			dropdownItem.putData(
@@ -248,7 +250,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"permissionsLayoutPageTemplateEntryURL",
 				permissionsLayoutPageTemplateEntryURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
@@ -276,7 +279,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				dropdownItem.putData(
 					"updateLayoutPageTemplateEntryURL",
 					_getUpdateLayoutPrototypeURL(layoutPrototype));
-				dropdownItem.setLabel(LanguageUtil.get(_request, "rename"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "rename"));
 			};
 		}
 
@@ -293,7 +297,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"updateLayoutPageTemplateEntryURL",
 				_getUpdateLayoutPageTemplateEntryURL());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "rename"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "rename"));
 		};
 	}
 
@@ -309,7 +314,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "change-thumbnail"));
+				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
 		};
 	}
 
@@ -355,7 +360,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 	private final LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

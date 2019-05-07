@@ -44,7 +44,7 @@ public class SiteMembershipsDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
@@ -53,11 +53,13 @@ public class SiteMembershipsDisplayContext {
 			return _group;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		_group = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -75,8 +77,9 @@ public class SiteMembershipsDisplayContext {
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return new NavigationItemList() {
 			{
@@ -85,7 +88,7 @@ public class SiteMembershipsDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(themeDisplay.getURLCurrent());
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "details"));
+							LanguageUtil.get(_httpServletRequest, "details"));
 					});
 			}
 		};
@@ -106,7 +109,7 @@ public class SiteMembershipsDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		if (Validator.isNull(_redirect)) {
 			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
@@ -122,7 +125,7 @@ public class SiteMembershipsDisplayContext {
 			return _selUser;
 		}
 
-		_selUser = PortalUtil.getSelectedUser(_request, false);
+		_selUser = PortalUtil.getSelectedUser(_httpServletRequest, false);
 
 		return _selUser;
 	}
@@ -132,7 +135,7 @@ public class SiteMembershipsDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1", "users");
+		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "users");
 
 		return _tabs1;
 	}
@@ -142,7 +145,7 @@ public class SiteMembershipsDisplayContext {
 			return _userGroupId;
 		}
 
-		_userGroupId = ParamUtil.getLong(_request, "userGroupId");
+		_userGroupId = ParamUtil.getLong(_httpServletRequest, "userGroupId");
 
 		return _userGroupId;
 	}
@@ -167,7 +170,7 @@ public class SiteMembershipsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "users");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "users"));
+							LanguageUtil.get(_httpServletRequest, "users"));
 					});
 
 				add(
@@ -177,7 +180,8 @@ public class SiteMembershipsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "organizations");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "organizations"));
+							LanguageUtil.get(
+								_httpServletRequest, "organizations"));
 					});
 
 				add(
@@ -187,7 +191,8 @@ public class SiteMembershipsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "user-groups");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "user-groups"));
+							LanguageUtil.get(
+								_httpServletRequest, "user-groups"));
 					});
 			}
 		};
@@ -196,7 +201,7 @@ public class SiteMembershipsDisplayContext {
 	private Group _group;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private User _selUser;
 	private String _tabs1;
 	private Long _userGroupId;

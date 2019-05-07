@@ -293,7 +293,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setHttpServletRequest(_request);
+		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setLocale(_LOCALE);
 		ddmFormRenderingContext.setPortletNamespace(_PORTLET_NAMESPACE);
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
@@ -378,14 +378,15 @@ public class DDMFormFieldTemplateContextFactoryTest {
 	}
 
 	protected void setUpDDMFormTemplateContextFactoryUtil() {
-		_request = Mockito.mock(HttpServletRequest.class);
+		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathThemeImages(StringPool.BLANK);
 
 		Mockito.when(
-			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
@@ -419,6 +420,6 @@ public class DDMFormFieldTemplateContextFactoryTest {
 
 	private static final String _PORTLET_NAMESPACE = "_PORTLET_NAMESPACE_";
 
-	private HttpServletRequest _request;
+	private HttpServletRequest _httpServletRequest;
 
 }

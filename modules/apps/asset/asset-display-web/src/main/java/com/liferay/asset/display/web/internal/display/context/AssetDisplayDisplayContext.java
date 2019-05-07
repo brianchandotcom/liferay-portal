@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetDisplayDisplayContext {
 
 	public AssetDisplayDisplayContext(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public int getAbstractLength() {
@@ -32,7 +32,8 @@ public class AssetDisplayDisplayContext {
 			return _abstractLength;
 		}
 
-		_abstractLength = ParamUtil.getInteger(_request, "abstractLength");
+		_abstractLength = ParamUtil.getInteger(
+			_httpServletRequest, "abstractLength");
 
 		return _abstractLength;
 	}
@@ -42,7 +43,7 @@ public class AssetDisplayDisplayContext {
 			return _className;
 		}
 
-		_className = ParamUtil.getString(_request, "className");
+		_className = ParamUtil.getString(_httpServletRequest, "className");
 
 		return _className;
 	}
@@ -52,7 +53,7 @@ public class AssetDisplayDisplayContext {
 			return _classPK;
 		}
 
-		_classPK = ParamUtil.getLong(_request, "classPK");
+		_classPK = ParamUtil.getLong(_httpServletRequest, "classPK");
 
 		return _classPK;
 	}
@@ -62,7 +63,7 @@ public class AssetDisplayDisplayContext {
 			return _template;
 		}
 
-		_template = ParamUtil.getString(_request, "template");
+		_template = ParamUtil.getString(_httpServletRequest, "template");
 
 		return _template;
 	}
@@ -72,7 +73,7 @@ public class AssetDisplayDisplayContext {
 			return _viewURL;
 		}
 
-		_viewURL = ParamUtil.getString(_request, "viewURL");
+		_viewURL = ParamUtil.getString(_httpServletRequest, "viewURL");
 
 		return _viewURL;
 	}
@@ -82,7 +83,8 @@ public class AssetDisplayDisplayContext {
 			return _showComments;
 		}
 
-		_showComments = ParamUtil.getBoolean(_request, "showComments");
+		_showComments = ParamUtil.getBoolean(
+			_httpServletRequest, "showComments");
 
 		return _showComments;
 	}
@@ -92,7 +94,8 @@ public class AssetDisplayDisplayContext {
 			return _showExtraInfo;
 		}
 
-		_showExtraInfo = ParamUtil.getBoolean(_request, "showExtraInfo");
+		_showExtraInfo = ParamUtil.getBoolean(
+			_httpServletRequest, "showExtraInfo");
 
 		return _showExtraInfo;
 	}
@@ -102,7 +105,7 @@ public class AssetDisplayDisplayContext {
 			return _showHeader;
 		}
 
-		_showHeader = ParamUtil.getBoolean(_request, "showHeader");
+		_showHeader = ParamUtil.getBoolean(_httpServletRequest, "showHeader");
 
 		return _showHeader;
 	}
@@ -110,7 +113,7 @@ public class AssetDisplayDisplayContext {
 	private Integer _abstractLength;
 	private String _className;
 	private Long _classPK;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showComments;
 	private Boolean _showExtraInfo;
 	private Boolean _showHeader;

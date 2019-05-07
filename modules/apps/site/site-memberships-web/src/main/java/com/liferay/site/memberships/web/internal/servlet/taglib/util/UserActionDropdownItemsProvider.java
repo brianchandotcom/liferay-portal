@@ -47,9 +47,9 @@ public class UserActionDropdownItemsProvider {
 		_user = user;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -107,7 +107,7 @@ public class UserActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"editUserGroupRoleURL", editUserGroupRoleURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "assign-site-roles"));
+				LanguageUtil.get(_httpServletRequest, "assign-site-roles"));
 		};
 	}
 
@@ -130,12 +130,12 @@ public class UserActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"deleteGroupUsersURL", deleteGroupUsersURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "remove-membership"));
+				LanguageUtil.get(_httpServletRequest, "remove-membership"));
 		};
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;
 

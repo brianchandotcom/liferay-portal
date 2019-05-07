@@ -46,7 +46,7 @@ public class SoyComponentRendererHelper {
 		ComponentDescriptor componentDescriptor, Map<String, ?> context,
 		Portal portal, SoyRenderer soyRenderer) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
 		_context = new HashMap<>(context);
 		_portal = portal;
@@ -112,7 +112,8 @@ public class SoyComponentRendererHelper {
 
 		if (!_context.containsKey("portletId")) {
 			_context.put(
-				"portletId", _request.getAttribute(WebKeys.PORTLET_ID));
+				"portletId",
+				_httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 		}
 
 		if (!_componentDescriptor.isWrapper() &&
@@ -146,23 +147,25 @@ public class SoyComponentRendererHelper {
 			ScriptData scriptData = new ScriptData();
 
 			scriptData.append(
-				_portal.getPortletId(_request), componentJavaScript,
+				_portal.getPortletId(_httpServletRequest), componentJavaScript,
 				sb.toString(), ScriptData.ModulesType.ES6);
 
 			scriptData.writeTo(writer);
 		}
 		else {
-			ScriptData scriptData = (ScriptData)_request.getAttribute(
-				WebKeys.AUI_SCRIPT_DATA);
+			ScriptData scriptData =
+				(ScriptData)_httpServletRequest.getAttribute(
+					WebKeys.AUI_SCRIPT_DATA);
 
 			if (scriptData == null) {
 				scriptData = new ScriptData();
 
-				_request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
+				_httpServletRequest.setAttribute(
+					WebKeys.AUI_SCRIPT_DATA, scriptData);
 			}
 
 			scriptData.append(
-				_portal.getPortletId(_request), componentJavaScript,
+				_portal.getPortletId(_httpServletRequest), componentJavaScript,
 				sb.toString(), ScriptData.ModulesType.ES6);
 		}
 	}
@@ -179,8 +182,8 @@ public class SoyComponentRendererHelper {
 		}
 
 		_soyRenderer.renderSoy(
-			_request, writer, _componentDescriptor.getTemplateNamespace(),
-			_context);
+			_httpServletRequest, writer,
+			_componentDescriptor.getTemplateNamespace(), _context);
 
 		if (wrapper) {
 			writer.append("</div>");
@@ -196,7 +199,7 @@ public class SoyComponentRendererHelper {
 	private final String _elementSelector;
 	private final String _moduleName;
 	private final Portal _portal;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SoyRenderer _soyRenderer;
 	private final String _wrapperId;
 

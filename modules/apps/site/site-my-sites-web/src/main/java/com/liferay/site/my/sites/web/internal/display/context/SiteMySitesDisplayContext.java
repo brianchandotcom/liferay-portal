@@ -59,7 +59,7 @@ public class SiteMySitesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public List<DropdownItem> getArticleActionDropdownItems(Group group)
@@ -168,7 +168,7 @@ public class SiteMySitesDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "my-sites");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "my-sites"));
+							LanguageUtil.get(_httpServletRequest, "my-sites"));
 					});
 
 				add(
@@ -178,7 +178,8 @@ public class SiteMySitesDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "available-sites");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "available-sites"));
+							LanguageUtil.get(
+								_httpServletRequest, "available-sites"));
 					});
 			}
 		};
@@ -189,7 +190,8 @@ public class SiteMySitesDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}
@@ -199,7 +201,8 @@ public class SiteMySitesDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -239,7 +242,7 @@ public class SiteMySitesDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _tabs1;
 
 }

@@ -895,7 +895,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-		ddmFormRenderingContext.setHttpServletRequest(_request);
+		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setLocale(_LOCALE);
 		ddmFormRenderingContext.setPortletNamespace(_PORTLET_NAMESPACE);
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
@@ -1008,14 +1008,15 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	protected void setUpHttpServletRequest() {
-		_request = Mockito.mock(HttpServletRequest.class);
+		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathThemeImages(StringPool.BLANK);
 
 		when(
-			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
@@ -1127,6 +1128,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
-	private HttpServletRequest _request;
+	private HttpServletRequest _httpServletRequest;
 
 }

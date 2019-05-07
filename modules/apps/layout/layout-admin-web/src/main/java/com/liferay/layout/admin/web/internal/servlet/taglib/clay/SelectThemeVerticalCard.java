@@ -37,7 +37,7 @@ public class SelectThemeVerticalCard implements VerticalCard {
 	public SelectThemeVerticalCard(Theme theme, RenderRequest renderRequest) {
 		_theme = theme;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class SelectThemeVerticalCard implements VerticalCard {
 			Validator.isNotNull(selPluginPackage.getAuthor())) {
 
 			author = LanguageUtil.format(
-				_request, "by-x", selPluginPackage.getAuthor());
+				_httpServletRequest, "by-x", selPluginPackage.getAuthor());
 		}
 
 		return author;
@@ -87,7 +87,7 @@ public class SelectThemeVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final Theme _theme;
 
 }

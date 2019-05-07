@@ -59,7 +59,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 		RenderResponse renderResponse, Organization organization,
 		String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_organization = organization;
@@ -82,7 +82,8 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -90,7 +91,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -124,7 +125,8 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 			String.valueOf(_organization.getOrganizationId()));
 		portletURL.setParameter("displayStyle", _displayStyle);
 
-		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
+		String[] keywords = ParamUtil.getStringValues(
+			_httpServletRequest, "keywords");
 
 		if (ArrayUtil.isNotEmpty(keywords)) {
 			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
@@ -154,8 +156,9 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 
 		userSearch.setRowChecker(rowChecker);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -227,7 +230,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -243,7 +246,8 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "first-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "first-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "first-name"));
 					});
 
 				add(
@@ -253,7 +257,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "last-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "last-name"));
+							LanguageUtil.get(_httpServletRequest, "last-name"));
 					});
 
 				add(
@@ -263,7 +267,8 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "screen-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "screen-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "screen-name"));
 					});
 			}
 		};
@@ -278,7 +283,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 	private final Organization _organization;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private UserSearch _userSearch;
 
 }

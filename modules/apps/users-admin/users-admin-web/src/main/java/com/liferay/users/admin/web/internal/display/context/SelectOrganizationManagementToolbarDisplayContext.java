@@ -60,7 +60,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -97,7 +97,8 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -105,7 +106,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -140,12 +141,13 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 		}
 
 		String eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectOrganization");
 
 		portletURL.setParameter("eventName", eventName);
 
-		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
+		String[] keywords = ParamUtil.getStringValues(
+			_httpServletRequest, "keywords");
 
 		if (ArrayUtil.isNotEmpty(keywords)) {
 			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
@@ -156,7 +158,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 
-		String target = ParamUtil.getString(_request, "target");
+		String target = ParamUtil.getString(_httpServletRequest, "target");
 
 		if (Validator.isNotNull(target)) {
 			portletURL.setParameter("target", target);
@@ -182,8 +184,9 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, getPortletURL());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long parentOrganizationId =
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
@@ -261,7 +264,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -277,7 +280,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 
 				add(
@@ -287,7 +290,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "type");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "type"));
+							LanguageUtil.get(_httpServletRequest, "type"));
 					});
 			}
 		};
@@ -295,7 +298,7 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 
 	private User _getSelectedUser() {
 		try {
-			return PortalUtil.getSelectedUser(_request);
+			return PortalUtil.getSelectedUser(_httpServletRequest);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -310,6 +313,6 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 	private OrganizationSearch _organizationSearch;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

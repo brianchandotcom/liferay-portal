@@ -47,7 +47,7 @@ public class ViewMembershipRequestsDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -70,7 +70,8 @@ public class ViewMembershipRequestsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -85,7 +86,7 @@ public class ViewMembershipRequestsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "pending");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "pending"));
+							LanguageUtil.get(_httpServletRequest, "pending"));
 					});
 
 				add(
@@ -95,7 +96,7 @@ public class ViewMembershipRequestsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "approved");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "approved"));
+							LanguageUtil.get(_httpServletRequest, "approved"));
 					});
 
 				add(
@@ -105,7 +106,7 @@ public class ViewMembershipRequestsDisplayContext {
 						navigationItem.setHref(
 							getPortletURL(), "tabs1", "denied");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "denied"));
+							LanguageUtil.get(_httpServletRequest, "denied"));
 					});
 			}
 		};
@@ -133,8 +134,9 @@ public class ViewMembershipRequestsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -175,8 +177,9 @@ public class ViewMembershipRequestsDisplayContext {
 			return _siteMembershipSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer siteMembershipSearch = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "no-requests-were-found");
@@ -230,7 +233,7 @@ public class ViewMembershipRequestsDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1", "pending");
+		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "pending");
 
 		return _tabs1;
 	}
@@ -240,7 +243,7 @@ public class ViewMembershipRequestsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _siteMembershipSearch;
 	private String _tabs1;
 

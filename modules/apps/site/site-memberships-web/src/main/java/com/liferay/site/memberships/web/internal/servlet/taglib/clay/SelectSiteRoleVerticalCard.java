@@ -37,7 +37,7 @@ public class SelectSiteRoleVerticalCard implements VerticalCard {
 	public SelectSiteRoleVerticalCard(Role role, RenderRequest renderRequest) {
 		_role = role;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -61,13 +61,14 @@ public class SelectSiteRoleVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		return LanguageUtil.get(_request, _role.getTypeLabel());
+		return LanguageUtil.get(_httpServletRequest, _role.getTypeLabel());
 	}
 
 	@Override
 	public String getTitle() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HtmlUtil.escape(_role.getTitle(themeDisplay.getLocale()));
 	}
@@ -77,7 +78,7 @@ public class SelectSiteRoleVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final Role _role;
 
 }

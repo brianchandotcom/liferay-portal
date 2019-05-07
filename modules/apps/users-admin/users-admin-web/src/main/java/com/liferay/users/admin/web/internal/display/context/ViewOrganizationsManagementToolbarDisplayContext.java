@@ -66,7 +66,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -86,7 +86,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 								"deleteOrganizations();"));
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -115,7 +115,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 								"/users_admin/edit_organization", "redirect",
 								_getViewUsersURL(), "type", organizationType);
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, organizationType));
+								LanguageUtil.get(
+									_httpServletRequest, organizationType));
 						});
 				}
 			}
@@ -130,7 +131,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -138,7 +140,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -186,7 +188,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 			return _organizationSearch;
 		}
 
-		PortletURL portletURL = (PortletURL)_request.getAttribute(
+		PortletURL portletURL = (PortletURL)_httpServletRequest.getAttribute(
 			"view.jsp-portletURL");
 
 		OrganizationSearch organizationSearch = new OrganizationSearch(
@@ -198,8 +200,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 		organizationSearch.setRowChecker(rowChecker);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long parentOrganizationId =
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
@@ -215,7 +218,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		}
 		else {
 			parentOrganizationId = ParamUtil.getLong(
-				_request, "parentOrganizationId",
+				_httpServletRequest, "parentOrganizationId",
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 		}
 
@@ -288,8 +291,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
@@ -303,7 +307,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -319,7 +323,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 
 				add(
@@ -329,7 +333,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "type");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "type"));
+							LanguageUtil.get(_httpServletRequest, "type"));
 					});
 			}
 		};
@@ -337,8 +341,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	private String _getViewUsersURL() {
 		String toolbarItem = ParamUtil.getString(
-			_request, "toolbarItem", "view-all-organizations");
-		String usersListView = (String)_request.getAttribute(
+			_httpServletRequest, "toolbarItem", "view-all-organizations");
+		String usersListView = (String)_httpServletRequest.getAttribute(
 			"view.jsp-usersListView");
 
 		PortletURL viewUsersURL = _renderResponse.createRenderURL();
@@ -357,6 +361,6 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	private OrganizationSearch _organizationSearch;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

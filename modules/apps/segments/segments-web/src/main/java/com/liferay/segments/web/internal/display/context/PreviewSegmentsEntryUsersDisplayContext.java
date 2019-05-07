@@ -56,7 +56,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		ODataRetriever<User> userODataRetriever,
 		UserLocalService userLocalService) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsEntryProvider = segmentsEntryProvider;
@@ -64,7 +64,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		_userODataRetriever = userODataRetriever;
 		_userLocalService = userLocalService;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -171,7 +171,8 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			return _segmentsEntry;
 		}
 
-		long segmentsEntryId = ParamUtil.getLong(_request, "segmentsEntryId");
+		long segmentsEntryId = ParamUtil.getLong(
+			_httpServletRequest, "segmentsEntryId");
 
 		if (segmentsEntryId > 0) {
 			try {
@@ -194,7 +195,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SegmentsEntry _segmentsEntry;
 	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;

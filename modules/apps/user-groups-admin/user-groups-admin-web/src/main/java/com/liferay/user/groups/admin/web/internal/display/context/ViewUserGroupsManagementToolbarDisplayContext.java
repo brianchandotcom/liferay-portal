@@ -55,7 +55,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -74,7 +74,8 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 									"deleteUserGroups()"));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "delete"));
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -100,7 +101,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 							"/edit_user_group.jsp", "redirect",
 							_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add"));
+							LanguageUtil.get(_httpServletRequest, "add"));
 					});
 			}
 		};
@@ -114,7 +115,8 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -122,7 +124,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -130,7 +132,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (Validator.isNull(_keywords)) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -138,7 +140,8 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 
 	public String getOrderByCol() {
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "name");
 		}
 
 		return _orderByCol;
@@ -146,7 +149,8 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 
 	public String getOrderByType() {
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+			_orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
 		}
 
 		return _orderByType;
@@ -158,7 +162,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 		portletURL.setParameter("mvcPath", "/view.jsp");
 
 		String viewUserGroupsRedirect = ParamUtil.getString(
-			_request, "viewUserGroupsRedirect");
+			_httpServletRequest, "viewUserGroupsRedirect");
 
 		if (Validator.isNotNull(viewUserGroupsRedirect)) {
 			portletURL.setParameter(
@@ -202,8 +206,9 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 
 		userGroupSearch.setRowChecker(new UserGroupChecker(_renderResponse));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		UserGroupDisplayTerms userGroupSearchTerms =
 			(UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
@@ -263,7 +268,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 						dropdownItem.setActive(true);
 						dropdownItem.setHref(StringPool.BLANK);
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 			}
 		};
@@ -279,15 +284,16 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
+							LanguageUtil.get(_httpServletRequest, "name"));
 					});
 			}
 		};
 	}
 
 	private boolean _hasAddUserGroupPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER_GROUP);
@@ -299,7 +305,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private UserGroupSearch _userGroupSearch;
 
 }

@@ -46,7 +46,7 @@ public class SelectSiteInitializerDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -60,9 +60,10 @@ public class SelectSiteInitializerDisplayContext {
 			return _backURL;
 		}
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
-		_backURL = ParamUtil.getString(_request, "backURL", redirect);
+		_backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL", redirect);
 
 		return _backURL;
 	}
@@ -72,7 +73,8 @@ public class SelectSiteInitializerDisplayContext {
 			return _parentGroupId;
 		}
 
-		_parentGroupId = ParamUtil.getLong(_request, "parentGroupId");
+		_parentGroupId = ParamUtil.getLong(
+			_httpServletRequest, "parentGroupId");
 
 		return _parentGroupId;
 	}
@@ -112,8 +114,9 @@ public class SelectSiteInitializerDisplayContext {
 
 		List<SiteInitializerItem> siteInitializerItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<LayoutSetPrototype> layoutSetPrototypes =
 			LayoutSetPrototypeServiceUtil.search(
@@ -146,7 +149,7 @@ public class SelectSiteInitializerDisplayContext {
 	private Long _parentGroupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SiteInitializerRegistry _siteInitializerRegistry;
 
 }

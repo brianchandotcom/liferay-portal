@@ -47,7 +47,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
@@ -63,7 +63,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		}
 
 		long siteNavigationMenuId = ParamUtil.getLong(
-			_request, "siteNavigationMenuId");
+			_httpServletRequest, "siteNavigationMenuId");
 
 		if (siteNavigationMenuId > 0) {
 			_siteNavigationMenu =
@@ -83,8 +83,9 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			return _siteNavigationMenu;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
@@ -150,8 +151,9 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			"id", "0"
 		);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(),
@@ -191,8 +193,9 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 	private JSONArray _getLayoutItemsJSONArray(
 		boolean privateLayout, long parentLayoutId) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -235,7 +238,7 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		}
 
 		_siteNavigationMenuItemId = ParamUtil.getLong(
-			_request, "siteNavigationMenuItemId");
+			_httpServletRequest, "siteNavigationMenuItemId");
 
 		return _siteNavigationMenuItemId;
 	}
@@ -245,8 +248,9 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
@@ -300,13 +304,13 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		}
 
 		_siteNavigationMenuType = ParamUtil.getInteger(
-			_request, "siteNavigationMenuType");
+			_httpServletRequest, "siteNavigationMenuType");
 
 		return _siteNavigationMenuType;
 	}
 
 	private final String _itemSelectedEventName;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuItemId;
 	private final SiteNavigationMenuItemTypeRegistry

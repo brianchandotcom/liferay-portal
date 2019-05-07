@@ -45,9 +45,9 @@ public class ViewMembershipRequetsPendingActionDropdownItemsProvider {
 		_membershipRequest = membershipRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -77,13 +77,14 @@ public class ViewMembershipRequetsPendingActionDropdownItemsProvider {
 				_membershipRequest.getUserId(), "groupId",
 				_themeDisplay.getScopeGroupId(), "membershipRequestId",
 				_membershipRequest.getMembershipRequestId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "reply"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "reply"));
 		};
 	}
 
 	private final MembershipRequest _membershipRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

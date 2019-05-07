@@ -50,7 +50,7 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 		_ddmTemplate = ddmTemplate;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -104,7 +104,8 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				"/copy_ddm_template.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "ddmTemplateId",
 				_ddmTemplate.getTemplateId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "copy"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
 	}
 
@@ -125,7 +126,8 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 			dropdownItem.putData("action", "deleteDDMTemplate");
 			dropdownItem.putData(
 				"deleteDDMTemplateURL", deleteDDMTemplateURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -138,7 +140,8 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				"/edit_ddm_template.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "ddmTemplateId",
 				_ddmTemplate.getTemplateId());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
 	}
 
@@ -152,19 +155,20 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				_ddmTemplate.getResourceClassNameId()),
 			_ddmTemplate.getName(_themeDisplay.getLocale()), null,
 			String.valueOf(_ddmTemplate.getTemplateId()),
-			LiferayWindowState.POP_UP.toString(), null, _request);
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissionsDDMTemplate");
 			dropdownItem.putData(
 				"permissionsDDMTemplateURL", permissionsDDMTemplateURL);
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
 	private final DDMTemplate _ddmTemplate;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

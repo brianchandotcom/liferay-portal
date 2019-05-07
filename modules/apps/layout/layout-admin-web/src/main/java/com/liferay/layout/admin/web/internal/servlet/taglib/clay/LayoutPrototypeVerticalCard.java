@@ -58,7 +58,7 @@ public class LayoutPrototypeVerticalCard
 		_layoutPrototype = (LayoutPrototype)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -122,7 +122,8 @@ public class LayoutPrototypeVerticalCard
 							label = "active";
 						}
 
-						labelItem.setLabel(LanguageUtil.get(_request, label));
+						labelItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, label));
 
 						String style = "warning";
 
@@ -141,10 +142,11 @@ public class LayoutPrototypeVerticalCard
 		Date createDate = _layoutPrototype.getModifiedDate();
 
 		String createdDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "created-x-ago", createdDateDescription);
+			_httpServletRequest, "created-x-ago", createdDateDescription);
 	}
 
 	@Override
@@ -160,7 +162,7 @@ public class LayoutPrototypeVerticalCard
 	private final LayoutPrototype _layoutPrototype;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

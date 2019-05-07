@@ -74,11 +74,11 @@ public class JournalEditArticleDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, JournalArticle article) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_article = article;
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_setViewAttributes();
@@ -89,7 +89,8 @@ public class JournalEditArticleDisplayContext {
 			return _articleId;
 		}
 
-		_articleId = BeanParamUtil.getString(_article, _request, "articleId");
+		_articleId = BeanParamUtil.getString(
+			_article, _httpServletRequest, "articleId");
 
 		return _articleId;
 	}
@@ -116,9 +117,11 @@ public class JournalEditArticleDisplayContext {
 		Map<String, Object> strings = new HashMap<>();
 
 		strings.put(
-			"change", LanguageUtil.format(_request, "change", "content"));
+			"change",
+			LanguageUtil.format(_httpServletRequest, "change", "content"));
 		strings.put(
-			"default", LanguageUtil.format(_request, "default", "content"));
+			"default",
+			LanguageUtil.format(_httpServletRequest, "default", "content"));
 
 		for (Locale availableLocale : getAvailableLocales()) {
 			String curLanguageId = LocaleUtil.toLanguageId(availableLocale);
@@ -126,7 +129,7 @@ public class JournalEditArticleDisplayContext {
 			strings.put(
 				curLanguageId,
 				LanguageUtil.format(
-					_request, "default-language-x",
+					_httpServletRequest, "default-language-x",
 					availableLocale.getDisplayName(
 						LocaleUtil.fromLanguageId(getDefaultLanguageId())),
 					false));
@@ -166,7 +169,8 @@ public class JournalEditArticleDisplayContext {
 			return _classNameId;
 		}
 
-		_classNameId = BeanParamUtil.getLong(_article, _request, "classNameId");
+		_classNameId = BeanParamUtil.getLong(
+			_article, _httpServletRequest, "classNameId");
 
 		return _classNameId;
 	}
@@ -176,7 +180,8 @@ public class JournalEditArticleDisplayContext {
 			return _classPK;
 		}
 
-		_classPK = BeanParamUtil.getLong(_article, _request, "classPK");
+		_classPK = BeanParamUtil.getLong(
+			_article, _httpServletRequest, "classPK");
 
 		return _classPK;
 	}
@@ -217,7 +222,8 @@ public class JournalEditArticleDisplayContext {
 			return _ddmStructure;
 		}
 
-		long ddmStructureId = ParamUtil.getLong(_request, "ddmStructureId");
+		long ddmStructureId = ParamUtil.getLong(
+			_httpServletRequest, "ddmStructureId");
 
 		if (ddmStructureId > 0) {
 			_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
@@ -225,7 +231,7 @@ public class JournalEditArticleDisplayContext {
 		}
 		else if (Validator.isNotNull(getDDMStructureKey())) {
 			long groupId = ParamUtil.getLong(
-				_request, "groupId", _themeDisplay.getSiteGroupId());
+				_httpServletRequest, "groupId", _themeDisplay.getSiteGroupId());
 
 			if (_article != null) {
 				groupId = _article.getGroupId();
@@ -250,7 +256,8 @@ public class JournalEditArticleDisplayContext {
 			return _ddmStructureKey;
 		}
 
-		_ddmStructureKey = ParamUtil.getString(_request, "ddmStructureKey");
+		_ddmStructureKey = ParamUtil.getString(
+			_httpServletRequest, "ddmStructureKey");
 
 		if (Validator.isNull(_ddmStructureKey) && (_article != null)) {
 			_ddmStructureKey = _article.getDDMStructureKey();
@@ -260,7 +267,8 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public DDMTemplate getDDMTemplate() {
-		long ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
+		long ddmTemplateId = ParamUtil.getLong(
+			_httpServletRequest, "ddmTemplateId");
 
 		if (ddmTemplateId == -1) {
 			return null;
@@ -275,7 +283,7 @@ public class JournalEditArticleDisplayContext {
 
 		if (Validator.isNotNull(getDDMTemplateKey())) {
 			long groupId = ParamUtil.getLong(
-				_request, "groupId", _themeDisplay.getSiteGroupId());
+				_httpServletRequest, "groupId", _themeDisplay.getSiteGroupId());
 
 			if (_article != null) {
 				groupId = _article.getGroupId();
@@ -296,7 +304,8 @@ public class JournalEditArticleDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		_ddmTemplateKey = ParamUtil.getString(_request, "ddmTemplateKey");
+		_ddmTemplateKey = ParamUtil.getString(
+			_httpServletRequest, "ddmTemplateKey");
 
 		if (Validator.isNull(_ddmTemplateKey) && (_article != null) &&
 			Objects.equals(
@@ -329,7 +338,8 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getDefaultLanguageId() {
-		String languageId = ParamUtil.getString(_request, "languageId");
+		String languageId = ParamUtil.getString(
+			_httpServletRequest, "languageId");
 
 		if (Validator.isNotNull(languageId)) {
 			return languageId;
@@ -356,7 +366,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_folderId = BeanParamUtil.getLong(
-			_article, _request, "folderId",
+			_article, _httpServletRequest, "folderId",
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
@@ -399,7 +409,8 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_groupId = BeanParamUtil.getLong(
-			_article, _request, "groupId", _themeDisplay.getScopeGroupId());
+			_article, _httpServletRequest, "groupId",
+			_themeDisplay.getScopeGroupId());
 
 		return _groupId;
 	}
@@ -409,7 +420,8 @@ public class JournalEditArticleDisplayContext {
 			return _portletResource;
 		}
 
-		_portletResource = ParamUtil.getString(_request, "portletResource");
+		_portletResource = ParamUtil.getString(
+			_httpServletRequest, "portletResource");
 
 		return _portletResource;
 	}
@@ -431,7 +443,7 @@ public class JournalEditArticleDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -441,7 +453,7 @@ public class JournalEditArticleDisplayContext {
 			return _refererPlid;
 		}
 
-		_refererPlid = ParamUtil.getLong(_request, "refererPlid");
+		_refererPlid = ParamUtil.getLong(_httpServletRequest, "refererPlid");
 
 		return _refererPlid;
 	}
@@ -452,7 +464,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_referringPortletResource = ParamUtil.getString(
-			_request, "referringPortletResource");
+			_httpServletRequest, "referringPortletResource");
 
 		return _referringPortletResource;
 	}
@@ -474,7 +486,8 @@ public class JournalEditArticleDisplayContext {
 			return _smallImageSource;
 		}
 
-		_smallImageSource = ParamUtil.getString(_request, "smallImageSource");
+		_smallImageSource = ParamUtil.getString(
+			_httpServletRequest, "smallImageSource");
 
 		if (Validator.isNotNull(_smallImageSource)) {
 			return _smallImageSource;
@@ -501,7 +514,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_version = BeanParamUtil.getDouble(
-			_article, _request, "version",
+			_article, _httpServletRequest, "version",
 			JournalArticleConstants.VERSION_DEFAULT);
 
 		return _version;
@@ -533,7 +546,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		_changeStructure = GetterUtil.getBoolean(
-			ParamUtil.getString(_request, "changeStructure"));
+			ParamUtil.getString(_httpServletRequest, "changeStructure"));
 
 		return _changeStructure;
 	}
@@ -543,7 +556,8 @@ public class JournalEditArticleDisplayContext {
 			return _neverExpire;
 		}
 
-		_neverExpire = ParamUtil.getBoolean(_request, "neverExpire", true);
+		_neverExpire = ParamUtil.getBoolean(
+			_httpServletRequest, "neverExpire", true);
 
 		if ((_article != null) && (_article.getExpirationDate() != null)) {
 			_neverExpire = false;
@@ -557,7 +571,8 @@ public class JournalEditArticleDisplayContext {
 			return _neverReview;
 		}
 
-		_neverReview = ParamUtil.getBoolean(_request, "neverReview", true);
+		_neverReview = ParamUtil.getBoolean(
+			_httpServletRequest, "neverReview", true);
 
 		if ((_article != null) && (_article.getReviewDate() != null)) {
 			_neverReview = false;
@@ -589,19 +604,20 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	private JournalConverter _getJournalConverter() {
-		return (JournalConverter)_request.getAttribute(
+		return (JournalConverter)_httpServletRequest.getAttribute(
 			JournalWebKeys.JOURNAL_CONVERTER);
 	}
 
 	private String _getTitle() {
 		if (getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			return LanguageUtil.get(_request, "structure-default-values");
+			return LanguageUtil.get(
+				_httpServletRequest, "structure-default-values");
 		}
 		else if ((_article != null) && !_article.isNew()) {
 			return _article.getTitle(_themeDisplay.getLocale());
 		}
 
-		return LanguageUtil.get(_request, "new-web-content");
+		return LanguageUtil.get(_httpServletRequest, "new-web-content");
 	}
 
 	private boolean _hasInheritedWorkflowDefinitionLink()
@@ -632,7 +648,8 @@ public class JournalEditArticleDisplayContext {
 			return _showHeader;
 		}
 
-		_showHeader = ParamUtil.getBoolean(_request, "showHeader", true);
+		_showHeader = ParamUtil.getBoolean(
+			_httpServletRequest, "showHeader", true);
 
 		return _showHeader;
 	}
@@ -731,7 +748,7 @@ public class JournalEditArticleDisplayContext {
 	private String _redirect;
 	private Long _refererPlid;
 	private String _referringPortletResource;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showHeader;
 	private String _smallImageSource;
 	private final ThemeDisplay _themeDisplay;

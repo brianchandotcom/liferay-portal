@@ -49,7 +49,7 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 
 		_layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(type);
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -58,7 +58,7 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 	public Map<String, String> getData() {
 		Map<String, String> data = new HashMap<>();
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		try {
 			PortletURL addLayoutURL = _renderResponse.createRenderURL();
@@ -67,12 +67,12 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 				"mvcRenderCommandName", "/layout/add_layout");
 			addLayoutURL.setParameter("backURL", redirect);
 
-			long selPlid = ParamUtil.getLong(_request, "selPlid");
+			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
 
 			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 
 			boolean privateLayout = ParamUtil.getBoolean(
-				_request, "privateLayout");
+				_httpServletRequest, "privateLayout");
 
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
@@ -107,7 +107,8 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 			_layoutTypeController.getClass());
 
 		return LanguageUtil.get(
-			_request, layoutTypeResourceBundle, "layout.types." + _type);
+			_httpServletRequest, layoutTypeResourceBundle,
+			"layout.types." + _type);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 
 	private final LayoutTypeController _layoutTypeController;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final String _type;
 

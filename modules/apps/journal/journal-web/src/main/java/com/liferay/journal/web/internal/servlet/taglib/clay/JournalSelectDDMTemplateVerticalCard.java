@@ -44,15 +44,16 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 			journalSelectDDMTemplateDisplayContext) {
 
 		_ddmTemplate = (DDMTemplate)baseModel;
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_journalSelectDDMTemplateDisplayContext =
 			journalSelectDDMTemplateDisplayContext;
 	}
 
 	@Override
 	public Map<String, String> getData() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Map<String, String> data = new HashMap<>();
 
@@ -86,8 +87,9 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 
 	@Override
 	public String getImageSrc() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HtmlUtil.escapeAttribute(
 			_ddmTemplate.getTemplateImageURL(themeDisplay));
@@ -98,16 +100,18 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 		Date createDate = _ddmTemplate.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "modified-x-ago", modifiedDateDescription);
+			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
 	}
 
 	@Override
 	public String getTitle() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HtmlUtil.escape(_ddmTemplate.getName(themeDisplay.getLocale()));
 	}
@@ -120,6 +124,6 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 	private final DDMTemplate _ddmTemplate;
 	private final JournalSelectDDMTemplateDisplayContext
 		_journalSelectDDMTemplateDisplayContext;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

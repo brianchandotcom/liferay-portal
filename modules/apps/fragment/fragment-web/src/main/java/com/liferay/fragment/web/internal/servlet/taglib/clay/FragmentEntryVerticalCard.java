@@ -55,7 +55,7 @@ public class FragmentEntryVerticalCard
 		_renderResponse = renderResponse;
 
 		_fragmentEntry = (FragmentEntry)baseModel;
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -145,9 +145,11 @@ public class FragmentEntryVerticalCard
 		Date statusDate = _fragmentEntry.getStatusDate();
 
 		String statusDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - statusDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - statusDate.getTime(), true);
 
-		return LanguageUtil.format(_request, "x-ago", statusDateDescription);
+		return LanguageUtil.format(
+			_httpServletRequest, "x-ago", statusDateDescription);
 	}
 
 	@Override
@@ -158,7 +160,7 @@ public class FragmentEntryVerticalCard
 	private final FragmentEntry _fragmentEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

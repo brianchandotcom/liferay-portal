@@ -139,7 +139,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 
 		ddmForm.setDefaultLocale(LocaleUtil.BRAZIL);
 
-		Locale locale = _ddmFormRendererTag.getLocale(_request, ddmForm);
+		Locale locale = _ddmFormRendererTag.getLocale(
+			_httpServletRequest, ddmForm);
 
 		Assert.assertEquals(LocaleUtil.BRAZIL, locale);
 	}
@@ -216,7 +217,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 
 	@Test
 	public void testGetLocaleFromRequestWhenDDMFormIsNull() {
-		Locale locale = _ddmFormRendererTag.getLocale(_request, null);
+		Locale locale = _ddmFormRendererTag.getLocale(
+			_httpServletRequest, null);
 
 		Assert.assertEquals(LocaleUtil.US, locale);
 	}
@@ -229,7 +231,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 		ddmForm.setAvailableLocales(
 			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
 
-		Locale locale = _ddmFormRendererTag.getLocale(_request, ddmForm);
+		Locale locale = _ddmFormRendererTag.getLocale(
+			_httpServletRequest, ddmForm);
 
 		Assert.assertEquals(LocaleUtil.US, locale);
 	}
@@ -396,20 +399,20 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	protected void setUpHttpServletRequest() throws IllegalAccessException {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		_request.setAttribute(
+		_httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE, new MockRenderResponse());
-		_request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		MemberMatcher.field(
 			DDMFormRendererTag.class, "request"
 		).set(
-			_ddmFormRendererTag, _request
+			_ddmFormRendererTag, _httpServletRequest
 		);
 	}
 
 	protected void setUpLanguageUtil() {
 		when(
-			_language.getLanguageId(Matchers.eq(_request))
+			_language.getLanguageId(Matchers.eq(_httpServletRequest))
 		).thenReturn(
 			"en_US"
 		);
@@ -437,7 +440,7 @@ public class DDMFormRendererTagTest extends PowerMockito {
 		when(
 			PortalUtil.getHttpServletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
-			_request
+			_httpServletRequest
 		);
 
 		when(
@@ -485,6 +488,7 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	@Mock
 	private Language _language;
 
-	private final HttpServletRequest _request = new MockHttpServletRequest();
+	private final HttpServletRequest _httpServletRequest =
+		new MockHttpServletRequest();
 
 }

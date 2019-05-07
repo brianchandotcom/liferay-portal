@@ -54,7 +54,7 @@ public class UserGroupRolesDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -64,7 +64,8 @@ public class UserGroupRolesDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -75,7 +76,7 @@ public class UserGroupRolesDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectUserGroupsRoles");
 
 		return _eventName;
@@ -86,11 +87,13 @@ public class UserGroupRolesDisplayContext {
 			return _groupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_groupId = ParamUtil.getLong(
-			_request, "groupId", themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}
@@ -171,8 +174,9 @@ public class UserGroupRolesDisplayContext {
 			return _roleSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
 
@@ -240,7 +244,7 @@ public class UserGroupRolesDisplayContext {
 			return _userGroupId;
 		}
 
-		_userGroupId = ParamUtil.getLong(_request, "userGroupId");
+		_userGroupId = ParamUtil.getLong(_httpServletRequest, "userGroupId");
 
 		return _userGroupId;
 	}
@@ -250,7 +254,8 @@ public class UserGroupRolesDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "title");
+		_orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol", "title");
 
 		return _orderByCol;
 	}
@@ -286,7 +291,8 @@ public class UserGroupRolesDisplayContext {
 			return _assignRoles;
 		}
 
-		_assignRoles = ParamUtil.getBoolean(_request, "assignRoles", true);
+		_assignRoles = ParamUtil.getBoolean(
+			_httpServletRequest, "assignRoles", true);
 
 		return _assignRoles;
 	}
@@ -300,7 +306,7 @@ public class UserGroupRolesDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private RoleSearch _roleSearch;
 	private Long _userGroupId;
 

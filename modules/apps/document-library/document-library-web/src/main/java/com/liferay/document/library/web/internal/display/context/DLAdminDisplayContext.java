@@ -97,9 +97,9 @@ public class DLAdminDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_versioningStrategy = versioningStrategy;
 
-		_request = liferayPortletRequest.getHttpServletRequest();
+		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
-		_dlRequestHelper = new DLRequestHelper(_request);
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 
 		_dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
@@ -110,7 +110,7 @@ public class DLAdminDisplayContext {
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
@@ -119,7 +119,8 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
 
 		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
 
@@ -134,7 +135,7 @@ public class DLAdminDisplayContext {
 					DLPortletKeys.DOCUMENT_LIBRARY, "display-style",
 					displayStyle);
 
-				_request.setAttribute(
+				_httpServletRequest.setAttribute(
 					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 			}
 		}
@@ -155,14 +156,15 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getNavigation() {
-		return ParamUtil.getString(_request, "navigation", "home");
+		return ParamUtil.getString(_httpServletRequest, "navigation", "home");
 	}
 
 	public String getOrderByCol() {
-		String orderByCol = ParamUtil.getString(_request, "orderByCol");
+		String orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol");
 
 		long fileEntryTypeId = ParamUtil.getLong(
-			_request, "fileEntryTypeId", -1);
+			_httpServletRequest, "fileEntryTypeId", -1);
 
 		if (orderByCol.equals("downloads") && (fileEntryTypeId >= 0)) {
 			orderByCol = "modifiedDate";
@@ -181,7 +183,8 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getOrderByType() {
-		String orderByType = ParamUtil.getString(_request, "orderByType");
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType");
 
 		if (Validator.isNotNull(orderByType)) {
 			_portalPreferences.setValue(
@@ -257,16 +260,17 @@ public class DLAdminDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/search");
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		portletURL.setParameter("redirect", redirect);
 
-		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
+		long searchFolderId = ParamUtil.getLong(
+			_httpServletRequest, "searchFolderId");
 
 		portletURL.setParameter(
 			"searchFolderId", String.valueOf(searchFolderId));
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		portletURL.setParameter("keywords", keywords);
 
@@ -279,7 +283,7 @@ public class DLAdminDisplayContext {
 
 	public boolean isSearch() {
 		String mvcRenderCommandName = ParamUtil.getString(
-			_request, "mvcRenderCommandName");
+			_httpServletRequest, "mvcRenderCommandName");
 
 		return mvcRenderCommandName.equals("/document_library/search");
 	}
@@ -292,7 +296,7 @@ public class DLAdminDisplayContext {
 		try {
 			_computeRootFolder();
 
-			_folder = (Folder)_request.getAttribute(
+			_folder = (Folder)_httpServletRequest.getAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 			_folderId = BeanPropertiesUtil.getLong(
@@ -360,16 +364,19 @@ public class DLAdminDisplayContext {
 	}
 
 	private SearchContainer _getDLSearchContainer() throws PortalException {
-		String navigation = ParamUtil.getString(_request, "navigation", "home");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "home");
 
-		String currentFolder = ParamUtil.getString(_request, "curFolder");
-		String deltaFolder = ParamUtil.getString(_request, "deltaFolder");
+		String currentFolder = ParamUtil.getString(
+			_httpServletRequest, "curFolder");
+		String deltaFolder = ParamUtil.getString(
+			_httpServletRequest, "deltaFolder");
 
 		long fileEntryTypeId = ParamUtil.getLong(
-			_request, "fileEntryTypeId", -1);
+			_httpServletRequest, "fileEntryTypeId", -1);
 
 		String dlFileEntryTypeName = LanguageUtil.get(
-			_request, "basic-document");
+			_httpServletRequest, "basic-document");
 
 		int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -381,8 +388,8 @@ public class DLAdminDisplayContext {
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		long categoryId = ParamUtil.getLong(_request, "categoryId");
-		String tagName = ParamUtil.getString(_request, "tag");
+		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
+		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
 
 		boolean useAssetEntryQuery = false;
 
@@ -448,11 +455,11 @@ public class DLAdminDisplayContext {
 						fileEntryTypeId);
 
 				dlFileEntryTypeName = dlFileEntryType.getName(
-					_request.getLocale());
+					_httpServletRequest.getLocale());
 			}
 
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				_request);
+				_httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "none");
 			searchContext.setEnd(dlSearchContainer.getEnd());
@@ -581,7 +588,8 @@ public class DLAdminDisplayContext {
 		if (fileEntryTypeId >= 0) {
 			dlSearchContainer.setEmptyResultsMessage(
 				LanguageUtil.format(
-					_request, "there-are-no-documents-or-media-files-of-type-x",
+					_httpServletRequest,
+					"there-are-no-documents-or-media-files-of-type-x",
 					HtmlUtil.escape(dlFileEntryTypeName)));
 		}
 		else {
@@ -596,12 +604,12 @@ public class DLAdminDisplayContext {
 		throws PortalException {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
-			_request);
+			_httpServletRequest);
 
 		searchContext.setAttribute("paginationType", "regular");
 
 		long searchRepositoryId = ParamUtil.getLong(
-			_request, "searchRepositoryId");
+			_httpServletRequest, "searchRepositoryId");
 
 		if (searchRepositoryId == 0) {
 			searchRepositoryId = _themeDisplay.getScopeGroupId();
@@ -610,13 +618,14 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
 		searchContext.setEnd(searchContainer.getEnd());
 
-		long searchFolderId = ParamUtil.getLong(_request, "searchFolderId");
+		long searchFolderId = ParamUtil.getLong(
+			_httpServletRequest, "searchFolderId");
 
 		searchContext.setFolderIds(new long[] {searchFolderId});
 
 		searchContext.setIncludeDiscussions(true);
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		searchContext.setKeywords(keywords);
 
@@ -633,7 +642,8 @@ public class DLAdminDisplayContext {
 		List<Object> searchResults = new ArrayList<>();
 
 		for (SearchResult searchResult :
-				SearchResultUtil.getSearchResults(hits, _request.getLocale())) {
+				SearchResultUtil.getSearchResults(
+					hits, _httpServletRequest.getLocale())) {
 
 			FileEntry fileEntry = null;
 			Folder folder = null;
@@ -702,7 +712,7 @@ public class DLAdminDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private long _rootFolderId;
 	private String _rootFolderName;
 	private SearchContainer _searchContainer;

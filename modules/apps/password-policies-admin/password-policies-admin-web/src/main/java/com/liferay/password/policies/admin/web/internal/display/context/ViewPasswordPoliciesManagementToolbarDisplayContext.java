@@ -54,7 +54,7 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -71,7 +71,7 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 								"deletePasswordPolicies();"));
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -96,7 +96,7 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 							"/edit_password_policy.jsp", "redirect",
 							_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add"));
+							LanguageUtil.get(_httpServletRequest, "add"));
 					});
 			}
 		};
@@ -104,7 +104,7 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 
 	public String getKeywords() {
 		if (Validator.isNull(_keywords)) {
-			_keywords = ParamUtil.getString(_request, "keywords");
+			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 		}
 
 		return _keywords;
@@ -112,7 +112,8 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 
 	public String getOrderByCol() {
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "name");
 		}
 
 		return _orderByCol;
@@ -120,7 +121,8 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 
 	public String getOrderByType() {
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+			_orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
 		}
 
 		return _orderByType;
@@ -168,8 +170,9 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 		passwordPolicySearch.setRowChecker(
 			new PasswordPolicyChecker(_renderResponse));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PasswordPolicyDisplayTerms searchTerms =
 			(PasswordPolicyDisplayTerms)passwordPolicySearch.getSearchTerms();
@@ -210,8 +213,9 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(),
@@ -225,6 +229,6 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 	private PasswordPolicySearch _passwordPolicySearch;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

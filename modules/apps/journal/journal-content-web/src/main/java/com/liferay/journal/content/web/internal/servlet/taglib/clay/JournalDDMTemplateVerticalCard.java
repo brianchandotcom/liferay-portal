@@ -34,7 +34,7 @@ public class JournalDDMTemplateVerticalCard implements VerticalCard {
 		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest) {
 
 		_ddmTemplate = ddmTemplate;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
@@ -44,8 +44,9 @@ public class JournalDDMTemplateVerticalCard implements VerticalCard {
 
 	@Override
 	public String getImageSrc() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HtmlUtil.escapeAttribute(
 			_ddmTemplate.getTemplateImageURL(themeDisplay));
@@ -56,16 +57,18 @@ public class JournalDDMTemplateVerticalCard implements VerticalCard {
 		Date createDate = _ddmTemplate.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_request, System.currentTimeMillis() - createDate.getTime(), true);
+			_httpServletRequest,
+			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_request, "modified-x-ago", modifiedDateDescription);
+			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
 	}
 
 	@Override
 	public String getTitle() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return HtmlUtil.escape(_ddmTemplate.getName(themeDisplay.getLocale()));
 	}
@@ -76,6 +79,6 @@ public class JournalDDMTemplateVerticalCard implements VerticalCard {
 	}
 
 	private final DDMTemplate _ddmTemplate;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

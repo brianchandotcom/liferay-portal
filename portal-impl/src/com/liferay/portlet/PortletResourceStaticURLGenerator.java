@@ -58,7 +58,7 @@ public class PortletResourceStaticURLGenerator {
 					Portlet rootPortlet = portlet.getRootPortlet();
 
 					portletResource = PortalUtil.getStaticResourceURL(
-						_request, contextPath + portletResource,
+						_httpServletRequest, contextPath + portletResource,
 						rootPortlet.getTimestamp());
 				}
 
@@ -80,7 +80,7 @@ public class PortletResourceStaticURLGenerator {
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -89,7 +89,7 @@ public class PortletResourceStaticURLGenerator {
 		_visitedURLs = visitedURLs;
 	}
 
-	private HttpServletRequest _request;
+	private HttpServletRequest _httpServletRequest;
 	private ThemeDisplay _themeDisplay;
 	private Set<String> _visitedURLs;
 

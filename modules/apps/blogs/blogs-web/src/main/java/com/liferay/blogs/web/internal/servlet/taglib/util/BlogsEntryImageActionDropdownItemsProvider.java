@@ -46,9 +46,9 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 		_fileEntry = fileEntry;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -61,7 +61,7 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL portletURL = (PortletURL)_request.getAttribute(
+		PortletURL portletURL = (PortletURL)_httpServletRequest.getAttribute(
 			"view_images.jsp-portletURL");
 
 		return new DropdownItemList() {
@@ -75,7 +75,7 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 							portletURL.toString(), "fileEntryId",
 							_fileEntry.getFileEntryId());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_httpServletRequest, "delete"));
 					});
 			}
 		};
@@ -83,7 +83,7 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 
 	private final FileEntry _fileEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

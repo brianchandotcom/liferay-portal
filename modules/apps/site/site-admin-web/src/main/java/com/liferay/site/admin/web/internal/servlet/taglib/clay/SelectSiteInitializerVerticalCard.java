@@ -45,12 +45,13 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		_siteInitializerItem = siteInitializerItem;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
 	public Map<String, String> getData() {
-		long parentGroupId = ParamUtil.getLong(_request, "parentGroupId");
+		long parentGroupId = ParamUtil.getLong(
+			_httpServletRequest, "parentGroupId");
 
 		Map<String, String> data = new HashMap<>();
 
@@ -120,7 +121,7 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 	}
 
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SiteInitializerItem _siteInitializerItem;
 
 }

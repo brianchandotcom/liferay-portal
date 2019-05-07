@@ -46,9 +46,9 @@ public class OrganizationActionDropdownItemsProvider {
 		_organization = organization;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -88,13 +88,13 @@ public class OrganizationActionDropdownItemsProvider {
 				"deleteGroupOrganizationsURL",
 				deleteGroupOrganizationsURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "remove-membership"));
+				LanguageUtil.get(_httpServletRequest, "remove-membership"));
 		};
 	}
 
 	private final Organization _organization;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -222,7 +222,7 @@ public class SearchResultSummaryDisplayBuilder {
 	public SearchResultSummaryDisplayBuilder setRequest(
 		HttpServletRequest httpServletRequest) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		return this;
 	}
@@ -597,7 +597,7 @@ public class SearchResultSummaryDisplayBuilder {
 				LocaleUtil.toLanguageId(summaryLocale));
 			searchResultSummaryDisplayContext.setLocaleReminder(
 				_language.format(
-					_request,
+					_httpServletRequest,
 					"this-result-comes-from-the-x-version-of-this-content",
 					summaryLocale.getDisplayLanguage(_locale), false));
 
@@ -918,7 +918,7 @@ public class SearchResultSummaryDisplayBuilder {
 	private PortletURLFactory _portletURLFactory;
 	private RenderRequest _renderRequest;
 	private RenderResponse _renderResponse;
-	private HttpServletRequest _request;
+	private HttpServletRequest _httpServletRequest;
 	private ResourceActions _resourceActions;
 	private Stream<SearchResultImageContributor>
 		_searchResultImageContributorsStream = Stream.empty();

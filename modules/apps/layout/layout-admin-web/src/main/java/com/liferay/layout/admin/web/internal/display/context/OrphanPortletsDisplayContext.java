@@ -55,7 +55,7 @@ public class OrphanPortletsDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
@@ -65,7 +65,7 @@ public class OrphanPortletsDisplayContext {
 			return _backURL;
 		}
 
-		_backURL = ParamUtil.getString(_request, "backURL");
+		_backURL = ParamUtil.getString(_httpServletRequest, "backURL");
 
 		return _backURL;
 	}
@@ -250,7 +250,7 @@ public class OrphanPortletsDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByType;
 	private SearchContainer _orphanPortletsSearchContainer;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Layout _selLayout;
 	private Long _selPlid;
 

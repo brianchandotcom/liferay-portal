@@ -69,12 +69,12 @@ public class FragmentDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryProcessorRegistry =
-			(FragmentEntryProcessorRegistry)_request.getAttribute(
+			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
 				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -89,14 +89,15 @@ public class FragmentDisplayContext {
 							"/fragment/edit_fragment_collection", "redirect",
 							_themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "collection"));
+							LanguageUtil.get(
+								_httpServletRequest, "collection"));
 					});
 
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "openImportView");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "import"));
+							LanguageUtil.get(_httpServletRequest, "import"));
 					});
 			}
 		};
@@ -109,7 +110,7 @@ public class FragmentDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData("action", "exportCollections");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "export"));
+							LanguageUtil.get(_httpServletRequest, "export"));
 					});
 
 				if (FragmentPermission.contains(
@@ -121,14 +122,16 @@ public class FragmentDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "openImportView");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "import"));
+								LanguageUtil.get(
+									_httpServletRequest, "import"));
 						});
 
 					add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteCollections");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "delete"));
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
 						});
 				}
 			}
@@ -140,7 +143,7 @@ public class FragmentDisplayContext {
 			return _cssContent;
 		}
 
-		_cssContent = ParamUtil.getString(_request, "cssContent");
+		_cssContent = ParamUtil.getString(_httpServletRequest, "cssContent");
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -192,7 +195,8 @@ public class FragmentDisplayContext {
 		}
 
 		_fragmentCollectionId = ParamUtil.getLong(
-			_request, "fragmentCollectionId", defaultFragmentCollectionId);
+			_httpServletRequest, "fragmentCollectionId",
+			defaultFragmentCollectionId);
 
 		return _fragmentCollectionId;
 	}
@@ -355,7 +359,8 @@ public class FragmentDisplayContext {
 			return _fragmentEntryId;
 		}
 
-		_fragmentEntryId = ParamUtil.getLong(_request, "fragmentEntryId");
+		_fragmentEntryId = ParamUtil.getLong(
+			_httpServletRequest, "fragmentEntryId");
 
 		return _fragmentEntryId;
 	}
@@ -364,7 +369,7 @@ public class FragmentDisplayContext {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
 		if (fragmentEntry == null) {
-			return LanguageUtil.get(_request, "add-fragment");
+			return LanguageUtil.get(_httpServletRequest, "add-fragment");
 		}
 
 		return fragmentEntry.getName();
@@ -375,7 +380,7 @@ public class FragmentDisplayContext {
 			return _htmlContent;
 		}
 
-		_htmlContent = ParamUtil.getString(_request, "htmlContent");
+		_htmlContent = ParamUtil.getString(_httpServletRequest, "htmlContent");
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -401,7 +406,7 @@ public class FragmentDisplayContext {
 			return _jsContent;
 		}
 
-		_jsContent = ParamUtil.getString(_request, "jsContent");
+		_jsContent = ParamUtil.getString(_httpServletRequest, "jsContent");
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -417,7 +422,7 @@ public class FragmentDisplayContext {
 			return _name;
 		}
 
-		_name = ParamUtil.getString(_request, "name");
+		_name = ParamUtil.getString(_httpServletRequest, "name");
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
@@ -433,7 +438,8 @@ public class FragmentDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "all");
 
 		return _navigation;
 	}
@@ -448,7 +454,7 @@ public class FragmentDisplayContext {
 						navigationItem.setHref(
 							_getPortletURL(), "tabs1", "fragments");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "fragments"));
+							LanguageUtil.get(_httpServletRequest, "fragments"));
 					});
 
 				add(
@@ -458,7 +464,7 @@ public class FragmentDisplayContext {
 						navigationItem.setHref(
 							_getPortletURL(), "tabs1", "resources");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "resources"));
+							LanguageUtil.get(_httpServletRequest, "resources"));
 					});
 			}
 		};
@@ -469,13 +475,14 @@ public class FragmentDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
 
 	public String getRedirect() {
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
 			PortletURL portletURL = _renderResponse.createRenderURL();
@@ -532,7 +539,7 @@ public class FragmentDisplayContext {
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_request, FragmentPortletKeys.FRAGMENT,
+			_httpServletRequest, FragmentPortletKeys.FRAGMENT,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
@@ -549,7 +556,7 @@ public class FragmentDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -560,7 +567,7 @@ public class FragmentDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_httpServletRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -598,7 +605,7 @@ public class FragmentDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1", "fragments");
+		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "fragments");
 
 		return _tabs1;
 	}
@@ -620,7 +627,7 @@ public class FragmentDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 

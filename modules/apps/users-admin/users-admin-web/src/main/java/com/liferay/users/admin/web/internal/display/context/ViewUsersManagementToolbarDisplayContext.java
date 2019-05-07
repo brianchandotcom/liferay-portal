@@ -63,7 +63,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 		RenderResponse renderResponse, String displayStyle, String navigation,
 		int status) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
@@ -87,7 +87,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 									"deleteUsers('", Constants.RESTORE, "');"));
 							dropdownItem.setIcon("undo");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "activate"));
+								LanguageUtil.get(
+									_httpServletRequest, "activate"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -113,7 +114,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 									"deleteUsers('", action, "');"));
 							dropdownItem.setIcon(icon);
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, action));
+								LanguageUtil.get(_httpServletRequest, action));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -139,7 +140,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "/users_admin/edit_user");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-user"));
+							LanguageUtil.get(_httpServletRequest, "add-user"));
 					});
 			}
 		};
@@ -153,7 +154,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -161,7 +163,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -184,8 +186,10 @@ public class ViewUsersManagementToolbarDisplayContext {
 							labelItem.setCloseable(true);
 
 							String label = String.format(
-								"%s: %s", LanguageUtil.get(_request, "status"),
-								LanguageUtil.get(_request, _navigation));
+								"%s: %s",
+								LanguageUtil.get(_httpServletRequest, "status"),
+								LanguageUtil.get(
+									_httpServletRequest, _navigation));
 
 							labelItem.setLabel(label);
 						});
@@ -232,7 +236,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 			return _userSearch;
 		}
 
-		PortletURL portletURL = (PortletURL)_request.getAttribute(
+		PortletURL portletURL = (PortletURL)_httpServletRequest.getAttribute(
 			"view.jsp-portletURL");
 
 		portletURL.setParameter("navigation", _navigation);
@@ -246,8 +250,9 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		userSearch.setRowChecker(rowChecker);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
@@ -326,8 +331,9 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
@@ -343,7 +349,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 					dropdownItem.setHref(
 						getPortletURL(), "navigation", navigation);
 					dropdownItem.setLabel(
-						LanguageUtil.get(_request, navigation));
+						LanguageUtil.get(_httpServletRequest, navigation));
 				});
 		}
 
@@ -360,7 +366,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "first-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "first-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "first-name"));
 					});
 
 				add(
@@ -370,7 +377,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "last-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "last-name"));
+							LanguageUtil.get(_httpServletRequest, "last-name"));
 					});
 
 				add(
@@ -380,7 +387,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "screen-name");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "screen-name"));
+							LanguageUtil.get(
+								_httpServletRequest, "screen-name"));
 					});
 			}
 		};
@@ -394,7 +402,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 	private final String _navigation;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final int _status;
 	private UserSearch _userSearch;
 

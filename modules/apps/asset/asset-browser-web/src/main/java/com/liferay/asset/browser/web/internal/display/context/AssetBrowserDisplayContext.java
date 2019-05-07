@@ -55,7 +55,7 @@ public class AssetBrowserDisplayContext {
 	public AssetBrowserDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -104,8 +104,9 @@ public class AssetBrowserDisplayContext {
 			return assetBrowserSearch;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Sort sort = null;
 
@@ -164,7 +165,8 @@ public class AssetBrowserDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -175,7 +177,7 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_request, "eventName",
+			_httpServletRequest, "eventName",
 			_renderResponse.getNamespace() + "selectAsset");
 
 		return _eventName;
@@ -186,7 +188,7 @@ public class AssetBrowserDisplayContext {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_request, "groupId");
+		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
 
 		return _groupId;
 	}
@@ -196,7 +198,8 @@ public class AssetBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -206,7 +209,8 @@ public class AssetBrowserDisplayContext {
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 
-		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+		long selectedGroupId = ParamUtil.getLong(
+			_httpServletRequest, "selectedGroupId");
 
 		if (selectedGroupId > 0) {
 			portletURL.setParameter(
@@ -254,23 +258,25 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_refererAssetEntryId = ParamUtil.getLong(
-			_request, "refererAssetEntryId");
+			_httpServletRequest, "refererAssetEntryId");
 
 		return _refererAssetEntryId;
 	}
 
 	public long[] getSelectedGroupIds() {
 		long[] selectedGroupIds = StringUtil.split(
-			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
+			ParamUtil.getString(_httpServletRequest, "selectedGroupIds"), 0L);
 
 		if (selectedGroupIds.length > 0) {
 			return selectedGroupIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+		long selectedGroupId = ParamUtil.getLong(
+			_httpServletRequest, "selectedGroupId");
 
 		try {
 			return PortalUtil.getSharedContentSiteGroupIds(
@@ -291,7 +297,8 @@ public class AssetBrowserDisplayContext {
 			return _subtypeSelectionId;
 		}
 
-		_subtypeSelectionId = ParamUtil.getLong(_request, "subtypeSelectionId");
+		_subtypeSelectionId = ParamUtil.getLong(
+			_httpServletRequest, "subtypeSelectionId");
 
 		return _subtypeSelectionId;
 	}
@@ -301,7 +308,8 @@ public class AssetBrowserDisplayContext {
 			return _typeSelection;
 		}
 
-		_typeSelection = ParamUtil.getString(_request, "typeSelection");
+		_typeSelection = ParamUtil.getString(
+			_httpServletRequest, "typeSelection");
 
 		return _typeSelection;
 	}
@@ -312,7 +320,7 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_multipleSelection = ParamUtil.getBoolean(
-			_request, "multipleSelection");
+			_httpServletRequest, "multipleSelection");
 
 		return _multipleSelection;
 	}
@@ -322,7 +330,8 @@ public class AssetBrowserDisplayContext {
 			return _showAddButton;
 		}
 
-		_showAddButton = ParamUtil.getBoolean(_request, "showAddButton");
+		_showAddButton = ParamUtil.getBoolean(
+			_httpServletRequest, "showAddButton");
 
 		return _showAddButton;
 	}
@@ -356,7 +365,7 @@ public class AssetBrowserDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_request, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -364,10 +373,12 @@ public class AssetBrowserDisplayContext {
 	private Boolean _getListable() {
 		Boolean listable = null;
 
-		String listableValue = ParamUtil.getString(_request, "listable", null);
+		String listableValue = ParamUtil.getString(
+			_httpServletRequest, "listable", null);
 
 		if (Validator.isNotNull(listableValue)) {
-			listable = ParamUtil.getBoolean(_request, "listable", true);
+			listable = ParamUtil.getBoolean(
+				_httpServletRequest, "listable", true);
 		}
 
 		return listable;
@@ -379,7 +390,7 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
+			_httpServletRequest, "orderByCol", "modified-date");
 
 		return _orderByCol;
 	}
@@ -402,7 +413,8 @@ public class AssetBrowserDisplayContext {
 			return _showNonindexable;
 		}
 
-		_showNonindexable = ParamUtil.getBoolean(_request, "showNonindexable");
+		_showNonindexable = ParamUtil.getBoolean(
+			_httpServletRequest, "showNonindexable");
 
 		return _showNonindexable;
 	}
@@ -412,7 +424,8 @@ public class AssetBrowserDisplayContext {
 			return _showScheduled;
 		}
 
-		_showScheduled = ParamUtil.getBoolean(_request, "showScheduled");
+		_showScheduled = ParamUtil.getBoolean(
+			_httpServletRequest, "showScheduled");
 
 		return _showScheduled;
 	}
@@ -433,7 +446,7 @@ public class AssetBrowserDisplayContext {
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showAddButton;
 	private Boolean _showNonindexable;
 	private Boolean _showScheduled;

@@ -70,14 +70,14 @@ public class InputAssetLinksDisplayContext {
 	public InputAssetLinksDisplayContext(PageContext pageContext) {
 		_pageContext = pageContext;
 
-		_request = (HttpServletRequest)pageContext.getRequest();
+		_httpServletRequest = (HttpServletRequest)pageContext.getRequest();
 
 		_assetEntryId = GetterUtil.getLong(
-			(String)_request.getAttribute(
+			(String)_httpServletRequest.getAttribute(
 				"liferay-ui:input-asset-links:assetEntryId"));
-		_portletRequest = (PortletRequest)_request.getAttribute(
+		_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -159,7 +159,7 @@ public class InputAssetLinksDisplayContext {
 		}
 
 		String randomKey = PortalUtil.generateRandomKey(
-			_request, "taglib_ui_input_asset_links_page");
+			_httpServletRequest, "taglib_ui_input_asset_links_page");
 
 		_randomNamespace = randomKey + StringPool.UNDERLINE;
 
@@ -200,7 +200,7 @@ public class InputAssetLinksDisplayContext {
 		List<AssetLink> assetLinks = new ArrayList<>();
 
 		String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(
-			_request, "assetLinksSearchContainerPrimaryKeys");
+			_httpServletRequest, "assetLinksSearchContainerPrimaryKeys");
 
 		if (Validator.isNull(assetLinksSearchContainerPrimaryKeys) &&
 			SessionErrors.isEmpty(_portletRequest) && (_assetEntryId > 0)) {
@@ -305,7 +305,7 @@ public class InputAssetLinksDisplayContext {
 		throws Exception {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_request, assetRendererFactory.getClassName(),
+			_httpServletRequest, assetRendererFactory.getClassName(),
 			PortletProvider.Action.BROWSE);
 
 		if (portletURL == null) {
@@ -462,7 +462,7 @@ public class InputAssetLinksDisplayContext {
 		}
 
 		if (_isStagedLocally()) {
-			String className = (String)_request.getAttribute(
+			String className = (String)_httpServletRequest.getAttribute(
 				"liferay-ui:input-asset-links:className");
 
 			AssetRendererFactory<?> assetRendererFactory =
@@ -487,7 +487,7 @@ public class InputAssetLinksDisplayContext {
 	private final PageContext _pageContext;
 	private final PortletRequest _portletRequest;
 	private String _randomNamespace;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _stagedLocally;
 	private Boolean _stagedReferrerPortlet;
 	private final ThemeDisplay _themeDisplay;

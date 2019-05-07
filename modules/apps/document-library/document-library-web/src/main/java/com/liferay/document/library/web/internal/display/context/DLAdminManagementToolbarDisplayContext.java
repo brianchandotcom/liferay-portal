@@ -92,21 +92,21 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
 
-		_dlRequestHelper = new DLRequestHelper(_request);
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_dlTrashUtil = (DLTrashUtil)_request.getAttribute(
+		_dlTrashUtil = (DLTrashUtil)_httpServletRequest.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_hasValidAssetVocabularies = _hasValidAssetVocabularies(
@@ -139,7 +139,8 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem.putData("action", "download");
 							dropdownItem.setIcon("download");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "download"));
+								LanguageUtil.get(
+									_httpServletRequest, "download"));
 							dropdownItem.setQuickAction(true);
 						});
 				}
@@ -152,7 +153,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem.putData("action", "move");
 							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "move"));
+								LanguageUtil.get(_httpServletRequest, "move"));
 							dropdownItem.setQuickAction(true);
 						});
 
@@ -169,7 +170,8 @@ public class DLAdminManagementToolbarDisplayContext {
 
 							dropdownItem.setIcon("tag");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "edit-tags"));
+								LanguageUtil.get(
+									_httpServletRequest, "edit-tags"));
 							dropdownItem.setQuickAction(true);
 						});
 
@@ -188,7 +190,8 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setIcon("categories");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
-										_request, "edit-categories"));
+										_httpServletRequest,
+										"edit-categories"));
 								dropdownItem.setQuickAction(true);
 							});
 					}
@@ -206,12 +209,14 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setIcon("trash");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
-										_request, "move-to-recycle-bin"));
+										_httpServletRequest,
+										"move-to-recycle-bin"));
 							}
 							else {
 								dropdownItem.setIcon("times-circle");
 								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "delete"));
+									LanguageUtil.get(
+										_httpServletRequest, "delete"));
 							}
 
 							dropdownItem.setQuickAction(true);
@@ -224,7 +229,8 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem.putData("action", "checkin");
 							dropdownItem.setIcon("unlock");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "checkin"));
+								LanguageUtil.get(
+									_httpServletRequest, "checkin"));
 							dropdownItem.setQuickAction(false);
 						});
 
@@ -234,7 +240,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem.setIcon("lock");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, "checkout[document]"));
+									_httpServletRequest, "checkout[document]"));
 							dropdownItem.setQuickAction(false);
 						});
 				}
@@ -339,7 +345,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		}
 
 		PortletToolbarContributor dlPortletToolbarContributor =
-			(PortletToolbarContributor)_request.getAttribute(
+			(PortletToolbarContributor)_httpServletRequest.getAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR);
 
 		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
@@ -384,7 +390,8 @@ public class DLAdminManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
+							LanguageUtil.get(
+								_httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -392,7 +399,7 @@ public class DLAdminManagementToolbarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							_getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
+							LanguageUtil.get(_httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -418,7 +425,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							labelItem.setCloseable(true);
 
 							String fileEntryTypeName = LanguageUtil.get(
-								_request, "basic-document");
+								_httpServletRequest, "basic-document");
 
 							if (fileEntryTypeId !=
 									DLFileEntryTypeConstants.
@@ -429,12 +436,13 @@ public class DLAdminManagementToolbarDisplayContext {
 										getFileEntryType(fileEntryTypeId);
 
 								fileEntryTypeName = fileEntryType.getName(
-									_request.getLocale());
+									_httpServletRequest.getLocale());
 							}
 
 							String label = String.format(
 								"%s: %s",
-								LanguageUtil.get(_request, "document-type"),
+								LanguageUtil.get(
+									_httpServletRequest, "document-type"),
 								fileEntryTypeName);
 
 							labelItem.setLabel(label);
@@ -460,7 +468,8 @@ public class DLAdminManagementToolbarDisplayContext {
 							User user = _themeDisplay.getUser();
 
 							String label = String.format(
-								"%s: %s", LanguageUtil.get(_request, "owner"),
+								"%s: %s",
+								LanguageUtil.get(_httpServletRequest, "owner"),
 								user.getFullName());
 
 							labelItem.setLabel(label);
@@ -481,7 +490,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		searchURL.setParameter("repositoryId", String.valueOf(repositoryId));
 
 		long searchRepositoryId = ParamUtil.getLong(
-			_request, "searchRepositoryId", repositoryId);
+			_httpServletRequest, "searchRepositoryId", repositoryId);
 
 		searchURL.setParameter(
 			"searchRepositoryId", String.valueOf(searchRepositoryId));
@@ -491,7 +500,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		searchURL.setParameter("folderId", String.valueOf(folderId));
 
 		long searchFolderId = ParamUtil.getLong(
-			_request, "searchFolderId", folderId);
+			_httpServletRequest, "searchFolderId", folderId);
 
 		searchURL.setParameter(
 			"searchFolderId", String.valueOf(searchFolderId));
@@ -535,16 +544,18 @@ public class DLAdminManagementToolbarDisplayContext {
 			return null;
 		}
 
-		String navigation = ParamUtil.getString(_request, "navigation", "home");
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation", "home");
 
-		int curEntry = ParamUtil.getInteger(_request, "curEntry");
-		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
+		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
+		int deltaEntry = ParamUtil.getInteger(
+			_httpServletRequest, "deltaEntry");
 
 		long folderId = _getFolderId();
 
 		long fileEntryTypeId = _getFileEntryTypeId();
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		PortletURL displayStyleURL = _liferayPortletResponse.createRenderURL();
 
@@ -625,7 +636,8 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getCurrentSortingURL() {
-		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
+		int deltaEntry = ParamUtil.getInteger(
+			_httpServletRequest, "deltaEntry");
 
 		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
 
@@ -668,13 +680,13 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	private long _getFileEntryTypeId() {
-		return ParamUtil.getLong(_request, "fileEntryTypeId", -1);
+		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		long fileEntryTypeId = _getFileEntryTypeId();
 		final String navigation = ParamUtil.getString(
-			_request, "navigation", "home");
+			_httpServletRequest, "navigation", "home");
 
 		return new DropdownItemList() {
 			{
@@ -698,7 +710,7 @@ public class DLAdminManagementToolbarDisplayContext {
 						dropdownItem.setHref(viewAllDocumentsURL);
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
+							LanguageUtil.get(_httpServletRequest, "all"));
 					});
 
 				if (_themeDisplay.isSignedIn()) {
@@ -719,7 +731,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem.setHref(viewMyDocumentsURL);
 
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "mine"));
+								LanguageUtil.get(_httpServletRequest, "mine"));
 						});
 				}
 
@@ -731,11 +743,11 @@ public class DLAdminManagementToolbarDisplayContext {
 							"action", "openDocumentTypesSelector");
 
 						String label = LanguageUtil.get(
-							_request, "document-type");
+							_httpServletRequest, "document-type");
 
 						if (fileEntryTypeId != -1) {
 							String fileEntryTypeName = LanguageUtil.get(
-								_request, "basic-document");
+								_httpServletRequest, "basic-document");
 
 							if (fileEntryTypeId !=
 									DLFileEntryTypeConstants.
@@ -746,7 +758,7 @@ public class DLAdminManagementToolbarDisplayContext {
 										getFileEntryType(fileEntryTypeId);
 
 								fileEntryTypeName = fileEntryType.getName(
-									_request.getLocale());
+									_httpServletRequest.getLocale());
 							}
 
 							label = String.format(
@@ -761,14 +773,14 @@ public class DLAdminManagementToolbarDisplayContext {
 
 	private long _getFolderId() {
 		if (_isSearch()) {
-			return ParamUtil.getLong(_request, "folderId");
+			return ParamUtil.getLong(_httpServletRequest, "folderId");
 		}
 
 		return _dlAdminDisplayContext.getFolderId();
 	}
 
 	private String _getNavigation() {
-		return ParamUtil.getString(_request, "navigation", "home");
+		return ParamUtil.getString(_httpServletRequest, "navigation", "home");
 	}
 
 	private String _getOrderByCol() {
@@ -804,7 +816,8 @@ public class DLAdminManagementToolbarDisplayContext {
 								orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
-									_request, orderByColEntry.getValue()));
+									_httpServletRequest,
+									orderByColEntry.getValue()));
 						});
 				}
 			}
@@ -886,7 +899,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	private boolean _isEnableOnBulk() throws PortalException {
-		long folderId = ParamUtil.getLong(_request, "folderId");
+		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
 
 		if (_hasWorkflowDefinitionLink(
 				folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL)) {
@@ -910,7 +923,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	private final boolean _hasValidAssetVocabularies;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

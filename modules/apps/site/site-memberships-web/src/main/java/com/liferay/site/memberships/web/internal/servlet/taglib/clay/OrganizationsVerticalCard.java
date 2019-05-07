@@ -53,7 +53,7 @@ public class OrganizationsVerticalCard
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -85,8 +85,9 @@ public class OrganizationsVerticalCard
 
 	@Override
 	public String getImageSrc() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -102,7 +103,7 @@ public class OrganizationsVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		return LanguageUtil.get(_request, _organization.getType());
+		return LanguageUtil.get(_httpServletRequest, _organization.getType());
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class OrganizationsVerticalCard
 	private final Organization _organization;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final boolean _showActions;
 
 }

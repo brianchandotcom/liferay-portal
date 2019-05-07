@@ -69,7 +69,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 		_resourceBundle = resourceBundle;
 		_trashHelper = trashHelper;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -178,7 +178,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
 			dropdownItem.putData("deleteURL", deleteURL.toString());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "delete"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -213,7 +214,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 			dropdownItem.putData("action", "delete");
 			dropdownItem.putData("deleteURL", moveToTrashURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "move-to-recycle-bin"));
+				LanguageUtil.get(_httpServletRequest, "move-to-recycle-bin"));
 		};
 	}
 
@@ -223,7 +224,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
 			dropdownItem.putData("permissionsURL", _getPermissionsURL());
-			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
@@ -233,7 +235,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 				StringPool.BLANK, BlogsEntry.class.getName(),
 				BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry),
 				null, String.valueOf(_blogsEntry.getEntryId()),
-				LiferayWindowState.POP_UP.toString(), null, _request);
+				LiferayWindowState.POP_UP.toString(), null,
+				_httpServletRequest);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);
@@ -255,7 +258,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 			dropdownItem.putData("action", "publishToLive");
 			dropdownItem.putData("publishEntryURL", publishEntryURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_request, "publish-to-live"));
+				LanguageUtil.get(_httpServletRequest, "publish-to-live"));
 		};
 	}
 
@@ -309,8 +312,9 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowPublishMenuItem() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _isShowPublishMenuItem(
 			themeDisplay.getScopeGroup(), BlogsPortletKeys.BLOGS_ADMIN,
@@ -320,7 +324,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 	private boolean _isTrashEnabled() {
 		try {
 			return _trashHelper.isTrashEnabled(
-				PortalUtil.getScopeGroupId(_request));
+				PortalUtil.getScopeGroupId(_httpServletRequest));
 		}
 		catch (PortalException pe) {
 			return ReflectionUtil.throwException(pe);
@@ -330,7 +334,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 	private final BlogsEntry _blogsEntry;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final ResourceBundle _resourceBundle;
 	private final TrashHelper _trashHelper;
 

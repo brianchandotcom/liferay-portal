@@ -59,7 +59,7 @@ public class LiferayPortletURLPrivilegedAction {
 		_portletRequest = portletRequest;
 		_portletResponseImpl = portletResponseImpl;
 
-		_request = null;
+		_httpServletRequest = null;
 		_requestPlid = requestPlid;
 		_constructors = constructors;
 	}
@@ -73,7 +73,7 @@ public class LiferayPortletURLPrivilegedAction {
 		_copy = copy;
 		_layout = layout;
 		_portlet = portlet;
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		_constructors = null;
 		_includeLinkToLayoutUuid = false;
@@ -85,9 +85,9 @@ public class LiferayPortletURLPrivilegedAction {
 	}
 
 	public LiferayPortletURL run() {
-		if (_request != null) {
+		if (_httpServletRequest != null) {
 			return PortletURLFactoryUtil.create(
-				_request, _portlet, _layout, _lifecycle, _copy);
+				_httpServletRequest, _portlet, _layout, _lifecycle, _copy);
 		}
 
 		long plid = _plid;
@@ -185,7 +185,7 @@ public class LiferayPortletURLPrivilegedAction {
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private final PortletResponseImpl _portletResponseImpl;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final long _requestPlid;
 
 }

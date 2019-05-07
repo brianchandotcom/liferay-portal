@@ -41,7 +41,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 			ServletContextUtil.getSiteNavigationMenuItemType(
 				siteNavigationMenuItem.getType());
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 		_siteNavigationMenuItemType = siteNavigationMenuItemType;
@@ -62,7 +62,8 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	@Override
 	public List<NavItem> getChildren() {
 		return NavItemUtil.getChildNavItems(
-			_request, _siteNavigationMenuItem.getSiteNavigationMenuId(),
+			_httpServletRequest,
+			_siteNavigationMenuItem.getSiteNavigationMenuId(),
 			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}
 
@@ -79,19 +80,19 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	@Override
 	public String getRegularURL() throws Exception {
 		return _siteNavigationMenuItemType.getRegularURL(
-			_request, _siteNavigationMenuItem);
+			_httpServletRequest, _siteNavigationMenuItem);
 	}
 
 	@Override
 	public String getResetLayoutURL() throws Exception {
 		return _siteNavigationMenuItemType.getResetLayoutURL(
-			_request, _siteNavigationMenuItem);
+			_httpServletRequest, _siteNavigationMenuItem);
 	}
 
 	@Override
 	public String getResetMaxStateURL() throws Exception {
 		return _siteNavigationMenuItemType.getResetMaxStateURL(
-			_request, _siteNavigationMenuItem);
+			_httpServletRequest, _siteNavigationMenuItem);
 	}
 
 	@Override
@@ -141,7 +142,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 			_themeDisplay.getLayout());
 	}
 
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final SiteNavigationMenuItemType _siteNavigationMenuItemType;
 	private final ThemeDisplay _themeDisplay;

@@ -54,14 +54,15 @@ public class BlogImagesDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 
-		_request = _liferayPortletRequest.getHttpServletRequest();
+		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public void populateResults(SearchContainer searchContainer)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Folder attachmentsFolder =
 			BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -70,7 +71,7 @@ public class BlogImagesDisplayContext {
 		int total = 0;
 		List results = null;
 
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNull(keywords)) {
 			total = PortletFileRepositoryUtil.getPortletFileEntriesCount(
@@ -89,7 +90,7 @@ public class BlogImagesDisplayContext {
 		}
 		else {
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				_request);
+				_httpServletRequest);
 
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setFolderIds(
@@ -97,9 +98,9 @@ public class BlogImagesDisplayContext {
 			searchContext.setStart(searchContainer.getStart());
 
 			String orderByCol = ParamUtil.getString(
-				_request, "orderByCol", "title");
+				_httpServletRequest, "orderByCol", "title");
 			String orderByType = ParamUtil.getString(
-				_request, "orderByType", "asc");
+				_httpServletRequest, "orderByType", "asc");
 
 			Sort sort = new Sort(
 				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
@@ -150,6 +151,6 @@ public class BlogImagesDisplayContext {
 		BlogImagesDisplayContext.class);
 
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

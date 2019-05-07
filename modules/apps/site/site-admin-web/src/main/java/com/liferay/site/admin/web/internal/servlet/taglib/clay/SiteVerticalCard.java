@@ -55,7 +55,8 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 		_siteAdminDisplayContext = siteAdminDisplayContext;
 
 		_group = (Group)baseModel;
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -128,7 +129,7 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 		List<Group> childSites = _group.getChildren(true);
 
 		return LanguageUtil.format(
-			_request, "x-child-sites", childSites.size());
+			_httpServletRequest, "x-child-sites", childSites.size());
 	}
 
 	@Override
@@ -146,7 +147,7 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 	private final Group _group;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 

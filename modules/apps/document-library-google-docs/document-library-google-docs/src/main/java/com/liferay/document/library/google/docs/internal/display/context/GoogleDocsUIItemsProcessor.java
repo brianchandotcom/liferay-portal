@@ -42,7 +42,7 @@ public class GoogleDocsUIItemsProcessor {
 		HttpServletRequest httpServletRequest,
 		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
 
-		_request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 		_googleDocsMetadataHelper = googleDocsMetadataHelper;
 	}
 
@@ -91,8 +91,9 @@ public class GoogleDocsUIItemsProcessor {
 
 		urlUIItem.setKey(GoogleDocsUIItemKeys.EDIT_IN_GOOGLE);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
@@ -131,6 +132,6 @@ public class GoogleDocsUIItemsProcessor {
 	}
 
 	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

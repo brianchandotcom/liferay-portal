@@ -189,7 +189,7 @@ public class Instance {
 		this.slaStatus = slaStatus;
 	}
 
-	public void setSlaStatus(
+	public void setSLAStatus(
 		UnsafeSupplier<SLAStatus, Exception> slaStatusUnsafeSupplier) {
 
 		try {

@@ -246,7 +246,7 @@ public class Instance {
 	}
 
 	@JsonIgnore
-	public void setSlaStatus(
+	public void setSLAStatus(
 		UnsafeSupplier<SLAStatus, Exception> slaStatusUnsafeSupplier) {
 
 		try {

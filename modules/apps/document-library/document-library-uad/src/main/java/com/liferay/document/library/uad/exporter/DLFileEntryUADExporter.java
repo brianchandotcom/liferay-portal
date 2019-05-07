@@ -16,6 +16,7 @@ package com.liferay.document.library.uad.exporter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
@@ -27,6 +28,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = UADExporter.class)
 public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
+
+	@Override
+	public long getExportDataCount(long userId) throws PortalException {
+		return count(userId) * 2;
+	}
 
 	@Override
 	protected void writeToZip(DLFileEntry dlFileEntry, ZipWriter zipWriter)

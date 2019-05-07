@@ -81,14 +81,14 @@ public class PersonalApplicationURLUtil {
 				group = group.getLiveGroup();
 			}
 
-			user = UserLocalServiceUtil.getDefaultUser(
-				themeDisplay.getCompanyId());
-
 			Layout currentLayout = themeDisplay.getLayout();
 
 			if (currentLayout.isPublicLayout()) {
 				privateLayout = false;
 			}
+
+			user = UserLocalServiceUtil.getDefaultUser(
+				themeDisplay.getCompanyId());
 		}
 
 		Layout layout = null;

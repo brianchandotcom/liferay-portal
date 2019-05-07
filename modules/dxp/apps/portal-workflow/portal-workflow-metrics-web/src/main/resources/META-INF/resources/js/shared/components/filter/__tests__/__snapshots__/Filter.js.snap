@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<li
+  className="dropdown nav-item"
+>
+  <button
+    aria-expanded={false}
+    aria-haspopup="true"
+    className="dropdown-toggle nav-link"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      className="mr-2 navbar-text-truncate"
+    >
+      SLA Status
+    </span>
+    <svg
+      className="lexicon-icon lexicon-icon-caret-bottom"
+      focusable="false"
+      role="presentation"
+    >
+      <use
+        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+      />
+    </svg>
+  </button>
+  <div
+    className=" dropdown-menu"
+    role="menu"
+  >
+    <ul
+      className="list-unstyled"
+    />
+  </div>
+</li>
+`;

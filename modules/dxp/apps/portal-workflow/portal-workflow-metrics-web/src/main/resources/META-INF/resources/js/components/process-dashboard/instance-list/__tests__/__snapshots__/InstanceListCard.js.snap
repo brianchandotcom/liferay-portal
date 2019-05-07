@@ -77,7 +77,746 @@ exports[`Should component receive props 1`] = `
         page={1}
         pageSize={10}
         processId={12351}
+        query="?filters.slaStatus%5B0%5D=overdue"
       >
+        <InstanceListFilter
+          processId={12351}
+          query="?filters.slaStatus%5B0%5D=overdue"
+          totalCount={0}
+        >
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
+          >
+            <div
+              className="container-fluid container-fluid-max-xl"
+            >
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <strong
+                    className="ml-0 mr-0 navbar-text"
+                  >
+                    Filter By
+                  </strong>
+                </li>
+                <withRouter(Filter)
+                  filterKey="slaStatuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Overdue",
+                        "name": "Overdue",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "OnTime",
+                        "name": "On Time",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Untracked",
+                        "name": "Untracked",
+                      },
+                    ]
+                  }
+                  key="0"
+                  name="SLA Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="slaStatuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Overdue",
+                            "name": "Overdue",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "OnTime",
+                            "name": "On Time",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Untracked",
+                            "name": "Untracked",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="SLA Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            SLA Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={3}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Overdue"
+                                key="0"
+                                name="Overdue"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Overdue"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Overdue
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="OnTime"
+                                key="1"
+                                name="On Time"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="OnTime"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          On Time
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Untracked"
+                                key="2"
+                                name="Untracked"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Untracked"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Untracked
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="statuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Pending",
+                        "name": "pending",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Completed",
+                        "name": "completed",
+                      },
+                    ]
+                  }
+                  key="1"
+                  name="Process Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="statuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Pending",
+                            "name": "pending",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Completed",
+                            "name": "completed",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={2}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Pending"
+                                key="0"
+                                name="pending"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Pending"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          pending
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Completed"
+                                key="1"
+                                name="completed"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Completed"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          completed
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="taskKeys"
+                  items={Array []}
+                  key="2"
+                  name="Process Step"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="taskKeys"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={Array []}
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Step"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Step
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={0}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            />
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+              </ul>
+            </div>
+          </nav>
+          <withRouter(FilterResultsBar)
+            filters={
+              Array [
+                Object {
+                  "items": Array [],
+                  "key": "slaStatuses",
+                  "name": "SLA Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "statuses",
+                  "name": "Process Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "taskKeys",
+                  "name": "Process Step",
+                },
+              ]
+            }
+            totalCount={0}
+          >
+            <Route>
+              <FilterResultsBar
+                filters={
+                  Array [
+                    Object {
+                      "items": Array [],
+                      "key": "slaStatuses",
+                      "name": "SLA Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "statuses",
+                      "name": "Process Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "taskKeys",
+                      "name": "Process Step",
+                    },
+                  ]
+                }
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                totalCount={0}
+              />
+            </Route>
+          </withRouter(FilterResultsBar)>
+        </InstanceListFilter>
         <div
           className="container-fluid-1280 mt-4"
         >
@@ -182,6 +921,742 @@ exports[`Should component shows empty state when items is undefined 1`] = `
       }
     >
       <InstanceListCard>
+        <InstanceListFilter
+          totalCount={0}
+        >
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
+          >
+            <div
+              className="container-fluid container-fluid-max-xl"
+            >
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <strong
+                    className="ml-0 mr-0 navbar-text"
+                  >
+                    Filter By
+                  </strong>
+                </li>
+                <withRouter(Filter)
+                  filterKey="slaStatuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Overdue",
+                        "name": "Overdue",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "OnTime",
+                        "name": "On Time",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Untracked",
+                        "name": "Untracked",
+                      },
+                    ]
+                  }
+                  key="0"
+                  name="SLA Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="slaStatuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Overdue",
+                            "name": "Overdue",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "OnTime",
+                            "name": "On Time",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Untracked",
+                            "name": "Untracked",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="SLA Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            SLA Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={3}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Overdue"
+                                key="0"
+                                name="Overdue"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Overdue"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Overdue
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="OnTime"
+                                key="1"
+                                name="On Time"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="OnTime"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          On Time
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Untracked"
+                                key="2"
+                                name="Untracked"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Untracked"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Untracked
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="statuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Pending",
+                        "name": "pending",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Completed",
+                        "name": "completed",
+                      },
+                    ]
+                  }
+                  key="1"
+                  name="Process Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="statuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Pending",
+                            "name": "pending",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Completed",
+                            "name": "completed",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={2}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Pending"
+                                key="0"
+                                name="pending"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Pending"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          pending
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Completed"
+                                key="1"
+                                name="completed"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Completed"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          completed
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="taskKeys"
+                  items={Array []}
+                  key="2"
+                  name="Process Step"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="taskKeys"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={Array []}
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Step"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Step
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={0}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            />
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+              </ul>
+            </div>
+          </nav>
+          <withRouter(FilterResultsBar)
+            filters={
+              Array [
+                Object {
+                  "items": Array [],
+                  "key": "slaStatuses",
+                  "name": "SLA Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "statuses",
+                  "name": "Process Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "taskKeys",
+                  "name": "Process Step",
+                },
+              ]
+            }
+            totalCount={0}
+          >
+            <Route>
+              <FilterResultsBar
+                filters={
+                  Array [
+                    Object {
+                      "items": Array [],
+                      "key": "slaStatuses",
+                      "name": "SLA Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "statuses",
+                      "name": "Process Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "taskKeys",
+                      "name": "Process Step",
+                    },
+                  ]
+                }
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                totalCount={0}
+              />
+            </Route>
+          </withRouter(FilterResultsBar)>
+        </InstanceListFilter>
         <div
           className="container-fluid-1280 mt-4"
         >
@@ -290,6 +1765,743 @@ exports[`Should render component 1`] = `
         pageSize={10}
         processId={12351}
       >
+        <InstanceListFilter
+          processId={12351}
+          totalCount={0}
+        >
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
+          >
+            <div
+              className="container-fluid container-fluid-max-xl"
+            >
+              <ul
+                className="navbar-nav"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <strong
+                    className="ml-0 mr-0 navbar-text"
+                  >
+                    Filter By
+                  </strong>
+                </li>
+                <withRouter(Filter)
+                  filterKey="slaStatuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Overdue",
+                        "name": "Overdue",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "OnTime",
+                        "name": "On Time",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Untracked",
+                        "name": "Untracked",
+                      },
+                    ]
+                  }
+                  key="0"
+                  name="SLA Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="slaStatuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Overdue",
+                            "name": "Overdue",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "OnTime",
+                            "name": "On Time",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Untracked",
+                            "name": "Untracked",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="SLA Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            SLA Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={3}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Overdue"
+                                key="0"
+                                name="Overdue"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Overdue"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Overdue
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="OnTime"
+                                key="1"
+                                name="On Time"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="OnTime"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          On Time
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Untracked"
+                                key="2"
+                                name="Untracked"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Untracked"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          Untracked
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="statuses"
+                  items={
+                    Array [
+                      Object {
+                        "active": false,
+                        "key": "Pending",
+                        "name": "pending",
+                      },
+                      Object {
+                        "active": false,
+                        "key": "Completed",
+                        "name": "completed",
+                      },
+                    ]
+                  }
+                  key="1"
+                  name="Process Status"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="statuses"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={
+                        Array [
+                          Object {
+                            "active": false,
+                            "key": "Pending",
+                            "name": "pending",
+                          },
+                          Object {
+                            "active": false,
+                            "key": "Completed",
+                            "name": "completed",
+                          },
+                        ]
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Status"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Status
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={2}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <FilterItem
+                                active={false}
+                                itemKey="Pending"
+                                key="0"
+                                name="pending"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Pending"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          pending
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                              <FilterItem
+                                active={false}
+                                itemKey="Completed"
+                                key="1"
+                                name="completed"
+                                onChange={[Function]}
+                              >
+                                <li
+                                  className=" dropdown-item"
+                                >
+                                  <div
+                                    className="custom-checkbox custom-control"
+                                  >
+                                    <label>
+                                      <input
+                                        checked={false}
+                                        className="custom-control-input"
+                                        name="Completed"
+                                        onChange={[Function]}
+                                        type="checkbox"
+                                      />
+                                      <span
+                                        className="custom-control-label"
+                                      >
+                                        <span
+                                          className="custom-control-label-text"
+                                        >
+                                          completed
+                                        </span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </li>
+                              </FilterItem>
+                            </ul>
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+                <withRouter(Filter)
+                  filterKey="taskKeys"
+                  items={Array []}
+                  key="2"
+                  name="Process Step"
+                >
+                  <Route>
+                    <Filter
+                      filterKey="taskKeys"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      items={Array []}
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      name="Process Step"
+                    >
+                      <li
+                        className="dropdown nav-item"
+                      >
+                        <button
+                          aria-expanded={false}
+                          aria-haspopup="true"
+                          className="dropdown-toggle nav-link"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="mr-2 navbar-text-truncate"
+                          >
+                            Process Step
+                          </span>
+                          <Icon
+                            iconName="caret-bottom"
+                          >
+                            <svg
+                              className="lexicon-icon lexicon-icon-caret-bottom"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <use
+                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                              />
+                            </svg>
+                          </Icon>
+                        </button>
+                        <div
+                          className=" dropdown-menu"
+                          role="menu"
+                        >
+                          <FilterSearch
+                            onChange={[Function]}
+                            totalCount={0}
+                          >
+                            <ul
+                              className="list-unstyled"
+                            />
+                          </FilterSearch>
+                        </div>
+                      </li>
+                    </Filter>
+                  </Route>
+                </withRouter(Filter)>
+              </ul>
+            </div>
+          </nav>
+          <withRouter(FilterResultsBar)
+            filters={
+              Array [
+                Object {
+                  "items": Array [],
+                  "key": "slaStatuses",
+                  "name": "SLA Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "statuses",
+                  "name": "Process Status",
+                },
+                Object {
+                  "items": Array [],
+                  "key": "taskKeys",
+                  "name": "Process Step",
+                },
+              ]
+            }
+            totalCount={0}
+          >
+            <Route>
+              <FilterResultsBar
+                filters={
+                  Array [
+                    Object {
+                      "items": Array [],
+                      "key": "slaStatuses",
+                      "name": "SLA Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "statuses",
+                      "name": "Process Status",
+                    },
+                    Object {
+                      "items": Array [],
+                      "key": "taskKeys",
+                      "name": "Process Step",
+                    },
+                  ]
+                }
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                totalCount={0}
+              />
+            </Route>
+          </withRouter(FilterResultsBar)>
+        </InstanceListFilter>
         <div
           className="container-fluid-1280 mt-4"
         >
@@ -321,35 +2533,549 @@ exports[`Should render component 1`] = `
 `;
 
 exports[`Should render component with empty data 1`] = `
-<div
-  className="container-fluid-1280 mt-4"
->
-  <div>
+Array [
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
     <div
-      className="border-1 pb-6 pt-6 sheet"
+      className="container-fluid container-fluid-max-xl"
     >
-      <span
-        aria-hidden="true"
-        className="loading-animation"
-      />
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <strong
+            className="ml-0 mr-0 navbar-text"
+          >
+            Filter By
+          </strong>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              SLA Status
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            >
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Overdue"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        Overdue
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="OnTime"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        On Time
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Untracked"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        Untracked
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              Process Status
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            >
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Pending"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        pending
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Completed"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        completed
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              Process Step
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            />
+          </div>
+        </li>
+      </ul>
     </div>
-  </div>
-</div>
+  </nav>,
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div>
+      <div
+        className="border-1 pb-6 pt-6 sheet"
+      >
+        <span
+          aria-hidden="true"
+          className="loading-animation"
+        />
+      </div>
+    </div>
+  </div>,
+]
 `;
 
 exports[`Should render component with error state 1`] = `
-<div
-  className="container-fluid-1280 mt-4"
->
-  <div>
+Array [
+  <nav
+    className="management-bar management-bar-light navbar navbar-expand-md"
+  >
     <div
-      className="border-1 pb-6 pt-6 sheet"
+      className="container-fluid container-fluid-max-xl"
     >
-      <span
-        aria-hidden="true"
-        className="loading-animation"
-      />
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item"
+        >
+          <strong
+            className="ml-0 mr-0 navbar-text"
+          >
+            Filter By
+          </strong>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              SLA Status
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            >
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Overdue"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        Overdue
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="OnTime"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        On Time
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Untracked"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        Untracked
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              Process Status
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            >
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Pending"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        pending
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+              <li
+                className=" dropdown-item"
+              >
+                <div
+                  className="custom-checkbox custom-control"
+                >
+                  <label>
+                    <input
+                      checked={false}
+                      className="custom-control-input"
+                      name="Completed"
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <span
+                      className="custom-control-label"
+                    >
+                      <span
+                        className="custom-control-label-text"
+                      >
+                        completed
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li
+          className="dropdown nav-item"
+        >
+          <button
+            aria-expanded={false}
+            aria-haspopup="true"
+            className="dropdown-toggle nav-link"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="mr-2 navbar-text-truncate"
+            >
+              Process Step
+            </span>
+            <svg
+              className="lexicon-icon lexicon-icon-caret-bottom"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+              />
+            </svg>
+          </button>
+          <div
+            className=" dropdown-menu"
+            role="menu"
+          >
+            <ul
+              className="list-unstyled"
+            />
+          </div>
+        </li>
+      </ul>
     </div>
-  </div>
-</div>
+  </nav>,
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div>
+      <div
+        className="border-1 pb-6 pt-6 sheet"
+      >
+        <span
+          aria-hidden="true"
+          className="loading-animation"
+        />
+      </div>
+    </div>
+  </div>,
+]
 `;

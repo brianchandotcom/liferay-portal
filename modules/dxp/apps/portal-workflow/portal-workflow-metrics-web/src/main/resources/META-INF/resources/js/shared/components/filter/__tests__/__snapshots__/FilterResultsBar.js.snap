@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<nav
+  className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
+>
+  <div
+    className="container-fluid container-fluid-max-xl"
+  >
+    <ul
+      className="tbar-nav tbar-nav-wrap"
+    >
+      <li
+        className="tbar-item"
+      >
+        <div
+          className="tbar-section"
+        >
+          <span
+            className="component-text text-truncate-inline"
+          >
+            <span
+              className="text-truncate"
+            >
+              2 Results for 
+            </span>
+          </span>
+        </div>
+      </li>
+      <li
+        className="tbar-item"
+      >
+        <div
+          className="tbar-section"
+        >
+          <span
+            className="component-label label label-dismissible tbar-label"
+          >
+            <span
+              className="label-item label-item-expand"
+            >
+              <div
+                className="label-section"
+              >
+                SLA Status: 
+                <strong>
+                  Overdue
+                </strong>
+              </div>
+            </span>
+            <span
+              className="label-item label-item-after"
+            >
+              <button
+                aria-label="close"
+                className="btn close"
+                onClick={[Function]}
+                type="button"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-times"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                  />
+                </svg>
+              </button>
+            </span>
+          </span>
+        </div>
+      </li>
+      <li
+        className="tbar-item tbar-item-expand"
+      >
+        <div
+          className="tbar-section text-right"
+        >
+          <a
+            className="component-link tbar-link"
+            href="/instances?filters="
+            onClick={[Function]}
+          >
+            <span>
+              Clear All
+            </span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;

@@ -16,8 +16,11 @@ package com.liferay.fragment.entry.processor.portlet;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -135,9 +138,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-			int previewType)
+			FragmentEntryLink fragmentEntryLink, String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		validateFragmentEntryHTML(html);
@@ -163,9 +165,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			Element runtimeTagElement = new Element(
-				"@liferay_portlet.runtime", true);
-
 			FragmentEntryLink originalFragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLink.getOriginalFragmentEntryLinkId());
@@ -186,22 +185,19 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				defaultPreferences = portlet.getDefaultPreferences();
 			}
 
-			runtimeTagElement.attr(
-				"defaultPreferences",
+			String portletHTML = _fragmentPortletRenderer.renderPortlet(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				fragmentEntryProcessorContext.getHttpServletResponse(),
+				portletName,
+				_getInstanceId(fragmentEntryLink.getNamespace(), id),
 				_getPreferences(
 					portletName, fragmentEntryLink, id, defaultPreferences));
-
-			runtimeTagElement.attr(
-				"instanceId",
-				_getInstanceId(fragmentEntryLink.getNamespace(), id));
-			runtimeTagElement.attr("persistSettings=false", true);
-			runtimeTagElement.attr("portletName", portletName);
 
 			Element portletElement = new Element("div");
 
 			portletElement.attr("class", "portlet");
 
-			portletElement.appendChild(runtimeTagElement);
+			portletElement.html(portletHTML);
 
 			element.replaceWith(portletElement);
 		}
@@ -209,6 +205,25 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		Element bodyElement = document.body();
 
 		return bodyElement.html();
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
+		throws PortalException {
+
+		DefaultFragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(null, null, mode, locale);
+
+		fragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
+		fragmentEntryProcessorContext.setPreviewType(previewType);
+		fragmentEntryProcessorContext.setSegmentsExperienceIds(
+			segmentsExperienceIds);
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, html, fragmentEntryProcessorContext);
 	}
 
 	@Override
@@ -401,6 +416,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentPortletRenderer _fragmentPortletRenderer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -1,6 +1,5 @@
 import core from 'metal';
 import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
@@ -17,7 +16,6 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @inheritDoc
 	 */
 	created() {
-		this.eventHandler_ = new EventHandler();
 		this.validInputKeyCodes_ = [8, 9, 13, 38, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
 	}
 
@@ -28,22 +26,20 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		let idOptions = this.one('#idOptions');
 
 		if (idOptions) {
-			this.eventHandler_.add(
-				dom.delegate(
-					idOptions,
-					'change',
-					'input[type="radio"]',
-					(event) => this.onChangeUuidOptions_(event.delegateTarget)
-				)
+			dom.delegate(
+				idOptions,
+				'change',
+				'input[type="radio"]',
+				(event) => this.onChangeUuidOptions_(event.delegateTarget)
 			);
 		}
 
 		let nameInput = this.one('#name');
 
 		if (nameInput) {
-			this.eventHandler_.add(nameInput.addEventListener('input', (event) => {
+			nameInput.addEventListener('input', () => {
 				this.updateUuid();
-			}));
+			});
 		}
 
 		this.nameInput = nameInput;
@@ -52,23 +48,23 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		let maxHeightInput = this.one('#maxHeight');
 
 		if (maxWidthInput) {
-			this.eventHandler_.add(maxWidthInput.addEventListener('keydown', (event) => {
+			maxWidthInput.addEventListener('keydown', (event) => {
 				this.handleKeyDown_(event);
-			}));
+			});
 
-			this.eventHandler_.add(maxWidthInput.addEventListener('input', (event) => {
-				this.validateDimensions_(true);
-			}));
+			maxWidthInput.addEventListener('input', () => {
+				this.validateDimensions_();
+			});
 		}
 
 		if (maxHeightInput) {
-			this.eventHandler_.add(maxHeightInput.addEventListener('keydown', (event) => {
+			maxHeightInput.addEventListener('keydown', (event) => {
 				this.handleKeyDown_(event);
-			}));
+			});
 
-			this.eventHandler_.add(maxHeightInput.addEventListener('input', (event) => {
-				this.validateDimensions_(true);
-			}));
+			maxHeightInput.addEventListener('input', () => {
+				this.validateDimensions_();
+			});
 		}
 
 		this.maxWidthInput = maxWidthInput;
@@ -79,17 +75,9 @@ class EditAdaptiveMediaConfig extends PortletBase {
 
 		let saveButton = this.one('button[type=submit]');
 
-		this.eventHandler_.add(saveButton.addEventListener('click', (event) => {
+		saveButton.addEventListener('click', (event) => {
 			this.onSubmitForm_(event);
-		}));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	detached() {
-		super.detached();
-		this.eventHandler_.removeAllListeners();
+		});
 	}
 
 	/**
@@ -161,7 +149,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @protected
 	 */
 	onSubmitForm_(event) {
-		this.validateDimensions_(false);
+		this.validateDimensions_();
 
 		let form = Liferay.Form.get(this.ns('fm'));
 
@@ -178,12 +166,9 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	/**
 	 * Checks if max-widht or max-height has a value.
 	 *
-	 * @param  {Boolean} validateFields whether the dimensions values
-	 * have to be validated or not.
-	 *
 	 * @protected
 	 */
-	validateDimensions_(validateFields) {
+	validateDimensions_() {
 		let form = Liferay.Form.get(this.ns('fm'));
 
 		let nsMaxWidth = this.ns('maxWidth');
@@ -200,10 +185,8 @@ class EditAdaptiveMediaConfig extends PortletBase {
 			form.addRule(nsMaxWidth, 'required', inputErrorMessage);
 			form.addRule(nsMaxHeight, 'required', STR_BLANK);
 
-			if (validateFields) {
-				form.formValidator.validateField(nsMaxWidth);
-				form.formValidator.validateField(nsMaxHeight);
-			}
+			form.formValidator.validateField(nsMaxWidth);
+			form.formValidator.validateField(nsMaxHeight);
 		}
 	}
 }

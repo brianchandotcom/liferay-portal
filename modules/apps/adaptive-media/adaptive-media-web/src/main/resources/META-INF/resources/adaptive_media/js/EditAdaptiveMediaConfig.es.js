@@ -30,54 +30,61 @@ class EditAdaptiveMediaConfig extends PortletBase {
 				idOptions,
 				'change',
 				'input[type="radio"]',
-				(event) => this.onChangeUuidOptions_(event.delegateTarget)
+				event => this.onChangeUuidOptions_(event.delegateTarget)
 			);
 		}
 
 		let nameInput = this.one('#name');
 
 		if (nameInput) {
-			nameInput.addEventListener('input', () => {
-				this.updateUuid();
-			});
+			nameInput.addEventListener(
+				'input',
+				() => this.updateUuid()
+			);
 		}
 
 		this.nameInput = nameInput;
 
-		let maxWidthInput = this.one('#maxWidth');
 		let maxHeightInput = this.one('#maxHeight');
+		let maxWidthInput = this.one('#maxWidth');
 
 		if (maxWidthInput) {
-			maxWidthInput.addEventListener('keydown', (event) => {
-				this.handleKeyDown_(event);
-			});
+			maxWidthInput.addEventListener(
+				'keydown',
+				(event) => {
+					this.handleKeyDown_(event);
+				}
+			);
 
-			maxWidthInput.addEventListener('input', () => {
-				this.validateDimensions_();
-			});
+			maxWidthInput.addEventListener(
+				'input',
+				() => this.validateDimensions_()
+			);
 		}
 
 		if (maxHeightInput) {
-			maxHeightInput.addEventListener('keydown', (event) => {
-				this.handleKeyDown_(event);
-			});
+			maxHeightInput.addEventListener(
+				'keydown',
+				event => this.handleKeyDown_(event)
+			);
 
-			maxHeightInput.addEventListener('input', () => {
-				this.validateDimensions_();
-			});
+			maxHeightInput.addEventListener(
+				'input',
+				() => this.validateDimensions_()
+			);
 		}
 
-		this.maxWidthInput = maxWidthInput;
-
 		this.maxHeightInput = maxHeightInput;
+		this.maxWidthInput = maxWidthInput;
 
 		this.newUuidInput = this.one('#newUuid');
 
 		let saveButton = this.one('button[type=submit]');
 
-		saveButton.addEventListener('click', (event) => {
-			this.onSubmitForm_(event);
-		});
+		saveButton.addEventListener(
+			'click',
+			event => this.onSubmitForm_(event)
+		);
 	}
 
 	/**

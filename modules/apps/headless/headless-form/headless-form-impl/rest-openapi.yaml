@@ -74,15 +74,10 @@ components:
         FormContext:
             description: https://www.schema.org/FormContext
             properties:
-                fieldValues:
+                formFieldValues:
                     description: https://www.schema.org/FormFieldValue
                     items:
-                        properties:
-                            name:
-                                type: string
-                            value:
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/FormFieldValue"
                     type: array
                 formPageContexts:
                     description: https://www.schema.org/FormPageContext
@@ -164,6 +159,28 @@ components:
                 title:
                     type: string
             type: object
+        FormFieldValue:
+            description: https://www.schema.org/FormFieldValue
+            items:
+                properties:
+                    formDocument:
+                        allOf:
+                            - $ref: "#/components/schemas/FormDocument"
+                        readOnly: true
+                    formDocumentId:
+                        format: int64
+                        type: integer
+                        writeOnly: true
+                    id:
+                        format: int64
+                        readOnly: true
+                        type: integer
+                    name:
+                        type: string
+                    value:
+                        type: string
+                type: object
+            type: array
         FormRecord:
             description: https://www.schema.org/FormRecord
             properties:
@@ -183,32 +200,14 @@ components:
                     type: string
                 draft:
                     type: boolean
-                fieldValues:
-                    description: https://www.schema.org/FormFieldValue
-                    items:
-                        properties:
-                            formDocument:
-                                allOf:
-                                    - $ref: "#/components/schemas/FormDocument"
-                                readOnly: true
-                            formDocumentId:
-                                format: int64
-                                type: integer
-                                writeOnly: true
-                            id:
-                                format: int64
-                                readOnly: true
-                                type: integer
-                            name:
-                                type: string
-                            value:
-                                type: string
-                        type: object
-                    type: array
                 form:
                     allOf:
                         - $ref: "#/components/schemas/Form"
                     readOnly: true
+                formFieldValues:
+                    items:
+                        $ref: "#/components/schemas/FormFieldValue"
+                    type: array
                 formId:
                     format: int64
                     type: integer

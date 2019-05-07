@@ -1,8 +1,6 @@
 import 'clay-progress-bar';
 import Ajax from 'metal-ajax';
-import Component from 'metal-component';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import ProgressBar from 'frontend-js-web/liferay/compat/progressbar/ProgressBar.es';
 import Soy from 'metal-soy';
 import Tooltip from 'frontend-js-web/liferay/compat/tooltip/Tooltip.es';
 import core from 'metal';
@@ -56,7 +54,10 @@ class AdaptiveMediaProgress extends PortletBase {
 
 		this.showLoadingIndicator_ = true;
 
-		this.emit('start', {uuid: this.uuid});
+		this.emit(
+			'start',
+			{uuid: this.uuid}
+		);
 	}
 
 	/**
@@ -77,24 +78,26 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @protected
 	 */
 	getAdaptedImagesPercentage_() {
-		Ajax.request(this.percentageUrl).then((xhr) => {
-			try {
-				let json = JSON.parse(xhr.response);
+		Ajax.request(this.percentageUrl).then(
+			(xhr) => {
+				try {
+					let json = JSON.parse(xhr.response);
 
-				let adaptedImages = json.adaptedImages;
+					let adaptedImages = json.adaptedImages;
 
-				let totalImages = json.totalImages;
+					let totalImages = json.totalImages;
 
-				this.updateProgressBar_(adaptedImages, totalImages);
+					this.updateProgressBar_(adaptedImages, totalImages);
 
-				if (this.percentage_ >= 100) {
-					this.onProgressBarComplete_();
+					if (this.percentage_ >= 100) {
+						this.onProgressBarComplete_();
+					}
+				}
+				catch (e) {
+					clearInterval(this.intervalId_);
 				}
 			}
-			catch (e) {
-				clearInterval(this.intervalId_);
-			}
-		});
+		);
 	}
 
 	/**
@@ -106,7 +109,10 @@ class AdaptiveMediaProgress extends PortletBase {
 		this.clearInterval_();
 		this.showLoadingIndicator_ = false;
 
-		this.emit('finish', {uuid: this.uuid});
+		this.emit(
+			'finish',
+			{uuid: this.uuid}
+		);
 	}
 
 	/**

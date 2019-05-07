@@ -142,8 +142,9 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 							dropdownItem.setHref(
 								liferayPortletResponse.createRenderURL(),
 								"mvcPath", "/edit_ddm_template.jsp", "redirect",
-								themeDisplay.getURLCurrent(), "language",
-								templateLanguageType);
+								themeDisplay.getURLCurrent(), "classPK",
+								_journalDDMTemplateDisplayContext.getClassPK(),
+								"language", templateLanguageType);
 							dropdownItem.setLabel(
 								LanguageUtil.format(
 									request, "add-x", sb.toString(), false));

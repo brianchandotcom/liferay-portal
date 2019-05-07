@@ -25,6 +25,10 @@ class AdaptiveMediaProgress extends PortletBase {
 		this.id_ = this.namespace + 'AdaptRemaining' + this.uuid + 'Progress';
 
 		this.updateProgressBar_(this.adaptedImages, this.totalImages);
+
+		if (this.autoStartProgress) {
+			this.startProgress();
+		}
 	}
 
 	/**
@@ -124,6 +128,18 @@ class AdaptiveMediaProgress extends PortletBase {
  * @type {!Object}
  */
 AdaptiveMediaProgress.STATE = {
+
+	/**
+	 * Number of adapted images in the platform.
+	 *
+	 * @instance
+	 * @memberof AdaptiveMediaProgress
+	 * @type {Number}
+	 */
+	autoStartProgress: {
+		validator: core.isBoolean,
+		value: false
+	},
 
 	/**
 	 * Number of adapted images in the platform.

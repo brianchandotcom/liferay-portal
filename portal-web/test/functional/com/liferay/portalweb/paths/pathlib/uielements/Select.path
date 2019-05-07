@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ANY</td>
-	<td>//div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select</td>
+	<td>//div[not(contains(@class,'hide'))]/div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select</td>
 	<td></td>
 </tr>
 <tr>

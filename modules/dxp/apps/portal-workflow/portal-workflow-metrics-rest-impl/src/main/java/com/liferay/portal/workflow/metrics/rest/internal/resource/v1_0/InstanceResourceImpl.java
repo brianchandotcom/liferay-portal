@@ -46,7 +46,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SlaStatus;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SLAStatus;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.Status;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
@@ -418,13 +418,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 
 		if (_isOverdue(bucket)) {
-			instance.setSlaStatus(SlaStatus.OVERDUE);
+			instance.setSLAStatus(SLAStatus.OVERDUE);
 		}
 		else if (_isOnTime(bucket)) {
-			instance.setSlaStatus(SlaStatus.ON_TIME);
+			instance.setSLAStatus(SLAStatus.ON_TIME);
 		}
 		else {
-			instance.setSlaStatus(SlaStatus.UNTRACKED);
+			instance.setSLAStatus(SLAStatus.UNTRACKED);
 		}
 	}
 

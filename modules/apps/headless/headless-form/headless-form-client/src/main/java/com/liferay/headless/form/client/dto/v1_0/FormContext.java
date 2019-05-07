@@ -28,26 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormContext {
 
-	public FieldValue[] getFieldValues() {
-		return fieldValues;
+	public FormFieldValue[] getFormFieldValues() {
+		return formFieldValues;
 	}
 
-	public void setFieldValues(FieldValue[] fieldValues) {
-		this.fieldValues = fieldValues;
+	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
+		this.formFieldValues = formFieldValues;
 	}
 
-	public void setFieldValues(
-		UnsafeSupplier<FieldValue[], Exception> fieldValuesUnsafeSupplier) {
+	public void setFormFieldValues(
+		UnsafeSupplier<FormFieldValue[], Exception>
+			formFieldValuesUnsafeSupplier) {
 
 		try {
-			fieldValues = fieldValuesUnsafeSupplier.get();
+			formFieldValues = formFieldValuesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FieldValue[] fieldValues;
+	protected FormFieldValue[] formFieldValues;
 
 	public FormPageContext[] getFormPageContexts() {
 		return formPageContexts;

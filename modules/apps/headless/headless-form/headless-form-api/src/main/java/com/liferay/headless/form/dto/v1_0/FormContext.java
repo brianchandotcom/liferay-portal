@@ -46,20 +46,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FormContext {
 
 	@Schema(description = "https://www.schema.org/FormFieldValue")
-	public FieldValue[] getFieldValues() {
-		return fieldValues;
+	public FormFieldValue[] getFormFieldValues() {
+		return formFieldValues;
 	}
 
-	public void setFieldValues(FieldValue[] fieldValues) {
-		this.fieldValues = fieldValues;
+	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
+		this.formFieldValues = formFieldValues;
 	}
 
 	@JsonIgnore
-	public void setFieldValues(
-		UnsafeSupplier<FieldValue[], Exception> fieldValuesUnsafeSupplier) {
+	public void setFormFieldValues(
+		UnsafeSupplier<FormFieldValue[], Exception>
+			formFieldValuesUnsafeSupplier) {
 
 		try {
-			fieldValues = fieldValuesUnsafeSupplier.get();
+			formFieldValues = formFieldValuesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,7 +72,7 @@ public class FormContext {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FieldValue[] fieldValues;
+	protected FormFieldValue[] formFieldValues;
 
 	@Schema(description = "https://www.schema.org/FormPageContext")
 	public FormPageContext[] getFormPageContexts() {
@@ -217,19 +218,19 @@ public class FormContext {
 
 		sb.append("{");
 
-		if (fieldValues != null) {
+		if (formFieldValues != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldValues\": ");
+			sb.append("\"formFieldValues\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < fieldValues.length; i++) {
-				sb.append(String.valueOf(fieldValues[i]));
+			for (int i = 0; i < formFieldValues.length; i++) {
+				sb.append(String.valueOf(formFieldValues[i]));
 
-				if ((i + 1) < fieldValues.length) {
+				if ((i + 1) < formFieldValues.length) {
 					sb.append(", ");
 				}
 			}

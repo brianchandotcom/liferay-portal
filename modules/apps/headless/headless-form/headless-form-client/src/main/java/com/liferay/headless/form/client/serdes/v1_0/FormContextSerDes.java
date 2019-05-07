@@ -14,8 +14,8 @@
 
 package com.liferay.headless.form.client.serdes.v1_0;
 
-import com.liferay.headless.form.client.dto.v1_0.FieldValue;
 import com.liferay.headless.form.client.dto.v1_0.FormContext;
+import com.liferay.headless.form.client.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.client.dto.v1_0.FormPageContext;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
@@ -58,19 +58,19 @@ public class FormContextSerDes {
 
 		sb.append("{");
 
-		if (formContext.getFieldValues() != null) {
+		if (formContext.getFormFieldValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldValues\": ");
+			sb.append("\"formFieldValues\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < formContext.getFieldValues().length; i++) {
-				sb.append(String.valueOf(formContext.getFieldValues()[i]));
+			for (int i = 0; i < formContext.getFormFieldValues().length; i++) {
+				sb.append(String.valueOf(formContext.getFormFieldValues()[i]));
 
-				if ((i + 1) < formContext.getFieldValues().length) {
+				if ((i + 1) < formContext.getFormFieldValues().length) {
 					sb.append(", ");
 				}
 			}
@@ -147,12 +147,13 @@ public class FormContextSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		if (formContext.getFieldValues() == null) {
-			map.put("fieldValues", null);
+		if (formContext.getFormFieldValues() == null) {
+			map.put("formFieldValues", null);
 		}
 		else {
 			map.put(
-				"fieldValues", String.valueOf(formContext.getFieldValues()));
+				"formFieldValues",
+				String.valueOf(formContext.getFormFieldValues()));
 		}
 
 		if (formContext.getFormPageContexts() == null) {
@@ -245,15 +246,15 @@ public class FormContextSerDes {
 			FormContext formContext, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fieldValues")) {
+			if (Objects.equals(jsonParserFieldName, "formFieldValues")) {
 				if (jsonParserFieldValue != null) {
-					formContext.setFieldValues(
+					formContext.setFormFieldValues(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> FieldValueSerDes.toDTO((String)object)
+							object -> FormFieldValueSerDes.toDTO((String)object)
 						).toArray(
-							size -> new FieldValue[size]
+							size -> new FormFieldValue[size]
 						));
 				}
 			}

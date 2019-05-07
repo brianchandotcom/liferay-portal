@@ -40,10 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FieldValue")
+@GraphQLName("FormFieldValue")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FieldValue")
-public class FieldValue {
+@XmlRootElement(name = "FormFieldValue")
+public class FormFieldValue {
 
 	@Schema
 	public FormDocument getFormDocument() {
@@ -187,13 +187,13 @@ public class FieldValue {
 			return true;
 		}
 
-		if (!(object instanceof FieldValue)) {
+		if (!(object instanceof FormFieldValue)) {
 			return false;
 		}
 
-		FieldValue fieldValue = (FieldValue)object;
+		FormFieldValue formFieldValue = (FormFieldValue)object;
 
-		return Objects.equals(toString(), fieldValue.toString());
+		return Objects.equals(toString(), formFieldValue.toString());
 	}
 
 	@Override

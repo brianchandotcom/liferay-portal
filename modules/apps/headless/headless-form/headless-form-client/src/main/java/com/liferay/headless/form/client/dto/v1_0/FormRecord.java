@@ -134,27 +134,6 @@ public class FormRecord {
 
 	protected Boolean draft;
 
-	public FieldValue[] getFieldValues() {
-		return fieldValues;
-	}
-
-	public void setFieldValues(FieldValue[] fieldValues) {
-		this.fieldValues = fieldValues;
-	}
-
-	public void setFieldValues(
-		UnsafeSupplier<FieldValue[], Exception> fieldValuesUnsafeSupplier) {
-
-		try {
-			fieldValues = fieldValuesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FieldValue[] fieldValues;
-
 	public Form getForm() {
 		return form;
 	}
@@ -173,6 +152,28 @@ public class FormRecord {
 	}
 
 	protected Form form;
+
+	public FormFieldValue[] getFormFieldValues() {
+		return formFieldValues;
+	}
+
+	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
+		this.formFieldValues = formFieldValues;
+	}
+
+	public void setFormFieldValues(
+		UnsafeSupplier<FormFieldValue[], Exception>
+			formFieldValuesUnsafeSupplier) {
+
+		try {
+			formFieldValues = formFieldValuesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FormFieldValue[] formFieldValues;
 
 	public Long getFormId() {
 		return formId;

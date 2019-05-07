@@ -14,7 +14,7 @@
 
 package com.liferay.headless.form.client.serdes.v1_0;
 
-import com.liferay.headless.form.client.dto.v1_0.FieldValue;
+import com.liferay.headless.form.client.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.client.dto.v1_0.FormRecord;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
@@ -126,26 +126,6 @@ public class FormRecordSerDes {
 			sb.append(formRecord.getDraft());
 		}
 
-		if (formRecord.getFieldValues() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fieldValues\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < formRecord.getFieldValues().length; i++) {
-				sb.append(String.valueOf(formRecord.getFieldValues()[i]));
-
-				if ((i + 1) < formRecord.getFieldValues().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (formRecord.getForm() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +134,26 @@ public class FormRecordSerDes {
 			sb.append("\"form\": ");
 
 			sb.append(String.valueOf(formRecord.getForm()));
+		}
+
+		if (formRecord.getFormFieldValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formFieldValues\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < formRecord.getFormFieldValues().length; i++) {
+				sb.append(String.valueOf(formRecord.getFormFieldValues()[i]));
+
+				if ((i + 1) < formRecord.getFormFieldValues().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (formRecord.getFormId() != null) {
@@ -223,18 +223,20 @@ public class FormRecordSerDes {
 			map.put("draft", String.valueOf(formRecord.getDraft()));
 		}
 
-		if (formRecord.getFieldValues() == null) {
-			map.put("fieldValues", null);
-		}
-		else {
-			map.put("fieldValues", String.valueOf(formRecord.getFieldValues()));
-		}
-
 		if (formRecord.getForm() == null) {
 			map.put("form", null);
 		}
 		else {
 			map.put("form", String.valueOf(formRecord.getForm()));
+		}
+
+		if (formRecord.getFormFieldValues() == null) {
+			map.put("formFieldValues", null);
+		}
+		else {
+			map.put(
+				"formFieldValues",
+				String.valueOf(formRecord.getFormFieldValues()));
 		}
 
 		if (formRecord.getFormId() == null) {
@@ -336,22 +338,22 @@ public class FormRecordSerDes {
 					formRecord.setDraft((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fieldValues")) {
-				if (jsonParserFieldValue != null) {
-					formRecord.setFieldValues(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FieldValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FieldValue[size]
-						));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "form")) {
 				if (jsonParserFieldValue != null) {
 					formRecord.setForm(
 						FormSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formFieldValues")) {
+				if (jsonParserFieldValue != null) {
+					formRecord.setFormFieldValues(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FormFieldValueSerDes.toDTO((String)object)
+						).toArray(
+							size -> new FormFieldValue[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formId")) {

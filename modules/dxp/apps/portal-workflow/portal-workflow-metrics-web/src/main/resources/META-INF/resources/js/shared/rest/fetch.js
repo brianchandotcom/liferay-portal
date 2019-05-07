@@ -11,4 +11,8 @@ const restClient = axios.create({
 	baseURL: '/o/portal-workflow-metrics/v1.0'
 });
 
+axios.defaults.params = {
+	['p_auth']: Liferay.authToken
+};
+
 export default restClient;

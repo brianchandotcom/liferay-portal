@@ -108,35 +108,38 @@ public interface Portal {
 	 *
 	 * @param description the description to append to the current meta
 	 *        description
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
 	public void addPageDescription(
-		String description, HttpServletRequest request);
+		String description, HttpServletRequest httpServletRequest);
 
 	/**
 	 * Appends the keywords to the current meta keywords of the page.
 	 *
 	 * @param keywords the keywords to add to the current meta keywords
 	 *        (comma-separated)
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
-	public void addPageKeywords(String keywords, HttpServletRequest request);
+	public void addPageKeywords(
+		String keywords, HttpServletRequest httpServletRequest);
 
 	/**
 	 * Appends the subtitle to the current subtitle of the page.
 	 *
 	 * @param subtitle the subtitle to append to the current subtitle
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
-	public void addPageSubtitle(String subtitle, HttpServletRequest request);
+	public void addPageSubtitle(
+		String subtitle, HttpServletRequest httpServletRequest);
 
 	/**
 	 * Appends the title to the current title of the page.
 	 *
 	 * @param title the title to append to the current title
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
-	public void addPageTitle(String title, HttpServletRequest request);
+	public void addPageTitle(
+		String title, HttpServletRequest httpServletRequest);
 
 	public boolean addPortalInetSocketAddressEventListener(
 		PortalInetSocketAddressEventListener
@@ -145,29 +148,29 @@ public interface Portal {
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breakcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 */
 	public void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url);
+		HttpServletRequest httpServletRequest, String title, String url);
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breakcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
 	 */
 	public void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url,
+		HttpServletRequest httpServletRequest, String title, String url,
 		Map<String, Object> data);
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breakcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
@@ -175,18 +178,18 @@ public interface Portal {
 	 *        entry
 	 */
 	public void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url,
+		HttpServletRequest httpServletRequest, String title, String url,
 		Map<String, Object> data, boolean portletBreadcrumbEntry);
 
 	/**
 	 * Adds the default resource permissions for the portlet to the page.
 	 *
-	 * @param  request the servlet request for the page
+	 * @param  httpServletRequest the servlet request for the page
 	 * @param  portlet the portlet
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void addPortletDefaultResource(
-			HttpServletRequest request, Portlet portlet)
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws PortalException;
 
 	public void addPortletDefaultResource(
@@ -261,11 +264,12 @@ public interface Portal {
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *
-	 * @param  request the servlet request for the page
+	 * @param  httpServletRequest the servlet request for the page
 	 * @param  input the input string
 	 * @return the generated key
 	 */
-	public String generateRandomKey(HttpServletRequest request, String input);
+	public String generateRandomKey(
+		HttpServletRequest httpServletRequest, String input);
 
 	public String getAbsoluteURL(
 		HttpServletRequest httpServletRequest, String url);

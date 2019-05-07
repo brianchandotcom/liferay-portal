@@ -369,11 +369,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	/**
 	 * Returns the DDM template's content.
 	 *
-	 * @param  request the request corresponding to a portlet render. In some
+	 * @param  httpServletRequest the request corresponding to a portlet render. In some
 	 *         cases, such as an {@link HttpServletRequest} corresponding to a
 	 *         portlet action or resource request, or for a regular servlet, the
 	 *         <code>renderRequest</code> is not accessible to the template.
-	 * @param  response the response corresponding to a portlet render. In some
+	 * @param  httpServletResponse the response corresponding to a portlet render. In some
 	 *         cases, such as an {@link HttpServletResponse} corresponding to a
 	 *         portlet action or resource response, or for a regular servlet,
 	 *         the <code>renderResponse</code> is not accessible to the
@@ -387,20 +387,23 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	 */
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			DDMTemplate ddmTemplate, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		Transformer transformer = TransformerHolder.getTransformer();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest != null) && (portletResponse != null)) {
 			PortletURL currentURL = PortletURLUtil.getCurrent(
@@ -420,7 +423,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
+			PortletDisplayTemplateConstants.LOCALE,
+			httpServletRequest.getLocale());
 
 		if (portletRequest instanceof RenderRequest) {
 			RenderRequest renderRequest = (RenderRequest)portletRequest;
@@ -476,13 +480,14 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		// Taglibs
 
-		templateManager.addTaglibSupport(contextObjects, request, response);
+		templateManager.addTaglibSupport(
+			contextObjects, httpServletRequest, httpServletResponse);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		templateManager.addTaglibTheme(
-			contextObjects, "taglibLiferay", request,
-			new PipingServletResponse(response, unsyncStringWriter));
+			contextObjects, "taglibLiferay", httpServletRequest,
+			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
 

@@ -30,18 +30,18 @@ public interface GroupProvider {
 	/**
 	 * Returns the <code>Group</code> associated with the request.
 	 *
-	 * @param  request the servlet request used to retrieve the group
+	 * @param  httpServletRequest the servlet request used to retrieve the group
 	 * @return the <code>Group</code> associated with the request
 	 */
-	public Group getGroup(HttpServletRequest request);
+	public Group getGroup(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Sets the <code>Group</code> to associate with the request.
 	 *
-	 * @param request the servlet request used to associate the
+	 * @param httpServletRequest the servlet request used to associate the
 	 *        <code>Group</code>
 	 * @param group the <code>Group</code> to associate with the request
 	 */
-	public void setGroup(HttpServletRequest request, Group group);
+	public void setGroup(HttpServletRequest httpServletRequest, Group group);
 
 }

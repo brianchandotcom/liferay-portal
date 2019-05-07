@@ -47,36 +47,36 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns the data to be injected as the <code>data</code> attribute of the
 	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>data</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public Map<String, Object> getData(HttpServletRequest request);
+	public Map<String, Object> getData(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the icon name to be injected as the <code>icon</code> attribute
 	 * of the <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 * entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>icon</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public String getIcon(HttpServletRequest request);
+	public String getIcon(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the icon CSS class to be injected as the
 	 * <code>iconCssClass</code> attribute of the <code>liferay-ui:icon</code>
 	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>iconCssClass</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public String getIconCssClass(HttpServletRequest request);
+	public String getIconCssClass(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the Control Menu entry's key. This key must be unique in the
@@ -100,74 +100,77 @@ public interface ProductNavigationControlMenuEntry {
 	 * <code>linkCssClass</code> attribute of the <code>liferay-ui:icon</code>
 	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>linkCssClass</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public String getLinkCssClass(HttpServletRequest request);
+	public String getLinkCssClass(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the markup view string to be injected as the
 	 * <code>markupView</code> attribute of the <code>liferay-ui:icon</code> tag
 	 * instance for the Control Menu entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>markupView</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public String getMarkupView(HttpServletRequest request);
+	public String getMarkupView(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the URL to be injected as the <code>url</code> attribute of the
 	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return the <code>url</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
 	 */
-	public String getURL(HttpServletRequest request);
+	public String getURL(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns <code>true</code> if the Control Menu entry body's HTML should be
 	 * rendered.
 	 *
-	 * @param  request the request that renders the Control Menu entry
-	 * @param  response the response that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletResponse the response that renders the Control Menu entry
 	 * @return <code>true</code> if the Control Menu entry body's HTML should be
 	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeBody(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	/**
 	 * Returns <code>true</code> if the Control Menu entry icon's HTML should be
 	 * rendered.
 	 *
-	 * @param  request the request that renders the Control Menu entry
-	 * @param  response the response that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletResponse the response that renders the Control Menu entry
 	 * @return <code>true</code> if the Control Menu entry icon's HTML should be
 	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	/**
 	 * Returns <code>true</code> if the Control Menu entry should be displayed
 	 * in the request's context.
 	 *
-	 * @param  request the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu entry
 	 * @return <code>true</code> if the Control Menu entry should be displayed
 	 *         in the request's context; <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public boolean isShow(HttpServletRequest request) throws PortalException;
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the Control Menu entry should be opened in a

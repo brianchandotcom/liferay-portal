@@ -90,12 +90,12 @@ public class PortalUtil {
 	 *
 	 * @param description the description to append to the current meta
 	 *        description
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
 	public static void addPageDescription(
-		String description, HttpServletRequest request) {
+		String description, HttpServletRequest httpServletRequest) {
 
-		getPortal().addPageDescription(description, request);
+		getPortal().addPageDescription(description, httpServletRequest);
 	}
 
 	/**
@@ -104,34 +104,36 @@ public class PortalUtil {
 	 *
 	 * @param keywords the keywords to add to the current meta keywords
 	 *        (comma-separated)
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
 	public static void addPageKeywords(
-		String keywords, HttpServletRequest request) {
+		String keywords, HttpServletRequest httpServletRequest) {
 
-		getPortal().addPageKeywords(keywords, request);
+		getPortal().addPageKeywords(keywords, httpServletRequest);
 	}
 
 	/**
 	 * Appends the subtitle to the current subtitle of the page in the request.
 	 *
 	 * @param subtitle the subtitle to append to the current subtitle
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
 	public static void addPageSubtitle(
-		String subtitle, HttpServletRequest request) {
+		String subtitle, HttpServletRequest httpServletRequest) {
 
-		getPortal().addPageSubtitle(subtitle, request);
+		getPortal().addPageSubtitle(subtitle, httpServletRequest);
 	}
 
 	/**
 	 * Appends the title to the current title of the page in the request.
 	 *
 	 * @param title the title to append to the current title
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 */
-	public static void addPageTitle(String title, HttpServletRequest request) {
-		getPortal().addPageTitle(title, request);
+	public static void addPageTitle(
+		String title, HttpServletRequest httpServletRequest) {
+
+		getPortal().addPageTitle(title, httpServletRequest);
 	}
 
 	public static boolean addPortalInetSocketAddressEventListener(
@@ -145,35 +147,36 @@ public class PortalUtil {
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 */
 	public static void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url) {
+		HttpServletRequest httpServletRequest, String title, String url) {
 
-		getPortal().addPortletBreadcrumbEntry(request, title, url);
+		getPortal().addPortletBreadcrumbEntry(httpServletRequest, title, url);
 	}
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
 	 */
 	public static void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url,
+		HttpServletRequest httpServletRequest, String title, String url,
 		Map<String, Object> data) {
 
-		getPortal().addPortletBreadcrumbEntry(request, title, url, data);
+		getPortal().addPortletBreadcrumbEntry(
+			httpServletRequest, title, url, data);
 	}
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
-	 * @param request the servlet request for the page
+	 * @param httpServletRequest the servlet request for the page
 	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
@@ -181,26 +184,26 @@ public class PortalUtil {
 	 *        entry
 	 */
 	public static void addPortletBreadcrumbEntry(
-		HttpServletRequest request, String title, String url,
+		HttpServletRequest httpServletRequest, String title, String url,
 		Map<String, Object> data, boolean portletBreadcrumbEntry) {
 
 		getPortal().addPortletBreadcrumbEntry(
-			request, title, url, data, portletBreadcrumbEntry);
+			httpServletRequest, title, url, data, portletBreadcrumbEntry);
 	}
 
 	/**
 	 * Adds the default resource permissions for the portlet to the page in the
 	 * request.
 	 *
-	 * @param  request the servlet request for the page
+	 * @param  httpServletRequest the servlet request for the page
 	 * @param  portlet the portlet
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static void addPortletDefaultResource(
-			HttpServletRequest request, Portlet portlet)
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws PortalException {
 
-		getPortal().addPortletDefaultResource(request, portlet);
+		getPortal().addPortletDefaultResource(httpServletRequest, portlet);
 	}
 
 	public static void addPortletDefaultResource(
@@ -301,14 +304,14 @@ public class PortalUtil {
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *
-	 * @param  request the servlet request for the page
+	 * @param  httpServletRequest the servlet request for the page
 	 * @param  input the input string
 	 * @return the generated key
 	 */
 	public static String generateRandomKey(
-		HttpServletRequest request, String input) {
+		HttpServletRequest httpServletRequest, String input) {
 
-		return getPortal().generateRandomKey(request, input);
+		return getPortal().generateRandomKey(httpServletRequest, input);
 	}
 
 	public static String getAbsoluteURL(

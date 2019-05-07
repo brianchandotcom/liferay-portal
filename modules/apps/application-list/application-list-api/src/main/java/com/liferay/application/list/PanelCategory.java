@@ -55,33 +55,35 @@ public interface PanelCategory extends PanelEntry {
 	/**
 	 * Returns <code>true</code> if the category body renders successfully.
 	 *
-	 * @param  request the servlet request used in the rendering process
-	 * @param  response the servlet response used in the rendering process
+	 * @param  httpServletRequest the servlet request used in the rendering process
+	 * @param  httpServletResponse the servlet response used in the rendering process
 	 * @return <code>true</code> if the category body renders successfully;
 	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	/**
 	 * Returns <code>true</code> if the category header renders successfully.
 	 *
-	 * @param  request the servlet request used in the rendering process
-	 * @param  response the servlet response used in the rendering process
+	 * @param  httpServletRequest the servlet request used in the rendering process
+	 * @param  httpServletResponse the servlet response used in the rendering process
 	 * @return <code>true</code> if the category header renders successfully;
 	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeHeader(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	/**
 	 * Returns <code>true</code> if the application category is active.
 	 *
-	 * @param  request the servlet request
+	 * @param  httpServletRequest the servlet request
 	 * @param  panelCategoryHelper the {@link PanelCategoryHelper} to facilitate
 	 *         the method's implementation
 	 * @param  group the group for which the state of the application category
@@ -90,8 +92,8 @@ public interface PanelCategory extends PanelEntry {
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isActive(
-		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper,
-		Group group);
+		HttpServletRequest httpServletRequest,
+		PanelCategoryHelper panelCategoryHelper, Group group);
 
 	/**
 	 * Returns <code>true</code> if the state of the category is persisted.

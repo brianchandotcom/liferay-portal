@@ -1728,13 +1728,13 @@ public class ServicePreAction extends Action {
 	 * Returns <code>true</code> if the request URI's path starts with the
 	 * portal's default login path <code>c/portal/login</code>.
 	 *
-	 * @param  request the servlet request for the page, which can be a result
+	 * @param  httpServletRequest the servlet request for the page, which can be a result
 	 *         of a redirect
 	 * @return <code>true</code> if the request is a login request;
 	 *         <code>false</code> otherwise
 	 */
-	private boolean _isLoginRequest(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
+	private boolean _isLoginRequest(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
 
 		String mainPath = _PATH_MAIN;
 

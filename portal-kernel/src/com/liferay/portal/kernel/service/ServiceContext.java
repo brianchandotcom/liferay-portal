@@ -1533,10 +1533,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Sets the optional request used when instantiating this service context.
 	 * The field is volatile and so will be discarded on serialization.
 	 *
-	 * @param request the request
+	 * @param httpServletRequest the request
 	 */
-	public void setRequest(HttpServletRequest request) {
-		_httpServletRequest = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_httpServletRequest = httpServletRequest;
 	}
 
 	/**

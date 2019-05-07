@@ -71,14 +71,15 @@ public interface SocialBookmark {
 	 * @param  target the desired target for the link (e.g., {@code _blank})
 	 * @param  title the title of the content being shared
 	 * @param  url the URL of the content being shared (e.g., the current page)
-	 * @param  request the servlet request
-	 * @param  response the servlet response
+	 * @param  httpServletRequest the servlet request
+	 * @param  httpServletResponse the servlet response
 	 * @throws IOException if an IO exception occurred
 	 * @throws ServletException if a servlet exception occurred
 	 */
 	public void render(
-			String target, String title, String url, HttpServletRequest request,
-			HttpServletResponse response)
+			String target, String title, String url,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException;
 
 }

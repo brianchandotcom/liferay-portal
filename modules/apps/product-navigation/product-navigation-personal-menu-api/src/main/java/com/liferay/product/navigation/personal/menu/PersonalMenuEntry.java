@@ -66,12 +66,12 @@ public interface PersonalMenuEntry {
 	 * Returns the URL used to render a portlet based on the servlet request
 	 * attributes.
 	 *
-	 * @param  request the servlet request used to create a portlet's URL
+	 * @param  httpServletRequest the servlet request used to create a portlet's URL
 	 * @return the portlet's URL used to render a target portlet
 	 * @throws PortalException if a portal exception occurred
 	 * @review
 	 */
-	public String getPortletURL(HttpServletRequest request)
+	public String getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	/**

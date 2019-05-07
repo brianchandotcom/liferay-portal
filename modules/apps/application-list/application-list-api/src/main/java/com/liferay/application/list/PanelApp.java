@@ -62,24 +62,25 @@ public interface PanelApp extends PanelEntry {
 	 * Returns the URL used to render a portlet based on the servlet request
 	 * attributes.
 	 *
-	 * @param  request the servlet request used to create a portlet's URL
+	 * @param  httpServletRequest the servlet request used to create a portlet's URL
 	 * @return the portlet's URL used to render a target portlet
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the application successfully renders.
 	 *
-	 * @param  request the servlet request used in the rendering process
-	 * @param  response the servlet response used in the rendering process
+	 * @param  httpServletRequest the servlet request used in the rendering process
+	 * @param  httpServletResponse the servlet response used in the rendering process
 	 * @return <code>true</code> if the application successfully renders;
 	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	/**

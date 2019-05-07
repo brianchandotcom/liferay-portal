@@ -27,11 +27,11 @@ public interface AbsolutePortalURLBuilderFactory {
 	/**
 	 * Get a new AbsolutePortalURLBuilder instance tied to the given request.
 	 *
-	 * @param  request the servlet request
+	 * @param  httpServletRequest the servlet request
 	 * @return an instance of AbsolutePortalURLBuilder
 	 * @review
 	 */
 	public AbsolutePortalURLBuilder getAbsolutePortalURLBuilder(
-		HttpServletRequest request);
+		HttpServletRequest httpServletRequest);
 
 }

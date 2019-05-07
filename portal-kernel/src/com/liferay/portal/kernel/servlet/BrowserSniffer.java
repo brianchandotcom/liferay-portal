@@ -54,10 +54,10 @@ public interface BrowserSniffer {
 	 * <code>10.0</code>, not <code>8.0</code>.
 	 * </p>
 	 *
-	 * @param  request the servlet request
+	 * @param  httpServletRequest the servlet request
 	 * @return a float representing the version number
 	 */
-	public float getMajorVersion(HttpServletRequest request);
+	public float getMajorVersion(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the browser's revision.
@@ -70,10 +70,10 @@ public interface BrowserSniffer {
 	 * <code>10.0</code>, not <code>8.0</code>.
 	 * </p>
 	 *
-	 * @param  request the servlet request
+	 * @param  httpServletRequest the servlet request
 	 * @return a String containing the revision number
 	 */
-	public String getRevision(HttpServletRequest request);
+	public String getRevision(HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the browser's version.
@@ -86,10 +86,10 @@ public interface BrowserSniffer {
 	 * <code>10.0</code>, not <code>8.0</code>.
 	 * </p>
 	 *
-	 * @param  request the servlet request
+	 * @param  httpServletRequest the servlet request
 	 * @return a String containing the version number
 	 */
-	public String getVersion(HttpServletRequest request);
+	public String getVersion(HttpServletRequest httpServletRequest);
 
 	public boolean isAir(HttpServletRequest httpServletRequest);
 

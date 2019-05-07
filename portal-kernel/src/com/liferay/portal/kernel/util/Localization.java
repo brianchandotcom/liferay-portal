@@ -183,14 +183,14 @@ public interface Localization {
 	 * Returns a map of locales and localized strings for the parameter in the
 	 * request.
 	 *
-	 * @param  request the request
+	 * @param  httpServletRequest the request
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization is loaded from a parameter with this
 	 *         prefix, followed by an underscore, and the language ID.
 	 * @return the locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
-		HttpServletRequest request, String parameter);
+		HttpServletRequest httpServletRequest, String parameter);
 
 	/**
 	 * Returns a map of locales and localized strings for the preference in the

@@ -72,8 +72,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
-import org.osgi.framework.Constants;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Young
@@ -222,7 +220,7 @@ public class ServiceTestUtil {
 
 		HashMap<String, Object> messageBusProperties = new HashMap<>();
 
-		messageBusProperties.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE);
+		messageBusProperties.put("service.ranking", Integer.MAX_VALUE);
 
 		registry.registerService(
 			MessageBus.class, _messageBusWrapper, messageBusProperties);
@@ -235,7 +233,7 @@ public class ServiceTestUtil {
 			new HashMap<>();
 
 		portalExecutorManagerProperties.put(
-			Constants.SERVICE_RANKING, Integer.MAX_VALUE);
+			"service.ranking", Integer.MAX_VALUE);
 
 		registry.registerService(
 			PortalExecutorManager.class, _portalExecutorManagerWrapper,

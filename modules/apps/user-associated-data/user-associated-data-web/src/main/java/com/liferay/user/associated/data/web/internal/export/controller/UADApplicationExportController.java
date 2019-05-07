@@ -110,7 +110,7 @@ public class UADApplicationExportController {
 			UADExporter uadExporter = _uadRegistry.getUADExporter(
 				uadRegistryKey);
 
-			totalCount += uadExporter.count(userId);
+			totalCount += uadExporter.getExportDataCount(userId);
 		}
 
 		return totalCount;

@@ -58,4 +58,15 @@ public interface UADExporter<T> extends UADComponent<T> {
 	 */
 	public File exportAll(long userId) throws PortalException;
 
+	/**
+	 * Returns the number of export data items of type {@code T} entities
+	 * associated with the user.
+	 *
+	 * @param  userId the primary key of the user whose data to count
+	 * @return the number of export data items
+	 */
+	public default long getExportDataCount(long userId) throws PortalException {
+		return count(userId);
+	}
+
 }

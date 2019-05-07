@@ -56,12 +56,6 @@ public class ProductNavigationControlMenuTopHeadDynamicInclude
 			return;
 		}
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			return;
-		}
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		StringBundler sb = new StringBundler(6);

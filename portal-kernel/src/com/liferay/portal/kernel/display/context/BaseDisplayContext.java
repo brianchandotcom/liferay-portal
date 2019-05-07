@@ -33,8 +33,8 @@ public abstract class BaseDisplayContext<T extends DisplayContext>
 		_uuid = uuid;
 
 		this.parentDisplayContext = parentDisplayContext;
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 	}
 
 	@Override

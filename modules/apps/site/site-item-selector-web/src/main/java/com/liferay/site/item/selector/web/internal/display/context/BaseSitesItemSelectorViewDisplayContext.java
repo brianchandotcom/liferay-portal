@@ -43,7 +43,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		this.request = httpServletRequest;
+		request = httpServletRequest;
 		_siteItemSelectorCriterion = siteItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;

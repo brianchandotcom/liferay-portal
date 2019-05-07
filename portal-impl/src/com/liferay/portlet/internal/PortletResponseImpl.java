@@ -498,7 +498,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		HttpServletResponse httpServletResponse) {
 
 		this.portletRequestImpl = portletRequestImpl;
-		this.response = httpServletResponse;
+		response = httpServletResponse;
 
 		_portlet = portletRequestImpl.getPortlet();
 

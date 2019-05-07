@@ -48,8 +48,8 @@ public class MockPortletContainer implements PortletContainer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet) {
 
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 		this.portlet = portlet;
 
 		if (modifyLayoutTypeSettings) {
@@ -70,8 +70,8 @@ public class MockPortletContainer implements PortletContainer {
 		HttpServletResponse httpServletResponse, Portlet portlet, Layout layout,
 		Event event) {
 
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 		this.portlet = portlet;
 		this.layout = layout;
 		this.event = event;
@@ -103,8 +103,8 @@ public class MockPortletContainer implements PortletContainer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet) {
 
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 		this.portlet = portlet;
 	}
 
@@ -113,8 +113,8 @@ public class MockPortletContainer implements PortletContainer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet) {
 
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 		this.portlet = portlet;
 	}
 
@@ -123,8 +123,8 @@ public class MockPortletContainer implements PortletContainer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet) {
 
-		this.request = httpServletRequest;
-		this.response = httpServletResponse;
+		request = httpServletRequest;
+		response = httpServletResponse;
 		this.portlet = portlet;
 	}
 

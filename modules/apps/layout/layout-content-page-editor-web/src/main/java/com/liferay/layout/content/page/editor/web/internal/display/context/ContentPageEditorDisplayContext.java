@@ -131,7 +131,7 @@ public class ContentPageEditorDisplayContext {
 		String className, long classPK,
 		FragmentRendererController fragmentRendererController) {
 
-		this.request = httpServletRequest;
+		request = httpServletRequest;
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
 

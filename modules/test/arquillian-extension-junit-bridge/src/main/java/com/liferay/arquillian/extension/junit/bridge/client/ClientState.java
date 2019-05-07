@@ -49,8 +49,6 @@ import java.util.function.Predicate;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
-import org.osgi.jmx.framework.FrameworkMBean;
-
 /**
  * @author Shuyang Zhou
  */
@@ -70,26 +68,25 @@ public class ClientState {
 		throws Exception {
 
 		if (_bundleId == 0) {
-			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
-
 			ServerSocket serverSocket = _socketState.getServerSocket();
 
 			Random random = new SecureRandom();
 
 			long passCode = random.nextLong();
 
+			_frameworkState.connect();
+
 			_bundleId = _installBundle(
-				frameworkMBean, filteredMethodNamesMap,
-				serverSocket.getInetAddress(), serverSocket.getLocalPort(),
-				passCode);
+				filteredMethodNamesMap, serverSocket.getInetAddress(),
+				serverSocket.getLocalPort(), passCode);
 
 			try {
-				frameworkMBean.startBundle(_bundleId);
+				_frameworkState.startBundle(_bundleId);
 
 				_socketState.connect(passCode);
 			}
 			catch (Throwable t) {
-				frameworkMBean.uninstallBundle(_bundleId);
+				_frameworkState.uninstallBundle(_bundleId);
 
 				throw t;
 			}
@@ -104,9 +101,9 @@ public class ClientState {
 				testClasses.remove(testClass);
 
 				if (testClasses.isEmpty()) {
-					FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
+					_frameworkState.uninstallBundle(_bundleId);
 
-					frameworkMBean.uninstallBundle(_bundleId);
+					_frameworkState.close();
 
 					_socketState.close();
 
@@ -230,7 +227,6 @@ public class ClientState {
 	}
 
 	private static long _installBundle(
-			FrameworkMBean frameworkMBean,
 			Map<String, List<String>> filteredMethodNamesMap,
 			InetAddress inetAddress, int port, long passCode)
 		throws Exception {
@@ -244,8 +240,7 @@ public class ClientState {
 		URL url = uri.toURL();
 
 		try {
-			return frameworkMBean.installBundleFromURL(
-				url.getPath(), url.toExternalForm());
+			return _frameworkState.installBundle(url.getPath(), url);
 		}
 		finally {
 			Files.delete(path);
@@ -253,6 +248,7 @@ public class ClientState {
 	}
 
 	private static long _bundleId;
+	private static final FrameworkState _frameworkState = new FrameworkState();
 	private static final SocketState _socketState = new SocketState();
 	private static Set<Class<?>> _testClasses;
 

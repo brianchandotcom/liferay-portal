@@ -4,4 +4,5 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.jmx", version: "1.1.0"
 
 	compileOnly group: "junit", name: "junit", version: "4.12"
+	compileOnly project(":test:arquillian-extension-junit-bridge-connector")
 }

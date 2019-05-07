@@ -100,6 +100,10 @@ public class SocketState {
 		}
 	}
 
+	public long readLong() throws IOException {
+		return _objectInputStream.readLong();
+	}
+
 	public Object readObject() throws Exception {
 		try {
 			return _objectInputStream.readObject();
@@ -107,6 +111,12 @@ public class SocketState {
 		catch (WriteAbortedException wae) {
 			return _objectInputStream.readObject();
 		}
+	}
+
+	public void writeObject(Object object) throws IOException {
+		_objectOutputStream.writeObject(object);
+
+		_objectOutputStream.flush();
 	}
 
 	public void writeUTF(String string) throws IOException {

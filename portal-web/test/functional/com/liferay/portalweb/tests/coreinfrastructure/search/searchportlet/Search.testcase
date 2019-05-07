@@ -1446,42 +1446,34 @@ definition {
 	}
 
 	test ViewCreatedSearchPageAsSiteMemberAndGuest {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Search Page");
 
-		User.openUsersAdmin();
+		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		User.openUsersAdmin();
-
-		Site.assignUserSitesCP(
-			siteName = "Site Name",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Search Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContent.addArticleCP(
-			webContentContent = "WC Content",
-			webContentTitle = "WC Title");
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Site Name",
+			serviceContext = "${webContentServiceContext}",
+			title = "WC Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Page",
@@ -1999,25 +1991,22 @@ definition {
 	}
 
 	test ViewSearchGlobalTemplateAsSiteMemberAndGuest {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.openUsersAdmin();
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		User.openUsersAdmin();
-
-		Site.assignUserSitesCP(
-			siteName = "Site Name",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -2025,14 +2014,13 @@ definition {
 			pageName = "Search Global Template Page",
 			pageTemplateName = "Search");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
 
-		WebContent.addArticleCP(
-			webContentContent = "WC Content",
-			webContentTitle = "WC Title");
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Site Name",
+			serviceContext = "${webContentServiceContext}",
+			title = "WC Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Global Template Page",

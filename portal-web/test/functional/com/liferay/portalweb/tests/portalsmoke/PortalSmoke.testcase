@@ -31,6 +31,7 @@ definition {
 	@priority = "5"
 	test LCSClientSmoke {
 		property deploy.lcs.token.file = "true";
+		property environment.acceptance = "true";
 		property portal.fixpack.release = "true";
 		property portal.smoke = "false";
 		property portal.upstream = "false";

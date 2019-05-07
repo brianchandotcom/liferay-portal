@@ -268,7 +268,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
 			}
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 		catch (AssetCategoryException | AssetTagException |
 			   InvalidFolderException e) {

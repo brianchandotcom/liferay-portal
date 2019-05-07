@@ -102,6 +102,13 @@ public class SiteAdminManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (!PortalPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				ActionKeys.ADD_COMMUNITY)) {
+
+			return null;
+		}
+
 		try {
 			PortletURL addSiteURL = liferayPortletResponse.createRenderURL();
 

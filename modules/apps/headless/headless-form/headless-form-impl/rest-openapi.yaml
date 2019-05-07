@@ -122,6 +122,10 @@ components:
                     type: string
                 draft:
                     type: boolean
+                form:
+                    allOf:
+                        - $ref: "#/components/schemas/Form"
+                    readOnly: true
                 formFieldValues:
                     description: https://www.schema.org/FormFieldValue
                     items:
@@ -144,10 +148,6 @@ components:
                                 type: string
                         type: object
                     type: array
-                form:
-                    allOf:
-                        - $ref: "#/components/schemas/Form"
-                    readOnly: true
                 formId:
                     format: int64
                     type: integer
@@ -297,14 +297,6 @@ components:
                                 type: string
                         type: object
                     type: array
-                id:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
-                siteId:
-                    format: int64
-                    type: integer
                 formSuccessPageSettings:
                     description: https://www.schema.org/FormSuccessPageSettings
                     properties:
@@ -316,6 +308,14 @@ components:
                             format: int64
                             type: integer
                     type: object
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                siteId:
+                    format: int64
+                    type: integer
             type: object
 info:
     description: ""

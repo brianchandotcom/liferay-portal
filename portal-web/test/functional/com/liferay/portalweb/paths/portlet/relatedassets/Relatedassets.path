@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//ul[contains(@class,'list-unstyled')]/li/a[contains(.,'${key_assetTitle}')]</td>
+	<td>//section[contains(@id,'RelatedAssetsPortlet')]//h4/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list')]/li/a)[1]</td>
+	<td>xpath=(//section[contains(@id,'RelatedAssetsPortlet')]//h4/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_2</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list')]/li/a)[2]</td>
+	<td>xpath=(//section[contains(@id,'RelatedAssetsPortlet')]//h4/a)[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,33 +13,33 @@
 }
 
 .modal {
-	display: block;
-	margin: 0;
-	overflow: hidden;
-	position: fixed;
-}
+	&.fade .modal-dialog {
+		position: static;
 
-.modal-body {
-	overflow: auto;
+		&.modal-dialog-sm {
+			max-width: $modal-md;
+		}
+	}
 
-	&.dialog-iframe-bd {
+	&.yui3-widget-modal {
+		display: block;
+		margin: 0;
 		overflow: hidden;
-		padding: 0;
-	}
-}
+		position: fixed;
 
-.modal-dialog {
-	@include sm {
-		max-width: none;
-	}
+		@include sm {
+			max-width: none;
+		}
 
-	&.modal-dialog-sm {
-		max-width: $modal-md;
-	}
-}
+		.modal-body {
+			overflow: auto;
 
-.modal-hidden {
-	display: none;
+			&.dialog-iframe-bd {
+				overflow: hidden;
+				padding: 0;
+			}
+		}
+	}
 }
 
 .modal-open .modal {

@@ -72,6 +72,30 @@ definition {
 		var userId = JSONCurlUtil.post("${curl}", "$['userId']");
 	}
 
+	macro _agreeToTermsAndAnswerReminderQuery {
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl1 = '''
+			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+				-u test@liferay.com:test
+		''';
+
+		echo("## Agreeing to Terms of Use for user ${userId}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl1}");
+
+		var curl2 = '''
+			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+				-u test@liferay.com:test
+		''';
+
+		echo("## Answering Password Reminder for ${userId}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl2}");
+	}
+
 	macro _deleteUser {
 		if (!(isSet(userId))) {
 			fail("Please set 'userId'.");
@@ -92,6 +116,58 @@ definition {
 		echo("## * Email Address: ${userEmailAddress}");
 
 		var temporary = JSONCurlUtil.post("${curl}", "");
+	}
+
+	macro _disablePasswordChangeRequired {
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl1 = '''
+			${portalURL}/api/jsonws/passwordpolicy/search/company-id/${companyId}/name/default/start/0/end/1/-obc \
+				-u test@liferay.com:test
+		''';
+
+		var passwordPolicyId = JSONCurlUtil.post("${curl1}", "$.[?(@['name'] == 'Default Password Policy')]['passwordPolicyId']");
+		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "[&quot;", "");
+		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "&quot;]", "");
+
+		echo("## Default Password Policy ID: ${passwordPolicyId}");
+
+		var curl2 = '''
+			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
+				-u test@liferay.com:test \
+				-d passwordPolicyId=${passwordPolicyId} \
+				-d name='Default Password Policy' \
+				-d description='Default Password Policy' \
+				-d changeable=true \
+				-d changeRequired=false \
+				-d minAge=0 \
+				-d checkSyntax=false \
+				-d allowDictionaryWords=true \
+				-d minAlphanumeric=0 \
+				-d minLength=6 \
+				-d minLowerCase=0 \
+				-d minNumbers=1 \
+				-d minSymbols=0 \
+				-d minUpperCase=1 \
+				-d regex="(?=.{4})(?:[a-zA-Z0-9]*)" \
+				-d history=false \
+				-d historyCount=6 \
+				-d expireable=false \
+				-d maxAge=8640000 \
+				-d warningTime=86400 \
+				-d graceLimit=0 \
+				-d lockout=false \
+				-d maxFailure=3 \
+				-d lockoutDuration=0 \
+				-d resetFailureCount=600 \
+				-d resetTicketMaxAge=86400
+		''';
+
+		echo("## Disabling Change Required Password Policy");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl2}");
 	}
 
 	macro addUser {
@@ -116,6 +192,29 @@ definition {
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}");
+	}
+
+	macro addUserToSite {
+		if (!(isSet(groupName))) {
+			fail("Please set 'groupName'.");
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
+
+		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro deleteUserByEmailAddress {
@@ -188,6 +287,45 @@ definition {
 		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
 
 		return "${userId}";
+	}
+
+	macro setFirstPassword {
+		if (!(isSet(userEmailAddress))) {
+			fail("Please set 'userEmailAddress'.");
+		}
+
+		if (!(isSet(newPassword))) {
+			var newPassword = "test";
+		}
+
+		if (!(isSet(requireReset))) {
+			var requireReset = "true";
+		}
+
+		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/update-password \
+				-u test@liferay.com:test \
+				-d userId=${userId} \
+				-d password1='${newPassword}' \
+				-d password2='${newPassword}' \
+				-d passwordReset=${requireReset}
+		''';
+
+		echo("## Updating password for ${userEmailAddress} to '${newPassword}'");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		if ("${requireReset}" == "false") {
+			JSONUser._disablePasswordChangeRequired();
+		}
+
+		if ("${agreeToTermsAndAnswerReminderQuery}" == "true") {
+			JSONUser._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
+		}
 	}
 
 	macro tearDownByFirstName {

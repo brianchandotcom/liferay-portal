@@ -62,8 +62,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88197."
-	@priority = "5"
-	test ActivateStagingOnGlobalSiteWithDDMStructures {
+	@priority = "3"
+	test ActivateStagingOnGlobalSiteWithDDMStructure {
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(

@@ -270,6 +270,26 @@ public class CTProcessLocalServiceUtil {
 		return getService().getCTProcesses(companyId, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
+			long companyId, String keywords, int status,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
+				queryDefinition) {
+
+		return getService().getCTProcesses(
+			companyId, keywords, status, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
+			long companyId, String keywords,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
+				queryDefinition) {
+
+		return getService().getCTProcesses(
+			companyId, keywords, queryDefinition);
+	}
+
 	/**
 	 * Returns the number of ct processes.
 	 *

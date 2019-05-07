@@ -224,6 +224,15 @@ public interface CTProcessLocalService
 	public List<CTProcess> getCTProcesses(
 		long companyId, QueryDefinition<?> queryDefinition);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTProcess> getCTProcesses(
+		long companyId, String keywords, int status,
+		QueryDefinition<?> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTProcess> getCTProcesses(
+		long companyId, String keywords, QueryDefinition<?> queryDefinition);
+
 	/**
 	 * Returns the number of ct processes.
 	 *

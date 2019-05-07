@@ -527,7 +527,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						jarBuilder.writeJarTo(fileCollection.getSingleFile());
 					}
 					catch (Exception e) {
-						throw new GradleException("Failed to build jar", e);
+						throw new GradleException("Unable to build jar", e);
 					}
 				}
 

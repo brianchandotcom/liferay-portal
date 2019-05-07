@@ -14,7 +14,7 @@
 
 package com.liferay.headless.form.client.serdes.v1_0;
 
-import com.liferay.headless.form.client.dto.v1_0.FieldValue;
+import com.liferay.headless.form.client.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FieldValueSerDes {
+public class FormFieldValueSerDes {
 
-	public static FieldValue toDTO(String json) {
-		FieldValueJSONParser fieldValueJSONParser = new FieldValueJSONParser();
+	public static FormFieldValue toDTO(String json) {
+		FormFieldValueJSONParser formFieldValueJSONParser =
+			new FormFieldValueJSONParser();
 
-		return fieldValueJSONParser.parseToDTO(json);
+		return formFieldValueJSONParser.parseToDTO(json);
 	}
 
-	public static FieldValue[] toDTOs(String json) {
-		FieldValueJSONParser fieldValueJSONParser = new FieldValueJSONParser();
+	public static FormFieldValue[] toDTOs(String json) {
+		FormFieldValueJSONParser formFieldValueJSONParser =
+			new FormFieldValueJSONParser();
 
-		return fieldValueJSONParser.parseToDTOs(json);
+		return formFieldValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FieldValue fieldValue) {
-		if (fieldValue == null) {
+	public static String toJSON(FormFieldValue formFieldValue) {
+		if (formFieldValue == null) {
 			return "null";
 		}
 
@@ -53,37 +55,37 @@ public class FieldValueSerDes {
 
 		sb.append("{");
 
-		if (fieldValue.getFormDocument() != null) {
+		if (formFieldValue.getFormDocument() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"formDocument\": ");
 
-			sb.append(String.valueOf(fieldValue.getFormDocument()));
+			sb.append(String.valueOf(formFieldValue.getFormDocument()));
 		}
 
-		if (fieldValue.getFormDocumentId() != null) {
+		if (formFieldValue.getFormDocumentId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"formDocumentId\": ");
 
-			sb.append(fieldValue.getFormDocumentId());
+			sb.append(formFieldValue.getFormDocumentId());
 		}
 
-		if (fieldValue.getId() != null) {
+		if (formFieldValue.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(fieldValue.getId());
+			sb.append(formFieldValue.getId());
 		}
 
-		if (fieldValue.getName() != null) {
+		if (formFieldValue.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -92,12 +94,12 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(fieldValue.getName()));
+			sb.append(_escape(formFieldValue.getName()));
 
 			sb.append("\"");
 		}
 
-		if (fieldValue.getValue() != null) {
+		if (formFieldValue.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -106,7 +108,7 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(fieldValue.getValue()));
+			sb.append(_escape(formFieldValue.getValue()));
 
 			sb.append("\"");
 		}
@@ -117,54 +119,56 @@ public class FieldValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FieldValueJSONParser fieldValueJSONParser = new FieldValueJSONParser();
+		FormFieldValueJSONParser formFieldValueJSONParser =
+			new FormFieldValueJSONParser();
 
-		return fieldValueJSONParser.parseToMap(json);
+		return formFieldValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FieldValue fieldValue) {
-		if (fieldValue == null) {
+	public static Map<String, String> toMap(FormFieldValue formFieldValue) {
+		if (formFieldValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new HashMap<>();
 
-		if (fieldValue.getFormDocument() == null) {
+		if (formFieldValue.getFormDocument() == null) {
 			map.put("formDocument", null);
 		}
 		else {
 			map.put(
-				"formDocument", String.valueOf(fieldValue.getFormDocument()));
+				"formDocument",
+				String.valueOf(formFieldValue.getFormDocument()));
 		}
 
-		if (fieldValue.getFormDocumentId() == null) {
+		if (formFieldValue.getFormDocumentId() == null) {
 			map.put("formDocumentId", null);
 		}
 		else {
 			map.put(
 				"formDocumentId",
-				String.valueOf(fieldValue.getFormDocumentId()));
+				String.valueOf(formFieldValue.getFormDocumentId()));
 		}
 
-		if (fieldValue.getId() == null) {
+		if (formFieldValue.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(fieldValue.getId()));
+			map.put("id", String.valueOf(formFieldValue.getId()));
 		}
 
-		if (fieldValue.getName() == null) {
+		if (formFieldValue.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(fieldValue.getName()));
+			map.put("name", String.valueOf(formFieldValue.getName()));
 		}
 
-		if (fieldValue.getValue() == null) {
+		if (formFieldValue.getValue() == null) {
 			map.put("value", null);
 		}
 		else {
-			map.put("value", String.valueOf(fieldValue.getValue()));
+			map.put("value", String.valueOf(formFieldValue.getValue()));
 		}
 
 		return map;
@@ -205,50 +209,50 @@ public class FieldValueSerDes {
 		return sb.toString();
 	}
 
-	private static class FieldValueJSONParser
-		extends BaseJSONParser<FieldValue> {
+	private static class FormFieldValueJSONParser
+		extends BaseJSONParser<FormFieldValue> {
 
 		@Override
-		protected FieldValue createDTO() {
-			return new FieldValue();
+		protected FormFieldValue createDTO() {
+			return new FormFieldValue();
 		}
 
 		@Override
-		protected FieldValue[] createDTOArray(int size) {
-			return new FieldValue[size];
+		protected FormFieldValue[] createDTOArray(int size) {
+			return new FormFieldValue[size];
 		}
 
 		@Override
 		protected void setField(
-			FieldValue fieldValue, String jsonParserFieldName,
+			FormFieldValue formFieldValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "formDocument")) {
 				if (jsonParserFieldValue != null) {
-					fieldValue.setFormDocument(
+					formFieldValue.setFormDocument(
 						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formDocumentId")) {
 				if (jsonParserFieldValue != null) {
-					fieldValue.setFormDocumentId(
+					formFieldValue.setFormDocumentId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					fieldValue.setId(
+					formFieldValue.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					fieldValue.setName((String)jsonParserFieldValue);
+					formFieldValue.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					fieldValue.setValue((String)jsonParserFieldValue);
+					formFieldValue.setValue((String)jsonParserFieldValue);
 				}
 			}
 			else {

@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -30,8 +29,8 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServ
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,17 +44,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -133,8 +128,8 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formId);
 
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);
@@ -159,8 +154,8 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);
@@ -172,33 +167,6 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			_dlAppService, _dlurlHelper,
 			contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService);
-	}
-
-	private DDMFormValues _createDDMFormValues(
-			DDMFormInstance ddmFormInstance, FieldValue[] fieldValues,
-			Locale locale)
-		throws Exception {
-
-		DDMStructure ddmStructure = ddmFormInstance.getStructure();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		ddmFormValues.addAvailableLocale(locale);
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		ddmFormValues.setDDMFormFieldValues(
-			transformToList(
-				fieldValues,
-				fieldValue -> _toDDMFormFieldValue(
-					ddmFormFieldsMap, fieldValue)));
-
-		ddmFormValues.setDefaultLocale(locale);
-
-		return ddmFormValues;
 	}
 
 	private ServiceContext _createServiceContext(boolean draft)
@@ -269,7 +237,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		Value value = ddmFormFieldValue.getValue();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			value.getString(LocaleThreadLocal.getDefaultLocale()));
+			value.getString(contextAcceptLanguage.getPreferredLocale()));
 
 		long fileEntryId = jsonObject.getLong("fileEntryId");
 
@@ -305,48 +273,6 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 		ddmFormFieldValue.setValue(value);
 	}
-
-	private DDMFormFieldValue _toDDMFormFieldValue(
-		Map<String, DDMFormField> ddmFormFieldsMap, FieldValue fieldValue) {
-
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setName(fieldValue.getName());
-
-		Value value = _VALUE;
-
-		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldValue.getName());
-
-		if (ddmFormField != null) {
-			value = Optional.ofNullable(
-				fieldValue.getValue()
-			).map(
-				Object::toString
-			).map(
-				stringValue -> {
-					if (ddmFormField.isLocalizable()) {
-						return new LocalizedValue() {
-							{
-								addString(
-									contextAcceptLanguage.getPreferredLocale(),
-									stringValue);
-							}
-						};
-					}
-
-					return _VALUE;
-				}
-			).orElse(
-				_VALUE
-			);
-		}
-
-		ddmFormFieldValue.setValue(value);
-
-		return ddmFormFieldValue;
-	}
-
-	private static final Value _VALUE = new UnlocalizedValue((String)null);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FormRecordResourceImpl.class);

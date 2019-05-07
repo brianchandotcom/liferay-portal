@@ -26,10 +26,6 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -44,26 +40,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormRecord")
+@GraphQLName("FormFieldContext")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FormRecord")
-public class FormRecord {
+@XmlRootElement(name = "FormFieldContext")
+public class FormFieldContext {
 
 	@Schema
-	public Creator getCreator() {
-		return creator;
+	public Boolean getEvaluable() {
+		return evaluable;
 	}
 
-	public void setCreator(Creator creator) {
-		this.creator = creator;
+	public void setEvaluable(Boolean evaluable) {
+		this.evaluable = evaluable;
 	}
 
 	@JsonIgnore
-	public void setCreator(
-		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+	public void setEvaluable(
+		UnsafeSupplier<Boolean, Exception> evaluableUnsafeSupplier) {
 
 		try {
-			creator = creatorUnsafeSupplier.get();
+			evaluable = evaluableUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -75,107 +71,21 @@ public class FormRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Creator creator;
+	protected Boolean evaluable;
 
 	@Schema
-	public Date getDateCreated() {
-		return dateCreated;
+	public String getName() {
+		return name;
 	}
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(
-		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date dateCreated;
-
-	@Schema
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date dateModified;
-
-	@Schema
-	public Date getDatePublished() {
-		return datePublished;
-	}
-
-	public void setDatePublished(Date datePublished) {
-		this.datePublished = datePublished;
-	}
-
-	@JsonIgnore
-	public void setDatePublished(
-		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
-
-		try {
-			datePublished = datePublishedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date datePublished;
-
-	@Schema
-	public Boolean getDraft() {
-		return draft;
-	}
-
-	public void setDraft(Boolean draft) {
-		this.draft = draft;
-	}
-
-	@JsonIgnore
-	public void setDraft(
-		UnsafeSupplier<Boolean, Exception> draftUnsafeSupplier) {
-
-		try {
-			draft = draftUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -187,50 +97,23 @@ public class FormRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean draft;
+	protected String name;
 
-	@Schema
-	public Form getForm() {
-		return form;
+	@Schema(description = "https://www.schema.org/FormFieldOption")
+	public Option[] getOptions() {
+		return options;
 	}
 
-	public void setForm(Form form) {
-		this.form = form;
-	}
-
-	@JsonIgnore
-	public void setForm(UnsafeSupplier<Form, Exception> formUnsafeSupplier) {
-		try {
-			form = formUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Form form;
-
-	@Schema
-	public FormFieldValue[] getFormFieldValues() {
-		return formFieldValues;
-	}
-
-	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
-		this.formFieldValues = formFieldValues;
+	public void setOptions(Option[] options) {
+		this.options = options;
 	}
 
 	@JsonIgnore
-	public void setFormFieldValues(
-		UnsafeSupplier<FormFieldValue[], Exception>
-			formFieldValuesUnsafeSupplier) {
+	public void setOptions(
+		UnsafeSupplier<Option[], Exception> optionsUnsafeSupplier) {
 
 		try {
-			formFieldValues = formFieldValuesUnsafeSupplier.get();
+			options = optionsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -242,23 +125,23 @@ public class FormRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FormFieldValue[] formFieldValues;
+	protected Option[] options;
 
 	@Schema
-	public Long getFormId() {
-		return formId;
+	public Boolean getReadOnly() {
+		return readOnly;
 	}
 
-	public void setFormId(Long formId) {
-		this.formId = formId;
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 	@JsonIgnore
-	public void setFormId(
-		UnsafeSupplier<Long, Exception> formIdUnsafeSupplier) {
+	public void setReadOnly(
+		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
 
 		try {
-			formId = formIdUnsafeSupplier.get();
+			readOnly = readOnlyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -269,22 +152,24 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long formId;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean readOnly;
 
 	@Schema
-	public Long getId() {
-		return id;
+	public Boolean getRequired() {
+		return required;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setRequired(Boolean required) {
+		this.required = required;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setRequired(
+		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			required = requiredUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -295,8 +180,120 @@ public class FormRecord {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean required;
+
+	@Schema
+	public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
+	}
+
+	@JsonIgnore
+	public void setValid(
+		UnsafeSupplier<Boolean, Exception> validUnsafeSupplier) {
+
+		try {
+			valid = validUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean valid;
+
+	@Schema
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String value;
+
+	@Schema
+	public Boolean getValueChanged() {
+		return valueChanged;
+	}
+
+	public void setValueChanged(Boolean valueChanged) {
+		this.valueChanged = valueChanged;
+	}
+
+	@JsonIgnore
+	public void setValueChanged(
+		UnsafeSupplier<Boolean, Exception> valueChangedUnsafeSupplier) {
+
+		try {
+			valueChanged = valueChangedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean valueChanged;
+
+	@Schema
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	@JsonIgnore
+	public void setVisible(
+		UnsafeSupplier<Boolean, Exception> visibleUnsafeSupplier) {
+
+		try {
+			visible = visibleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean visible;
 
 	@Override
 	public boolean equals(Object object) {
@@ -304,13 +301,13 @@ public class FormRecord {
 			return true;
 		}
 
-		if (!(object instanceof FormRecord)) {
+		if (!(object instanceof FormFieldContext)) {
 			return false;
 		}
 
-		FormRecord formRecord = (FormRecord)object;
+		FormFieldContext formFieldContext = (FormFieldContext)object;
 
-		return Objects.equals(toString(), formRecord.toString());
+		return Objects.equals(toString(), formFieldContext.toString());
 	}
 
 	@Override
@@ -325,94 +322,43 @@ public class FormRecord {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (creator != null) {
+		if (evaluable != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"creator\": ");
+			sb.append("\"evaluable\": ");
 
-			sb.append(String.valueOf(creator));
+			sb.append(evaluable);
 		}
 
-		if (dateCreated != null) {
+		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dateCreated\": ");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(dateCreated));
+			sb.append(_escape(name));
 
 			sb.append("\"");
 		}
 
-		if (dateModified != null) {
+		if (options != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateModified));
-
-			sb.append("\"");
-		}
-
-		if (datePublished != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"datePublished\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(datePublished));
-
-			sb.append("\"");
-		}
-
-		if (draft != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"draft\": ");
-
-			sb.append(draft);
-		}
-
-		if (form != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"form\": ");
-
-			sb.append(String.valueOf(form));
-		}
-
-		if (formFieldValues != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formFieldValues\": ");
+			sb.append("\"options\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < formFieldValues.length; i++) {
-				sb.append(String.valueOf(formFieldValues[i]));
+			for (int i = 0; i < options.length; i++) {
+				sb.append(String.valueOf(options[i]));
 
-				if ((i + 1) < formFieldValues.length) {
+				if ((i + 1) < options.length) {
 					sb.append(", ");
 				}
 			}
@@ -420,24 +366,68 @@ public class FormRecord {
 			sb.append("]");
 		}
 
-		if (formId != null) {
+		if (readOnly != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formId\": ");
+			sb.append("\"readOnly\": ");
 
-			sb.append(formId);
+			sb.append(readOnly);
 		}
 
-		if (id != null) {
+		if (required != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"required\": ");
 
-			sb.append(id);
+			sb.append(required);
+		}
+
+		if (valid != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valid\": ");
+
+			sb.append(valid);
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
+		}
+
+		if (valueChanged != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"valueChanged\": ");
+
+			sb.append(valueChanged);
+		}
+
+		if (visible != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"visible\": ");
+
+			sb.append(visible);
 		}
 
 		sb.append("}");

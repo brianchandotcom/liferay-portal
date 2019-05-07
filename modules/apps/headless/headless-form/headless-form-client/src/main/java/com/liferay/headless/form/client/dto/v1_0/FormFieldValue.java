@@ -15,7 +15,7 @@
 package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
-import com.liferay.headless.form.client.serdes.v1_0.FieldValueSerDes;
+import com.liferay.headless.form.client.serdes.v1_0.FormFieldValueSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FieldValue {
+public class FormFieldValue {
 
 	public FormDocument getFormDocument() {
 		return formDocument;
@@ -135,13 +135,13 @@ public class FieldValue {
 			return true;
 		}
 
-		if (!(object instanceof FieldValue)) {
+		if (!(object instanceof FormFieldValue)) {
 			return false;
 		}
 
-		FieldValue fieldValue = (FieldValue)object;
+		FormFieldValue formFieldValue = (FormFieldValue)object;
 
-		return Objects.equals(toString(), fieldValue.toString());
+		return Objects.equals(toString(), formFieldValue.toString());
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class FieldValue {
 	}
 
 	public String toString() {
-		return FieldValueSerDes.toJSON(this);
+		return FormFieldValueSerDes.toJSON(this);
 	}
 
 }

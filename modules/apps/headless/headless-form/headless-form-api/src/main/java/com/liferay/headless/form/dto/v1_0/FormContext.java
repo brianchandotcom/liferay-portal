@@ -40,106 +40,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FieldValue")
+@GraphQLName("FormContext")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FieldValue")
-public class FieldValue {
+@XmlRootElement(name = "FormContext")
+public class FormContext {
 
-	@Schema
-	public FormDocument getFormDocument() {
-		return formDocument;
+	@Schema(description = "https://www.schema.org/FormFieldValue")
+	public FormFieldValue[] getFormFieldValues() {
+		return formFieldValues;
 	}
 
-	public void setFormDocument(FormDocument formDocument) {
-		this.formDocument = formDocument;
-	}
-
-	@JsonIgnore
-	public void setFormDocument(
-		UnsafeSupplier<FormDocument, Exception> formDocumentUnsafeSupplier) {
-
-		try {
-			formDocument = formDocumentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected FormDocument formDocument;
-
-	@Schema
-	public Long getFormDocumentId() {
-		return formDocumentId;
-	}
-
-	public void setFormDocumentId(Long formDocumentId) {
-		this.formDocumentId = formDocumentId;
+	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
+		this.formFieldValues = formFieldValues;
 	}
 
 	@JsonIgnore
-	public void setFormDocumentId(
-		UnsafeSupplier<Long, Exception> formDocumentIdUnsafeSupplier) {
+	public void setFormFieldValues(
+		UnsafeSupplier<FormFieldValue[], Exception>
+			formFieldValuesUnsafeSupplier) {
 
 		try {
-			formDocumentId = formDocumentIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long formDocumentId;
-
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			formFieldValues = formFieldValuesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -151,23 +72,24 @@ public class FieldValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected FormFieldValue[] formFieldValues;
 
-	@Schema
-	public String getValue() {
-		return value;
+	@Schema(description = "https://www.schema.org/FormPageContext")
+	public FormPageContext[] getFormPageContexts() {
+		return formPageContexts;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setFormPageContexts(FormPageContext[] formPageContexts) {
+		this.formPageContexts = formPageContexts;
 	}
 
 	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+	public void setFormPageContexts(
+		UnsafeSupplier<FormPageContext[], Exception>
+			formPageContextsUnsafeSupplier) {
 
 		try {
-			value = valueUnsafeSupplier.get();
+			formPageContexts = formPageContextsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -179,7 +101,95 @@ public class FieldValue {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
+	protected FormPageContext[] formPageContexts;
+
+	@Schema
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	@JsonIgnore
+	public void setReadOnly(
+		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
+
+		try {
+			readOnly = readOnlyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean readOnly;
+
+	@Schema
+	public Boolean getShowRequiredFieldsWarning() {
+		return showRequiredFieldsWarning;
+	}
+
+	public void setShowRequiredFieldsWarning(
+		Boolean showRequiredFieldsWarning) {
+
+		this.showRequiredFieldsWarning = showRequiredFieldsWarning;
+	}
+
+	@JsonIgnore
+	public void setShowRequiredFieldsWarning(
+		UnsafeSupplier<Boolean, Exception>
+			showRequiredFieldsWarningUnsafeSupplier) {
+
+		try {
+			showRequiredFieldsWarning =
+				showRequiredFieldsWarningUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean showRequiredFieldsWarning;
+
+	@Schema
+	public Boolean getShowSubmitButton() {
+		return showSubmitButton;
+	}
+
+	public void setShowSubmitButton(Boolean showSubmitButton) {
+		this.showSubmitButton = showSubmitButton;
+	}
+
+	@JsonIgnore
+	public void setShowSubmitButton(
+		UnsafeSupplier<Boolean, Exception> showSubmitButtonUnsafeSupplier) {
+
+		try {
+			showSubmitButton = showSubmitButtonUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean showSubmitButton;
 
 	@Override
 	public boolean equals(Object object) {
@@ -187,13 +197,13 @@ public class FieldValue {
 			return true;
 		}
 
-		if (!(object instanceof FieldValue)) {
+		if (!(object instanceof FormContext)) {
 			return false;
 		}
 
-		FieldValue fieldValue = (FieldValue)object;
+		FormContext formContext = (FormContext)object;
 
-		return Objects.equals(toString(), fieldValue.toString());
+		return Objects.equals(toString(), formContext.toString());
 	}
 
 	@Override
@@ -208,62 +218,74 @@ public class FieldValue {
 
 		sb.append("{");
 
-		if (formDocument != null) {
+		if (formFieldValues != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formDocument\": ");
+			sb.append("\"formFieldValues\": ");
 
-			sb.append(String.valueOf(formDocument));
+			sb.append("[");
+
+			for (int i = 0; i < formFieldValues.length; i++) {
+				sb.append(String.valueOf(formFieldValues[i]));
+
+				if ((i + 1) < formFieldValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (formDocumentId != null) {
+		if (formPageContexts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formDocumentId\": ");
+			sb.append("\"formPageContexts\": ");
 
-			sb.append(formDocumentId);
+			sb.append("[");
+
+			for (int i = 0; i < formPageContexts.length; i++) {
+				sb.append(String.valueOf(formPageContexts[i]));
+
+				if ((i + 1) < formPageContexts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (id != null) {
+		if (readOnly != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"readOnly\": ");
 
-			sb.append(id);
+			sb.append(readOnly);
 		}
 
-		if (name != null) {
+		if (showRequiredFieldsWarning != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"showRequiredFieldsWarning\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append(showRequiredFieldsWarning);
 		}
 
-		if (value != null) {
+		if (showSubmitButton != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"showSubmitButton\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
+			sb.append(showSubmitButton);
 		}
 
 		sb.append("}");

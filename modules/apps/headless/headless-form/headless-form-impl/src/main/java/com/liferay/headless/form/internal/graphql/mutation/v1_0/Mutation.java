@@ -14,7 +14,7 @@
 
 package com.liferay.headless.form.internal.graphql.mutation.v1_0;
 
-import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
@@ -67,14 +67,16 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form postFormEvaluateContext(
-			@GraphQLName("formId") Long formId, @GraphQLName("form") Form form)
+	public FormContext postFormEvaluateContext(
+			@GraphQLName("formId") Long formId,
+			@GraphQLName("formContext") FormContext formContext)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formResource -> formResource.postFormEvaluateContext(formId, form));
+			formResource -> formResource.postFormEvaluateContext(
+				formId, formContext));
 	}
 
 	@GraphQLField

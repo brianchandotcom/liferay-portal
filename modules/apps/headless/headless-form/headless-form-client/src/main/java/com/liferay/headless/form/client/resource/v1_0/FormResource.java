@@ -67,12 +67,14 @@ public class FormResource {
 		}
 	}
 
-	public Form postFormEvaluateContext(Long formId, Form form)
+	public com.liferay.headless.form.client.dto.v1_0.FormContext
+			postFormEvaluateContext(
+				Long formId,
+				com.liferay.headless.form.client.dto.v1_0.FormContext
+					formContext)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(FormSerDes.toJSON(form), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -92,7 +94,8 @@ public class FormResource {
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 
 		try {
-			return FormSerDes.toDTO(content);
+			return com.liferay.headless.form.client.serdes.v1_0.
+				FormContextSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(

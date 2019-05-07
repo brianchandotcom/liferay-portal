@@ -687,16 +687,16 @@ public abstract class BaseFormRecordResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("fieldValues", additionalAssertFieldName)) {
-				if (formRecord.getFieldValues() == null) {
+			if (Objects.equals("form", additionalAssertFieldName)) {
+				if (formRecord.getForm() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("form", additionalAssertFieldName)) {
-				if (formRecord.getForm() == null) {
+			if (Objects.equals("formFieldValues", additionalAssertFieldName)) {
+				if (formRecord.getFormFieldValues() == null) {
 					valid = false;
 				}
 
@@ -801,10 +801,9 @@ public abstract class BaseFormRecordResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("fieldValues", additionalAssertFieldName)) {
+			if (Objects.equals("form", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						formRecord1.getFieldValues(),
-						formRecord2.getFieldValues())) {
+						formRecord1.getForm(), formRecord2.getForm())) {
 
 					return false;
 				}
@@ -812,9 +811,10 @@ public abstract class BaseFormRecordResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("form", additionalAssertFieldName)) {
+			if (Objects.equals("formFieldValues", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						formRecord1.getForm(), formRecord2.getForm())) {
+						formRecord1.getFormFieldValues(),
+						formRecord2.getFormFieldValues())) {
 
 					return false;
 				}
@@ -1001,12 +1001,12 @@ public abstract class BaseFormRecordResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("fieldValues")) {
+		if (entityFieldName.equals("form")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("form")) {
+		if (entityFieldName.equals("formFieldValues")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

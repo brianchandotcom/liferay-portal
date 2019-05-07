@@ -15,6 +15,7 @@
 package com.liferay.headless.form.internal.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -76,12 +77,12 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Path("/forms/{formId}/evaluate-context")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
-	public Form postFormEvaluateContext(
+	public FormContext postFormEvaluateContext(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
-			Form form)
+			FormContext formContext)
 		throws Exception {
 
-		return new Form();
+		return new FormContext();
 	}
 
 	@Override

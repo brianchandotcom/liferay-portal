@@ -62,6 +62,9 @@ public class StagingBarTemplateContextContributor
 
 				StringBuilder sb = new StringBuilder();
 
+				sb.append(
+					GetterUtil.getString(contextObjects.get("bodyCssClass")));
+
 				Layout layout = themeDisplay.getLayout();
 
 				if (!layout.isSystem() || layout.isTypeControlPanel() ||
@@ -69,9 +72,6 @@ public class StagingBarTemplateContextContributor
 						layout.getFriendlyURL(),
 						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
-					sb.append(
-						GetterUtil.getString(
-							contextObjects.get("bodyCssClass")));
 					sb.append(StringPool.SPACE);
 					sb.append("has-staging-bar");
 				}

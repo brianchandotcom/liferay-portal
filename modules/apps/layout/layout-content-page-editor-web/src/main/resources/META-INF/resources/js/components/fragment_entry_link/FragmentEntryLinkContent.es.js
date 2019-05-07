@@ -202,7 +202,7 @@ class FragmentEntryLinkContent extends Component {
 	_createEditables() {
 		this._destroyEditables();
 
-		this._editables = [...this.refs.content.querySelectorAll('lfr-editable')].map(
+		this._editables = Array.from(this.refs.content.querySelectorAll('lfr-editable')).map(
 			editable => {
 				const editableValues = (
 					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
@@ -253,11 +253,9 @@ class FragmentEntryLinkContent extends Component {
 						{
 							css: cssRule.style,
 							cssText: cssRule.cssText,
-							nodes: [
-								...this.refs.content.querySelectorAll(
-									cssRule.selectorText
-								)
-							],
+							nodes: Array.from(
+								this.refs.content.querySelectorAll(cssRule.selectorText)
+							),
 							selectorText: cssRule.selectorText
 						}
 					);

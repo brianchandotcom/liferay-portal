@@ -250,11 +250,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
 				ListUtil.toList(taskKeys)));
-
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
 			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
-
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(processId, statuses, taskKeys));
 

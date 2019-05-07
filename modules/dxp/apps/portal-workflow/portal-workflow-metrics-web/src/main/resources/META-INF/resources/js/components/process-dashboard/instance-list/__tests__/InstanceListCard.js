@@ -5,6 +5,43 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 
+test('Should build request url with query filters', () => {
+	const data = {
+		items: [
+			{
+				assetTitle: 'Item Subject Test',
+				assetType: 'Process',
+				dateCreated: new Date('2019', '01', '01'),
+				id: 12351,
+				status: 'Overdue',
+				taskNames: ['Step 1', 'Step 2', 'Step 3'],
+				userName: 'User Test'
+			}
+		],
+		title: 'Single Approver',
+		totalCount: 1
+	};
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<InstanceListCard
+				page={1}
+				pageSize={10}
+				processId={12351}
+				query="?filters.slaStatus%5B0%5D=overdue"
+			/>
+		</Router>
+	);
+
+	const instance = component.find(InstanceListCard).instance();
+
+	const requestUrl = instance.getRequestUrl();
+
+	expect(requestUrl).toEqual(
+		'/processes/12351/instances?page=1&pageSize=10&slaStatus=overdue'
+	);
+});
+
 test('Should component load process instances', () => {
 	const data = {
 		items: [
@@ -56,7 +93,12 @@ test('Should component receive props', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<InstanceListCard page={1} pageSize={10} processId={12351} />
+			<InstanceListCard
+				page={1}
+				pageSize={10}
+				processId={12351}
+				query="?filters.slaStatus%5B0%5D=overdue"
+			/>
 		</Router>
 	);
 
@@ -64,7 +106,8 @@ test('Should component receive props', () => {
 
 	instance.componentWillReceiveProps({
 		...instance.props,
-		page: 2
+		page: 2,
+		query: 'filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B1%5D=ontime'
 	});
 
 	expect(component).toMatchSnapshot();

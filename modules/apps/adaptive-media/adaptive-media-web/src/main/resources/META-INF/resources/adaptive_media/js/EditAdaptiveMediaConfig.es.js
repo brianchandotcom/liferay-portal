@@ -78,6 +78,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		this.maxWidthInput = maxWidthInput;
 
 		this.newUuidInput = this.one('#newUuid');
+		this.newUuidLabel = this.one('label', this.newUuidInput.parentNode);
 
 		let saveButton = this.one('button[type=submit]');
 
@@ -132,6 +133,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 */
 	onChangeUuidOptions_() {
 		let newUuidInput = this.newUuidInput;
+		const newUuidLabel = this.newUuidLabel;
 
 		if (this.isAutomaticUuid_()) {
 			this._lastCustomUuuid = newUuidInput.value;
@@ -139,11 +141,13 @@ class EditAdaptiveMediaConfig extends PortletBase {
 			this.updateUuid(this.nameInput.value);
 
 			newUuidInput.setAttribute('disabled', true);
+			newUuidLabel.classList.add('disabled');
 		}
 		else {
 			newUuidInput.value = this._lastCustomUuuid || newUuidInput.value;
 
 			newUuidInput.removeAttribute('disabled');
+			newUuidLabel.classList.remove('disabled');
 		}
 	}
 

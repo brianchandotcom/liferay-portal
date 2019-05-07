@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * @author Hugo Huijser
  */
-public class ArraysAsListCheck extends BaseCheck {
+public class ListUtilCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -101,7 +101,7 @@ public class ArraysAsListCheck extends BaseCheck {
 			}
 		}
 
-		log(detailAST, _MSG_USE_ARRAYS_AS_LIST);
+		log(detailAST, _MSG_USE_LIST_UTIL);
 	}
 
 	private List<DetailAST> _getIdentDetailASTList(
@@ -222,6 +222,6 @@ public class ArraysAsListCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _MSG_USE_ARRAYS_AS_LIST = "arrays.as.list.use";
+	private static final String _MSG_USE_LIST_UTIL = "list.util.use";
 
 }

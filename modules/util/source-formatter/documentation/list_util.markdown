@@ -1,9 +1,9 @@
-## Arrays.asList
+## ListUtil
 
-Use `Arrays.asList` to simplify code, when possible:
+Use `ListUtil.toList` to simplify code, when possible:
 
 ```java
-addUsers(Arrays.asList(UserLocalServiceUtil.getUser(userId)));
+addUsers(ListUtil.toList(UserLocalServiceUtil.getUser(userId)));
 ```
 
 Instead of

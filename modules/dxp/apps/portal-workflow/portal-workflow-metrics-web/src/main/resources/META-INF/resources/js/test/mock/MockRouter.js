@@ -6,7 +6,7 @@ export class MockRouter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { client, page = 1, search, sort } = this.props;
+		const { client, page = 1, query, search, sort } = this.props;
 
 		this.contextState = {
 			client,
@@ -16,6 +16,7 @@ export class MockRouter extends React.Component {
 			maxPages: 3,
 			namespace: 'workflow_',
 			page,
+			query,
 			search,
 			setStatus: this.setStatus.bind(this),
 			setTitle: this.setTitle.bind(this),
@@ -40,7 +41,13 @@ export class MockRouter extends React.Component {
 	render() {
 		const defaultPath = `/processes/1/10/${encodeURIComponent('title:asc')}`;
 
-		const { initialPath = defaultPath, page = 1, search, sort } = this.props;
+		const {
+			initialPath = defaultPath,
+			page = 1,
+			query,
+			search,
+			sort
+		} = this.props;
 
 		const initialEntries = [
 			{
@@ -52,7 +59,7 @@ export class MockRouter extends React.Component {
 					}
 				},
 				pathname: initialPath,
-				search: '?backPath=%2F'
+				search: query || '?backPath=%2F'
 			}
 		];
 

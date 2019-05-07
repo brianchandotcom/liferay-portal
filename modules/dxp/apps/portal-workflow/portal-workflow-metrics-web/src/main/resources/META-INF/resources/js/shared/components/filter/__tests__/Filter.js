@@ -1,0 +1,146 @@
+import { Filter } from '../Filter';
+import React from 'react';
+import renderer from 'react-test-renderer';
+import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+
+test('Should active item when checkbox is checked', () => {
+	const items = [
+		{
+			active: false,
+			key: 'overdue',
+			name: 'Overdue'
+		}
+	];
+
+	const component = mount(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter
+				filterKey="slaStatus"
+				items={items}
+				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
+				name="SLA Status"
+			/>
+		</Router>
+	);
+
+	const instance = component.find(Filter).instance();
+
+	instance.onCheckboxChange({ target: { checked: true, name: 'overdue' } });
+
+	expect(instance.state.items[0].active).toEqual(true);
+});
+
+test('Should hide dropdown when click outside filter', () => {
+	const items = [
+		{
+			active: true,
+			key: 'overdue',
+			name: 'Overdue'
+		}
+	];
+
+	const component = mount(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter
+				filterKey="slaStatus"
+				items={items}
+				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
+				name="SLA Status"
+			/>
+		</Router>
+	);
+
+	const instance = component.find(Filter).instance();
+
+	instance.toggleDropDown();
+	instance.onCheckboxChange({ target: { checked: true, name: 'overdue' } });
+	instance.onClickOutside(document.body);
+
+	expect(instance.state.expanded).toEqual(false);
+});
+
+test('Should keep dropdown open when click inside filter', () => {
+	const items = [
+		{
+			active: true,
+			key: 'overdue',
+			name: 'Overdue'
+		}
+	];
+
+	const component = mount(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter
+				filterKey="slaStatus"
+				items={items}
+				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
+				name="SLA Status"
+			/>
+		</Router>
+	);
+
+	const instance = component.find(Filter).instance();
+
+	instance.toggleDropDown();
+
+	instance.onClickOutside({ target: instance.wrapperRef });
+
+	expect(instance.state.expanded).toEqual(true);
+});
+
+test('Should render component', () => {
+	const component = renderer.create(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter filterKey="slaStatus" name="SLA Status" />
+		</Router>
+	);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should search items', () => {
+	const items = [
+		{
+			active: true,
+			key: 'overdue',
+			name: 'Overdue'
+		},
+		{
+			active: false,
+			key: 'ontime',
+			name: 'On Time'
+		}
+	];
+
+	const component = mount(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter filterKey="slaStatus" items={items} name="SLA Status" />
+		</Router>
+	);
+
+	const instance = component.find(Filter).instance();
+
+	instance.onSearchChange({
+		target: {
+			value: 'over'
+		}
+	});
+
+	expect(instance.filteredItems.length).toEqual(1);
+});
+
+test('Should toggle dropdown', () => {
+	const component = mount(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter filterKey="slaStatus" name="SLA Status" />
+		</Router>
+	);
+
+	const instance = component.find(Filter).instance();
+
+	instance.toggleDropDown();
+
+	expect(instance.state.expanded).toEqual(true);
+});

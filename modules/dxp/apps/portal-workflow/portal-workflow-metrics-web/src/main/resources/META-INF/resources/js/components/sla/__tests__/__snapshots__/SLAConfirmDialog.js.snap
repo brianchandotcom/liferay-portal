@@ -68,7 +68,7 @@ exports[`Should cancel dialog 1`] = `
         itemToRemove={1234}
       >
         <div
-          className="modal"
+          className="modal show"
           role="dialog"
           tabIndex="-1"
         >
@@ -745,7 +745,7 @@ exports[`Should remove item 1`] = `
         itemToRemove={1234}
       >
         <div
-          className="modal"
+          className="modal show"
           role="dialog"
           tabIndex="-1"
         >
@@ -808,7 +808,7 @@ exports[`Should remove item 1`] = `
 
 exports[`Should render component 1`] = `
 <div
-  className="modal"
+  className="modal show"
   role="dialog"
   tabIndex="-1"
 >

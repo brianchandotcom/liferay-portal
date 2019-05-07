@@ -42,7 +42,11 @@ exports[`Should render component 1`] = `
               <div
                 className="label-section"
               >
-                SLA Status: 
+                <span
+                  className="font-weight-normal"
+                >
+                  SLA Status: 
+                </span>
                 <strong>
                   Overdue
                 </strong>

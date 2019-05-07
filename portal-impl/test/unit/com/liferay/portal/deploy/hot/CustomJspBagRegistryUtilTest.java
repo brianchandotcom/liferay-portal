@@ -66,14 +66,7 @@ public class CustomJspBagRegistryUtilTest {
 
 	@Test
 	public void testGetCustomJspBags() {
-		TestCustomJspBag testCustomJspBag = new TestCustomJspBag() {
-
-			@Override
-			public boolean isCustomJspGlobal() {
-				return false;
-			}
-
-		};
+		TestCustomJspBag testCustomJspBag = new TestCustomJspBag(false);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -102,14 +95,7 @@ public class CustomJspBagRegistryUtilTest {
 
 	@Test
 	public void testGetGlobalCustomJspBags() {
-		TestCustomJspBag testCustomJspBag = new TestCustomJspBag() {
-
-			@Override
-			public boolean isCustomJspGlobal() {
-				return true;
-			}
-
-		};
+		TestCustomJspBag testCustomJspBag = new TestCustomJspBag(true);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -136,7 +122,7 @@ public class CustomJspBagRegistryUtilTest {
 		}
 	}
 
-	private abstract static class TestCustomJspBag implements CustomJspBag {
+	private static class TestCustomJspBag implements CustomJspBag {
 
 		@Override
 		public String getCustomJspDir() {
@@ -168,6 +154,16 @@ public class CustomJspBagRegistryUtilTest {
 			};
 		}
 
+		@Override
+		public boolean isCustomJspGlobal() {
+			return _customJspGlobal;
+		}
+
+		private TestCustomJspBag(boolean customJspGlobal) {
+			_customJspGlobal = customJspGlobal;
+		}
+
+		private final boolean _customJspGlobal;
 		private final List<String> _customJsps = new ArrayList<>();
 
 	}

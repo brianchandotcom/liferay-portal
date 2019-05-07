@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -40,7 +41,25 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 			content = _formatIncludeResource(fileName, content);
 		}
 
+		if (fileName.endsWith("-test/bnd.bnd")) {
+			_checkIncludeResource(fileName, content);
+		}
+
 		return content;
+	}
+
+	private void _checkIncludeResource(String fileName, String content) {
+		String includeResource = BNDSourceUtil.getDefinitionValue(
+			content, "-includeresource");
+
+		if ((includeResource != null) &&
+			includeResource.contains("test-classes/integration")) {
+
+			addMessage(
+				fileName,
+				"Do not use 'test-classes/integration' in bnd.bnd in test " +
+					"modules");
+		}
 	}
 
 	private String _formatIncludeResource(String fileName, String content) {

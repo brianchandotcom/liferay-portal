@@ -171,30 +171,27 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign propertyType = properties[propertyName] />
+			<#assign capitalizedPropertyName = propertyName?cap_first />
 
-			<#if enumSchemas?keys?seq_contains(propertyType)>
-				if (${schemaVarName}.get${propertyType}() == null) {
+			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+				<#assign capitalizedPropertyName = properties[propertyName] />
+			</#if>
+
+			<#if allSchemas[properties[propertyName]]??>
+				if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
 					map.put("${propertyName}", null);
 				}
 				else {
-					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyType}()));
+					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
 				}
-			<#elseif allSchemas[propertyType]??>
-				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
-					map.put("${propertyName}", null);
-				}
-				else {
-					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
-				}
-			<#elseif stringUtil.equals(propertyType, "Date")>
-				map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+			<#elseif stringUtil.equals(properties[propertyName], "Date")>
+				map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()));
 			<#else>
-				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
+				if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
 					map.put("${propertyName}", null);
 				}
 				else {
-					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
+					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${capitalizedPropertyName}()));
 				}
 			</#if>
 		</#list>

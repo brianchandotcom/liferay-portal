@@ -119,6 +119,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--APPLICATION_AUTHORIZATION_REQUEST_PAGE-->
+<tr>
+	<td>AUTHORIZE_APPLICATION_NAME</td>
+	<td>//form[contains(@id,'OAuth2AuthorizePortlet')]//h1[contains(.,'${key_applicationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHORIZE_SCOPE_NAME</td>
+	<td>//ul[@class='list-group']//div[contains(.,'${key_scopeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OAUTH2_TESTER-->
 <tr>
 	<td>OAUTH2_TESTER_CLIENT_ID</td>

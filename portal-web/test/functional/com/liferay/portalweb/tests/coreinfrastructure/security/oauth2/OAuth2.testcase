@@ -146,6 +146,57 @@ definition {
 		}
 	}
 
+	test AssertAuthorizationPromptsScopeIsSameAsActualGranted {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com",
+			clientProfile = "Web Application",
+			websiteURL = "http://www.liferay.com");
+
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=com.liferay.oauth2.provider.sample.jar");
+
+		Pause(locator1 = "10000");
+
+		OAuth2.viewScopes(
+			applicationName = "OAuth Application",
+			resourcePanels = "sample-app",
+			resourceUncheckedList = "sample-app.everything.read");
+
+		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+
+		AssertElementPresent(
+			key_applicationName = "OAuth Application",
+			locator1 = "OAuth2#AUTHORIZE_APPLICATION_NAME");
+
+		AssertElementPresent(
+			key_scopeName = "Portal Services",
+			locator1 = "OAuth2#AUTHORIZE_SCOPE_NAME");
+
+		AssertElementNotPresent(
+			key_scopeName = "sample-app",
+			locator1 = "OAuth2#AUTHORIZE_SCOPE_NAME");
+	}
+
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 

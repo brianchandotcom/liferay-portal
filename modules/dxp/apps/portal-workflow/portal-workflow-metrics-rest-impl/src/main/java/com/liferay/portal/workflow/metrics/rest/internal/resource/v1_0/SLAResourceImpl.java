@@ -238,7 +238,6 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 					}
 				};
 				status = workflowMetricsSLADefinition.getStatus();
-
 				stopNodeKeys = new StopNodeKeys() {
 					{
 						nodeKeys = _toNodeKeys(

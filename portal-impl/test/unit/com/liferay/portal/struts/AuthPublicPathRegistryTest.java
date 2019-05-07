@@ -46,8 +46,8 @@ public class AuthPublicPathRegistryTest {
 				_TEST_AUTH_PUBLIC_PATH + " not found",
 				AuthPublicPathRegistry.contains(_TEST_AUTH_PUBLIC_PATH));
 			Assert.assertFalse(
-				"/unregistered/unknown/path should not be found",
-				AuthPublicPathRegistry.contains("/unregistered/unknown/path"));
+				_UNKNOW_AUTH_PUBLIC_PATH + " should not be found",
+				AuthPublicPathRegistry.contains(_UNKNOW_AUTH_PUBLIC_PATH));
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -56,5 +56,8 @@ public class AuthPublicPathRegistryTest {
 
 	private static final String _TEST_AUTH_PUBLIC_PATH =
 		"TEST_AUTH_PUBLIC_PATH";
+
+	private static final String _UNKNOW_AUTH_PUBLIC_PATH =
+		"UNKNOW_AUTH_PUBLIC_PATH";
 
 }

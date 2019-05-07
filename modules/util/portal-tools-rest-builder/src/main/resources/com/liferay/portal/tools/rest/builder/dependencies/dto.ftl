@@ -172,7 +172,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		}
 
 		@JsonIgnore
-		public void set${propertyName?cap_first}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
+		public void set${capitalizedPropertyName}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
 			try {
 				${propertyName} = ${propertyName}UnsafeSupplier.get();
 			}

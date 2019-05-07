@@ -327,21 +327,29 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		if (_isExpressionAssignsVariable(nextSiblingDetailAST, name)) {
-			return;
-		}
-
 		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
 			nextSiblingDetailAST, true, TokenTypes.IDENT);
 
+		boolean nextVariableUsesVariable = false;
+
 		for (DetailAST identDetailAST : identDetailASTList) {
+			DetailAST parentDetailAST = identDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.ASSIGN) {
+				return;
+			}
+
 			String identName = identDetailAST.getText();
 
 			if (identName.equals(name)) {
-				log(
-					nextExpressionStartLineNumber,
-					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
+				nextVariableUsesVariable = true;
 			}
+		}
+
+		if (nextVariableUsesVariable) {
+			log(
+				nextExpressionStartLineNumber,
+				_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 		}
 	}
 
@@ -502,35 +510,6 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		if ((DetailASTUtil.getEndLineNumber(previousSiblingDetailAST) + 1) ==
 				DetailASTUtil.getStartLineNumber(variableDefinitionDetailAST)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isExpressionAssignsVariable(
-		DetailAST detailAST, String name) {
-
-		if (detailAST.getType() != TokenTypes.EXPR) {
-			return false;
-		}
-
-		DetailAST childDetailAST = detailAST.getFirstChild();
-
-		if (childDetailAST.getType() != TokenTypes.ASSIGN) {
-			return false;
-		}
-
-		DetailAST expressionNameDetailAST = childDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		if (expressionNameDetailAST == null) {
-			return false;
-		}
-
-		String expressionName = expressionNameDetailAST.getText();
-
-		if (expressionName.equals(name)) {
 			return true;
 		}
 

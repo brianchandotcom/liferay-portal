@@ -17,8 +17,6 @@ package com.liferay.layout.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -52,7 +49,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -223,52 +219,6 @@ public class LayoutCopyHelperTest {
 	}
 
 	@Test
-	public void testCopyLayoutNameAndTitle() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), StringPool.BLANK);
-
-		sourceLayout.setNameMap(
-			Collections.singletonMap(LocaleUtil.getDefault(), "source-name"));
-
-		LayoutLocalServiceUtil.updateLayout(sourceLayout);
-
-		Layout targetLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), StringPool.BLANK);
-
-		Assert.assertNotEquals(
-			sourceLayout.getName(LocaleUtil.getDefault()),
-			targetLayout.getName(LocaleUtil.getDefault()));
-
-		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
-
-		Assert.assertEquals(
-			sourceLayout.getName(LocaleUtil.getDefault()),
-			targetLayout.getName(LocaleUtil.getDefault()));
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0,
-				"page-template-name",
-				ServiceContextTestUtil.getServiceContext());
-
-		sourceLayout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Assert.assertEquals(
-			sourceLayout.getName(LocaleUtil.getDefault()),
-			layoutPageTemplateEntry.getName());
-
-		targetLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), StringPool.BLANK);
-
-		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
-
-		Assert.assertNotEquals(
-			sourceLayout.getName(LocaleUtil.getDefault()),
-			targetLayout.getName(LocaleUtil.getDefault()));
-	}
-
-	@Test
 	public void testCopyLayoutPortletPreferences() throws Exception {
 		String portletId = PortletKeys.TEST;
 
@@ -302,52 +252,6 @@ public class LayoutCopyHelperTest {
 		Assert.assertEquals(
 			PortletPreferencesFactoryUtil.toXML(sourcePortletPreferences),
 			PortletPreferencesFactoryUtil.toXML(targetPortletPreferences));
-	}
-
-	@Test
-	public void testCopyLayoutSEOData() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), StringPool.BLANK);
-
-		sourceLayout.setDescriptionMap(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), "source-description"));
-		sourceLayout.setKeywordsMap(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), "source-keywords"));
-		sourceLayout.setRobotsMap(
-			Collections.singletonMap(LocaleUtil.getDefault(), "source-robots"));
-
-		LayoutLocalServiceUtil.updateLayout(sourceLayout);
-
-		Layout targetLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), StringPool.BLANK);
-
-		Assert.assertNotEquals(
-			sourceLayout.getDescription(LocaleUtil.getDefault()),
-			targetLayout.getDescription(LocaleUtil.getDefault()));
-
-		Assert.assertNotEquals(
-			sourceLayout.getKeywords(LocaleUtil.getDefault()),
-			targetLayout.getKeywords(LocaleUtil.getDefault()));
-
-		Assert.assertNotEquals(
-			sourceLayout.getRobots(LocaleUtil.getDefault()),
-			targetLayout.getRobots(LocaleUtil.getDefault()));
-
-		targetLayout = _layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
-
-		Assert.assertEquals(
-			sourceLayout.getDescription(LocaleUtil.getDefault()),
-			targetLayout.getDescription(LocaleUtil.getDefault()));
-
-		Assert.assertEquals(
-			sourceLayout.getKeywords(LocaleUtil.getDefault()),
-			targetLayout.getKeywords(LocaleUtil.getDefault()));
-
-		Assert.assertEquals(
-			sourceLayout.getRobots(LocaleUtil.getDefault()),
-			targetLayout.getRobots(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -402,10 +306,6 @@ public class LayoutCopyHelperTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

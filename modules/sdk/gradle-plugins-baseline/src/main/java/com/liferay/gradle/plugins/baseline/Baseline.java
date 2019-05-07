@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.bnd;
+package com.liferay.gradle.plugins.baseline;
 
 import aQute.bnd.differ.Baseline.BundleInfo;
 import aQute.bnd.differ.Baseline.Info;

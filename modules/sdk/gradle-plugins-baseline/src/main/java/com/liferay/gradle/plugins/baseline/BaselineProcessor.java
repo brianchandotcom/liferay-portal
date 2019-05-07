@@ -6,7 +6,7 @@
  * project.
  */
 
-package com.liferay.ant.bnd;
+package com.liferay.gradle.plugins.baseline;
 
 import aQute.bnd.header.Attrs;
 import aQute.bnd.osgi.Analyzer;

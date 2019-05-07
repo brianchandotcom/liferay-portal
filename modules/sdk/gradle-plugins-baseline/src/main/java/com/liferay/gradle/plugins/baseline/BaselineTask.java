@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.baseline;
 
 import aQute.service.reporter.Reporter;
 
-import com.liferay.ant.bnd.Baseline;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 

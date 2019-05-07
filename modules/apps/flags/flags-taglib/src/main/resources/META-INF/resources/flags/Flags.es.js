@@ -1,4 +1,4 @@
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import 'clay-modal';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 import templates from './Flags.soy';
@@ -54,6 +54,8 @@ class Flags extends PortletBase {
 	 */
 
 	_handleFlagButtonClick() {
+		this.refs.modal.show();
+
 		this._reportDialogOpen = true;
 	}
 
@@ -65,17 +67,23 @@ class Flags extends PortletBase {
 	 */
 
 	_handleReasonChange(event) {
-		this._selectedReason = event.delegateTarget.value;
+		this._selectedReason = event.target.value;
 	}
 
 	/**
 	 * Forms the submit.
 	 * @internal
+	 * @param {Event} event
 	 * @protected
 	 */
 
-	_handleReportButtonClick() {
-		this._sendReport();
+	_handleClickFooterButton(event) {
+		if (event.target.classList.contains('btn-primary')) {
+			this._sendReport();
+		}
+		else {
+			this.refs.modal.emit('hide');
+		}
 	}
 
 	/**

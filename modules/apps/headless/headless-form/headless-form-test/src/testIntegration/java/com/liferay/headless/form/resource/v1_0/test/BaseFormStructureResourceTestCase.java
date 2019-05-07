@@ -486,8 +486,18 @@ public abstract class BaseFormStructureResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("formPages", additionalAssertFieldName)) {
-				if (formStructure.getFormPages() == null) {
+			if (Objects.equals("formLayoutPages", additionalAssertFieldName)) {
+				if (formStructure.getFormLayoutPages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"formSuccessPageSettings", additionalAssertFieldName)) {
+
+				if (formStructure.getFormSuccessPageSettings() == null) {
 					valid = false;
 				}
 
@@ -496,14 +506,6 @@ public abstract class BaseFormStructureResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (formStructure.getName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("successPage", additionalAssertFieldName)) {
-				if (formStructure.getSuccessPage() == null) {
 					valid = false;
 				}
 
@@ -612,10 +614,23 @@ public abstract class BaseFormStructureResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("formPages", additionalAssertFieldName)) {
+			if (Objects.equals("formLayoutPages", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						formStructure1.getFormPages(),
-						formStructure2.getFormPages())) {
+						formStructure1.getFormLayoutPages(),
+						formStructure2.getFormLayoutPages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"formSuccessPageSettings", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						formStructure1.getFormSuccessPageSettings(),
+						formStructure2.getFormSuccessPageSettings())) {
 
 					return false;
 				}
@@ -636,17 +651,6 @@ public abstract class BaseFormStructureResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						formStructure1.getName(), formStructure2.getName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("successPage", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						formStructure1.getSuccessPage(),
-						formStructure2.getSuccessPage())) {
 
 					return false;
 				}
@@ -791,7 +795,12 @@ public abstract class BaseFormStructureResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("formPages")) {
+		if (entityFieldName.equals("formLayoutPages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("formSuccessPageSettings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -810,11 +819,6 @@ public abstract class BaseFormStructureResourceTestCase {
 		}
 
 		if (entityFieldName.equals("siteId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("successPage")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

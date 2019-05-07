@@ -15,7 +15,7 @@
 package com.liferay.headless.form.client.serdes.v1_0;
 
 import com.liferay.headless.form.client.dto.v1_0.Field;
-import com.liferay.headless.form.client.dto.v1_0.FormPage;
+import com.liferay.headless.form.client.dto.v1_0.FormLayoutPage;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -32,22 +32,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormPageSerDes {
+public class FormLayoutPageSerDes {
 
-	public static FormPage toDTO(String json) {
-		FormPageJSONParser formPageJSONParser = new FormPageJSONParser();
+	public static FormLayoutPage toDTO(String json) {
+		FormLayoutPageJSONParser formLayoutPageJSONParser =
+			new FormLayoutPageJSONParser();
 
-		return formPageJSONParser.parseToDTO(json);
+		return formLayoutPageJSONParser.parseToDTO(json);
 	}
 
-	public static FormPage[] toDTOs(String json) {
-		FormPageJSONParser formPageJSONParser = new FormPageJSONParser();
+	public static FormLayoutPage[] toDTOs(String json) {
+		FormLayoutPageJSONParser formLayoutPageJSONParser =
+			new FormLayoutPageJSONParser();
 
-		return formPageJSONParser.parseToDTOs(json);
+		return formLayoutPageJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FormPage formPage) {
-		if (formPage == null) {
+	public static String toJSON(FormLayoutPage formLayoutPage) {
+		if (formLayoutPage == null) {
 			return "null";
 		}
 
@@ -55,7 +57,7 @@ public class FormPageSerDes {
 
 		sb.append("{");
 
-		if (formPage.getFields() != null) {
+		if (formLayoutPage.getFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -64,10 +66,10 @@ public class FormPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < formPage.getFields().length; i++) {
-				sb.append(String.valueOf(formPage.getFields()[i]));
+			for (int i = 0; i < formLayoutPage.getFields().length; i++) {
+				sb.append(String.valueOf(formLayoutPage.getFields()[i]));
 
-				if ((i + 1) < formPage.getFields().length) {
+				if ((i + 1) < formLayoutPage.getFields().length) {
 					sb.append(", ");
 				}
 			}
@@ -75,7 +77,7 @@ public class FormPageSerDes {
 			sb.append("]");
 		}
 
-		if (formPage.getHeadline() != null) {
+		if (formLayoutPage.getHeadline() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -84,22 +86,22 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(formPage.getHeadline()));
+			sb.append(_escape(formLayoutPage.getHeadline()));
 
 			sb.append("\"");
 		}
 
-		if (formPage.getId() != null) {
+		if (formLayoutPage.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(formPage.getId());
+			sb.append(formLayoutPage.getId());
 		}
 
-		if (formPage.getText() != null) {
+		if (formLayoutPage.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -108,7 +110,7 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(formPage.getText()));
+			sb.append(_escape(formLayoutPage.getText()));
 
 			sb.append("\"");
 		}
@@ -119,44 +121,45 @@ public class FormPageSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FormPageJSONParser formPageJSONParser = new FormPageJSONParser();
+		FormLayoutPageJSONParser formLayoutPageJSONParser =
+			new FormLayoutPageJSONParser();
 
-		return formPageJSONParser.parseToMap(json);
+		return formLayoutPageJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FormPage formPage) {
-		if (formPage == null) {
+	public static Map<String, String> toMap(FormLayoutPage formLayoutPage) {
+		if (formLayoutPage == null) {
 			return null;
 		}
 
 		Map<String, String> map = new HashMap<>();
 
-		if (formPage.getFields() == null) {
+		if (formLayoutPage.getFields() == null) {
 			map.put("fields", null);
 		}
 		else {
-			map.put("fields", String.valueOf(formPage.getFields()));
+			map.put("fields", String.valueOf(formLayoutPage.getFields()));
 		}
 
-		if (formPage.getHeadline() == null) {
+		if (formLayoutPage.getHeadline() == null) {
 			map.put("headline", null);
 		}
 		else {
-			map.put("headline", String.valueOf(formPage.getHeadline()));
+			map.put("headline", String.valueOf(formLayoutPage.getHeadline()));
 		}
 
-		if (formPage.getId() == null) {
+		if (formLayoutPage.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(formPage.getId()));
+			map.put("id", String.valueOf(formLayoutPage.getId()));
 		}
 
-		if (formPage.getText() == null) {
+		if (formLayoutPage.getText() == null) {
 			map.put("text", null);
 		}
 		else {
-			map.put("text", String.valueOf(formPage.getText()));
+			map.put("text", String.valueOf(formLayoutPage.getText()));
 		}
 
 		return map;
@@ -197,26 +200,27 @@ public class FormPageSerDes {
 		return sb.toString();
 	}
 
-	private static class FormPageJSONParser extends BaseJSONParser<FormPage> {
+	private static class FormLayoutPageJSONParser
+		extends BaseJSONParser<FormLayoutPage> {
 
 		@Override
-		protected FormPage createDTO() {
-			return new FormPage();
+		protected FormLayoutPage createDTO() {
+			return new FormLayoutPage();
 		}
 
 		@Override
-		protected FormPage[] createDTOArray(int size) {
-			return new FormPage[size];
+		protected FormLayoutPage[] createDTOArray(int size) {
+			return new FormLayoutPage[size];
 		}
 
 		@Override
 		protected void setField(
-			FormPage formPage, String jsonParserFieldName,
+			FormLayoutPage formLayoutPage, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "fields")) {
 				if (jsonParserFieldValue != null) {
-					formPage.setFields(
+					formLayoutPage.setFields(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -228,17 +232,18 @@ public class FormPageSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {
 				if (jsonParserFieldValue != null) {
-					formPage.setHeadline((String)jsonParserFieldValue);
+					formLayoutPage.setHeadline((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					formPage.setId(Long.valueOf((String)jsonParserFieldValue));
+					formLayoutPage.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
-					formPage.setText((String)jsonParserFieldValue);
+					formLayoutPage.setText((String)jsonParserFieldValue);
 				}
 			}
 			else {

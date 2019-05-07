@@ -15,7 +15,7 @@
 package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
-import com.liferay.headless.form.client.serdes.v1_0.FormPageSerDes;
+import com.liferay.headless.form.client.serdes.v1_0.FormSuccessPageSettingsSerDes;
 
 import java.util.Objects;
 
@@ -26,28 +26,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormPage {
+public class FormSuccessPageSettings {
 
-	public Field[] getFields() {
-		return fields;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setFields(Field[] fields) {
-		this.fields = fields;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setFields(
-		UnsafeSupplier<Field[], Exception> fieldsUnsafeSupplier) {
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
 		try {
-			fields = fieldsUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Field[] fields;
+	protected String description;
 
 	public String getHeadline() {
 		return headline;
@@ -89,38 +89,20 @@ public class FormPage {
 
 	protected Long id;
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String text;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof FormPage)) {
+		if (!(object instanceof FormSuccessPageSettings)) {
 			return false;
 		}
 
-		FormPage formPage = (FormPage)object;
+		FormSuccessPageSettings formSuccessPageSettings =
+			(FormSuccessPageSettings)object;
 
-		return Objects.equals(toString(), formPage.toString());
+		return Objects.equals(toString(), formSuccessPageSettings.toString());
 	}
 
 	@Override
@@ -131,7 +113,7 @@ public class FormPage {
 	}
 
 	public String toString() {
-		return FormPageSerDes.toJSON(this);
+		return FormSuccessPageSettingsSerDes.toJSON(this);
 	}
 
 }

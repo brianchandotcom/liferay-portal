@@ -189,34 +189,6 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean draft;
 
-	@Schema(description = "https://www.schema.org/FormFieldValue")
-	public FieldValue[] getFieldValues() {
-		return fieldValues;
-	}
-
-	public void setFieldValues(FieldValue[] fieldValues) {
-		this.fieldValues = fieldValues;
-	}
-
-	@JsonIgnore
-	public void setFieldValues(
-		UnsafeSupplier<FieldValue[], Exception> fieldValuesUnsafeSupplier) {
-
-		try {
-			fieldValues = fieldValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FieldValue[] fieldValues;
-
 	@Schema
 	public Form getForm() {
 		return form;
@@ -242,6 +214,35 @@ public class FormRecord {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Form form;
+
+	@Schema(description = "https://www.schema.org/FormFieldValue")
+	public FormFieldValue[] getFormFieldValues() {
+		return formFieldValues;
+	}
+
+	public void setFormFieldValues(FormFieldValue[] formFieldValues) {
+		this.formFieldValues = formFieldValues;
+	}
+
+	@JsonIgnore
+	public void setFormFieldValues(
+		UnsafeSupplier<FormFieldValue[], Exception>
+			formFieldValuesUnsafeSupplier) {
+
+		try {
+			formFieldValues = formFieldValuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FormFieldValue[] formFieldValues;
 
 	@Schema
 	public Long getFormId() {
@@ -389,26 +390,6 @@ public class FormRecord {
 			sb.append(draft);
 		}
 
-		if (fieldValues != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fieldValues\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < fieldValues.length; i++) {
-				sb.append(String.valueOf(fieldValues[i]));
-
-				if ((i + 1) < fieldValues.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (form != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -417,6 +398,26 @@ public class FormRecord {
 			sb.append("\"form\": ");
 
 			sb.append(String.valueOf(form));
+		}
+
+		if (formFieldValues != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formFieldValues\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < formFieldValues.length; i++) {
+				sb.append(String.valueOf(formFieldValues[i]));
+
+				if ((i + 1) < formFieldValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (formId != null) {

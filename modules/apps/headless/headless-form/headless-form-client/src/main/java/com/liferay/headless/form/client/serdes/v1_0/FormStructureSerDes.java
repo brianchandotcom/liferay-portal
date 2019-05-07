@@ -14,7 +14,7 @@
 
 package com.liferay.headless.form.client.serdes.v1_0;
 
-import com.liferay.headless.form.client.dto.v1_0.FormPage;
+import com.liferay.headless.form.client.dto.v1_0.FormLayoutPage;
 import com.liferay.headless.form.client.dto.v1_0.FormStructure;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
@@ -144,24 +144,38 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
-		if (formStructure.getFormPages() != null) {
+		if (formStructure.getFormLayoutPages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formPages\": ");
+			sb.append("\"formLayoutPages\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < formStructure.getFormPages().length; i++) {
-				sb.append(String.valueOf(formStructure.getFormPages()[i]));
+			for (int i = 0; i < formStructure.getFormLayoutPages().length;
+				 i++) {
 
-				if ((i + 1) < formStructure.getFormPages().length) {
+				sb.append(
+					String.valueOf(formStructure.getFormLayoutPages()[i]));
+
+				if ((i + 1) < formStructure.getFormLayoutPages().length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
+		}
+
+		if (formStructure.getFormSuccessPageSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formSuccessPageSettings\": ");
+
+			sb.append(
+				String.valueOf(formStructure.getFormSuccessPageSettings()));
 		}
 
 		if (formStructure.getId() != null) {
@@ -196,16 +210,6 @@ public class FormStructureSerDes {
 			sb.append("\"siteId\": ");
 
 			sb.append(formStructure.getSiteId());
-		}
-
-		if (formStructure.getSuccessPage() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"successPage\": ");
-
-			sb.append(String.valueOf(formStructure.getSuccessPage()));
 		}
 
 		sb.append("}");
@@ -262,11 +266,22 @@ public class FormStructureSerDes {
 				"description", String.valueOf(formStructure.getDescription()));
 		}
 
-		if (formStructure.getFormPages() == null) {
-			map.put("formPages", null);
+		if (formStructure.getFormLayoutPages() == null) {
+			map.put("formLayoutPages", null);
 		}
 		else {
-			map.put("formPages", String.valueOf(formStructure.getFormPages()));
+			map.put(
+				"formLayoutPages",
+				String.valueOf(formStructure.getFormLayoutPages()));
+		}
+
+		if (formStructure.getFormSuccessPageSettings() == null) {
+			map.put("formSuccessPageSettings", null);
+		}
+		else {
+			map.put(
+				"formSuccessPageSettings",
+				String.valueOf(formStructure.getFormSuccessPageSettings()));
 		}
 
 		if (formStructure.getId() == null) {
@@ -288,14 +303,6 @@ public class FormStructureSerDes {
 		}
 		else {
 			map.put("siteId", String.valueOf(formStructure.getSiteId()));
-		}
-
-		if (formStructure.getSuccessPage() == null) {
-			map.put("successPage", null);
-		}
-		else {
-			map.put(
-				"successPage", String.valueOf(formStructure.getSuccessPage()));
 		}
 
 		return map;
@@ -383,16 +390,25 @@ public class FormStructureSerDes {
 					formStructure.setDescription((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "formPages")) {
+			else if (Objects.equals(jsonParserFieldName, "formLayoutPages")) {
 				if (jsonParserFieldValue != null) {
-					formStructure.setFormPages(
+					formStructure.setFormLayoutPages(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> FormPageSerDes.toDTO((String)object)
+							object -> FormLayoutPageSerDes.toDTO((String)object)
 						).toArray(
-							size -> new FormPage[size]
+							size -> new FormLayoutPage[size]
 						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "formSuccessPageSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					formStructure.setFormSuccessPageSettings(
+						FormSuccessPageSettingsSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -410,12 +426,6 @@ public class FormStructureSerDes {
 				if (jsonParserFieldValue != null) {
 					formStructure.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "successPage")) {
-				if (jsonParserFieldValue != null) {
-					formStructure.setSuccessPage(
-						SuccessPageSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

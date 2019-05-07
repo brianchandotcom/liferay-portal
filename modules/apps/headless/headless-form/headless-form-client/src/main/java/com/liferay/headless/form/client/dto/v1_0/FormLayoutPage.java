@@ -15,7 +15,7 @@
 package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
-import com.liferay.headless.form.client.serdes.v1_0.FieldValueSerDes;
+import com.liferay.headless.form.client.serdes.v1_0.FormLayoutPageSerDes;
 
 import java.util.Objects;
 
@@ -26,49 +26,49 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FieldValue {
+public class FormLayoutPage {
 
-	public FormDocument getFormDocument() {
-		return formDocument;
+	public Field[] getFields() {
+		return fields;
 	}
 
-	public void setFormDocument(FormDocument formDocument) {
-		this.formDocument = formDocument;
+	public void setFields(Field[] fields) {
+		this.fields = fields;
 	}
 
-	public void setFormDocument(
-		UnsafeSupplier<FormDocument, Exception> formDocumentUnsafeSupplier) {
+	public void setFields(
+		UnsafeSupplier<Field[], Exception> fieldsUnsafeSupplier) {
 
 		try {
-			formDocument = formDocumentUnsafeSupplier.get();
+			fields = fieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FormDocument formDocument;
+	protected Field[] fields;
 
-	public Long getFormDocumentId() {
-		return formDocumentId;
+	public String getHeadline() {
+		return headline;
 	}
 
-	public void setFormDocumentId(Long formDocumentId) {
-		this.formDocumentId = formDocumentId;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
 
-	public void setFormDocumentId(
-		UnsafeSupplier<Long, Exception> formDocumentIdUnsafeSupplier) {
+	public void setHeadline(
+		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
 
 		try {
-			formDocumentId = formDocumentIdUnsafeSupplier.get();
+			headline = headlineUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long formDocumentId;
+	protected String headline;
 
 	public Long getId() {
 		return id;
@@ -89,45 +89,24 @@ public class FieldValue {
 
 	protected Long id;
 
-	public String getName() {
-		return name;
+	public String getText() {
+		return text;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setText(String text) {
+		this.text = text;
 	}
 
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
 		try {
-			name = nameUnsafeSupplier.get();
+			text = textUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String name;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String value;
+	protected String text;
 
 	@Override
 	public boolean equals(Object object) {
@@ -135,13 +114,13 @@ public class FieldValue {
 			return true;
 		}
 
-		if (!(object instanceof FieldValue)) {
+		if (!(object instanceof FormLayoutPage)) {
 			return false;
 		}
 
-		FieldValue fieldValue = (FieldValue)object;
+		FormLayoutPage formLayoutPage = (FormLayoutPage)object;
 
-		return Objects.equals(toString(), fieldValue.toString());
+		return Objects.equals(toString(), formLayoutPage.toString());
 	}
 
 	@Override
@@ -152,7 +131,7 @@ public class FieldValue {
 	}
 
 	public String toString() {
-		return FieldValueSerDes.toJSON(this);
+		return FormLayoutPageSerDes.toJSON(this);
 	}
 
 }

@@ -134,26 +134,52 @@ public class FormStructure {
 
 	protected String description;
 
-	public FormPage[] getFormPages() {
-		return formPages;
+	public FormLayoutPage[] getFormLayoutPages() {
+		return formLayoutPages;
 	}
 
-	public void setFormPages(FormPage[] formPages) {
-		this.formPages = formPages;
+	public void setFormLayoutPages(FormLayoutPage[] formLayoutPages) {
+		this.formLayoutPages = formLayoutPages;
 	}
 
-	public void setFormPages(
-		UnsafeSupplier<FormPage[], Exception> formPagesUnsafeSupplier) {
+	public void setFormLayoutPages(
+		UnsafeSupplier<FormLayoutPage[], Exception>
+			formLayoutPagesUnsafeSupplier) {
 
 		try {
-			formPages = formPagesUnsafeSupplier.get();
+			formLayoutPages = formLayoutPagesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FormPage[] formPages;
+	protected FormLayoutPage[] formLayoutPages;
+
+	public FormSuccessPageSettings getFormSuccessPageSettings() {
+		return formSuccessPageSettings;
+	}
+
+	public void setFormSuccessPageSettings(
+		FormSuccessPageSettings formSuccessPageSettings) {
+
+		this.formSuccessPageSettings = formSuccessPageSettings;
+	}
+
+	public void setFormSuccessPageSettings(
+		UnsafeSupplier<FormSuccessPageSettings, Exception>
+			formSuccessPageSettingsUnsafeSupplier) {
+
+		try {
+			formSuccessPageSettings =
+				formSuccessPageSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FormSuccessPageSettings formSuccessPageSettings;
 
 	public Long getId() {
 		return id;
@@ -213,27 +239,6 @@ public class FormStructure {
 	}
 
 	protected Long siteId;
-
-	public SuccessPage getSuccessPage() {
-		return successPage;
-	}
-
-	public void setSuccessPage(SuccessPage successPage) {
-		this.successPage = successPage;
-	}
-
-	public void setSuccessPage(
-		UnsafeSupplier<SuccessPage, Exception> successPageUnsafeSupplier) {
-
-		try {
-			successPage = successPageUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected SuccessPage successPage;
 
 	@Override
 	public boolean equals(Object object) {

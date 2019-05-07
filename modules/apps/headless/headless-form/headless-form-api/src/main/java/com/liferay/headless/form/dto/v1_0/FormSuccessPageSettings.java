@@ -40,26 +40,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormPage")
+@GraphQLName("FormSuccessPageSettings")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FormPage")
-public class FormPage {
+@XmlRootElement(name = "FormSuccessPageSettings")
+public class FormSuccessPageSettings {
 
-	@Schema(description = "https://www.schema.org/FormField")
-	public Field[] getFields() {
-		return fields;
+	@Schema
+	public String getDescription() {
+		return description;
 	}
 
-	public void setFields(Field[] fields) {
-		this.fields = fields;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@JsonIgnore
-	public void setFields(
-		UnsafeSupplier<Field[], Exception> fieldsUnsafeSupplier) {
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
 		try {
-			fields = fieldsUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,7 +71,7 @@ public class FormPage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Field[] fields;
+	protected String description;
 
 	@Schema
 	public String getHeadline() {
@@ -127,45 +127,20 @@ public class FormPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	@JsonIgnore
-	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
-		try {
-			text = textUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String text;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof FormPage)) {
+		if (!(object instanceof FormSuccessPageSettings)) {
 			return false;
 		}
 
-		FormPage formPage = (FormPage)object;
+		FormSuccessPageSettings formSuccessPageSettings =
+			(FormSuccessPageSettings)object;
 
-		return Objects.equals(toString(), formPage.toString());
+		return Objects.equals(toString(), formSuccessPageSettings.toString());
 	}
 
 	@Override
@@ -180,24 +155,18 @@ public class FormPage {
 
 		sb.append("{");
 
-		if (fields != null) {
+		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fields\": ");
+			sb.append("\"description\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < fields.length; i++) {
-				sb.append(String.valueOf(fields[i]));
+			sb.append(_escape(description));
 
-				if ((i + 1) < fields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		if (headline != null) {
@@ -222,20 +191,6 @@ public class FormPage {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (text != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"text\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(text));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");

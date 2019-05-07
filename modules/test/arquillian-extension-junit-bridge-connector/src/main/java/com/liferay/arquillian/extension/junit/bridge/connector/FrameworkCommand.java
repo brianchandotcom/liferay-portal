@@ -14,10 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.connector;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-
-import java.net.URL;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -28,11 +27,13 @@ import org.osgi.framework.BundleException;
  */
 public interface FrameworkCommand extends Serializable {
 
-	public static FrameworkCommand installBundle(String location, URL url) {
+	public static FrameworkCommand installBundle(
+		String location, byte[] bytes) {
+
 		return bundleContext -> {
 			long bundleId = -1;
 
-			try (InputStream inputStream = url.openStream()) {
+			try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
 				Bundle bundle = bundleContext.installBundle(
 					location, inputStream);
 

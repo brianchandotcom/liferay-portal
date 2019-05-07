@@ -23,7 +23,6 @@ import java.io.IOException;
 
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -231,20 +230,12 @@ public class ClientState {
 			InetAddress inetAddress, int port, long passCode)
 		throws Exception {
 
-		Path path = BndBundleUtil.createBundle(
+		byte[] bytes = BndBundleUtil.createBundle(
 			filteredMethodNamesMap, inetAddress.getHostAddress(), port,
 			passCode);
 
-		URI uri = path.toUri();
-
-		URL url = uri.toURL();
-
-		try {
-			return _frameworkState.installBundle(url.getPath(), url);
-		}
-		finally {
-			Files.delete(path);
-		}
+		return _frameworkState.installBundle(
+			String.valueOf(System.currentTimeMillis()), bytes);
 	}
 
 	private static long _bundleId;

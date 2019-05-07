@@ -23,12 +23,10 @@ import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.arquillian.extension.junit.bridge.server.TestBundleActivator;
 import com.liferay.arquillian.extension.junit.bridge.util.StringUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import java.net.URL;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -48,7 +46,7 @@ import java.util.regex.Pattern;
  */
 public class BndBundleUtil {
 
-	public static Path createBundle(
+	public static byte[] createBundle(
 			Map<String, List<String>> filteredMethodNamesMap,
 			String hostAddress, int port, long passCode)
 		throws Exception {
@@ -73,11 +71,15 @@ public class BndBundleUtil {
 							attributes.getValue("Import-Package"))),
 					","));
 
-			Path path = Files.createTempFile(null, ".jar");
+			byte[] bytes = null;
 
-			jar.write(path.toFile());
+			try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+				jar.write(baos);
 
-			return path;
+				bytes = baos.toByteArray();
+			}
+
+			return bytes;
 		}
 	}
 

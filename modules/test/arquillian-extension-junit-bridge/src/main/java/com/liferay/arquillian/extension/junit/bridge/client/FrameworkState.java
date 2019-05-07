@@ -22,7 +22,6 @@ import java.io.ObjectOutputStream;
 
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
 
 /**
  * @author Matthew Tambara
@@ -51,9 +50,11 @@ public class FrameworkState {
 		_objectInputStream = new ObjectInputStream(_socket.getInputStream());
 	}
 
-	public long installBundle(String location, URL url) throws IOException {
+	public long installBundle(String location, byte[] bytes)
+		throws IOException {
+
 		_objectOutputStream.writeObject(
-			FrameworkCommand.installBundle(location, url));
+			FrameworkCommand.installBundle(location, bytes));
 
 		_objectOutputStream.flush();
 

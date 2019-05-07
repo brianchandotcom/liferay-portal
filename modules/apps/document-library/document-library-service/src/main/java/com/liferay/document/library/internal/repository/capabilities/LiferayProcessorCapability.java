@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
@@ -122,7 +123,11 @@ public class LiferayProcessorCapability
 			return null;
 		}
 
-		return new SafeFileEntry(fileEntry);
+		if (ContentTypes.IMAGE_PNG.equals(fileEntry.getMimeType())) {
+			return new SafeFileEntry(fileEntry);
+		}
+
+		return fileEntry;
 	}
 
 	private FileVersion _wrap(FileVersion fileVersion) {
@@ -130,7 +135,11 @@ public class LiferayProcessorCapability
 			return null;
 		}
 
-		return new SafeFileVersion(fileVersion);
+		if (ContentTypes.IMAGE_PNG.equals(fileVersion.getMimeType())) {
+			return new SafeFileVersion(fileVersion);
+		}
+
+		return fileVersion;
 	}
 
 	private final DLFileVersionPreviewLocalService

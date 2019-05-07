@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -33,6 +34,11 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		return true;
 	}
 
+	public void setCheckTestIncludeResource(String checkTestIncludeResource) {
+		_checkTestIncludeResource = GetterUtil.getBoolean(
+			checkTestIncludeResource);
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -41,7 +47,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 			content = _formatIncludeResource(fileName, content);
 		}
 
-		if (fileName.endsWith("-test/bnd.bnd")) {
+		if (fileName.endsWith("-test/bnd.bnd") && _checkTestIncludeResource) {
 			_checkIncludeResource(fileName, content);
 		}
 
@@ -191,6 +197,8 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 	private static final Pattern _includeResourcePattern = Pattern.compile(
 		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);
+
+	private boolean _checkTestIncludeResource;
 
 	private static class IncludeResourceComparator
 		implements Comparator<String> {

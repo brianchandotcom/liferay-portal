@@ -24,8 +24,9 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,7 +38,10 @@ public class StagedModelDataHandlerRegistryUtilTest {
 	@BeforeClass
 	public static void setUpClass() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
 
+	@Before
+	public void setUp() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_stagedModelDataHandler =
@@ -56,8 +60,8 @@ public class StagedModelDataHandlerRegistryUtilTest {
 			StagedModelDataHandler.class, _stagedModelDataHandler);
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
+	@After
+	public void tearDown() {
 		_serviceRegistration.unregister();
 	}
 
@@ -83,8 +87,7 @@ public class StagedModelDataHandlerRegistryUtilTest {
 
 	private static final String _CLASS_NAME = "TestStagedModelDataHandler";
 
-	private static ServiceRegistration<StagedModelDataHandler>
-		_serviceRegistration;
-	private static StagedModelDataHandler<?> _stagedModelDataHandler;
+	private ServiceRegistration<StagedModelDataHandler> _serviceRegistration;
+	private StagedModelDataHandler<?> _stagedModelDataHandler;
 
 }

@@ -395,7 +395,7 @@ public abstract class BaseInstanceResourceTestCase {
 			}
 
 			if (Objects.equals("slaStatus", additionalAssertFieldName)) {
-				if (instance.getSlaStatus() == null) {
+				if (instance.getSLAStatus() == null) {
 					valid = false;
 				}
 
@@ -504,7 +504,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("slaStatus", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						instance1.getSlaStatus(), instance2.getSlaStatus())) {
+						instance1.getSLAStatus(), instance2.getSLAStatus())) {
 
 					return false;
 				}

@@ -51,13 +51,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Instance")
 public class Instance {
 
-	public static enum SlaStatus {
+	public static enum SLAStatus {
 
 		ON_TIME("OnTime"), OVERDUE("Overdue"), UNTRACKED("Untracked");
 
 		@JsonCreator
-		public static SlaStatus create(String value) {
-			for (SlaStatus slaStatus : values()) {
+		public static SLAStatus create(String value) {
+			for (SLAStatus slaStatus : values()) {
 				if (Objects.equals(slaStatus.getValue(), value)) {
 					return slaStatus;
 				}
@@ -76,7 +76,7 @@ public class Instance {
 			return _value;
 		}
 
-		private SlaStatus(String value) {
+		private SLAStatus(String value) {
 			_value = value;
 		}
 
@@ -228,12 +228,12 @@ public class Instance {
 	protected Long id;
 
 	@Schema
-	public SlaStatus getSlaStatus() {
+	public SLAStatus getSLAStatus() {
 		return slaStatus;
 	}
 
 	@JsonIgnore
-	public String getSlaStatusAsString() {
+	public String getSLAStatusAsString() {
 		if (slaStatus == null) {
 			return null;
 		}
@@ -241,13 +241,13 @@ public class Instance {
 		return slaStatus.toString();
 	}
 
-	public void setSlaStatus(SlaStatus slaStatus) {
+	public void setSLAStatus(SLAStatus slaStatus) {
 		this.slaStatus = slaStatus;
 	}
 
 	@JsonIgnore
 	public void setSlaStatus(
-		UnsafeSupplier<SlaStatus, Exception> slaStatusUnsafeSupplier) {
+		UnsafeSupplier<SLAStatus, Exception> slaStatusUnsafeSupplier) {
 
 		try {
 			slaStatus = slaStatusUnsafeSupplier.get();
@@ -262,7 +262,7 @@ public class Instance {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SlaStatus slaStatus;
+	protected SLAStatus slaStatus;
 
 	@Schema
 	public Status getStatus() {

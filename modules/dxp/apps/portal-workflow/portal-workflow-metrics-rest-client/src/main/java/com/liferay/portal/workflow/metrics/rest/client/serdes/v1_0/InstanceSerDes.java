@@ -112,7 +112,7 @@ public class InstanceSerDes {
 			sb.append(instance.getId());
 		}
 
-		if (instance.getSlaStatus() != null) {
+		if (instance.getSLAStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -121,7 +121,7 @@ public class InstanceSerDes {
 
 			sb.append("\"");
 
-			sb.append(instance.getSlaStatus());
+			sb.append(instance.getSLAStatus());
 
 			sb.append("\"");
 		}
@@ -224,11 +224,11 @@ public class InstanceSerDes {
 			map.put("id", String.valueOf(instance.getId()));
 		}
 
-		if (instance.getSlaStatus() == null) {
+		if (instance.getSLAStatus() == null) {
 			map.put("slaStatus", null);
 		}
 		else {
-			map.put("slaStatus", String.valueOf(instance.getSlaStatus()));
+			map.put("slaStatus", String.valueOf(instance.getSLAStatus()));
 		}
 
 		if (instance.getStatus() == null) {
@@ -330,8 +330,8 @@ public class InstanceSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "slaStatus")) {
 				if (jsonParserFieldValue != null) {
-					instance.setSlaStatus(
-						Instance.SlaStatus.create(
+					instance.setSLAStatus(
+						Instance.SLAStatus.create(
 							(String)jsonParserFieldValue));
 				}
 			}

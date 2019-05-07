@@ -14,7 +14,6 @@
 
 package com.liferay.product.navigation.control.menu.theme.contributor.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -53,12 +52,6 @@ public class ProductNavigationControlMenuTopHeadDynamicInclude
 				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
-			return;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
 			return;
 		}
 

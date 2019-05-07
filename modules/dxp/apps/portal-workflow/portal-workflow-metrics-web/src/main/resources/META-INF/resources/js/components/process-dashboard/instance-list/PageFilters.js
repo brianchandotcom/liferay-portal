@@ -1,40 +1,46 @@
+import {
+	filterKeys,
+	processStatusKeys,
+	slaStatusKeys
+} from './filterConstants';
+
 const processStatusFilter = {
-	key: 'statuses',
+	key: filterKeys.processStatus,
 	name: Liferay.Language.get('process-status')
 };
 
 const processStatusItems = [
 	{
-		key: 'Pending',
+		key: processStatusKeys.pending,
 		name: Liferay.Language.get('pending')
 	},
 	{
-		key: 'Completed',
+		key: processStatusKeys.completed,
 		name: Liferay.Language.get('completed')
 	}
 ];
 
 const processStepFilter = {
-	key: 'taskKeys',
+	key: filterKeys.processStep,
 	name: Liferay.Language.get('process-step')
 };
 
 const slaStatusFilter = {
-	key: 'slaStatuses',
+	key: filterKeys.slaStatus,
 	name: Liferay.Language.get('sla-status')
 };
 
 const slaStatusItems = [
 	{
-		key: 'Overdue',
+		key: slaStatusKeys.overdue,
 		name: Liferay.Language.get('overdue')
 	},
 	{
-		key: 'OnTime',
+		key: slaStatusKeys.onTime,
 		name: Liferay.Language.get('on-time')
 	},
 	{
-		key: 'Untracked',
+		key: slaStatusKeys.untracked,
 		name: Liferay.Language.get('untracked')
 	}
 ];

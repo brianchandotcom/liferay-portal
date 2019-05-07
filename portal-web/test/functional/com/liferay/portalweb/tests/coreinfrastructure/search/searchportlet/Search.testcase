@@ -1446,8 +1446,6 @@ definition {
 	}
 
 	test ViewCreatedSearchPageAsSiteMemberAndGuest {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1460,24 +1458,22 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
-			groupName = "Site Name",
+			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Search Page");
 
 		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
-			groupName = "Site Name",
 			serviceContext = "${webContentServiceContext}",
+			groupName = "Guest",
 			title = "WC Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Search Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
 
@@ -1490,9 +1486,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoSitePage(
-			pageName = "Search Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
@@ -1505,9 +1499,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(
-			pageName = "Search Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
@@ -1991,8 +1983,6 @@ definition {
 	}
 
 	test ViewSearchGlobalTemplateAsSiteMemberAndGuest {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -2005,28 +1995,20 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
-			groupName = "Site Name",
+			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
-
-		ProductMenu.gotoSite(site = "Site Name");
-
-		SitePages.addPublicPage(
-			pageName = "Search Global Template Page",
-			pageTemplateName = "Search");
 
 		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
-			groupName = "Site Name",
+			groupName = "Guest",
 			serviceContext = "${webContentServiceContext}",
 			title = "WC Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Search Global Template Page",
-			siteName = "Site Name");
+		Navigator.openURL();
 
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -2035,11 +2017,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoSitePage(
-			pageName = "Search Global Template Page",
-			siteName = "Site Name");
-
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -2050,11 +2028,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(
-			pageName = "Search Global Template Page",
-			siteName = "Site Name");
-
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",

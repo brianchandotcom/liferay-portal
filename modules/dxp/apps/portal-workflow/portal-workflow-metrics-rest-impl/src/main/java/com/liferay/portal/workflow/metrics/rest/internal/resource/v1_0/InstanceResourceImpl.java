@@ -274,6 +274,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		int instanceCount, Pagination pagination, long processId,
 		String[] slaStatuses, String[] statuses, String[] taskKeys) {
 
+		List<Instance> instances = new LinkedList<>();
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
@@ -326,8 +328,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)aggregationResultsMap.get("instanceId");
-
-		List<Instance> instances = new LinkedList<>();
 
 		for (Bucket bucket : termsAggregationResult.getBuckets()) {
 			Instance instance = Stream.of(

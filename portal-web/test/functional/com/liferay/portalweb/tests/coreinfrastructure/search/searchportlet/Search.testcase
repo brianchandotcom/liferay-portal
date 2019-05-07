@@ -1445,6 +1445,8 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a use case for LPS-84035."
+	@priority = "5"
 	test ViewCreatedSearchPageAsSiteMemberAndGuest {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1465,48 +1467,65 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
+		var webContentServiceContext = '''{"addGuestPermissions": "true", "assetTagNames": ["tag"]}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
-			serviceContext = "${webContentServiceContext}",
 			groupName = "Guest",
+			serviceContext = "${webContentServiceContext}",
 			title = "WC Title");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
 
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article",
-			searchTerm = "WC Title");
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Site Member");
+
+		SearchPortlets.configureDestination(destinationPage = "Search Page");
 
 		User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
+
+		AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+		for (var portlet : list "Custom Filter,Sort,Suggestions,Search Results,Search Bar") {
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
+		}
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
+
+		AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+		for (var portlet : list "Custom Filter,Sort,Suggestions,Search Results,Search Bar") {
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
+		}
 	}
 
 	@description = "This is a use case for LPS-74299."
@@ -1982,6 +2001,8 @@ definition {
 			searchTerm = "organic");
 	}
 
+	@description = "This is a use case for LPS-84035."
+	@priority = "5"
 	test ViewSearchGlobalTemplateAsSiteMemberAndGuest {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1998,26 +2019,39 @@ definition {
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
 
-		var webContentServiceContext = '''{"addGuestPermissions": "true"}''';
+		var webContentServiceContext = '''{"addGuestPermissions": "true", "assetTagNames": ["tag"]}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
-			groupName = "Guest",
 			serviceContext = "${webContentServiceContext}",
+			groupName = "Guest",
 			title = "WC Title");
-
-		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article",
-			searchTerm = "WC Title");
+		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Site Member");
 
 		User.logoutPG();
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+		AssertElementPresent(locator1 = "Search#SEARCH_BAR_WIDGET");
+
+		for (var portlet : list "Last Modified,Tag,Type,User") {
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
+		}
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -2029,6 +2063,16 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+		AssertElementPresent(locator1 = "Search#SEARCH_BAR_WIDGET");
+
+		for (var portlet : list "Last Modified,Tag,Type,User") {
+			AssertElementPresent(
+				key_portletName = "${portlet}",
+				locator1 = "Portlet#BODY");
+		}
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",

@@ -77,7 +77,10 @@ public interface FragmentEntryLinkLocalService
 		FragmentEntryLink fragmentEntryLink);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(
@@ -87,7 +90,10 @@ public interface FragmentEntryLinkLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(
@@ -98,7 +104,10 @@ public interface FragmentEntryLinkLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(
@@ -116,7 +125,10 @@ public interface FragmentEntryLinkLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(

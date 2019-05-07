@@ -51,7 +51,10 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -68,7 +71,10 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -86,7 +92,10 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -120,7 +129,10 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addFragmentEntryLink(long, long, long, long, long, long, String, String, String, String, String, int, String, ServiceContext)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override

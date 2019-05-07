@@ -542,13 +542,12 @@ public class LPKGBundleTrackerCustomizer
 
 			if (bundle != null) {
 				_uninstallBundle(symbolicName.concat(StringPool.DASH), bundle);
-			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Disabled ", symbolicName, StringPool.COLON,
-						url.getPath()));
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Disabled ", symbolicName, StringPool.COLON, name));
+				}
 			}
 
 			return true;

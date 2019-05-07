@@ -83,6 +83,8 @@ public class ChangeListsHistoryDisplayContext {
 		).put(
 			"filterUser", _getFilterByUser()
 		).put(
+			"keywords", _getKeywords()
+		).put(
 			"orderByCol", _getOrderByCol()
 		).put(
 			"orderByType", getOrderByType()
@@ -194,7 +196,7 @@ public class ChangeListsHistoryDisplayContext {
 	}
 
 	public String getViewSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = _getPortletURL();
 
 		return portletURL.toString();
 	}
@@ -306,6 +308,16 @@ public class ChangeListsHistoryDisplayContext {
 		return iteratorURL;
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords", null);
+
+		return _keywords;
+	}
+
 	private String _getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -393,6 +405,7 @@ public class ChangeListsHistoryDisplayContext {
 	private String _filterByStatus;
 	private String _filterByUser;
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

@@ -72,7 +72,7 @@ class ChangeListsConfiguration extends PortletBase {
 						}
 					);
 				}
-				else {
+
 					return Object.assign(
 						{},
 						item,
@@ -80,7 +80,7 @@ class ChangeListsConfiguration extends PortletBase {
 							active: false
 						}
 					);
-				}
+
 			}
 		);
 	}

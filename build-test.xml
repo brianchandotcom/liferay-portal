@@ -6068,8 +6068,15 @@ go</echo>
 	</target>
 
 	<target name="deploy-license-xml">
+		<get-testcase-property property.name="deploy.lcs.token.file" />
+
 		<if>
-			<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
+			<and>
+				<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
+				<not>
+					<equals arg1="${deploy.lcs.token.file}" arg2="true" />
+				</not>
+			</and>
 			<then>
 				<mkdir dir="${liferay.home}/deploy" />
 

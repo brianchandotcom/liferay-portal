@@ -64,7 +64,7 @@ class InstanceListFilter extends React.Component {
 		const { client } = this.context;
 
 		return client
-			.get(`/processes/${processId}/tasks?fields=key,name&page=0&pageSize=0`)
+			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
 			.then(({ data }) => {
 				return data;
 			});

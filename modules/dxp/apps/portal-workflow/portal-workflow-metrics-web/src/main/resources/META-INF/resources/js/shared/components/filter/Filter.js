@@ -29,6 +29,14 @@ class Filter extends React.Component {
 		document.removeEventListener('mousedown', this.onClickOutside);
 	}
 
+	componentWillReceiveProps({ items }) {
+		if (items !== this.state.items) {
+			this.setState({
+				items
+			});
+		}
+	}
+
 	get filteredItems() {
 		const { items, searchTerm } = this.state;
 

@@ -20,6 +20,7 @@ import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,13 +35,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
-
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_userId = TestPropsValues.getUserId();
-	}
 
 	@Override
 	public void testPostDataDefinitionDataDefinitionPermission()
@@ -97,13 +91,17 @@ public class DataDefinitionResourceTest
 					}
 				};
 				siteId = testGroup.getGroupId();
-				userId = _userId;
+
+				try {
+					userId = TestPropsValues.getUserId();
+				}
+				catch (PortalException pe) {
+					throw new RuntimeException(pe.getMessage(), pe);
+				}
 			}
 		};
 	}
 
 	private static final String _OPERATION_SAVE_PERMISSION = "save";
-
-	private long _userId;
 
 }

@@ -15,10 +15,13 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
@@ -230,6 +233,63 @@ public class PortalImplUnitTest {
 	}
 
 	@Test
+	public void testGetOriginalServletRequest() {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		Assert.assertSame(
+			httpServletRequest,
+			_portalImpl.getOriginalServletRequest(httpServletRequest));
+
+		HttpServletRequestWrapper requestWrapper1 =
+			new HttpServletRequestWrapper(httpServletRequest);
+
+		Assert.assertSame(
+			httpServletRequest,
+			_portalImpl.getOriginalServletRequest(requestWrapper1));
+
+		HttpServletRequestWrapper requestWrapper2 =
+			new HttpServletRequestWrapper(requestWrapper1);
+
+		Assert.assertSame(
+			httpServletRequest,
+			_portalImpl.getOriginalServletRequest(requestWrapper2));
+
+		HttpServletRequestWrapper requestWrapper3 =
+			new PersistentHttpServletRequestWrapper1(requestWrapper2);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portalImpl.getOriginalServletRequest(requestWrapper3);
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper1.class,
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalHttpServletRequest);
+		Assert.assertSame(
+			httpServletRequest, getWrappedRequest(originalHttpServletRequest));
+
+		HttpServletRequestWrapper requestWrapper4 =
+			new PersistentHttpServletRequestWrapper2(requestWrapper3);
+
+		originalHttpServletRequest = _portalImpl.getOriginalServletRequest(
+			requestWrapper4);
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper2.class,
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper4, originalHttpServletRequest);
+
+		originalHttpServletRequest = getWrappedRequest(
+			originalHttpServletRequest);
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper1.class,
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalHttpServletRequest);
+		Assert.assertSame(
+			httpServletRequest, getWrappedRequest(originalHttpServletRequest));
+	}
+
+	@Test
 	public void testIsSecureWithHttpsInitialFalse() throws Exception {
 		boolean companySecurityAuthRequiresHttps =
 			PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS;
@@ -433,6 +493,23 @@ public class PortalImplUnitTest {
 	}
 
 	@Test
+	public void testIsValidResourceId() {
+		Assert.assertTrue(_portalImpl.isValidResourceId("/view.jsp"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("/META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("/META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("\\META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("\\META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF/web.xml"));
+		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF\\web.xml"));
+		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF/web.xml"));
+		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF\\web.xml"));
+	}
+
+	@Test
 	public void testUpdateRedirectRemoveLayoutURL() {
 		HttpUtil httpUtil = new HttpUtil();
 
@@ -464,6 +541,15 @@ public class PortalImplUnitTest {
 				"/web/group/layout", "/group/layout", "/group"));
 	}
 
+	protected HttpServletRequest getWrappedRequest(
+		HttpServletRequest httpServletRequest) {
+
+		HttpServletRequestWrapper requestWrapper =
+			(HttpServletRequestWrapper)httpServletRequest;
+
+		return (HttpServletRequest)requestWrapper.getRequest();
+	}
+
 	protected void setPropsValuesValue(String fieldName, Object value)
 		throws Exception {
 
@@ -471,5 +557,27 @@ public class PortalImplUnitTest {
 	}
 
 	private final PortalImpl _portalImpl = new PortalImpl();
+
+	private static class PersistentHttpServletRequestWrapper1
+		extends PersistentHttpServletRequestWrapper {
+
+		private PersistentHttpServletRequestWrapper1(
+			HttpServletRequest httpServletRequest) {
+
+			super(httpServletRequest);
+		}
+
+	}
+
+	private static class PersistentHttpServletRequestWrapper2
+		extends PersistentHttpServletRequestWrapper {
+
+		private PersistentHttpServletRequestWrapper2(
+			HttpServletRequest httpServletRequest) {
+
+			super(httpServletRequest);
+		}
+
+	}
 
 }

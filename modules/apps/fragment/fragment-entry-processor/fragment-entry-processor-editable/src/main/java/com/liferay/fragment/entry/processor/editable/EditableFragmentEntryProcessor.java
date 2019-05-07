@@ -14,20 +14,30 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +47,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -131,9 +142,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-			int previewType)
+			FragmentEntryLink fragmentEntryLink, String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -173,42 +183,60 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject mappedValueConfigJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode)) {
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
+					fragmentEntryProcessorContext.getMode())) {
+
 				value = jsonObject.getString("mappedField");
 
 				if (Validator.isNotNull(value)) {
 					mappedValueConfigJSONObject =
 						editableElementParser.getFieldTemplateConfigJSONObject(
-							value, locale, null);
+							value, fragmentEntryProcessorContext.getLocale(),
+							null);
 
 					value = StringUtil.replace(
 						editableElementParser.getFieldTemplate(), "field_name",
 						value);
+
+					value = _processTemplate(
+						value, fragmentEntryProcessorContext);
 				}
 			}
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					jsonObject, assetEntriesFieldValues, mode, locale,
-					previewClassPK, previewType);
+					jsonObject, assetEntriesFieldValues,
+					fragmentEntryProcessorContext.getMode(),
+					fragmentEntryProcessorContext.getLocale(),
+					fragmentEntryProcessorContext.getPreviewClassPK(),
+					fragmentEntryProcessorContext.getPreviewType());
 
 				if (fieldValue != null) {
 					String fieldId = jsonObject.getString("fieldId");
 
 					mappedValueConfigJSONObject =
 						editableElementParser.getFieldTemplateConfigJSONObject(
-							fieldId, locale, fieldValue);
+							fieldId, fragmentEntryProcessorContext.getLocale(),
+							fieldValue);
 
 					value = editableElementParser.parseFieldValue(fieldValue);
+
+					value = _processTemplate(
+						value, fragmentEntryProcessorContext);
 				}
 			}
 
 			if (Validator.isNull(value)) {
 				value = _fragmentEntryProcessorUtil.getEditableValue(
-					editableValueJSONObject, locale, segmentsExperienceIds);
+					editableValueJSONObject,
+					fragmentEntryProcessorContext.getLocale(),
+					fragmentEntryProcessorContext.getSegmentsExperienceIds());
 			}
 
-			if (Objects.equals(mode, FragmentEntryLinkConstants.EDIT)) {
+			if (Objects.equals(
+					fragmentEntryProcessorContext.getMode(),
+					FragmentEntryLinkConstants.EDIT)) {
+
 				editableElementParser.replace(element, value);
 			}
 			else {
@@ -221,8 +249,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		if (Objects.equals(
-				mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
-			Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
+				fragmentEntryProcessorContext.getMode(),
+				FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
+			Objects.equals(
+				fragmentEntryProcessorContext.getMode(),
+				FragmentEntryLinkConstants.VIEW)) {
 
 			for (Element element : document.select("lfr-editable")) {
 				element.removeAttr("id");
@@ -233,7 +264,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element bodyElement = document.body();
 
-		if (!assetEntriesFieldValues.containsKey(previewClassPK)) {
+		if (!assetEntriesFieldValues.containsKey(
+				fragmentEntryProcessorContext.getPreviewClassPK())) {
+
 			return bodyElement.html();
 		}
 
@@ -244,6 +277,25 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		bodyElement = previewElement.html(bodyElement.html());
 
 		return bodyElement.outerHtml();
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
+		throws PortalException {
+
+		DefaultFragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(null, null, mode, locale);
+
+		fragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
+		fragmentEntryProcessorContext.setPreviewType(previewType);
+		fragmentEntryProcessorContext.setSegmentsExperienceIds(
+			segmentsExperienceIds);
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, html, fragmentEntryProcessorContext);
 	}
 
 	@Reference(
@@ -285,6 +337,50 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private String _processTemplate(
+			String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
+			new StringTemplateResource("template_id", "[#ftl]\n" + html),
+			false);
+
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		templateManager.addTaglibSupport(
+			template, fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse());
+
+		templateManager.addTaglibTheme(
+			template, "taglibLiferay",
+			fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse());
+
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+		template.put("contentAccessorUtil", ContentAccessorUtil.getInstance());
+
+		Optional<Map<String, Object>> fieldValuesOptional =
+			fragmentEntryProcessorContext.getFieldValuesOptional();
+
+		if (fieldValuesOptional.isPresent() &&
+			MapUtil.isNotEmpty(fieldValuesOptional.get())) {
+
+			template.putAll(fieldValuesOptional.get());
+		}
+
+		template.prepare(fragmentEntryProcessorContext.getHttpServletRequest());
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
 	}
 
 	private void _validateAttribute(Element element, String attributeName)

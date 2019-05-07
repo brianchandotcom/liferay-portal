@@ -792,8 +792,8 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static List<String> getGitHubCacheHostnames() {
-		if (_gitHubCacheHostnames != null) {
-			return _gitHubCacheHostnames;
+		if (gitHubCacheHostnames != null) {
+			return new ArrayList<>(gitHubCacheHostnames);
 		}
 
 		Properties buildProperties;
@@ -810,9 +810,9 @@ public class GitHubDevSyncUtil {
 
 		String[] gitCacheHostnames = gitCacheHostnamesPropertyValue.split(",");
 
-		_gitHubCacheHostnames = Arrays.asList(gitCacheHostnames);
+		gitHubCacheHostnames = Arrays.asList(gitCacheHostnames);
 
-		return _gitHubCacheHostnames;
+		return gitHubCacheHostnames;
 	}
 
 	protected static List<String> getGitHubDevRemoteURLs(
@@ -1344,7 +1344,7 @@ public class GitHubDevSyncUtil {
 		return validatedGitHubDevRemoteURLs;
 	}
 
-	protected static List<String> _gitHubCacheHostnames;
+	protected static List<String> gitHubCacheHostnames;
 
 	private static LocalGitBranch _createCachedLocalGitBranch(
 		LocalGitRepository localGitRepository, String receiverUsername,

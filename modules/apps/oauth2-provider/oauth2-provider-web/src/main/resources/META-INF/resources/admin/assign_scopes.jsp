@@ -244,7 +244,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 							slave.attr('checked', false);
 						}
 
-						if (slave.attr('name')) {
+						if (slave.attr('name') == '<portlet:namespace />scopeAliases') {
 							slave.attr('disabled', false);
 						}
 					}

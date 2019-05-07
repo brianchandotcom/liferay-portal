@@ -66,13 +66,13 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign curName = propertyName?cap_first />
+			<#assign capitalizedPropertyName = propertyName?cap_first />
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-				<#assign curName = properties[propertyName] />
+				<#assign capitalizedPropertyName = properties[propertyName] />
 			</#if>
 
-			if (${schemaVarName}.get${curName}() != null) {
+			if (${schemaVarName}.get${capitalizedPropertyName}() != null) {
 				if (sb.length() > 1) {
 					sb.append(", ");
 				}
@@ -96,7 +96,7 @@ public class ${schemaName}SerDes {
 								<#elseif stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]")>
 									sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()[i]));
 								<#else>
-									sb.append(${schemaVarName}.get${curName}()[i]);
+									sb.append(${schemaVarName}.get${capitalizedPropertyName}()[i]);
 								</#if>
 
 								sb.append("\"");
@@ -123,7 +123,7 @@ public class ${schemaName}SerDes {
 							<#elseif stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String")>
 								sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()));
 							<#else>
-								sb.append(${schemaVarName}.get${curName}());
+								sb.append(${schemaVarName}.get${capitalizedPropertyName}());
 							</#if>
 
 							sb.append("\"");
@@ -258,13 +258,13 @@ public class ${schemaName}SerDes {
 
 				if (Objects.equals(jsonParserFieldName, "${propertyName}")) {
 					if (jsonParserFieldValue != null) {
-						<#assign curName = propertyName?cap_first />
+						<#assign capitalizedPropertyName = propertyName?cap_first />
 
 						<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-							<#assign curName = properties[propertyName] />
+							<#assign capitalizedPropertyName = properties[propertyName] />
 						</#if>
 
-						${schemaVarName}.set${curName}(
+						${schemaVarName}.set${capitalizedPropertyName}(
 
 						<#assign propertyType = properties[propertyName] />
 

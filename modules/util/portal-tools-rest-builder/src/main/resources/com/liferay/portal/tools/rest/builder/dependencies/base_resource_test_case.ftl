@@ -1103,13 +1103,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-					<#assign curName = propertyName?cap_first />
+					<#assign capitalizedPropertyName = propertyName?cap_first />
 
 					<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-						<#assign curName = properties[propertyName] />
+						<#assign capitalizedPropertyName = properties[propertyName] />
 					</#if>
 
-					if (${schemaVarName}.get${curName}() == null) {
+					if (${schemaVarName}.get${capitalizedPropertyName}() == null) {
 						valid = false;
 					}
 
@@ -1159,13 +1159,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-					<#assign curName = propertyName?cap_first />
+					<#assign capitalizedPropertyName = propertyName?cap_first />
 
 					<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-						<#assign curName = properties[propertyName] />
+						<#assign capitalizedPropertyName = properties[propertyName] />
 					</#if>
 
-					if (!Objects.deepEquals(${schemaVarName}1.get${curName}(), ${schemaVarName}2.get${curName}())) {
+					if (!Objects.deepEquals(${schemaVarName}1.get${capitalizedPropertyName}(), ${schemaVarName}2.get${capitalizedPropertyName}())) {
 						return false;
 					}
 

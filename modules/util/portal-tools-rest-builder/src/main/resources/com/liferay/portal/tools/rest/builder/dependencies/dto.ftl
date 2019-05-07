@@ -146,19 +146,19 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			</#if>
 		)
 
-		<#assign curName = propertyName?cap_first />
+		<#assign capitalizedPropertyName = propertyName?cap_first />
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
-			<#assign curName = propertyType />
+			<#assign capitalizedPropertyName = propertyType />
 		</#if>
 
-		public ${propertyType} get${curName}() {
+		public ${propertyType} get${capitalizedPropertyName}() {
 			return ${propertyName};
 		}
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore
-			public String get${curName}AsString() {
+			public String get${capitalizedPropertyName}AsString() {
 				if (${propertyName} == null) {
 					return null;
 				}
@@ -167,7 +167,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			}
 		</#if>
 
-		public void set${curName}(${propertyType} ${propertyName}) {
+		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 

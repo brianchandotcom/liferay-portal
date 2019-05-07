@@ -61,20 +61,20 @@ public class ${schemaName} {
 	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
 	<#list properties?keys as propertyName>
-		<#assign curName = propertyName?cap_first />
+		<#assign capitalizedPropertyName = propertyName?cap_first />
 
 		<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-			<#assign curName = properties[propertyName] />
+			<#assign capitalizedPropertyName = properties[propertyName] />
 		</#if>
 
 		<#assign propertyType = properties[propertyName] />
 
-		public ${propertyType} get${curName}() {
+		public ${propertyType} get${capitalizedPropertyName}() {
 			return ${propertyName};
 		}
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
-			public String get${curName}AsString() {
+			public String get${capitalizedPropertyName}AsString() {
 				if (${propertyName} == null) {
 					return null;
 				}
@@ -83,7 +83,7 @@ public class ${schemaName} {
 			}
 		</#if>
 
-		public void set${curName}(${propertyType} ${propertyName}) {
+		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 

@@ -84,6 +84,7 @@ import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -506,7 +507,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					Project project = task.getProject();
 
 					try (JarBuilder jarBuilder = new JarBuilder()) {
-						Map<String, String> properties = _getProperties(project);
+						Map<String, String> properties = _getProperties(
+							project);
 
 						jarBuilder.withBase(BundleUtils.getBase(project));
 						jarBuilder.withClasspath(_getClasspath(project));
@@ -515,7 +517,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							properties.get(Constants.BUNDLE_SYMBOLICNAME));
 						jarBuilder.withProperties(properties);
 						jarBuilder.withResources(new File[0]);
-						jarBuilder.withSourcepath(BundleUtils.getSources(project));
+						jarBuilder.withSourcepath(
+							BundleUtils.getSources(project));
 						jarBuilder.withVersion(BundleUtils.getVersion(project));
 
 						TaskOutputs taskOutputs = task.getOutputs();

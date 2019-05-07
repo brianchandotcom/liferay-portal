@@ -29,6 +29,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.dm.gradle.plugins.bundle.JarBuilder;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
@@ -76,8 +77,8 @@ public class ExecuteBndTask extends DefaultTask {
 
 				outputDir.mkdirs();
 
-				try (OutputStream outputStream =
-						new FileOutputStream(outputFile)) {
+				try (OutputStream outputStream = new FileOutputStream(
+						outputFile)) {
 
 					jarBuilder.writeManifestTo(outputStream);
 				}

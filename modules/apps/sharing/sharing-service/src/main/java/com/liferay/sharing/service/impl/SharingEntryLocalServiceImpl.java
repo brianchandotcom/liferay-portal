@@ -656,6 +656,7 @@ public class SharingEntryLocalServiceImpl
 
 		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
+		sharingEntry.setUserId(serviceContext.getUserId());
 
 		Stream<SharingEntryAction> sharingEntryActionStream =
 			sharingEntryActions.stream();

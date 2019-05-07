@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,7 +43,11 @@ public class CTProcessFinderImpl
 	public static final String FIND_BY_C_S =
 		CTProcessFinder.class.getName() + ".findByC_S";
 
+	public static final String FIND_BY_C_N_D_S =
+		CTProcessFinder.class.getName() + ".findByC_N_D_S";
+
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<CTProcess> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<?> orderByComparator) {
@@ -105,6 +110,113 @@ public class CTProcessFinderImpl
 			qPos.add(companyId);
 
 			qPos.add(status);
+
+			return (List<CTProcess>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<CTProcess> findByC_N_D(
+		long companyId, String keywords, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_C_N_D_S);
+
+			sql = StringUtil.replace(
+				sql, "(CTProcess.companyId = ?) AND",
+				"(CTProcess.companyId = ?)");
+
+			sql = StringUtil.replace(
+				sql, "(BackgroundTask.status = ?)", StringPool.BLANK);
+
+			String[] names = _customSQL.keywords(
+				keywords, true, WildcardMode.SURROUND);
+			String[] descriptions = _customSQL.keywords(
+				keywords, true, WildcardMode.SURROUND);
+
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(CTCollection.name)", StringPool.LIKE, false, names);
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(CTCollection.description)", StringPool.LIKE, true,
+				descriptions);
+			sql = _customSQL.replaceAndOperator(sql, false);
+
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("CTProcess", CTProcessImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(names, 2);
+
+			qPos.add(descriptions, 2);
+
+			return (List<CTProcess>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<CTProcess> findByC_N_D_S(
+		long companyId, String keywords, int status, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_C_N_D_S);
+
+			String[] names = _customSQL.keywords(
+				keywords, true, WildcardMode.SURROUND);
+			String[] descriptions = _customSQL.keywords(
+				keywords, true, WildcardMode.SURROUND);
+
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(CTCollection.name)", StringPool.LIKE, false, names);
+			sql = _customSQL.replaceKeywords(
+				sql, "LOWER(CTCollection.description)", StringPool.LIKE, true,
+				descriptions);
+			sql = _customSQL.replaceAndOperator(sql, false);
+
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("CTProcess", CTProcessImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(status);
+
+			qPos.add(names, 2);
+
+			qPos.add(descriptions, 2);
 
 			return (List<CTProcess>)QueryUtil.list(q, getDialect(), start, end);
 		}

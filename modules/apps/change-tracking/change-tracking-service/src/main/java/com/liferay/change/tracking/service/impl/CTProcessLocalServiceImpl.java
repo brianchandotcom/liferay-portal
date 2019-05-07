@@ -117,6 +117,25 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			queryDefinition.getOrderByComparator());
 	}
 
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, String keywords, int status,
+		QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.findByC_N_D_S(
+			companyId, keywords, status, queryDefinition.getStart(),
+			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, String keywords, QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.findByC_N_D(
+			companyId, keywords, queryDefinition.getStart(),
+			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
+	}
+
 	private long _addBackgroundTask(
 			User user, long ctCollectionId, long ctProcessId,
 			boolean ignoreCollision, ServiceContext serviceContext)

@@ -215,10 +215,10 @@ public class DLAdminDisplayContextTest {
 
 	private Company _company;
 
+	private DLAdminDisplayContext _dlAdminDisplayContext;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private DLAdminDisplayContext _dlAdminDisplayContext;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

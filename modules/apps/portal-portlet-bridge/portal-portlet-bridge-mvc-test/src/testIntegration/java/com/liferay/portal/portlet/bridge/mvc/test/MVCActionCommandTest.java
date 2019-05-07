@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.bridges.mvc;
+package com.liferay.portal.portlet.bridge.mvc.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand1;
-import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand2;
-import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestPortlet;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
-
-import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Enumeration;
@@ -37,7 +33,6 @@ import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderParameters;
@@ -48,10 +43,18 @@ import javax.servlet.http.Part;
 
 import javax.xml.namespace.QName;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockActionRequest;
@@ -61,14 +64,72 @@ import org.springframework.mock.web.portlet.MockPortletConfig;
 /**
  * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class MVCActionCommandTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleClassTestRule("bundle.mvcactioncommand"));
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(MVCActionCommandTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_portlet = new MVCPortlet();
+
+		_portletServiceRegistration = bundleContext.registerService(
+			javax.portlet.Portlet.class, _portlet,
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"javax.portlet.init-param.copy-request-parameters",
+						"false");
+					put("javax.portlet.name", _PORTLET_NAME);
+				}
+			});
+
+		_mvcActionCommandServiceRegistration1 = bundleContext.registerService(
+			MVCActionCommand.class,
+			(actionRequest, actionResponse) -> {
+				actionRequest.setAttribute(
+					_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1,
+					_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1);
+
+				return true;
+			},
+			new HashMapDictionary<String, Object>() {
+				{
+					put("javax.portlet.name", _PORTLET_NAME);
+					put("mvc.command.name", _TEST_MVC_ACTION_COMMAND_NAME_1);
+				}
+			});
+
+		_mvcActionCommandServiceRegistration2 = bundleContext.registerService(
+			MVCActionCommand.class,
+			(actionRequest, actionResponse) -> {
+				actionRequest.setAttribute(
+					_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2,
+					_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2);
+
+				return true;
+			},
+			new HashMapDictionary<String, Object>() {
+				{
+					put("javax.portlet.name", _PORTLET_NAME);
+					put("mvc.command.name", _TEST_MVC_ACTION_COMMAND_NAME_2);
+				}
+			});
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_portletServiceRegistration.unregister();
+		_mvcActionCommandServiceRegistration1.unregister();
+		_mvcActionCommandServiceRegistration2.unregister();
+	}
 
 	@Test
 	public void testMultipleMVCActionCommandsWithMultipleParameters()
@@ -77,28 +138,26 @@ public class MVCActionCommandTest {
 		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
-			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
+			ActionRequest.ACTION_NAME, _TEST_MVC_ACTION_COMMAND_NAME_1);
 		mockActionRequest.addParameter(
-			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+			ActionRequest.ACTION_NAME, _TEST_MVC_ACTION_COMMAND_NAME_2);
 
 		_portlet.processAction(mockActionRequest, new MockActionResponse());
 
 		Assert.assertNotNull(
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 		Assert.assertEquals(
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1,
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 		Assert.assertNotNull(
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2));
 		Assert.assertEquals(
-			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2,
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2));
 	}
 
 	@Test
@@ -109,26 +168,25 @@ public class MVCActionCommandTest {
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME +
-				StringPool.COMMA +
-					TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_NAME);
+			_TEST_MVC_ACTION_COMMAND_NAME_1 + StringPool.COMMA +
+				_TEST_MVC_ACTION_COMMAND_NAME_2);
 
 		_portlet.processAction(mockActionRequest, new MockActionResponse());
 
 		Assert.assertNotNull(
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 		Assert.assertEquals(
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1,
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 		Assert.assertNotNull(
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2));
 		Assert.assertEquals(
-			TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2,
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand2.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2));
 	}
 
 	@Test
@@ -136,22 +194,42 @@ public class MVCActionCommandTest {
 		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
-			ActionRequest.ACTION_NAME,
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_NAME);
+			ActionRequest.ACTION_NAME, _TEST_MVC_ACTION_COMMAND_NAME_1);
 
 		_portlet.processAction(mockActionRequest, new MockActionResponse());
 
 		Assert.assertNotNull(
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 		Assert.assertEquals(
-			TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE,
+			_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1,
 			mockActionRequest.getAttribute(
-				TestMVCActionCommand1.TEST_MVC_ACTION_COMMAND_ATTRIBUTE));
+				_TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1));
 	}
 
-	@Inject(filter = "javax.portlet.name=" + TestPortlet.PORTLET_NAME)
-	private final javax.portlet.Portlet _portlet = null;
+	private static final String _PORTLET_NAME =
+		"com_liferay_portal_kernel_portlet_bridges_mvc_test_" +
+			"MVCActionCommandTest_TestPortlet";
+
+	private static final String _TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1 =
+		"TEST_MVC_ACTION_COMMAND_ATTRIBUTE_1";
+
+	private static final String _TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2 =
+		"TEST_MVC_ACTION_COMMAND_ATTRIBUTE_2";
+
+	private static final String _TEST_MVC_ACTION_COMMAND_NAME_1 =
+		"TEST_MVC_ACTION_COMMAND_NAME_1";
+
+	private static final String _TEST_MVC_ACTION_COMMAND_NAME_2 =
+		"TEST_MVC_ACTION_COMMAND_NAME_2";
+
+	private static ServiceRegistration<MVCActionCommand>
+		_mvcActionCommandServiceRegistration1;
+	private static ServiceRegistration<MVCActionCommand>
+		_mvcActionCommandServiceRegistration2;
+	private static javax.portlet.Portlet _portlet;
+	private static ServiceRegistration<javax.portlet.Portlet>
+		_portletServiceRegistration;
 
 	private static class MockLiferayPortletConfig
 		extends MockPortletConfig implements LiferayPortletConfig {
@@ -252,14 +330,12 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
-		public Part getPart(String name) throws IOException, PortletException {
+		public Part getPart(String name) {
 			return null;
 		}
 
 		@Override
-		public Collection<Part> getParts()
-			throws IOException, PortletException {
-
+		public Collection<Part> getParts() {
 			return null;
 		}
 

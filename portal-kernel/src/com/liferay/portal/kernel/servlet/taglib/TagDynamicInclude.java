@@ -25,8 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 public interface TagDynamicInclude {
 
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String tagClassName, String tagDynamicId, String tagPoint)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String tagClassName,
+			String tagDynamicId, String tagPoint)
 		throws IOException;
 
 	public void register(TagDynamicIncludeRegistry tagDynamicIncludeRegistry);

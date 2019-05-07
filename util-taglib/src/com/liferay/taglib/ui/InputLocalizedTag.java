@@ -243,12 +243,13 @@ public class InputLocalizedTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		Set<Locale> availableLocales = _availableLocales;
 
 		if (availableLocales == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			availableLocales = LanguageUtil.getAvailableLocales(
 				themeDisplay.getSiteGroupId());
@@ -266,49 +267,53 @@ public class InputLocalizedTag extends IncludeTag {
 			id = _name;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:autoFocus", String.valueOf(_autoFocus));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:autoSize", String.valueOf(_autoSize));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:availableLocales", availableLocales);
-		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-localized:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:disabled", String.valueOf(_disabled));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:displayWidth", _displayWidth);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:dynamicAttributes",
 			getDynamicAttributes());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:editorName", _editorName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:fieldPrefix", _fieldPrefix);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:fieldPrefixSeparator",
 			_fieldPrefixSeparator);
-		request.setAttribute("liferay-ui:input-localized:formName", formName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-localized:formName", formName);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:helpMessage", _helpMessage);
-		request.setAttribute("liferay-ui:input-localized:id", id);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:input-localized:id", id);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:ignoreRequestValue",
 			String.valueOf(_ignoreRequestValue));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:inputAddon", _inputAddon);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:languageId", _languageId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:maxLength", _maxLength);
-		request.setAttribute("liferay-ui:input-localized:name", _name);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-localized:name", _name);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:placeholder", _placeholder);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:toolbarSet", _toolbarSet);
-		request.setAttribute("liferay-ui:input-localized:type", _type);
-		request.setAttribute("liferay-ui:input-localized:xml", _xml);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-localized:type", _type);
+		httpServletRequest.setAttribute("liferay-ui:input-localized:xml", _xml);
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(

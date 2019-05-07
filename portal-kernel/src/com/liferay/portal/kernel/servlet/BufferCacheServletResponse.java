@@ -38,8 +38,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
-	public BufferCacheServletResponse(HttpServletResponse response) {
-		super(response);
+	public BufferCacheServletResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 	}
 
 	/**

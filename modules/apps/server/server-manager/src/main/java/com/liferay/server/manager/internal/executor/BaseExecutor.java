@@ -28,8 +28,8 @@ public abstract class BaseExecutor implements Executor {
 
 	@Override
 	public void executeCreate(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		throw new UnsupportedOperationException();
@@ -37,8 +37,8 @@ public abstract class BaseExecutor implements Executor {
 
 	@Override
 	public void executeDelete(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		throw new UnsupportedOperationException();
@@ -46,8 +46,8 @@ public abstract class BaseExecutor implements Executor {
 
 	@Override
 	public void executeRead(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		throw new UnsupportedOperationException();
@@ -55,8 +55,8 @@ public abstract class BaseExecutor implements Executor {
 
 	@Override
 	public void executeUpdate(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		throw new UnsupportedOperationException();

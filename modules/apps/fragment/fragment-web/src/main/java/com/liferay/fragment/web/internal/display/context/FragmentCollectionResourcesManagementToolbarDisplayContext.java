@@ -52,21 +52,21 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	public FragmentCollectionResourcesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			FragmentCollectionResourcesDisplayContext
 				fragmentCollectionResourcesDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			fragmentCollectionResourcesDisplayContext.getSearchContainer());
 
 		_fragmentPortletConfiguration =
-			(FragmentPortletConfiguration)request.getAttribute(
+			(FragmentPortletConfiguration)httpServletRequest.getAttribute(
 				FragmentPortletConfiguration.class.getName());
-		_itemSelector = (ItemSelector)request.getAttribute(
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

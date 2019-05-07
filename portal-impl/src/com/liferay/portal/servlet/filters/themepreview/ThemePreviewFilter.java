@@ -36,18 +36,22 @@ public class ThemePreviewFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (isThemePreview(request)) {
+		if (isThemePreview(httpServletRequest)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	protected String getContent(HttpServletRequest request, String content) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected String getContent(
+		HttpServletRequest httpServletRequest, String content) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Pattern cssPattern = Pattern.compile(themeDisplay.getPathThemeCss());
 
@@ -65,8 +69,8 @@ public class ThemePreviewFilter extends BasePortalFilter {
 		return content;
 	}
 
-	protected boolean isThemePreview(HttpServletRequest request) {
-		if (ParamUtil.getBoolean(request, _THEME_PREVIEW)) {
+	protected boolean isThemePreview(HttpServletRequest httpServletRequest) {
+		if (ParamUtil.getBoolean(httpServletRequest, _THEME_PREVIEW)) {
 			return true;
 		}
 
@@ -75,24 +79,24 @@ public class ThemePreviewFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		request.setAttribute(StripFilter.SKIP_FILTER, Boolean.TRUE);
+		httpServletRequest.setAttribute(StripFilter.SKIP_FILTER, Boolean.TRUE);
 
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(response);
+			new BufferCacheServletResponse(httpServletResponse);
 
 		processFilter(
-			ThemePreviewFilter.class.getName(), request,
+			ThemePreviewFilter.class.getName(), httpServletRequest,
 			bufferCacheServletResponse, filterChain);
 
 		String content = bufferCacheServletResponse.getString();
 
-		content = getContent(request, content);
+		content = getContent(httpServletRequest, content);
 
-		ServletResponseUtil.write(response, content);
+		ServletResponseUtil.write(httpServletResponse, content);
 	}
 
 	private static final String _THEME_PREVIEW = "themePreview";

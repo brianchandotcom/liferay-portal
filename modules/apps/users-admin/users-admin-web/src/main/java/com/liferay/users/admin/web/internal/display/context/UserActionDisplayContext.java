@@ -28,10 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 public class UserActionDisplayContext {
 
 	public UserActionDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
-		User user, User selUser) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest, User user, User selUser) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_user = user;
 		_selUser = selUser;

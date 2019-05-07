@@ -247,48 +247,50 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-entry:actionJspServletContext",
 			getActionJspServletContext());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:commentRelatedSearchResults",
 			_commentRelatedSearchResults);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:containerName", _containerName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:containerType", _containerType);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:escape", _escape);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:fileEntryRelatedSearchResults",
 			_fileEntryRelatedSearchResults);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:highlightEnabled",
 			_highlightEnabled);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:rowCheckerId", _rowCheckerId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:rowCheckerName", _rowCheckerName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:showCheckbox", _showCheckbox);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:status", _status);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:thumbnailSrc", _thumbnailSrc);
-		request.setAttribute("liferay-ui:app-view-search-entry:title", _title);
-		request.setAttribute("liferay-ui:app-view-search-entry:url", _url);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:app-view-search-entry:title", _title);
+		httpServletRequest.setAttribute(
+			"liferay-ui:app-view-search-entry:url", _url);
+		httpServletRequest.setAttribute(
 			"liferay-ui:app-view-search-entry:versions", _versions);
 	}
 

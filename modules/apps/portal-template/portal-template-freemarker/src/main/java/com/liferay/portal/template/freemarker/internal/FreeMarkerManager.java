@@ -172,24 +172,28 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	@Override
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		contextObjects.put(
 			applicationName,
 			new HttpRequestHashModel(
-				request, response, _configuration.getObjectWrapper()));
+				httpServletRequest, httpServletResponse,
+				_configuration.getObjectWrapper()));
 	}
 
 	@Override
 	public void addTaglibSupport(
-		Map<String, Object> contextObjects, HttpServletRequest request,
-		HttpServletResponse response) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ServletContext servletContext = request.getServletContext();
+		ServletContext servletContext = httpServletRequest.getServletContext();
 
 		addTaglibApplication(contextObjects, "Application", servletContext);
 
-		addTaglibRequest(contextObjects, "Request", request, response);
+		addTaglibRequest(
+			contextObjects, "Request", httpServletRequest, httpServletResponse);
 
 		// Legacy
 

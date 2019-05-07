@@ -47,11 +47,11 @@ public class AdminUtil {
 	}
 
 	public static String getUpdateUserPassword(
-		HttpServletRequest request, long userId) {
+		HttpServletRequest httpServletRequest, long userId) {
 
-		String password = PortalUtil.getUserPassword(request);
+		String password = PortalUtil.getUserPassword(httpServletRequest);
 
-		if (userId != PortalUtil.getUserId(request)) {
+		if (userId != PortalUtil.getUserId(httpServletRequest)) {
 			password = StringPool.BLANK;
 		}
 
@@ -80,14 +80,14 @@ public class AdminUtil {
 	}
 
 	public static User updateUser(
-			HttpServletRequest request, long userId, String screenName,
-			String emailAddress, long facebookId, String openId,
-			String languageId, String timeZoneId, String greeting,
-			String comments, String smsSn, String facebookSn, String jabberSn,
-			String skypeSn, String twitterSn)
+			HttpServletRequest httpServletRequest, long userId,
+			String screenName, String emailAddress, long facebookId,
+			String openId, String languageId, String timeZoneId,
+			String greeting, String comments, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn)
 		throws PortalException {
 
-		String password = getUpdateUserPassword(request, userId);
+		String password = getUpdateUserPassword(httpServletRequest, userId);
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 

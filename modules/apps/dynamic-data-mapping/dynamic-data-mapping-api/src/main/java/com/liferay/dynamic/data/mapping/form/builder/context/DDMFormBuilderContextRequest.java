@@ -30,8 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormBuilderContextRequest {
 
 	public static DDMFormBuilderContextRequest with(
-		Optional<DDMStructure> ddmStructureOptional, HttpServletRequest request,
-		HttpServletResponse response, Locale locale, boolean readOnly) {
+		Optional<DDMStructure> ddmStructureOptional,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Locale locale,
+		boolean readOnly) {
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			new DDMFormBuilderContextRequest();
@@ -41,8 +43,9 @@ public class DDMFormBuilderContextRequest {
 				"ddmStructure", ddmStructureOptional.get());
 		}
 
-		ddmFormBuilderContextRequest.setHttpServletRequest(request);
-		ddmFormBuilderContextRequest.setHttpServletResponse(response);
+		ddmFormBuilderContextRequest.setHttpServletRequest(httpServletRequest);
+		ddmFormBuilderContextRequest.setHttpServletResponse(
+			httpServletResponse);
 		ddmFormBuilderContextRequest.setLocale(locale);
 		ddmFormBuilderContextRequest.setReadOnly(readOnly);
 
@@ -73,12 +76,14 @@ public class DDMFormBuilderContextRequest {
 		return getProperty("readOnly");
 	}
 
-	public void setHttpServletRequest(HttpServletRequest request) {
-		addProperty("request", request);
+	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+		addProperty("request", httpServletRequest);
 	}
 
-	public void setHttpServletResponse(HttpServletResponse response) {
-		addProperty("response", response);
+	public void setHttpServletResponse(
+		HttpServletResponse httpServletResponse) {
+
+		addProperty("response", httpServletResponse);
 	}
 
 	public void setLocale(Locale locale) {

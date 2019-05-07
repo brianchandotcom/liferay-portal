@@ -48,7 +48,8 @@ public class SessionAuthToken implements AuthToken {
 
 	@Override
 	public void addCSRFToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
 			return;
@@ -66,18 +67,19 @@ public class SessionAuthToken implements AuthToken {
 			return;
 		}
 
-		liferayPortletURL.setParameter("p_auth", getToken(request));
+		liferayPortletURL.setParameter("p_auth", getToken(httpServletRequest));
 	}
 
 	@Override
 	public void addPortletInvocationToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		if (!PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
 			return;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		String portletId = liferayPortletURL.getPortletId();
 
@@ -117,86 +119,90 @@ public class SessionAuthToken implements AuthToken {
 		}
 
 		liferayPortletURL.setParameter(
-			"p_p_auth", getToken(request, plid, portletId));
+			"p_p_auth", getToken(httpServletRequest, plid, portletId));
 	}
 
 	@Override
-	public void checkCSRFToken(HttpServletRequest request, String origin)
+	public void checkCSRFToken(
+			HttpServletRequest httpServletRequest, String origin)
 		throws PrincipalException {
 
 		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
 			return;
 		}
 
-		String sharedSecret = ParamUtil.getString(request, "p_auth_secret");
+		String sharedSecret = ParamUtil.getString(
+			httpServletRequest, "p_auth_secret");
 
 		if (AuthTokenWhitelistUtil.isValidSharedSecret(sharedSecret)) {
 			return;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		if (AuthTokenWhitelistUtil.isOriginCSRFWhitelisted(companyId, origin)) {
 			return;
 		}
 
 		if (origin.equals(SecurityPortletContainerWrapper.class.getName())) {
-			String ppid = ParamUtil.getString(request, "p_p_id");
+			String ppid = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				companyId, ppid);
 
 			if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-					request, portlet)) {
+					httpServletRequest, portlet)) {
 
 				return;
 			}
 		}
 
-		String csrfToken = ParamUtil.getString(request, "p_auth");
+		String csrfToken = ParamUtil.getString(httpServletRequest, "p_auth");
 
 		if (Validator.isNull(csrfToken)) {
-			csrfToken = GetterUtil.getString(request.getHeader("X-CSRF-Token"));
+			csrfToken = GetterUtil.getString(
+				httpServletRequest.getHeader("X-CSRF-Token"));
 		}
 
 		String sessionToken = getSessionAuthenticationToken(
-			request, _CSRF, false);
+			httpServletRequest, _CSRF, false);
 
 		if (!csrfToken.equals(sessionToken)) {
 			throw new PrincipalException.MustHaveValidCSRFToken(
-				PortalUtil.getUserId(request), origin);
+				PortalUtil.getUserId(httpServletRequest), origin);
 		}
 	}
 
 	@Override
-	public String getToken(HttpServletRequest request) {
-		return getSessionAuthenticationToken(request, _CSRF, true);
+	public String getToken(HttpServletRequest httpServletRequest) {
+		return getSessionAuthenticationToken(httpServletRequest, _CSRF, true);
 	}
 
 	@Override
 	public String getToken(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
 		return getSessionAuthenticationToken(
-			request, PortletPermissionUtil.getPrimaryKey(plid, portletId),
-			true);
+			httpServletRequest,
+			PortletPermissionUtil.getPrimaryKey(plid, portletId), true);
 	}
 
 	@Override
 	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
 		if (AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				request, portlet)) {
+				httpServletRequest, portlet)) {
 
 			return true;
 		}
 
-		String portletToken = ParamUtil.getString(request, "p_p_auth");
+		String portletToken = ParamUtil.getString(
+			httpServletRequest, "p_p_auth");
 
 		if (Validator.isNull(portletToken)) {
 			HttpServletRequest originalRequest =
-				PortalUtil.getOriginalServletRequest(request);
+				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			portletToken = ParamUtil.getString(originalRequest, "p_p_auth");
 		}
@@ -206,7 +212,7 @@ public class SessionAuthToken implements AuthToken {
 				layout.getPlid(), portlet.getPortletId());
 
 			String sessionToken = getSessionAuthenticationToken(
-				request, key, false);
+				httpServletRequest, key, false);
 
 			if (Validator.isNotNull(sessionToken) &&
 				sessionToken.equals(portletToken)) {
@@ -219,11 +225,12 @@ public class SessionAuthToken implements AuthToken {
 	}
 
 	protected String getSessionAuthenticationToken(
-		HttpServletRequest request, String key, boolean createToken) {
+		HttpServletRequest httpServletRequest, String key,
+		boolean createToken) {
 
 		String sessionAuthenticationToken = null;
 
-		HttpServletRequest currentRequest = request;
+		HttpServletRequest currentRequest = httpServletRequest;
 		HttpSession session = null;
 		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
 

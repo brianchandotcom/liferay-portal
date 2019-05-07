@@ -39,11 +39,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	implements SitesItemSelectorViewDisplayContext {
 
 	public BaseSitesItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		this.request = request;
+		this.request = httpServletRequest;
 		_siteItemSelectorCriterion = siteItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;

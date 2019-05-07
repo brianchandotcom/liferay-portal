@@ -75,9 +75,9 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormTaglibUtil {
 
 	public static DDMFormValues createDDMFormValues(
-		HttpServletRequest request, DDMForm ddmForm) {
+		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
 
-		return _ddmFormValuesFactory.create(request, ddmForm);
+		return _ddmFormValuesFactory.create(httpServletRequest, ddmForm);
 	}
 
 	public static DDMForm getDDMForm(
@@ -167,13 +167,14 @@ public class DDMFormTaglibUtil {
 
 	public static String getFormBuilderContext(
 		long ddmStructureId, long ddmStructureVersionId,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String serializedFormBuilderContext = ParamUtil.getString(
-			request, "serializedFormBuilderContext");
+			httpServletRequest, "serializedFormBuilderContext");
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;

@@ -53,8 +53,10 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class JournalEditDDMTemplateDisplayContext {
 
-	public JournalEditDDMTemplateDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public JournalEditDDMTemplateDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		_request = httpServletRequest;
 
 		_ddmTemplateHelper = (DDMTemplateHelper)_request.getAttribute(
 			DDMTemplateHelper.class.getName());

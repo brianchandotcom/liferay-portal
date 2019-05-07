@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface TagDynamicIdFactory {
 
 	public String getTagDynamicId(
-		HttpServletRequest request, HttpServletResponse response, Object tag);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Object tag);
 
 }

@@ -67,18 +67,18 @@ public class UserSearchEntry extends TextSearchEntry {
 
 	@Override
 	public void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-user:cssClass", getCssClass());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-user:date", _date);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-user:showDetails",
 			_showDetails);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-user:userId", _userId);
 
 		if (_servletContext != null) {
@@ -87,13 +87,14 @@ public class UserSearchEntry extends TextSearchEntry {
 					_servletContext, _PAGE);
 
 			requestDispatcher.include(
-				request, new PipingServletResponse(response, writer));
+				httpServletRequest,
+				new PipingServletResponse(httpServletResponse, writer));
 		}
 		else {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-				_PAGE);
+			RequestDispatcher requestDispatcher =
+				httpServletRequest.getRequestDispatcher(_PAGE);
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -101,12 +102,12 @@ public class UserSearchEntry extends TextSearchEntry {
 		_date = date;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
-	public void setResponse(HttpServletResponse response) {
-		_response = response;
+	public void setResponse(HttpServletResponse httpServletResponse) {
+		_response = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {

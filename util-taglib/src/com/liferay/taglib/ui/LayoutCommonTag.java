@@ -108,7 +108,7 @@ public class LayoutCommonTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

@@ -48,11 +48,11 @@ public class AccessControlUtil {
 	}
 
 	public static void initAccessControlContext(
-		HttpServletRequest request, HttpServletResponse response,
-		Map<String, Object> settings) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Map<String, Object> settings) {
 
 		getAccessControl().initAccessControlContext(
-			request, response, settings);
+			httpServletRequest, httpServletResponse, settings);
 	}
 
 	public static void initContextUser(long userId) throws AuthException {
@@ -60,13 +60,13 @@ public class AccessControlUtil {
 	}
 
 	public static boolean isAccessAllowed(
-		HttpServletRequest request, Set<String> hostsAllowed) {
+		HttpServletRequest httpServletRequest, Set<String> hostsAllowed) {
 
 		if (hostsAllowed.isEmpty()) {
 			return true;
 		}
 
-		String remoteAddr = request.getRemoteAddr();
+		String remoteAddr = httpServletRequest.getRemoteAddr();
 
 		for (String hostAllowed : hostsAllowed) {
 			AllowedIPAddressesValidator allowedIPAddressesValidator =

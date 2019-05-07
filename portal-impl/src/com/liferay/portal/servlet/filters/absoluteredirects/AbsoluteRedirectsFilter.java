@@ -48,11 +48,12 @@ public class AbsoluteRedirectsFilter
 
 	@Override
 	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (request.getCharacterEncoding() == null) {
-			request.setCharacterEncoding(StringPool.UTF8);
+		if (httpServletRequest.getCharacterEncoding() == null) {
+			httpServletRequest.setCharacterEncoding(StringPool.UTF8);
 		}
 
 		//response.setContentType(ContentTypes.TEXT_HTML_UTF8);
@@ -60,22 +61,22 @@ public class AbsoluteRedirectsFilter
 		// Company id needs to always be called here so that it's properly set
 		// in subsequent calls
 
-		long companyId = PortalInstances.getCompanyId(request);
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Company id " + companyId);
 		}
 
-		PortalUtil.getCurrentCompleteURL(request);
-		PortalUtil.getCurrentURL(request);
+		PortalUtil.getCurrentCompleteURL(httpServletRequest);
+		PortalUtil.getCurrentURL(httpServletRequest);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		Boolean httpsInitial = (Boolean)session.getAttribute(
 			WebKeys.HTTPS_INITIAL);
 
 		if (httpsInitial == null) {
-			httpsInitial = Boolean.valueOf(request.isSecure());
+			httpsInitial = Boolean.valueOf(httpServletRequest.isSecure());
 
 			session.setAttribute(WebKeys.HTTPS_INITIAL, httpsInitial);
 
@@ -85,7 +86,7 @@ public class AbsoluteRedirectsFilter
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -94,9 +95,11 @@ public class AbsoluteRedirectsFilter
 
 	@Override
 	public HttpServletResponse getWrappedHttpServletResponse(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		return new AbsoluteRedirectsResponse(request, response);
+		return new AbsoluteRedirectsResponse(
+			httpServletRequest, httpServletResponse);
 	}
 
 	@Override

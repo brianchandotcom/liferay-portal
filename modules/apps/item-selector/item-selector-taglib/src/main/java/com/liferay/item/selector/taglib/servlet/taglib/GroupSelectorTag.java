@@ -62,25 +62,26 @@ public class GroupSelectorTag extends IncludeTag {
 		_groupsCount = 0;
 	}
 
-	protected List<Group> getGroups(HttpServletRequest request) {
+	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
 		if (_groups != null) {
 			return _groups;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(request, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("site", Boolean.TRUE);
 
 		int cur = ParamUtil.getInteger(
-			request, SearchContainer.DEFAULT_CUR_PARAM,
+			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
 			SearchContainer.DEFAULT_CUR);
 		int delta = ParamUtil.getInteger(
-			request, SearchContainer.DEFAULT_DELTA_PARAM,
+			httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
 			SearchContainer.DEFAULT_DELTA);
 
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
@@ -91,15 +92,16 @@ public class GroupSelectorTag extends IncludeTag {
 			startAndEnd[0], startAndEnd[1], null);
 	}
 
-	protected int getGroupsCount(HttpServletRequest request) {
+	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
 		if ((_groups != null) || (_groupsCount > 0)) {
 			return _groupsCount;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(request, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
@@ -116,13 +118,14 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-item-selector:group-selector:groups", getGroups(request));
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:group-selector:groups",
+			getGroups(httpServletRequest));
+		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:groupsCount",
-			getGroupsCount(request));
-		request.setAttribute(
+			getGroupsCount(httpServletRequest));
+		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
 	}

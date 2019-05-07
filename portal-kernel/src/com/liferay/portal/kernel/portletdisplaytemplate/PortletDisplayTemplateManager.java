@@ -45,15 +45,15 @@ public interface PortletDisplayTemplateManager {
 		String language);
 
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			DDMTemplate ddmTemplate, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception;
 
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long templateId, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long templateId,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception;
 
 }

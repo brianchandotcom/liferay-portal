@@ -117,21 +117,23 @@ public class ImageSelectorTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:draggableImage", _draggableImage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:fileEntryId", _fileEntryId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:itemSelectorEventName",
 			_itemSelectorEventName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:itemSelectorURL", _itemSelectorURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:maxFileSize", _maxFileSize);
-		request.setAttribute("liferay-ui:image-selector:paramName", _paramName);
-		request.setAttribute("liferay-ui:image-selector:uploadURL", _uploadURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:paramName", _paramName);
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:uploadURL", _uploadURL);
+		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:validExtensions", _validExtensions);
 	}
 

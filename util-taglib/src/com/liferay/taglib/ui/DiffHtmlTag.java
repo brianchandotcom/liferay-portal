@@ -53,10 +53,11 @@ public class DiffHtmlTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:diff-html:diffHtmlResults", _diffHtmlResults);
-		request.setAttribute("liferay-ui:diff-html:infoMessage", _infoMessage);
+		httpServletRequest.setAttribute(
+			"liferay-ui:diff-html:infoMessage", _infoMessage);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/diff_html/page.jsp";

@@ -142,7 +142,8 @@ public abstract class BasePortletConfigurationIcon
 	 */
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		return false;

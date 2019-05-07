@@ -102,8 +102,8 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		String label = getLabel();
 
@@ -111,7 +111,7 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 			label = TextFormatter.format(getName(), TextFormatter.K);
 		}
 
-		setNamespacedAttribute(request, "label", label);
+		setNamespacedAttribute(httpServletRequest, "label", label);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

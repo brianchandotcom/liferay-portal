@@ -29,18 +29,18 @@ import javax.servlet.http.HttpSession;
  */
 public class State implements Serializable {
 
-	public static State get(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public static State get(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
 
 		return (State)session.getAttribute(
 			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
 	public static void save(
-		HttpServletRequest request, long userId, String successURL,
+		HttpServletRequest httpServletRequest, long userId, String successURL,
 		String failureURL, String state) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(
 			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE,
@@ -61,33 +61,37 @@ public class State implements Serializable {
 	}
 
 	public String goToFailurePage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		_cleanUpSession(request);
+		_cleanUpSession(httpServletRequest);
 
-		response.sendRedirect(_failureURL);
+		httpServletResponse.sendRedirect(_failureURL);
 
 		return null;
 	}
 
 	public String goToSuccessPage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		_cleanUpSession(request);
+		_cleanUpSession(httpServletRequest);
 
-		response.sendRedirect(_successURL);
+		httpServletResponse.sendRedirect(_successURL);
 
 		return null;
 	}
 
-	public boolean isValid(HttpServletRequest request) {
-		if (Validator.isNotNull(ParamUtil.getString(request, "error"))) {
+	public boolean isValid(HttpServletRequest httpServletRequest) {
+		if (Validator.isNotNull(
+				ParamUtil.getString(httpServletRequest, "error"))) {
+
 			return false;
 		}
 
-		String state = ParamUtil.getString(request, "state");
+		String state = ParamUtil.getString(httpServletRequest, "state");
 
 		if (!_state.equals(state)) {
 			return false;
@@ -96,8 +100,8 @@ public class State implements Serializable {
 		return true;
 	}
 
-	private void _cleanUpSession(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	private void _cleanUpSession(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
 
 		session.removeAttribute(_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}

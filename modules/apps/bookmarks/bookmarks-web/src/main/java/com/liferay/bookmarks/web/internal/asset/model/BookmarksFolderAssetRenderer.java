@@ -92,7 +92,9 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/bookmarks/asset/folder_" + template + ".jsp";
 		}
@@ -227,13 +229,14 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER, _folder);
+		httpServletRequest.setAttribute(
+			BookmarksWebKeys.BOOKMARKS_FOLDER, _folder);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	private final ModelResourcePermission<BookmarksFolder>

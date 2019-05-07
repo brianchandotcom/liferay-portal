@@ -37,31 +37,31 @@ import javax.servlet.http.HttpServletRequestWrapper;
 public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 
 	public static AsyncPortletServletRequest getAsyncPortletServletRequest(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		while (request instanceof HttpServletRequestWrapper) {
-			if (request instanceof AsyncPortletServletRequest) {
-				return (AsyncPortletServletRequest)request;
+		while (httpServletRequest instanceof HttpServletRequestWrapper) {
+			if (httpServletRequest instanceof AsyncPortletServletRequest) {
+				return (AsyncPortletServletRequest)httpServletRequest;
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)request;
+				(HttpServletRequestWrapper)httpServletRequest;
 
-			request =
+			httpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
 		return null;
 	}
 
-	public AsyncPortletServletRequest(HttpServletRequest request) {
-		super(request);
+	public AsyncPortletServletRequest(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 
-		_contextPath = request.getContextPath();
-		_pathInfo = request.getPathInfo();
-		_queryString = request.getQueryString();
-		_requestURI = request.getRequestURI();
-		_servletPath = request.getServletPath();
+		_contextPath = httpServletRequest.getContextPath();
+		_pathInfo = httpServletRequest.getPathInfo();
+		_queryString = httpServletRequest.getQueryString();
+		_requestURI = httpServletRequest.getRequestURI();
+		_servletPath = httpServletRequest.getServletPath();
 	}
 
 	@Override

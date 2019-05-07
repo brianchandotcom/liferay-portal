@@ -47,12 +47,13 @@ public class FjordTopHeadDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -77,7 +78,7 @@ public class FjordTopHeadDynamicInclude implements DynamicInclude {
 			return;
 		}
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 
@@ -97,7 +98,7 @@ public class FjordTopHeadDynamicInclude implements DynamicInclude {
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
 		String staticResourceURL = _portal.getStaticResourceURL(
-			request, sb.toString(), themeLastModified);
+			httpServletRequest, sb.toString(), themeLastModified);
 
 		printWriter.write(staticResourceURL);
 

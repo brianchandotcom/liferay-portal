@@ -208,10 +208,10 @@ public class PortalImplTest {
 	}
 
 	protected HttpServletRequest getWrappedRequest(
-		HttpServletRequest requestRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		HttpServletRequestWrapper requestWrapper =
-			(HttpServletRequestWrapper)requestRequest;
+			(HttpServletRequestWrapper)httpServletRequest;
 
 		return (HttpServletRequest)requestWrapper.getRequest();
 	}
@@ -222,9 +222,9 @@ public class PortalImplTest {
 		extends PersistentHttpServletRequestWrapper {
 
 		private PersistentHttpServletRequestWrapper1(
-			HttpServletRequest request) {
+			HttpServletRequest httpServletRequest) {
 
-			super(request);
+			super(httpServletRequest);
 		}
 
 	}
@@ -233,9 +233,9 @@ public class PortalImplTest {
 		extends PersistentHttpServletRequestWrapper {
 
 		private PersistentHttpServletRequestWrapper2(
-			HttpServletRequest request) {
+			HttpServletRequest httpServletRequest) {
 
-			super(request);
+			super(httpServletRequest);
 		}
 
 	}

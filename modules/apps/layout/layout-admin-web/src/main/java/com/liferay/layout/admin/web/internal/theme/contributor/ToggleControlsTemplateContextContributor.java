@@ -44,13 +44,16 @@ public class ToggleControlsTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		String liferayToggleControls = SessionClicks.get(
-			request, "com.liferay.frontend.js.web_toggleControls", "visible");
+			httpServletRequest, "com.liferay.frontend.js.web_toggleControls",
+			"visible");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 

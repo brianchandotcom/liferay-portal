@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class NoRedirectServletResponse extends HttpServletResponseWrapper {
 
-	public NoRedirectServletResponse(HttpServletResponse response) {
-		super(response);
+	public NoRedirectServletResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 	}
 
 	public String getRedirectLocation() {

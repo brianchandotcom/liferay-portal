@@ -397,7 +397,7 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		HttpServletRequest request, String parameter) {
+		HttpServletRequest httpServletRequest, String parameter) {
 
 		Map<Locale, String> map = new HashMap<>();
 
@@ -405,7 +405,9 @@ public class LocalizationImpl implements Localization {
 			String localizedParameter = getLocalizedName(
 				parameter, LocaleUtil.toLanguageId(locale));
 
-			map.put(locale, ParamUtil.getString(request, localizedParameter));
+			map.put(
+				locale,
+				ParamUtil.getString(httpServletRequest, localizedParameter));
 		}
 
 		return map;

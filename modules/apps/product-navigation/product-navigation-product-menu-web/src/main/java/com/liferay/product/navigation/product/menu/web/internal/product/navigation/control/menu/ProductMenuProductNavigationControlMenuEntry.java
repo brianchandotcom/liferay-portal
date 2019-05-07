@@ -81,17 +81,19 @@ public class ProductMenuProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
 	public boolean includeBody(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isIsolated()) {
 			return false;
@@ -103,7 +105,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		try {
 			bodyBottomTag.doBodyTag(
-				request, response, this::_processBodyBottomContent);
+				httpServletRequest, httpServletResponse,
+				this::_processBodyBottomContent);
 		}
 		catch (JspException je) {
 			throw new IOException(je);
@@ -114,7 +117,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		Map<String, String> values = new HashMap<>();
@@ -125,10 +129,12 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		values.put("portletNamespace", portletNamespace);
 
-		values.put("title", HtmlUtil.escape(LanguageUtil.get(request, "menu")));
+		values.put(
+			"title",
+			HtmlUtil.escape(LanguageUtil.get(httpServletRequest, "menu")));
 
 		String productMenuState = SessionClicks.get(
-			request,
+			httpServletRequest,
 			ProductNavigationProductMenuWebKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
 			"closed");
@@ -140,13 +146,14 @@ public class ProductMenuProductNavigationControlMenuEntry
 		else {
 			values.put("cssClass", StringPool.BLANK);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request,
+				httpServletRequest,
 				ProductNavigationProductMenuPortletKeys.
 					PRODUCT_NAVIGATION_PRODUCT_MENU,
 				RenderRequest.RENDER_PHASE);
@@ -164,7 +171,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
 		}
 
-		Writer writer = response.getWriter();
+		Writer writer = httpServletResponse.getWriter();
 
 		writer.write(StringUtil.replace(_TMPL_CONTENT, "${", "}", values));
 
@@ -172,9 +179,12 @@ public class ProductMenuProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			return false;

@@ -82,7 +82,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public PortletURL getPortletURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
@@ -90,7 +90,8 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 			_portletURL, liferayPortletResponse);
 
 		portletURL.setParameter(
-			"selectedTab", String.valueOf(getTitle(request.getLocale())));
+			"selectedTab",
+			String.valueOf(getTitle(httpServletRequest.getLocale())));
 
 		return portletURL;
 	}

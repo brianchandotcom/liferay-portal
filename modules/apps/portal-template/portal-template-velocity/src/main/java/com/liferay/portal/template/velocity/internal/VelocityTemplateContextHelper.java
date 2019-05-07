@@ -74,14 +74,16 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		super.prepare(contextObjects, request);
+		super.prepare(contextObjects, httpServletRequest);
 
 		// Theme display
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			Theme theme = themeDisplay.getTheme();
@@ -112,7 +114,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		Map<String, Object> vmVariables =
-			(Map<String, Object>)request.getAttribute(
+			(Map<String, Object>)httpServletRequest.getAttribute(
 				WebKeys.VM_VARIABLES + portletDisplay.getId());
 
 		if (vmVariables != null) {
@@ -130,7 +132,8 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {
 
-			templateContextContributor.prepare(contextObjects, request);
+			templateContextContributor.prepare(
+				contextObjects, httpServletRequest);
 		}
 	}
 

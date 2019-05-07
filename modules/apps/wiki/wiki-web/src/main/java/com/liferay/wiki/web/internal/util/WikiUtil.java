@@ -89,7 +89,7 @@ public class WikiUtil {
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
 		long nodeId, String title, double sourceVersion, double targetVersion,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		double previousVersion = 0;
 		double nextVersion = 0;
@@ -118,7 +118,7 @@ public class WikiUtil {
 			String extraInfo = StringPool.BLANK;
 
 			if (page.isMinorEdit()) {
-				extraInfo = LanguageUtil.get(request, "minor-edit");
+				extraInfo = LanguageUtil.get(httpServletRequest, "minor-edit");
 			}
 
 			DiffVersion diffVersion = new DiffVersion(

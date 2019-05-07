@@ -44,19 +44,22 @@ public class SPAFilter extends BaseFilter implements TryFilter {
 
 	@Override
 	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		response.setHeader("X-Request-URL", _http.getCompleteURL(request));
+		httpServletResponse.setHeader(
+			"X-Request-URL", _http.getCompleteURL(httpServletRequest));
 
 		return null;
 	}
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		return _browserSniffer.isIe(request);
+		return _browserSniffer.isIe(httpServletRequest);
 	}
 
 	@Override

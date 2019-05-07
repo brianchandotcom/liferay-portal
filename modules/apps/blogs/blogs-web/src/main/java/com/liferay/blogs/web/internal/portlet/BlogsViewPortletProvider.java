@@ -51,20 +51,22 @@ public class BlogsViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+	public PortletURL getPortletURL(
+			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
-			return super.getPortletURL(request, group);
+			return super.getPortletURL(httpServletRequest, group);
 		}
 
 		return PortletURLFactoryUtil.create(
-			request, getPortletName(), PortletRequest.RENDER_PHASE);
+			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
 
 }

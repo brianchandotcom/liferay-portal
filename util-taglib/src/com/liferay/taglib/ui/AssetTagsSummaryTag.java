@@ -95,22 +95,23 @@ public class AssetTagsSummaryTag<R> extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		List<AssetTag> assetTags = new ArrayList<>();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-categories-summary:assetTags", assetTags);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-tags-summary:assetTagNames", _assetTagNames);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-tags-summary:className", _className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-tags-summary:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-ui:asset-tags-summary:message", _message);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:asset-tags-summary:message", _message);
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-tags-summary:paramName", _paramName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:asset-tags-summary:portletURL", _portletURL);
 	}
 

@@ -53,7 +53,7 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
 
 	private static final String _PAGE = "/control_menu/page.jsp";

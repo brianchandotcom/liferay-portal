@@ -69,7 +69,8 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		if (!_isStale()) {
@@ -77,7 +78,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 				_log.debug("Serving cached content for /js_loader_config");
 			}
 
-			_writeResponse(response, _objectValuePair.getValue());
+			_writeResponse(httpServletResponse, _objectValuePair.getValue());
 
 			return;
 		}
@@ -97,7 +98,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				request);
+				httpServletRequest);
 
 		String url = absolutePortalURLBuilder.forWhiteboard(
 			"/js_resolve_modules"
@@ -118,7 +119,7 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		_objectValuePair = new ObjectValuePair<>(
 			getLastModified(), minifiedContent);
 
-		_writeResponse(response, minifiedContent);
+		_writeResponse(httpServletResponse, minifiedContent);
 	}
 
 	private boolean _isStale() {
@@ -129,13 +130,14 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		return false;
 	}
 
-	private void _writeResponse(HttpServletResponse response, String content)
+	private void _writeResponse(
+			HttpServletResponse httpServletResponse, String content)
 		throws IOException {
 
-		response.setContentType(Details.CONTENT_TYPE);
+		httpServletResponse.setContentType(Details.CONTENT_TYPE);
 
 		PrintWriter printWriter = new PrintWriter(
-			response.getOutputStream(), true);
+			httpServletResponse.getOutputStream(), true);
 
 		printWriter.write(content);
 

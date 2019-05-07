@@ -28,24 +28,25 @@ import javax.servlet.http.HttpServletResponse;
 public interface DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType);
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileEntry fileEntry);
 
 	public DLViewFileEntryHistoryDisplayContext
 		getDLViewFileEntryHistoryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FileVersion fileVersion);
 
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileShortcut fileShortcut);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileShortcut fileShortcut);
 
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion);
 
 }

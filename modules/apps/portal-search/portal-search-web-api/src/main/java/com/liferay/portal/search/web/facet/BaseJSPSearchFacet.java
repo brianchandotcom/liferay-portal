@@ -37,7 +37,8 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public void includeConfiguration(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		if (Validator.isNull(getConfigurationJspPath())) {
@@ -48,7 +49,7 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			_servletContext.getRequestDispatcher(getConfigurationJspPath());
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include JSP " + getDisplayJspPath(), se);
@@ -60,7 +61,8 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public void includeView(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		if (Validator.isNull(getDisplayJspPath())) {
@@ -71,7 +73,7 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			_servletContext.getRequestDispatcher(getDisplayJspPath());
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include JSP", se);

@@ -89,25 +89,29 @@ public class NodeSiteNavigationMenuItemType
 
 	@Override
 	public void renderAddPage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_node.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_node.jsp");
 	}
 
 	@Override
 	public void renderEditPage(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_node.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_node.jsp");
 	}
 
 	@Reference

@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AlertTag extends BaseAlertTag {
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		String id = getId();
 
@@ -40,7 +40,7 @@ public class AlertTag extends BaseAlertTag {
 
 		setId(id);
 
-		setNamespacedAttribute(request, "id", id);
+		setNamespacedAttribute(httpServletRequest, "id", id);
 	}
 
 }

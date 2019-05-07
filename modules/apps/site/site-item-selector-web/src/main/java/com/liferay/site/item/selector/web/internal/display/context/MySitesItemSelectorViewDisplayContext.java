@@ -40,14 +40,14 @@ public class MySitesItemSelectorViewDisplayContext
 	extends BaseSitesItemSelectorViewDisplayContext {
 
 	public MySitesItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL,
 		GroupSearchProvider groupSearchProvider) {
 
 		super(
-			request, siteItemSelectorCriterion, itemSelectedEventName,
-			portletURL);
+			httpServletRequest, siteItemSelectorCriterion,
+			itemSelectedEventName, portletURL);
 
 		_groupSearchProvider = groupSearchProvider;
 		_portletRequest = getPortletRequest();

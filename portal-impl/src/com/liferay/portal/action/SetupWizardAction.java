@@ -46,65 +46,71 @@ public class SetupWizardAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!PropsValues.SETUP_WIZARD_ENABLED) {
-			response.sendRedirect(themeDisplay.getPathMain());
+			httpServletResponse.sendRedirect(themeDisplay.getPathMain());
 		}
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		try {
 			if (Validator.isNull(cmd)) {
 				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TRANSLATE)) {
-				SetupWizardUtil.updateLanguage(request, response);
+				SetupWizardUtil.updateLanguage(
+					httpServletRequest, httpServletResponse);
 
 				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TEST)) {
-				testDatabase(request, response);
+				testDatabase(httpServletRequest, httpServletResponse);
 
 				return null;
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				SetupWizardUtil.updateSetup(request, response);
+				SetupWizardUtil.updateSetup(
+					httpServletRequest, httpServletResponse);
 
-				if (ParamUtil.getBoolean(request, "defaultDatabase")) {
+				if (ParamUtil.getBoolean(
+						httpServletRequest, "defaultDatabase")) {
+
 					PropsValues.SETUP_WIZARD_ENABLED = false;
 				}
 			}
 
-			response.sendRedirect(
+			httpServletResponse.sendRedirect(
 				themeDisplay.getPathMain() + "/portal/setup_wizard");
 
 			return null;
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
 	protected void putMessage(
-		HttpServletRequest request, JSONObject jsonObject, String key,
-		Object... arguments) {
+		HttpServletRequest httpServletRequest, JSONObject jsonObject,
+		String key, Object... arguments) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String message = themeDisplay.translate(key, arguments);
 
@@ -112,37 +118,38 @@ public class SetupWizardAction implements Action {
 	}
 
 	protected void testDatabase(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			SetupWizardUtil.testDatabase(request);
+			SetupWizardUtil.testDatabase(httpServletRequest);
 
 			jsonObject.put("success", true);
 
 			putMessage(
-				request, jsonObject,
+				httpServletRequest, jsonObject,
 				"database-connection-was-established-successfully");
 		}
 		catch (ClassNotFoundException cnfe) {
 			putMessage(
-				request, jsonObject, "database-driver-x-is-not-present",
-				cnfe.getLocalizedMessage());
+				httpServletRequest, jsonObject,
+				"database-driver-x-is-not-present", cnfe.getLocalizedMessage());
 		}
 		catch (SQLException sqle) {
 			putMessage(
-				request, jsonObject,
+				httpServletRequest, jsonObject,
 				"database-connection-could-not-be-established");
 		}
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setHeader(
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-		ServletResponseUtil.write(response, jsonObject.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 	}
 
 }

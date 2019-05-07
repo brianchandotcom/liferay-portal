@@ -90,44 +90,48 @@ public class I18nServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			String i18nLanguageId = request.getServletPath();
+			String i18nLanguageId = httpServletRequest.getServletPath();
 
-			I18nData i18nData = getI18nData(request);
+			I18nData i18nData = getI18nData(httpServletRequest);
 
 			if ((i18nData == null) ||
 				!PortalUtil.isValidResourceId(i18nData.getPath())) {
 
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND,
-					new NoSuchLayoutException(), request, response);
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
 
 				return;
 			}
 
 			if (i18nLanguageId.contains(StringPool.UNDERLINE)) {
-				_sendRedirect(request, response, i18nData);
+				_sendRedirect(
+					httpServletRequest, httpServletResponse, i18nData);
 			}
 			else {
-				_processI18nData(request, response, i18nData);
+				_processI18nData(
+					httpServletRequest, httpServletResponse, i18nData);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 	}
 
-	protected I18nData getI18nData(HttpServletRequest request)
+	protected I18nData getI18nData(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String i18nLanguageId = request.getServletPath();
+		String i18nLanguageId = httpServletRequest.getServletPath();
 
 		int pos = i18nLanguageId.lastIndexOf(CharPool.SLASH);
 
@@ -155,7 +159,7 @@ public class I18nServlet extends HttpServlet {
 
 		Group siteGroup = null;
 
-		String path = GetterUtil.getString(request.getPathInfo());
+		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
 		if (Validator.isNull(path)) {
 			path = "/";
@@ -169,7 +173,8 @@ public class I18nServlet extends HttpServlet {
 					friendlyURLIndices[0], friendlyURLIndices[1]);
 
 				siteGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
-					PortalInstances.getCompanyId(request), friendlyURL);
+					PortalInstances.getCompanyId(httpServletRequest),
+					friendlyURL);
 
 				if (siteGroup == null) {
 					return null;
@@ -303,21 +308,22 @@ public class I18nServlet extends HttpServlet {
 	}
 
 	private void _processI18nData(
-			HttpServletRequest request, HttpServletResponse response,
-			I18nData i18nData)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, I18nData i18nData)
 		throws Exception {
 
-		_setRequestAttributes(request, response, i18nData);
+		_setRequestAttributes(
+			httpServletRequest, httpServletResponse, i18nData);
 
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(i18nData.getPath());
 
-		if (request.isAsyncSupported()) {
+		if (httpServletRequest.isAsyncSupported()) {
 			AsyncPortletServletRequest asyncPortletServletRequest =
 				AsyncPortletServletRequest.getAsyncPortletServletRequest(
-					request);
+					httpServletRequest);
 
 			if (asyncPortletServletRequest != null) {
 				asyncPortletServletRequest.update(
@@ -325,42 +331,45 @@ public class I18nServlet extends HttpServlet {
 			}
 		}
 
-		requestDispatcher.forward(request, response);
+		requestDispatcher.forward(httpServletRequest, httpServletResponse);
 	}
 
 	private void _sendRedirect(
-		HttpServletRequest request, HttpServletResponse response,
-		I18nData i18nData) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, I18nData i18nData) {
 
-		_setRequestAttributes(request, response, i18nData);
+		_setRequestAttributes(
+			httpServletRequest, httpServletResponse, i18nData);
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nData.getLanguageId());
 
-		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+		httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
-		response.setHeader(
+		httpServletResponse.setHeader(
 			"Location",
 			StringPool.SLASH + locale.toLanguageTag() + i18nData.getPath());
 	}
 
 	private void _setRequestAttributes(
-		HttpServletRequest request, HttpServletResponse response,
-		I18nData i18nData) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, I18nData i18nData) {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.I18N_LANGUAGE_CODE, i18nData.getLanguageCode());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.I18N_LANGUAGE_ID, i18nData.getLanguageId());
-		request.setAttribute(WebKeys.I18N_PATH, i18nData.getI18nPath());
+		httpServletRequest.setAttribute(
+			WebKeys.I18N_PATH, i18nData.getI18nPath());
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			i18nData.getLanguageId(), false, false);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(WebKeys.LOCALE, locale);
 
-		LanguageUtil.updateCookie(request, response, locale);
+		LanguageUtil.updateCookie(
+			httpServletRequest, httpServletResponse, locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nServlet.class);

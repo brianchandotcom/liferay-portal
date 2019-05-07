@@ -38,18 +38,20 @@ public class DefaultConfigurationFormRenderer
 
 	@Override
 	public Map<String, Object> getRequestParameters(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		return null;
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String html = (String)request.getAttribute(
+		String html = (String)httpServletRequest.getAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML);
 
 		printWriter.print(html);

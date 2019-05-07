@@ -44,11 +44,11 @@ public class UpdateEmailAddressAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			return actionMapping.getActionForward(
@@ -56,14 +56,14 @@ public class UpdateEmailAddressAction implements Action {
 		}
 
 		try {
-			updateEmailAddress(request);
+			updateEmailAddress(httpServletRequest);
 
 			return actionMapping.getActionForward(
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserEmailAddressException) {
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward(
 					"portal.update_email_address");
@@ -71,32 +71,35 @@ public class UpdateEmailAddressAction implements Action {
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward("portal.error");
 			}
 
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
-	protected void updateEmailAddress(HttpServletRequest request)
+	protected void updateEmailAddress(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		AuthTokenUtil.checkCSRFToken(
-			request, UpdateEmailAddressAction.class.getName());
+			httpServletRequest, UpdateEmailAddressAction.class.getName());
 
-		long userId = PortalUtil.getUserId(request);
+		long userId = PortalUtil.getUserId(httpServletRequest);
 
-		String password = AdminUtil.getUpdateUserPassword(request, userId);
+		String password = AdminUtil.getUpdateUserPassword(
+			httpServletRequest, userId);
 
-		String emailAddress1 = ParamUtil.getString(request, "emailAddress1");
-		String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
+		String emailAddress1 = ParamUtil.getString(
+			httpServletRequest, "emailAddress1");
+		String emailAddress2 = ParamUtil.getString(
+			httpServletRequest, "emailAddress2");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		UserServiceUtil.updateEmailAddress(
 			userId, password, emailAddress1, emailAddress2, serviceContext);

@@ -71,9 +71,9 @@ public class RowChecker {
 		return getAllRowsCheckBox(null);
 	}
 
-	public String getAllRowsCheckBox(HttpServletRequest request) {
+	public String getAllRowsCheckBox(HttpServletRequest httpServletRequest) {
 		return getAllRowsCheckbox(
-			request, _allRowIds, StringUtil.quote(_rowIds));
+			httpServletRequest, _allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -101,11 +101,11 @@ public class RowChecker {
 	}
 
 	public String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String primaryKey) {
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String primaryKey) {
 
 		return getRowCheckBox(
-			request, checked, disabled, _rowIds, primaryKey,
+			httpServletRequest, checked, disabled, _rowIds, primaryKey,
 			StringUtil.quote(_rowIds), StringUtil.quote(_allRowIds),
 			StringPool.BLANK);
 	}
@@ -185,7 +185,8 @@ public class RowChecker {
 	}
 
 	protected String getAllRowsCheckbox(
-		HttpServletRequest request, String name, String checkBoxRowIds) {
+		HttpServletRequest httpServletRequest, String name,
+		String checkBoxRowIds) {
 
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
@@ -196,7 +197,8 @@ public class RowChecker {
 		sb.append("<label><input name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
-		sb.append(LanguageUtil.get(getLocale(request), "select-all"));
+		sb.append(
+			LanguageUtil.get(getLocale(httpServletRequest), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
 		sb.append(HtmlUtil.buildData(_data));
 		sb.append("onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(");
@@ -207,12 +209,13 @@ public class RowChecker {
 		return sb.toString();
 	}
 
-	protected Locale getLocale(HttpServletRequest request) {
+	protected Locale getLocale(HttpServletRequest httpServletRequest) {
 		Locale locale = null;
 
-		if (request != null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (httpServletRequest != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			locale = themeDisplay.getLocale();
 		}
@@ -263,8 +266,8 @@ public class RowChecker {
 	}
 
 	protected String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String name, String value, String checkBoxRowIds,
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
 		StringBundler sb = new StringBundler(14);
@@ -284,7 +287,7 @@ public class RowChecker {
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
-		sb.append(LanguageUtil.get(request.getLocale(), "select"));
+		sb.append(LanguageUtil.get(httpServletRequest.getLocale(), "select"));
 		sb.append("\" type=\"checkbox\" value=\"");
 		sb.append(HtmlUtil.escapeAttribute(value));
 		sb.append("\" ");

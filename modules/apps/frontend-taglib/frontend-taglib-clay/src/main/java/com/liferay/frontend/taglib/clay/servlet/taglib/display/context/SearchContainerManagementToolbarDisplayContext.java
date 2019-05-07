@@ -29,9 +29,11 @@ public class SearchContainerManagementToolbarDisplayContext
 	public SearchContainerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, SearchContainer searchContainer) {
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 
 		this.searchContainer = searchContainer;
 	}

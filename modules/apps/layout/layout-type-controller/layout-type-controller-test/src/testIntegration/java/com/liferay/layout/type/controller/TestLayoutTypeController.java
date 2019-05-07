@@ -57,16 +57,16 @@ public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
 	public String includeEditContent(
-		HttpServletRequest request, HttpServletResponse response,
-		Layout layout) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Layout layout) {
 
 		return null;
 	}
 
 	@Override
 	public boolean includeLayoutContent(
-		HttpServletRequest request, HttpServletResponse response,
-		Layout layout) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Layout layout) {
 
 		return false;
 	}
@@ -113,7 +113,8 @@ public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
 	public boolean matches(
-		HttpServletRequest request, String friendlyURL, Layout layout) {
+		HttpServletRequest httpServletRequest, String friendlyURL,
+		Layout layout) {
 
 		return false;
 	}

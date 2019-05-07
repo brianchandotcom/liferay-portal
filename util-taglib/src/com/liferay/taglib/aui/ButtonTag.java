@@ -48,8 +48,8 @@ public class ButtonTag extends BaseButtonTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		String value = getValue();
 
@@ -67,7 +67,7 @@ public class ButtonTag extends BaseButtonTag implements BodyTag {
 			}
 		}
 
-		setNamespacedAttribute(request, "value", value);
+		setNamespacedAttribute(httpServletRequest, "value", value);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

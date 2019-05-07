@@ -30,10 +30,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 
-	public String getDDMFormBuilderContext(HttpServletRequest request) {
+	public String getDDMFormBuilderContext(
+		HttpServletRequest httpServletRequest) {
+
 		return DDMFormTaglibUtil.getFormBuilderContext(
 			GetterUtil.getLong(getDdmStructureId()),
-			GetterUtil.getLong(getDdmStructureVersionId()), request);
+			GetterUtil.getLong(getDdmStructureVersionId()), httpServletRequest);
 	}
 
 	protected DDMForm getDDMForm() {
@@ -43,10 +45,11 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	}
 
 	protected DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return DDMFormTaglibUtil.getDDMFormBuilderSettings(
 			DDMFormBuilderSettingsRequest.with(
@@ -56,47 +59,49 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
-			getDDMFormBuilderSettings(request);
+			getDDMFormBuilderSettings(httpServletRequest);
 
 		setNamespacedAttribute(
-			request, "dataProviderInstancesURL",
+			httpServletRequest, "dataProviderInstancesURL",
 			ddmFormBuilderSettingsResponse.getDataProviderInstancesURL());
 		setNamespacedAttribute(
-			request, "dataProviderInstanceParameterSettingsURL",
+			httpServletRequest, "dataProviderInstanceParameterSettingsURL",
 			ddmFormBuilderSettingsResponse.
 				getDataProviderInstanceParameterSettingsURL());
 		setNamespacedAttribute(
-			request, "evaluatorURL",
+			httpServletRequest, "evaluatorURL",
 			ddmFormBuilderSettingsResponse.getFormContextProviderURL());
 		setNamespacedAttribute(
-			request, "fieldSets",
+			httpServletRequest, "fieldSets",
 			ddmFormBuilderSettingsResponse.getFieldSets());
 		setNamespacedAttribute(
-			request, "fieldSetDefinitionURL",
+			httpServletRequest, "fieldSetDefinitionURL",
 			ddmFormBuilderSettingsResponse.getFieldSetDefinitionURL());
 		setNamespacedAttribute(
-			request, "fieldSettingsDDMFormContextURL",
+			httpServletRequest, "fieldSettingsDDMFormContextURL",
 			ddmFormBuilderSettingsResponse.getFieldSettingsDDMFormContextURL());
 
 		setNamespacedAttribute(
-			request, "formBuilderContext", getDDMFormBuilderContext(request));
+			httpServletRequest, "formBuilderContext",
+			getDDMFormBuilderContext(httpServletRequest));
 		setNamespacedAttribute(
-			request, "functionsMetadata",
+			httpServletRequest, "functionsMetadata",
 			ddmFormBuilderSettingsResponse.getFunctionsMetadata());
 		setNamespacedAttribute(
-			request, "functionsURL",
+			httpServletRequest, "functionsURL",
 			ddmFormBuilderSettingsResponse.getFunctionsURL());
 		setNamespacedAttribute(
-			request, "npmResolvedPackageName",
+			httpServletRequest, "npmResolvedPackageName",
 			DDMFormTaglibUtil.getNPMResolvedPackageName());
 		setNamespacedAttribute(
-			request, "rolesURL", ddmFormBuilderSettingsResponse.getRolesURL());
+			httpServletRequest, "rolesURL",
+			ddmFormBuilderSettingsResponse.getRolesURL());
 		setNamespacedAttribute(
-			request, "serializedDDMFormRules",
+			httpServletRequest, "serializedDDMFormRules",
 			ddmFormBuilderSettingsResponse.getSerializedDDMFormRules());
 	}
 

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/search/configuration.jsp";
 	}
 

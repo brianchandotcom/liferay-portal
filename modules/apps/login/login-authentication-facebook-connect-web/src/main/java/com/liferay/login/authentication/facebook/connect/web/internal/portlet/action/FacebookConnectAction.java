@@ -117,22 +117,24 @@ public class FacebookConnectAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException.MustBeEnabled(
 				themeDisplay.getCompanyId(), FacebookConnect.class.getName());
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		String nonce = (String)session.getAttribute(WebKeys.FACEBOOK_NONCE);
 
-		String state = ParamUtil.getString(request, "state");
+		String state = ParamUtil.getString(httpServletRequest, "state");
 
 		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject(state);
 
@@ -140,13 +142,17 @@ public class FacebookConnectAction implements StrutsAction {
 
 		if (!stateNonce.equals(nonce)) {
 			throw new PrincipalException.MustHaveValidCSRFToken(
-				_portal.getUserId(request),
+				_portal.getUserId(httpServletRequest),
 				FacebookConnectAction.class.getName());
 		}
 
-		if (!Validator.isBlank(ParamUtil.getString(request, "error"))) {
+		if (!Validator.isBlank(
+				ParamUtil.getString(httpServletRequest, "error"))) {
+
 			if (_log.isDebugEnabled()) {
-				_log.debug("Authentication error: " + request.getQueryString());
+				_log.debug(
+					"Authentication error: " +
+						httpServletRequest.getQueryString());
 			}
 
 			return _forward;
@@ -156,7 +162,7 @@ public class FacebookConnectAction implements StrutsAction {
 
 		redirect = _portal.escapeRedirect(redirect);
 
-		String code = ParamUtil.getString(request, "code");
+		String code = ParamUtil.getString(httpServletRequest, "code");
 
 		String token = _facebookConnect.getAccessToken(
 			themeDisplay.getCompanyId(), redirect, code);
@@ -169,7 +175,8 @@ public class FacebookConnectAction implements StrutsAction {
 				if ((user != null) &&
 					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
 
-					redirectUpdateAccount(request, response, user);
+					redirectUpdateAccount(
+						httpServletRequest, httpServletResponse, user);
 
 					return null;
 				}
@@ -181,7 +188,9 @@ public class FacebookConnectAction implements StrutsAction {
 
 				Class<?> clazz = pe.getClass();
 
-				sendError(clazz.getSimpleName(), request, response);
+				sendError(
+					clazz.getSimpleName(), httpServletRequest,
+					httpServletResponse);
 
 				return null;
 			}
@@ -190,7 +199,7 @@ public class FacebookConnectAction implements StrutsAction {
 			return _forward;
 		}
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 
 		return null;
 	}
@@ -253,17 +262,18 @@ public class FacebookConnectAction implements StrutsAction {
 	}
 
 	protected void redirectUpdateAccount(
-			HttpServletRequest request, HttpServletResponse response, User user)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/associate_facebook_user");
 		portletURL.setParameter(
-			"redirect", ParamUtil.getString(request, "redirect"));
+			"redirect", ParamUtil.getString(httpServletRequest, "redirect"));
 		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
 		portletURL.setParameter("emailAddress", user.getEmailAddress());
 		portletURL.setParameter("firstName", user.getFirstName());
@@ -271,23 +281,23 @@ public class FacebookConnectAction implements StrutsAction {
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 	protected void sendError(
-			String error, HttpServletRequest request,
-			HttpServletResponse response)
+			String error, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/facebook_connect_login_error");
 		portletURL.setParameter("error", error);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 	@Reference(unbind = "-")

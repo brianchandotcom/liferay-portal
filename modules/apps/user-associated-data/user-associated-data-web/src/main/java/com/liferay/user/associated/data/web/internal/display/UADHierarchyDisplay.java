@@ -90,15 +90,16 @@ public class UADHierarchyDisplay {
 	}
 
 	public <T> void addPortletBreadcrumbEntries(
-			HttpServletRequest request, RenderResponse renderResponse,
-			Locale locale)
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse, Locale locale)
 		throws Exception {
 
 		PortletURL baseURL = renderResponse.createRenderURL();
 
-		String applicationKey = ParamUtil.getString(request, "applicationKey");
-		String puid = ParamUtil.getString(request, "p_u_i_d");
-		String scope = ParamUtil.getString(request, "scope");
+		String applicationKey = ParamUtil.getString(
+			httpServletRequest, "applicationKey");
+		String puid = ParamUtil.getString(httpServletRequest, "p_u_i_d");
+		String scope = ParamUtil.getString(httpServletRequest, "scope");
 
 		baseURL.setParameter("applicationKey", applicationKey);
 		baseURL.setParameter("p_u_i_d", puid);
@@ -109,7 +110,8 @@ public class UADHierarchyDisplay {
 
 		applicationURL.setParameter("mvcRenderCommandName", "/review_uad_data");
 
-		String className = ParamUtil.getString(request, "parentContainerClass");
+		String className = ParamUtil.getString(
+			httpServletRequest, "parentContainerClass");
 
 		UADDisplay uadDisplay = _getUADDisplayByTypeClassName(className);
 
@@ -117,11 +119,12 @@ public class UADHierarchyDisplay {
 			uadDisplay, locale);
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, applicationName, applicationURL.toString());
+			httpServletRequest, applicationName, applicationURL.toString());
 
 		List<KeyValuePair> parentBreadcrumbs = new ArrayList<>();
 
-		String primaryKey = ParamUtil.getString(request, "parentContainerId");
+		String primaryKey = ParamUtil.getString(
+			httpServletRequest, "parentContainerId");
 
 		Object container = uadDisplay.get(primaryKey);
 
@@ -162,12 +165,13 @@ public class UADHierarchyDisplay {
 
 		for (KeyValuePair keyValuePair : parentBreadcrumbs) {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, keyValuePair.getKey(), keyValuePair.getValue());
+				httpServletRequest, keyValuePair.getKey(),
+				keyValuePair.getValue());
 		}
 
 		String name = uadDisplay.getName(container, locale);
 
-		PortalUtil.addPortletBreadcrumbEntry(request, name, null);
+		PortalUtil.addPortletBreadcrumbEntry(httpServletRequest, name, null);
 	}
 
 	public long countAll(long userId) {

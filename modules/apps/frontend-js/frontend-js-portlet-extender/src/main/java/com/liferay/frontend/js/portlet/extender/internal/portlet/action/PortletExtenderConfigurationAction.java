@@ -81,18 +81,19 @@ public class PortletExtenderConfigurationAction
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		_setPortletPreferencesToDDMFormValues(themeDisplay, portletDisplay);
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		JSONArray fieldsJSONArray = _preferencesJSONObject.getJSONArray(
 			"fields");
@@ -107,12 +108,13 @@ public class PortletExtenderConfigurationAction
 					"[$PORTLET_NAMESPACE$]", "[$SAVE_LABEL$]"
 				},
 				new String[] {
-					_getActionURL(request, portletDisplay), Constants.CMD,
-					Constants.UPDATE,
+					_getActionURL(httpServletRequest, portletDisplay),
+					Constants.CMD, Constants.UPDATE,
 					String.valueOf(System.currentTimeMillis()),
 					_ddmFormRenderer.render(
 						_ddmForm,
-						_createDDMFormRenderingContext(request, response)),
+						_createDDMFormRenderingContext(
+							httpServletRequest, httpServletResponse)),
 					fieldsJSONArray.toString(), portletDisplay.getNamespace(),
 					LanguageUtil.get(themeDisplay.getLocale(), "save")
 				}));
@@ -190,16 +192,18 @@ public class PortletExtenderConfigurationAction
 	}
 
 	private String _getActionURL(
-			HttpServletRequest request, PortletDisplay portletDisplay)
+			HttpServletRequest httpServletRequest,
+			PortletDisplay portletDisplay)
 		throws Exception {
 
 		PortletURL actionURL = PortletURLFactoryUtil.create(
-			request, portletDisplay.getPortletName(),
+			httpServletRequest, portletDisplay.getPortletName(),
 			PortletRequest.ACTION_PHASE);
 
 		actionURL.setParameter(ActionRequest.ACTION_NAME, "editConfiguration");
 		actionURL.setParameter("mvcPath", "/edit_configuration.jsp");
-		actionURL.setParameter("p_auth", AuthTokenUtil.getToken(request));
+		actionURL.setParameter(
+			"p_auth", AuthTokenUtil.getToken(httpServletRequest));
 		actionURL.setParameter("p_p_mode", PortletMode.VIEW.toString());
 		actionURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 		actionURL.setParameter(

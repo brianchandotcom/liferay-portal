@@ -42,10 +42,10 @@ public class ManageCollaboratorsPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = super.getPortletURL(request);
+		PortletURL portletURL = super.getPortletURL(httpServletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/sharing/manage_collaborators");

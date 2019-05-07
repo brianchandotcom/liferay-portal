@@ -30,9 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CacheResponseUtil {
 
 	public static void setHeaders(
-		HttpServletResponse response, Map<String, Set<Header>> headers) {
+		HttpServletResponse httpServletResponse,
+		Map<String, Set<Header>> headers) {
 
-		if (response.isCommitted()) {
+		if (httpServletResponse.isCommitted()) {
 			return;
 		}
 
@@ -43,26 +44,28 @@ public class CacheResponseUtil {
 
 			for (Header header : entry.getValue()) {
 				if (first) {
-					header.setToResponse(key, response);
+					header.setToResponse(key, httpServletResponse);
 
 					first = false;
 				}
 				else {
-					header.addToResponse(key, response);
+					header.addToResponse(key, httpServletResponse);
 				}
 			}
 		}
 	}
 
 	public static void write(
-			HttpServletResponse response, CacheResponseData cacheResponseData)
+			HttpServletResponse httpServletResponse,
+			CacheResponseData cacheResponseData)
 		throws IOException {
 
-		setHeaders(response, cacheResponseData.getHeaders());
+		setHeaders(httpServletResponse, cacheResponseData.getHeaders());
 
-		response.setContentType(cacheResponseData.getContentType());
+		httpServletResponse.setContentType(cacheResponseData.getContentType());
 
-		ServletResponseUtil.write(response, cacheResponseData.getByteBuffer());
+		ServletResponseUtil.write(
+			httpServletResponse, cacheResponseData.getByteBuffer());
 	}
 
 }

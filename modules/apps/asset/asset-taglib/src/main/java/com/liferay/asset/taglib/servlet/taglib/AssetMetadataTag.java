@@ -112,11 +112,11 @@ public class AssetMetadataTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			_className, _classPK);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-metadata:assetEntry", assetEntry);
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -127,19 +127,20 @@ public class AssetMetadataTag extends IncludeTag {
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(_classPK);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-asset:asset-metadata:assetRenderer", assetRenderer);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-metadata:className", _className);
-		request.setAttribute("liferay-asset:asset-metadata:classPK", _classPK);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-asset:asset-metadata:classPK", _classPK);
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-metadata:filterByMetadata", _filterByMetadata);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-metadata:metadataFields", _metadataFields);
 	}
 

@@ -96,7 +96,8 @@ public class FilterMapping {
 	}
 
 	public boolean isMatch(
-		HttpServletRequest request, Dispatcher dispatcher, String uri) {
+		HttpServletRequest httpServletRequest, Dispatcher dispatcher,
+		String uri) {
 
 		if (!_dispatchers.contains(dispatcher) || (uri == null)) {
 			return false;
@@ -124,7 +125,9 @@ public class FilterMapping {
 			}
 		}
 
-		if (matchURLPattern && isMatchURLRegexPattern(request, uri)) {
+		if (matchURLPattern &&
+			isMatchURLRegexPattern(httpServletRequest, uri)) {
+
 			return true;
 		}
 
@@ -132,11 +135,11 @@ public class FilterMapping {
 	}
 
 	public boolean isMatchURLRegexPattern(
-		HttpServletRequest request, String uri) {
+		HttpServletRequest httpServletRequest, String uri) {
 
 		String url = uri;
 
-		String queryString = request.getQueryString();
+		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
 			url = url.concat(

@@ -54,10 +54,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ServiceContextFactory {
 
-	public static ServiceContext getInstance(HttpServletRequest request)
+	public static ServiceContext getInstance(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = _getInstance(request);
+		ServiceContext serviceContext = _getInstance(httpServletRequest);
 
 		_ensureValidModelPermissions(serviceContext);
 
@@ -75,16 +76,16 @@ public class ServiceContextFactory {
 	}
 
 	public static ServiceContext getInstance(
-			String className, HttpServletRequest request)
+			String className, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ServiceContext serviceContext = _getInstance(request);
+		ServiceContext serviceContext = _getInstance(httpServletRequest);
 
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
 			serviceContext.setModelPermissions(
-				ModelPermissionsFactory.create(request, className));
+				ModelPermissionsFactory.create(httpServletRequest, className));
 		}
 
 		_ensureValidModelPermissions(serviceContext);
@@ -95,7 +96,7 @@ public class ServiceContextFactory {
 			PortalUtil.getExpandoBridgeAttributes(
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
-				request);
+				httpServletRequest);
 
 		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
@@ -145,15 +146,17 @@ public class ServiceContextFactory {
 		}
 	}
 
-	private static ServiceContext _getInstance(HttpServletRequest request)
+	private static ServiceContext _getInstance(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		// Theme display
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			serviceContext.setCompanyId(themeDisplay.getCompanyId());
@@ -181,7 +184,8 @@ public class ServiceContextFactory {
 			serviceContext.setUserId(themeDisplay.getUserId());
 		}
 		else {
-			serviceContext.setCompanyId(PortalUtil.getCompanyId(request));
+			serviceContext.setCompanyId(
+				PortalUtil.getCompanyId(httpServletRequest));
 
 			Group guestGroup = GroupLocalServiceUtil.getGroup(
 				serviceContext.getCompanyId(), GroupConstants.GUEST);
@@ -191,7 +195,7 @@ public class ServiceContextFactory {
 			User user = null;
 
 			try {
-				user = PortalUtil.getUser(request);
+				user = PortalUtil.getUser(httpServletRequest);
 			}
 			catch (NoSuchUserException nsue) {
 
@@ -213,7 +217,8 @@ public class ServiceContextFactory {
 			}
 		}
 
-		serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
+		serviceContext.setPortalURL(
+			PortalUtil.getPortalURL(httpServletRequest));
 		serviceContext.setPathMain(PortalUtil.getPathMain());
 		serviceContext.setPathFriendlyURLPrivateGroup(
 			PortalUtil.getPathFriendlyURLPrivateGroup());
@@ -226,7 +231,7 @@ public class ServiceContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		Map<String, String[]> parameters = request.getParameterMap();
+		Map<String, String[]> parameters = httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();
@@ -246,15 +251,17 @@ public class ServiceContextFactory {
 
 		// Command
 
-		serviceContext.setCommand(ParamUtil.getString(request, Constants.CMD));
+		serviceContext.setCommand(
+			ParamUtil.getString(httpServletRequest, Constants.CMD));
 
 		// Current URL
 
-		serviceContext.setCurrentURL(PortalUtil.getCurrentURL(request));
+		serviceContext.setCurrentURL(
+			PortalUtil.getCurrentURL(httpServletRequest));
 
 		// Form date
 
-		long formDateLong = ParamUtil.getLong(request, "formDate");
+		long formDateLong = ParamUtil.getLong(httpServletRequest, "formDate");
 
 		if (formDateLong > 0) {
 			serviceContext.setFormDate(new Date(formDateLong));
@@ -263,11 +270,11 @@ public class ServiceContextFactory {
 		// Permissions
 
 		serviceContext.setModelPermissions(
-			ModelPermissionsFactory.create(request));
+			ModelPermissionsFactory.create(httpServletRequest));
 
 		// Portlet preferences ids
 
-		String portletId = PortalUtil.getPortletId(request);
+		String portletId = PortalUtil.getPortletId(httpServletRequest);
 
 		if (Validator.isNotNull(portletId)) {
 			serviceContext.setPortletId(portletId);
@@ -275,15 +282,16 @@ public class ServiceContextFactory {
 
 		// Request
 
-		serviceContext.setRemoteAddr(request.getRemoteAddr());
-		serviceContext.setRemoteHost(request.getRemoteHost());
-		serviceContext.setRequest(request);
+		serviceContext.setRemoteAddr(httpServletRequest.getRemoteAddr());
+		serviceContext.setRemoteHost(httpServletRequest.getRemoteHost());
+		serviceContext.setRequest(httpServletRequest);
 
 		// Asset
 
 		long[] assetCategoryIds = new long[0];
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		List<Long> assetCategoryIdsList = new ArrayList<>();
 
@@ -299,7 +307,7 @@ public class ServiceContextFactory {
 			updateAssetCategoryIds = true;
 
 			long[] assetVocabularyAssetCategoryIds = ParamUtil.getLongValues(
-				request, name);
+				httpServletRequest, name);
 
 			for (long assetCategoryId : assetVocabularyAssetCategoryIds) {
 				assetCategoryIdsList.add(assetCategoryId);
@@ -315,9 +323,10 @@ public class ServiceContextFactory {
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		serviceContext.setAssetEntryVisible(
-			ParamUtil.getBoolean(request, "assetEntryVisible", true));
+			ParamUtil.getBoolean(
+				httpServletRequest, "assetEntryVisible", true));
 
-		String assetLinkEntryIdsString = request.getParameter(
+		String assetLinkEntryIdsString = httpServletRequest.getParameter(
 			"assetLinksSearchContainerPrimaryKeys");
 
 		if (assetLinkEntryIdsString != null) {
@@ -326,10 +335,10 @@ public class ServiceContextFactory {
 		}
 
 		serviceContext.setAssetPriority(
-			ParamUtil.getDouble(request, "assetPriority"));
+			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
 
 		String[] assetTagNames = ParamUtil.getStringValues(
-			request, "assetTagNames");
+			httpServletRequest, "assetTagNames");
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
@@ -337,7 +346,8 @@ public class ServiceContextFactory {
 
 		serviceContext.setWorkflowAction(
 			ParamUtil.getInteger(
-				request, "workflowAction", WorkflowConstants.ACTION_PUBLISH));
+				httpServletRequest, "workflowAction",
+				WorkflowConstants.ACTION_PUBLISH));
 
 		return serviceContext;
 	}

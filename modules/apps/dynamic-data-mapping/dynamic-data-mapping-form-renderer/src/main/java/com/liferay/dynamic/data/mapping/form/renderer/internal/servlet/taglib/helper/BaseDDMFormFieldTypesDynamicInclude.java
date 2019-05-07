@@ -154,7 +154,9 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 		return JSONFactoryUtil.createJSONObject(json);
 	}
 
-	protected void include(HttpServletResponse response) throws IOException {
+	protected void include(HttpServletResponse httpServletResponse)
+		throws IOException {
+
 		ScriptData scriptData = new ScriptData();
 
 		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
@@ -193,7 +195,7 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
 			_MODULES, ScriptData.ModulesType.AUI);
 
-		scriptData.writeTo(response.getWriter());
+		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	protected boolean isValidPackageName(String packageName) {

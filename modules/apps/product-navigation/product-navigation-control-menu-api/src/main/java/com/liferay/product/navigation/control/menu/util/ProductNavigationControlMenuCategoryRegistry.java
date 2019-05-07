@@ -32,6 +32,6 @@ public interface ProductNavigationControlMenuCategoryRegistry {
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey,
-			HttpServletRequest request);
+			HttpServletRequest httpServletRequest);
 
 }

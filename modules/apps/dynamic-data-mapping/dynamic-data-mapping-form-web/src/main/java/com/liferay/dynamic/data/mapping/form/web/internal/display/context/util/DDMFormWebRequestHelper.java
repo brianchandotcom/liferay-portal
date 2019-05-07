@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMFormWebRequestHelper extends BaseRequestHelper {
 
-	public DDMFormWebRequestHelper(HttpServletRequest request) {
-		super(request);
+	public DDMFormWebRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 }

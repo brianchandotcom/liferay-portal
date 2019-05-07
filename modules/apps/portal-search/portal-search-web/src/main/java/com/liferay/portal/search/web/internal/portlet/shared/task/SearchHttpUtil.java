@@ -34,10 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class SearchHttpUtil {
 
-	public static String getCompleteOriginalURL(HttpServletRequest request) {
+	public static String getCompleteOriginalURL(
+		HttpServletRequest httpServletRequest) {
+
 		boolean forwarded = false;
 
-		if (request.getAttribute(
+		if (httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI) != null) {
 
 			forwarded = true;
@@ -48,17 +50,17 @@ public class SearchHttpUtil {
 
 		if (forwarded) {
 			requestURL = _portal.getAbsoluteURL(
-				request,
-				(String)request.getAttribute(
+				httpServletRequest,
+				(String)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI));
 
-			queryString = (String)request.getAttribute(
+			queryString = (String)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 		}
 		else {
-			requestURL = String.valueOf(request.getRequestURL());
+			requestURL = String.valueOf(httpServletRequest.getRequestURL());
 
-			queryString = request.getQueryString();
+			queryString = httpServletRequest.getQueryString();
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -84,8 +86,8 @@ public class SearchHttpUtil {
 
 		String completeURL = sb.toString();
 
-		if (request.isRequestedSessionIdFromURL()) {
-			HttpSession session = request.getSession();
+		if (httpServletRequest.isRequestedSessionIdFromURL()) {
+			HttpSession session = httpServletRequest.getSession();
 
 			String sessionId = session.getId();
 

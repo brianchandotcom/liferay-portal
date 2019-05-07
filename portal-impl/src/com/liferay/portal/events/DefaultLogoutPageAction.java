@@ -34,11 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 public class DefaultLogoutPageAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			doRun(request, response);
+			doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -46,10 +48,11 @@ public class DefaultLogoutPageAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		String path = PrefsPropsUtil.getString(
 			companyId, PropsKeys.DEFAULT_LOGOUT_PAGE_PATH);
@@ -60,7 +63,7 @@ public class DefaultLogoutPageAction extends Action {
 		}
 
 		if (Validator.isNotNull(path)) {
-			request.setAttribute(WebKeys.REFERER, path);
+			httpServletRequest.setAttribute(WebKeys.REFERER, path);
 		}
 
 		// The commented code shows how you can programmaticaly set the user's

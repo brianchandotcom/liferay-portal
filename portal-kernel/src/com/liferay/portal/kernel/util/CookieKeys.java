@@ -59,14 +59,17 @@ public class CookieKeys {
 	public static final String USER_UUID = "USER_UUID";
 
 	public static void addCookie(
-		HttpServletRequest request, HttpServletResponse response,
-		Cookie cookie) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Cookie cookie) {
 
-		addCookie(request, response, cookie, request.isSecure());
+		addCookie(
+			httpServletRequest, httpServletResponse, cookie,
+			httpServletRequest.isSecure());
 	}
 
 	public static void addCookie(
-		HttpServletRequest request, HttpServletResponse response, Cookie cookie,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Cookie cookie,
 		boolean secure) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
@@ -96,33 +99,35 @@ public class CookieKeys {
 		cookie.setValue(encodedValue);
 		cookie.setVersion(0);
 
-		response.addCookie(cookie);
+		httpServletResponse.addCookie(cookie);
 
-		Map<String, Cookie> cookieMap = _getCookieMap(request);
+		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
 
 		cookieMap.put(StringUtil.toUpperCase(name), cookie);
 	}
 
 	public static void addSupportCookie(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		Cookie cookieSupportCookie = new Cookie(COOKIE_SUPPORT, "true");
 
 		cookieSupportCookie.setPath(StringPool.SLASH);
 		cookieSupportCookie.setMaxAge(MAX_AGE);
 
-		addCookie(request, response, cookieSupportCookie);
+		addCookie(httpServletRequest, httpServletResponse, cookieSupportCookie);
 	}
 
 	public static void deleteCookies(
-		HttpServletRequest request, HttpServletResponse response, String domain,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String domain,
 		String... cookieNames) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
 			return;
 		}
 
-		Map<String, Cookie> cookieMap = _getCookieMap(request);
+		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
 
 		for (String cookieName : cookieNames) {
 			Cookie cookie = cookieMap.remove(
@@ -137,23 +142,26 @@ public class CookieKeys {
 				cookie.setPath(StringPool.SLASH);
 				cookie.setValue(StringPool.BLANK);
 
-				response.addCookie(cookie);
+				httpServletResponse.addCookie(cookie);
 			}
 		}
 	}
 
-	public static String getCookie(HttpServletRequest request, String name) {
-		return getCookie(request, name, true);
+	public static String getCookie(
+		HttpServletRequest httpServletRequest, String name) {
+
+		return getCookie(httpServletRequest, name, true);
 	}
 
 	public static String getCookie(
-		HttpServletRequest request, String name, boolean toUpperCase) {
+		HttpServletRequest httpServletRequest, String name,
+		boolean toUpperCase) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
 			return null;
 		}
 
-		String value = _get(request, name, toUpperCase);
+		String value = _get(httpServletRequest, name, toUpperCase);
 
 		if ((value == null) || !isEncodedCookie(name)) {
 			return value;
@@ -182,7 +190,7 @@ public class CookieKeys {
 		}
 	}
 
-	public static String getDomain(HttpServletRequest request) {
+	public static String getDomain(HttpServletRequest httpServletRequest) {
 
 		// See LEP-4602 and	LEP-4618.
 
@@ -194,7 +202,7 @@ public class CookieKeys {
 			return StringPool.BLANK;
 		}
 
-		return getDomain(request.getServerName());
+		return getDomain(httpServletRequest.getServerName());
 	}
 
 	public static String getDomain(String host) {
@@ -237,8 +245,8 @@ public class CookieKeys {
 		return domain;
 	}
 
-	public static boolean hasSessionId(HttpServletRequest request) {
-		String jsessionid = getCookie(request, JSESSIONID, false);
+	public static boolean hasSessionId(HttpServletRequest httpServletRequest) {
+		String jsessionid = getCookie(httpServletRequest, JSESSIONID, false);
 
 		if (jsessionid != null) {
 			return true;
@@ -257,13 +265,15 @@ public class CookieKeys {
 		return false;
 	}
 
-	public static void validateSupportCookie(HttpServletRequest request)
+	public static void validateSupportCookie(
+			HttpServletRequest httpServletRequest)
 		throws CookieNotSupportedException {
 
 		if (_SESSION_ENABLE_PERSISTENT_COOKIES &&
 			_SESSION_TEST_COOKIE_SUPPORT) {
 
-			String cookieSupport = getCookie(request, COOKIE_SUPPORT, false);
+			String cookieSupport = getCookie(
+				httpServletRequest, COOKIE_SUPPORT, false);
 
 			if (Validator.isNull(cookieSupport)) {
 				throw new CookieNotSupportedException();
@@ -272,9 +282,10 @@ public class CookieKeys {
 	}
 
 	private static String _get(
-		HttpServletRequest request, String name, boolean toUpperCase) {
+		HttpServletRequest httpServletRequest, String name,
+		boolean toUpperCase) {
 
-		Map<String, Cookie> cookieMap = _getCookieMap(request);
+		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
 
 		if (toUpperCase) {
 			name = StringUtil.toUpperCase(name);
@@ -290,17 +301,17 @@ public class CookieKeys {
 	}
 
 	private static Map<String, Cookie> _getCookieMap(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, Cookie> cookieMap =
-			(Map<String, Cookie>)request.getAttribute(
+			(Map<String, Cookie>)httpServletRequest.getAttribute(
 				CookieKeys.class.getName());
 
 		if (cookieMap != null) {
 			return cookieMap;
 		}
 
-		Cookie[] cookies = request.getCookies();
+		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (cookies == null) {
 			cookieMap = new HashMap<>();
@@ -317,7 +328,7 @@ public class CookieKeys {
 			}
 		}
 
-		request.setAttribute(CookieKeys.class.getName(), cookieMap);
+		httpServletRequest.setAttribute(CookieKeys.class.getName(), cookieMap);
 
 		return cookieMap;
 	}

@@ -59,23 +59,25 @@ public class RTLServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		URL url = getResourceURL(request);
+		URL url = getResourceURL(httpServletRequest);
 
 		if (url == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_NOT_FOUND, "Not Found");
 		}
 		else {
-			transfer(url, response);
+			transfer(url, httpServletResponse);
 		}
 	}
 
 	@Override
-	protected long getLastModified(HttpServletRequest request) {
+	protected long getLastModified(HttpServletRequest httpServletRequest) {
 		try {
-			URL url = getResourceURL(request);
+			URL url = getResourceURL(httpServletRequest);
 
 			if (url != null) {
 				URLConnection urlConnection = url.openConnection();
@@ -83,18 +85,19 @@ public class RTLServlet extends HttpServlet {
 				return urlConnection.getLastModified();
 			}
 
-			return super.getLastModified(request);
+			return super.getLastModified(httpServletRequest);
 		}
 		catch (IOException ioe) {
-			return super.getLastModified(request);
+			return super.getLastModified(httpServletRequest);
 		}
 	}
 
-	protected URL getResourceURL(HttpServletRequest request)
+	protected URL getResourceURL(HttpServletRequest httpServletRequest)
 		throws IOException {
 
 		String path = URLDecoder.decode(
-			RequestDispatcherUtil.getEffectivePath(request), StringPool.UTF8);
+			RequestDispatcherUtil.getEffectivePath(httpServletRequest),
+			StringPool.UTF8);
 
 		URL url = _servletContextHelper.getResource(path);
 
@@ -102,9 +105,11 @@ public class RTLServlet extends HttpServlet {
 			return null;
 		}
 
-		String languageId = request.getParameter("languageId");
+		String languageId = httpServletRequest.getParameter("languageId");
 
-		if ((languageId == null) || !PortalUtil.isRightToLeft(request)) {
+		if ((languageId == null) ||
+			!PortalUtil.isRightToLeft(httpServletRequest)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skip because specified language " + languageId +
@@ -172,17 +177,18 @@ public class RTLServlet extends HttpServlet {
 		return uri.toURL();
 	}
 
-	protected void transfer(URL url, HttpServletResponse response)
+	protected void transfer(URL url, HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		URLConnection urlConnection = url.openConnection();
 
-		response.setContentLength(urlConnection.getContentLength());
+		httpServletResponse.setContentLength(urlConnection.getContentLength());
 
-		response.setContentType(ContentTypes.TEXT_CSS);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.TEXT_CSS);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		StreamUtil.transfer(url.openStream(), response.getOutputStream());
+		StreamUtil.transfer(
+			url.openStream(), httpServletResponse.getOutputStream());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RTLServlet.class);

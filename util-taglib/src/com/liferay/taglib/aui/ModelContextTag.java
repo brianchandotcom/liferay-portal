@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ModelContextTag extends BaseModelContextTag {
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		Class<?> model = getModel();
 
 		if (model != null) {

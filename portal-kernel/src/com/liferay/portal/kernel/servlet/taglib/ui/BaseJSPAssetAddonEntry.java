@@ -34,14 +34,15 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(getJspPath());
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include JSP " + getJspPath(), se);

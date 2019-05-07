@@ -40,8 +40,8 @@ public class InitFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		_countDownLatch.await();
@@ -49,7 +49,8 @@ public class InitFilter extends BasePortalFilter {
 		synchronized (this) {
 			try {
 				processFilter(
-					InitFilter.class.getName(), request, response, filterChain);
+					InitFilter.class.getName(), httpServletRequest,
+					httpServletResponse, filterChain);
 			}
 			finally {
 				if (_serviceRegistration != null) {

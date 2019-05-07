@@ -70,12 +70,12 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletCSRFWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		String portletId = portlet.getPortletId();
 
 		String[] mvcActionCommandNames = getMVCActionCommandNames(
-			request, portletId);
+			httpServletRequest, portletId);
 
 		return _containsAll(
 			portletId, _portletCSRFWhitelist, mvcActionCommandNames);
@@ -83,16 +83,17 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		String portletId = portlet.getPortletId();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isLifecycleAction()) {
 			String[] mvcActionCommandNames = getMVCActionCommandNames(
-				request, portletId);
+				httpServletRequest, portletId);
 
 			return _containsAll(
 				portletId, _portletInvocationWhitelistAction,
@@ -101,7 +102,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		else if (themeDisplay.isLifecycleRender()) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
 
-			String mvcRenderCommandName = request.getParameter(
+			String mvcRenderCommandName = httpServletRequest.getParameter(
 				namespace.concat("mvcRenderCommandName"));
 
 			return _contains(
@@ -109,13 +110,13 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				mvcRenderCommandName);
 		}
 		else if (themeDisplay.isLifecycleResource()) {
-			String ppid = request.getParameter("p_p_id");
+			String ppid = httpServletRequest.getParameter("p_p_id");
 
 			if (!portletId.equals(ppid)) {
 				return false;
 			}
 
-			String mvcResourceCommandName = request.getParameter(
+			String mvcResourceCommandName = httpServletRequest.getParameter(
 				"p_p_resource_id");
 
 			return _contains(
@@ -174,11 +175,11 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	protected String[] getMVCActionCommandNames(
-		HttpServletRequest request, String portletId) {
+		HttpServletRequest httpServletRequest, String portletId) {
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		String[] actionNames = request.getParameterValues(
+		String[] actionNames = httpServletRequest.getParameterValues(
 			namespace.concat(ActionRequest.ACTION_NAME));
 
 		String actions = StringUtil.merge(actionNames);

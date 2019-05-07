@@ -47,9 +47,10 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 	public ViewAppsManagerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 
 		_searchContainer = _createSearchContainer(liferayPortletRequest);
 	}

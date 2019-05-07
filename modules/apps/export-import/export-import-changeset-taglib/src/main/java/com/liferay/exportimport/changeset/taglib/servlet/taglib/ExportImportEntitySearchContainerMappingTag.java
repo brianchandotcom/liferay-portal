@@ -78,12 +78,12 @@ public class ExportImportEntitySearchContainerMappingTag<R> extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:" +
 				"export-import-entity-search-container-mapping:searchContainer",
 			_searchContainer);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:" +
 				"export-import-entity-search-container-mapping:" +
 					"searchContainerMappingId",

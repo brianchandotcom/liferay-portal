@@ -31,9 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ServerDisplayContext {
 
 	public ServerDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 

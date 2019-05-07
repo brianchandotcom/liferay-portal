@@ -618,10 +618,12 @@ public class DDMFormDisplayContext {
 		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
-	protected Locale getLocale(HttpServletRequest request, DDMForm ddmForm) {
+	protected Locale getLocale(
+		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
+
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		String languageId = LanguageUtil.getLanguageId(request);
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 

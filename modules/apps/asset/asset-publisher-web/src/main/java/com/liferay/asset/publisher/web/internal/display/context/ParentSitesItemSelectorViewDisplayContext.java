@@ -36,12 +36,13 @@ public class ParentSitesItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public ParentSitesItemSelectorViewDisplayContext(
-		HttpServletRequest request, AssetPublisherHelper assetPublisherHelper,
+		HttpServletRequest httpServletRequest,
+		AssetPublisherHelper assetPublisherHelper,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
-			request, assetPublisherHelper, siteItemSelectorCriterion,
+			httpServletRequest, assetPublisherHelper, siteItemSelectorCriterion,
 			itemSelectedEventName, portletURL);
 	}
 

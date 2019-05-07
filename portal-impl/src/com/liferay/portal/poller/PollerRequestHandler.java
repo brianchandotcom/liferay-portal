@@ -27,7 +27,7 @@ public interface PollerRequestHandler {
 	public PollerHeader getPollerHeader(String pollerRequestString);
 
 	public JSONObject processRequest(
-			HttpServletRequest request, String pollerRequestString)
+			HttpServletRequest httpServletRequest, String pollerRequestString)
 		throws Exception;
 
 }

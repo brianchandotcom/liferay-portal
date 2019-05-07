@@ -117,11 +117,11 @@ public class VideoDLPreviewRendererProvider
 
 	private List<String> _getPreviewFileURLs(
 			FileVersion fileVersion, String videoPosterURL,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		int status = ParamUtil.getInteger(
-			request, "status", WorkflowConstants.STATUS_ANY);
+			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
 		String previewQueryString = "&videoPreview=1";
 
@@ -130,8 +130,9 @@ public class VideoDLPreviewRendererProvider
 		}
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			List<String> previewFileURLs = new ArrayList<>();
 

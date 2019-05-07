@@ -44,10 +44,10 @@ public class SearchSpeedTag<R> extends SearchFormTag<R> {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute("liferay-ui:search:hits", _hits);
+		httpServletRequest.setAttribute("liferay-ui:search:hits", _hits);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/search_speed/page.jsp";

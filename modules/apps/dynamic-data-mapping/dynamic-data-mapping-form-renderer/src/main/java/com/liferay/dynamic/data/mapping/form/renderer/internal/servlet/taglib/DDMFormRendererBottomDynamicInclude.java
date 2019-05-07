@@ -34,12 +34,12 @@ public class DDMFormRendererBottomDynamicInclude
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		if (DDMFormFieldTypesThreadLocal.isFieldTypesRequested()) {
-			include(response);
+			include(httpServletResponse);
 		}
 
 		DDMFormFieldTypesThreadLocal.removeAll();

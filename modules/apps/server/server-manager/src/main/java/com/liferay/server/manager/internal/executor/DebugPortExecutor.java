@@ -42,7 +42,7 @@ public class DebugPortExecutor extends BaseExecutor {
 
 	@Override
 	public void executeRead(
-		HttpServletRequest request, JSONObject responseJSONObject,
+		HttpServletRequest httpServletRequest, JSONObject responseJSONObject,
 		Queue<String> arguments) {
 
 		String debugPort = getDebugPort();

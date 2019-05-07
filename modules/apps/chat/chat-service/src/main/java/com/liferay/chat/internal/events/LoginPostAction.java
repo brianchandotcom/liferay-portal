@@ -36,9 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 public class LoginPostAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
-		long userId = _portal.getUserId(request);
-		String password = _portal.getUserPassword(request);
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		long userId = _portal.getUserId(httpServletRequest);
+		String password = _portal.getUserPassword(httpServletRequest);
 
 		JabberUtil.login(userId, password);
 	}

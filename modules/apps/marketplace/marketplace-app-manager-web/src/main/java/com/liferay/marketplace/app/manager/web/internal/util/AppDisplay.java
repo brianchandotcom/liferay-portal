@@ -41,11 +41,11 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getDisplayURL(MimeResponse mimeResponse);
 
-	public String getIconURL(HttpServletRequest request);
+	public String getIconURL(HttpServletRequest httpServletRequest);
 
 	public int getState();
 
-	public String getStoreURL(HttpServletRequest request);
+	public String getStoreURL(HttpServletRequest httpServletRequest);
 
 	public String getTitle();
 

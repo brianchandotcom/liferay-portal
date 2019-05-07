@@ -211,17 +211,20 @@ public class AddMenuTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:add-menu:inline", _inline);
-		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-frontend:add-menu:inline", _inline);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:add-menu:maxItems", _maxItems);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:add-menu:menuItemGroups", _menuItemGroups);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:add-menu:menuItemsCount", _menuItemsCount);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:add-menu:numMenuItems", _numMenuItems);
-		request.setAttribute("liferay-frontend:add-menu:total", getTotal());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:add-menu:total", getTotal());
+		httpServletRequest.setAttribute(
 			"liferay-frontend:add-menu:viewMoreURL", _viewMoreURL);
 	}
 

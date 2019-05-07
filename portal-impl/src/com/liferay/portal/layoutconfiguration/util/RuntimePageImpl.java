@@ -102,87 +102,100 @@ public class RuntimePageImpl implements RuntimePage {
 
 	@Override
 	public StringBundler getProcessedTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId, TemplateResource templateResource)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
+			TemplateResource templateResource)
 		throws Exception {
 
 		return doDispatch(
-			request, response, portletId, templateResource,
-			TemplateConstants.LANG_TYPE_VM, true);
+			httpServletRequest, httpServletResponse, portletId,
+			templateResource, TemplateConstants.LANG_TYPE_VM, true);
 	}
 
 	@Override
 	public void processCustomizationSettings(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			TemplateResource templateResource)
 		throws Exception {
 
 		processCustomizationSettings(
-			request, response, templateResource,
+			httpServletRequest, httpServletResponse, templateResource,
 			TemplateConstants.LANG_TYPE_VM);
 	}
 
 	@Override
 	public void processCustomizationSettings(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			TemplateResource templateResource, String langType)
 		throws Exception {
 
-		doDispatch(request, response, null, templateResource, langType, false);
+		doDispatch(
+			httpServletRequest, httpServletResponse, null, templateResource,
+			langType, false);
 	}
 
 	@Override
 	public void processTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId, TemplateResource templateResource)
-		throws Exception {
-
-		StringBundler sb = doDispatch(
-			request, response, portletId, templateResource,
-			TemplateConstants.LANG_TYPE_VM, true);
-
-		sb.writeTo(response.getWriter());
-	}
-
-	@Override
-	public void processTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId, TemplateResource templateResource,
-			String langType)
-		throws Exception {
-
-		StringBundler sb = doDispatch(
-			request, response, portletId, templateResource, langType, true);
-
-		sb.writeTo(response.getWriter());
-	}
-
-	@Override
-	public void processTemplate(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
 			TemplateResource templateResource)
 		throws Exception {
 
-		processTemplate(request, response, null, templateResource);
+		StringBundler sb = doDispatch(
+			httpServletRequest, httpServletResponse, portletId,
+			templateResource, TemplateConstants.LANG_TYPE_VM, true);
+
+		sb.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override
 	public void processTemplate(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
 			TemplateResource templateResource, String langType)
 		throws Exception {
 
-		processTemplate(request, response, null, templateResource, langType);
+		StringBundler sb = doDispatch(
+			httpServletRequest, httpServletResponse, portletId,
+			templateResource, langType, true);
+
+		sb.writeTo(httpServletResponse.getWriter());
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			TemplateResource templateResource)
+		throws Exception {
+
+		processTemplate(
+			httpServletRequest, httpServletResponse, null, templateResource);
+	}
+
+	@Override
+	public void processTemplate(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			TemplateResource templateResource, String langType)
+		throws Exception {
+
+		processTemplate(
+			httpServletRequest, httpServletResponse, null, templateResource,
+			langType);
 	}
 
 	@Override
 	public String processXML(
-			HttpServletRequest request, HttpServletResponse response,
-			String content)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String content)
 		throws Exception {
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletResponse != null) &&
 			!(portletResponse instanceof RenderResponse)) {
@@ -191,9 +204,10 @@ public class RuntimePageImpl implements RuntimePage {
 				"processXML can only be invoked in the render phase");
 		}
 
-		RuntimeLogic portletLogic = new PortletLogic(request, response);
+		RuntimeLogic portletLogic = new PortletLogic(
+			httpServletRequest, httpServletResponse);
 
-		content = processXML(request, content, portletLogic);
+		content = processXML(httpServletRequest, content, portletLogic);
 
 		if (portletResponse == null) {
 			return content;
@@ -204,15 +218,15 @@ public class RuntimePageImpl implements RuntimePage {
 		RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
 		RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
 
-		content = processXML(request, content, actionURLLogic);
-		content = processXML(request, content, renderURLLogic);
+		content = processXML(httpServletRequest, content, actionURLLogic);
+		content = processXML(httpServletRequest, content, renderURLLogic);
 
 		return content;
 	}
 
 	@Override
 	public String processXML(
-			HttpServletRequest request, String content,
+			HttpServletRequest httpServletRequest, String content,
 			RuntimeLogic runtimeLogic)
 		throws Exception {
 
@@ -226,22 +240,24 @@ public class RuntimePageImpl implements RuntimePage {
 			return content;
 		}
 
-		Portlet renderPortlet = (Portlet)request.getAttribute(
+		Portlet renderPortlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
-		Boolean renderPortletResource = (Boolean)request.getAttribute(
-			WebKeys.RENDER_PORTLET_RESOURCE);
+		Boolean renderPortletResource =
+			(Boolean)httpServletRequest.getAttribute(
+				WebKeys.RENDER_PORTLET_RESOURCE);
 
-		String outerPortletId = (String)request.getAttribute(
+		String outerPortletId = (String)httpServletRequest.getAttribute(
 			WebKeys.OUTER_PORTLET_ID);
 
 		if (outerPortletId == null) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.OUTER_PORTLET_ID, renderPortlet.getPortletId());
 		}
 
 		try {
-			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
+			httpServletRequest.setAttribute(
+				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
 			StringBundler sb = new StringBundler();
 
@@ -285,25 +301,28 @@ public class RuntimePageImpl implements RuntimePage {
 		}
 		finally {
 			if (outerPortletId == null) {
-				request.removeAttribute(WebKeys.OUTER_PORTLET_ID);
+				httpServletRequest.removeAttribute(WebKeys.OUTER_PORTLET_ID);
 			}
 
-			request.setAttribute(WebKeys.RENDER_PORTLET, renderPortlet);
+			httpServletRequest.setAttribute(
+				WebKeys.RENDER_PORTLET, renderPortlet);
 
 			if (renderPortletResource == null) {
-				request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
+				httpServletRequest.removeAttribute(
+					WebKeys.RENDER_PORTLET_RESOURCE);
 			}
 			else {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.RENDER_PORTLET_RESOURCE, renderPortletResource);
 			}
 		}
 	}
 
 	protected StringBundler doDispatch(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId, TemplateResource templateResource,
-			String langType, boolean processTemplate)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
+			TemplateResource templateResource, String langType,
+			boolean processTemplate)
 		throws Exception {
 
 		ClassLoader pluginClassLoader = null;
@@ -338,12 +357,13 @@ public class RuntimePageImpl implements RuntimePage {
 
 			if (processTemplate) {
 				return doProcessTemplate(
-					request, response, portletId, templateResource, langType,
-					false);
+					httpServletRequest, httpServletResponse, portletId,
+					templateResource, langType, false);
 			}
 
 			doProcessCustomizationSettings(
-				request, response, templateResource, langType, false);
+				httpServletRequest, httpServletResponse, templateResource,
+				langType, false);
 
 			return null;
 		}
@@ -357,13 +377,15 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doProcessCustomizationSettings(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			TemplateResource templateResource, String langType,
 			boolean restricted)
 		throws Exception {
 
 		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(request, response);
+			new CustomizationSettingsProcessor(
+				httpServletRequest, httpServletResponse);
 
 		Template template = TemplateManagerUtil.getTemplate(
 			langType, templateResource, restricted);
@@ -372,7 +394,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		// Velocity variables
 
-		template.prepare(request);
+		template.prepare(httpServletRequest);
 
 		// liferay:include tag library
 
@@ -382,7 +404,7 @@ public class RuntimePageImpl implements RuntimePage {
 		template.put("theme", velocityTaglib);
 
 		try {
-			template.processTemplate(response.getWriter());
+			template.processTemplate(httpServletResponse.getWriter());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -392,13 +414,14 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected StringBundler doProcessTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			String portletId, TemplateResource templateResource,
-			String langType, boolean restricted)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
+			TemplateResource templateResource, String langType,
+			boolean restricted)
 		throws Exception {
 
 		TemplateProcessor processor = new TemplateProcessor(
-			request, response, portletId);
+			httpServletRequest, httpServletResponse, portletId);
 
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(langType);
@@ -410,13 +433,13 @@ public class RuntimePageImpl implements RuntimePage {
 
 		// Velocity variables
 
-		template.prepare(request);
+		template.prepare(httpServletRequest);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request,
-			new PipingServletResponse(response, unsyncStringWriter));
+			template, "taglibLiferay", httpServletRequest,
+			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 
 		try {
 			template.processTemplate(unsyncStringWriter);
@@ -460,7 +483,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 				javax.portlet.Portlet portlet =
 					PortletBagUtil.getPortletInstance(
-						request.getServletContext(), portletModel,
+						httpServletRequest.getServletContext(), portletModel,
 						portletModel.getRootPortletId());
 
 				if (!PortletTypeUtil.isHeaderPortlet(portlet)) {
@@ -469,7 +492,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 				Map<String, Object> headerRequestMap =
 					portletRenderer.renderHeaders(
-						request, response,
+						httpServletRequest, httpServletResponse,
 						portletModel.getHeaderRequestAttributePrefixes());
 
 				String rendererPortletId = portletModel.getPortletId();
@@ -498,7 +521,7 @@ public class RuntimePageImpl implements RuntimePage {
 		}
 
 		boolean portletParallelRender = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
+			httpServletRequest.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
 
 		Lock lock = null;
 
@@ -527,16 +550,18 @@ public class RuntimePageImpl implements RuntimePage {
 					lock = new ReentrantLock();
 				}
 
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.PARALLEL_RENDERING_MERGE_LOCK, lock);
 
 				ObjectValuePair<HttpServletRequest, Closeable> objectValuePair =
-					ThreadLocalFacadeServletRequestWrapperUtil.inject(request);
+					ThreadLocalFacadeServletRequestWrapperUtil.inject(
+						httpServletRequest);
 
 				try {
 					parallelyRenderPortlets(
-						objectValuePair.getKey(), response, processor,
-						contentsMap, portletHeaderRequestMap, portletRenderers);
+						objectValuePair.getKey(), httpServletResponse,
+						processor, contentsMap, portletHeaderRequestMap,
+						portletRenderers);
 				}
 				finally {
 					Closeable closeable = objectValuePair.getValue();
@@ -544,7 +569,8 @@ public class RuntimePageImpl implements RuntimePage {
 					closeable.close();
 				}
 
-				request.removeAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+				httpServletRequest.removeAttribute(
+					WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -565,7 +591,7 @@ public class RuntimePageImpl implements RuntimePage {
 					contentsMap.put(
 						rendererPortletId,
 						portletRenderer.render(
-							request, response,
+							httpServletRequest, httpServletResponse,
 							portletHeaderRequestMap.get(rendererPortletId)));
 
 					if (_log.isDebugEnabled()) {
@@ -635,7 +661,8 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void parallelyRenderPortlets(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			TemplateProcessor processor, Map<String, StringBundler> contentsMap,
 			Map<String, Map<String, Object>> portletHeaderRequestMap,
 			List<PortletRenderer> portletRenderers)
@@ -661,7 +688,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 			Callable<StringBundler> renderCallable =
 				portletRenderer.getCallable(
-					request, response,
+					httpServletRequest, httpServletResponse,
 					portletHeaderRequestMap.get(rendererPortletId));
 
 			Future<StringBundler> future = null;
@@ -776,7 +803,8 @@ public class RuntimePageImpl implements RuntimePage {
 							portlet.getPortletId());
 				}
 
-				sb = portletRenderer.renderAjax(request, response);
+				sb = portletRenderer.renderAjax(
+					httpServletRequest, httpServletResponse);
 			}
 			else {
 				if (_log.isDebugEnabled()) {
@@ -794,7 +822,8 @@ public class RuntimePageImpl implements RuntimePage {
 					}
 				}
 
-				sb = portletRenderer.renderError(request, response);
+				sb = portletRenderer.renderError(
+					httpServletRequest, httpServletResponse);
 			}
 
 			contentsMap.put(portlet.getPortletId(), sb);

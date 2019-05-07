@@ -45,11 +45,11 @@ public class JournalFeedsManagementToolbarDisplayContext
 	public JournalFeedsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		JournalFeedsDisplayContext journalFeedsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalFeedsDisplayContext.getFeedsSearchContainer());
 	}
 

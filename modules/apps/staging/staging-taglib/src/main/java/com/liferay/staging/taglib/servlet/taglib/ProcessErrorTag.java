@@ -119,28 +119,28 @@ public class ProcessErrorTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:authException", _authException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:duplicateLockException",
 			_duplicateLockException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:illegalArgumentException",
 			_illegalArgumentException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:layoutPrototypeException",
 			_layoutPrototypeException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:noSuchExceptions",
 			_noSuchExceptions);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:remoteExportException",
 			_remoteExportException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:remoteOptionsException",
 			_remoteOptionsException);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-error:systemException", _systemException);
 	}
 

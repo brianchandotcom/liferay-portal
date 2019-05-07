@@ -49,23 +49,25 @@ public class PortletDisplayTemplateManagerUtil {
 	}
 
 	public static String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			DDMTemplate ddmTemplate, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		return _portletDisplayTemplateManager.renderDDMTemplate(
-			request, response, ddmTemplate, entries, contextObjects);
+			httpServletRequest, httpServletResponse, ddmTemplate, entries,
+			contextObjects);
 	}
 
 	public static String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long templateId, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long templateId,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		return _portletDisplayTemplateManager.renderDDMTemplate(
-			request, response, templateId, entries, contextObjects);
+			httpServletRequest, httpServletResponse, templateId, entries,
+			contextObjects);
 	}
 
 	private static volatile PortletDisplayTemplateManager

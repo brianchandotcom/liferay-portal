@@ -62,17 +62,17 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 	};
 
 	public NamespaceServletRequest(
-		HttpServletRequest request, String attrNamespace,
+		HttpServletRequest httpServletRequest, String attrNamespace,
 		String paramNamespace) {
 
-		this(request, attrNamespace, paramNamespace, true);
+		this(httpServletRequest, attrNamespace, paramNamespace, true);
 	}
 
 	public NamespaceServletRequest(
-		HttpServletRequest request, String attrNamespace, String paramNamespace,
-		boolean inherit) {
+		HttpServletRequest httpServletRequest, String attrNamespace,
+		String paramNamespace, boolean inherit) {
 
-		super(request, inherit);
+		super(httpServletRequest, inherit);
 
 		_attrNamespace = attrNamespace;
 		_paramNamespace = paramNamespace;

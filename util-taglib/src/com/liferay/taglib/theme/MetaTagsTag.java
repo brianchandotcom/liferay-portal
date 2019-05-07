@@ -40,22 +40,24 @@ import javax.servlet.jsp.JspWriter;
 public class MetaTagsTag extends IncludeTag {
 
 	public static void doTag(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response)
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		doTag(_PAGE, servletContext, request, response);
+		doTag(_PAGE, servletContext, httpServletRequest, httpServletResponse);
 	}
 
 	public static void doTag(
 			String page, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(page);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

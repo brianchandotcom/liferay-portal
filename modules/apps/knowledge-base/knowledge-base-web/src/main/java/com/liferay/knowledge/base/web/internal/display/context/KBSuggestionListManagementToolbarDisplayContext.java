@@ -51,11 +51,12 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	public KBSuggestionListManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, SearchContainer searchContainer) {
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_searchContainer = searchContainer;
 
 		_currentURLObj = PortletURLUtil.getCurrent(

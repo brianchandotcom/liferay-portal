@@ -24,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface StrutsAction {
 
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	/**
@@ -33,11 +34,12 @@ public interface StrutsAction {
 	 */
 	@Deprecated
 	public default String execute(
-			StrutsAction originalStrutsAction, HttpServletRequest request,
-			HttpServletResponse response)
+			StrutsAction originalStrutsAction,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		return execute(request, response);
+		return execute(httpServletRequest, httpServletResponse);
 	}
 
 }

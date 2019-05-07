@@ -34,13 +34,15 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class EncryptedServletRequest extends HttpServletRequestWrapper {
 
-	public EncryptedServletRequest(HttpServletRequest request, Key key) {
-		super(request);
+	public EncryptedServletRequest(
+		HttpServletRequest httpServletRequest, Key key) {
+
+		super(httpServletRequest);
 
 		_params = new HashMap<>();
 		_key = key;
 
-		Map<String, String[]> parameters = request.getParameterMap();
+		Map<String, String[]> parameters = httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();

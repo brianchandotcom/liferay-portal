@@ -35,7 +35,8 @@ public interface AssetAddonEntry {
 	public Double getWeight();
 
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	public boolean isEnabled();

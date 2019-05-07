@@ -87,7 +87,7 @@ public class ManagementBarFilterItemTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		ManagementBarNavigationTag managementBarNavigationTag =
 			(ManagementBarNavigationTag)findAncestorWithClass(
 				this, ManagementBarNavigationTag.class);

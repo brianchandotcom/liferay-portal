@@ -73,11 +73,11 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	protected void prepareRequest(HttpServletRequest request) {
+	protected void prepareRequest(HttpServletRequest httpServletRequest) {
 		String resolvedModuleName = _npmResolver.resolveModuleName(
 			"map-openstreetmap/js/MapOpenStreetMap.es");
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-map:map:bootstrapRequire",
 			resolvedModuleName + " as MapOpenStreetMap");
 	}

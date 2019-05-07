@@ -116,10 +116,11 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
 			companyId);
@@ -129,13 +130,13 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 
 		if (!_openSSO.isAuthenticated(
-				request, openSSOConfiguration.serviceURL())) {
+				httpServletRequest, openSSOConfiguration.serviceURL())) {
 
 			return null;
 		}
 
 		Map<String, String> nameValues = _openSSO.getAttributes(
-			request, openSSOConfiguration.serviceURL());
+			httpServletRequest, openSSOConfiguration.serviceURL());
 
 		String screenName = nameValues.get(
 			openSSOConfiguration.screenNameAttr());
@@ -193,7 +194,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		else {
 			if (Validator.isNull(emailAddress)) {
 				return handleException(
-					request, response, new Exception("Email address is null"));
+					httpServletRequest, httpServletResponse,
+					new Exception("Email address is null"));
 			}
 		}
 
@@ -203,8 +205,9 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		}
 
 		if (user == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			Locale locale = LocaleUtil.getDefault();
 
@@ -225,10 +228,11 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 				locale);
 		}
 
-		String currentURL = _portal.getCurrentURL(request);
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
 
 		if (currentURL.contains("/portal/login")) {
-			String redirect = ParamUtil.getString(request, "redirect");
+			String redirect = ParamUtil.getString(
+				httpServletRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				redirect = _portal.escapeRedirect(redirect);
@@ -237,7 +241,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 				redirect = _portal.getPathMain();
 			}
 
-			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
+			httpServletRequest.setAttribute(
+				AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 		}
 
 		String[] credentials = new String[3];

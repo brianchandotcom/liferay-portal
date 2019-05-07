@@ -156,7 +156,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 			title);
 	}
 
-	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+	public DropdownItemList getFilterOptions(
+		HttpServletRequest httpServletRequest) {
+
 		return new DropdownItemList() {
 			{
 				addGroup(
@@ -167,12 +169,14 @@ public class WorkflowDefinitionLinkDisplayContext {
 									add(
 										_getOrderByDropdownItem(
 											"resource",
-											_getCurrentOrder(request)));
+											_getCurrentOrder(
+												httpServletRequest)));
 
 									add(
 										_getOrderByDropdownItem(
 											"workflow",
-											_getCurrentOrder(request)));
+											_getCurrentOrder(
+												httpServletRequest)));
 								}
 							});
 						dropdownGroupItem.setLabel(
@@ -508,8 +512,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 		return false;
 	}
 
-	public boolean showStripeMessage(HttpServletRequest request) {
-		HttpSession httpSession = request.getSession(false);
+	public boolean showStripeMessage(HttpServletRequest httpServletRequest) {
+		HttpSession httpSession = httpServletRequest.getSession(false);
 
 		String showDefinitionLinkInfo = SessionClicks.get(
 			httpSession, "show_definition_link_info", StringPool.BLANK);
@@ -670,8 +674,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 		return ListUtil.filter(workflowHandlers, WorkflowHandler::isVisible);
 	}
 
-	private String _getCurrentOrder(HttpServletRequest request) {
-		return ParamUtil.getString(request, "orderByCol", "resource");
+	private String _getCurrentOrder(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(
+			httpServletRequest, "orderByCol", "resource");
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(

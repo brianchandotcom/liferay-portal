@@ -121,10 +121,10 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		return sb.toString();
 	}
 
-	public String getHelpPageTitle(HttpServletRequest request) {
+	public String getHelpPageTitle(HttpServletRequest httpServletRequest) {
 		return LanguageUtil.format(
-			request, "x-syntax-help", getFormatLabel(request.getLocale()),
-			false);
+			httpServletRequest, "x-syntax-help",
+			getFormatLabel(httpServletRequest.getLocale()), false);
 	}
 
 	public abstract String getHelpURL();

@@ -179,39 +179,39 @@ public class SocialActivitiesTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:activityDescriptors",
 			_activityDescriptors);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:className",
 			_className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:classPK",
 			String.valueOf(_classPK));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:displayRSSFeed",
 			String.valueOf(_displayRSSFeed));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedDelta",
 			String.valueOf(_feedDelta));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedDisplayStyle",
 			_feedDisplayStyle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedResourceURL",
 			_feedResourceURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedTitle",
 			_feedTitle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedType", _feedType);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedURL", _feedURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-activities:social-activities:feedURLMessage",
 			_feedURLMessage);
 	}

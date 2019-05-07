@@ -22,8 +22,10 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class WebLogicIncludeServletResponse extends HttpServletResponseWrapper {
 
-	public WebLogicIncludeServletResponse(HttpServletResponse response) {
-		super(response);
+	public WebLogicIncludeServletResponse(
+		HttpServletResponse httpServletResponse) {
+
+		super(httpServletResponse);
 	}
 
 	@Override

@@ -154,7 +154,8 @@ public interface DDL {
 	 */
 	@Deprecated
 	public boolean isEditable(
-			HttpServletRequest request, String portletId, long groupId)
+			HttpServletRequest httpServletRequest, String portletId,
+			long groupId)
 		throws Exception;
 
 	/**

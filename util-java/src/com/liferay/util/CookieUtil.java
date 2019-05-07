@@ -33,14 +33,17 @@ import javax.servlet.http.HttpServletRequest;
 @Deprecated
 public class CookieUtil {
 
-	public static String get(HttpServletRequest request, String name) {
-		return get(request, name, true);
+	public static String get(
+		HttpServletRequest httpServletRequest, String name) {
+
+		return get(httpServletRequest, name, true);
 	}
 
 	public static String get(
-		HttpServletRequest request, String name, boolean toUpperCase) {
+		HttpServletRequest httpServletRequest, String name,
+		boolean toUpperCase) {
 
-		Map<String, Cookie> cookieMap = _getCookieMap(request);
+		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
 
 		if (toUpperCase) {
 			name = StringUtil.toUpperCase(name);
@@ -56,17 +59,17 @@ public class CookieUtil {
 	}
 
 	private static Map<String, Cookie> _getCookieMap(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, Cookie> cookieMap =
-			(Map<String, Cookie>)request.getAttribute(
+			(Map<String, Cookie>)httpServletRequest.getAttribute(
 				CookieUtil.class.getName());
 
 		if (cookieMap != null) {
 			return cookieMap;
 		}
 
-		Cookie[] cookies = request.getCookies();
+		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (cookies == null) {
 			cookieMap = Collections.emptyMap();
@@ -83,7 +86,7 @@ public class CookieUtil {
 			}
 		}
 
-		request.setAttribute(CookieUtil.class.getName(), cookieMap);
+		httpServletRequest.setAttribute(CookieUtil.class.getName(), cookieMap);
 
 		return cookieMap;
 	}

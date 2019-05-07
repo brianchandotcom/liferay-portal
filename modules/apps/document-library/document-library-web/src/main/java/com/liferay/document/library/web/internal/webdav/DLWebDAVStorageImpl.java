@@ -978,10 +978,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected String getContentType(
-		HttpServletRequest request, File file, String title) {
+		HttpServletRequest httpServletRequest, File file, String title) {
 
 		String contentType = GetterUtil.getString(
-			request.getHeader(HttpHeaders.CONTENT_TYPE),
+			httpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE),
 			ContentTypes.APPLICATION_OCTET_STREAM);
 
 		if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM) ||

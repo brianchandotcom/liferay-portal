@@ -94,16 +94,16 @@ public class ContentTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:content:cmd", _cmd);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-staging:content:cmd", _cmd);
+		httpServletRequest.setAttribute(
 			"liferay-staging:content:disableInputs", _disableInputs);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:content:exportImportConfigurationId",
 			_exportImportConfigurationId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:content:showAllPortlets", _showAllPortlets);
-		request.setAttribute("liferay-staging:content:type", _type);
+		httpServletRequest.setAttribute("liferay-staging:content:type", _type);
 	}
 
 	private static final String _PAGE = "/content/page.jsp";

@@ -170,9 +170,9 @@ public class AtomUtil {
 	}
 
 	public static void saveUserInRequest(
-		HttpServletRequest request, User user) {
+		HttpServletRequest httpServletRequest, User user) {
 
-		request.setAttribute(_USER, user);
+		httpServletRequest.setAttribute(_USER, user);
 	}
 
 	public static String setPageInUrl(String url, int page) {

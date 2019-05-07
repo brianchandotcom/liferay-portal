@@ -34,8 +34,8 @@ public class LanguageIdCacheFileNameContributor
 	}
 
 	@Override
-	public String getParameterValue(HttpServletRequest request) {
-		String languageId = request.getParameter(getParameterName());
+	public String getParameterValue(HttpServletRequest httpServletRequest) {
+		String languageId = httpServletRequest.getParameter(getParameterName());
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 

@@ -228,9 +228,11 @@ public class StagingUtil {
 	}
 
 	public static void deleteRecentLayoutRevisionId(
-		HttpServletRequest request, long layoutSetBranchId, long plid) {
+		HttpServletRequest httpServletRequest, long layoutSetBranchId,
+		long plid) {
 
-		_staging.deleteRecentLayoutRevisionId(request, layoutSetBranchId, plid);
+		_staging.deleteRecentLayoutRevisionId(
+			httpServletRequest, layoutSetBranchId, plid);
 	}
 
 	public static void deleteRecentLayoutRevisionId(
@@ -320,11 +322,12 @@ public class StagingUtil {
 	}
 
 	public static long getRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid)
 		throws PortalException {
 
 		return _staging.getRecentLayoutRevisionId(
-			request, layoutSetBranchId, plid);
+			httpServletRequest, layoutSetBranchId, plid);
 	}
 
 	public static long getRecentLayoutRevisionId(
@@ -336,9 +339,10 @@ public class StagingUtil {
 	}
 
 	public static long getRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetId) {
+		HttpServletRequest httpServletRequest, long layoutSetId) {
 
-		return _staging.getRecentLayoutSetBranchId(request, layoutSetId);
+		return _staging.getRecentLayoutSetBranchId(
+			httpServletRequest, layoutSetId);
 	}
 
 	public static long getRecentLayoutSetBranchId(User user, long layoutSetId) {
@@ -663,12 +667,12 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutBranchId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutBranchId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutBranchId)
 		throws PortalException {
 
 		_staging.setRecentLayoutBranchId(
-			request, layoutSetBranchId, plid, layoutBranchId);
+			httpServletRequest, layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public static void setRecentLayoutBranchId(
@@ -680,12 +684,12 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutRevisionId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutRevisionId)
 		throws PortalException {
 
 		_staging.setRecentLayoutRevisionId(
-			request, layoutSetBranchId, plid, layoutRevisionId);
+			httpServletRequest, layoutSetBranchId, plid, layoutRevisionId);
 	}
 
 	public static void setRecentLayoutRevisionId(
@@ -697,12 +701,12 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutSetBranchId(
-			HttpServletRequest request, long layoutSetId,
+			HttpServletRequest httpServletRequest, long layoutSetId,
 			long layoutSetBranchId)
 		throws PortalException {
 
 		_staging.setRecentLayoutSetBranchId(
-			request, layoutSetId, layoutSetBranchId);
+			httpServletRequest, layoutSetId, layoutSetBranchId);
 	}
 
 	public static void setRecentLayoutSetBranchId(

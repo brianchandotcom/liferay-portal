@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface URLEncoder {
 
-	public String encodeURL(HttpServletResponse response, String path);
+	public String encodeURL(
+		HttpServletResponse httpServletResponse, String path);
 
 }

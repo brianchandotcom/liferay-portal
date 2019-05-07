@@ -992,7 +992,7 @@ public class BlogEntriesDisplayContextTest {
 		}
 
 		@Override
-		public void transferHeaders(HttpServletResponse response) {
+		public void transferHeaders(HttpServletResponse httpServletResponse) {
 		}
 
 		@Override

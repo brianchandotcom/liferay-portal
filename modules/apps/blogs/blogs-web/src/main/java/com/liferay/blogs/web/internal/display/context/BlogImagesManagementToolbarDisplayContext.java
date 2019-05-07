@@ -52,11 +52,11 @@ public class BlogImagesManagementToolbarDisplayContext {
 	public BlogImagesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, PortletURL currentURLObj) {
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_currentURLObj = currentURLObj;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(

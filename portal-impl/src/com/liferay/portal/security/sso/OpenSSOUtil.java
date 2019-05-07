@@ -40,22 +40,22 @@ import javax.servlet.http.HttpServletRequest;
 public class OpenSSOUtil {
 
 	public static Map<String, String> getAttributes(
-		HttpServletRequest request, String serviceUrl) {
+		HttpServletRequest httpServletRequest, String serviceUrl) {
 
-		return _getOpenSSO().getAttributes(request, serviceUrl);
+		return _getOpenSSO().getAttributes(httpServletRequest, serviceUrl);
 	}
 
 	public static String getSubjectId(
-		HttpServletRequest request, String serviceUrl) {
+		HttpServletRequest httpServletRequest, String serviceUrl) {
 
-		return _getOpenSSO().getSubjectId(request, serviceUrl);
+		return _getOpenSSO().getSubjectId(httpServletRequest, serviceUrl);
 	}
 
 	public static boolean isAuthenticated(
-			HttpServletRequest request, String serviceUrl)
+			HttpServletRequest httpServletRequest, String serviceUrl)
 		throws IOException {
 
-		return _getOpenSSO().isAuthenticated(request, serviceUrl);
+		return _getOpenSSO().isAuthenticated(httpServletRequest, serviceUrl);
 	}
 
 	public static boolean isValidServiceUrl(String serviceUrl) {

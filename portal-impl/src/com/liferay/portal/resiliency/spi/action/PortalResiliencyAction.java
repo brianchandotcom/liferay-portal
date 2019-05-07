@@ -44,14 +44,15 @@ public class PortalResiliencyAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		SPIAgentRequest spiAgentRequest = (SPIAgentRequest)request.getAttribute(
-			WebKeys.SPI_AGENT_REQUEST);
+		SPIAgentRequest spiAgentRequest =
+			(SPIAgentRequest)httpServletRequest.getAttribute(
+				WebKeys.SPI_AGENT_REQUEST);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		spiAgentRequest.populateSessionAttributes(session);
 
@@ -59,16 +60,17 @@ public class PortalResiliencyAction implements Action {
 			(String)session.getAttribute(WebKeys.USER_PASSWORD));
 
 		try {
-			_execute(request, response);
+			_execute(httpServletRequest, httpServletResponse);
 		}
 		finally {
 			SPIAgentResponse spiAgentResponse =
-				(SPIAgentResponse)request.getAttribute(
+				(SPIAgentResponse)httpServletRequest.getAttribute(
 					WebKeys.SPI_AGENT_RESPONSE);
 
-			spiAgentResponse.captureRequestSessionAttributes(request);
+			spiAgentResponse.captureRequestSessionAttributes(
+				httpServletRequest);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTAL_RESILIENCY_ACTION, Boolean.TRUE);
 		}
 
@@ -76,23 +78,25 @@ public class PortalResiliencyAction implements Action {
 	}
 
 	private void _execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		PortletContainer portletContainer =
 			PortletContainerUtil.getPortletContainer();
 
-		Portlet portlet = (Portlet)request.getAttribute(
+		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.SPI_AGENT_PORTLET);
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		if (portletId.equals(portlet.getPortletId())) {
-			portletContainer.preparePortlet(request, portlet);
+			portletContainer.preparePortlet(httpServletRequest, portlet);
 		}
 
-		SPIAgent.Lifecycle lifecycle = (SPIAgent.Lifecycle)request.getAttribute(
-			WebKeys.SPI_AGENT_LIFECYCLE);
+		SPIAgent.Lifecycle lifecycle =
+			(SPIAgent.Lifecycle)httpServletRequest.getAttribute(
+				WebKeys.SPI_AGENT_LIFECYCLE);
 
 		if (lifecycle == SPIAgent.Lifecycle.ACTION) {
 
@@ -101,49 +105,57 @@ public class PortalResiliencyAction implements Action {
 			// request attribute, but to avoid a massive refactor, the SPI
 			// simply sends back the modified layout type settings to the MPI
 
-			Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+			Layout requestLayout = (Layout)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT);
 
 			String typeSettings = requestLayout.getTypeSettings();
 
 			ActionResult actionResult = portletContainer.processAction(
-				request, response, portlet);
+				httpServletRequest, httpServletResponse, portlet);
 
 			String newTypeSettings = requestLayout.getTypeSettings();
 
 			if (!newTypeSettings.equals(typeSettings)) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
 			}
 
-			request.setAttribute(WebKeys.SPI_AGENT_ACTION_RESULT, actionResult);
+			httpServletRequest.setAttribute(
+				WebKeys.SPI_AGENT_ACTION_RESULT, actionResult);
 		}
 		else if (lifecycle == SPIAgent.Lifecycle.EVENT) {
-			Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+			Layout requestLayout = (Layout)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT);
 
 			String typeSettings = requestLayout.getTypeSettings();
 
-			Layout layout = (Layout)request.getAttribute(
+			Layout layout = (Layout)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_LAYOUT);
 
-			Event event = (Event)request.getAttribute(WebKeys.SPI_AGENT_EVENT);
+			Event event = (Event)httpServletRequest.getAttribute(
+				WebKeys.SPI_AGENT_EVENT);
 
 			List<Event> events = portletContainer.processEvent(
-				request, response, portlet, layout, event);
+				httpServletRequest, httpServletResponse, portlet, layout,
+				event);
 
 			String newTypeSettings = requestLayout.getTypeSettings();
 
 			if (!newTypeSettings.equals(typeSettings)) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
 			}
 
-			request.setAttribute(WebKeys.SPI_AGENT_EVENT_RESULT, events);
+			httpServletRequest.setAttribute(
+				WebKeys.SPI_AGENT_EVENT_RESULT, events);
 		}
 		else if (lifecycle == SPIAgent.Lifecycle.RENDER) {
-			portletContainer.render(request, response, portlet);
+			portletContainer.render(
+				httpServletRequest, httpServletResponse, portlet);
 		}
 		else if (lifecycle == SPIAgent.Lifecycle.RESOURCE) {
-			portletContainer.serveResource(request, response, portlet);
+			portletContainer.serveResource(
+				httpServletRequest, httpServletResponse, portlet);
 		}
 		else {
 			throw new IllegalArgumentException("Unkown lifecycle " + lifecycle);

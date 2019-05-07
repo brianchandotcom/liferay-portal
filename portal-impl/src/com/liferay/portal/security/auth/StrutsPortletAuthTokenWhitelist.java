@@ -55,13 +55,13 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletCSRFWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		String portletId = portlet.getPortletId();
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		String strutsAction = request.getParameter(
+		String strutsAction = httpServletRequest.getParameter(
 			namespace.concat("struts_action"));
 
 		if (Validator.isNotNull(strutsAction)) {
@@ -80,17 +80,17 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		String portletId = portlet.getPortletId();
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		String strutsAction = request.getParameter(
+		String strutsAction = httpServletRequest.getParameter(
 			namespace.concat("struts_action"));
 
 		if (Validator.isNull(strutsAction)) {
-			strutsAction = request.getParameter("struts_action");
+			strutsAction = httpServletRequest.getParameter("struts_action");
 		}
 
 		if (Validator.isNotNull(strutsAction)) {

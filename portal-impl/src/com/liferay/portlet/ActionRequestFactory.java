@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionRequestFactory {
 
 	public static LiferayActionRequest create(
-		HttpServletRequest request, Portlet portlet,
+		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
 		PortletPreferences preferences, long plid) {
@@ -44,8 +44,8 @@ public class ActionRequestFactory {
 		ActionRequestImpl actionRequestImpl = new ActionRequestImpl();
 
 		actionRequestImpl.init(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, preferences, plid);
+			httpServletRequest, portlet, invokerPortlet, portletContext,
+			windowState, portletMode, preferences, plid);
 
 		return actionRequestImpl;
 	}

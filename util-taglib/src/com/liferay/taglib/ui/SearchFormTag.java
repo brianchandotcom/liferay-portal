@@ -51,7 +51,7 @@ public class SearchFormTag<R> extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		SearchContainerTag<R> searchContainerTag =
 			(SearchContainerTag<R>)findAncestorWithClass(
 				this, SearchContainerTag.class);
@@ -59,15 +59,15 @@ public class SearchFormTag<R> extends IncludeTag {
 		if (searchContainerTag != null) {
 			_searchContainer = searchContainerTag.getSearchContainer();
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:search:compactEmptyResultsMessage",
 				String.valueOf(
 					searchContainerTag.isCompactEmptyResultsMessage()));
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search:searchContainer", _searchContainer);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search:showAddButton", String.valueOf(_showAddButton));
 	}
 

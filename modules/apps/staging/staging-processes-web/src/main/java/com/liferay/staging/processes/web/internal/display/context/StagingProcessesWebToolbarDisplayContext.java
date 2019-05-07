@@ -43,10 +43,10 @@ import javax.servlet.jsp.PageContext;
 public class StagingProcessesWebToolbarDisplayContext {
 
 	public StagingProcessesWebToolbarDisplayContext(
-		HttpServletRequest request, PageContext pageContext,
+		HttpServletRequest httpServletRequest, PageContext pageContext,
 		LiferayPortletResponse portletResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_pageContext = pageContext;
 
 		_portletResponse = portletResponse;

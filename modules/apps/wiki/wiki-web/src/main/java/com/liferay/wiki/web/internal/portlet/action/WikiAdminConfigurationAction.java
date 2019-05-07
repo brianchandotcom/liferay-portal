@@ -40,7 +40,7 @@ public class WikiAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/wiki_admin/configuration.jsp";
 	}
 

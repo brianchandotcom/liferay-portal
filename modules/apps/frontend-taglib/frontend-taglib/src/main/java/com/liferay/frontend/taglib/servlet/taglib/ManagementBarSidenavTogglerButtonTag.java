@@ -88,20 +88,20 @@ public class ManagementBarSidenavTogglerButtonTag
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		if (Validator.isNull(getId())) {
 			setId(StringUtil.randomId());
 		}
 
-		setNamespacedAttribute(request, "href", _href);
-		setNamespacedAttribute(request, "position", _position);
-		setNamespacedAttribute(request, "type", _type);
-		setNamespacedAttribute(request, "typeMobile", _typeMobile);
-		setNamespacedAttribute(request, "width", _width);
+		setNamespacedAttribute(httpServletRequest, "href", _href);
+		setNamespacedAttribute(httpServletRequest, "position", _position);
+		setNamespacedAttribute(httpServletRequest, "type", _type);
+		setNamespacedAttribute(httpServletRequest, "typeMobile", _typeMobile);
+		setNamespacedAttribute(httpServletRequest, "width", _width);
 
-		super.setAttributes(request);
+		super.setAttributes(httpServletRequest);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

@@ -124,8 +124,8 @@ public class InvokerFilterChain implements FilterChain {
 	}
 
 	protected void processDirectCallFilter(
-			Filter filter, HttpServletRequest request,
-			HttpServletResponse response)
+			Filter filter, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		if (filter instanceof WrapHttpServletRequestFilter) {
@@ -136,8 +136,9 @@ public class InvokerFilterChain implements FilterChain {
 			WrapHttpServletRequestFilter wrapHttpServletRequestFilter =
 				(WrapHttpServletRequestFilter)filter;
 
-			request = wrapHttpServletRequestFilter.getWrappedHttpServletRequest(
-				request, response);
+			httpServletRequest =
+				wrapHttpServletRequestFilter.getWrappedHttpServletRequest(
+					httpServletRequest, httpServletResponse);
 		}
 
 		if (filter instanceof WrapHttpServletResponseFilter) {
@@ -148,9 +149,9 @@ public class InvokerFilterChain implements FilterChain {
 			WrapHttpServletResponseFilter wrapHttpServletResponseFilter =
 				(WrapHttpServletResponseFilter)filter;
 
-			response =
+			httpServletResponse =
 				wrapHttpServletResponseFilter.getWrappedHttpServletResponse(
-					request, response);
+					httpServletRequest, httpServletResponse);
 		}
 
 		if (filter instanceof TryFinallyFilter) {
@@ -163,9 +164,10 @@ public class InvokerFilterChain implements FilterChain {
 					_log.debug("Invoke try for filter " + filter.getClass());
 				}
 
-				object = tryFinallyFilter.doFilterTry(request, response);
+				object = tryFinallyFilter.doFilterTry(
+					httpServletRequest, httpServletResponse);
 
-				doFilter(request, response);
+				doFilter(httpServletRequest, httpServletResponse);
 			}
 			finally {
 				if (_log.isDebugEnabled()) {
@@ -173,7 +175,8 @@ public class InvokerFilterChain implements FilterChain {
 						"Invoke finally for filter " + filter.getClass());
 				}
 
-				tryFinallyFilter.doFilterFinally(request, response, object);
+				tryFinallyFilter.doFilterFinally(
+					httpServletRequest, httpServletResponse, object);
 			}
 		}
 		else if (filter instanceof TryFilter) {
@@ -183,12 +186,12 @@ public class InvokerFilterChain implements FilterChain {
 				_log.debug("Invoke try for filter " + filter.getClass());
 			}
 
-			tryFilter.doFilterTry(request, response);
+			tryFilter.doFilterTry(httpServletRequest, httpServletResponse);
 
-			doFilter(request, response);
+			doFilter(httpServletRequest, httpServletResponse);
 		}
 		else {
-			doFilter(request, response);
+			doFilter(httpServletRequest, httpServletResponse);
 		}
 	}
 

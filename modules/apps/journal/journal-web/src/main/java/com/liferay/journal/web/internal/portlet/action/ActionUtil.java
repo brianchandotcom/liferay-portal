@@ -244,25 +244,28 @@ public class ActionUtil {
 		}
 	}
 
-	public static JournalArticle getArticle(HttpServletRequest request)
+	public static JournalArticle getArticle(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String actionName = ParamUtil.getString(
-			request, ActionRequest.ACTION_NAME);
+			httpServletRequest, ActionRequest.ACTION_NAME);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
+		long resourcePrimKey = ParamUtil.getLong(
+			httpServletRequest, "resourcePrimKey");
 		long groupId = ParamUtil.getLong(
-			request, "groupId", themeDisplay.getScopeGroupId());
-		long classNameId = ParamUtil.getLong(request, "classNameId");
-		long classPK = ParamUtil.getLong(request, "classPK");
-		String articleId = ParamUtil.getString(request, "articleId");
+			httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
 		String ddmStructureKey = ParamUtil.getString(
-			request, "ddmStructureKey");
+			httpServletRequest, "ddmStructureKey");
 		int status = ParamUtil.getInteger(
-			request, "status", WorkflowConstants.STATUS_ANY);
+			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
 		JournalArticle article = null;
 
@@ -356,11 +359,11 @@ public class ActionUtil {
 		return articles;
 	}
 
-	public static JournalFeed getFeed(HttpServletRequest request)
+	public static JournalFeed getFeed(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-		String feedId = ParamUtil.getString(request, "feedId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		String feedId = ParamUtil.getString(httpServletRequest, "feedId");
 
 		JournalFeed feed = null;
 
@@ -380,13 +383,14 @@ public class ActionUtil {
 		return getFeed(request);
 	}
 
-	public static JournalFolder getFolder(HttpServletRequest request)
+	public static JournalFolder getFolder(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long folderId = ParamUtil.getLong(request, "folderId");
+		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
 		JournalFolder folder = null;
 

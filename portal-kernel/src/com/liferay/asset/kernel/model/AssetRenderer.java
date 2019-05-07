@@ -117,14 +117,14 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public String getURLDownload(ThemeDisplay themeDisplay);
 
-	public default PortletURL getURLEdit(HttpServletRequest request)
+	public default PortletURL getURLEdit(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return null;
 	}
 
 	public default PortletURL getURLEdit(
-			HttpServletRequest request, WindowState windowState,
+			HttpServletRequest httpServletRequest, WindowState windowState,
 			PortletURL redirectURL)
 		throws Exception {
 
@@ -132,7 +132,7 @@ public interface AssetRenderer<T> extends Renderer {
 	}
 
 	public default PortletURL getURLEdit(
-			HttpServletRequest request, WindowState windowState,
+			HttpServletRequest httpServletRequest, WindowState windowState,
 			String redirect)
 		throws Exception {
 
@@ -187,7 +187,8 @@ public interface AssetRenderer<T> extends Renderer {
 			String noSuchEntryRedirect)
 		throws Exception;
 
-	public default String getURLViewUsages(HttpServletRequest request)
+	public default String getURLViewUsages(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return StringPool.BLANK;

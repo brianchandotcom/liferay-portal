@@ -28,9 +28,12 @@ public class BaseMBHomeDisplayContext
 
 	public BaseMBHomeDisplayContext(
 		UUID uuid, MBHomeDisplayContext parentDisplayContext,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(
+			uuid, parentDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 	@Override

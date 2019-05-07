@@ -96,8 +96,9 @@ public class WebDAVUtil {
 		getInstance()._deleteStorage(storage);
 	}
 
-	public static long getDepth(HttpServletRequest request) {
-		String value = GetterUtil.getString(request.getHeader("Depth"));
+	public static long getDepth(HttpServletRequest httpServletRequest) {
+		String value = GetterUtil.getString(
+			httpServletRequest.getHeader("Depth"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("\"Depth\" header is " + value);
@@ -111,9 +112,9 @@ public class WebDAVUtil {
 	}
 
 	public static String getDestination(
-		HttpServletRequest request, String rootPath) {
+		HttpServletRequest httpServletRequest, String rootPath) {
 
-		String headerDestination = request.getHeader("Destination");
+		String headerDestination = httpServletRequest.getHeader("Destination");
 
 		String[] pathSegments = StringUtil.split(headerDestination, rootPath);
 
@@ -229,12 +230,12 @@ public class WebDAVUtil {
 		return _instance;
 	}
 
-	public static String getLockUuid(HttpServletRequest request)
+	public static String getLockUuid(HttpServletRequest httpServletRequest)
 		throws WebDAVException {
 
 		String token = StringPool.BLANK;
 
-		String value = GetterUtil.getString(request.getHeader("If"));
+		String value = GetterUtil.getString(httpServletRequest.getHeader("If"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("\"If\" header is " + value);
@@ -300,10 +301,11 @@ public class WebDAVUtil {
 		return getInstance()._getStorageTokens();
 	}
 
-	public static long getTimeout(HttpServletRequest request) {
+	public static long getTimeout(HttpServletRequest httpServletRequest) {
 		long timeout = 0;
 
-		String value = GetterUtil.getString(request.getHeader("Timeout"));
+		String value = GetterUtil.getString(
+			httpServletRequest.getHeader("Timeout"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("\"Timeout\" header is " + value);
@@ -322,8 +324,8 @@ public class WebDAVUtil {
 		return timeout * Time.SECOND;
 	}
 
-	public static boolean isOverwrite(HttpServletRequest request) {
-		return getInstance()._isOverwrite(request);
+	public static boolean isOverwrite(HttpServletRequest httpServletRequest) {
+		return getInstance()._isOverwrite(httpServletRequest);
 	}
 
 	public static String stripManualCheckInRequiredPath(String url) {
@@ -427,8 +429,9 @@ public class WebDAVUtil {
 		return _storages.keySet();
 	}
 
-	private boolean _isOverwrite(HttpServletRequest request) {
-		String value = GetterUtil.getString(request.getHeader("Overwrite"));
+	private boolean _isOverwrite(HttpServletRequest httpServletRequest) {
+		String value = GetterUtil.getString(
+			httpServletRequest.getHeader("Overwrite"));
 
 		if (StringUtil.equalsIgnoreCase(value, "F") ||
 			!GetterUtil.getBoolean(value)) {

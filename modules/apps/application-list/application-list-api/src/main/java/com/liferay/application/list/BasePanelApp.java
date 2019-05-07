@@ -90,14 +90,14 @@ public abstract class BasePanelApp implements PanelApp {
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, getGroup(request), getPortletId(), 0, 0,
-			PortletRequest.RENDER_PHASE);
+			httpServletRequest, getGroup(httpServletRequest), getPortletId(), 0,
+			0, PortletRequest.RENDER_PHASE);
 
-		Group group = groupProvider.getGroup(request);
+		Group group = groupProvider.getGroup(httpServletRequest);
 
 		if (group == null) {
 			return portletURL;
@@ -111,7 +111,8 @@ public abstract class BasePanelApp implements PanelApp {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		return false;
@@ -159,9 +160,10 @@ public abstract class BasePanelApp implements PanelApp {
 		return portlet.getControlPanelEntryInstance();
 	}
 
-	protected Group getGroup(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected Group getGroup(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -185,7 +187,7 @@ public abstract class BasePanelApp implements PanelApp {
 			return null;
 		}
 
-		return groupProvider.getGroup(request);
+		return groupProvider.getGroup(httpServletRequest);
 	}
 
 	protected void setUserNotificationEventLocalService(

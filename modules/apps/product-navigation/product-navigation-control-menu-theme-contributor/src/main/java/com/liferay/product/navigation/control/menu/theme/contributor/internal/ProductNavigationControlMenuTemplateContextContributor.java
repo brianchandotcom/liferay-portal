@@ -46,9 +46,10 @@ public class ProductNavigationControlMenuTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		if (!isShowControlMenu(request)) {
+		if (!isShowControlMenu(httpServletRequest)) {
 			return;
 		}
 
@@ -58,9 +59,10 @@ public class ProductNavigationControlMenuTemplateContextContributor
 		contextObjects.put("bodyCssClass", cssClass + " has-control-menu");
 	}
 
-	protected boolean isShowControlMenu(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected boolean isShowControlMenu(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			return false;
@@ -86,7 +88,8 @@ public class ProductNavigationControlMenuTemplateContextContributor
 				productNavigationControlMenuEntries =
 					_productNavigationControlMenuEntryRegistry.
 						getProductNavigationControlMenuEntries(
-							productNavigationControlMenuCategory, request);
+							productNavigationControlMenuCategory,
+							httpServletRequest);
 
 			if (!productNavigationControlMenuEntries.isEmpty()) {
 				return true;

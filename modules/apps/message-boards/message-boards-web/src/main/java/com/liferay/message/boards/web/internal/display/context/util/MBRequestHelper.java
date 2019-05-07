@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MBRequestHelper extends BaseRequestHelper {
 
-	public MBRequestHelper(HttpServletRequest request) {
-		super(request);
+	public MBRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public MBCategory getCategory() {

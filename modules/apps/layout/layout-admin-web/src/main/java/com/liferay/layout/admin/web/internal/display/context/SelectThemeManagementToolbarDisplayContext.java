@@ -29,11 +29,11 @@ public class SelectThemeManagementToolbarDisplayContext
 	public SelectThemeManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SelectThemeDisplayContext selectThemeDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectThemeDisplayContext.getThemesSearchContainer());
 	}
 

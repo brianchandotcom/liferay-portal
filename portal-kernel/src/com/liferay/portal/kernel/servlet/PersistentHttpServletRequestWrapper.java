@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
 public class PersistentHttpServletRequestWrapper
 	extends HttpServletRequestWrapper implements Cloneable {
 
-	public PersistentHttpServletRequestWrapper(HttpServletRequest request) {
-		super(request);
+	public PersistentHttpServletRequestWrapper(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 	@Override

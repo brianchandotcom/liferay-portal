@@ -94,16 +94,17 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		setNamespacedAttribute(
-			request, "classNameId",
+			httpServletRequest, "classNameId",
 			String.valueOf(PortalUtil.getClassNameId(getClassName())));
 		setNamespacedAttribute(
-			request, "portletDisplayDDMTemplate",
+			httpServletRequest, "portletDisplayDDMTemplate",
 			getPortletDisplayDDMTemplate());
-		setNamespacedAttribute(request, "resourceBundle", getResourceBundle());
+		setNamespacedAttribute(
+			httpServletRequest, "resourceBundle", getResourceBundle());
 	}
 
 }

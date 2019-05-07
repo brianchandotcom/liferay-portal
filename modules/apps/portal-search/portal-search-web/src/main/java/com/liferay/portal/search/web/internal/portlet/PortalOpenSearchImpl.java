@@ -57,13 +57,14 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
 	@Override
 	public String search(
-			HttpServletRequest request, long groupId, long userId,
+			HttpServletRequest httpServletRequest, long groupId, long userId,
 			String keywords, int startPage, int itemsPerPage, String format)
 		throws SearchException {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			int start = (startPage * itemsPerPage) - itemsPerPage;
 			int end = startPage * itemsPerPage;
@@ -123,7 +124,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 				String title = StringPool.BLANK;
 
 				PortletURL portletURL = getPortletURL(
-					request, portletId, resultScopeGroupId);
+					httpServletRequest, portletId, resultScopeGroupId);
 
 				String url = portletURL.toString();
 

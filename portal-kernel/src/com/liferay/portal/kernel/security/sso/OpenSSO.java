@@ -26,12 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 public interface OpenSSO {
 
 	public Map<String, String> getAttributes(
-		HttpServletRequest request, String serviceUrl);
+		HttpServletRequest httpServletRequest, String serviceUrl);
 
-	public String getSubjectId(HttpServletRequest request, String serviceUrl);
+	public String getSubjectId(
+		HttpServletRequest httpServletRequest, String serviceUrl);
 
 	public boolean isAuthenticated(
-			HttpServletRequest request, String serviceUrl)
+			HttpServletRequest httpServletRequest, String serviceUrl)
 		throws IOException;
 
 	public boolean isValidServiceUrl(String serviceUrl);

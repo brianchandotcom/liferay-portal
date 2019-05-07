@@ -42,18 +42,18 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class GZipResponse extends HttpServletResponseWrapper {
 
-	public GZipResponse(HttpServletResponse response) {
-		super(response);
+	public GZipResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 
 		// Clear previous content length setting. GZip response does not buffer
 		// output to get final content length. The response will be chunked
 		// unless an outer filter calculates the content length.
 
-		response.setContentLength(-1);
+		httpServletResponse.setContentLength(-1);
 
 		// Setting the header after finishResponse is too late
 
-		response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
+		httpServletResponse.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
 	}
 
 	public void finishResponse() throws IOException {

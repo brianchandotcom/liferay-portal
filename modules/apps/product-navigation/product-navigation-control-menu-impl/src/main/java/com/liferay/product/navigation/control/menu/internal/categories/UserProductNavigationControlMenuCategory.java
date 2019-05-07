@@ -41,7 +41,7 @@ public class UserProductNavigationControlMenuCategory
 	}
 
 	@Override
-	public boolean hasAccessPermission(HttpServletRequest request) {
+	public boolean hasAccessPermission(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 

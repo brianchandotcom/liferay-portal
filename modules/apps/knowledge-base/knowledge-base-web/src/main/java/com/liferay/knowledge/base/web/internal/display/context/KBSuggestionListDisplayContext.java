@@ -44,9 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 public class KBSuggestionListDisplayContext {
 
 	public KBSuggestionListDisplayContext(
-		HttpServletRequest request, String templatePath, KBArticle kbArticle) {
+		HttpServletRequest httpServletRequest, String templatePath,
+		KBArticle kbArticle) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_templatePath = templatePath;
 		_kbArticle = kbArticle;
 
@@ -55,9 +56,10 @@ public class KBSuggestionListDisplayContext {
 	}
 
 	public KBSuggestionListDisplayContext(
-		HttpServletRequest request, String templatePath, long groupId) {
+		HttpServletRequest httpServletRequest, String templatePath,
+		long groupId) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_templatePath = templatePath;
 		_groupId = groupId;
 

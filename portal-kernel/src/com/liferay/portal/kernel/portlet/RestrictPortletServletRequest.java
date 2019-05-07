@@ -50,8 +50,10 @@ public class RestrictPortletServletRequest
 		return false;
 	}
 
-	public RestrictPortletServletRequest(HttpServletRequest request) {
-		super(request);
+	public RestrictPortletServletRequest(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 	@Override

@@ -31,15 +31,17 @@ public class DisplayChartServlet extends DisplayChart {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			super.service(request, response);
+			super.service(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, e, request, response);
+				HttpServletResponse.SC_NOT_FOUND, e, httpServletRequest,
+				httpServletResponse);
 		}
 	}
 

@@ -52,15 +52,18 @@ public class CharacterEncodingFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws IOException {
 
-		String parameter = request.getParameter(REQUEST_PARAMETER_NAME);
+		String parameter = httpServletRequest.getParameter(
+			REQUEST_PARAMETER_NAME);
 
-		try (OutputStream outputStream = response.getOutputStream()) {
+		try (OutputStream outputStream =
+				httpServletResponse.getOutputStream()) {
+
 			outputStream.write(
-				parameter.getBytes(request.getCharacterEncoding()));
+				parameter.getBytes(httpServletRequest.getCharacterEncoding()));
 		}
 	}
 

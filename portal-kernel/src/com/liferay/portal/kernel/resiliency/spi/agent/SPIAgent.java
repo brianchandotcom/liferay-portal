@@ -31,19 +31,22 @@ public interface SPIAgent {
 
 	public void init(SPI spi) throws PortalResiliencyException;
 
-	public HttpServletRequest prepareRequest(HttpServletRequest request)
+	public HttpServletRequest prepareRequest(
+			HttpServletRequest httpServletRequest)
 		throws IOException;
 
 	public HttpServletResponse prepareResponse(
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalResiliencyException;
 
 	public void transferResponse(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e)
 		throws IOException;
 
 	public enum Lifecycle {

@@ -38,17 +38,18 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_portal.setPageKeywords(
 			_assetHelper.getAssetKeywords(
 				Layout.class.getName(), themeDisplay.getPlid()),
-			request);
+			httpServletRequest);
 	}
 
 	@Override

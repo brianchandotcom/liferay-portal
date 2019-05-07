@@ -35,7 +35,8 @@ public abstract class Action implements LifecycleAction {
 	}
 
 	public abstract void run(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException;
 
 	public void run(RenderRequest renderRequest, RenderResponse renderResponse)

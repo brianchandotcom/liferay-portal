@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 public class SortConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/sort/configuration.jsp";
 	}
 

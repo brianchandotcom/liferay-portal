@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface AccessControl {
 
 	public void initAccessControlContext(
-		HttpServletRequest request, HttpServletResponse response,
-		Map<String, Object> settings);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Map<String, Object> settings);
 
 	public void initContextUser(long userId) throws AuthException;
 

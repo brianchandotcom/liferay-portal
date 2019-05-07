@@ -47,22 +47,27 @@ public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-		HttpServletRequest request, HttpServletResponse response, String key) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String key) {
 
 		if (!_monitoringConfiguration.monitorPortalRequest()) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		DataSample dataSample =
 			_dataSampleFactory.createPortalRequestDataSample(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				request.getHeader(HttpHeaders.REFERER), request.getRemoteAddr(),
-				request.getRemoteUser(), request.getRequestURI(),
-				String.valueOf(request.getRequestURL()) + ".jsp_display",
-				request.getHeader(HttpHeaders.USER_AGENT));
+				httpServletRequest.getHeader(HttpHeaders.REFERER),
+				httpServletRequest.getRemoteAddr(),
+				httpServletRequest.getRemoteUser(),
+				httpServletRequest.getRequestURI(),
+				String.valueOf(httpServletRequest.getRequestURL()) +
+					".jsp_display",
+				httpServletRequest.getHeader(HttpHeaders.USER_AGENT));
 
 		dataSample.setDescription("Portal Request");
 
@@ -70,7 +75,7 @@ public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		DataSampleThreadLocal.initialize();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE, dataSample);
 	}
 

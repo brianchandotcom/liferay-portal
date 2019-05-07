@@ -45,9 +45,9 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 	implements AnnouncementsAdminViewDisplayContext {
 
 	public DefaultAnnouncementsAdminViewDisplayContext(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	@Override

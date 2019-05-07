@@ -68,26 +68,30 @@ public class JournalContentConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		request.setAttribute(JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+		httpServletRequest.setAttribute(
+			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
 		try {
 			JournalContentDisplayContext journalContentDisplayContext =
@@ -96,7 +100,7 @@ public class JournalContentConfigurationAction
 					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
 					_ddmTemplateModelResourcePermission);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
 				journalContentDisplayContext);
 		}
@@ -106,7 +110,7 @@ public class JournalContentConfigurationAction
 			}
 		}
 
-		super.include(portletConfig, request, response);
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override

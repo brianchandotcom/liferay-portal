@@ -62,15 +62,16 @@ import javax.servlet.http.HttpServletResponse;
 public class TemplateProcessor implements ColumnProcessor {
 
 	public TemplateProcessor(
-		HttpServletRequest request, HttpServletResponse response,
-		String portletId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String portletId) {
 
-		_request = request;
-		_response = response;
+		_request = httpServletRequest;
+		_response = httpServletResponse;
 
 		if (Validator.isNotNull(portletId)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
@@ -80,7 +81,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 
 		_portletAjaxRender = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.PORTLET_AJAX_RENDER));
+			httpServletRequest.getAttribute(WebKeys.PORTLET_AJAX_RENDER));
 
 		_portletRenderers = new TreeMap<>(_renderWeightComparator);
 	}

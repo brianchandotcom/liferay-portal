@@ -60,13 +60,14 @@ public class FullPageApplicationLayoutTypeController
 
 	@Override
 	public String includeEditContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
-		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
-		return super.includeEditContent(request, response, layout);
+		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
 	}
 
 	@Override
@@ -100,8 +101,8 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Override
-	protected void addAttributes(HttpServletRequest request) {
-		super.addAttributes(request);
+	protected void addAttributes(HttpServletRequest httpServletRequest) {
+		super.addAttributes(httpServletRequest);
 
 		List<Portlet> portlets = _portletLocalService.getPortlets();
 
@@ -111,7 +112,7 @@ public class FullPageApplicationLayoutTypeController
 
 		portlets = ListUtil.filter(portlets, Portlet::isFullPageDisplayable);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			FullPageApplicationLayoutTypeControllerWebKeys.
 				FULL_PAGE_APPLICATION_PORTLETS,
 			portlets);
@@ -119,9 +120,11 @@ public class FullPageApplicationLayoutTypeController
 
 	@Override
 	protected ServletResponse createServletResponse(
-		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
+		HttpServletResponse httpServletResponse,
+		UnsyncStringWriter unsyncStringWriter) {
 
-		return new PipingServletResponse(response, unsyncStringWriter);
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override
@@ -135,10 +138,10 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Override
-	protected void removeAttributes(HttpServletRequest request) {
-		request.removeAttribute(WebKeys.SEL_LAYOUT);
+	protected void removeAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.removeAttribute(WebKeys.SEL_LAYOUT);
 
-		super.removeAttributes(request);
+		super.removeAttributes(httpServletRequest);
 	}
 
 	@Reference(unbind = "-")

@@ -98,19 +98,19 @@ public class ManagementBarTag extends BaseBarTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:actionButtons", _actionButtons);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:buttons", buttons);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:disabled", _disabled);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:filters", _filters);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:includeCheckBox",
 			_includeCheckBox);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar:searchContainerId",
 			_searchContainerId);
 	}

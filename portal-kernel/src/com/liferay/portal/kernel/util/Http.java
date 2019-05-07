@@ -93,7 +93,7 @@ public interface Http {
 
 	public String fixPath(String path, boolean leading, boolean trailing);
 
-	public String getCompleteURL(HttpServletRequest request);
+	public String getCompleteURL(HttpServletRequest httpServletRequest);
 
 	public Cookie[] getCookies();
 
@@ -113,7 +113,7 @@ public interface Http {
 
 	public String getProtocol(boolean secure);
 
-	public String getProtocol(HttpServletRequest request);
+	public String getProtocol(HttpServletRequest httpServletRequest);
 
 	public String getProtocol(RenderRequest renderRequest);
 
@@ -121,7 +121,7 @@ public interface Http {
 
 	public String getQueryString(String url);
 
-	public String getRequestURL(HttpServletRequest request);
+	public String getRequestURL(HttpServletRequest httpServletRequest);
 
 	public boolean hasDomain(String url);
 
@@ -148,7 +148,8 @@ public interface Http {
 
 	public String protocolize(String url, boolean secure);
 
-	public String protocolize(String url, HttpServletRequest request);
+	public String protocolize(
+		String url, HttpServletRequest httpServletRequest);
 
 	public String protocolize(String url, int port, boolean secure);
 

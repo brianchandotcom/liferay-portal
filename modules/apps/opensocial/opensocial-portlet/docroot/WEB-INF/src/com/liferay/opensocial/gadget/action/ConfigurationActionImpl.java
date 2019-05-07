@@ -33,19 +33,19 @@ import javax.servlet.http.HttpServletResponse;
 public class ConfigurationActionImpl extends BaseConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/gadget/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		doInclude(portletConfig, request, response);
+		doInclude(portletConfig, httpServletRequest, httpServletResponse);
 
-		super.include(portletConfig, request, response);
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -59,14 +59,15 @@ public class ConfigurationActionImpl extends BaseConfigurationAction {
 
 	@Override
 	protected Gadget getGadget(
-			PortletConfig portletConfig, HttpServletRequest request)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+			httpServletRequest, "portletResource");
 
 		return ShindigUtil.getGadget(
 			portletResource, themeDisplay.getCompanyId());

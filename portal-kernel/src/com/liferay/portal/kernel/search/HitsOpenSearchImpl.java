@@ -63,16 +63,17 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 
 	@Override
 	public String search(
-			HttpServletRequest request, long groupId, long userId,
+			HttpServletRequest httpServletRequest, long groupId, long userId,
 			String keywords, int startPage, int itemsPerPage, String format)
 		throws SearchException {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			SearchContext searchContext = SearchContextFactory.getInstance(
-				request);
+				httpServletRequest);
 
 			searchContext.setAttribute("paginationType", "more");
 
@@ -150,7 +151,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 				}
 
 				PortletURL portletURL = getPortletURL(
-					request, className, PortletProvider.Action.VIEW,
+					httpServletRequest, className, PortletProvider.Action.VIEW,
 					resultScopeGroupId);
 
 				Summary summary = getSummary(

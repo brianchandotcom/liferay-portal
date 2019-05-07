@@ -40,11 +40,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static List<BookmarksEntry> getEntries(HttpServletRequest request)
+	public static List<BookmarksEntry> getEntries(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		long[] entryIds = ParamUtil.getLongValues(
-			request, "rowIdsBookmarksEntry");
+			httpServletRequest, "rowIdsBookmarksEntry");
 
 		List<BookmarksEntry> entries = new ArrayList<>();
 
@@ -66,10 +67,10 @@ public class ActionUtil {
 		return getEntries(request);
 	}
 
-	public static BookmarksEntry getEntry(HttpServletRequest request)
+	public static BookmarksEntry getEntry(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(request, "entryId");
+		long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
 
 		BookmarksEntry entry = null;
 
@@ -93,13 +94,15 @@ public class ActionUtil {
 		return getEntry(request);
 	}
 
-	public static BookmarksFolder getFolder(HttpServletRequest request)
+	public static BookmarksFolder getFolder(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long folderId = ParamUtil.getLong(request, "folderId");
+		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
 		BookmarksFolder folder = null;
 
@@ -130,11 +133,12 @@ public class ActionUtil {
 		return getFolder(request);
 	}
 
-	public static List<BookmarksFolder> getFolders(HttpServletRequest request)
+	public static List<BookmarksFolder> getFolders(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		long[] folderIds = ParamUtil.getLongValues(
-			request, "rowIdsBookmarksFolder");
+			httpServletRequest, "rowIdsBookmarksFolder");
 
 		List<BookmarksFolder> folders = new ArrayList<>();
 

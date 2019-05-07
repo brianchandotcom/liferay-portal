@@ -31,8 +31,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 
-	public WikiPageInfoPanelRequestHelper(HttpServletRequest request) {
-		super(request);
+	public WikiPageInfoPanelRequestHelper(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 	public WikiNode getCurrentNode() {

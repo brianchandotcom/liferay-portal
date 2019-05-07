@@ -46,14 +46,16 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String strutsAction = ParamUtil.getString(
+			httpServletRequest, "struts_action");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (strutsAction.startsWith("/login/facebook_connect") ||
 			!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
@@ -64,23 +66,23 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 		String facebookAuthRedirectURL = _facebookConnect.getRedirectURL(
 			themeDisplay.getCompanyId());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			FacebookConnectWebKeys.FACEBOOK_AUTH_REDIRECT_URL,
 			facebookAuthRedirectURL);
 
 		String facebookAuthURL = _facebookConnect.getAuthURL(
 			themeDisplay.getCompanyId());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			FacebookConnectWebKeys.FACEBOOK_AUTH_URL, facebookAuthURL);
 
 		String facebookAppId = _facebookConnect.getAppId(
 			themeDisplay.getCompanyId());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			FacebookConnectWebKeys.FACEBOOK_APP_ID, facebookAppId);
 
-		super.include(request, response, key);
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
 	@Override

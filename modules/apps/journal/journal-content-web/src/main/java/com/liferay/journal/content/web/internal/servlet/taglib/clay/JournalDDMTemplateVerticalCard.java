@@ -31,10 +31,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalDDMTemplateVerticalCard implements VerticalCard {
 
 	public JournalDDMTemplateVerticalCard(
-		DDMTemplate ddmTemplate, HttpServletRequest request) {
+		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest) {
 
 		_ddmTemplate = ddmTemplate;
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	@Override

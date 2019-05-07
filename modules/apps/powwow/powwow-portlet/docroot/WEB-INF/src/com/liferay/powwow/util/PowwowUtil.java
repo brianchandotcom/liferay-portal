@@ -104,15 +104,16 @@ public class PowwowUtil {
 
 	public static String getInvitationURL(
 			long powwowMeetingId, PowwowParticipant powwowParticipant,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(9);
 
 		Layout layout = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			themeDisplay.getCompanyId(),

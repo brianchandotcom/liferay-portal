@@ -32,12 +32,12 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 	public SelectSiteRolesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SelectSiteRolesDisplayContext selectSiteRolesDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectSiteRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 

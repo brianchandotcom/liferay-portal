@@ -57,8 +57,8 @@ public abstract class SearchEntry
 
 	@Override
 	public abstract void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	@Override

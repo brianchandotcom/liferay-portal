@@ -67,14 +67,17 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 	public DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion,
+		ResourceBundle resourceBundle,
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
 		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager, Portal portal) {
 
-		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+		super(
+			_UUID, parentDLDisplayContext, httpServletRequest,
+			httpServletResponse, fileVersion);
 
 		_resourceBundle = resourceBundle;
 		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
@@ -83,8 +86,9 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
 		_portal = portal;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 	}

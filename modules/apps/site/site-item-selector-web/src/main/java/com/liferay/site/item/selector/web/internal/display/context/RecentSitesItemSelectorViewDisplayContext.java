@@ -38,14 +38,14 @@ public class RecentSitesItemSelectorViewDisplayContext
 	implements SitesItemSelectorViewDisplayContext {
 
 	public RecentSitesItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL,
 		RecentGroupManager recentGroupManager) {
 
 		super(
-			request, siteItemSelectorCriterion, itemSelectedEventName,
-			portletURL);
+			httpServletRequest, siteItemSelectorCriterion,
+			itemSelectedEventName, portletURL);
 
 		_recentGroupManager = recentGroupManager;
 	}

@@ -40,14 +40,18 @@ public class ModelPermissionsFactory {
 
 	public static final String MODEL_PERMISSIONS_PREFIX = "modelPermissions";
 
-	public static ModelPermissions create(HttpServletRequest request) {
-		return _createModelPermissions(request.getParameterMap(), null);
+	public static ModelPermissions create(
+		HttpServletRequest httpServletRequest) {
+
+		return _createModelPermissions(
+			httpServletRequest.getParameterMap(), null);
 	}
 
 	public static ModelPermissions create(
-		HttpServletRequest request, String className) {
+		HttpServletRequest httpServletRequest, String className) {
 
-		return _createModelPermissions(request.getParameterMap(), className);
+		return _createModelPermissions(
+			httpServletRequest.getParameterMap(), className);
 	}
 
 	public static ModelPermissions create(

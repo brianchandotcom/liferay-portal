@@ -29,12 +29,14 @@ public interface CommentDisplayContextFactory extends DisplayContextFactory {
 
 	public CommentSectionDisplayContext getCommentSectionDisplayContext(
 		CommentSectionDisplayContext parentCommentSectionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission, Discussion discussion);
 
 	public CommentTreeDisplayContext getCommentTreeDisplayContext(
 		CommentTreeDisplayContext parentCommentTreeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission,
 		DiscussionComment discussionComment);
 

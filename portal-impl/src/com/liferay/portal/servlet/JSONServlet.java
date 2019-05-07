@@ -50,7 +50,8 @@ public class JSONServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
@@ -59,7 +60,8 @@ public class JSONServlet extends HttpServlet {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
 			if (_pluginClassLoader == null) {
-				_jsonAction.execute(null, request, response);
+				_jsonAction.execute(
+					null, httpServletRequest, httpServletResponse);
 			}
 			else {
 				Thread currentThread = Thread.currentThread();
@@ -70,7 +72,8 @@ public class JSONServlet extends HttpServlet {
 				try {
 					currentThread.setContextClassLoader(_pluginClassLoader);
 
-					_jsonAction.execute(null, request, response);
+					_jsonAction.execute(
+						null, httpServletRequest, httpServletResponse);
 				}
 				finally {
 					currentThread.setContextClassLoader(contextClassLoader);

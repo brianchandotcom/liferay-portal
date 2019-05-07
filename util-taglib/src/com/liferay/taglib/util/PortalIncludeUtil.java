@@ -66,7 +66,8 @@ public class PortalIncludeUtil {
 	public interface HTMLRenderer {
 
 		public void renderHTML(
-				HttpServletRequest request, HttpServletResponse response)
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse)
 			throws IOException, ServletException;
 
 	}

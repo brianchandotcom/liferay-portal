@@ -32,11 +32,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ProductNavigationControlMenuUtil {
 
-	public static boolean isEditEnabled(HttpServletRequest request)
+	public static boolean isEditEnabled(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isStateMaximized()) {
 			return false;

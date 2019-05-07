@@ -34,7 +34,7 @@ public class FolderFacetPortletConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/folder/facet/configuration.jsp";
 	}
 

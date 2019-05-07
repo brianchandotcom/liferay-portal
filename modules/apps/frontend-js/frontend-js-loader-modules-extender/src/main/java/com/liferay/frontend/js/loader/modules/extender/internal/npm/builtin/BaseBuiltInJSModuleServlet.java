@@ -82,31 +82,32 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String pathInfo = request.getPathInfo();
+		String pathInfo = httpServletRequest.getPathInfo();
 
 		ResourceDescriptor resourceDescriptor = getResourceDescriptor(pathInfo);
 
 		if (resourceDescriptor == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
 
-		_setContentType(response, pathInfo);
+		_setContentType(httpServletResponse, pathInfo);
 
-		String languageId = request.getParameter("languageId");
+		String languageId = httpServletRequest.getParameter("languageId");
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		_sendResource(response, resourceDescriptor, locale);
+		_sendResource(httpServletResponse, resourceDescriptor, locale);
 	}
 
 	private void _sendResource(
-			HttpServletResponse response, ResourceDescriptor resourceDescriptor,
-			Locale locale)
+			HttpServletResponse httpServletResponse,
+			ResourceDescriptor resourceDescriptor, Locale locale)
 		throws IOException {
 
 		JSPackage jsPackage = resourceDescriptor.getJsPackage();
@@ -114,7 +115,7 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 		URL url = jsPackage.getResourceURL(resourceDescriptor.getPackagePath());
 
 		if (url == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
@@ -122,9 +123,9 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 		try (InputStream inputStream = url.openStream()) {
 			String content = StringUtil.read(inputStream);
 
-			response.setCharacterEncoding(StringPool.UTF8);
+			httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-			PrintWriter printWriter = response.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			JSBundle jsBundle = jsPackage.getJSBundle();
 
@@ -143,27 +144,29 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 		catch (IOException ioe) {
 			_log.error("Unable to read " + resourceDescriptor.toString(), ioe);
 
-			response.sendError(
+			httpServletResponse.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 				"Unable to read file");
 		}
 	}
 
 	private void _setContentType(
-		HttpServletResponse response, String pathInfo) {
+		HttpServletResponse httpServletResponse, String pathInfo) {
 
 		String extension = FileUtil.getExtension(pathInfo);
 
 		if (extension.equals(".js")) {
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
+			httpServletResponse.setContentType(
+				ContentTypes.TEXT_JAVASCRIPT_UTF8);
 		}
 		else if (extension.equals(".map")) {
-			response.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		}
 		else {
 			MimeTypes mimeTypes = getMimeTypes();
 
-			response.setContentType(mimeTypes.getContentType(pathInfo));
+			httpServletResponse.setContentType(
+				mimeTypes.getContentType(pathInfo));
 		}
 	}
 

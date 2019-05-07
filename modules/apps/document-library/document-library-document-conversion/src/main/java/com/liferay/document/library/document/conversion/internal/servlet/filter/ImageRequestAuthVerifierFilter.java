@@ -42,15 +42,16 @@ public class ImageRequestAuthVerifierFilter extends AuthVerifierFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		String token = ParamUtil.getString(request, "auth_token");
+		String token = ParamUtil.getString(httpServletRequest, "auth_token");
 
 		if (Validator.isBlank(token)) {
 			return false;
 		}
 
-		return super.isFilterEnabled(request, response);
+		return super.isFilterEnabled(httpServletRequest, httpServletResponse);
 	}
 
 }

@@ -57,14 +57,16 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 
 	@Override
 	public void render(
-			String target, String title, String url, HttpServletRequest request,
-			HttpServletResponse response)
+			String target, String title, String url,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/bookmark/deprecated_bookmark.jsp");
+		RequestDispatcher requestDispatcher =
+			httpServletRequest.getRequestDispatcher(
+				"/bookmark/deprecated_bookmark.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	private static final String _SOCIAL_BOOKMARK_POST_URL =

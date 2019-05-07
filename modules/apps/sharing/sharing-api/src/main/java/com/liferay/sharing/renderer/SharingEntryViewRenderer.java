@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface SharingEntryViewRenderer {
 
 	public void render(
-			SharingEntry sharingEntry, HttpServletRequest request,
-			HttpServletResponse response)
+			SharingEntry sharingEntry, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException;
 
 }

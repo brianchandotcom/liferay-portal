@@ -93,18 +93,18 @@ public class ProcessListMenuTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:backgroundTask",
 			_backgroundTask);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:deleteMenu", _deleteMenu);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:localPublishing",
 			_localPublishing);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:relaunchMenu", _relaunchMenu);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list-menu:summaryMenu", _summaryMenu);
 	}
 

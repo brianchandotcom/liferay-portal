@@ -185,9 +185,9 @@ public class CalendarDisplayContext {
 	}
 
 	public String getEditCalendarBookingRedirectURL(
-		HttpServletRequest request, String defaultURL) {
+		HttpServletRequest httpServletRequest, String defaultURL) {
 
-		String redirect = ParamUtil.getString(request, "redirect");
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
 
@@ -195,7 +195,7 @@ public class CalendarDisplayContext {
 			return defaultURL;
 		}
 
-		return ParamUtil.getString(request, "redirect", defaultURL);
+		return ParamUtil.getString(httpServletRequest, "redirect", defaultURL);
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {

@@ -32,17 +32,17 @@ import javax.servlet.http.HttpServletResponse;
 public class WebDAVRequestImpl implements WebDAVRequest {
 
 	public WebDAVRequestImpl(
-			WebDAVStorage storage, HttpServletRequest request,
-			HttpServletResponse response, String userAgent,
+			WebDAVStorage storage, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String userAgent,
 			PermissionChecker permissionChecker)
 		throws WebDAVException {
 
 		_storage = storage;
-		_request = request;
-		_response = response;
+		_request = httpServletRequest;
+		_response = httpServletResponse;
 		_userAgent = userAgent;
 
-		_lockUuid = WebDAVUtil.getLockUuid(request);
+		_lockUuid = WebDAVUtil.getLockUuid(httpServletRequest);
 
 		String pathInfo = HttpUtil.fixPath(_request.getPathInfo(), false, true);
 
@@ -60,7 +60,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 		_path = WebDAVUtil.stripOfficeExtension(pathInfo);
 
-		_companyId = PortalUtil.getCompanyId(request);
+		_companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		_groupId = WebDAVUtil.getGroupId(_companyId, _path);
 

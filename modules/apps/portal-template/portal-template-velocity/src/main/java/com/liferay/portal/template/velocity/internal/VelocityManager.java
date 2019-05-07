@@ -67,10 +67,12 @@ public class VelocityManager extends BaseTemplateManager {
 	@Override
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String themeName,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			request.getServletContext(), request, response, contextObjects);
+			httpServletRequest.getServletContext(), httpServletRequest,
+			httpServletResponse, contextObjects);
 
 		contextObjects.put(themeName, velocityTaglib);
 

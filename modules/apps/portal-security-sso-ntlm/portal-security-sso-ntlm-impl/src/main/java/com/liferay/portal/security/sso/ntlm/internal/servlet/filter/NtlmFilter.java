@@ -115,13 +115,15 @@ public class NtlmFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (!_browserSniffer.isIe(request)) {
+		if (!_browserSniffer.isIe(httpServletRequest)) {
 			return false;
 		}
 
-		long companyId = _portalInstancesLocalService.getCompanyId(request);
+		long companyId = _portalInstancesLocalService.getCompanyId(
+			httpServletRequest);
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
@@ -216,11 +218,11 @@ public class NtlmFilter extends BaseFilter {
 		return ntlmManager;
 	}
 
-	protected String getPortalCacheKey(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
+	protected String getPortalCacheKey(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession(false);
 
 		if (session == null) {
-			return request.getRemoteAddr();
+			return httpServletRequest.getRemoteAddr();
 		}
 
 		return session.getId();
@@ -228,25 +230,26 @@ public class NtlmFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		// Type 1 NTLM requests from browser can (and should) always immediately
 		// be replied to with an Type 2 NTLM response, no matter whether we're
 		// yet logging in or whether it is much later in the session.
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
 		String authorization = GetterUtil.getString(
-			request.getHeader(HttpHeaders.AUTHORIZATION));
+			httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
 
 		if (authorization.startsWith("NTLM")) {
-			long companyId = _portalInstancesLocalService.getCompanyId(request);
+			long companyId = _portalInstancesLocalService.getCompanyId(
+				httpServletRequest);
 
 			NtlmManager ntlmManager = getNtlmManager(companyId);
 
-			String portalCacheKey = getPortalCacheKey(request);
+			String portalCacheKey = getPortalCacheKey(httpServletRequest);
 
 			byte[] src = Base64.decode(authorization.substring(5));
 
@@ -261,12 +264,13 @@ public class NtlmFilter extends BaseFilter {
 
 				authorization = Base64.encode(challengeMessage);
 
-				response.setContentLength(0);
-				response.setHeader(
+				httpServletResponse.setContentLength(0);
+				httpServletResponse.setHeader(
 					HttpHeaders.WWW_AUTHENTICATE, "NTLM " + authorization);
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_UNAUTHORIZED);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				_portalCache.put(portalCacheKey, serverChallenge);
 
@@ -279,11 +283,13 @@ public class NtlmFilter extends BaseFilter {
 			byte[] serverChallenge = _portalCache.get(portalCacheKey);
 
 			if (serverChallenge == null) {
-				response.setContentLength(0);
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, "NTLM");
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.setContentLength(0);
+				httpServletResponse.setHeader(
+					HttpHeaders.WWW_AUTHENTICATE, "NTLM");
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_UNAUTHORIZED);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				return;
 			}
@@ -302,11 +308,13 @@ public class NtlmFilter extends BaseFilter {
 			}
 
 			if (ntlmUserAccount == null) {
-				response.setContentLength(0);
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, "NTLM");
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.setContentLength(0);
+				httpServletResponse.setHeader(
+					HttpHeaders.WWW_AUTHENTICATE, "NTLM");
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_UNAUTHORIZED);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				return;
 			}
@@ -315,7 +323,7 @@ public class NtlmFilter extends BaseFilter {
 				_log.debug("NTLM remote user " + ntlmUserAccount.getUserName());
 			}
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				NtlmWebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
 
 			if (session != null) {
@@ -324,7 +332,7 @@ public class NtlmFilter extends BaseFilter {
 			}
 		}
 
-		String path = request.getPathInfo();
+		String path = httpServletRequest.getPathInfo();
 
 		if ((path != null) && path.endsWith("/login")) {
 			NtlmUserAccount ntlmUserAccount = null;
@@ -335,21 +343,24 @@ public class NtlmFilter extends BaseFilter {
 			}
 
 			if (ntlmUserAccount == null) {
-				response.setContentLength(0);
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, "NTLM");
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.setContentLength(0);
+				httpServletResponse.setHeader(
+					HttpHeaders.WWW_AUTHENTICATE, "NTLM");
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_UNAUTHORIZED);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				return;
 			}
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				NtlmWebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
 		}
 
 		processFilter(
-			NtlmPostFilter.class.getName(), request, response, filterChain);
+			NtlmPostFilter.class.getName(), httpServletRequest,
+			httpServletResponse, filterChain);
 	}
 
 	@Reference(unbind = "-")

@@ -44,12 +44,13 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public SitesThatIAdministerItemSelectorViewDisplayContext(
-		HttpServletRequest request, AssetPublisherHelper assetPublisherHelper,
+		HttpServletRequest httpServletRequest,
+		AssetPublisherHelper assetPublisherHelper,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
-			request, assetPublisherHelper, siteItemSelectorCriterion,
+			httpServletRequest, assetPublisherHelper, siteItemSelectorCriterion,
 			itemSelectedEventName, portletURL);
 	}
 

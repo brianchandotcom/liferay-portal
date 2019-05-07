@@ -29,47 +29,51 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenUtil {
 
 	public static void addCSRFToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
-			authToken.addCSRFToken(request, liferayPortletURL);
+			authToken.addCSRFToken(httpServletRequest, liferayPortletURL);
 		}
 	}
 
 	public static void addPortletInvocationToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
-			authToken.addPortletInvocationToken(request, liferayPortletURL);
+			authToken.addPortletInvocationToken(
+				httpServletRequest, liferayPortletURL);
 		}
 	}
 
-	public static void checkCSRFToken(HttpServletRequest request, String origin)
+	public static void checkCSRFToken(
+			HttpServletRequest httpServletRequest, String origin)
 		throws PrincipalException {
 
 		AuthToken authToken = _authToken;
 
 		if (authToken != null) {
-			authToken.checkCSRFToken(request, origin);
+			authToken.checkCSRFToken(httpServletRequest, origin);
 		}
 	}
 
-	public static String getToken(HttpServletRequest request) {
+	public static String getToken(HttpServletRequest httpServletRequest) {
 		AuthToken authToken = _authToken;
 
 		if (authToken == null) {
 			return null;
 		}
 
-		return authToken.getToken(request);
+		return authToken.getToken(httpServletRequest);
 	}
 
 	public static String getToken(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
 		AuthToken authToken = _authToken;
 
@@ -77,11 +81,11 @@ public class AuthTokenUtil {
 			return null;
 		}
 
-		return authToken.getToken(request, plid, portletId);
+		return authToken.getToken(httpServletRequest, plid, portletId);
 	}
 
 	public static boolean isValidPortletInvocationToken(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
 		AuthToken authToken = _authToken;
 
@@ -90,7 +94,7 @@ public class AuthTokenUtil {
 		}
 
 		return authToken.isValidPortletInvocationToken(
-			request, layout, portlet);
+			httpServletRequest, layout, portlet);
 	}
 
 	private static volatile AuthToken _authToken =

@@ -125,27 +125,27 @@ public class ProcessListTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:deleteMenu", _deleteMenu);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:emptyResultsMessage",
 			_emptyResultsMessage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:localTaskExecutorClassName",
 			_localTaskExecutorClassName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:mvcRenderCommandName",
 			_mvcRenderCommandName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:relaunchMenu", _relaunchMenu);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:remoteTaskExecutorClassName",
 			_remoteTaskExecutorClassName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:resultRowSplitter",
 			_resultRowSplitter);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-list:summaryMenu", _summaryMenu);
 	}
 

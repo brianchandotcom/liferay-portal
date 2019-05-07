@@ -74,20 +74,21 @@ import org.osgi.framework.ServiceReference;
  */
 public class MailManager {
 
-	public static MailManager getInstance(HttpServletRequest request)
+	public static MailManager getInstance(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		User user = PortalUtil.getUser(request);
+		User user = PortalUtil.getUser(httpServletRequest);
 
 		if (user == null) {
 			return null;
 		}
 
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		return new MailManager(
-			user, new PasswordRetriever(request), portletConfig);
+			user, new PasswordRetriever(httpServletRequest), portletConfig);
 	}
 
 	public MailManager(

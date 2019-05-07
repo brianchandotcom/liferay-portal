@@ -29,11 +29,12 @@ import javax.servlet.http.HttpServletResponseWrapper;
 public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 	public AbsoluteRedirectsResponse(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(response);
+		super(httpServletResponse);
 
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	@Override

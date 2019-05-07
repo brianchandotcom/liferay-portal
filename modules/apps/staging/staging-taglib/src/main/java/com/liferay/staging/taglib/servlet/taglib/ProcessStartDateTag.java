@@ -66,11 +66,11 @@ public class ProcessStartDateTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-start-date:backgroundTask",
 			_backgroundTask);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-start-date:listView", _listView);
 	}
 

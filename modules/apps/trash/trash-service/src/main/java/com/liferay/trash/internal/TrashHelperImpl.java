@@ -123,7 +123,8 @@ public class TrashHelperImpl implements TrashHelper {
 
 	@Override
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, String className, long classPK)
+			HttpServletRequest httpServletRequest, String className,
+			long classPK)
 		throws PortalException {
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
@@ -145,11 +146,13 @@ public class TrashHelperImpl implements TrashHelper {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+			httpServletRequest, TrashEntry.class.getName(),
+			PortletProvider.Action.VIEW);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());

@@ -82,10 +82,11 @@ public class OpenSSOFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			long companyId = _portal.getCompanyId(request);
+			long companyId = _portal.getCompanyId(httpServletRequest);
 
 			OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
 				companyId);
@@ -121,23 +122,24 @@ public class OpenSSOFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
 			companyId);
 
-		String requestURI = GetterUtil.getString(request.getRequestURI());
+		String requestURI = GetterUtil.getString(
+			httpServletRequest.getRequestURI());
 
 		if (requestURI.endsWith("/portal/logout")) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.invalidate();
 
-			response.sendRedirect(openSSOConfiguration.logoutURL());
+			httpServletResponse.sendRedirect(openSSOConfiguration.logoutURL());
 
 			return;
 		}
@@ -149,25 +151,26 @@ public class OpenSSOFilter extends BaseFilter {
 			// LEP-5943
 
 			authenticated = _openSSO.isAuthenticated(
-				request, openSSOConfiguration.serviceURL());
+				httpServletRequest, openSSOConfiguration.serviceURL());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			processFilter(
-				OpenSSOFilter.class.getName(), request, response, filterChain);
+				OpenSSOFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		if (authenticated) {
 
 			// LEP-5943
 
 			String newSubjectId = _openSSO.getSubjectId(
-				request, openSSOConfiguration.serviceURL());
+				httpServletRequest, openSSOConfiguration.serviceURL());
 
 			String oldSubjectId = (String)session.getAttribute(_SUBJECT_ID_KEY);
 
@@ -177,17 +180,18 @@ public class OpenSSOFilter extends BaseFilter {
 			else if (!newSubjectId.equals(oldSubjectId)) {
 				session.invalidate();
 
-				session = request.getSession();
+				session = httpServletRequest.getSession();
 
 				session.setAttribute(_SUBJECT_ID_KEY, newSubjectId);
 			}
 
 			processFilter(
-				OpenSSOFilter.class.getName(), request, response, filterChain);
+				OpenSSOFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
-		else if (_portal.getUserId(request) > 0) {
+		else if (_portal.getUserId(httpServletRequest) > 0) {
 			session.invalidate();
 		}
 
@@ -196,17 +200,17 @@ public class OpenSSOFilter extends BaseFilter {
 		if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH ||
 			!loginURL.contains("/portal/login")) {
 
-			response.sendRedirect(openSSOConfiguration.loginURL());
+			httpServletResponse.sendRedirect(openSSOConfiguration.loginURL());
 
 			return;
 		}
 
-		String currentURL = _portal.getCurrentURL(request);
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
 
 		String redirect = currentURL;
 
 		if (currentURL.contains("/portal/login")) {
-			redirect = ParamUtil.getString(request, "redirect");
+			redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 			if (Validator.isNull(redirect)) {
 				redirect = _portal.getPathMain();
@@ -217,7 +221,7 @@ public class OpenSSOFilter extends BaseFilter {
 			openSSOConfiguration.loginURL() +
 				URLCodec.encodeURL("?redirect=" + URLCodec.encodeURL(redirect));
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 	}
 
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";

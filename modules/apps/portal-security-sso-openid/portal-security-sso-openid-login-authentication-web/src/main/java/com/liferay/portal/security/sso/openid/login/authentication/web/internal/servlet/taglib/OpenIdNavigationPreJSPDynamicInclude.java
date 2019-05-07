@@ -46,15 +46,16 @@ public class OpenIdNavigationPreJSPDynamicInclude
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
+			httpServletRequest, "mvcRenderCommandName");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (mvcRenderCommandName.equals("/login/openid") ||
 			!_openId.isEnabled(themeDisplay.getCompanyId())) {
@@ -62,7 +63,7 @@ public class OpenIdNavigationPreJSPDynamicInclude
 			return;
 		}
 
-		super.include(request, response, key);
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
 	@Override

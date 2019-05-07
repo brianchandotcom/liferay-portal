@@ -26,14 +26,15 @@ public abstract class BaseDisplayContext<T extends DisplayContext>
 	implements DisplayContext {
 
 	public BaseDisplayContext(
-		UUID uuid, T parentDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentDisplayContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		_uuid = uuid;
 
 		this.parentDisplayContext = parentDisplayContext;
-		this.request = request;
-		this.response = response;
+		this.request = httpServletRequest;
+		this.response = httpServletResponse;
 	}
 
 	@Override

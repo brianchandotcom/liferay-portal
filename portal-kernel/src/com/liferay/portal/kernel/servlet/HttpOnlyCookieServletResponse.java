@@ -31,13 +31,13 @@ import javax.servlet.http.HttpServletResponseWrapper;
 public class HttpOnlyCookieServletResponse extends HttpServletResponseWrapper {
 
 	public static HttpServletResponse getHttpOnlyCookieServletResponse(
-		HttpServletResponse response) {
+		HttpServletResponse httpServletResponse) {
 
-		HttpServletResponse wrappedResponse = response;
+		HttpServletResponse wrappedResponse = httpServletResponse;
 
 		while (wrappedResponse instanceof HttpServletResponseWrapper) {
 			if (wrappedResponse instanceof HttpOnlyCookieServletResponse) {
-				return response;
+				return httpServletResponse;
 			}
 
 			HttpServletResponseWrapper httpServletResponseWrapper =
@@ -47,11 +47,13 @@ public class HttpOnlyCookieServletResponse extends HttpServletResponseWrapper {
 				(HttpServletResponse)httpServletResponseWrapper.getResponse();
 		}
 
-		return new HttpOnlyCookieServletResponse(response);
+		return new HttpOnlyCookieServletResponse(httpServletResponse);
 	}
 
-	public HttpOnlyCookieServletResponse(HttpServletResponse response) {
-		super(response);
+	public HttpOnlyCookieServletResponse(
+		HttpServletResponse httpServletResponse) {
+
+		super(httpServletResponse);
 	}
 
 	@Override

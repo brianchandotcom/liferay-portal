@@ -27,25 +27,27 @@ import javax.servlet.http.HttpServletRequest;
 public class DynamicServletRequest
 	extends com.liferay.portal.kernel.servlet.DynamicServletRequest {
 
-	public DynamicServletRequest(HttpServletRequest request) {
-		super(request);
-	}
-
-	public DynamicServletRequest(HttpServletRequest request, boolean inherit) {
-		super(request, inherit);
+	public DynamicServletRequest(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public DynamicServletRequest(
-		HttpServletRequest request, Map<String, String[]> params) {
+		HttpServletRequest httpServletRequest, boolean inherit) {
 
-		super(request, params);
+		super(httpServletRequest, inherit);
 	}
 
 	public DynamicServletRequest(
-		HttpServletRequest request, Map<String, String[]> params,
+		HttpServletRequest httpServletRequest, Map<String, String[]> params) {
+
+		super(httpServletRequest, params);
+	}
+
+	public DynamicServletRequest(
+		HttpServletRequest httpServletRequest, Map<String, String[]> params,
 		boolean inherit) {
 
-		super(request, params, inherit);
+		super(httpServletRequest, params, inherit);
 	}
 
 }

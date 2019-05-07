@@ -42,8 +42,8 @@ public class ServerExecutor extends BaseExecutor {
 
 	@Override
 	public void executeRead(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		ExecutorPathResolver executorPathResolver = new ExecutorPathResolver(

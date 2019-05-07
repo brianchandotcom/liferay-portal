@@ -113,8 +113,8 @@ public class SiteAssetRenderer extends BaseAssetRenderer<Group> {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
 		return false;

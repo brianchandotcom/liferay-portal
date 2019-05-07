@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SessionTreeJSClicks {
 
 	public static void closeLayoutNodes(
-		HttpServletRequest request, String treeId, boolean privateLayout,
-		long layoutId, boolean recursive) {
+		HttpServletRequest httpServletRequest, String treeId,
+		boolean privateLayout, long layoutId, boolean recursive) {
 
 		try {
 			List<String> layoutIds = new ArrayList<>();
@@ -46,11 +46,12 @@ public class SessionTreeJSClicks {
 			layoutIds.add(String.valueOf(layoutId));
 
 			if (recursive) {
-				getLayoutIds(request, privateLayout, layoutId, layoutIds);
+				getLayoutIds(
+					httpServletRequest, privateLayout, layoutId, layoutIds);
 			}
 
 			closeNodes(
-				request, treeId,
+				httpServletRequest, treeId,
 				layoutIds.toArray(new String[layoutIds.size()]));
 		}
 		catch (Exception e) {
@@ -59,12 +60,13 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void closeNode(
-		HttpServletRequest request, String treeId, String nodeId) {
+		HttpServletRequest httpServletRequest, String treeId, String nodeId) {
 
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -89,11 +91,14 @@ public class SessionTreeJSClicks {
 		}
 	}
 
-	public static void closeNodes(HttpServletRequest request, String treeId) {
+	public static void closeNodes(
+		HttpServletRequest httpServletRequest, String treeId) {
+
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				portalPreferences.setValue(
 					SessionTreeJSClicks.class.getName(), treeId,
@@ -113,12 +118,14 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void closeNodes(
-		HttpServletRequest request, String treeId, String[] nodeIds) {
+		HttpServletRequest httpServletRequest, String treeId,
+		String[] nodeIds) {
 
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -146,11 +153,12 @@ public class SessionTreeJSClicks {
 	}
 
 	public static String getOpenNodes(
-		HttpServletRequest request, String treeId) {
+		HttpServletRequest httpServletRequest, String treeId) {
 
 		try {
 			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					httpServletRequest);
 
 			return portalPreferences.getValue(
 				SessionTreeJSClicks.class.getName(), treeId);
@@ -163,8 +171,8 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void openLayoutNodes(
-		HttpServletRequest request, String treeId, boolean privateLayout,
-		long layoutId, boolean recursive) {
+		HttpServletRequest httpServletRequest, String treeId,
+		boolean privateLayout, long layoutId, boolean recursive) {
 
 		try {
 			List<String> layoutIds = new ArrayList<>();
@@ -172,11 +180,12 @@ public class SessionTreeJSClicks {
 			layoutIds.add(String.valueOf(layoutId));
 
 			if (recursive) {
-				getLayoutIds(request, privateLayout, layoutId, layoutIds);
+				getLayoutIds(
+					httpServletRequest, privateLayout, layoutId, layoutIds);
 			}
 
 			openNodes(
-				request, treeId,
+				httpServletRequest, treeId,
 				layoutIds.toArray(new String[layoutIds.size()]));
 		}
 		catch (Exception e) {
@@ -185,12 +194,13 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void openNode(
-		HttpServletRequest request, String treeId, String nodeId) {
+		HttpServletRequest httpServletRequest, String treeId, String nodeId) {
 
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -215,12 +225,14 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void openNodes(
-		HttpServletRequest request, String treeId, String[] nodeIds) {
+		HttpServletRequest httpServletRequest, String treeId,
+		String[] nodeIds) {
 
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -247,11 +259,11 @@ public class SessionTreeJSClicks {
 	}
 
 	protected static List<String> getLayoutIds(
-			HttpServletRequest request, boolean privateLayout,
+			HttpServletRequest httpServletRequest, boolean privateLayout,
 			long parentLayoutId, List<String> layoutIds)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, parentLayoutId);
@@ -260,7 +272,8 @@ public class SessionTreeJSClicks {
 			layoutIds.add(String.valueOf(layout.getLayoutId()));
 
 			getLayoutIds(
-				request, privateLayout, layout.getLayoutId(), layoutIds);
+				httpServletRequest, privateLayout, layout.getLayoutId(),
+				layoutIds);
 		}
 
 		return layoutIds;

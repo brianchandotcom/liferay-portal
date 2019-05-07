@@ -35,7 +35,7 @@ public class WikiConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/wiki/configuration.jsp";
 	}
 

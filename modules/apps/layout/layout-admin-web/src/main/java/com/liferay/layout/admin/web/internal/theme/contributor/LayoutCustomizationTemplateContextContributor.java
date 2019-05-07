@@ -42,11 +42,12 @@ public class LayoutCustomizationTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		try {
 			if (_customizationSettingsProductNavigationControlMenuEntry.isShow(
-					request)) {
+					httpServletRequest)) {
 
 				StringBuilder sb = new StringBuilder(3);
 

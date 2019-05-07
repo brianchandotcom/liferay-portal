@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ServiceContextFunction
 	implements Function<String, ServiceContext> {
 
-	public ServiceContextFunction(HttpServletRequest request) {
-		_request = request;
+	public ServiceContextFunction(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 
 		_portletRequest = null;
 	}

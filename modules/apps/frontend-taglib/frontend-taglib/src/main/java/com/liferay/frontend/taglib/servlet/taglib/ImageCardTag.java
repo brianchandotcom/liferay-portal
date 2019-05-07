@@ -82,12 +82,15 @@ public class ImageCardTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:image-card:cssClass", _cssClass);
-		request.setAttribute("liferay-frontend:image-card:data", _data);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-frontend:image-card:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:image-card:data", _data);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:image-card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:image-card:imageUrl", _imageUrl);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:image-card:imageUrl", _imageUrl);
 	}
 
 	private String _cssClass;

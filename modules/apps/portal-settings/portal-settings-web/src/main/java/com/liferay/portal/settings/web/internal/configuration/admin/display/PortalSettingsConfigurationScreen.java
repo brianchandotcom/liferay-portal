@@ -75,30 +75,32 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		try {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				PortalSettingsWebKeys.DELETE_CONFIRMATION_TEXT,
 				UnicodeLanguageUtil.get(
 					ResourceBundleUtil.getBundle(
-						request.getLocale(),
+						httpServletRequest.getLocale(),
 						PortalSettingsConfigurationScreen.class),
 					"are-you-sure-you-want-to-reset-the-configured-values"));
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				PortalSettingsWebKeys.
 					PORTAL_SETTINGS_CONFIGURATION_SCREEN_CONTRIBUTOR,
 				_portalSettingsConfigurationScreenContributor);
 
 			_portalSettingsConfigurationScreenContributor.setAttributes(
-				request, response);
+				httpServletRequest, httpServletResponse);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/configuration/screen/entry.jsp");
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			throw new IOException(

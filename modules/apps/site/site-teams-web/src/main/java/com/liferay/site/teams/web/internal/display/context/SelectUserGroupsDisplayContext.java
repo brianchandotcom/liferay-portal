@@ -49,11 +49,11 @@ public class SelectUserGroupsDisplayContext {
 
 	public SelectUserGroupsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	public String getDisplayStyle() {

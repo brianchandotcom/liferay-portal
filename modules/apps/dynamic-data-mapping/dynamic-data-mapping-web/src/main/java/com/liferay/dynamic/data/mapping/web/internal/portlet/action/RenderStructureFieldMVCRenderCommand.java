@@ -60,25 +60,29 @@ public class RenderStructureFieldMVCRenderCommand
 	extends BaseMVCResourceCommand {
 
 	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String mode = ParamUtil.getString(request, "mode");
-		String namespace = ParamUtil.getString(request, "namespace");
+		String mode = ParamUtil.getString(httpServletRequest, "mode");
+		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
 		String portletNamespace = ParamUtil.getString(
-			request, "portletNamespace");
-		boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
+			httpServletRequest, "portletNamespace");
+		boolean readOnly = ParamUtil.getBoolean(httpServletRequest, "readOnly");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		request.setAttribute("aui:form:portletNamespace", portletNamespace);
+		httpServletRequest.setAttribute(
+			"aui:form:portletNamespace", portletNamespace);
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(
-			_portal.getOriginalServletRequest(request));
-		ddmFormFieldRenderingContext.setHttpServletResponse(response);
+			_portal.getOriginalServletRequest(httpServletRequest));
+		ddmFormFieldRenderingContext.setHttpServletResponse(
+			httpServletResponse);
 		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
 		ddmFormFieldRenderingContext.setMode(mode);
 		ddmFormFieldRenderingContext.setNamespace(namespace);
@@ -117,9 +121,12 @@ public class RenderStructureFieldMVCRenderCommand
 		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 	}
 
-	protected DDMFormField getDDMFormField(HttpServletRequest request) {
-		String definition = ParamUtil.getString(request, "definition");
-		String fieldName = ParamUtil.getString(request, "fieldName");
+	protected DDMFormField getDDMFormField(
+		HttpServletRequest httpServletRequest) {
+
+		String definition = ParamUtil.getString(
+			httpServletRequest, "definition");
+		String fieldName = ParamUtil.getString(httpServletRequest, "fieldName");
 
 		DDMFormDeserializer ddmFormDeserializer =
 			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");

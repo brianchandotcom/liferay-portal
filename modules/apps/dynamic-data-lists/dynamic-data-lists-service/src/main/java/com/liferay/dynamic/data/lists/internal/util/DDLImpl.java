@@ -287,7 +287,8 @@ public class DDLImpl implements DDL {
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean isEditable(
-			HttpServletRequest request, String portletId, long groupId)
+			HttpServletRequest httpServletRequest, String portletId,
+			long groupId)
 		throws Exception {
 
 		return true;

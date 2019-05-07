@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/search/bar/configuration.jsp";
 	}
 

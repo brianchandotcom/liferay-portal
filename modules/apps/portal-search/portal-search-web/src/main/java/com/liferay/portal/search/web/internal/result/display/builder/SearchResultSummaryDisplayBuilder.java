@@ -220,9 +220,9 @@ public class SearchResultSummaryDisplayBuilder {
 	}
 
 	public SearchResultSummaryDisplayBuilder setRequest(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		_request = request;
+		_request = httpServletRequest;
 
 		return this;
 	}

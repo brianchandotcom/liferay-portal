@@ -29,9 +29,12 @@ import javax.servlet.http.HttpSession;
 public class LogSessionIdAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		if (_log.isDebugEnabled()) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			_log.debug(
 				StringBundler.concat(

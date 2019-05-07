@@ -64,11 +64,11 @@ public class AssetCategoriesNavigationTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty",
 			String.valueOf(_hidePortletWhenEmpty));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:vocabularyIds",
 			_vocabularyIds);
 	}

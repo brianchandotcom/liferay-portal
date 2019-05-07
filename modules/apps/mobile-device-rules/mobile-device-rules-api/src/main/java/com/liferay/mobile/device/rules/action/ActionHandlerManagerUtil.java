@@ -35,11 +35,12 @@ import org.osgi.util.tracker.ServiceTracker;
 public class ActionHandlerManagerUtil {
 
 	public static void applyActions(
-			List<MDRAction> mdrActions, HttpServletRequest request,
-			HttpServletResponse response)
+			List<MDRAction> mdrActions, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		getActionHandlerManager().applyActions(mdrActions, request, response);
+		getActionHandlerManager().applyActions(
+			mdrActions, httpServletRequest, httpServletResponse);
 	}
 
 	public static ActionHandler getActionHandler(String actionType) {

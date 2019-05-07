@@ -50,8 +50,10 @@ import javax.servlet.http.HttpSession;
  */
 public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
-	public static void disableXSSAuditor(HttpServletResponse response) {
-		response.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
+	public static void disableXSSAuditor(
+		HttpServletResponse httpServletResponse) {
+
+		httpServletResponse.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
 	}
 
 	public static void disableXSSAuditor(PortletResponse portletResponse) {
@@ -59,9 +61,9 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	}
 
 	public static void disableXSSAuditorOnNextRequest(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(_DISABLE_XSS_AUDITOR, Boolean.TRUE);
 	}
@@ -74,17 +76,19 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	}
 
 	public static HttpServletResponse getSanitizedServletResponse(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		setXContentOptions(request, response);
-		setXFrameOptions(request, response);
-		setXXSSProtection(request, response);
+		setXContentOptions(httpServletRequest, httpServletResponse);
+		setXFrameOptions(httpServletRequest, httpServletResponse);
+		setXXSSProtection(httpServletRequest, httpServletResponse);
 
 		if (ServerDetector.isResin()) {
-			response = new SanitizedServletResponse(response);
+			httpServletResponse = new SanitizedServletResponse(
+				httpServletResponse);
 		}
 
-		return response;
+		return httpServletResponse;
 	}
 
 	@Override
@@ -115,14 +119,15 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	}
 
 	protected static void setXContentOptions(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (!_X_CONTENT_TYPE_OPTIONS) {
 			return;
 		}
 
 		if (_X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES.length > 0) {
-			String requestURI = request.getRequestURI();
+			String requestURI = httpServletRequest.getRequestURI();
 
 			for (String url : _X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES) {
 				if (requestURI.startsWith(url)) {
@@ -131,17 +136,19 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			}
 		}
 
-		response.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
+		httpServletResponse.setHeader(
+			HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
 	}
 
 	protected static void setXFrameOptions(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (!_X_FRAME_OPTIONS) {
 			return;
 		}
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		for (KeyValuePair xFrameOptionKVP : _xFrameOptionKVPs) {
 			String url = xFrameOptionKVP.getKey();
@@ -150,7 +157,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 				String value = xFrameOptionKVP.getValue();
 
 				if (value != null) {
-					response.setHeader(
+					httpServletResponse.setHeader(
 						HttpHeaders.X_FRAME_OPTIONS,
 						xFrameOptionKVP.getValue());
 				}
@@ -159,20 +166,21 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			}
 		}
 
-		response.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
+		httpServletResponse.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
 	}
 
 	protected static void setXXSSProtection(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
 		if ((session != null) &&
 			(session.getAttribute(_DISABLE_XSS_AUDITOR) != null)) {
 
 			session.removeAttribute(_DISABLE_XSS_AUDITOR);
 
-			response.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
+			httpServletResponse.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
 
 			return;
 		}
@@ -181,11 +189,12 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			return;
 		}
 
-		response.setHeader(HttpHeaders.X_XSS_PROTECTION, _X_XSS_PROTECTION);
+		httpServletResponse.setHeader(
+			HttpHeaders.X_XSS_PROTECTION, _X_XSS_PROTECTION);
 	}
 
-	private SanitizedServletResponse(HttpServletResponse response) {
-		super(response);
+	private SanitizedServletResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 	}
 
 	private static final String _DISABLE_XSS_AUDITOR =

@@ -107,10 +107,10 @@ public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 
 	public PortletURLImpl(
-		HttpServletRequest request, Portlet portlet, Layout layout,
+		HttpServletRequest httpServletRequest, Portlet portlet, Layout layout,
 		String lifecycle, MimeResponse.Copy copy) {
 
-		this(request, portlet, null, layout, lifecycle, copy);
+		this(httpServletRequest, portlet, null, layout, lifecycle, copy);
 	}
 
 	public PortletURLImpl(
@@ -1237,7 +1237,7 @@ public class PortletURLImpl
 	}
 
 	private PortletURLImpl(
-		HttpServletRequest request, Portlet portlet,
+		HttpServletRequest httpServletRequest, Portlet portlet,
 		PortletRequest portletRequest, Layout layout, String lifecycle,
 		MimeResponse.Copy copy) {
 
@@ -1245,7 +1245,7 @@ public class PortletURLImpl
 			throw new NullPointerException("Portlet is null");
 		}
 
-		_request = request;
+		_request = httpServletRequest;
 		_portlet = portlet;
 		_portletRequest = portletRequest;
 		_layout = layout;
@@ -1265,7 +1265,7 @@ public class PortletURLImpl
 		}
 
 		_removePublicRenderParameters = new LinkedHashSet<>();
-		_secure = PortalUtil.isSecure(request);
+		_secure = PortalUtil.isSecure(httpServletRequest);
 
 		if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 			_copyCurrentRenderParameters = true;
@@ -1293,7 +1293,8 @@ public class PortletURLImpl
 					continue;
 				}
 
-				String value = request.getParameter(autopropagatedParameter);
+				String value = httpServletRequest.getParameter(
+					autopropagatedParameter);
 
 				if (value != null) {
 					setParameter(autopropagatedParameter, value);

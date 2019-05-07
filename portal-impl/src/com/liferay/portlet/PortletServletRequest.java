@@ -58,13 +58,13 @@ import javax.servlet.http.HttpSession;
 public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	public PortletServletRequest(
-		HttpServletRequest request, PortletRequest portletRequest,
+		HttpServletRequest httpServletRequest, PortletRequest portletRequest,
 		String pathInfo, String queryString, String requestURI,
 		String servletPath, boolean named, boolean include) {
 
-		super(request);
+		super(httpServletRequest);
 
-		_request = request;
+		_request = httpServletRequest;
 
 		_portletRequest = portletRequest;
 
@@ -81,7 +81,8 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		_lifecycle = _liferayPortletRequest.getLifecycle();
 
 		if (Validator.isNotNull(_queryString)) {
-			_liferayPortletRequest.setPortletRequestDispatcherRequest(request);
+			_liferayPortletRequest.setPortletRequestDispatcherRequest(
+				httpServletRequest);
 		}
 	}
 

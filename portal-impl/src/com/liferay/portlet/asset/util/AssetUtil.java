@@ -121,9 +121,9 @@ public class AssetUtil {
 	};
 
 	public static Set<String> addLayoutTags(
-		HttpServletRequest request, List<AssetTag> tags) {
+		HttpServletRequest httpServletRequest, List<AssetTag> tags) {
 
-		Set<String> layoutTags = getLayoutTagNames(request);
+		Set<String> layoutTags = getLayoutTagNames(httpServletRequest);
 
 		for (AssetTag tag : tags) {
 			layoutTags.add(tag.getName());
@@ -133,12 +133,13 @@ public class AssetUtil {
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long assetCategoryId, HttpServletRequest request,
+			long assetCategoryId, HttpServletRequest httpServletRequest,
 			PortletURL portletURL)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -151,16 +152,18 @@ public class AssetUtil {
 		}
 
 		addPortletBreadcrumbEntries(
-			assetCategoryId, request, portletURL, portletBreadcrumbEntry);
+			assetCategoryId, httpServletRequest, portletURL,
+			portletBreadcrumbEntry);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long assetCategoryId, HttpServletRequest request,
+			long assetCategoryId, HttpServletRequest httpServletRequest,
 			PortletURL portletURL, boolean portletBreadcrumbEntry)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
 			assetCategoryId);
@@ -174,14 +177,16 @@ public class AssetUtil {
 				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorCategory.getTitle(themeDisplay.getLocale()),
+				httpServletRequest,
+				ancestorCategory.getTitle(themeDisplay.getLocale()),
 				portletURL.toString(), null, portletBreadcrumbEntry);
 		}
 
 		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, assetCategory.getTitle(themeDisplay.getLocale()),
+			httpServletRequest,
+			assetCategory.getTitle(themeDisplay.getLocale()),
 			portletURL.toString(), null, portletBreadcrumbEntry);
 	}
 
@@ -683,14 +688,17 @@ public class AssetUtil {
 			StringPool.BLANK);
 	}
 
-	public static Set<String> getLayoutTagNames(HttpServletRequest request) {
-		Set<String> tagNames = (Set<String>)request.getAttribute(
+	public static Set<String> getLayoutTagNames(
+		HttpServletRequest httpServletRequest) {
+
+		Set<String> tagNames = (Set<String>)httpServletRequest.getAttribute(
 			WebKeys.ASSET_LAYOUT_TAG_NAMES);
 
 		if (tagNames == null) {
 			tagNames = new HashSet<>();
 
-			request.setAttribute(WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
+			httpServletRequest.setAttribute(
+				WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
 		}
 
 		return tagNames;
@@ -757,11 +765,12 @@ public class AssetUtil {
 	}
 
 	public static Hits search(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		return search(searchContext, assetEntryQuery, start, end);
 	}
@@ -793,11 +802,12 @@ public class AssetUtil {
 	}
 
 	public static BaseModelSearchResult<AssetEntry> searchAssetEntries(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
 	}

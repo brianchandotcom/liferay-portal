@@ -79,8 +79,8 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	protected String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String name, String value, String checkBoxRowIds,
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
 		try {
@@ -106,7 +106,7 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 		}
 
 		return super.getRowCheckBox(
-			request, checked, disabled, name, value, checkBoxRowIds,
+			httpServletRequest, checked, disabled, name, value, checkBoxRowIds,
 			checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 

@@ -47,10 +47,10 @@ public class HtmlVerticalCardTag extends VerticalCardTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute("liferay-frontend:card:html", _html);
+		httpServletRequest.setAttribute("liferay-frontend:card:html", _html);
 	}
 
 	private String _html;

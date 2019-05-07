@@ -32,15 +32,16 @@ import javax.servlet.http.HttpServletResponse;
 public class RequestDispatcherUtil {
 
 	public static ObjectValuePair<String, Long> getContentAndLastModifiedTime(
-			RequestDispatcher requestDispatcher, HttpServletRequest request,
-			HttpServletResponse response)
+			RequestDispatcher requestDispatcher,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new LastModifiedCacheServletResponse(response);
+			new LastModifiedCacheServletResponse(httpServletResponse);
 
 		requestDispatcher.include(
-			new HttpServletRequestWrapper(request) {
+			new HttpServletRequestWrapper(httpServletRequest) {
 
 				@Override
 				public long getDateHeader(String name) {
@@ -90,31 +91,34 @@ public class RequestDispatcherUtil {
 				-1));
 	}
 
-	public static String getEffectivePath(HttpServletRequest request) {
-		DispatcherType dispatcherType = request.getDispatcherType();
+	public static String getEffectivePath(
+		HttpServletRequest httpServletRequest) {
+
+		DispatcherType dispatcherType = httpServletRequest.getDispatcherType();
 
 		if (dispatcherType.equals(DispatcherType.FORWARD)) {
-			return (String)request.getAttribute(
+			return (String)httpServletRequest.getAttribute(
 				RequestDispatcher.FORWARD_SERVLET_PATH);
 		}
 		else if (dispatcherType.equals(DispatcherType.INCLUDE)) {
-			return (String)request.getAttribute(
+			return (String)httpServletRequest.getAttribute(
 				RequestDispatcher.INCLUDE_SERVLET_PATH);
 		}
 
-		return request.getServletPath();
+		return httpServletRequest.getServletPath();
 	}
 
 	public static long getLastModifiedTime(
-			RequestDispatcher requestDispatcher, HttpServletRequest request,
-			HttpServletResponse response)
+			RequestDispatcher requestDispatcher,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
-			new LastModifiedCacheServletResponse(response);
+			new LastModifiedCacheServletResponse(httpServletResponse);
 
 		requestDispatcher.include(
-			new HttpServletRequestWrapper(request) {
+			new HttpServletRequestWrapper(httpServletRequest) {
 
 				@Override
 				public String getMethod() {
@@ -132,8 +136,10 @@ public class RequestDispatcherUtil {
 	private static class LastModifiedCacheServletResponse
 		extends BufferCacheServletResponse {
 
-		public LastModifiedCacheServletResponse(HttpServletResponse response) {
-			super(response);
+		public LastModifiedCacheServletResponse(
+			HttpServletResponse httpServletResponse) {
+
+			super(httpServletResponse);
 		}
 
 		@Override

@@ -26,9 +26,9 @@ public class ProtectedServletRequest
 	extends com.liferay.portal.kernel.servlet.ProtectedServletRequest {
 
 	public ProtectedServletRequest(
-		HttpServletRequest request, String remoteUser) {
+		HttpServletRequest httpServletRequest, String remoteUser) {
 
-		super(request, remoteUser);
+		super(httpServletRequest, remoteUser);
 	}
 
 }

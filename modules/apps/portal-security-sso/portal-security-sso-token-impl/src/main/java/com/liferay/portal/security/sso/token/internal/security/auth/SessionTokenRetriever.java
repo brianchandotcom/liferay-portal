@@ -33,9 +33,9 @@ public class SessionTokenRetriever implements TokenRetriever {
 
 	@Override
 	public String getLoginToken(
-		HttpServletRequest request, String userTokenName) {
+		HttpServletRequest httpServletRequest, String userTokenName) {
 
-		HttpSession httpSession = request.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
 		return (String)httpSession.getAttribute(userTokenName);
 	}

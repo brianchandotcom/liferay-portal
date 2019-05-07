@@ -33,13 +33,13 @@ public class AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext
 	public AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			AssetDisplayPagesItemSelectorViewDisplayContext
 				assetDisplayPagesItemSelectorViewDisplayContext)
 		throws PortletException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			assetDisplayPagesItemSelectorViewDisplayContext.
 				getAssetDisplayPageSearchContainer());
 	}

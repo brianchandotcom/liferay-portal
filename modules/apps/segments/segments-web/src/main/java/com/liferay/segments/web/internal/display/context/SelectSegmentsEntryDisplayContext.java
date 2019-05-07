@@ -51,11 +51,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectSegmentsEntryDisplayContext {
 
 	public SelectSegmentsEntryDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		SegmentsEntryLocalService segmentsEntryLocalService) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsEntryLocalService = segmentsEntryLocalService;

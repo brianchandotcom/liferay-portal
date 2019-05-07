@@ -32,12 +32,12 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 	public SelectOrganizationsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SelectOrganizationsDisplayContext selectOrganizationsDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectOrganizationsDisplayContext.getOrganizationSearchContainer());
 	}
 

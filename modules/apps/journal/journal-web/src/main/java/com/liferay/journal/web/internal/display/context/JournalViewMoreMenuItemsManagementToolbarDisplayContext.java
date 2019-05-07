@@ -32,13 +32,13 @@ public class JournalViewMoreMenuItemsManagementToolbarDisplayContext
 	public JournalViewMoreMenuItemsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			JournalViewMoreMenuItemsDisplayContext
 				journalViewMoreMenuItemsDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalViewMoreMenuItemsDisplayContext.
 				getDDMStructuresSearchContainer());
 	}

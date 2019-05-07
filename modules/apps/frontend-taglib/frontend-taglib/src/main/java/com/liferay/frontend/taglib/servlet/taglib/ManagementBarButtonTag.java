@@ -160,9 +160,9 @@ public class ManagementBarButtonTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "active", _active);
-		setNamespacedAttribute(request, "cssClass", _cssClass);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(httpServletRequest, "active", _active);
+		setNamespacedAttribute(httpServletRequest, "cssClass", _cssClass);
 
 		if (_data == null) {
 			_data = new HashMap<>();
@@ -170,14 +170,15 @@ public class ManagementBarButtonTag extends IncludeTag {
 
 		_data.put("qa-id", _label + "Button");
 
-		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(httpServletRequest, "data", _data);
 
-		setNamespacedAttribute(request, "disabled", _disabled);
-		setNamespacedAttribute(request, "href", _href);
-		setNamespacedAttribute(request, "icon", _icon);
-		setNamespacedAttribute(request, "iconCssClass", _iconCssClass);
-		setNamespacedAttribute(request, "id", _id);
-		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(httpServletRequest, "disabled", _disabled);
+		setNamespacedAttribute(httpServletRequest, "href", _href);
+		setNamespacedAttribute(httpServletRequest, "icon", _icon);
+		setNamespacedAttribute(
+			httpServletRequest, "iconCssClass", _iconCssClass);
+		setNamespacedAttribute(httpServletRequest, "id", _id);
+		setNamespacedAttribute(httpServletRequest, "label", _label);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

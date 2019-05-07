@@ -52,13 +52,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static Group getGroup(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public static Group getGroup(HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
+
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		Group group = null;
 
@@ -69,7 +72,7 @@ public class ActionUtil {
 			group = themeDisplay.getSiteGroup();
 		}
 
-		request.setAttribute(WebKeys.GROUP, group);
+		httpServletRequest.setAttribute(WebKeys.GROUP, group);
 
 		return group;
 	}
@@ -200,13 +203,13 @@ public class ActionUtil {
 	}
 
 	protected static PortletPreferences getPortletPreferences(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletPreferences,
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
 		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+			httpServletRequest, "portletResource");
 
 		if (Validator.isNull(portletResource)) {
 			return portletConfigPortletPreferences;
@@ -217,17 +220,17 @@ public class ActionUtil {
 		}
 
 		return PortletPreferencesFactoryUtil.getPortletPreferences(
-			request, portletResource);
+			httpServletRequest, portletResource);
 	}
 
 	protected static PortletPreferences getPortletSetup(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			PortletPreferences portletConfigPortletSetup,
 			PortletPreferences portletSetup)
 		throws PortalException {
 
 		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+			httpServletRequest, "portletResource");
 
 		if (Validator.isNull(portletResource)) {
 			return portletConfigPortletSetup;
@@ -238,7 +241,7 @@ public class ActionUtil {
 		}
 
 		return PortletPreferencesFactoryUtil.getPortletSetup(
-			request, portletResource);
+			httpServletRequest, portletResource);
 	}
 
 }

@@ -80,18 +80,19 @@ public class ComboServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			doService(request, response);
+			doService(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -117,13 +118,14 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected void doService(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		Set<String> modulePathsSet = new LinkedHashSet<>();
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			request.getQueryString());
+			httpServletRequest.getQueryString());
 
 		Enumeration<String> enu = Collections.enumeration(
 			parameterMap.keySet());
@@ -159,7 +161,7 @@ public class ComboServlet extends HttpServlet {
 				HttpServletResponse.SC_NOT_FOUND,
 				new NoSuchLayoutException(
 					"Query string translates to an empty module paths set"),
-				request, response);
+				httpServletRequest, httpServletResponse);
 
 			return;
 		}
@@ -181,16 +183,18 @@ public class ComboServlet extends HttpServlet {
 			}
 
 			if (!extension.equals(pathExtension)) {
-				response.setHeader(
+				httpServletResponse.setHeader(
 					HttpHeaders.CACHE_CONTROL,
 					HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_BAD_REQUEST);
 
 				return;
 			}
 		}
 
-		String minifierType = ParamUtil.getString(request, "minifierType");
+		String minifierType = ParamUtil.getString(
+			httpServletRequest, "minifierType");
 
 		if (Validator.isNull(minifierType)) {
 			minifierType = "js";
@@ -212,7 +216,8 @@ public class ComboServlet extends HttpServlet {
 			modulePathsString = Arrays.toString(modulePaths);
 
 			modulePathsString +=
-				StringPool.POUND + LanguageUtil.getLanguageId(request);
+				StringPool.POUND +
+					LanguageUtil.getLanguageId(httpServletRequest);
 
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
@@ -224,10 +229,11 @@ public class ComboServlet extends HttpServlet {
 				String modulePath = modulePaths[i];
 
 				if (!validateModuleExtension(modulePath)) {
-					response.setHeader(
+					httpServletResponse.setHeader(
 						HttpHeaders.CACHE_CONTROL,
 						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					httpServletResponse.setStatus(
+						HttpServletResponse.SC_BAD_REQUEST);
 
 					return;
 				}
@@ -237,20 +243,22 @@ public class ComboServlet extends HttpServlet {
 				if (Validator.isNotNull(modulePath)) {
 					RequestDispatcher requestDispatcher =
 						getResourceRequestDispatcher(
-							request, response, modulePath);
+							httpServletRequest, httpServletResponse,
+							modulePath);
 
 					if (requestDispatcher == null) {
-						response.setHeader(
+						httpServletResponse.setHeader(
 							HttpHeaders.CACHE_CONTROL,
 							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-						response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+						httpServletResponse.setStatus(
+							HttpServletResponse.SC_NOT_FOUND);
 
 						return;
 					}
 
 					bytes = getResourceContent(
-						requestDispatcher, request, response, modulePath,
-						minifierType);
+						requestDispatcher, httpServletRequest,
+						httpServletResponse, modulePath, minifierType);
 				}
 
 				bytesArray[i] = bytes;
@@ -269,14 +277,15 @@ public class ComboServlet extends HttpServlet {
 			contentType = ContentTypes.TEXT_CSS;
 		}
 
-		response.setContentType(contentType);
+		httpServletResponse.setContentType(contentType);
 
-		ServletResponseUtil.write(response, bytesArray);
+		ServletResponseUtil.write(httpServletResponse, bytesArray);
 	}
 
 	protected byte[] getResourceContent(
-			RequestDispatcher requestDispatcher, HttpServletRequest request,
-			HttpServletResponse response, String modulePath,
+			RequestDispatcher requestDispatcher,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String modulePath,
 			String minifierType)
 		throws Exception {
 
@@ -296,7 +305,7 @@ public class ComboServlet extends HttpServlet {
 		sb.append(StringPool.QUESTION);
 		sb.append(minifierType);
 		sb.append("&languageId=");
-		sb.append(ParamUtil.getString(request, "languageId"));
+		sb.append(ParamUtil.getString(httpServletRequest, "languageId"));
 
 		String fileContentKey = sb.toString();
 
@@ -314,8 +323,8 @@ public class ComboServlet extends HttpServlet {
 			if ((requestDispatcher != null) &&
 				(elapsedTime <= PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL) &&
 				(RequestDispatcherUtil.getLastModifiedTime(
-					requestDispatcher, request, response) ==
-						fileContentBag._lastModified)) {
+					requestDispatcher, httpServletRequest,
+					httpServletResponse) == fileContentBag._lastModified)) {
 
 				return fileContentBag._fileContent;
 			}
@@ -329,7 +338,7 @@ public class ComboServlet extends HttpServlet {
 		else {
 			ObjectValuePair<String, Long> objectValuePair =
 				RequestDispatcherUtil.getContentAndLastModifiedTime(
-					requestDispatcher, request, response);
+					requestDispatcher, httpServletRequest, httpServletResponse);
 
 			String stringFileContent = objectValuePair.getKey();
 
@@ -343,7 +352,8 @@ public class ComboServlet extends HttpServlet {
 				if (minifierType.equals("css")) {
 					try {
 						stringFileContent = DynamicCSSUtil.replaceToken(
-							getServletContext(), request, stringFileContent);
+							getServletContext(), httpServletRequest,
+							stringFileContent);
 					}
 					catch (Exception e) {
 						_log.error(
@@ -354,7 +364,7 @@ public class ComboServlet extends HttpServlet {
 							_log.debug(stringFileContent);
 						}
 
-						response.setHeader(
+						httpServletResponse.setHeader(
 							HttpHeaders.CACHE_CONTROL,
 							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 					}
@@ -407,8 +417,8 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected RequestDispatcher getResourceRequestDispatcher(
-			HttpServletRequest request, HttpServletResponse response,
-			String modulePath)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String modulePath)
 		throws Exception {
 
 		String portletId = getModulePortletId(modulePath);
@@ -426,8 +436,8 @@ public class ComboServlet extends HttpServlet {
 				_log.warn(
 					StringBundler.concat(
 						"Invalid resource ",
-						String.valueOf(request.getRequestURL()), "?",
-						request.getQueryString()));
+						String.valueOf(httpServletRequest.getRequestURL()), "?",
+						httpServletRequest.getQueryString()));
 			}
 
 			return null;

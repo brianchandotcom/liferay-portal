@@ -48,18 +48,18 @@ public class AssetBrowserManagementToolbarDisplayContext
 	public AssetBrowserManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		AssetBrowserDisplayContext assetBrowserDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			assetBrowserDisplayContext.getAssetBrowserSearch());
 
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
 
-		_assetHelper = (AssetHelper)request.getAttribute(
+		_assetHelper = (AssetHelper)httpServletRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

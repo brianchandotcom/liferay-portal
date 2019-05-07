@@ -33,12 +33,12 @@ public class UserRolesManagementToolbarDisplayContext
 	public UserRolesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			UserRolesDisplayContext userRolesDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			userRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 

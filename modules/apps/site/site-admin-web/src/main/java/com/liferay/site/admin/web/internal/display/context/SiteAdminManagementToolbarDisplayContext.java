@@ -46,12 +46,12 @@ public class SiteAdminManagementToolbarDisplayContext
 	public SiteAdminManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SiteAdminDisplayContext siteAdminDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			siteAdminDisplayContext.getSearchContainer());
 
 		_siteAdminDisplayContext = siteAdminDisplayContext;

@@ -66,9 +66,10 @@ public class StatusTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:status:cssClass", _cssClass);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:status:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-staging:status:stagedModel", _stagedModel);
 	}
 

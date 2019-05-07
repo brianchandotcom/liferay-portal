@@ -47,10 +47,10 @@ public class ThemeModificationActionHandler implements ActionHandler {
 
 	@Override
 	public void applyAction(
-		MDRAction mdrAction, HttpServletRequest request,
-		HttpServletResponse response) {
+		MDRAction mdrAction, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		UnicodeProperties typeSettingsProperties =
 			mdrAction.getTypeSettingsProperties();
@@ -68,7 +68,7 @@ public class ThemeModificationActionHandler implements ActionHandler {
 			return;
 		}
 
-		request.setAttribute(WebKeys.THEME, theme);
+		httpServletRequest.setAttribute(WebKeys.THEME, theme);
 
 		String colorSchemeId = GetterUtil.getString(
 			typeSettingsProperties.getProperty("colorSchemeId"));
@@ -81,10 +81,11 @@ public class ThemeModificationActionHandler implements ActionHandler {
 				companyId, themeId, colorSchemeId);
 		}
 
-		request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+		httpServletRequest.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setLookAndFeel(theme, colorScheme);
 	}

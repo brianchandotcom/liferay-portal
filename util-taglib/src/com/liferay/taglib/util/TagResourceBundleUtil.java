@@ -41,17 +41,17 @@ import javax.servlet.jsp.PageContext;
 public class TagResourceBundleUtil {
 
 	public static ResourceBundle getResourceBundle(
-		HttpServletRequest request, Locale locale) {
+		HttpServletRequest httpServletRequest, Locale locale) {
 
 		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader(
-			request);
+			httpServletRequest);
 
 		if (resourceBundleLoader != null) {
 			return resourceBundleLoader.loadResourceBundle(locale);
 		}
 
 		ResourceBundle portletResourceBundle = getPortletResourceBundle(
-			request, locale);
+			httpServletRequest, locale);
 
 		ResourceBundle portalResourceBundle = PortalUtil.getResourceBundle(
 			locale);
@@ -78,10 +78,11 @@ public class TagResourceBundleUtil {
 	}
 
 	protected static ResourceBundle getPortletResourceBundle(
-		HttpServletRequest request, Locale locale) {
+		HttpServletRequest httpServletRequest, Locale locale) {
 
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (portletConfig != null) {
 			return portletConfig.getResourceBundle(locale);
@@ -91,14 +92,15 @@ public class TagResourceBundleUtil {
 	}
 
 	protected static ResourceBundleLoader getResourceBundleLoader(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		ResourceBundleLoader resourceBundleLoader =
-			(ResourceBundleLoader)request.getAttribute(
+			(ResourceBundleLoader)httpServletRequest.getAttribute(
 				WebKeys.RESOURCE_BUNDLE_LOADER);
 
 		if (resourceBundleLoader == null) {
-			ServletContext servletContext = request.getServletContext();
+			ServletContext servletContext =
+				httpServletRequest.getServletContext();
 
 			String servletContextName = servletContext.getServletContextName();
 
@@ -111,8 +113,9 @@ public class TagResourceBundleUtil {
 					getResourceBundleLoaderByServletContextName(
 						servletContextName);
 
-			PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
 
 			if (portletConfig != null) {
 				LiferayPortletContext liferayPortletContext =

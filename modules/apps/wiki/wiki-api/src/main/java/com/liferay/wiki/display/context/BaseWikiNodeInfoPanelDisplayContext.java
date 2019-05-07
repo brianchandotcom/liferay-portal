@@ -29,9 +29,12 @@ public abstract class BaseWikiNodeInfoPanelDisplayContext
 	public BaseWikiNodeInfoPanelDisplayContext(
 		UUID uuid,
 		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, wikiNodeInfoPanelDisplayContext, request, response);
+		super(
+			uuid, wikiNodeInfoPanelDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

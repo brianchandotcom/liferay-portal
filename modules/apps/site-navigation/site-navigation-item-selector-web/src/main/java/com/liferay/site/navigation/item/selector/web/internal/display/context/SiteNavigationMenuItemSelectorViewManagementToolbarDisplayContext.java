@@ -32,12 +32,12 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 	public SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteNavigationMenuItemSelectorViewDisplayContext
 			siteNavigationMenuItemSelectorViewDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			siteNavigationMenuItemSelectorViewDisplayContext.
 				getSearchContainer());
 	}

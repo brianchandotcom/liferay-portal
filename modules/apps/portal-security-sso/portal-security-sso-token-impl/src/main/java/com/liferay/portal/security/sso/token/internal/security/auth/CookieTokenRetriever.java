@@ -33,9 +33,9 @@ public class CookieTokenRetriever implements TokenRetriever {
 
 	@Override
 	public String getLoginToken(
-		HttpServletRequest request, String userTokenName) {
+		HttpServletRequest httpServletRequest, String userTokenName) {
 
-		return CookieKeys.getCookie(request, userTokenName, false);
+		return CookieKeys.getCookie(httpServletRequest, userTokenName, false);
 	}
 
 }

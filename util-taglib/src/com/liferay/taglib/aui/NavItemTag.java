@@ -56,8 +56,8 @@ public class NavItemTag extends BaseNavItemTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		if (!getUseDialog() && AUIUtil.isOpensNewWindow(getTarget())) {
 			String title = getTitle();
@@ -72,7 +72,8 @@ public class NavItemTag extends BaseNavItemTag implements BodyTag {
 			title = title.concat(
 				LanguageUtil.get(resourceBundle, "opens-new-window"));
 
-			setNamespacedAttribute(request, "title", String.valueOf(title));
+			setNamespacedAttribute(
+				httpServletRequest, "title", String.valueOf(title));
 		}
 	}
 

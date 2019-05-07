@@ -32,12 +32,13 @@ public class RateEntryAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String className = getClassName(request);
-		long classPK = getClassPK(request);
-		double score = ParamUtil.getDouble(request, "score");
+		String className = getClassName(httpServletRequest);
+		long classPK = getClassPK(httpServletRequest);
+		double score = ParamUtil.getDouble(httpServletRequest, "score");
 
 		if (score == -1) {
 			RatingsEntryServiceUtil.deleteEntry(className, classPK);
@@ -72,12 +73,12 @@ public class RateEntryAction extends JSONAction {
 		return jsonObject.toString();
 	}
 
-	protected String getClassName(HttpServletRequest request) {
-		return ParamUtil.getString(request, "className");
+	protected String getClassName(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "className");
 	}
 
-	protected long getClassPK(HttpServletRequest request) {
-		return ParamUtil.getLong(request, "classPK");
+	protected long getClassPK(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getLong(httpServletRequest, "classPK");
 	}
 
 }

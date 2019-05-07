@@ -37,9 +37,10 @@ import javax.servlet.http.HttpServletRequest;
 public class GroupPortletRatingsDefinitionDisplayContext {
 
 	public GroupPortletRatingsDefinitionDisplayContext(
-		UnicodeProperties groupTypeSettings, HttpServletRequest request) {
+		UnicodeProperties groupTypeSettings,
+		HttpServletRequest httpServletRequest) {
 
-		_populateRatingsTypeMaps(groupTypeSettings, request);
+		_populateRatingsTypeMaps(groupTypeSettings, httpServletRequest);
 	}
 
 	public Map<String, Map<String, RatingsType>> getGroupRatingsTypeMaps() {
@@ -47,7 +48,8 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 	}
 
 	private void _populateRatingsTypeMaps(
-		UnicodeProperties groupTypeSettings, HttpServletRequest request) {
+		UnicodeProperties groupTypeSettings,
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
@@ -66,8 +68,9 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 
 			String portletId = portletRatingsDefinitionValues.getPortletId();
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (!PortletLocalServiceUtil.hasPortlet(
 					themeDisplay.getCompanyId(), portletId)) {
@@ -83,7 +86,7 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 				className);
 
 			String groupRatingsTypeString = PropertiesParamUtil.getString(
-				groupTypeSettings, request, propertyKey);
+				groupTypeSettings, httpServletRequest, propertyKey);
 
 			RatingsType ratingsType = null;
 

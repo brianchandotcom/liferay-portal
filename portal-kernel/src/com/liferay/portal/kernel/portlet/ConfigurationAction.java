@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface ConfigurationAction {
 
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	public void processAction(

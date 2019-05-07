@@ -42,14 +42,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EditDisplayPageMenuDisplayContext {
 
-	public EditDisplayPageMenuDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public EditDisplayPageMenuDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		_request = httpServletRequest;
 
 		_infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider)request.getAttribute(
+			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
-		_infoEditURLProvider = (InfoEditURLProvider)request.getAttribute(
-			AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER);
+		_infoEditURLProvider =
+			(InfoEditURLProvider)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

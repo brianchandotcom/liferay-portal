@@ -108,16 +108,20 @@ public class InputCheckBoxTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:input-checkbox:cssClass", _cssClass);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-checkbox:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-checkbox:defaultValue", _defaultValue);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-checkbox:disabled", String.valueOf(_disabled));
-		request.setAttribute("liferay-ui:input-checkbox:formName", _formName);
-		request.setAttribute("liferay-ui:input-checkbox:id", _id);
-		request.setAttribute("liferay-ui:input-checkbox:onClick", _onClick);
-		request.setAttribute("liferay-ui:input-checkbox:param", _param);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-checkbox:formName", _formName);
+		httpServletRequest.setAttribute("liferay-ui:input-checkbox:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-checkbox:onClick", _onClick);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-checkbox:param", _param);
 	}
 
 	protected void updateFormCheckboxNames() {

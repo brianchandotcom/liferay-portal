@@ -33,7 +33,8 @@ public interface AssetEntryAction<T> {
 	public String getDialogTitle(Locale locale);
 
 	public String getDialogURL(
-			HttpServletRequest request, AssetRenderer<T> assetRenderer)
+			HttpServletRequest httpServletRequest,
+			AssetRenderer<T> assetRenderer)
 		throws PortalException;
 
 	public String getIcon();

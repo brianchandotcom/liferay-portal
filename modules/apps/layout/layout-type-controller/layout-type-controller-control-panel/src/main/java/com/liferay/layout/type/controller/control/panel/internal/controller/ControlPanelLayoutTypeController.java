@@ -87,19 +87,21 @@ public class ControlPanelLayoutTypeController
 	}
 
 	@Override
-	protected void addAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void addAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
 	}
 
 	@Override
 	protected ServletResponse createServletResponse(
-		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
+		HttpServletResponse httpServletResponse,
+		UnsyncStringWriter unsyncStringWriter) {
 
-		return new PipingServletResponse(response, unsyncStringWriter);
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override
@@ -113,9 +115,11 @@ public class ControlPanelLayoutTypeController
 	}
 
 	@Override
-	protected void removeAttributes(HttpServletRequest request) {
-		request.removeAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
-		request.removeAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+	protected void removeAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.removeAttribute(
+			ApplicationListWebKeys.PANEL_APP_REGISTRY);
+		httpServletRequest.removeAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 	}
 
 	@Reference(unbind = "-")

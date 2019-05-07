@@ -74,7 +74,8 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 	@Override
 	public void serveImage(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -97,29 +98,30 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	}
 
 	@Override
-	protected boolean validateChallenge(HttpServletRequest request)
+	protected boolean validateChallenge(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
 		String reCaptchaResponse = ParamUtil.getString(
-			request, "g-recaptcha-response");
+			httpServletRequest, "g-recaptcha-response");
 
 		while (Validator.isBlank(reCaptchaResponse) &&
-			   (request instanceof HttpServletRequestWrapper)) {
+			   (httpServletRequest instanceof HttpServletRequestWrapper)) {
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)request;
+				(HttpServletRequestWrapper)httpServletRequest;
 
-			request =
+			httpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 
 			reCaptchaResponse = ParamUtil.getString(
-				request, "g-recaptcha-response");
+				httpServletRequest, "g-recaptcha-response");
 		}
 
 		if (Validator.isBlank(reCaptchaResponse)) {
 			_log.error(
-				"CAPTCHA text is null. User " + request.getRemoteUser() +
-					" may be trying to circumvent the CAPTCHA.");
+				"CAPTCHA text is null. User " +
+					httpServletRequest.getRemoteUser() +
+						" may be trying to circumvent the CAPTCHA.");
 
 			throw new CaptchaTextException();
 		}
@@ -136,7 +138,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 			_log.error(se, se);
 		}
 
-		options.addPart("remoteip", request.getRemoteAddr());
+		options.addPart("remoteip", httpServletRequest.getRemoteAddr());
 		options.addPart("response", reCaptchaResponse);
 		options.setPost(true);
 

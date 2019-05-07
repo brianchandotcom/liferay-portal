@@ -30,18 +30,19 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchContainerReference {
 
 	public SearchContainerReference(
-		HttpServletRequest request, String namespace) {
+		HttpServletRequest httpServletRequest, String namespace) {
 
 		_namespace = namespace;
 
-		request.setAttribute(WebKeys.SEARCH_CONTAINER_REFERENCE, this);
+		httpServletRequest.setAttribute(
+			WebKeys.SEARCH_CONTAINER_REFERENCE, this);
 	}
 
-	public String getId(HttpServletRequest request) {
-		return getId(request, SearchContainer.DEFAULT_VAR);
+	public String getId(HttpServletRequest httpServletRequest) {
+		return getId(httpServletRequest, SearchContainer.DEFAULT_VAR);
 	}
 
-	public String getId(HttpServletRequest request, String var) {
+	public String getId(HttpServletRequest httpServletRequest, String var) {
 		if (_searchContainers == null) {
 			return StringPool.BLANK;
 		}
@@ -52,7 +53,7 @@ public class SearchContainerReference {
 			return StringPool.BLANK;
 		}
 
-		return searchContainer.getId(request, _namespace);
+		return searchContainer.getId(httpServletRequest, _namespace);
 	}
 
 	public void register(SearchContainer<?> searchContainer) {

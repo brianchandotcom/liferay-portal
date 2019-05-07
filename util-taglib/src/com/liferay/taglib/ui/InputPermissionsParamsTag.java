@@ -46,16 +46,18 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class InputPermissionsParamsTag extends TagSupport {
 
-	public static String doTag(String modelName, HttpServletRequest request)
+	public static String doTag(
+			String modelName, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		try {
 			RenderResponse renderResponse =
-				(RenderResponse)request.getAttribute(
+				(RenderResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			Layout layout = themeDisplay.getLayout();
 

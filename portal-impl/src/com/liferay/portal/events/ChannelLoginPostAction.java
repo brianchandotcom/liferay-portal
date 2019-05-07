@@ -32,9 +32,12 @@ import javax.servlet.http.HttpSession;
 public class ChannelLoginPostAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		try {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			User user = (User)session.getAttribute(WebKeys.USER);
 

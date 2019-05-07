@@ -188,10 +188,11 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutUuid = null;
 	}
 
-	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
+	protected List<NavItem> getBranchNavItems(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return NavItemUtil.getBranchNavItems(request);
+		return NavItemUtil.getBranchNavItems(httpServletRequest);
 	}
 
 	protected String getDisplayStyle() {
@@ -232,7 +233,7 @@ public class NavigationTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";

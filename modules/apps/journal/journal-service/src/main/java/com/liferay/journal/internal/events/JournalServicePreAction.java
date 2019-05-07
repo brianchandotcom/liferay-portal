@@ -44,25 +44,30 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalServicePreAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			servicePre(request);
+			servicePre(httpServletRequest);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
 	}
 
-	public void servicePre(HttpServletRequest request) throws PortalException {
-		String strutsAction = _portal.getStrutsAction(request);
+	public void servicePre(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		String strutsAction = _portal.getStrutsAction(httpServletRequest);
 
 		if (!strutsAction.equals(_PATH_PORTAL_LAYOUT)) {
 			return;
 		}
 
-		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
+		long mainJournalArticleId = ParamUtil.getLong(
+			httpServletRequest, "p_j_a_id");
 
 		if (mainJournalArticleId <= 0) {
 			return;
@@ -76,7 +81,8 @@ public class JournalServicePreAction extends Action {
 				JournalArticle.class.getName(),
 				mainJournalArticle.getResourcePrimKey());
 
-			request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 		}
 		catch (NoSuchArticleException nsae) {
 			if (_log.isWarnEnabled()) {

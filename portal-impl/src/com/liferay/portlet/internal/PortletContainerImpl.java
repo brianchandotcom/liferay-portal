@@ -123,11 +123,12 @@ import javax.servlet.http.HttpSession;
 public class PortletContainerImpl implements PortletContainer {
 
 	@Override
-	public void preparePortlet(HttpServletRequest request, Portlet portlet)
+	public void preparePortlet(
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws PortletContainerException {
 
 		try {
-			_preparePortlet(request, portlet);
+			_preparePortlet(httpServletRequest, portlet);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
@@ -136,52 +137,57 @@ public class PortletContainerImpl implements PortletContainer {
 
 	@Override
 	public ActionResult processAction(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		return _preserveGroupIds(
-			request,
+			httpServletRequest,
 			() -> {
 				if (portlet != null) {
-					_processGroupId(request, portlet);
+					_processGroupId(httpServletRequest, portlet);
 				}
 
-				return _processAction(request, response, portlet);
+				return _processAction(
+					httpServletRequest, httpServletResponse, portlet);
 			});
 	}
 
 	@Override
 	public List<Event> processEvent(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, Layout layout, Event event)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet,
+			Layout layout, Event event)
 		throws PortletContainerException {
 
 		return _preserveGroupIds(
-			request,
+			httpServletRequest,
 			() -> {
-				String portletId = ParamUtil.getString(request, "p_p_id");
+				String portletId = ParamUtil.getString(
+					httpServletRequest, "p_p_id");
 
 				if ((portlet != null) &&
 					portletId.equals(portlet.getPortletId())) {
 
-					_processGroupId(request, portlet);
+					_processGroupId(httpServletRequest, portlet);
 				}
 
-				return _processEvent(request, response, portlet, layout, event);
+				return _processEvent(
+					httpServletRequest, httpServletResponse, portlet, layout,
+					event);
 			});
 	}
 
 	@Override
 	public void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout) {
+		HttpServletRequest httpServletRequest, Layout layout) {
 
-		processPublicRenderParameters(request, layout, null);
+		processPublicRenderParameters(httpServletRequest, layout, null);
 	}
 
 	@Override
 	public void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -195,27 +201,30 @@ public class PortletContainerImpl implements PortletContainer {
 
 		portlets.remove(portlet);
 
-		_processPublicRenderParameters(request, layout, portlets, false);
+		_processPublicRenderParameters(
+			httpServletRequest, layout, portlets, false);
 	}
 
 	@Override
 	public void render(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		_preserveGroupIds(
-			request,
+			httpServletRequest,
 			() -> {
-				String portletId = ParamUtil.getString(request, "p_p_id");
+				String portletId = ParamUtil.getString(
+					httpServletRequest, "p_p_id");
 
 				if ((portlet != null) &&
 					portletId.equals(portlet.getPortletId())) {
 
-					_processGroupId(request, portlet);
+					_processGroupId(httpServletRequest, portlet);
 				}
 
-				_render(request, response, portlet, false);
+				_render(
+					httpServletRequest, httpServletResponse, portlet, false);
 
 				return null;
 			});
@@ -223,22 +232,23 @@ public class PortletContainerImpl implements PortletContainer {
 
 	@Override
 	public void renderHeaders(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		_preserveGroupIds(
-			request,
+			httpServletRequest,
 			() -> {
-				String portletId = ParamUtil.getString(request, "p_p_id");
+				String portletId = ParamUtil.getString(
+					httpServletRequest, "p_p_id");
 
 				if ((portlet != null) &&
 					portletId.equals(portlet.getPortletId())) {
 
-					_processGroupId(request, portlet);
+					_processGroupId(httpServletRequest, portlet);
 				}
 
-				_render(request, response, portlet, true);
+				_render(httpServletRequest, httpServletResponse, portlet, true);
 
 				return null;
 			});
@@ -246,18 +256,19 @@ public class PortletContainerImpl implements PortletContainer {
 
 	@Override
 	public void serveResource(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		_preserveGroupIds(
-			request,
+			httpServletRequest,
 			() -> {
 				if (portlet != null) {
-					_processGroupId(request, portlet);
+					_processGroupId(httpServletRequest, portlet);
 				}
 
-				_serveResource(request, response, portlet);
+				_serveResource(
+					httpServletRequest, httpServletResponse, portlet);
 
 				return null;
 			});
@@ -274,20 +285,23 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	protected long getScopeGroupId(
-			HttpServletRequest request, Layout layout, String portletId)
+			HttpServletRequest httpServletRequest, Layout layout,
+			String portletId)
 		throws PortalException {
 
 		long scopeGroupId = 0;
 
-		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout requestLayout = (Layout)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT);
 
 		try {
-			request.setAttribute(WebKeys.LAYOUT, layout);
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
-			scopeGroupId = PortalUtil.getScopeGroupId(request, portletId);
+			scopeGroupId = PortalUtil.getScopeGroupId(
+				httpServletRequest, portletId);
 		}
 		finally {
-			request.setAttribute(WebKeys.LAYOUT, requestLayout);
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, requestLayout);
 		}
 
 		if (scopeGroupId <= 0) {
@@ -340,25 +354,27 @@ public class PortletContainerImpl implements PortletContainer {
 		return false;
 	}
 
-	private void _preparePortlet(HttpServletRequest request, Portlet portlet)
+	private void _preparePortlet(
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws Exception {
 
-		User user = PortalUtil.getUser(request);
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		User user = PortalUtil.getUser(httpServletRequest);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (user != null) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			InvokerPortletUtil.clearResponse(
 				session, layout.getPrimaryKey(), portlet.getPortletId(),
-				LanguageUtil.getLanguageId(request));
+				LanguageUtil.getLanguageId(httpServletRequest));
 		}
 
 		_processPublicRenderParameters(
-			request, layout, Arrays.asList(portlet),
+			httpServletRequest, layout, Arrays.asList(portlet),
 			themeDisplay.isLifecycleAction());
 
 		if (themeDisplay.isHubAction() || themeDisplay.isHubPartialAction() ||
@@ -367,7 +383,7 @@ public class PortletContainerImpl implements PortletContainer {
 			themeDisplay.isLifecycleResource()) {
 
 			WindowState windowState = WindowStateFactory.getWindowState(
-				ParamUtil.getString(request, "p_p_state"));
+				ParamUtil.getString(httpServletRequest, "p_p_state"));
 
 			if (layout.isTypeControlPanel() &&
 				((windowState == null) ||
@@ -378,23 +394,26 @@ public class PortletContainerImpl implements PortletContainer {
 			}
 
 			PortletMode portletMode = PortletModeFactory.getPortletMode(
-				ParamUtil.getString(request, "p_p_mode"));
+				ParamUtil.getString(httpServletRequest, "p_p_mode"));
 
 			PortalUtil.updateWindowState(
-				portlet.getPortletId(), user, layout, windowState, request);
+				portlet.getPortletId(), user, layout, windowState,
+				httpServletRequest);
 
 			PortalUtil.updatePortletMode(
-				portlet.getPortletId(), user, layout, portletMode, request);
+				portlet.getPortletId(), user, layout, portletMode,
+				httpServletRequest);
 		}
 	}
 
 	private <T> T _preserveGroupIds(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			UnsafeSupplier<T, Exception> unsafeSupplier)
 		throws PortletContainerException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long previousScopeGroupId = 0;
 		long previousSiteGroupId = 0;
@@ -428,21 +447,22 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private ActionResult _processAction(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setId(portlet.getPortletId());
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		WindowState windowState = WindowStateFactory.getWindowState(
-			ParamUtil.getString(request, "p_p_state"));
+			ParamUtil.getString(httpServletRequest, "p_p_state"));
 
 		if (layout.isTypeControlPanel() &&
 			((windowState == null) || windowState.equals(WindowState.NORMAL) ||
@@ -452,18 +472,18 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(request, "p_p_mode"));
+			ParamUtil.getString(httpServletRequest, "p_p_mode"));
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				request, portlet.getPortletId());
+				httpServletRequest, portlet.getPortletId());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getStrictPreferences(
 				portletPreferencesIds);
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
@@ -474,7 +494,8 @@ public class PortletContainerImpl implements PortletContainer {
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		if (_log.isDebugEnabled()) {
-			String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+			String contentType = httpServletRequest.getHeader(
+				HttpHeaders.CONTENT_TYPE);
 
 			_log.debug("Content type " + contentType);
 		}
@@ -482,15 +503,15 @@ public class PortletContainerImpl implements PortletContainer {
 		try {
 			LiferayActionRequest liferayActionRequest =
 				ActionRequestFactory.create(
-					request, portlet, invokerPortlet, portletContext,
+					httpServletRequest, portlet, invokerPortlet, portletContext,
 					windowState, portletMode, portletPreferences,
 					layout.getPlid());
 
-			User user = PortalUtil.getUser(request);
+			User user = PortalUtil.getUser(httpServletRequest);
 
 			LiferayActionResponse liferayActionResponse =
 				ActionResponseFactory.create(
-					liferayActionRequest, response, user, layout);
+					liferayActionRequest, httpServletResponse, user, layout);
 
 			liferayActionRequest.defineObjects(
 				portletConfig, liferayActionResponse);
@@ -503,24 +524,26 @@ public class PortletContainerImpl implements PortletContainer {
 			invokerPortlet.processAction(
 				liferayActionRequest, liferayActionResponse);
 
-			liferayActionResponse.transferHeaders(response);
+			liferayActionResponse.transferHeaders(httpServletResponse);
 
 			RenderParametersPool.clear(
-				request, layout.getPlid(), portlet.getPortletId());
+				httpServletRequest, layout.getPlid(), portlet.getPortletId());
 
 			PortletApp portletApp = portlet.getPortletApp();
 
 			if (portletApp.getSpecMajorVersion() < 3) {
 				RenderParametersPool.put(
-					request, layout.getPlid(), portlet.getPortletId(),
+					httpServletRequest, layout.getPlid(),
+					portlet.getPortletId(),
 					liferayActionResponse.getRenderParameterMap());
 			}
 			else {
-				Layout requestLayout = (Layout)request.getAttribute(
+				Layout requestLayout = (Layout)httpServletRequest.getAttribute(
 					WebKeys.LAYOUT);
 
 				_setAllRenderParameters(
-					request, liferayActionResponse, portlet, requestLayout);
+					httpServletRequest, liferayActionResponse, portlet,
+					requestLayout);
 			}
 
 			List<Event> events = liferayActionResponse.getEvents();
@@ -567,12 +590,13 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private List<Event> _processEvent(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, Layout layout, Event event)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet,
+			Layout layout, Event event)
 		throws Exception {
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
@@ -644,24 +668,25 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		long scopeGroupId = getScopeGroupId(
-			request, layout, portlet.getPortletId());
+			httpServletRequest, layout, portlet.getPortletId());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletSetup(
 				scopeGroupId, layout, portlet.getPortletId(), null);
 
 		LiferayEventRequest liferayEventRequest = EventRequestFactory.create(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, portletPreferences, layout.getPlid());
+			httpServletRequest, portlet, invokerPortlet, portletContext,
+			windowState, portletMode, portletPreferences, layout.getPlid());
 
 		liferayEventRequest.setEvent(
 			serializeEvent(event, invokerPortlet.getPortletClassLoader()));
 
-		User user = PortalUtil.getUser(request);
-		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		User user = PortalUtil.getUser(httpServletRequest);
+		Layout requestLayout = (Layout)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT);
 
 		LiferayEventResponse liferayEventResponse = EventResponseFactory.create(
-			liferayEventRequest, response, user, requestLayout);
+			liferayEventRequest, httpServletResponse, user, requestLayout);
 
 		liferayEventRequest.defineObjects(portletConfig, liferayEventResponse);
 
@@ -669,7 +694,7 @@ public class PortletContainerImpl implements PortletContainer {
 			invokerPortlet.processEvent(
 				liferayEventRequest, liferayEventResponse);
 
-			liferayEventResponse.transferHeaders(response);
+			liferayEventResponse.transferHeaders(httpServletResponse);
 
 			if (liferayEventResponse.isCalledSetRenderParameter()) {
 				PortletApp portletApp = portlet.getPortletApp();
@@ -679,13 +704,14 @@ public class PortletContainerImpl implements PortletContainer {
 						liferayEventResponse.getRenderParameterMap();
 
 					RenderParametersPool.put(
-						request, requestLayout.getPlid(),
+						httpServletRequest, requestLayout.getPlid(),
 						portlet.getPortletId(),
 						new HashMap<>(renderParameterMap));
 				}
 				else {
 					_setAllRenderParameters(
-						request, liferayEventResponse, portlet, requestLayout);
+						httpServletRequest, liferayEventResponse, portlet,
+						requestLayout);
 				}
 			}
 
@@ -696,20 +722,22 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 	}
 
-	private void _processGroupId(HttpServletRequest request, Portlet portlet)
+	private void _processGroupId(
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(
-			request, portlet.getPortletId());
+			httpServletRequest, portlet.getPortletId());
 
 		themeDisplay.setScopeGroupId(scopeGroupId);
 
 		long siteGroupId = 0;
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		if (layout.isTypeControlPanel()) {
 			siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
@@ -722,12 +750,12 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private void _processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, List<Portlet> portlets,
-		boolean lifecycleAction) {
+		HttpServletRequest httpServletRequest, Layout layout,
+		List<Portlet> portlets, boolean lifecycleAction) {
 
 		PortletQName portletQName = PortletQNameUtil.getPortletQName();
 		Map<String, String[]> publicRenderParameters = null;
-		Map<String, String[]> parameters = request.getParameterMap();
+		Map<String, String[]> parameters = httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();
@@ -749,7 +777,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 				if (publicRenderParameters == null) {
 					publicRenderParameters = PublicRenderParametersPool.get(
-						request, layout.getPlid());
+						httpServletRequest, layout.getPlid());
 				}
 
 				String publicRenderParameterName =
@@ -780,8 +808,9 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private void _render(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, boolean headerPhase)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet,
+			boolean headerPhase)
 		throws Exception {
 
 		if ((portlet != null) && portlet.isInstanceable() &&
@@ -809,8 +838,9 @@ public class PortletContainerImpl implements PortletContainer {
 		// Capture the current portlet's settings to reset them once the child
 		// portlet is rendered
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletPreferencesFactoryUtil.checkControlPanelPortletPreferences(
 			themeDisplay, portlet);
@@ -829,29 +859,33 @@ public class PortletContainerImpl implements PortletContainer {
 
 		portletDisplay.copyTo(portletDisplayClone);
 
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (!(portletRequest instanceof RenderRequest)) {
 			portletRequest = null;
 		}
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (!(portletResponse instanceof RenderResponse)) {
 			portletResponse = null;
 		}
 
-		String lifecycle = (String)request.getAttribute(
+		String lifecycle = (String)httpServletRequest.getAttribute(
 			PortletRequest.LIFECYCLE_PHASE);
 
-		request.setAttribute(WebKeys.RENDER_PORTLET, portlet);
+		httpServletRequest.setAttribute(WebKeys.RENDER_PORTLET, portlet);
 
-		String path = (String)request.getAttribute(WebKeys.RENDER_PATH);
+		String path = (String)httpServletRequest.getAttribute(
+			WebKeys.RENDER_PATH);
 
 		if (path == null) {
 			path = "/html/portal/render_portlet.jsp";
@@ -864,30 +898,32 @@ public class PortletContainerImpl implements PortletContainer {
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-					request, path));
+					httpServletRequest, path));
 
 		BufferCacheServletResponse bufferCacheServletResponse = null;
 
 		boolean writeOutput = false;
 
-		if (response instanceof BufferCacheServletResponse) {
-			bufferCacheServletResponse = (BufferCacheServletResponse)response;
+		if (httpServletResponse instanceof BufferCacheServletResponse) {
+			bufferCacheServletResponse =
+				(BufferCacheServletResponse)httpServletResponse;
 		}
 		else {
 			writeOutput = true;
 			bufferCacheServletResponse = new BufferCacheServletResponse(
-				response);
+				httpServletResponse);
 		}
 
 		try {
-			requestDispatcher.include(request, bufferCacheServletResponse);
+			requestDispatcher.include(
+				httpServletRequest, bufferCacheServletResponse);
 
 			Boolean portletConfiguratorVisibility =
-				(Boolean)request.getAttribute(
+				(Boolean)httpServletRequest.getAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
 
 			if (portletConfiguratorVisibility != null) {
-				request.removeAttribute(
+				httpServletRequest.removeAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY);
 
 				Layout layout = themeDisplay.getLayout();
@@ -908,7 +944,7 @@ public class PortletContainerImpl implements PortletContainer {
 			}
 
 			if (writeOutput) {
-				Writer writer = response.getWriter();
+				Writer writer = httpServletResponse.getWriter();
 
 				writer.write(bufferCacheServletResponse.getString());
 			}
@@ -919,34 +955,35 @@ public class PortletContainerImpl implements PortletContainer {
 			portletDisplayClone.recycle();
 
 			if (portletConfig != null) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_CONFIG, portletConfig);
 			}
 
 			if (portletRequest != null) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
 			}
 
 			if (portletResponse != null) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
 			}
 
 			if (lifecycle != null) {
-				request.setAttribute(PortletRequest.LIFECYCLE_PHASE, lifecycle);
+				httpServletRequest.setAttribute(
+					PortletRequest.LIFECYCLE_PHASE, lifecycle);
 			}
 
-			request.removeAttribute(WebKeys.RENDER_PORTLET);
+			httpServletRequest.removeAttribute(WebKeys.RENDER_PORTLET);
 		}
 	}
 
 	private void _serveResource(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws Exception {
 
-		WindowState windowState = (WindowState)request.getAttribute(
+		WindowState windowState = (WindowState)httpServletRequest.getAttribute(
 			WebKeys.WINDOW_STATE);
 
 		PortletApp portletApp = portlet.getPortletApp();
@@ -955,7 +992,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		if (portletSpecMajorVersion >= 3) {
 			WindowState requestWindowState = WindowStateFactory.getWindowState(
-				ParamUtil.getString(request, "p_p_state"), 3);
+				ParamUtil.getString(httpServletRequest, "p_p_state"), 3);
 
 			if (WindowState.UNDEFINED.equals(requestWindowState)) {
 				windowState = requestWindowState;
@@ -963,14 +1000,15 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(request, "p_p_mode"), portletSpecMajorVersion);
+			ParamUtil.getString(httpServletRequest, "p_p_mode"),
+			portletSpecMajorVersion);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				request, portlet.getPortletId());
+				httpServletRequest, portlet.getPortletId());
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
@@ -978,12 +1016,13 @@ public class PortletContainerImpl implements PortletContainer {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 			layout.getPlid(), portlet.getPortletId());
@@ -1007,8 +1046,9 @@ public class PortletContainerImpl implements PortletContainer {
 
 		LiferayResourceRequest liferayResourceRequest = null;
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest instanceof LiferayResourceRequest) {
 			liferayResourceRequest = (LiferayResourceRequest)portletRequest;
@@ -1023,15 +1063,15 @@ public class PortletContainerImpl implements PortletContainer {
 					portletPreferencesIds);
 
 			liferayResourceRequest = ResourceRequestFactory.create(
-				request, portlet, invokerPortlet, portletContext, windowState,
-				portletMode, portletPreferences, layout.getPlid());
+				httpServletRequest, portlet, invokerPortlet, portletContext,
+				windowState, portletMode, portletPreferences, layout.getPlid());
 
 			liferayResourceResponse = ResourceResponseFactory.create(
-				liferayResourceRequest, response);
+				liferayResourceRequest, httpServletResponse);
 		}
 		else {
 			liferayResourceResponse =
-				(LiferayResourceResponse)request.getAttribute(
+				(LiferayResourceResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 		}
 
@@ -1047,7 +1087,7 @@ public class PortletContainerImpl implements PortletContainer {
 			invokerPortlet.serveResource(
 				liferayResourceRequest, liferayResourceResponse);
 
-			liferayResourceResponse.transferHeaders(response);
+			liferayResourceResponse.transferHeaders(httpServletResponse);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -1072,7 +1112,7 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private void _setAllRenderParameters(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayStateAwareResponse liferayStateAwareResponse, Portlet portlet,
 		Layout requestLayout) {
 
@@ -1094,7 +1134,8 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		Map<String, String[]> publicRenderParameterMap =
-			PublicRenderParametersPool.get(request, requestLayout.getPlid());
+			PublicRenderParametersPool.get(
+				httpServletRequest, requestLayout.getPlid());
 
 		Map<String, String[]> privateRenderParameterMap = new HashMap<>();
 
@@ -1120,8 +1161,8 @@ public class PortletContainerImpl implements PortletContainer {
 
 		if (!privateRenderParameterMap.isEmpty()) {
 			RenderParametersPool.put(
-				request, requestLayout.getPlid(), portlet.getPortletId(),
-				privateRenderParameterMap);
+				httpServletRequest, requestLayout.getPlid(),
+				portlet.getPortletId(), privateRenderParameterMap);
 		}
 	}
 

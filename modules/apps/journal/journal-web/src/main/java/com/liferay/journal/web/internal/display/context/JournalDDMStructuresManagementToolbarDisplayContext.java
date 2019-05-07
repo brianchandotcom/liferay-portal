@@ -50,13 +50,13 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 	public JournalDDMStructuresManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			JournalDDMStructuresDisplayContext
 				journalDDMStructuresDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalDDMStructuresDisplayContext.getDDMStructureSearch());
 	}
 

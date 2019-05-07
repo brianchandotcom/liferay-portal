@@ -47,11 +47,11 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 	public SiteNavigationAdminManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			siteNavigationAdminDisplayContext.getSearchContainer());
 
 		_siteNavigationAdminDisplayContext = siteNavigationAdminDisplayContext;

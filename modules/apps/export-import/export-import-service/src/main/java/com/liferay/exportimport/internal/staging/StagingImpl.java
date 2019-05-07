@@ -596,9 +596,10 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void deleteRecentLayoutRevisionId(
-		HttpServletRequest request, long layoutSetBranchId, long plid) {
+		HttpServletRequest httpServletRequest, long layoutSetBranchId,
+		long plid) {
 
-		long userId = _portal.getUserId(request);
+		long userId = _portal.getUserId(httpServletRequest);
 
 		deleteRecentLayoutRevisionId(userId, layoutSetBranchId, plid);
 	}
@@ -1812,10 +1813,11 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public long getRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid)
 		throws PortalException {
 
-		long userId = _portal.getUserId(request);
+		long userId = _portal.getUserId(httpServletRequest);
 
 		return getRecentLayoutRevisionId(userId, layoutSetBranchId, plid);
 	}
@@ -1831,11 +1833,11 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public long getRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetId) {
+		HttpServletRequest httpServletRequest, long layoutSetId) {
 
 		RecentLayoutSetBranch recentLayoutSetBranch =
 			_recentLayoutSetBranchLocalService.fetchRecentLayoutSetBranch(
-				_portal.getUserId(request), layoutSetId);
+				_portal.getUserId(httpServletRequest), layoutSetId);
 
 		if (recentLayoutSetBranch != null) {
 			return recentLayoutSetBranch.getLayoutSetBranchId();
@@ -3129,12 +3131,12 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void setRecentLayoutBranchId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutBranchId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutBranchId)
 		throws PortalException {
 
 		setRecentLayoutBranchId(
-			_portal.getUserId(request), layoutSetBranchId, plid,
+			_portal.getUserId(httpServletRequest), layoutSetBranchId, plid,
 			layoutBranchId);
 	}
 
@@ -3149,12 +3151,12 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void setRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutRevisionId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutRevisionId)
 		throws PortalException {
 
 		setRecentLayoutRevisionId(
-			_portal.getUserId(request), layoutSetBranchId, plid,
+			_portal.getUserId(httpServletRequest), layoutSetBranchId, plid,
 			layoutRevisionId);
 	}
 
@@ -3169,12 +3171,13 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void setRecentLayoutSetBranchId(
-			HttpServletRequest request, long layoutSetId,
+			HttpServletRequest httpServletRequest, long layoutSetId,
 			long layoutSetBranchId)
 		throws PortalException {
 
 		setRecentLayoutSetBranchId(
-			_portal.getUserId(request), layoutSetId, layoutSetBranchId);
+			_portal.getUserId(httpServletRequest), layoutSetId,
+			layoutSetBranchId);
 	}
 
 	@Override

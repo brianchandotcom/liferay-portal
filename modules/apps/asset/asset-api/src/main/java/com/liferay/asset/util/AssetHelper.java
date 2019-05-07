@@ -56,7 +56,7 @@ public interface AssetHelper {
 	};
 
 	public Set<String> addLayoutTags(
-		HttpServletRequest request, List<AssetTag> tags);
+		HttpServletRequest httpServletRequest, List<AssetTag> tags);
 
 	public PortletURL getAddPortletURL(
 			LiferayPortletRequest liferayPortletRequest,
@@ -86,8 +86,8 @@ public interface AssetHelper {
 	}
 
 	public Hits search(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception;
 
 	public Hits search(
@@ -104,8 +104,8 @@ public interface AssetHelper {
 		throws Exception;
 
 	public BaseModelSearchResult<AssetEntry> searchAssetEntries(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception;
 
 	public BaseModelSearchResult<AssetEntry> searchAssetEntries(

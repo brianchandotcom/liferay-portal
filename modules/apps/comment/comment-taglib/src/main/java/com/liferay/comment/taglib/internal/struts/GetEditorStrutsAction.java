@@ -39,13 +39,14 @@ public class GetEditorStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String namespace = ParamUtil.getString(request, "namespace");
+		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
 
 		HttpServletRequest namespacedRequest = new NamespaceServletRequest(
-			request, StringPool.BLANK, namespace);
+			httpServletRequest, StringPool.BLANK, namespace);
 
 		namespacedRequest.setAttribute("aui:form:portletNamespace", namespace);
 
@@ -78,7 +79,7 @@ public class GetEditorStrutsAction implements StrutsAction {
 			_servletContext.getRequestDispatcher(
 				"/discussion/editor_resource.jsp");
 
-		requestDispatcher.include(namespacedRequest, response);
+		requestDispatcher.include(namespacedRequest, httpServletResponse);
 
 		return null;
 	}

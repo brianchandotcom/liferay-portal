@@ -56,22 +56,26 @@ public class UserPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, this);
 
-		return super.include(request, response);
+		return super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public boolean includeHeader(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, this);
 
-		return super.includeHeader(request, response);
+		return super.includeHeader(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

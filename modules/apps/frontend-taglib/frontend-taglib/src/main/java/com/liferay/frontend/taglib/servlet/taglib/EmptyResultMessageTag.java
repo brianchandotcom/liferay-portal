@@ -106,26 +106,26 @@ public class EmptyResultMessageTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:actionDropdownItems",
 			_actionDropdownItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:animationTypeCssClass",
 			EmptyResultMessageKeys.getAnimationTypeCssClass(_animationType));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:componentId", _componentId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:defaultEventHandler",
 			_defaultEventHandler);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:description", _description);
 
 		if (Validator.isNull(_elementType)) {
-			_elementType = LanguageUtil.get(request, "element");
+			_elementType = LanguageUtil.get(httpServletRequest, "element");
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:elementType", _elementType);
 	}
 

@@ -245,9 +245,11 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
 	}
 
-	protected void setUpRange(HttpServletRequest request, String rangeHeader) {
+	protected void setUpRange(
+		HttpServletRequest httpServletRequest, String rangeHeader) {
+
 		when(
-			request.getHeader(HttpHeaders.RANGE)
+			httpServletRequest.getHeader(HttpHeaders.RANGE)
 		).thenReturn(
 			rangeHeader
 		);

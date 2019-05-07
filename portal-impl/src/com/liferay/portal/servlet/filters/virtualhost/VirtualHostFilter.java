@@ -81,9 +81,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		String uri = request.getRequestURI();
+		String uri = httpServletRequest.getRequestURI();
 
 		for (String extension : PropsValues.VIRTUAL_HOSTS_IGNORE_EXTENSIONS) {
 			if (uri.endsWith(extension)) {
@@ -95,13 +96,14 @@ public class VirtualHostFilter extends BasePortalFilter {
 	}
 
 	protected boolean isDocumentFriendlyURL(
-			HttpServletRequest request, long groupId, String friendlyURL)
+			HttpServletRequest httpServletRequest, long groupId,
+			String friendlyURL)
 		throws PortalException {
 
 		if (friendlyURL.startsWith(_PATH_DOCUMENTS) &&
-			WebServerServlet.hasFiles(request)) {
+			WebServerServlet.hasFiles(httpServletRequest)) {
 
-			String path = HttpUtil.fixPath(request.getPathInfo());
+			String path = HttpUtil.fixPath(httpServletRequest.getPathInfo());
 
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
@@ -178,14 +180,14 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long companyId = PortalInstances.getCompanyId(request);
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		String originalFriendlyURL = HttpUtil.normalizePath(
-			request.getRequestURI());
+			httpServletRequest.getRequestURI());
 
 		String friendlyURL = originalFriendlyURL;
 
@@ -254,20 +256,21 @@ public class VirtualHostFilter extends BasePortalFilter {
 					RequestDispatcher requestDispatcher =
 						_servletContext.getRequestDispatcher(forwardURL);
 
-					requestDispatcher.forward(request, response);
+					requestDispatcher.forward(
+						httpServletRequest, httpServletResponse);
 
 					return;
 				}
 			}
 
 			processFilter(
-				VirtualHostFilter.class.getName(), request, response,
-				filterChain);
+				VirtualHostFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 		if (_log.isDebugEnabled()) {
@@ -276,14 +279,15 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		if (layoutSet == null) {
 			processFilter(
-				VirtualHostFilter.class.getName(), request, response,
-				filterChain);
+				VirtualHostFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
 
 		try {
-			Map<String, String[]> parameterMap = request.getParameterMap();
+			Map<String, String[]> parameterMap =
+				httpServletRequest.getParameterMap();
 
 			String parameters = StringPool.BLANK;
 
@@ -294,7 +298,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 			LastPath lastPath = new LastPath(
 				_contextPath, friendlyURL, parameters);
 
-			request.setAttribute(WebKeys.LAST_PATH, lastPath);
+			httpServletRequest.setAttribute(WebKeys.LAST_PATH, lastPath);
 
 			StringBundler sb = new StringBundler(5);
 
@@ -319,11 +323,11 @@ public class VirtualHostFilter extends BasePortalFilter {
 				Group group = layoutSet.getGroup();
 
 				if (isDocumentFriendlyURL(
-						request, group.getGroupId(), friendlyURL)) {
+						httpServletRequest, group.getGroupId(), friendlyURL)) {
 
 					processFilter(
-						VirtualHostFilter.class.getName(), request, response,
-						filterChain);
+						VirtualHostFilter.class.getName(), httpServletRequest,
+						httpServletResponse, filterChain);
 
 					return;
 				}
@@ -331,7 +335,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				if (group.isGuest() && friendlyURL.equals(StringPool.SLASH) &&
 					!layoutSet.isPrivateLayout()) {
 
-					String homeURL = PortalUtil.getRelativeHomeURL(request);
+					String homeURL = PortalUtil.getRelativeHomeURL(
+						httpServletRequest);
 
 					if (Validator.isNotNull(homeURL)) {
 						friendlyURL = homeURL;
@@ -369,14 +374,14 @@ public class VirtualHostFilter extends BasePortalFilter {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(forwardURLString);
 
-			requestDispatcher.forward(request, response);
+			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			processFilter(
-				VirtualHostFilter.class.getName(), request, response,
-				filterChain);
+				VirtualHostFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 		}
 	}
 

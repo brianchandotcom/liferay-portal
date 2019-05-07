@@ -51,7 +51,8 @@ public interface AssetEntryQueryProcessor {
 	 */
 	@Deprecated
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	public void processAssetEntryQuery(

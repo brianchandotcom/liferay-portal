@@ -39,10 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class KBAdminNavigationDisplayContext {
 
 	public KBAdminNavigationDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 

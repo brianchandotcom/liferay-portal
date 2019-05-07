@@ -34,12 +34,12 @@ public class BaseDLViewFileEntryHistoryDisplayContext
 		UUID uuid,
 		DLViewFileEntryHistoryDisplayContext
 			parentDLViewFileEntryHistoryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
 		super(
-			uuid, parentDLViewFileEntryHistoryDisplayContext, request,
-			response);
+			uuid, parentDLViewFileEntryHistoryDisplayContext,
+			httpServletRequest, httpServletResponse);
 
 		this.fileVersion = fileVersion;
 	}

@@ -66,14 +66,14 @@ public class LiferayPortletURLPrivilegedAction {
 
 	public LiferayPortletURLPrivilegedAction(
 		String portletName, String lifecycle, MimeResponse.Copy copy,
-		Layout layout, Portlet portlet, HttpServletRequest request) {
+		Layout layout, Portlet portlet, HttpServletRequest httpServletRequest) {
 
 		_portletName = portletName;
 		_lifecycle = lifecycle;
 		_copy = copy;
 		_layout = layout;
 		_portlet = portlet;
-		_request = request;
+		_request = httpServletRequest;
 
 		_constructors = null;
 		_includeLinkToLayoutUuid = false;

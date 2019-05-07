@@ -142,12 +142,12 @@ public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		populateParams(parameterMap, namespace, routeParameters);
 	}
 
-	protected String getLifecycle(HttpServletRequest request) {
-		if (PortalUtil.isMultipartRequest(request)) {
+	protected String getLifecycle(HttpServletRequest httpServletRequest) {
+		if (PortalUtil.isMultipartRequest(httpServletRequest)) {
 			return "1";
 		}
 
-		return ParamUtil.getString(request, "p_p_lifecycle", "0");
+		return ParamUtil.getString(httpServletRequest, "p_p_lifecycle", "0");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

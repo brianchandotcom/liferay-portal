@@ -23,6 +23,6 @@ public interface CacheFileNameContributor {
 
 	public String getParameterName();
 
-	public String getParameterValue(HttpServletRequest request);
+	public String getParameterValue(HttpServletRequest httpServletRequest);
 
 }

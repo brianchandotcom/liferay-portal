@@ -55,11 +55,11 @@ public class LayoutSetPrototypeDisplayContext {
 
 	public LayoutSetPrototypeDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

@@ -41,8 +41,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseRequestHelper {
 
-	public BaseRequestHelper(HttpServletRequest request) {
-		_request = request;
+	public BaseRequestHelper(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public Company getCompany() {

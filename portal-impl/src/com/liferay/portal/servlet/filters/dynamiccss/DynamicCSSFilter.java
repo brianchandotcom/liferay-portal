@@ -68,11 +68,11 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		_tempDir.mkdirs();
 	}
 
-	protected String getCacheFileName(HttpServletRequest request) {
+	protected String getCacheFileName(HttpServletRequest httpServletRequest) {
 		String cacheFileName = CacheFileNameGenerator.getCacheFileName(
-			request, DynamicCSSFilter.class.getName());
+			httpServletRequest, DynamicCSSFilter.class.getName());
 
-		if (PortalUtil.isRightToLeft(request)) {
+		if (PortalUtil.isRightToLeft(httpServletRequest)) {
 			return cacheFileName + _CACHE_FILE_NAME_RTL;
 		}
 
@@ -80,16 +80,16 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 	}
 
 	protected Object getDynamicContent(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String requestPath = getRequestPath(request);
+		String requestPath = getRequestPath(httpServletRequest);
 
-		String originalRequestPath = request.getRequestURI();
+		String originalRequestPath = httpServletRequest.getRequestURI();
 
 		if (originalRequestPath.endsWith(_CSS_EXTENSION) &&
-			PortalUtil.isRightToLeft(request)) {
+			PortalUtil.isRightToLeft(httpServletRequest)) {
 
 			int pos = originalRequestPath.lastIndexOf(StringPool.PERIOD);
 
@@ -108,14 +108,14 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URL resourceURL = objectValuePair.getValue();
 
-		String cacheCommonFileName = getCacheFileName(request);
+		String cacheCommonFileName = getCacheFileName(httpServletRequest);
 
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CTYPE");
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
-		long lastModified = getLastModified(request, resourceURL);
+		long lastModified = getLastModified(httpServletRequest, resourceURL);
 
 		if (cacheDataFile.exists() &&
 			(cacheDataFile.lastModified() == lastModified)) {
@@ -123,7 +123,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			if (cacheContentTypeFile.exists()) {
 				String contentType = FileUtil.read(cacheContentTypeFile);
 
-				response.setContentType(contentType);
+				httpServletResponse.setContentType(contentType);
 			}
 
 			return cacheDataFile;
@@ -144,9 +144,9 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				content = StringUtil.read(resourceURL.openStream());
 
 				dynamicContent = DynamicCSSUtil.replaceToken(
-					servletContext, request, content);
+					servletContext, httpServletRequest, content);
 
-				response.setContentType(ContentTypes.TEXT_CSS);
+				httpServletResponse.setContentType(ContentTypes.TEXT_CSS);
 
 				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
 			}
@@ -158,16 +158,16 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				}
 
 				BufferCacheServletResponse bufferCacheServletResponse =
-					new BufferCacheServletResponse(response);
+					new BufferCacheServletResponse(httpServletResponse);
 
 				processFilter(
-					DynamicCSSFilter.class.getName(), request,
+					DynamicCSSFilter.class.getName(), httpServletRequest,
 					bufferCacheServletResponse, filterChain);
 
 				content = bufferCacheServletResponse.getString();
 
 				dynamicContent = DynamicCSSUtil.replaceToken(
-					servletContext, request, content);
+					servletContext, httpServletRequest, content);
 
 				FileUtil.write(
 					cacheContentTypeFile,
@@ -185,7 +185,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				_log.debug(content);
 			}
 
-			response.setHeader(
+			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 		}
@@ -202,20 +202,22 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		return dynamicContent;
 	}
 
-	protected long getLastModified(HttpServletRequest request, URL resourceURL)
+	protected long getLastModified(
+			HttpServletRequest httpServletRequest, URL resourceURL)
 		throws Exception {
 
 		long resourceLastModified = URLUtil.getLastModifiedTime(resourceURL);
 
-		long requestLastModified = ParamUtil.getLong(request, "t", -1);
+		long requestLastModified = ParamUtil.getLong(
+			httpServletRequest, "t", -1);
 
 		return Math.max(resourceLastModified, requestLastModified);
 	}
 
-	protected String getRequestPath(HttpServletRequest request) {
-		String requestPath = request.getRequestURI();
+	protected String getRequestPath(HttpServletRequest httpServletRequest) {
+		String requestPath = httpServletRequest.getRequestURI();
 
-		String contextPath = request.getContextPath();
+		String contextPath = httpServletRequest.getContextPath();
 
 		if (!contextPath.equals(StringPool.SLASH)) {
 			requestPath = requestPath.substring(contextPath.length());
@@ -225,36 +227,38 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 	}
 
 	@Override
-	protected boolean isModuleRequest(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
+	protected boolean isModuleRequest(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
 
 		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
 			return false;
 		}
 
-		return super.isModuleRequest(request);
+		return super.isModuleRequest(httpServletRequest);
 	}
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		Object parsedContent = getDynamicContent(
-			request, response, filterChain);
+			httpServletRequest, httpServletResponse, filterChain);
 
 		if (parsedContent == null) {
 			processFilter(
-				DynamicCSSFilter.class.getName(), request, response,
-				filterChain);
+				DynamicCSSFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 		}
 		else {
 			if (parsedContent instanceof File) {
-				ServletResponseUtil.write(response, (File)parsedContent);
+				ServletResponseUtil.write(
+					httpServletResponse, (File)parsedContent);
 			}
 			else if (parsedContent instanceof String) {
-				ServletResponseUtil.write(response, (String)parsedContent);
+				ServletResponseUtil.write(
+					httpServletResponse, (String)parsedContent);
 			}
 		}
 	}

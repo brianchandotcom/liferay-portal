@@ -51,11 +51,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = RecentGroupManager.class)
 public class RecentGroupManager {
 
-	public void addRecentGroup(HttpServletRequest request, Group group) {
-		addRecentGroup(request, group.getGroupId());
+	public void addRecentGroup(
+		HttpServletRequest httpServletRequest, Group group) {
+
+		addRecentGroup(httpServletRequest, group.getGroupId());
 	}
 
-	public void addRecentGroup(HttpServletRequest request, long groupId) {
+	public void addRecentGroup(
+		HttpServletRequest httpServletRequest, long groupId) {
+
 		long liveGroupId = _getLiveGroupId(groupId);
 
 		if (liveGroupId <= 0) {
@@ -68,7 +72,7 @@ public class RecentGroupManager {
 			return;
 		}
 
-		String value = _getRecentGroupsValue(request);
+		String value = _getRecentGroupsValue(httpServletRequest);
 
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
@@ -77,15 +81,15 @@ public class RecentGroupManager {
 
 		groupIds.add(0, liveGroupId);
 
-		_setRecentGroupsValue(request, StringUtil.merge(groupIds));
+		_setRecentGroupsValue(httpServletRequest, StringUtil.merge(groupIds));
 	}
 
-	public List<Group> getRecentGroups(HttpServletRequest request) {
-		String value = _getRecentGroupsValue(request);
+	public List<Group> getRecentGroups(HttpServletRequest httpServletRequest) {
+		String value = _getRecentGroupsValue(httpServletRequest);
 
 		try {
 			PortletRequest portletRequest =
-				(PortletRequest)request.getAttribute(
+				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);
 
 			return getRecentGroups(value, portletRequest);
@@ -199,14 +203,16 @@ public class RecentGroupManager {
 		return groupId;
 	}
 
-	private String _getRecentGroupsValue(HttpServletRequest request) {
-		return SessionClicks.get(request, _KEY_RECENT_GROUPS, null);
+	private String _getRecentGroupsValue(
+		HttpServletRequest httpServletRequest) {
+
+		return SessionClicks.get(httpServletRequest, _KEY_RECENT_GROUPS, null);
 	}
 
 	private void _setRecentGroupsValue(
-		HttpServletRequest request, String value) {
+		HttpServletRequest httpServletRequest, String value) {
 
-		SessionClicks.put(request, _KEY_RECENT_GROUPS, value);
+		SessionClicks.put(httpServletRequest, _KEY_RECENT_GROUPS, value);
 	}
 
 	private static final String _KEY_RECENT_GROUPS =

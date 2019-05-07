@@ -57,14 +57,14 @@ import jodd.util.NameValue;
  */
 public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
-	public JSONWebServiceInvokerAction(HttpServletRequest request) {
-		_request = request;
+	public JSONWebServiceInvokerAction(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 
-		String command = request.getParameter(Constants.CMD);
+		String command = httpServletRequest.getParameter(Constants.CMD);
 
 		if (command == null) {
 			try {
-				command = ServletUtil.readRequestBody(request);
+				command = ServletUtil.readRequestBody(httpServletRequest);
 			}
 			catch (IOException ioe) {
 				throw new IllegalArgumentException(ioe);

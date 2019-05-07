@@ -267,7 +267,8 @@ public class AcceptorServletTest {
 		}
 
 		@Override
-		public HttpServletRequest prepareRequest(HttpServletRequest request)
+		public HttpServletRequest prepareRequest(
+				HttpServletRequest httpServletRequest)
 			throws IOException {
 
 			if (_ioExceptionOnPrepareRequest) {
@@ -279,7 +280,7 @@ public class AcceptorServletTest {
 					"RuntimeException on prepare request");
 			}
 
-			_originalRequest1 = request;
+			_originalRequest1 = httpServletRequest;
 
 			_preparedRequest = new MockHttpServletRequest();
 
@@ -290,10 +291,11 @@ public class AcceptorServletTest {
 
 		@Override
 		public HttpServletResponse prepareResponse(
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
 
-			_originalRequest2 = request;
-			_originalResponse = response;
+			_originalRequest2 = httpServletRequest;
+			_originalResponse = httpServletResponse;
 
 			_preparedResponse = new MockHttpServletResponse();
 
@@ -315,11 +317,11 @@ public class AcceptorServletTest {
 
 		@Override
 		public void transferResponse(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e) {
 
-			Assert.assertSame(_preparedRequest, request);
-			Assert.assertSame(_preparedResponse, response);
+			Assert.assertSame(_preparedRequest, httpServletRequest);
+			Assert.assertSame(_preparedResponse, httpServletResponse);
 
 			_exception = e;
 		}

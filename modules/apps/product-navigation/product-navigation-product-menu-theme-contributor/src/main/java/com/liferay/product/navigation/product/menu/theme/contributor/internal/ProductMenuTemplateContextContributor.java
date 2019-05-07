@@ -47,16 +47,17 @@ public class ProductMenuTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		if (!isShowProductMenu(request)) {
+		if (!isShowProductMenu(httpServletRequest)) {
 			return;
 		}
 
 		String cssClass = GetterUtil.getString(
 			contextObjects.get("bodyCssClass"));
 		String productMenuState = SessionClicks.get(
-			request,
+			httpServletRequest,
 			ProductNavigationProductMenuWebKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
 			"closed");
@@ -67,9 +68,10 @@ public class ProductMenuTemplateContextContributor
 		contextObjects.put("liferay_product_menu_state", productMenuState);
 	}
 
-	protected boolean isShowProductMenu(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected boolean isShowProductMenu(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			return false;

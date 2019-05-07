@@ -71,17 +71,19 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -95,12 +97,12 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			_html.escape(_language.get(resourceBundle, "configure-page")));
 
 		PortletURL editPageURL = _portal.getControlPanelPortletURL(
-			request, LayoutAdminPortletKeys.GROUP_PAGES,
+			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
 		editPageURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
 
-		String currentURL = _portal.getCurrentURL(request);
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
 
 		editPageURL.setParameter("redirect", currentURL);
 		editPageURL.setParameter("backURL", currentURL);
@@ -121,7 +123,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			iconTag.setMarkupView("lexicon");
 
 			PageContext pageContext = PageContextFactoryUtil.create(
-				request, response);
+				httpServletRequest, httpServletResponse);
 
 			values.put("iconCog", iconTag.doTagAsString(pageContext));
 
@@ -140,7 +142,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			ReflectionUtil.throwException(je);
 		}
 
-		Writer writer = response.getWriter();
+		Writer writer = httpServletResponse.getWriter();
 
 		writer.write(StringUtil.replace(_TMPL_CONTENT, "${", "}", values));
 
@@ -148,9 +150,12 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -168,7 +173,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(

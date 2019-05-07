@@ -39,25 +39,25 @@ public class RedirectLogoutProcessor implements LogoutProcessor {
 
 	@Override
 	public void logout(
-			HttpServletRequest request, HttpServletResponse response,
-			String... parameters)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String... parameters)
 		throws IOException {
 
 		if (ArrayUtil.isEmpty(parameters)) {
 			return;
 		}
 
-		String pathInfo = request.getPathInfo();
+		String pathInfo = httpServletRequest.getPathInfo();
 
 		if (pathInfo.contains("/portal/logout")) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.invalidate();
 
 			String redirectURL = parameters[0];
 
 			if (Validator.isNotNull(redirectURL)) {
-				response.sendRedirect(redirectURL);
+				httpServletResponse.sendRedirect(redirectURL);
 			}
 		}
 	}

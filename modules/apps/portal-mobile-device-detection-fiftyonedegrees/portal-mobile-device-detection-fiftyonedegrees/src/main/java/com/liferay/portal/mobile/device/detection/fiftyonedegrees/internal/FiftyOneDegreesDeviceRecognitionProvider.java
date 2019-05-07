@@ -34,8 +34,8 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 	implements DeviceRecognitionProvider {
 
 	@Override
-	public Device detectDevice(HttpServletRequest request) {
-		return _fiftyOneDegreesEngineProxy.getDevice(request);
+	public Device detectDevice(HttpServletRequest httpServletRequest) {
+		return _fiftyOneDegreesEngineProxy.getDevice(httpServletRequest);
 	}
 
 	@Override

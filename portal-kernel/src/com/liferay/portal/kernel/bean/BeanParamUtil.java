@@ -29,18 +29,19 @@ import javax.servlet.http.HttpServletRequest;
 public class BeanParamUtil {
 
 	public static boolean getBoolean(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getBoolean(bean, request, param, GetterUtil.DEFAULT_BOOLEAN);
+		return getBoolean(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		boolean defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getBoolean(bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static boolean getBoolean(
@@ -60,20 +61,20 @@ public class BeanParamUtil {
 	}
 
 	public static boolean getBooleanSilent(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
 		return getBooleanSilent(
-			bean, request, param, GetterUtil.DEFAULT_BOOLEAN);
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBooleanSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		boolean defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getBooleanSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static boolean getBooleanSilent(
@@ -94,34 +95,37 @@ public class BeanParamUtil {
 	}
 
 	public static double getDouble(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getDouble(bean, request, param, GetterUtil.DEFAULT_DOUBLE);
+		return getDouble(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		double defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getDouble(bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static double getDouble(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		double defaultValue, Locale locale) {
 
 		defaultValue = BeanPropertiesUtil.getDouble(bean, param, defaultValue);
 
-		return ParamUtil.getDouble(request, param, defaultValue, locale);
+		return ParamUtil.getDouble(
+			httpServletRequest, param, defaultValue, locale);
 	}
 
 	public static double getDouble(
-		Object bean, HttpServletRequest request, String param, Locale locale) {
+		Object bean, HttpServletRequest httpServletRequest, String param,
+		Locale locale) {
 
 		return getDouble(
-			bean, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDouble(
@@ -158,36 +162,39 @@ public class BeanParamUtil {
 	}
 
 	public static double getDoubleSilent(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getDoubleSilent(bean, request, param, GetterUtil.DEFAULT_DOUBLE);
+		return getDoubleSilent(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDoubleSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		double defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getDoubleSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static double getDoubleSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		double defaultValue, Locale locale) {
 
 		defaultValue = BeanPropertiesUtil.getDoubleSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.getDouble(request, param, defaultValue, locale);
+		return ParamUtil.getDouble(
+			httpServletRequest, param, defaultValue, locale);
 	}
 
 	public static double getDoubleSilent(
-		Object bean, HttpServletRequest request, String param, Locale locale) {
+		Object bean, HttpServletRequest httpServletRequest, String param,
+		Locale locale) {
 
 		return getDoubleSilent(
-			bean, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDoubleSilent(
@@ -226,18 +233,19 @@ public class BeanParamUtil {
 	}
 
 	public static int getInteger(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getInteger(bean, request, param, GetterUtil.DEFAULT_INTEGER);
+		return getInteger(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		int defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getInteger(bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static int getInteger(
@@ -257,20 +265,20 @@ public class BeanParamUtil {
 	}
 
 	public static int getIntegerSilent(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
 		return getIntegerSilent(
-			bean, request, param, GetterUtil.DEFAULT_INTEGER);
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getIntegerSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		int defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getIntegerSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static int getIntegerSilent(
@@ -291,18 +299,19 @@ public class BeanParamUtil {
 	}
 
 	public static long getLong(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getLong(bean, request, param, GetterUtil.DEFAULT_LONG);
+		return getLong(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		long defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getLong(bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static long getLong(
@@ -321,19 +330,20 @@ public class BeanParamUtil {
 	}
 
 	public static long getLongSilent(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getLongSilent(bean, request, param, GetterUtil.DEFAULT_LONG);
+		return getLongSilent(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLongSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		long defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getLongSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static long getLongSilent(
@@ -354,18 +364,19 @@ public class BeanParamUtil {
 	}
 
 	public static String getString(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getString(bean, request, param, GetterUtil.DEFAULT_STRING);
+		return getString(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getString(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		String defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getString(bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static String getString(
@@ -385,19 +396,20 @@ public class BeanParamUtil {
 	}
 
 	public static String getStringSilent(
-		Object bean, HttpServletRequest request, String param) {
+		Object bean, HttpServletRequest httpServletRequest, String param) {
 
-		return getStringSilent(bean, request, param, GetterUtil.DEFAULT_STRING);
+		return getStringSilent(
+			bean, httpServletRequest, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getStringSilent(
-		Object bean, HttpServletRequest request, String param,
+		Object bean, HttpServletRequest httpServletRequest, String param,
 		String defaultValue) {
 
 		defaultValue = BeanPropertiesUtil.getStringSilent(
 			bean, param, defaultValue);
 
-		return ParamUtil.get(request, param, defaultValue);
+		return ParamUtil.get(httpServletRequest, param, defaultValue);
 	}
 
 	public static String getStringSilent(

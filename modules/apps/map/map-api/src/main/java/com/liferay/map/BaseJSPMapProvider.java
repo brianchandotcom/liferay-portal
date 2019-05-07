@@ -37,18 +37,22 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return includeJSP(request, response, getJspPath());
+		return includeJSP(
+			httpServletRequest, httpServletResponse, getJspPath());
 	}
 
 	@Override
 	public boolean includeConfiguration(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return includeJSP(request, response, getConfigurationJspPath());
+		return includeJSP(
+			httpServletRequest, httpServletResponse, getConfigurationJspPath());
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -56,8 +60,8 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 	}
 
 	protected boolean includeJSP(
-			HttpServletRequest request, HttpServletResponse response,
-			String jspPath)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String jspPath)
 		throws IOException {
 
 		if (Validator.isNull(jspPath)) {
@@ -67,10 +71,10 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(jspPath);
 
-		prepareRequest(request);
+		prepareRequest(httpServletRequest);
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include " + jspPath, se);
@@ -81,7 +85,8 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 		return true;
 	}
 
-	protected abstract void prepareRequest(HttpServletRequest request);
+	protected abstract void prepareRequest(
+		HttpServletRequest httpServletRequest);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPMapProvider.class);

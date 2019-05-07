@@ -40,8 +40,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getAddress(HttpServletRequest request) throws Exception {
-		long addressId = ParamUtil.getLong(request, "addressId");
+	public static void getAddress(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		long addressId = ParamUtil.getLong(httpServletRequest, "addressId");
 
 		Address address = null;
 
@@ -49,7 +51,7 @@ public class ActionUtil {
 			address = AddressServiceUtil.getAddress(addressId);
 		}
 
-		request.setAttribute(WebKeys.ADDRESS, address);
+		httpServletRequest.setAttribute(WebKeys.ADDRESS, address);
 	}
 
 	public static void getAddress(PortletRequest portletRequest)
@@ -61,10 +63,11 @@ public class ActionUtil {
 		getAddress(request);
 	}
 
-	public static void getEmailAddress(HttpServletRequest request)
+	public static void getEmailAddress(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long emailAddressId = ParamUtil.getLong(request, "emailAddressId");
+		long emailAddressId = ParamUtil.getLong(
+			httpServletRequest, "emailAddressId");
 
 		EmailAddress emailAddress = null;
 
@@ -73,7 +76,7 @@ public class ActionUtil {
 				emailAddressId);
 		}
 
-		request.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
+		httpServletRequest.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
 	}
 
 	public static void getEmailAddress(PortletRequest portletRequest)
@@ -85,10 +88,12 @@ public class ActionUtil {
 		getEmailAddress(request);
 	}
 
-	public static Organization getOrganization(HttpServletRequest request)
+	public static Organization getOrganization(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long organizationId = ParamUtil.getLong(request, "organizationId");
+		long organizationId = ParamUtil.getLong(
+			httpServletRequest, "organizationId");
 
 		Organization organization = null;
 
@@ -97,7 +102,7 @@ public class ActionUtil {
 				organizationId);
 		}
 
-		request.setAttribute(WebKeys.ORGANIZATION, organization);
+		httpServletRequest.setAttribute(WebKeys.ORGANIZATION, organization);
 
 		return organization;
 	}
@@ -111,10 +116,10 @@ public class ActionUtil {
 		return getOrganization(request);
 	}
 
-	public static void getOrgLabor(HttpServletRequest request)
+	public static void getOrgLabor(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
+		long orgLaborId = ParamUtil.getLong(httpServletRequest, "orgLaborId");
 
 		OrgLabor orgLabor = null;
 
@@ -122,7 +127,7 @@ public class ActionUtil {
 			orgLabor = OrgLaborServiceUtil.getOrgLabor(orgLaborId);
 		}
 
-		request.setAttribute(WebKeys.ORG_LABOR, orgLabor);
+		httpServletRequest.setAttribute(WebKeys.ORG_LABOR, orgLabor);
 	}
 
 	public static void getOrgLabor(PortletRequest portletRequest)
@@ -134,8 +139,10 @@ public class ActionUtil {
 		getOrgLabor(request);
 	}
 
-	public static void getPhone(HttpServletRequest request) throws Exception {
-		long phoneId = ParamUtil.getLong(request, "phoneId");
+	public static void getPhone(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		long phoneId = ParamUtil.getLong(httpServletRequest, "phoneId");
 
 		Phone phone = null;
 
@@ -143,7 +150,7 @@ public class ActionUtil {
 			phone = PhoneServiceUtil.getPhone(phoneId);
 		}
 
-		request.setAttribute(WebKeys.PHONE, phone);
+		httpServletRequest.setAttribute(WebKeys.PHONE, phone);
 	}
 
 	public static void getPhone(PortletRequest portletRequest)
@@ -155,8 +162,10 @@ public class ActionUtil {
 		getPhone(request);
 	}
 
-	public static void getWebsite(HttpServletRequest request) throws Exception {
-		long websiteId = ParamUtil.getLong(request, "websiteId");
+	public static void getWebsite(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		long websiteId = ParamUtil.getLong(httpServletRequest, "websiteId");
 
 		Website website = null;
 
@@ -164,7 +173,7 @@ public class ActionUtil {
 			website = WebsiteServiceUtil.getWebsite(websiteId);
 		}
 
-		request.setAttribute(WebKeys.WEBSITE, website);
+		httpServletRequest.setAttribute(WebKeys.WEBSITE, website);
 	}
 
 	public static void getWebsite(PortletRequest portletRequest)

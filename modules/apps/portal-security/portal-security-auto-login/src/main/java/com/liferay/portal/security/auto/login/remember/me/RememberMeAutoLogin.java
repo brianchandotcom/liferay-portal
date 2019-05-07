@@ -44,29 +44,31 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doHandleException(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e)
 		throws AutoLoginException {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(e, e);
 		}
 
-		removeCookies(request, response);
+		removeCookies(httpServletRequest, httpServletResponse);
 
 		throw new AutoLoginException(e);
 	}
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String autoUserId = CookieKeys.getCookie(request, CookieKeys.ID, false);
+		String autoUserId = CookieKeys.getCookie(
+			httpServletRequest, CookieKeys.ID, false);
 		String autoPassword = CookieKeys.getCookie(
-			request, CookieKeys.PASSWORD, false);
+			httpServletRequest, CookieKeys.PASSWORD, false);
 		String rememberMe = CookieKeys.getCookie(
-			request, CookieKeys.REMEMBER_ME, false);
+			httpServletRequest, CookieKeys.REMEMBER_ME, false);
 
 		// LEP-5188
 
@@ -74,12 +76,12 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		String contextPath = _portal.getPathContext();
 
 		if (proxyPath.equals(contextPath)) {
-			if (Validator.isNotNull(request.getContextPath())) {
+			if (Validator.isNotNull(httpServletRequest.getContextPath())) {
 				rememberMe = Boolean.TRUE.toString();
 			}
 		}
 		else {
-			if (!contextPath.equals(request.getContextPath())) {
+			if (!contextPath.equals(httpServletRequest.getContextPath())) {
 				rememberMe = Boolean.TRUE.toString();
 			}
 		}
@@ -90,7 +92,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			Validator.isNotNull(autoPassword) &&
 			Validator.isNotNull(rememberMe)) {
 
-			Company company = _portal.getCompany(request);
+			Company company = _portal.getCompany(httpServletRequest);
 
 			if (company.isAutoLogin()) {
 				KeyValuePair kvp = _userLocalService.decryptUserId(
@@ -107,7 +109,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		// LPS-11218
 
 		if (credentials != null) {
-			Company company = _portal.getCompany(request);
+			Company company = _portal.getCompany(httpServletRequest);
 
 			User defaultUser = _userLocalService.getDefaultUser(
 				company.getCompanyId());
@@ -115,7 +117,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			long userId = GetterUtil.getLong(credentials[0]);
 
 			if (defaultUser.getUserId() == userId) {
-				removeCookies(request, response);
+				removeCookies(httpServletRequest, httpServletResponse);
 
 				return null;
 			}
@@ -125,21 +127,22 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 	}
 
 	protected void removeCookies(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		Cookie cookie = new Cookie(CookieKeys.ID, StringPool.BLANK);
 
 		cookie.setMaxAge(0);
 		cookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(request, response, cookie);
+		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 
 		cookie = new Cookie(CookieKeys.PASSWORD, StringPool.BLANK);
 
 		cookie.setMaxAge(0);
 		cookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(request, response, cookie);
+		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
 	@Reference(unbind = "-")

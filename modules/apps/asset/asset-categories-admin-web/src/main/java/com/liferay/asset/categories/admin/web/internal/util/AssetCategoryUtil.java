@@ -40,18 +40,20 @@ public class AssetCategoryUtil {
 
 	public static List<BreadcrumbEntry> getAssetCategoriesBreadcrumbEntries(
 			AssetVocabulary vocabulary, AssetCategory category,
-			HttpServletRequest request, RenderResponse renderResponse)
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		BreadcrumbEntry vocabulariesBreadcrumbEntry = new BreadcrumbEntry();
 
 		vocabulariesBreadcrumbEntry.setTitle(
-			LanguageUtil.get(request, "vocabularies"));
+			LanguageUtil.get(httpServletRequest, "vocabularies"));
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -76,7 +78,8 @@ public class AssetCategoryUtil {
 
 		portletURL.setParameter("mvcPath", "/view_categories.jsp");
 
-		String navigation = ParamUtil.getString(request, "navigation");
+		String navigation = ParamUtil.getString(
+			httpServletRequest, "navigation");
 
 		if (Validator.isNotNull(navigation)) {
 			portletURL.setParameter("navigation", navigation);
@@ -121,13 +124,14 @@ public class AssetCategoryUtil {
 	}
 
 	public static List<BreadcrumbEntry> getAssetVocabulariesBreadcrumbEntries(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(request, "vocabularies"));
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(httpServletRequest, "vocabularies"));
 
 		breadcrumbEntries.add(breadcrumbEntry);
 

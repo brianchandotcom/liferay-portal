@@ -73,12 +73,12 @@ public class VerticalCardSmallImageTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:vertical-card-small-image:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:vertical-card-small-image:src", _src);
 	}
 

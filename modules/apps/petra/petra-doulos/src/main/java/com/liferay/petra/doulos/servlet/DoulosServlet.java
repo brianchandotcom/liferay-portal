@@ -64,17 +64,21 @@ public abstract class DoulosServlet extends HttpServlet {
 	}
 
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		service(request, response);
+		service(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		service(request, response);
+		service(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -130,30 +134,33 @@ public abstract class DoulosServlet extends HttpServlet {
 
 	protected abstract void registerDoulosRequestProcessors() throws Exception;
 
-	protected void sendError(HttpServletResponse response, String message)
+	protected void sendError(
+			HttpServletResponse httpServletResponse, String message)
 		throws IOException {
 
-		write(response, new ByteArrayInputStream(message.getBytes()));
+		write(
+			httpServletResponse, new ByteArrayInputStream(message.getBytes()));
 	}
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String remoteAddr = request.getRemoteAddr();
+		String remoteAddr = httpServletRequest.getRemoteAddr();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Remote address: " + remoteAddr);
 		}
 
 		if (!isValidIP(remoteAddr)) {
-			sendError(response, "IP " + remoteAddr + " is invalid.");
+			sendError(httpServletResponse, "IP " + remoteAddr + " is invalid.");
 
 			return;
 		}
 
-		String pathInfo = request.getPathInfo();
+		String pathInfo = httpServletRequest.getPathInfo();
 
 		if (pathInfo.length() > 1) {
 			if (pathInfo.endsWith("/")) {
@@ -175,12 +182,12 @@ public abstract class DoulosServlet extends HttpServlet {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Processing ", request.getRequestURL(), " with ",
-						doulosRequestProcessor));
+						"Processing ", httpServletRequest.getRequestURL(),
+						" with ", doulosRequestProcessor));
 			}
 
 			try {
-				String payload = request.getParameter("payload");
+				String payload = httpServletRequest.getParameter("payload");
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Payload parameter: " + payload);
@@ -191,7 +198,8 @@ public abstract class DoulosServlet extends HttpServlet {
 
 					String line = null;
 
-					BufferedReader bufferedReader = request.getReader();
+					BufferedReader bufferedReader =
+						httpServletRequest.getReader();
 
 					while ((line = bufferedReader.readLine()) != null) {
 						sb.append(line);
@@ -218,16 +226,16 @@ public abstract class DoulosServlet extends HttpServlet {
 				JSONObject responseJSONObject = new JSONObject();
 
 				doulosRequestProcessor.process(
-					request.getMethod(),
+					httpServletRequest.getMethod(),
 					pathInfo.substring(doulosRequestProcessorKey.length()),
-					request.getParameterMap(), payloadJSONObject,
+					httpServletRequest.getParameterMap(), payloadJSONObject,
 					responseJSONObject);
 
 				String redirect = responseJSONObject.optString(
 					"doulosRedirect");
 
 				if (!isBlank(redirect)) {
-					response.sendRedirect(redirect);
+					httpServletResponse.sendRedirect(redirect);
 
 					return;
 				}
@@ -235,7 +243,8 @@ public abstract class DoulosServlet extends HttpServlet {
 				String json = responseJSONObject.toString();
 
 				write(
-					response, new ByteArrayInputStream(json.getBytes("UTF-8")));
+					httpServletResponse,
+					new ByteArrayInputStream(json.getBytes("UTF-8")));
 			}
 			catch (Exception e) {
 				StringWriter stringWriter = new StringWriter();
@@ -250,26 +259,29 @@ public abstract class DoulosServlet extends HttpServlet {
 					_log.info(output);
 				}
 
-				sendError(response, output);
+				sendError(httpServletResponse, output);
 			}
 
 			return;
 		}
 
-		sendError(response, "Unregistered path " + request.getPathInfo() + ".");
+		sendError(
+			httpServletResponse,
+			"Unregistered path " + httpServletRequest.getPathInfo() + ".");
 	}
 
-	protected void write(HttpServletResponse response, InputStream inputStream)
+	protected void write(
+			HttpServletResponse httpServletResponse, InputStream inputStream)
 		throws IOException {
 
 		OutputStream outputStream = null;
 
 		try {
-			response.setHeader("Cache-Control", "public");
+			httpServletResponse.setHeader("Cache-Control", "public");
 
-			if (!response.isCommitted()) {
+			if (!httpServletResponse.isCommitted()) {
 				outputStream = new BufferedOutputStream(
-					response.getOutputStream());
+					httpServletResponse.getOutputStream());
 
 				int c = inputStream.read();
 

@@ -49,14 +49,14 @@ import javax.servlet.http.HttpServletRequest;
 public class PreviewSegmentsEntryUsersDisplayContext {
 
 	public PreviewSegmentsEntryUsersDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		SegmentsEntryProvider segmentsEntryProvider,
 		SegmentsEntryService segmentsEntryService,
 		ODataRetriever<User> userODataRetriever,
 		UserLocalService userLocalService) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsEntryProvider = segmentsEntryProvider;

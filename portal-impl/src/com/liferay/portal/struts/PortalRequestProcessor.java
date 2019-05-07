@@ -132,43 +132,45 @@ public class PortalRequestProcessor {
 	}
 
 	public void process(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		String path = _processPath(request);
+		String path = _processPath(httpServletRequest);
 
 		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
 		if (actionMapping == null) {
-			String lastPath = _getLastPath(request);
+			String lastPath = _getLastPath(httpServletRequest);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Last path " + lastPath);
 			}
 
-			response.sendRedirect(lastPath);
+			httpServletResponse.sendRedirect(lastPath);
 
 			return;
 		}
 
-		_process(actionMapping, request, response);
+		_process(actionMapping, httpServletRequest, httpServletResponse);
 	}
 
-	private String _findPath(HttpServletRequest request) {
-		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
+	private String _findPath(HttpServletRequest httpServletRequest) {
+		String path = (String)httpServletRequest.getAttribute(
+			INCLUDE_PATH_INFO);
 
 		if (path == null) {
-			path = request.getPathInfo();
+			path = httpServletRequest.getPathInfo();
 		}
 
 		if ((path != null) && (path.length() > 0)) {
 			return path;
 		}
 
-		path = (String)request.getAttribute(INCLUDE_SERVLET_PATH);
+		path = (String)httpServletRequest.getAttribute(INCLUDE_SERVLET_PATH);
 
 		if (path == null) {
-			path = request.getServletPath();
+			path = httpServletRequest.getServletPath();
 		}
 
 		int periodIndex = path.lastIndexOf(CharPool.PERIOD);
@@ -182,14 +184,15 @@ public class PortalRequestProcessor {
 	}
 
 	private String _getFriendlyTrackerPath(
-			String path, ThemeDisplay themeDisplay, HttpServletRequest request)
+			String path, ThemeDisplay themeDisplay,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		if (!path.equals(_PATH_PORTAL_LAYOUT)) {
 			return null;
 		}
 
-		long plid = ParamUtil.getLong(request, "p_l_id");
+		long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
 		if (plid == 0) {
 			return null;
@@ -200,13 +203,13 @@ public class PortalRequestProcessor {
 		String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
 			layout, themeDisplay);
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		if (Validator.isNull(portletId)) {
 			return layoutFriendlyURL;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
@@ -223,7 +226,7 @@ public class PortalRequestProcessor {
 			return layoutFriendlyURL.concat(
 				StringPool.QUESTION
 			).concat(
-				request.getQueryString()
+				httpServletRequest.getQueryString()
 			);
 		}
 
@@ -234,16 +237,17 @@ public class PortalRequestProcessor {
 			return layoutFriendlyURL.concat(
 				StringPool.QUESTION
 			).concat(
-				request.getQueryString()
+				httpServletRequest.getQueryString()
 			);
 		}
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portlet, layout, PortletRequest.RENDER_PHASE);
+			httpServletRequest, portlet, layout, PortletRequest.RENDER_PHASE);
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
@@ -264,15 +268,16 @@ public class PortalRequestProcessor {
 		return layoutFriendlyURL.concat(
 			StringPool.QUESTION
 		).concat(
-			request.getQueryString()
+			httpServletRequest.getQueryString()
 		);
 	}
 
-	private String _getLastPath(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	private String _getLastPath(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Boolean httpsInitial = (Boolean)session.getAttribute(
 			WebKeys.HTTPS_INITIAL);
@@ -283,10 +288,10 @@ public class PortalRequestProcessor {
 			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
 			(httpsInitial != null) && !httpsInitial.booleanValue()) {
 
-			portalURL = PortalUtil.getPortalURL(request, false);
+			portalURL = PortalUtil.getPortalURL(httpServletRequest, false);
 		}
 		else {
-			portalURL = PortalUtil.getPortalURL(request);
+			portalURL = PortalUtil.getPortalURL(httpServletRequest);
 		}
 
 		StringBundler sb = new StringBundler(7);
@@ -296,7 +301,7 @@ public class PortalRequestProcessor {
 		sb.append(_PATH_PORTAL_LAYOUT);
 
 		if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH) {
-			if (request.getRemoteUser() != null) {
+			if (httpServletRequest.getRemoteUser() != null) {
 
 				// If we do not forward by last path and the user is logged in,
 				// forward to the user's default layout to prevent a lagging
@@ -344,19 +349,20 @@ public class PortalRequestProcessor {
 	}
 
 	private void _internalModuleRelativeForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
+			String uri, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Definition definition = _definitions.get(uri);
 
 		if (definition != null) {
-			request.setAttribute(TilesUtil.DEFINITION, definition);
+			httpServletRequest.setAttribute(TilesUtil.DEFINITION, definition);
 
 			uri = definition.getPath();
 		}
 
-		StrutsUtil.forward(uri, _servletContext, request, response);
+		StrutsUtil.forward(
+			uri, _servletContext, httpServletRequest, httpServletResponse);
 	}
 
 	private boolean _isPortletPath(String path) {
@@ -383,19 +389,23 @@ public class PortalRequestProcessor {
 	}
 
 	private void _process(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		_processLocale(request);
+		_processLocale(httpServletRequest);
 
-		response.setContentType("text/html; charset=UTF-8");
+		httpServletResponse.setContentType("text/html; charset=UTF-8");
 
-		if (!_processRoles(request, response, actionMapping)) {
+		if (!_processRoles(
+				httpServletRequest, httpServletResponse, actionMapping)) {
+
 			return;
 		}
 
-		if (!_processForward(request, response, actionMapping)) {
+		if (!_processForward(
+				httpServletRequest, httpServletResponse, actionMapping)) {
+
 			return;
 		}
 
@@ -403,11 +413,12 @@ public class PortalRequestProcessor {
 
 		try {
 			ActionForward actionForward = action.execute(
-				actionMapping, request, response);
+				actionMapping, httpServletRequest, httpServletResponse);
 
 			if (actionForward != null) {
 				_internalModuleRelativeForward(
-					actionForward.getPath(), request, response);
+					actionForward.getPath(), httpServletRequest,
+					httpServletResponse);
 			}
 		}
 		catch (IOException | ServletException e) {
@@ -419,7 +430,8 @@ public class PortalRequestProcessor {
 	}
 
 	private boolean _processForward(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			ActionMapping actionMapping)
 		throws IOException, ServletException {
 
@@ -429,32 +441,34 @@ public class PortalRequestProcessor {
 			return true;
 		}
 
-		_internalModuleRelativeForward(forward, request, response);
+		_internalModuleRelativeForward(
+			forward, httpServletRequest, httpServletResponse);
 
 		return false;
 	}
 
-	private void _processLocale(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	private void _processLocale(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
 
 		if (session.getAttribute(WebKeys.LOCALE) != null) {
 			return;
 		}
 
-		Locale locale = request.getLocale();
+		Locale locale = httpServletRequest.getLocale();
 
 		if (locale != null) {
 			session.setAttribute(WebKeys.LOCALE, locale);
 		}
 	}
 
-	private String _processPath(HttpServletRequest request) {
-		String path = _findPath(request);
+	private String _processPath(HttpServletRequest httpServletRequest) {
+		String path = _findPath(httpServletRequest);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		// Current users
 
@@ -471,7 +485,7 @@ public class PortalRequestProcessor {
 			try {
 				if (PropsValues.SESSION_TRACKER_FRIENDLY_PATHS_ENABLED) {
 					fullPath = _getFriendlyTrackerPath(
-						path, themeDisplay, request);
+						path, themeDisplay, httpServletRequest);
 				}
 			}
 			catch (Exception e) {
@@ -481,7 +495,7 @@ public class PortalRequestProcessor {
 			String fullPathWithoutQueryString = fullPath;
 
 			if (Validator.isNull(fullPath)) {
-				String queryString = request.getQueryString();
+				String queryString = httpServletRequest.getQueryString();
 
 				fullPathWithoutQueryString = path;
 
@@ -516,12 +530,12 @@ public class PortalRequestProcessor {
 			}
 		}
 
-		String remoteUser = request.getRemoteUser();
+		String remoteUser = httpServletRequest.getRemoteUser();
 
 		User user = null;
 
 		try {
-			user = PortalUtil.getUser(request);
+			user = PortalUtil.getUser(httpServletRequest);
 		}
 		catch (Exception e) {
 		}
@@ -530,13 +544,13 @@ public class PortalRequestProcessor {
 
 		if (_lastPaths.contains(path) && !_trackerIgnorePaths.contains(path)) {
 			boolean saveLastPath = ParamUtil.getBoolean(
-				request, "saveLastPath", true);
+				httpServletRequest, "saveLastPath", true);
 
 			if (themeDisplay.isLifecycleResource() ||
 				themeDisplay.isStateExclusive() ||
 				themeDisplay.isStatePopUp() ||
 				!StringUtil.equalsIgnoreCase(
-					request.getMethod(), HttpMethods.GET)) {
+					httpServletRequest.getMethod(), HttpMethods.GET)) {
 
 				saveLastPath = false;
 			}
@@ -548,14 +562,14 @@ public class PortalRequestProcessor {
 				// Was a last path set by another servlet that dispatched to the
 				// MainServlet? If so, use that last path instead.
 
-				LastPath lastPath = (LastPath)request.getAttribute(
+				LastPath lastPath = (LastPath)httpServletRequest.getAttribute(
 					WebKeys.LAST_PATH);
 
 				if (lastPath == null) {
 					lastPath = new LastPath(
 						themeDisplay.getPathMain(), path,
 						HttpUtil.parameterMapToString(
-							request.getParameterMap()));
+							httpServletRequest.getParameterMap()));
 				}
 
 				session.setAttribute(WebKeys.LAST_PATH, lastPath);
@@ -610,8 +624,8 @@ public class PortalRequestProcessor {
 			return _PATH_PORTAL_LOGOUT;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		// Authenticated users must be active
 
@@ -628,7 +642,7 @@ public class PortalRequestProcessor {
 				!InterruptedPortletRequestWhitelistUtil.
 					isPortletInvocationWhitelisted(
 						companyId, portletId,
-						PortalUtil.getStrutsAction(request))) {
+						PortalUtil.getStrutsAction(httpServletRequest))) {
 
 				// Authenticated users should agree to Terms of Use
 
@@ -703,7 +717,8 @@ public class PortalRequestProcessor {
 	}
 
 	private boolean _processRoles(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			ActionMapping actionMapping)
 		throws IOException, ServletException {
 
@@ -718,7 +733,7 @@ public class PortalRequestProcessor {
 		User user = null;
 
 		try {
-			user = PortalUtil.getUser(request);
+			user = PortalUtil.getUser(httpServletRequest);
 		}
 		catch (Exception e) {
 		}
@@ -734,7 +749,8 @@ public class PortalRequestProcessor {
 
 				Portlet portlet = null;
 
-				String portletId = ParamUtil.getString(request, "p_p_id");
+				String portletId = ParamUtil.getString(
+					httpServletRequest, "p_p_id");
 
 				if (Validator.isNotNull(portletId)) {
 					portlet = PortletLocalServiceUtil.getPortletById(
@@ -759,7 +775,7 @@ public class PortalRequestProcessor {
 					!portlet.isSystem()) {
 
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					Layout layout = themeDisplay.getLayout();
@@ -777,13 +793,15 @@ public class PortalRequestProcessor {
 				}
 				else if ((portlet != null) && !portlet.isActive()) {
 					SessionErrors.add(
-						request, PortletActiveException.class.getName());
+						httpServletRequest,
+						PortletActiveException.class.getName());
 
 					authorized = false;
 				}
 			}
 			catch (Exception e) {
-				SessionErrors.add(request, PrincipalException.class.getName());
+				SessionErrors.add(
+					httpServletRequest, PrincipalException.class.getName());
 
 				authorized = false;
 			}
@@ -795,7 +813,8 @@ public class PortalRequestProcessor {
 
 			if (actionForward != null) {
 				_internalModuleRelativeForward(
-					actionForward.getPath(), request, response);
+					actionForward.getPath(), httpServletRequest,
+					httpServletResponse);
 			}
 
 			return false;

@@ -53,11 +53,13 @@ public class EventsProcessorUtil {
 	}
 
 	public static void process(
-			String key, String[] classes, HttpServletRequest request,
-			HttpServletResponse response)
+			String key, String[] classes, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
-		process(key, classes, new LifecycleEvent(request, response));
+		process(
+			key, classes,
+			new LifecycleEvent(httpServletRequest, httpServletResponse));
 	}
 
 	public static void process(

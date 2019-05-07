@@ -39,20 +39,22 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 	public static final String DYNAMIC_QUERY_STRING = "DYNAMIC_QUERY_STRING";
 
 	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, Map<String, String[]> parameterMap,
-		String queryString) {
+		HttpServletRequest httpServletRequest,
+		Map<String, String[]> parameterMap, String queryString) {
 
-		return addQueryString(request, parameterMap, queryString, true);
+		return addQueryString(
+			httpServletRequest, parameterMap, queryString, true);
 	}
 
 	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, Map<String, String[]> parameterMap,
-		String queryString, boolean inherit) {
+		HttpServletRequest httpServletRequest,
+		Map<String, String[]> parameterMap, String queryString,
+		boolean inherit) {
 
 		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
 		if (parameters.length == 0) {
-			return request;
+			return httpServletRequest;
 		}
 
 		parameterMap = new HashMap<>(parameterMap);
@@ -85,46 +87,52 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 			}
 		}
 
-		request = new DynamicServletRequest(request, parameterMap, inherit);
+		httpServletRequest = new DynamicServletRequest(
+			httpServletRequest, parameterMap, inherit);
 
-		request.setAttribute(DYNAMIC_QUERY_STRING, queryString);
+		httpServletRequest.setAttribute(DYNAMIC_QUERY_STRING, queryString);
 
-		return request;
+		return httpServletRequest;
 	}
 
 	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, String queryString) {
+		HttpServletRequest httpServletRequest, String queryString) {
 
 		return addQueryString(
-			request, new HashMap<String, String[]>(), queryString, true);
+			httpServletRequest, new HashMap<String, String[]>(), queryString,
+			true);
 	}
 
 	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, String queryString, boolean inherit) {
-
-		return addQueryString(
-			request, new HashMap<String, String[]>(), queryString, inherit);
-	}
-
-	public DynamicServletRequest(HttpServletRequest request) {
-		this(request, null, true);
-	}
-
-	public DynamicServletRequest(HttpServletRequest request, boolean inherit) {
-		this(request, null, inherit);
-	}
-
-	public DynamicServletRequest(
-		HttpServletRequest request, Map<String, String[]> params) {
-
-		this(request, params, true);
-	}
-
-	public DynamicServletRequest(
-		HttpServletRequest request, Map<String, String[]> params,
+		HttpServletRequest httpServletRequest, String queryString,
 		boolean inherit) {
 
-		super(request);
+		return addQueryString(
+			httpServletRequest, new HashMap<String, String[]>(), queryString,
+			inherit);
+	}
+
+	public DynamicServletRequest(HttpServletRequest httpServletRequest) {
+		this(httpServletRequest, null, true);
+	}
+
+	public DynamicServletRequest(
+		HttpServletRequest httpServletRequest, boolean inherit) {
+
+		this(httpServletRequest, null, inherit);
+	}
+
+	public DynamicServletRequest(
+		HttpServletRequest httpServletRequest, Map<String, String[]> params) {
+
+		this(httpServletRequest, params, true);
+	}
+
+	public DynamicServletRequest(
+		HttpServletRequest httpServletRequest, Map<String, String[]> params,
+		boolean inherit) {
+
+		super(httpServletRequest);
 
 		_params = new HashMap<>();
 		_inherit = inherit;
@@ -133,9 +141,9 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 			_params.putAll(params);
 		}
 
-		if (_inherit && (request instanceof DynamicServletRequest)) {
+		if (_inherit && (httpServletRequest instanceof DynamicServletRequest)) {
 			DynamicServletRequest dynamicRequest =
-				(DynamicServletRequest)request;
+				(DynamicServletRequest)httpServletRequest;
 
 			dynamicRequest.injectInto(this);
 

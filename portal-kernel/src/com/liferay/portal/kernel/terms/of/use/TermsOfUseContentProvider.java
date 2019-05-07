@@ -26,11 +26,13 @@ import javax.servlet.http.HttpServletResponse;
 public interface TermsOfUseContentProvider {
 
 	public void includeConfig(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	public void includeView(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 }

@@ -36,7 +36,8 @@ public class StrutsUtil {
 
 	public static void forward(
 			String uri, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ServletException {
 
 		if (_log.isDebugEnabled()) {
@@ -47,7 +48,7 @@ public class StrutsUtil {
 			return;
 		}
 
-		if (!response.isCommitted()) {
+		if (!httpServletResponse.isCommitted()) {
 			String path = TEXT_HTML_DIR.concat(uri);
 
 			if (_log.isDebugEnabled()) {
@@ -59,7 +60,8 @@ public class StrutsUtil {
 					servletContext, path);
 
 			try {
-				requestDispatcher.forward(request, response);
+				requestDispatcher.forward(
+					httpServletRequest, httpServletResponse);
 			}
 			catch (IOException ioe) {
 				if (_log.isWarnEnabled()) {
@@ -67,7 +69,8 @@ public class StrutsUtil {
 				}
 			}
 			catch (ServletException se1) {
-				request.setAttribute(PageContext.EXCEPTION, se1.getRootCause());
+				httpServletRequest.setAttribute(
+					PageContext.EXCEPTION, se1.getRootCause());
 
 				String errorPath = TEXT_HTML_DIR + "/common/error.jsp";
 
@@ -76,7 +79,8 @@ public class StrutsUtil {
 						servletContext, errorPath);
 
 				try {
-					requestDispatcher.forward(request, response);
+					requestDispatcher.forward(
+						httpServletRequest, httpServletResponse);
 				}
 				catch (IOException ioe2) {
 					if (_log.isWarnEnabled()) {

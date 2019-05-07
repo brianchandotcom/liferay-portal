@@ -45,9 +45,11 @@ public class WebProxyServletFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+		String contentType = httpServletRequest.getHeader(
+			HttpHeaders.CONTENT_TYPE);
 
 		if ((contentType != null) &&
 			contentType.startsWith(
@@ -66,16 +68,16 @@ public class WebProxyServletFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		WebProxyServletRequest webProxyServletRequest =
-			new WebProxyServletRequest(request);
+			new WebProxyServletRequest(httpServletRequest);
 
 		processFilter(
 			WebProxyServletFilter.class.getName(), webProxyServletRequest,
-			response, filterChain);
+			httpServletResponse, filterChain);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

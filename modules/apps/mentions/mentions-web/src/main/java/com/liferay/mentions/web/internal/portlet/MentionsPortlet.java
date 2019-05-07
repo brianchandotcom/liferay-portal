@@ -104,20 +104,21 @@ public class MentionsPortlet extends MVCPortlet {
 		}
 	}
 
-	private JSONArray _getJSONArray(HttpServletRequest request)
+	private JSONArray _getJSONArray(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SocialInteractionsConfiguration socialInteractionsConfiguration =
 			SocialInteractionsConfigurationUtil.
 				getSocialInteractionsConfiguration(
 					themeDisplay.getCompanyId(), MentionsPortletKeys.MENTIONS);
 
-		String query = ParamUtil.getString(request, "query");
+		String query = ParamUtil.getString(httpServletRequest, "query");
 
 		List<User> users = _mentionsUserFinder.getUsers(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), query,

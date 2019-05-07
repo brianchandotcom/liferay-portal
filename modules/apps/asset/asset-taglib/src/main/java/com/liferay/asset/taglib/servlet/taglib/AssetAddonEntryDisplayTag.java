@@ -70,8 +70,9 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(WebKeys.ASSET_ADDON_ENTRIES, _assetAddonEntries);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			WebKeys.ASSET_ADDON_ENTRIES, _assetAddonEntries);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

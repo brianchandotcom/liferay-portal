@@ -154,26 +154,32 @@ public class InputTimeTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:input-time:amPmParam", _amPmParam);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:amPmParam", _amPmParam);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:amPmValue", String.valueOf(_amPmValue));
-		request.setAttribute("liferay-ui:input-time:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:input-time:dateParam", _dateParam);
-		request.setAttribute("liferay-ui:input-time:dateValue", _dateValue);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:dateParam", _dateParam);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:dateValue", _dateValue);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:disabled", String.valueOf(_disabled));
-		request.setAttribute("liferay-ui:input-time:hourParam", _hourParam);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:hourParam", _hourParam);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:hourValue", String.valueOf(_hourValue));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:minuteInterval",
 			String.valueOf(_minuteInterval));
-		request.setAttribute("liferay-ui:input-time:minuteParam", _minuteParam);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-time:minuteParam", _minuteParam);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:minuteValue", String.valueOf(_minuteValue));
-		request.setAttribute("liferay-ui:input-time:name", _name);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:input-time:name", _name);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-time:timeFormat", String.valueOf(_timeFormat));
 	}
 

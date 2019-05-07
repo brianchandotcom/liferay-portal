@@ -52,12 +52,14 @@ public class MyAccountPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, this);
 
-		return super.include(request, response);
+		return super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

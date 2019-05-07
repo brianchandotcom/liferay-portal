@@ -304,7 +304,7 @@ public class MVCActionCommandTest {
 
 		@Override
 		public void setPortletRequestDispatcherRequest(
-			HttpServletRequest request) {
+			HttpServletRequest httpServletRequest) {
 		}
 
 		private final MockHttpServletRequest _mockHttpServletRequest =

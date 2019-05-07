@@ -50,15 +50,15 @@ public class CustomFieldChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String primaryKey) {
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String primaryKey) {
 
 		ExpandoColumn expandoColumn =
 			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
 				_companyId, _modelResource, primaryKey);
 
 		return super.getRowCheckBox(
-			request, checked, disabled,
+			httpServletRequest, checked, disabled,
 			String.valueOf(expandoColumn.getColumnId()));
 	}
 

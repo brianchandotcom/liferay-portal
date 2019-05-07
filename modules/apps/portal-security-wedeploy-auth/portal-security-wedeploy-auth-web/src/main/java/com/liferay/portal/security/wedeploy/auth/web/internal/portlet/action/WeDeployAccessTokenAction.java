@@ -50,23 +50,27 @@ public class WeDeployAccessTokenAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setHeader(
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String redirectURI = ParamUtil.getString(request, "redirect_uri");
-		String clientId = ParamUtil.getString(request, "client_id");
-		String clientSecret = ParamUtil.getString(request, "client_secret");
-		String authorizationToken = ParamUtil.getString(request, "code");
+		String redirectURI = ParamUtil.getString(
+			httpServletRequest, "redirect_uri");
+		String clientId = ParamUtil.getString(httpServletRequest, "client_id");
+		String clientSecret = ParamUtil.getString(
+			httpServletRequest, "client_secret");
+		String authorizationToken = ParamUtil.getString(
+			httpServletRequest, "code");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			WeDeployAuthToken.class.getName(), request);
+			WeDeployAuthToken.class.getName(), httpServletRequest);
 
 		try {
 			WeDeployAuthToken weDeployAuthToken =
@@ -109,7 +113,7 @@ public class WeDeployAccessTokenAction implements StrutsAction {
 						"resource"));
 		}
 
-		ServletResponseUtil.write(response, jsonObject.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 
 		return null;
 	}

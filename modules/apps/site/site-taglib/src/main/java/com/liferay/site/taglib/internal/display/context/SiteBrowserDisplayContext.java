@@ -33,18 +33,19 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteBrowserDisplayContext {
 
 	public SiteBrowserDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 
 		_emptyResultsMessage = GetterUtil.getString(
-			request.getAttribute(
+			httpServletRequest.getAttribute(
 				"liferay-site:site-browser:emptyResultsMessage"));
-		_groups = (List<Group>)request.getAttribute(
+		_groups = (List<Group>)httpServletRequest.getAttribute(
 			"liferay-site:site-browser:groups");
 		_groupsCount = GetterUtil.getInteger(
-			request.getAttribute("liferay-site:site-browser:groupsCount"));
+			httpServletRequest.getAttribute(
+				"liferay-site:site-browser:groupsCount"));
 	}
 
 	public String getDisplayStyle() {

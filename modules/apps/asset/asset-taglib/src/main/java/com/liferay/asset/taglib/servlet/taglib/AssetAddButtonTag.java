@@ -129,17 +129,18 @@ public class AssetAddButtonTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:addDisplayPageParameter",
 			_addDisplayPageParameter);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:allAssetCategoryIds",
 			_allAssetCategoryIds);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:allAssetTagNames",
 			_allAssetTagNames);
 
@@ -150,10 +151,10 @@ public class AssetAddButtonTag extends IncludeTag {
 				themeDisplay.getCompanyId());
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:classNameIds", classNameIds);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:classTypeIds", _classTypeIds);
 
 		long[] groupIds = _groupIds;
@@ -162,12 +163,12 @@ public class AssetAddButtonTag extends IncludeTag {
 			groupIds = new long[] {themeDisplay.getScopeGroupId()};
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:groupIds", groupIds);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:redirect", _redirect);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-add-button:useDialog", _useDialog);
 	}
 

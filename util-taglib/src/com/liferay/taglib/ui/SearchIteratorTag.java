@@ -97,18 +97,18 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:displayStyle", getDisplayStyle());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:markupView", _markupView);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:paginate", String.valueOf(_paginate));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:resultRowSplitter", _resultRowSplitter);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:searchResultCssClass",
 			getSearchResultCssClass());
 	}

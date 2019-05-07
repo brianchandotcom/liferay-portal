@@ -39,7 +39,8 @@ public interface TrashHelper {
 	public String getTrashTitle(long entryId);
 
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, String className, long classPK)
+			HttpServletRequest httpServletRequest, String className,
+			long classPK)
 		throws PortalException;
 
 	public boolean isTrashEnabled(Group group);

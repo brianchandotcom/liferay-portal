@@ -41,14 +41,14 @@ public class AxisCleanUpFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		try {
 			processFilter(
-				AxisCleanUpFilter.class.getName(), request, response,
-				filterChain);
+				AxisCleanUpFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 		}
 		finally {
 			try {

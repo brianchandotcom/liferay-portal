@@ -43,7 +43,8 @@ public abstract class BaseFormNavigatorEntry<T>
 
 	@Override
 	public abstract void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	@Override

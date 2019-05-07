@@ -63,11 +63,12 @@ public class GZipFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (isCompress(request) && !isInclude(request) &&
-			BrowserSnifferUtil.acceptsGzip(request) &&
-			!isAlreadyFiltered(request)) {
+		if (isCompress(httpServletRequest) && !isInclude(httpServletRequest) &&
+			BrowserSnifferUtil.acceptsGzip(httpServletRequest) &&
+			!isAlreadyFiltered(httpServletRequest)) {
 
 			return true;
 		}
@@ -75,24 +76,24 @@ public class GZipFilter extends BasePortalFilter {
 		return false;
 	}
 
-	protected boolean isAlreadyFiltered(HttpServletRequest request) {
-		if (request.getAttribute(SKIP_FILTER) != null) {
+	protected boolean isAlreadyFiltered(HttpServletRequest httpServletRequest) {
+		if (httpServletRequest.getAttribute(SKIP_FILTER) != null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	protected boolean isCompress(HttpServletRequest request) {
-		if (ParamUtil.getBoolean(request, _COMPRESS, true)) {
+	protected boolean isCompress(HttpServletRequest httpServletRequest) {
+		if (ParamUtil.getBoolean(httpServletRequest, _COMPRESS, true)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	protected boolean isInclude(HttpServletRequest request) {
-		String uri = (String)request.getAttribute(
+	protected boolean isInclude(HttpServletRequest httpServletRequest) {
+		String uri = (String)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
 
 		if (uri == null) {
@@ -104,22 +105,23 @@ public class GZipFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			String completeURL = HttpUtil.getCompleteURL(request);
+			String completeURL = HttpUtil.getCompleteURL(httpServletRequest);
 
 			_log.debug("Compressing " + completeURL);
 		}
 
-		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
+		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
-		GZipResponse gZipResponse = new GZipResponse(response);
+		GZipResponse gZipResponse = new GZipResponse(httpServletResponse);
 
 		processFilter(
-			GZipFilter.class.getName(), request, gZipResponse, filterChain);
+			GZipFilter.class.getName(), httpServletRequest, gZipResponse,
+			filterChain);
 
 		gZipResponse.finishResponse();
 	}

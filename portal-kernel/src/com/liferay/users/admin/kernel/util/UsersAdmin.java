@@ -250,7 +250,7 @@ public interface UsersAdmin {
 		};
 
 	public void addPortletBreadcrumbEntries(
-			Organization organization, HttpServletRequest request,
+			Organization organization, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception;
 

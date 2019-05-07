@@ -41,8 +41,8 @@ public class ImageEditorIGDisplayContextFactory
 	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileShortcut fileShortcut) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		return parentIGViewFileVersionDisplayContext;
 	}
@@ -50,18 +50,19 @@ public class ImageEditorIGDisplayContextFactory
 	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
 		Object model = fileVersion.getModel();
 
 		if (model instanceof DLFileVersion) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			return new ImageEditorIGViewFileVersionDisplayContext(
-				parentIGViewFileVersionDisplayContext, request, response,
-				fileVersion,
+				parentIGViewFileVersionDisplayContext, httpServletRequest,
+				httpServletResponse, fileVersion,
 				ResourceBundleUtil.getBundle(
 					themeDisplay.getLocale(),
 					ImageEditorIGDisplayContextFactory.class),

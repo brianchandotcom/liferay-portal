@@ -255,29 +255,32 @@ public class FlashTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:flash:align", _align);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-ui:flash:align", _align);
+		httpServletRequest.setAttribute(
 			"liferay-ui:flash:allowFullScreen", _allowFullScreen);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:flash:allowScriptAccess", _allowScriptAccess);
-		request.setAttribute("liferay-ui:flash:base", _base);
-		request.setAttribute("liferay-ui:flash:bgcolor", _bgcolor);
-		request.setAttribute("liferay-ui:flash:devicefont", _devicefont);
-		request.setAttribute("liferay-ui:flash:flashvars", _flashvars);
-		request.setAttribute("liferay-ui:flash:height", _height);
-		request.setAttribute("liferay-ui:flash:id", _id);
-		request.setAttribute("liferay-ui:flash:loop", _loop);
-		request.setAttribute("liferay-ui:flash:menu", _menu);
-		request.setAttribute("liferay-ui:flash:movie", _movie);
-		request.setAttribute("liferay-ui:flash:play", _play);
-		request.setAttribute("liferay-ui:flash:quality", _quality);
-		request.setAttribute("liferay-ui:flash:salign", _salign);
-		request.setAttribute("liferay-ui:flash:scale", _scale);
-		request.setAttribute("liferay-ui:flash:swliveconnect", _swliveconnect);
-		request.setAttribute("liferay-ui:flash:version", _version);
-		request.setAttribute("liferay-ui:flash:width", _width);
-		request.setAttribute("liferay-ui:flash:wmode", _wmode);
+		httpServletRequest.setAttribute("liferay-ui:flash:base", _base);
+		httpServletRequest.setAttribute("liferay-ui:flash:bgcolor", _bgcolor);
+		httpServletRequest.setAttribute(
+			"liferay-ui:flash:devicefont", _devicefont);
+		httpServletRequest.setAttribute(
+			"liferay-ui:flash:flashvars", _flashvars);
+		httpServletRequest.setAttribute("liferay-ui:flash:height", _height);
+		httpServletRequest.setAttribute("liferay-ui:flash:id", _id);
+		httpServletRequest.setAttribute("liferay-ui:flash:loop", _loop);
+		httpServletRequest.setAttribute("liferay-ui:flash:menu", _menu);
+		httpServletRequest.setAttribute("liferay-ui:flash:movie", _movie);
+		httpServletRequest.setAttribute("liferay-ui:flash:play", _play);
+		httpServletRequest.setAttribute("liferay-ui:flash:quality", _quality);
+		httpServletRequest.setAttribute("liferay-ui:flash:salign", _salign);
+		httpServletRequest.setAttribute("liferay-ui:flash:scale", _scale);
+		httpServletRequest.setAttribute(
+			"liferay-ui:flash:swliveconnect", _swliveconnect);
+		httpServletRequest.setAttribute("liferay-ui:flash:version", _version);
+		httpServletRequest.setAttribute("liferay-ui:flash:width", _width);
+		httpServletRequest.setAttribute("liferay-ui:flash:wmode", _wmode);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/flash/page.jsp";

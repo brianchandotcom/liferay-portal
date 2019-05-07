@@ -46,12 +46,12 @@ public class ContentPageLayoutEditorDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageLayoutEditorDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK,
 		FragmentRendererController fragmentRendererController) {
 
 		super(
-			request, renderResponse, className, classPK,
+			httpServletRequest, renderResponse, className, classPK,
 			fragmentRendererController);
 	}
 

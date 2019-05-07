@@ -27,15 +27,15 @@ import javax.servlet.http.HttpServletRequest;
 public class PrefsParamUtil {
 
 	public static boolean getBoolean(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param) {
 
 		return getBoolean(
-			preferences, request, param, GetterUtil.DEFAULT_BOOLEAN);
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, boolean defaultValue) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -43,7 +43,7 @@ public class PrefsParamUtil {
 		boolean getterUtilValue = GetterUtil.getBoolean(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.get(request, param, getterUtilValue);
+		return ParamUtil.get(httpServletRequest, param, getterUtilValue);
 	}
 
 	public static boolean getBoolean(
@@ -67,15 +67,15 @@ public class PrefsParamUtil {
 	}
 
 	public static double getDouble(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param) {
 
 		return getDouble(
-			preferences, request, param, GetterUtil.DEFAULT_DOUBLE);
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, double defaultValue) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -83,11 +83,11 @@ public class PrefsParamUtil {
 		double getterUtilValue = GetterUtil.getDouble(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.get(request, param, getterUtilValue);
+		return ParamUtil.get(httpServletRequest, param, getterUtilValue);
 	}
 
 	public static double getDouble(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, double defaultValue, Locale locale) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -95,15 +95,17 @@ public class PrefsParamUtil {
 		double getterUtilValue = GetterUtil.getDouble(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.getDouble(request, param, getterUtilValue, locale);
+		return ParamUtil.getDouble(
+			httpServletRequest, param, getterUtilValue, locale);
 	}
 
 	public static double getDouble(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, Locale locale) {
 
 		return getDouble(
-			preferences, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE,
+			locale);
 	}
 
 	public static double getDouble(
@@ -149,15 +151,15 @@ public class PrefsParamUtil {
 	}
 
 	public static int getInteger(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param) {
 
 		return getInteger(
-			preferences, request, param, GetterUtil.DEFAULT_INTEGER);
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, int defaultValue) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -165,7 +167,7 @@ public class PrefsParamUtil {
 		int getterUtilValue = GetterUtil.getInteger(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.get(request, param, getterUtilValue);
+		return ParamUtil.get(httpServletRequest, param, getterUtilValue);
 	}
 
 	public static int getInteger(
@@ -189,14 +191,15 @@ public class PrefsParamUtil {
 	}
 
 	public static long getLong(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param) {
 
-		return getLong(preferences, request, param, GetterUtil.DEFAULT_LONG);
+		return getLong(
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, long defaultValue) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -204,7 +207,7 @@ public class PrefsParamUtil {
 		long getterUtilValue = GetterUtil.getLong(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.get(request, param, getterUtilValue);
+		return ParamUtil.get(httpServletRequest, param, getterUtilValue);
 	}
 
 	public static long getLong(
@@ -228,15 +231,15 @@ public class PrefsParamUtil {
 	}
 
 	public static String getString(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param) {
 
 		return getString(
-			preferences, request, param, GetterUtil.DEFAULT_STRING);
+			preferences, httpServletRequest, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getString(
-		PortletPreferences preferences, HttpServletRequest request,
+		PortletPreferences preferences, HttpServletRequest httpServletRequest,
 		String param, String defaultValue) {
 
 		String preferencesValue = preferences.getValue(param, null);
@@ -244,7 +247,7 @@ public class PrefsParamUtil {
 		String getterUtilValue = GetterUtil.getString(
 			preferencesValue, defaultValue);
 
-		return ParamUtil.get(request, param, getterUtilValue);
+		return ParamUtil.get(httpServletRequest, param, getterUtilValue);
 	}
 
 	public static String getString(

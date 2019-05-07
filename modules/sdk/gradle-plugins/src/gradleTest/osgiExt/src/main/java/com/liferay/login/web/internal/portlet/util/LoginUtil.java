@@ -63,12 +63,12 @@ public class LoginUtil {
 	 */
 	@Deprecated
 	public static long getAuthenticatedUserId(
-			HttpServletRequest request, String login, String password,
-			String authType)
+			HttpServletRequest httpServletRequest, String login,
+			String password, String authType)
 		throws PortalException {
 
 		return AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-			request, login, password, authType);
+			httpServletRequest, login, password, authType);
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
@@ -145,12 +145,14 @@ public class LoginUtil {
 	}
 
 	public static String getLogin(
-		HttpServletRequest request, String paramName, Company company) {
+		HttpServletRequest httpServletRequest, String paramName,
+		Company company) {
 
-		String login = request.getParameter(paramName);
+		String login = httpServletRequest.getParameter(paramName);
 
 		if ((login == null) || login.equals("null")) {
-			login = CookieKeys.getCookie(request, CookieKeys.LOGIN, false);
+			login = CookieKeys.getCookie(
+				httpServletRequest, CookieKeys.LOGIN, false);
 
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&
 				Validator.isNull(login) &&
@@ -163,11 +165,13 @@ public class LoginUtil {
 		return login;
 	}
 
-	public static PortletURL getLoginURL(HttpServletRequest request, long plid)
+	public static PortletURL getLoginURL(
+			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, LoginPortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
+			httpServletRequest, LoginPortletKeys.LOGIN, plid,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter("mvcRenderCommandName", "/login/login");
@@ -184,12 +188,14 @@ public class LoginUtil {
 	 */
 	@Deprecated
 	public static void login(
-			HttpServletRequest request, HttpServletResponse response,
-			String login, String password, boolean rememberMe, String authType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String login,
+			String password, boolean rememberMe, String authType)
 		throws Exception {
 
 		AuthenticatedSessionManagerUtil.login(
-			request, response, login, password, rememberMe, authType);
+			httpServletRequest, httpServletResponse, login, password,
+			rememberMe, authType);
 	}
 
 	/**
@@ -199,10 +205,11 @@ public class LoginUtil {
 	 */
 	@Deprecated
 	public static HttpSession renewSession(
-			HttpServletRequest request, HttpSession session)
+			HttpServletRequest httpServletRequest, HttpSession session)
 		throws Exception {
 
-		return AuthenticatedSessionManagerUtil.renewSession(request, session);
+		return AuthenticatedSessionManagerUtil.renewSession(
+			httpServletRequest, session);
 	}
 
 	public static String sayHello() {

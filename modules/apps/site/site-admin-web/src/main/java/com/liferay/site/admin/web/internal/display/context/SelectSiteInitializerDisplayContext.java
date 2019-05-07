@@ -43,15 +43,15 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectSiteInitializerDisplayContext {
 
 	public SelectSiteInitializerDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_siteInitializerRegistry =
-			(SiteInitializerRegistry)request.getAttribute(
+			(SiteInitializerRegistry)httpServletRequest.getAttribute(
 				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
 	}
 

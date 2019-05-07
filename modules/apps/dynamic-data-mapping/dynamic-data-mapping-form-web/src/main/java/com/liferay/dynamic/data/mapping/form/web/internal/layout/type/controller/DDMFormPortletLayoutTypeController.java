@@ -86,9 +86,11 @@ public class DDMFormPortletLayoutTypeController
 
 	@Override
 	protected ServletResponse createServletResponse(
-		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
+		HttpServletResponse httpServletResponse,
+		UnsyncStringWriter unsyncStringWriter) {
 
-		return new PipingServletResponse(response, unsyncStringWriter);
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

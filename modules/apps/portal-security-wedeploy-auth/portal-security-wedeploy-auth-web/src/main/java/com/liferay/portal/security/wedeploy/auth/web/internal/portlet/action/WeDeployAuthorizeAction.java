@@ -43,23 +43,28 @@ public class WeDeployAuthorizeAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
-			sendLoginRedirect(request, response, themeDisplay.getPlid());
+			sendLoginRedirect(
+				httpServletRequest, httpServletResponse,
+				themeDisplay.getPlid());
 
 			return null;
 		}
 
-		String redirectURI = ParamUtil.getString(request, "redirect_uri");
-		String clientId = ParamUtil.getString(request, "client_id");
+		String redirectURI = ParamUtil.getString(
+			httpServletRequest, "redirect_uri");
+		String clientId = ParamUtil.getString(httpServletRequest, "client_id");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
+			httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("redirectURI", redirectURI);
@@ -67,24 +72,26 @@ public class WeDeployAuthorizeAction implements StrutsAction {
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setPortletMode(PortletMode.VIEW);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 
 		return null;
 	}
 
 	protected void sendLoginRedirect(
-			HttpServletRequest request, HttpServletResponse response, long plid)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long plid)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, plid,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter("mvcRenderCommandName", "/login/login");
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 }

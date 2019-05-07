@@ -38,20 +38,22 @@ public class SharepointServlet extends HttpServlet {
 
 	@Override
 	public void doGet(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					request.getHeader(HttpHeaders.USER_AGENT), " ",
-					request.getMethod(), " ", request.getRequestURI()));
+					httpServletRequest.getHeader(HttpHeaders.USER_AGENT), " ",
+					httpServletRequest.getMethod(), " ",
+					httpServletRequest.getRequestURI()));
 		}
 
 		try {
-			String uri = request.getRequestURI();
+			String uri = httpServletRequest.getRequestURI();
 
 			if (uri.equals("/_vti_inf.html")) {
-				vtiInfHtml(response);
+				vtiInfHtml(httpServletResponse);
 			}
 		}
 		catch (Exception e) {
@@ -61,20 +63,21 @@ public class SharepointServlet extends HttpServlet {
 
 	@Override
 	public void doPost(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			String uri = request.getRequestURI();
+			String uri = httpServletRequest.getRequestURI();
 
 			if (uri.equals("/_vti_bin/shtml.dll/_vti_rpc") ||
 				uri.equals("/sharepoint/_vti_bin/_vti_aut/author.dll")) {
 
-				HttpSession session = request.getSession();
+				HttpSession session = httpServletRequest.getSession();
 
 				User user = (User)session.getAttribute(WebKeys.USER);
 
 				SharepointRequest sharepointRequest = new SharepointRequest(
-					request, response, user);
+					httpServletRequest, httpServletResponse, user);
 
 				Method method = MethodFactory.create(sharepointRequest);
 
@@ -107,8 +110,10 @@ public class SharepointServlet extends HttpServlet {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							request.getHeader(HttpHeaders.USER_AGENT), " ",
-							method.getMethodName(), " ", uri, " ", rootPath));
+							httpServletRequest.getHeader(
+								HttpHeaders.USER_AGENT),
+							" ", method.getMethodName(), " ", uri, " ",
+							rootPath));
 				}
 
 				method.process(sharepointRequest);
@@ -117,8 +122,9 @@ public class SharepointServlet extends HttpServlet {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							request.getHeader(HttpHeaders.USER_AGENT), " ",
-							request.getMethod(), " ", uri));
+							httpServletRequest.getHeader(
+								HttpHeaders.USER_AGENT),
+							" ", httpServletRequest.getMethod(), " ", uri));
 				}
 			}
 		}
@@ -127,7 +133,9 @@ public class SharepointServlet extends HttpServlet {
 		}
 	}
 
-	protected void vtiInfHtml(HttpServletResponse response) throws Exception {
+	protected void vtiInfHtml(HttpServletResponse httpServletResponse)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(13);
 
 		sb.append("<!-- FrontPage Configuration Information");
@@ -144,7 +152,7 @@ public class SharepointServlet extends HttpServlet {
 		sb.append(StringPool.NEW_LINE);
 		sb.append("-->");
 
-		ServletResponseUtil.write(response, sb.toString());
+		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

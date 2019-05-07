@@ -32,9 +32,9 @@ public class AbsolutePortalURLBuilderFactoryImpl
 
 	@Override
 	public AbsolutePortalURLBuilder getAbsolutePortalURLBuilder(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		return new AbsolutePortalURLBuilderImpl(_portal, request);
+		return new AbsolutePortalURLBuilderImpl(_portal, httpServletRequest);
 	}
 
 	@Reference

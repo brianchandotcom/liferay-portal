@@ -47,19 +47,19 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		if (!_jsLodashConfiguration.enableLodash()) {
 			return;
 		}
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				request);
+				httpServletRequest);
 
 		for (String fileName : _FILE_NAMES) {
 			printWriter.print("<script data-senna-track=\"permanent\" src=\"");

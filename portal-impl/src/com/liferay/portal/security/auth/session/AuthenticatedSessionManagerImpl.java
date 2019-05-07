@@ -69,31 +69,34 @@ public class AuthenticatedSessionManagerImpl
 
 	@Override
 	public long getAuthenticatedUserId(
-			HttpServletRequest request, String login, String password,
-			String authType)
+			HttpServletRequest httpServletRequest, String login,
+			String password, String authType)
 		throws PortalException {
 
-		User user = _getAuthenticatedUser(request, login, password, authType);
+		User user = _getAuthenticatedUser(
+			httpServletRequest, login, password, authType);
 
 		return user.getUserId();
 	}
 
 	@Override
 	public void login(
-			HttpServletRequest request, HttpServletResponse response,
-			String login, String password, boolean rememberMe, String authType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String login,
+			String password, boolean rememberMe, String authType)
 		throws Exception {
 
-		request = PortalUtil.getOriginalServletRequest(request);
+		httpServletRequest = PortalUtil.getOriginalServletRequest(
+			httpServletRequest);
 
-		String queryString = request.getQueryString();
+		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString) &&
 			queryString.contains("password=")) {
 
 			String passwordParameterName = "password=";
 
-			String portletId = PortalUtil.getPortletId(request);
+			String portletId = PortalUtil.getPortletId(httpServletRequest);
 
 			if (portletId != null) {
 				passwordParameterName =
@@ -108,7 +111,8 @@ public class AuthenticatedSessionManagerImpl
 				 (queryString.charAt(index - 1) == CharPool.AMPERSAND))) {
 
 				if (_log.isWarnEnabled()) {
-					String referer = request.getHeader(HttpHeaders.REFERER);
+					String referer = httpServletRequest.getHeader(
+						HttpHeaders.REFERER);
 
 					StringBundler sb = new StringBundler(4);
 
@@ -124,25 +128,26 @@ public class AuthenticatedSessionManagerImpl
 			}
 		}
 
-		CookieKeys.validateSupportCookie(request);
+		CookieKeys.validateSupportCookie(httpServletRequest);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
-		Company company = PortalUtil.getCompany(request);
+		Company company = PortalUtil.getCompany(httpServletRequest);
 
-		User user = _getAuthenticatedUser(request, login, password, authType);
+		User user = _getAuthenticatedUser(
+			httpServletRequest, login, password, authType);
 
 		if (!PropsValues.AUTH_SIMULTANEOUS_LOGINS) {
 			signOutSimultaneousLogins(user.getUserId());
 		}
 
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
-			session = renewSession(request, session);
+			session = renewSession(httpServletRequest, session);
 		}
 
 		// Set cookies
 
-		String domain = CookieKeys.getDomain(request);
+		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		if (Validator.isNull(domain)) {
 			domain = null;
@@ -206,7 +211,7 @@ public class AuthenticatedSessionManagerImpl
 			idCookie.setMaxAge(-1);
 		}
 
-		boolean secure = request.isSecure();
+		boolean secure = httpServletRequest.isSecure();
 
 		if (secure && !PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
 			!StringUtil.equalsIgnoreCase(
@@ -220,8 +225,10 @@ public class AuthenticatedSessionManagerImpl
 			}
 		}
 
-		CookieKeys.addCookie(request, response, companyIdCookie, secure);
-		CookieKeys.addCookie(request, response, idCookie, secure);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, companyIdCookie, secure);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, idCookie, secure);
 
 		if (rememberMe) {
 			Cookie loginCookie = new Cookie(CookieKeys.LOGIN, login);
@@ -233,7 +240,8 @@ public class AuthenticatedSessionManagerImpl
 			loginCookie.setMaxAge(loginMaxAge);
 			loginCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, loginCookie, secure);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, loginCookie, secure);
 
 			Cookie passwordCookie = new Cookie(
 				CookieKeys.PASSWORD,
@@ -246,7 +254,9 @@ public class AuthenticatedSessionManagerImpl
 			passwordCookie.setMaxAge(loginMaxAge);
 			passwordCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, passwordCookie, secure);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, passwordCookie,
+				secure);
 
 			Cookie rememberMeCookie = new Cookie(
 				CookieKeys.REMEMBER_ME, Boolean.TRUE.toString());
@@ -258,7 +268,9 @@ public class AuthenticatedSessionManagerImpl
 			rememberMeCookie.setMaxAge(loginMaxAge);
 			rememberMeCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, rememberMeCookie, secure);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, rememberMeCookie,
+				secure);
 
 			Cookie screenNameCookie = new Cookie(
 				CookieKeys.SCREEN_NAME,
@@ -271,7 +283,9 @@ public class AuthenticatedSessionManagerImpl
 			screenNameCookie.setMaxAge(loginMaxAge);
 			screenNameCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(request, response, screenNameCookie, secure);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, screenNameCookie,
+				secure);
 		}
 
 		if (PropsValues.AUTH_USER_UUID_STORE_ENABLED) {
@@ -296,39 +310,45 @@ public class AuthenticatedSessionManagerImpl
 				userUUIDCookie.setMaxAge(-1);
 			}
 
-			CookieKeys.addCookie(request, response, userUUIDCookie, secure);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, userUUIDCookie,
+				secure);
 
 			AuthenticatedUserUUIDStoreUtil.register(userUUID);
 		}
 	}
 
 	@Override
-	public void logout(HttpServletRequest request, HttpServletResponse response)
+	public void logout(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		EventsProcessorUtil.process(
-			PropsKeys.LOGOUT_EVENTS_PRE, PropsValues.LOGOUT_EVENTS_PRE, request,
-			response);
+			PropsKeys.LOGOUT_EVENTS_PRE, PropsValues.LOGOUT_EVENTS_PRE,
+			httpServletRequest, httpServletResponse);
 
-		String domain = CookieKeys.getDomain(request);
+		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		if (Validator.isNull(domain)) {
 			domain = null;
 		}
 
 		boolean rememberMe = GetterUtil.getBoolean(
-			CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME, false));
+			CookieKeys.getCookie(
+				httpServletRequest, CookieKeys.REMEMBER_ME, false));
 
 		CookieKeys.deleteCookies(
-			request, response, domain, CookieKeys.COMPANY_ID,
-			CookieKeys.GUEST_LANGUAGE_ID, CookieKeys.ID, CookieKeys.PASSWORD,
-			CookieKeys.REMEMBER_ME);
+			httpServletRequest, httpServletResponse, domain,
+			CookieKeys.COMPANY_ID, CookieKeys.GUEST_LANGUAGE_ID, CookieKeys.ID,
+			CookieKeys.PASSWORD, CookieKeys.REMEMBER_ME);
 
 		if (!rememberMe) {
 			CookieKeys.deleteCookies(
-				request, response, domain, CookieKeys.LOGIN);
+				httpServletRequest, httpServletResponse, domain,
+				CookieKeys.LOGIN);
 		}
 
 		try {
@@ -339,12 +359,12 @@ public class AuthenticatedSessionManagerImpl
 
 		EventsProcessorUtil.process(
 			PropsKeys.LOGOUT_EVENTS_POST, PropsValues.LOGOUT_EVENTS_POST,
-			request, response);
+			httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public HttpSession renewSession(
-			HttpServletRequest request, HttpSession session)
+			HttpServletRequest httpServletRequest, HttpSession session)
 		throws Exception {
 
 		// Invalidate the previous session to prevent session fixation attacks
@@ -368,7 +388,7 @@ public class AuthenticatedSessionManagerImpl
 
 		session.invalidate();
 
-		session = request.getSession(true);
+		session = httpServletRequest.getSession(true);
 
 		for (String protectedAttributeName : protectedAttributeNames) {
 			Object protectedAttributeValue = protectedAttributes.get(
@@ -423,11 +443,11 @@ public class AuthenticatedSessionManagerImpl
 	}
 
 	private User _getAuthenticatedUser(
-			HttpServletRequest request, String login, String password,
-			String authType)
+			HttpServletRequest httpServletRequest, String login,
+			String password, String authType)
 		throws PortalException {
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		String contextPath = PortalUtil.getPathContext();
 
@@ -435,16 +455,16 @@ public class AuthenticatedSessionManagerImpl
 			throw new AuthException();
 		}
 
-		Company company = PortalUtil.getCompany(request);
+		Company company = PortalUtil.getCompany(httpServletRequest);
 
 		Map<String, String[]> headerMap = new HashMap<>();
 
-		Enumeration<String> enu1 = request.getHeaderNames();
+		Enumeration<String> enu1 = httpServletRequest.getHeaderNames();
 
 		while (enu1.hasMoreElements()) {
 			String name = enu1.nextElement();
 
-			Enumeration<String> enu2 = request.getHeaders(name);
+			Enumeration<String> enu2 = httpServletRequest.getHeaders(name);
 
 			List<String> headers = new ArrayList<>();
 
@@ -457,7 +477,8 @@ public class AuthenticatedSessionManagerImpl
 			headerMap.put(name, headers.toArray(new String[headers.size()]));
 		}
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 		Map<String, Object> resultsMap = new HashMap<>();
 
 		if (Validator.isNull(authType)) {

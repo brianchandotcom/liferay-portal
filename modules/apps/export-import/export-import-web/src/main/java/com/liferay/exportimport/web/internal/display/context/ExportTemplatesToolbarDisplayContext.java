@@ -46,10 +46,11 @@ public class ExportTemplatesToolbarDisplayContext
 	public ExportTemplatesToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, long liveGroupId, Company company,
-		PortletURL iteratorURL) {
+		HttpServletRequest httpServletRequest, long liveGroupId,
+		Company company, PortletURL iteratorURL) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 
 		searchContainer = _createSearchContainer(
 			liveGroupId, company, iteratorURL);

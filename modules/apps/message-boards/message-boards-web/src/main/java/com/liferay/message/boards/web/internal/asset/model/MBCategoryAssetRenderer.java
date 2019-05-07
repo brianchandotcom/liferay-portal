@@ -77,7 +77,9 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
@@ -198,13 +200,14 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
+		httpServletRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	private final MBCategory _category;

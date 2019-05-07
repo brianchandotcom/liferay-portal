@@ -39,10 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class GoogleDocsUIItemsProcessor {
 
 	public GoogleDocsUIItemsProcessor(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_googleDocsMetadataHelper = googleDocsMetadataHelper;
 	}
 

@@ -28,12 +28,13 @@ public final class PrecompileTestServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		response.setContentType("text/html");
+		httpServletResponse.setContentType("text/html");
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.println("<html>");
 		printWriter.println("\t<head><title>JspPrecompileTest</title></head>");

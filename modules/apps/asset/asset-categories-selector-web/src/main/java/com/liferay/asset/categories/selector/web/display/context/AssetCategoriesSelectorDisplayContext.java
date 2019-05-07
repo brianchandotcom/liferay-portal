@@ -50,11 +50,11 @@ public class AssetCategoriesSelectorDisplayContext {
 
 	public AssetCategoriesSelectorDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {

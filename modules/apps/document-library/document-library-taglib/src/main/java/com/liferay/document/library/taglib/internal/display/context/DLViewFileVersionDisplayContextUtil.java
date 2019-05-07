@@ -35,11 +35,12 @@ public class DLViewFileVersionDisplayContextUtil {
 
 	public static DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
 		return _instance._dlDisplayContextProvider.
-			getDLViewFileVersionDisplayContext(request, response, fileVersion);
+			getDLViewFileVersionDisplayContext(
+				httpServletRequest, httpServletResponse, fileVersion);
 	}
 
 	@Activate

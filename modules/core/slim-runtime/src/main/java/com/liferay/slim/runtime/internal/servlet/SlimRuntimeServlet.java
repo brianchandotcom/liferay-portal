@@ -219,7 +219,8 @@ public class SlimRuntimeServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		if (_log.isDebugEnabled()) {
@@ -230,10 +231,10 @@ public class SlimRuntimeServlet extends HttpServlet {
 			_log.debug("Set portal port");
 		}
 
-		PortalUtil.setPortalInetSocketAddresses(request);
+		PortalUtil.setPortalInetSocketAddresses(httpServletRequest);
 
 		if (_httpServlets.isEmpty()) {
-			response.sendError(
+			httpServletResponse.sendError(
 				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
 				"Module framework is unavailable");
 
@@ -242,7 +243,7 @@ public class SlimRuntimeServlet extends HttpServlet {
 
 		HttpServlet httpServlet = _httpServlets.get(0);
 
-		httpServlet.service(request, response);
+		httpServlet.service(httpServletRequest, httpServletResponse);
 	}
 
 	private String _toString(InputStream inputStream) {

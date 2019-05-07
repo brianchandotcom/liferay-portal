@@ -33,11 +33,12 @@ public class TrashContainerManagementToolbarDisplayContext
 	public TrashContainerManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request, TrashDisplayContext trashDisplayContext)
+			HttpServletRequest httpServletRequest,
+			TrashDisplayContext trashDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			trashDisplayContext.getTrashContainerSearchContainer());
 	}
 

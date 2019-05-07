@@ -72,16 +72,18 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = RequestContextMapper.class)
 public class RequestContextMapper {
 
-	public Context map(HttpServletRequest request) {
+	public Context map(HttpServletRequest httpServletRequest) {
 		Context context = new Context();
 
-		context.put(Context.BROWSER, _browserSniffer.getBrowserId(request));
-		context.put(Context.COOKIES, _getCookies(request));
+		context.put(
+			Context.BROWSER, _browserSniffer.getBrowserId(httpServletRequest));
+		context.put(Context.COOKIES, _getCookies(httpServletRequest));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		Device device = DeviceDetectionUtil.detectDevice(request);
+		Device device = DeviceDetectionUtil.detectDevice(httpServletRequest);
 
 		Dimensions screenResolution = null;
 
@@ -128,19 +130,21 @@ public class RequestContextMapper {
 		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
 		context.put(
 			Context.REFERRER_URL,
-			GetterUtil.getString(request.getHeader(HttpHeaders.REFERER)));
+			GetterUtil.getString(
+				httpServletRequest.getHeader(HttpHeaders.REFERER)));
 		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
-		context.put(Context.URL, _portal.getCurrentCompleteURL(request));
+		context.put(
+			Context.URL, _portal.getCurrentCompleteURL(httpServletRequest));
 
 		String userAgent = GetterUtil.getString(
-			request.getHeader(HttpHeaders.USER_AGENT));
+			httpServletRequest.getHeader(HttpHeaders.USER_AGENT));
 
 		context.put(Context.USER_AGENT, userAgent);
 
 		for (RequestContextContributor requestContextContributor :
 				_requestContextContributorServiceTrackerMap.values()) {
 
-			requestContextContributor.contribute(context, request);
+			requestContextContributor.contribute(context, httpServletRequest);
 		}
 
 		return context;
@@ -169,8 +173,8 @@ public class RequestContextMapper {
 		_requestContextContributorServiceTrackerMap.close();
 	}
 
-	private String[] _getCookies(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
+	private String[] _getCookies(HttpServletRequest httpServletRequest) {
+		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (cookies == null) {
 			return new String[0];

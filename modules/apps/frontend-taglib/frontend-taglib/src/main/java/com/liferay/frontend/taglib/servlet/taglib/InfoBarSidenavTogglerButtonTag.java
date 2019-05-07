@@ -23,10 +23,10 @@ public class InfoBarSidenavTogglerButtonTag
 	extends ManagementBarSidenavTogglerButtonTag {
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setCssClass("btn-secondary " + getCssClass());
 
-		super.setAttributes(request);
+		super.setAttributes(httpServletRequest);
 	}
 
 }

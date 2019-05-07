@@ -38,9 +38,9 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 
 	public CompanyPortletRatingsDefinitionDisplayContext(
 		PortletPreferences companyPortletPreferences,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		_populateRatingsTypeMaps(companyPortletPreferences, request);
+		_populateRatingsTypeMaps(companyPortletPreferences, httpServletRequest);
 	}
 
 	public Map<String, Map<String, RatingsType>> getCompanyRatingsTypeMaps() {
@@ -56,7 +56,7 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 
 	private void _populateRatingsTypeMaps(
 		PortletPreferences companyPortletPreferences,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
@@ -75,8 +75,9 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 
 			String portletId = portletRatingsDefinitionValues.getPortletId();
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (!PortletLocalServiceUtil.hasPortlet(
 					themeDisplay.getCompanyId(), portletId)) {
@@ -95,7 +96,7 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 				portletRatingsDefinitionValues.getDefaultRatingsType();
 
 			String companyRatingsTypeString = PrefsParamUtil.getString(
-				companyPortletPreferences, request, propertyKey,
+				companyPortletPreferences, httpServletRequest, propertyKey,
 				ratingsType.getValue());
 
 			ratingsTypeMap.put(

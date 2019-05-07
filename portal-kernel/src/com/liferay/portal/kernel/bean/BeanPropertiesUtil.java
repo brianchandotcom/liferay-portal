@@ -239,14 +239,18 @@ public class BeanPropertiesUtil {
 		return getBeanProperties().getStringSilent(bean, param, defaultValue);
 	}
 
-	public static void setProperties(Object bean, HttpServletRequest request) {
-		getBeanProperties().setProperties(bean, request);
+	public static void setProperties(
+		Object bean, HttpServletRequest httpServletRequest) {
+
+		getBeanProperties().setProperties(bean, httpServletRequest);
 	}
 
 	public static void setProperties(
-		Object bean, HttpServletRequest request, String[] ignoreProperties) {
+		Object bean, HttpServletRequest httpServletRequest,
+		String[] ignoreProperties) {
 
-		getBeanProperties().setProperties(bean, request, ignoreProperties);
+		getBeanProperties().setProperties(
+			bean, httpServletRequest, ignoreProperties);
 	}
 
 	public static void setProperty(Object bean, String param, Object value) {

@@ -92,16 +92,17 @@ public class MenuTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:menu:cssClass", _cssClass);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:menu:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-staging:menu:layoutSetBranchId",
 			String.valueOf(_layoutSetBranchId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:menu:onlyActions", String.valueOf(_onlyActions));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:menu:selPlid", String.valueOf(_selPlid));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:menu:showManageBranches",
 			String.valueOf(_showManageBranches));
 	}

@@ -39,16 +39,17 @@ public class GoogleAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!_googleAuthorization.isEnabled(companyId)) {
 			return null;
 		}
 
-		User user = getUser(request, companyId);
+		User user = getUser(httpServletRequest, companyId);
 
 		if (user == null) {
 			return null;
@@ -63,10 +64,11 @@ public class GoogleAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected User getUser(HttpServletRequest request, long companyId)
+	protected User getUser(
+			HttpServletRequest httpServletRequest, long companyId)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		String emailAddress = GetterUtil.getString(
 			session.getAttribute(GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS));

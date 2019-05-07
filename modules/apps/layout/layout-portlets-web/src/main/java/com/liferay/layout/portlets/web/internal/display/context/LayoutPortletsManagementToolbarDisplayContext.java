@@ -29,11 +29,11 @@ public class LayoutPortletsManagementToolbarDisplayContext
 	public LayoutPortletsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LayoutPortletsDisplayContext layoutPortletsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			layoutPortletsDisplayContext.getSearchContainer());
 	}
 

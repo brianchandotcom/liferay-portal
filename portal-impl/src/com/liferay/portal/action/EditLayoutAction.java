@@ -54,19 +54,22 @@ public class EditLayoutAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
 			if (cmd.equals("add")) {
-				String[] array = addPage(themeDisplay, request, response);
+				String[] array = addPage(
+					themeDisplay, httpServletRequest, httpServletResponse);
 
 				jsonObject.put(
 					"deletable", Boolean.valueOf(array[2])
@@ -81,19 +84,19 @@ public class EditLayoutAction extends JSONAction {
 				);
 			}
 			else if (cmd.equals("delete")) {
-				SitesUtil.deleteLayout(request, response);
+				SitesUtil.deleteLayout(httpServletRequest, httpServletResponse);
 			}
 			else if (cmd.equals("display_order")) {
-				updateDisplayOrder(request);
+				updateDisplayOrder(httpServletRequest);
 			}
 			else if (cmd.equals("name")) {
-				updateName(request);
+				updateName(httpServletRequest);
 			}
 			else if (cmd.equals("parent_layout_id")) {
-				updateParentLayoutId(request);
+				updateParentLayoutId(httpServletRequest);
 			}
 			else if (cmd.equals("priority")) {
-				updatePriority(request);
+				updatePriority(httpServletRequest);
 			}
 
 			jsonObject.put("status", HttpServletResponse.SC_OK);
@@ -103,7 +106,7 @@ public class EditLayoutAction extends JSONAction {
 				"message",
 				getLayoutTypeExceptionMessage(themeDisplay, lte, cmd));
 
-			long plid = ParamUtil.getLong(request, "plid");
+			long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) &&
 				(plid > 0)) {
@@ -132,26 +135,30 @@ public class EditLayoutAction extends JSONAction {
 	}
 
 	protected String[] addPage(
-			ThemeDisplay themeDisplay, HttpServletRequest request,
-			HttpServletResponse response)
+			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String doAsUserId = ParamUtil.getString(request, "doAsUserId");
+		String doAsUserId = ParamUtil.getString(
+			httpServletRequest, "doAsUserId");
 		String doAsUserLanguageId = ParamUtil.getString(
-			request, "doAsUserLanguageId");
+			httpServletRequest, "doAsUserLanguageId");
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
-		String name = ParamUtil.getString(request, "name", "New Page");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
+		long parentLayoutId = ParamUtil.getLong(
+			httpServletRequest, "parentLayoutId");
+		String name = ParamUtil.getString(
+			httpServletRequest, "name", "New Page");
 		String title = StringPool.BLANK;
 		String description = StringPool.BLANK;
 		String friendlyURL = StringPool.BLANK;
 		long layoutPrototypeId = ParamUtil.getLong(
-			request, "layoutPrototypeId");
+			httpServletRequest, "layoutPrototypeId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		Layout layout = null;
 
@@ -179,7 +186,8 @@ public class EditLayoutAction extends JSONAction {
 
 		EventsProcessorUtil.process(
 			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
-			layoutType.getConfigurationActionUpdate(), request, response);
+			layoutType.getConfigurationActionUpdate(), httpServletRequest,
+			httpServletResponse);
 
 		String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
 
@@ -267,33 +275,38 @@ public class EditLayoutAction extends JSONAction {
 		return StringPool.BLANK;
 	}
 
-	protected void updateDisplayOrder(HttpServletRequest request)
+	protected void updateDisplayOrder(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
+		long parentLayoutId = ParamUtil.getLong(
+			httpServletRequest, "parentLayoutId");
 		long[] layoutIds = StringUtil.split(
-			ParamUtil.getString(request, "layoutIds"), 0L);
+			ParamUtil.getString(httpServletRequest, "layoutIds"), 0L);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		LayoutServiceUtil.setLayouts(
 			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
-	protected void updateName(HttpServletRequest request) throws Exception {
-		long plid = ParamUtil.getLong(request, "plid");
+	protected void updateName(HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		String name = ParamUtil.getString(request, "name");
-		String languageId = ParamUtil.getString(request, "languageId");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
+
+		String name = ParamUtil.getString(httpServletRequest, "name");
+		String languageId = ParamUtil.getString(
+			httpServletRequest, "languageId");
 
 		if (plid <= 0) {
-			long groupId = ParamUtil.getLong(request, "groupId");
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
-			long layoutId = ParamUtil.getLong(request, "layoutId");
+				httpServletRequest, "privateLayout");
+			long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
 
 			LayoutServiceUtil.updateName(
 				groupId, privateLayout, layoutId, name, languageId);
@@ -303,35 +316,38 @@ public class EditLayoutAction extends JSONAction {
 		}
 	}
 
-	protected void updateParentLayoutId(HttpServletRequest request)
+	protected void updateParentLayoutId(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long plid = ParamUtil.getLong(request, "plid");
-		long parentPlid = ParamUtil.getLong(request, "parentPlid");
-		int priority = ParamUtil.getInteger(request, "priority");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
+		long parentPlid = ParamUtil.getLong(httpServletRequest, "parentPlid");
+		int priority = ParamUtil.getInteger(httpServletRequest, "priority");
 
 		LayoutServiceUtil.updateParentLayoutIdAndPriority(
 			plid, parentPlid, priority);
 	}
 
-	protected void updatePriority(HttpServletRequest request) throws Exception {
-		long plid = ParamUtil.getLong(request, "plid");
+	protected void updatePriority(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid <= 0) {
-			long groupId = ParamUtil.getLong(request, "groupId");
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
-			long layoutId = ParamUtil.getLong(request, "layoutId");
-			long nextLayoutId = ParamUtil.getLong(request, "nextLayoutId");
+				httpServletRequest, "privateLayout");
+			long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
+			long nextLayoutId = ParamUtil.getLong(
+				httpServletRequest, "nextLayoutId");
 			long previousLayoutId = ParamUtil.getLong(
-				request, "previousLayoutId");
+				httpServletRequest, "previousLayoutId");
 
 			LayoutServiceUtil.updatePriority(
 				groupId, privateLayout, layoutId, nextLayoutId,
 				previousLayoutId);
 		}
 		else {
-			int priority = ParamUtil.getInteger(request, "priority");
+			int priority = ParamUtil.getInteger(httpServletRequest, "priority");
 
 			LayoutServiceUtil.updatePriority(plid, priority);
 		}

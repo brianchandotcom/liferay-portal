@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WorkflowInstanceRequestHelper extends BaseRequestHelper {
 
-	public WorkflowInstanceRequestHelper(HttpServletRequest request) {
-		super(request);
+	public WorkflowInstanceRequestHelper(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 }

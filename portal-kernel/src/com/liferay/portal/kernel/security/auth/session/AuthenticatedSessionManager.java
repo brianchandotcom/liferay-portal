@@ -26,20 +26,23 @@ import javax.servlet.http.HttpSession;
 public interface AuthenticatedSessionManager {
 
 	public long getAuthenticatedUserId(
-			HttpServletRequest request, String login, String password,
-			String authType)
+			HttpServletRequest httpServletRequest, String login,
+			String password, String authType)
 		throws PortalException;
 
 	public void login(
-			HttpServletRequest request, HttpServletResponse response,
-			String login, String password, boolean rememberMe, String authType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String login,
+			String password, boolean rememberMe, String authType)
 		throws Exception;
 
-	public void logout(HttpServletRequest request, HttpServletResponse response)
+	public void logout(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	public HttpSession renewSession(
-			HttpServletRequest request, HttpSession session)
+			HttpServletRequest httpServletRequest, HttpSession session)
 		throws Exception;
 
 	public void signOutSimultaneousLogins(long userId) throws Exception;

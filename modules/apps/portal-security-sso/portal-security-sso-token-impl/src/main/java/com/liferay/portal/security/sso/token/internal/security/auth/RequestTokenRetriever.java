@@ -33,9 +33,9 @@ public class RequestTokenRetriever implements TokenRetriever {
 
 	@Override
 	public String getLoginToken(
-		HttpServletRequest request, String userTokenName) {
+		HttpServletRequest httpServletRequest, String userTokenName) {
 
-		return ParamUtil.getString(request, userTokenName);
+		return ParamUtil.getString(httpServletRequest, userTokenName);
 	}
 
 }

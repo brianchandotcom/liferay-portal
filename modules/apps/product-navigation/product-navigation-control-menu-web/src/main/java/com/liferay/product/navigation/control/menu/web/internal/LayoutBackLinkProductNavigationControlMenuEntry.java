@@ -47,12 +47,12 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getIcon(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest httpServletRequest) {
 		return "angle-left";
 	}
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
+	public String getIconCssClass(HttpServletRequest httpServletRequest) {
 		return "icon-monospaced";
 	}
 
@@ -62,14 +62,17 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
-		return ParamUtil.getString(request, "p_l_back_url");
+	public String getURL(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "p_l_back_url");
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -77,13 +80,14 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 			return false;
 		}
 
-		String layoutBackURL = ParamUtil.getString(request, "p_l_back_url");
+		String layoutBackURL = ParamUtil.getString(
+			httpServletRequest, "p_l_back_url");
 
 		if (Validator.isNull(layoutBackURL)) {
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 }

@@ -40,14 +40,15 @@ public class UnsubscribeAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long userId = ParamUtil.getLong(request, "userId");
-		String key = ParamUtil.getString(request, "key");
+		long userId = ParamUtil.getLong(httpServletRequest, "userId");
+		String key = ParamUtil.getString(httpServletRequest, "key");
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, SubscriptionPortletKeys.UNSUBSCRIBE,
+			httpServletRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(
@@ -58,7 +59,7 @@ public class UnsubscribeAction implements StrutsAction {
 		liferayPortletURL.setParameter("userId", String.valueOf(userId));
 		liferayPortletURL.setParameter("key", key);
 
-		response.sendRedirect(liferayPortletURL.toString());
+		httpServletResponse.sendRedirect(liferayPortletURL.toString());
 
 		return null;
 	}

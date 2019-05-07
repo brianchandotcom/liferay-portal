@@ -325,7 +325,8 @@ public class FreeMarkerTemplateTest {
 
 		@Override
 		public void prepare(
-			Map<String, Object> contextObjects, HttpServletRequest request) {
+			Map<String, Object> contextObjects,
+			HttpServletRequest httpServletRequest) {
 
 			String testValue = (String)contextObjects.get(_TEST_KEY);
 

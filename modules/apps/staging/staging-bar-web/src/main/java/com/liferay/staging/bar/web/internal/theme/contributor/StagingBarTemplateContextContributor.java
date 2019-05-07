@@ -46,13 +46,17 @@ public class StagingBarTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_stagingProductNavigationControlMenuEntry.isShow(request)) {
+			if (_stagingProductNavigationControlMenuEntry.isShow(
+					httpServletRequest)) {
+
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(
@@ -90,7 +94,8 @@ public class StagingBarTemplateContextContributor
 
 		if (themeDisplay.isShowStagingIcon()) {
 			contextObjects.put(
-				"staging_text", LanguageUtil.get(request, "staging"));
+				"staging_text",
+				LanguageUtil.get(httpServletRequest, "staging"));
 		}
 	}
 

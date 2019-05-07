@@ -47,11 +47,11 @@ public class JournalHistoryManagementToolbarDisplayContext
 	public JournalHistoryManagementToolbarDisplayContext(
 		JournalArticle article, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		JournalHistoryDisplayContext journalHistoryDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalHistoryDisplayContext.getArticleSearchContainer());
 
 		_article = article;

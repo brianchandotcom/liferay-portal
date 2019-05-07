@@ -38,24 +38,28 @@ public class ToggleTag extends IncludeTag {
 	public static void doTag(
 			String id, String showImage, String hideImage, String showMessage,
 			String hideMessage, boolean defaultShowContent, String stateVar,
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response)
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		doTag(
 			_PAGE, id, showImage, hideImage, showMessage, hideMessage,
-			defaultShowContent, stateVar, servletContext, request, response);
+			defaultShowContent, stateVar, servletContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 	public static void doTag(
 			String page, String id, String showImage, String hideImage,
 			String showMessage, String hideMessage, boolean defaultShowContent,
 			String stateVar, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(showImage) && Validator.isNull(showMessage)) {
 			showImage =
@@ -72,7 +76,7 @@ public class ToggleTag extends IncludeTag {
 		String defaultImage = defaultShowContent ? hideImage : showImage;
 		String defaultMessage = defaultShowContent ? hideMessage : showMessage;
 
-		String clickValue = SessionClicks.get(request, id, null);
+		String clickValue = SessionClicks.get(httpServletRequest, id, null);
 
 		if (defaultShowContent) {
 			if ((clickValue != null) && clickValue.equals("none")) {
@@ -104,23 +108,28 @@ public class ToggleTag extends IncludeTag {
 				ToggleTag.class.getName());
 		}
 
-		request.setAttribute("liferay-ui:toggle:defaultImage", defaultImage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:toggle:defaultImage", defaultImage);
+		httpServletRequest.setAttribute(
 			"liferay-ui:toggle:defaultMessage", defaultMessage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:toggle:defaultStateValue", defaultStateValue);
-		request.setAttribute("liferay-ui:toggle:hideImage", hideImage);
-		request.setAttribute("liferay-ui:toggle:hideMessage", hideMessage);
-		request.setAttribute("liferay-ui:toggle:id", id);
-		request.setAttribute("liferay-ui:toggle:showImage", showImage);
-		request.setAttribute("liferay-ui:toggle:showMessage", showMessage);
-		request.setAttribute("liferay-ui:toggle:stateVar", stateVar);
+		httpServletRequest.setAttribute(
+			"liferay-ui:toggle:hideImage", hideImage);
+		httpServletRequest.setAttribute(
+			"liferay-ui:toggle:hideMessage", hideMessage);
+		httpServletRequest.setAttribute("liferay-ui:toggle:id", id);
+		httpServletRequest.setAttribute(
+			"liferay-ui:toggle:showImage", showImage);
+		httpServletRequest.setAttribute(
+			"liferay-ui:toggle:showMessage", showMessage);
+		httpServletRequest.setAttribute("liferay-ui:toggle:stateVar", stateVar);
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, page);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

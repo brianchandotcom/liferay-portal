@@ -32,11 +32,11 @@ public class FragmentCollectionsManagementToolbarDisplayContext
 	public FragmentCollectionsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			fragmentCollectionsDisplayContext.getSearchContainer());
 	}
 

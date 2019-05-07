@@ -60,12 +60,12 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getIcon(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest httpServletRequest) {
 		return "pencil";
 	}
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
+	public String getIconCssClass(HttpServletRequest httpServletRequest) {
 		return "icon-monospaced";
 	}
 
@@ -75,9 +75,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public String getURL(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			String redirect = themeDisplay.getURLCurrent();
@@ -114,15 +115,19 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		String mode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (Objects.equals(mode, Constants.EDIT)) {
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -138,7 +143,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			return false;
 		}
 
-		String className = (String)request.getAttribute(
+		String className = (String)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME);
 
 		if (Objects.equals(

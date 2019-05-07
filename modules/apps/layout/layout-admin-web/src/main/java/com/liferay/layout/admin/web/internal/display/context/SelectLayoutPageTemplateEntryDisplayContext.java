@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	public SelectLayoutPageTemplateEntryDisplayContext(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		_request = request;
+		_request = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

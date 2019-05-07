@@ -75,9 +75,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _dlItemSelectorView.getExtensions();
 	}
 
-	public long getFolderId(HttpServletRequest request) {
+	public long getFolderId(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getLong(
-			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			httpServletRequest, "folderId",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public String getItemSelectedEventName() {
@@ -99,7 +100,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getPortletURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
@@ -107,9 +108,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			_portletURL, liferayPortletResponse);
 
 		portletURL.setParameter(
-			"folderId", String.valueOf(getFolderId(request)));
+			"folderId", String.valueOf(getFolderId(httpServletRequest)));
 		portletURL.setParameter(
-			"selectedTab", String.valueOf(getTitle(request.getLocale())));
+			"selectedTab",
+			String.valueOf(getTitle(httpServletRequest.getLocale())));
 
 		return portletURL;
 	}
@@ -136,12 +138,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getUploadURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
@@ -168,7 +171,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
 		portletURL.setParameter(
-			"folderId", String.valueOf(getFolderId(request)));
+			"folderId", String.valueOf(getFolderId(httpServletRequest)));
 
 		return portletURL;
 	}

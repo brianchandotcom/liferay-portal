@@ -116,20 +116,20 @@ public class ManagementBarDisplayButtonsTag
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:defaultViews",
 			_DEFAULT_VIEWS);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:disabled",
 			isDisabled());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:displayViews",
 			_displayViews);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:portletURL",
 			_portletURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:" +
 				"selectedDisplayStyle",
 			_selectedDisplayStyle);

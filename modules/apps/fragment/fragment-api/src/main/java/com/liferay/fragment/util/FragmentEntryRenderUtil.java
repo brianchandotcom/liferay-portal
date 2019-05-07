@@ -96,51 +96,57 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntryLink(
-			FragmentEntryLink fragmentEntryLink, HttpServletRequest request,
-			HttpServletResponse response)
+			FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, FragmentEntryLinkConstants.EDIT, request,
-			response);
+			fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+			httpServletRequest, httpServletResponse);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, mode, new HashMap<>(), request, response);
+			fragmentEntryLink, mode, new HashMap<>(), httpServletRequest,
+			httpServletResponse);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
-			Map<String, Object> parameterMap, HttpServletRequest request,
-			HttpServletResponse response)
+			Map<String, Object> parameterMap,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		return renderFragmentEntryLink(
 			fragmentEntryLink, mode, parameterMap,
-			LocaleUtil.getMostRelevantLocale(), request, response);
+			LocaleUtil.getMostRelevantLocale(), httpServletRequest,
+			httpServletResponse);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
 			Map<String, Object> parameterMap, Locale locale,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, mode, parameterMap, locale, new long[0], request,
-			response);
+			fragmentEntryLink, mode, parameterMap, locale, new long[0],
+			httpServletRequest, httpServletResponse);
 	}
 
 	public static String renderFragmentEntryLink(
 			FragmentEntryLink fragmentEntryLink, String mode,
 			Map<String, Object> parameterMap, Locale locale,
-			long[] segmentsExperienceIds, HttpServletRequest request,
-			HttpServletResponse response)
+			long[] segmentsExperienceIds, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		FragmentRendererController fragmentRendererController =
@@ -156,7 +162,8 @@ public class FragmentEntryRenderUtil {
 			segmentsExperienceIds);
 
 		return fragmentRendererController.render(
-			defaultFragmentRendererContext, request, response);
+			defaultFragmentRendererContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 	private static FragmentRendererController _getFragmentRendererController() {

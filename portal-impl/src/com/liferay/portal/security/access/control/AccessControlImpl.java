@@ -42,8 +42,8 @@ public class AccessControlImpl implements AccessControl {
 
 	@Override
 	public void initAccessControlContext(
-		HttpServletRequest request, HttpServletResponse response,
-		Map<String, Object> settings) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Map<String, Object> settings) {
 
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
@@ -55,8 +55,8 @@ public class AccessControlImpl implements AccessControl {
 
 		accessControlContext = new AccessControlContext();
 
-		accessControlContext.setRequest(request);
-		accessControlContext.setResponse(response);
+		accessControlContext.setRequest(httpServletRequest);
+		accessControlContext.setResponse(httpServletResponse);
 
 		Map<String, Object> accessControlContextSettings =
 			accessControlContext.getSettings();

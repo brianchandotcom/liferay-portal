@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CalendarConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/configuration.jsp";
 	}
 

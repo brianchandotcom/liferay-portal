@@ -34,21 +34,22 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		if (_servlets.isEmpty()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
 				new ServletException("Module framework is unavailable"),
-				request, response);
+				httpServletRequest, httpServletResponse);
 
 			return;
 		}
 
 		HttpServlet httpServlet = _servlets.get(0);
 
-		httpServlet.service(request, response);
+		httpServlet.service(httpServletRequest, httpServletResponse);
 	}
 
 	private final List<HttpServlet> _servlets =

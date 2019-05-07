@@ -75,11 +75,11 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-social-bookmarks:bookmarks-settings:displayStyle",
 			_displayStyle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-social-bookmarks:bookmarks-settings:types", _types);
 	}
 

@@ -48,10 +48,11 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 	public StagingProcessesWebPublishTemplatesToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, PageContext pageContext,
+		HttpServletRequest httpServletRequest, PageContext pageContext,
 		PortletURL iteratorURL) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 
 		long companyId = PortalUtil.getCompanyId(liferayPortletRequest);
 		long groupId = (long)pageContext.getAttribute("groupId");

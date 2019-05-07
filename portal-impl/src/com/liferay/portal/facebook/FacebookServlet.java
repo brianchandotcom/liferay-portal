@@ -43,25 +43,29 @@ public class FacebookServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			String[] facebookData = FacebookUtil.getFacebookData(request);
+			String[] facebookData = FacebookUtil.getFacebookData(
+				httpServletRequest);
 
 			if ((facebookData == null) ||
 				!PortalUtil.isValidResourceId(facebookData[1])) {
 
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND,
-					new NoSuchLayoutException(), request, response);
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
 			}
 			else {
 				String facebookCanvasPageURL = facebookData[0];
 				String redirect = facebookData[1];
 
-				request.setAttribute(GZipFilter.SKIP_FILTER, Boolean.TRUE);
-				request.setAttribute(
+				httpServletRequest.setAttribute(
+					GZipFilter.SKIP_FILTER, Boolean.TRUE);
+				httpServletRequest.setAttribute(
 					WebKeys.FACEBOOK_CANVAS_PAGE_URL, facebookCanvasPageURL);
 
 				ServletContext servletContext = getServletContext();
@@ -70,23 +74,24 @@ public class FacebookServlet extends HttpServlet {
 					servletContext.getRequestDispatcher(redirect);
 
 				BufferCacheServletResponse bufferCacheServletResponse =
-					new BufferCacheServletResponse(response);
+					new BufferCacheServletResponse(httpServletResponse);
 
-				requestDispatcher.forward(request, bufferCacheServletResponse);
+				requestDispatcher.forward(
+					httpServletRequest, bufferCacheServletResponse);
 
 				String fbml = bufferCacheServletResponse.getString();
 
 				fbml = fixFbml(fbml);
 
-				ServletResponseUtil.write(response, fbml);
+				ServletResponseUtil.write(httpServletResponse, fbml);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 	}
 

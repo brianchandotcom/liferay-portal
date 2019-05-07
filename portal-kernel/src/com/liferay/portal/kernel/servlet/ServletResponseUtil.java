@@ -73,97 +73,111 @@ public class ServletResponseUtil {
 	}
 
 	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, byte[] bytes)
-		throws IOException {
-
-		sendFile(request, response, fileName, bytes, null);
-	}
-
-	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, byte[] bytes, String contentType)
-		throws IOException {
-
-		sendFile(request, response, fileName, bytes, contentType, null);
-	}
-
-	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, byte[] bytes, String contentType,
-			String contentDispositionType)
-		throws IOException {
-
-		setHeaders(
-			request, response, fileName, contentType, contentDispositionType);
-
-		write(response, bytes);
-	}
-
-	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream)
-		throws IOException {
-
-		sendFile(request, response, fileName, inputStream, null);
-	}
-
-	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, long contentLength,
-			String contentType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			byte[] bytes)
 		throws IOException {
 
 		sendFile(
-			request, response, fileName, inputStream, contentLength,
+			httpServletRequest, httpServletResponse, fileName, bytes, null);
+	}
+
+	public static void sendFile(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			byte[] bytes, String contentType)
+		throws IOException {
+
+		sendFile(
+			httpServletRequest, httpServletResponse, fileName, bytes,
 			contentType, null);
 	}
 
 	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, long contentLength,
-			String contentType, String contentDispositionType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			byte[] bytes, String contentType, String contentDispositionType)
 		throws IOException {
 
 		setHeaders(
-			request, response, fileName, contentType, contentDispositionType);
+			httpServletRequest, httpServletResponse, fileName, contentType,
+			contentDispositionType);
 
-		write(response, inputStream, contentLength);
+		write(httpServletResponse, bytes);
 	}
 
 	public static void sendFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, String contentType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			InputStream inputStream)
 		throws IOException {
 
-		sendFile(request, response, fileName, inputStream, 0, contentType);
+		sendFile(
+			httpServletRequest, httpServletResponse, fileName, inputStream,
+			null);
+	}
+
+	public static void sendFile(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			InputStream inputStream, long contentLength, String contentType)
+		throws IOException {
+
+		sendFile(
+			httpServletRequest, httpServletResponse, fileName, inputStream,
+			contentLength, contentType, null);
+	}
+
+	public static void sendFile(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			InputStream inputStream, long contentLength, String contentType,
+			String contentDispositionType)
+		throws IOException {
+
+		setHeaders(
+			httpServletRequest, httpServletResponse, fileName, contentType,
+			contentDispositionType);
+
+		write(httpServletResponse, inputStream, contentLength);
+	}
+
+	public static void sendFile(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			InputStream inputStream, String contentType)
+		throws IOException {
+
+		sendFile(
+			httpServletRequest, httpServletResponse, fileName, inputStream, 0,
+			contentType);
 	}
 
 	public static void sendFileWithRangeHeader(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream inputStream, long contentLength,
-			String contentType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			InputStream inputStream, long contentLength, String contentType)
 		throws IOException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Accepting ranges for the file " + fileName);
 		}
 
-		response.setHeader(
+		httpServletResponse.setHeader(
 			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
 
 		List<Range> ranges = null;
 
 		try {
-			ranges = _getRanges(request, contentLength);
+			ranges = _getRanges(httpServletRequest, contentLength);
 		}
 		catch (IOException ioe) {
 			_log.error("Unable to get ranges", ioe);
 
-			response.setHeader(
+			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
 
-			response.sendError(
+			httpServletResponse.sendError(
 				HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
 
 			return;
@@ -171,43 +185,48 @@ public class ServletResponseUtil {
 
 		if ((ranges == null) || ranges.isEmpty()) {
 			sendFile(
-				request, response, fileName, inputStream, contentLength,
-				contentType);
+				httpServletRequest, httpServletResponse, fileName, inputStream,
+				contentLength, contentType);
 		}
 		else {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Request has range header " +
-						request.getHeader(HttpHeaders.RANGE));
+						httpServletRequest.getHeader(HttpHeaders.RANGE));
 			}
 
 			_write(
-				request, response, fileName, ranges, inputStream, contentLength,
-				contentType);
+				httpServletRequest, httpServletResponse, fileName, ranges,
+				inputStream, contentLength, contentType);
 		}
 	}
 
 	public static void write(
-			HttpServletResponse response,
+			HttpServletResponse httpServletResponse,
 			BufferCacheServletResponse bufferCacheServletResponse)
 		throws IOException {
 
 		if (bufferCacheServletResponse.isByteMode()) {
-			write(response, bufferCacheServletResponse.getByteBuffer());
+			write(
+				httpServletResponse,
+				bufferCacheServletResponse.getByteBuffer());
 		}
 		else if (bufferCacheServletResponse.isCharMode()) {
-			write(response, bufferCacheServletResponse.getCharBuffer());
+			write(
+				httpServletResponse,
+				bufferCacheServletResponse.getCharBuffer());
 		}
-	}
-
-	public static void write(HttpServletResponse response, byte[] bytes)
-		throws IOException {
-
-		write(response, bytes, 0, 0);
 	}
 
 	public static void write(
-			HttpServletResponse response, byte[] bytes, int offset,
+			HttpServletResponse httpServletResponse, byte[] bytes)
+		throws IOException {
+
+		write(httpServletResponse, bytes, 0, 0);
+	}
+
+	public static void write(
+			HttpServletResponse httpServletResponse, byte[] bytes, int offset,
 			int contentLength)
 		throws IOException {
 
@@ -215,7 +234,7 @@ public class ServletResponseUtil {
 
 			// LEP-3122
 
-			if (!response.isCommitted()) {
+			if (!httpServletResponse.isCommitted()) {
 
 				// LEP-536
 
@@ -223,13 +242,13 @@ public class ServletResponseUtil {
 					contentLength = bytes.length;
 				}
 
-				response.setContentLength(contentLength);
+				httpServletResponse.setContentLength(contentLength);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
-				if (response instanceof BufferCacheServletResponse) {
+				if (httpServletResponse instanceof BufferCacheServletResponse) {
 					BufferCacheServletResponse bufferCacheServletResponse =
-						(BufferCacheServletResponse)response;
+						(BufferCacheServletResponse)httpServletResponse;
 
 					bufferCacheServletResponse.setByteBuffer(
 						ByteBuffer.wrap(bytes, offset, contentLength));
@@ -239,7 +258,7 @@ public class ServletResponseUtil {
 					}
 					else {
 						ServletOutputStream servletOutputStream =
-							response.getOutputStream();
+							httpServletResponse.getOutputStream();
 
 						servletOutputStream.write(bytes, offset, contentLength);
 					}
@@ -260,26 +279,27 @@ public class ServletResponseUtil {
 		}
 	}
 
-	public static void write(HttpServletResponse response, byte[][] bytesArray)
+	public static void write(
+			HttpServletResponse httpServletResponse, byte[][] bytesArray)
 		throws IOException {
 
 		try {
 
 			// LEP-3122
 
-			if (!response.isCommitted()) {
+			if (!httpServletResponse.isCommitted()) {
 				long contentLength = 0;
 
 				for (byte[] bytes : bytesArray) {
 					contentLength += bytes.length;
 				}
 
-				setContentLength(response, contentLength);
+				setContentLength(httpServletResponse, contentLength);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				ServletOutputStream servletOutputStream =
-					response.getOutputStream();
+					httpServletResponse.getOutputStream();
 
 				for (byte[] bytes : bytesArray) {
 					servletOutputStream.write(bytes);
@@ -301,30 +321,30 @@ public class ServletResponseUtil {
 	}
 
 	public static void write(
-			HttpServletResponse response, ByteBuffer byteBuffer)
+			HttpServletResponse httpServletResponse, ByteBuffer byteBuffer)
 		throws IOException {
 
-		if (response instanceof BufferCacheServletResponse) {
+		if (httpServletResponse instanceof BufferCacheServletResponse) {
 			BufferCacheServletResponse bufferCacheServletResponse =
-				(BufferCacheServletResponse)response;
+				(BufferCacheServletResponse)httpServletResponse;
 
 			bufferCacheServletResponse.setByteBuffer(byteBuffer);
 		}
 		else {
 			write(
-				response, byteBuffer.array(),
+				httpServletResponse, byteBuffer.array(),
 				byteBuffer.arrayOffset() + byteBuffer.position(),
 				byteBuffer.arrayOffset() + byteBuffer.limit());
 		}
 	}
 
 	public static void write(
-			HttpServletResponse response, CharBuffer charBuffer)
+			HttpServletResponse httpServletResponse, CharBuffer charBuffer)
 		throws IOException {
 
-		if (response instanceof BufferCacheServletResponse) {
+		if (httpServletResponse instanceof BufferCacheServletResponse) {
 			BufferCacheServletResponse bufferCacheServletResponse =
-				(BufferCacheServletResponse)response;
+				(BufferCacheServletResponse)httpServletResponse;
 
 			bufferCacheServletResponse.setCharBuffer(charBuffer);
 		}
@@ -332,16 +352,16 @@ public class ServletResponseUtil {
 			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
 				StringPool.UTF8, charBuffer);
 
-			write(response, byteBuffer);
+			write(httpServletResponse, byteBuffer);
 		}
 	}
 
-	public static void write(HttpServletResponse response, File file)
+	public static void write(HttpServletResponse httpServletResponse, File file)
 		throws IOException {
 
-		if (response instanceof BufferCacheServletResponse) {
+		if (httpServletResponse instanceof BufferCacheServletResponse) {
 			BufferCacheServletResponse bufferCacheServletResponse =
-				(BufferCacheServletResponse)response;
+				(BufferCacheServletResponse)httpServletResponse;
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(FileUtil.getBytes(file));
 
@@ -353,30 +373,30 @@ public class ServletResponseUtil {
 			try (FileChannel fileChannel = fileInputStream.getChannel()) {
 				long contentLength = fileChannel.size();
 
-				setContentLength(response, contentLength);
+				setContentLength(httpServletResponse, contentLength);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				fileChannel.transferTo(
 					0, contentLength,
-					Channels.newChannel(response.getOutputStream()));
+					Channels.newChannel(httpServletResponse.getOutputStream()));
 			}
 		}
 	}
 
 	public static void write(
-			HttpServletResponse response, InputStream inputStream)
+			HttpServletResponse httpServletResponse, InputStream inputStream)
 		throws IOException {
 
-		write(response, inputStream, 0);
+		write(httpServletResponse, inputStream, 0);
 	}
 
 	public static void write(
-			HttpServletResponse response, InputStream inputStream,
+			HttpServletResponse httpServletResponse, InputStream inputStream,
 			long contentLength)
 		throws IOException {
 
-		if (response.isCommitted()) {
+		if (httpServletResponse.isCommitted()) {
 			if (inputStream != null) {
 				try {
 					inputStream.close();
@@ -392,21 +412,21 @@ public class ServletResponseUtil {
 		}
 
 		if (contentLength > 0) {
-			response.setHeader(
+			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 		}
 
-		response.flushBuffer();
+		httpServletResponse.flushBuffer();
 
-		StreamUtil.transfer(inputStream, response.getOutputStream());
+		StreamUtil.transfer(inputStream, httpServletResponse.getOutputStream());
 	}
 
-	public static void write(HttpServletResponse response, String s)
+	public static void write(HttpServletResponse httpServletResponse, String s)
 		throws IOException {
 
-		if (response instanceof BufferCacheServletResponse) {
+		if (httpServletResponse instanceof BufferCacheServletResponse) {
 			BufferCacheServletResponse bufferCacheServletResponse =
-				(BufferCacheServletResponse)response;
+				(BufferCacheServletResponse)httpServletResponse;
 
 			bufferCacheServletResponse.setString(s);
 		}
@@ -414,20 +434,21 @@ public class ServletResponseUtil {
 			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
 				StringPool.UTF8, CharBuffer.wrap(s));
 
-			write(response, byteBuffer);
+			write(httpServletResponse, byteBuffer);
 		}
 	}
 
 	protected static void setContentLength(
-		HttpServletResponse response, long contentLength) {
+		HttpServletResponse httpServletResponse, long contentLength) {
 
-		response.setHeader(
+		httpServletResponse.setHeader(
 			HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 	}
 
 	protected static void setHeaders(
-		HttpServletRequest request, HttpServletResponse response,
-		String fileName, String contentType, String contentDispositionType) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String fileName,
+		String contentType, String contentDispositionType) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Sending file of type " + contentType);
@@ -436,11 +457,11 @@ public class ServletResponseUtil {
 		// LEP-2201
 
 		if (Validator.isNotNull(contentType)) {
-			response.setContentType(contentType);
+			httpServletResponse.setContentType(contentType);
 		}
 
-		if (!response.containsHeader(HttpHeaders.CACHE_CONTROL)) {
-			response.setHeader(
+		if (!httpServletResponse.containsHeader(HttpHeaders.CACHE_CONTROL)) {
+			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE);
 		}
@@ -467,7 +488,7 @@ public class ServletResponseUtil {
 		if (!ascii) {
 			String encodedFileName = URLCodec.encodeURL(fileName, true);
 
-			if (BrowserSnifferUtil.isIe(request)) {
+			if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 				contentDispositionFileName =
 					"filename=\"" + encodedFileName + "\"";
 			}
@@ -500,7 +521,7 @@ public class ServletResponseUtil {
 
 				contentType = MimeTypesUtil.getExtensionContentType(extension);
 
-				response.setContentType(contentType);
+				httpServletResponse.setContentType(contentType);
 			}
 			else {
 				contentDispositionType =
@@ -519,22 +540,24 @@ public class ServletResponseUtil {
 			_log.debug("Setting content disposition header " + sb.toString());
 		}
 
-		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, sb.toString());
+		httpServletResponse.setHeader(
+			HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 	}
 
 	protected static void setHeaders(
-		HttpServletRequest request, HttpServletResponse response,
-		String fileName, String contentType, String contentDispositionType,
-		Range range) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String fileName,
+		String contentType, String contentDispositionType, Range range) {
 
 		setHeaders(
-			request, response, fileName, contentType, contentDispositionType);
+			httpServletRequest, httpServletResponse, fileName, contentType,
+			contentDispositionType);
 
 		if (range != null) {
-			response.setHeader(
+			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_RANGE, range.getContentRange());
 
-			response.setHeader(
+			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
 		}
 	}
@@ -590,10 +613,10 @@ public class ServletResponseUtil {
 	}
 
 	private static List<Range> _getRanges(
-			HttpServletRequest request, long length)
+			HttpServletRequest httpServletRequest, long length)
 		throws IOException {
 
-		String rangeString = request.getHeader(HttpHeaders.RANGE);
+		String rangeString = httpServletRequest.getHeader(HttpHeaders.RANGE);
 
 		if (Validator.isNull(rangeString)) {
 			return Collections.emptyList();
@@ -692,12 +715,15 @@ public class ServletResponseUtil {
 	}
 
 	private static void _write(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, List<Range> ranges, InputStream inputStream,
-			long fullLength, String contentType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String fileName,
+			List<Range> ranges, InputStream inputStream, long fullLength,
+			String contentType)
 		throws IOException {
 
-		try (OutputStream outputStream = response.getOutputStream()) {
+		try (OutputStream outputStream =
+				httpServletResponse.getOutputStream()) {
+
 			Range fullRange = new Range(0, fullLength - 1, fullLength);
 
 			Range firstRange = null;
@@ -711,10 +737,11 @@ public class ServletResponseUtil {
 					_log.debug("Writing full range");
 				}
 
-				response.setContentType(contentType);
+				httpServletResponse.setContentType(contentType);
 
 				setHeaders(
-					request, response, fileName, contentType, null, fullRange);
+					httpServletRequest, httpServletResponse, fileName,
+					contentType, null, fullRange);
 
 				_copyRange(
 					inputStream, outputStream, fullRange.getStart(),
@@ -727,12 +754,14 @@ public class ServletResponseUtil {
 
 				Range range = ranges.get(0);
 
-				response.setContentType(contentType);
+				httpServletResponse.setContentType(contentType);
 
 				setHeaders(
-					request, response, fileName, contentType, null, range);
+					httpServletRequest, httpServletResponse, fileName,
+					contentType, null, range);
 
-				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_PARTIAL_CONTENT);
 
 				_copyRange(
 					inputStream, outputStream, range.getStart(),
@@ -752,12 +781,14 @@ public class ServletResponseUtil {
 				String multipartContentType =
 					"multipart/byteranges; boundary=" + boundary;
 
-				response.setContentType(multipartContentType);
+				httpServletResponse.setContentType(multipartContentType);
 
 				setHeaders(
-					request, response, fileName, multipartContentType, null);
+					httpServletRequest, httpServletResponse, fileName,
+					multipartContentType, null);
 
-				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_PARTIAL_CONTENT);
 
 				boolean sequentialRangeList = _isSequentialRangeList(ranges);
 

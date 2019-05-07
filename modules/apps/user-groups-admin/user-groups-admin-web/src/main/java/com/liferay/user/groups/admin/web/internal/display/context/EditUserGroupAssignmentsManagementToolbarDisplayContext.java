@@ -53,17 +53,17 @@ import javax.servlet.http.HttpServletRequest;
 public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 
 	public EditUserGroupAssignmentsManagementToolbarDisplayContext(
-			HttpServletRequest request, RenderRequest renderRequest,
+			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 			RenderResponse renderResponse, String displayStyle, String mvcPath)
 		throws PortalException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 		_mvcPath = mvcPath;
 
-		long userGroupId = ParamUtil.getLong(request, "userGroupId");
+		long userGroupId = ParamUtil.getLong(httpServletRequest, "userGroupId");
 
 		_userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
 	}

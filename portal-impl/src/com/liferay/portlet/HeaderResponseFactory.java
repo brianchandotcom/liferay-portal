@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HeaderResponseFactory {
 
 	public static LiferayHeaderResponse create(
-		HeaderRequest headerRequest, HttpServletResponse response) {
+		HeaderRequest headerRequest, HttpServletResponse httpServletResponse) {
 
 		while (headerRequest instanceof HeaderRequestWrapper) {
 			headerRequest = ((HeaderRequestWrapper)headerRequest).getRequest();
@@ -40,7 +40,8 @@ public class HeaderResponseFactory {
 
 		HeaderResponseImpl headerResponseImpl = new HeaderResponseImpl();
 
-		headerResponseImpl.init((HeaderRequestImpl)headerRequest, response);
+		headerResponseImpl.init(
+			(HeaderRequestImpl)headerRequest, httpServletResponse);
 
 		return headerResponseImpl;
 	}

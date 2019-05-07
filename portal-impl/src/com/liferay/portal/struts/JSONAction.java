@@ -56,22 +56,22 @@ public abstract class JSONAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (rerouteExecute(request, response)) {
+		if (rerouteExecute(httpServletRequest, httpServletResponse)) {
 			return null;
 		}
 
-		String callback = ParamUtil.getString(request, "callback");
+		String callback = ParamUtil.getString(httpServletRequest, "callback");
 
 		String json = null;
 
 		try {
-			checkAuthToken(request);
+			checkAuthToken(httpServletRequest);
 
-			json = getJSON(request, response);
+			json = getJSON(httpServletRequest, httpServletResponse);
 
 			if (Validator.isNotNull(callback)) {
 				StringBundler sb = new StringBundler(5);
@@ -89,7 +89,8 @@ public abstract class JSONAction implements Action {
 			_log.error(pe.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_FORBIDDEN, pe, request, response);
+				HttpServletResponse.SC_FORBIDDEN, pe, httpServletRequest,
+				httpServletResponse);
 
 			return null;
 		}
@@ -104,26 +105,28 @@ public abstract class JSONAction implements Action {
 			_log.error(e.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 
-		boolean refresh = ParamUtil.getBoolean(request, "refresh");
+		boolean refresh = ParamUtil.getBoolean(httpServletRequest, "refresh");
 
 		if (refresh) {
 			return actionMapping.getActionForward(
 				ActionConstants.COMMON_REFERER);
 		}
 		else if (Validator.isNotNull(json)) {
-			response.setCharacterEncoding(StringPool.UTF8);
-			response.setContentType(ContentTypes.APPLICATION_JSON);
-			response.setHeader(
+			httpServletResponse.setCharacterEncoding(StringPool.UTF8);
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-			try (OutputStream outputStream = response.getOutputStream()) {
+			try (OutputStream outputStream =
+					httpServletResponse.getOutputStream()) {
+
 				byte[] bytes = json.getBytes(StringPool.UTF8);
 
 				outputStream.write(bytes);
@@ -134,17 +137,19 @@ public abstract class JSONAction implements Action {
 	}
 
 	public abstract String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
-	protected void checkAuthToken(HttpServletRequest request)
+	protected void checkAuthToken(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String authType = GetterUtil.getString(request.getAuthType());
+		String authType = GetterUtil.getString(
+			httpServletRequest.getAuthType());
 
 		// Support for the legacy JSON API at /c/portal/json_service
 
@@ -166,13 +171,16 @@ public abstract class JSONAction implements Action {
 		}
 
 		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-			if (!AccessControlUtil.isAccessAllowed(request, _hostsAllowed)) {
-				AuthTokenUtil.checkCSRFToken(request, getCSRFOrigin(request));
+			if (!AccessControlUtil.isAccessAllowed(
+					httpServletRequest, _hostsAllowed)) {
+
+				AuthTokenUtil.checkCSRFToken(
+					httpServletRequest, getCSRFOrigin(httpServletRequest));
 			}
 		}
 	}
 
-	protected String getCSRFOrigin(HttpServletRequest request) {
+	protected String getCSRFOrigin(HttpServletRequest httpServletRequest) {
 		return ClassUtil.getClassName(this);
 	}
 
@@ -181,7 +189,8 @@ public abstract class JSONAction implements Action {
 	}
 
 	protected boolean rerouteExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String reroutePath = getReroutePath();
@@ -191,7 +200,7 @@ public abstract class JSONAction implements Action {
 		}
 
 		String requestServletContextName = ParamUtil.getString(
-			request, "servletContextName");
+			httpServletRequest, "servletContextName");
 
 		if (Validator.isNull(requestServletContextName)) {
 			return false;
@@ -200,7 +209,8 @@ public abstract class JSONAction implements Action {
 		ServletContext servletContext = _servletContext;
 
 		if (servletContext == null) {
-			servletContext = (ServletContext)request.getAttribute(WebKeys.CTX);
+			servletContext = (ServletContext)httpServletRequest.getAttribute(
+				WebKeys.CTX);
 		}
 
 		String servletContextName = GetterUtil.getString(
@@ -225,7 +235,8 @@ public abstract class JSONAction implements Action {
 		}
 
 		requestDispatcher.forward(
-			new SharedSessionServletRequest(request, true), response);
+			new SharedSessionServletRequest(httpServletRequest, true),
+			httpServletResponse);
 
 		return true;
 	}

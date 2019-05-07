@@ -31,10 +31,10 @@ import javax.servlet.http.HttpServletRequest;
 public class MySubscriptionsManagementToolbarDisplayContext {
 
 	public MySubscriptionsManagementToolbarDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, User user) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_user = user;
 

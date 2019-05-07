@@ -39,39 +39,50 @@ public class HighestRatedAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isEnablePermissions(HttpServletRequest request) {
+	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
 		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
 			return true;
 		}
 
-		PortletPreferences portletPreferences = getPortletPreferences(request);
+		PortletPreferences portletPreferences = getPortletPreferences(
+			httpServletRequest);
 
 		return GetterUtil.getBoolean(
 			portletPreferences.getValue("enablePermissions", null), true);
 	}
 
 	@Override
-	public boolean isOrderingAndGroupingEnabled(HttpServletRequest request) {
+	public boolean isOrderingAndGroupingEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
+	public boolean isOrderingByTitleEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return true;
 	}
 
 	@Override
-	public boolean isSelectionStyleEnabled(HttpServletRequest request) {
+	public boolean isSelectionStyleEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isShowEnableAddContentButton(HttpServletRequest request) {
+	public boolean isShowEnableAddContentButton(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
+	public boolean isShowSubtypeFieldsFilter(
+		HttpServletRequest httpServletRequest) {
+
 		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}

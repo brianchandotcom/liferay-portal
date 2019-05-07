@@ -67,18 +67,19 @@ public class SharingButtonTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		SharingJavaScriptFactory sharingJavaScriptFactory =
 			SharingJavaScriptFactoryUtil.getSharingJavaScriptFactory();
 
 		try {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-sharing:button:javaScript",
-				sharingJavaScriptFactory.createSharingJavaScript(request));
-			request.setAttribute(
+				sharingJavaScriptFactory.createSharingJavaScript(
+					httpServletRequest));
+			httpServletRequest.setAttribute(
 				"liferay-sharing:button:onClick",
 				sharingJavaScriptFactory.createSharingOnClickMethod(
-					_className, _classPK, request));
+					_className, _classPK, httpServletRequest));
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to set onclick method", pe);

@@ -33,8 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 public class MethodFactoryImpl implements MethodFactory {
 
 	@Override
-	public Method create(HttpServletRequest request) throws WebDAVException {
-		String method = request.getMethod();
+	public Method create(HttpServletRequest httpServletRequest)
+		throws WebDAVException {
+
+		String method = httpServletRequest.getMethod();
 
 		Map<String, Object> methods = MethodHolder._methods;
 

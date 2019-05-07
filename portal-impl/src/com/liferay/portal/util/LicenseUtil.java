@@ -196,11 +196,11 @@ public class LicenseUtil {
 	public static void init() {
 	}
 
-	public static void registerOrder(HttpServletRequest request) {
-		String orderUuid = ParamUtil.getString(request, "orderUuid");
+	public static void registerOrder(HttpServletRequest httpServletRequest) {
+		String orderUuid = ParamUtil.getString(httpServletRequest, "orderUuid");
 		String productEntryName = ParamUtil.getString(
-			request, "productEntryName");
-		int maxServers = ParamUtil.getInteger(request, "maxServers");
+			httpServletRequest, "productEntryName");
+		int maxServers = ParamUtil.getInteger(httpServletRequest, "maxServers");
 
 		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
@@ -211,13 +211,15 @@ public class LicenseUtil {
 				orderUuid, productEntryName, maxServers);
 
 			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
-				request.setAttribute(entry.getKey(), entry.getValue());
+				httpServletRequest.setAttribute(
+					entry.getKey(), entry.getValue());
 			}
 		}
 		else {
 			for (ClusterNode clusterNode : clusterNodes) {
 				boolean register = ParamUtil.getBoolean(
-					request, clusterNode.getClusterNodeId() + "_register");
+					httpServletRequest,
+					clusterNode.getClusterNodeId() + "_register");
 
 				if (!register) {
 					continue;
@@ -225,8 +227,8 @@ public class LicenseUtil {
 
 				try {
 					_registerClusterOrder(
-						request, clusterNode, orderUuid, productEntryName,
-						maxServers);
+						httpServletRequest, clusterNode, orderUuid,
+						productEntryName, maxServers);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -241,7 +243,7 @@ public class LicenseUtil {
 							StringPool.COLON + clusterNode.getPortalPort();
 					}
 
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						clusterNode.getClusterNodeId() + "_ERROR_MESSAGE",
 						message);
 				}
@@ -487,7 +489,7 @@ public class LicenseUtil {
 	}
 
 	private static void _registerClusterOrder(
-			HttpServletRequest request, ClusterNode clusterNode,
+			HttpServletRequest httpServletRequest, ClusterNode clusterNode,
 			String orderUuid, String productEntryName, int maxServers)
 		throws Exception {
 
@@ -511,7 +513,7 @@ public class LicenseUtil {
 			(Map<String, Object>)clusterNodeResponse.getResult();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				clusterNode.getClusterNodeId() + StringPool.UNDERLINE +
 					entry.getKey(),
 				entry.getValue());

@@ -154,7 +154,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public void init(
-		HttpServletRequest request, Portlet portlet,
+		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
 		PortletPreferences preferences, long plid) {
@@ -168,15 +168,15 @@ public class ResourceRequestImpl
 		}
 
 		super.init(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, preferences, plid);
+			httpServletRequest, portlet, invokerPortlet, portletContext,
+			windowState, portletMode, preferences, plid);
 
 		_cacheablity = ParamUtil.getString(
-			request, "p_p_cacheability", ResourceURL.PAGE);
+			httpServletRequest, "p_p_cacheability", ResourceURL.PAGE);
 
 		_portletConfig = invokerPortlet.getPortletConfig();
 
-		_resourceID = request.getParameter("p_p_resource_id");
+		_resourceID = httpServletRequest.getParameter("p_p_resource_id");
 
 		if (!PortalUtil.isValidResourceId(_resourceID)) {
 			_resourceID = StringPool.BLANK;
@@ -187,7 +187,7 @@ public class ResourceRequestImpl
 				getPortletName());
 
 			_resourceParameters = new ResourceParametersImpl(
-				getPortletParameterMap(request, portletNamespace),
+				getPortletParameterMap(httpServletRequest, portletNamespace),
 				portletNamespace);
 		}
 	}

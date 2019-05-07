@@ -39,15 +39,18 @@ import javax.servlet.http.HttpServletResponse;
 public class RandomLookAndFeelAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
 
 			// Do not randomize look and feel unless the user is logged in
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (!themeDisplay.isSignedIn()) {
 				return;
@@ -56,7 +59,8 @@ public class RandomLookAndFeelAction extends Action {
 			// Do not randomize look and feel unless the user is accessing the
 			// portal
 
-			String requestURI = GetterUtil.getString(request.getRequestURI());
+			String requestURI = GetterUtil.getString(
+				httpServletRequest.getRequestURI());
 
 			if (!requestURI.endsWith("/portal/layout")) {
 				return;
@@ -90,9 +94,10 @@ public class RandomLookAndFeelAction extends Action {
 
 				themeDisplay.setLookAndFeel(theme, colorScheme);
 
-				request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+				httpServletRequest.setAttribute(
+					WebKeys.COLOR_SCHEME, colorScheme);
 
-				request.setAttribute(WebKeys.THEME, theme);
+				httpServletRequest.setAttribute(WebKeys.THEME, theme);
 			}
 		}
 		catch (Exception e) {

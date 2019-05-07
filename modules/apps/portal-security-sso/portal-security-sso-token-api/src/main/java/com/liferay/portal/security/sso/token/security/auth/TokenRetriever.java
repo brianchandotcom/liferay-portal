@@ -49,6 +49,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface TokenRetriever {
 
 	public String getLoginToken(
-		HttpServletRequest request, String userTokenName);
+		HttpServletRequest httpServletRequest, String userTokenName);
 
 }

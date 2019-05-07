@@ -54,14 +54,15 @@ public class VerifyEmailAddressAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			return actionMapping.getActionForward(
@@ -69,20 +70,23 @@ public class VerifyEmailAddressAction implements Action {
 		}
 
 		if (themeDisplay.isSignedIn() && cmd.equals(Constants.SEND)) {
-			sendEmailAddressVerification(request, response, themeDisplay);
+			sendEmailAddressVerification(
+				httpServletRequest, httpServletResponse, themeDisplay);
 
 			return actionMapping.getActionForward(
 				"portal.verify_email_address");
 		}
 
 		try {
-			verifyEmailAddress(request, response, themeDisplay);
+			verifyEmailAddress(
+				httpServletRequest, httpServletResponse, themeDisplay);
 
 			if (!themeDisplay.isSignedIn()) {
 				PortletURL portletURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+					httpServletRequest, PortletKeys.LOGIN,
+					PortletRequest.RENDER_PHASE);
 
-				response.sendRedirect(portletURL.toString());
+				httpServletResponse.sendRedirect(portletURL.toString());
 
 				return null;
 			}
@@ -92,27 +96,27 @@ public class VerifyEmailAddressAction implements Action {
 		}
 		catch (Exception e) {
 			if (e instanceof PortalException || e instanceof SystemException) {
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward(
 					"portal.verify_email_address");
 			}
 
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
 	protected void sendEmailAddressVerification(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		User user = themeDisplay.getUser();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		List<Ticket> tickets = TicketLocalServiceUtil.getTickets(
 			themeDisplay.getCompanyId(), User.class.getName(), user.getUserId(),
@@ -131,14 +135,14 @@ public class VerifyEmailAddressAction implements Action {
 	}
 
 	protected void verifyEmailAddress(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		AuthTokenUtil.checkCSRFToken(
-			request, VerifyEmailAddressAction.class.getName());
+			httpServletRequest, VerifyEmailAddressAction.class.getName());
 
-		String ticketKey = ParamUtil.getString(request, "ticketKey");
+		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
 		UserLocalServiceUtil.verifyEmailAddress(ticketKey);
 	}

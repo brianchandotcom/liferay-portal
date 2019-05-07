@@ -100,22 +100,22 @@ public class AssetTagsNavigationTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:classNameId",
 			String.valueOf(_classNameId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:displayStyle", _displayStyle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty",
 			String.valueOf(_hidePortletWhenEmpty));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:maxAssetTags",
 			String.valueOf(_maxAssetTags));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:showAssetCount",
 			String.valueOf(_showAssetCount));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-tags-navigation:showZeroAssetCount",
 			String.valueOf(_showZeroAssetCount));
 	}

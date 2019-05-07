@@ -37,9 +37,10 @@ import javax.servlet.http.HttpServletRequest;
 public class RequestBackedPortletURLFactoryUtil {
 
 	public static RequestBackedPortletURLFactory create(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		return new HttpServletRequestRequestBackedPortletURLFactory(request);
+		return new HttpServletRequestRequestBackedPortletURLFactory(
+			httpServletRequest);
 	}
 
 	public static RequestBackedPortletURLFactory create(
@@ -179,9 +180,9 @@ public class RequestBackedPortletURLFactoryUtil {
 		}
 
 		private HttpServletRequestRequestBackedPortletURLFactory(
-			HttpServletRequest request) {
+			HttpServletRequest httpServletRequest) {
 
-			_request = request;
+			_request = httpServletRequest;
 		}
 
 		private final HttpServletRequest _request;

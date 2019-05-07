@@ -37,30 +37,32 @@ import javax.servlet.http.HttpServletResponse;
 public class SecureRequestAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			if (request.isSecure()) {
+			if (httpServletRequest.isSecure()) {
 				return;
 			}
 
-			if (!isRequiresSecure(request)) {
+			if (!isRequiresSecure(httpServletRequest)) {
 				return;
 			}
 
-			if (response.isCommitted()) {
+			if (httpServletResponse.isCommitted()) {
 				return;
 			}
 
-			String redirect = getRedirect(request);
+			String redirect = getRedirect(httpServletRequest);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Redirect " + redirect);
 			}
 
 			if (redirect != null) {
-				response.sendRedirect(redirect);
+				httpServletResponse.sendRedirect(redirect);
 			}
 		}
 		catch (Exception e) {
@@ -68,8 +70,9 @@ public class SecureRequestAction extends Action {
 		}
 	}
 
-	protected String getRedirect(HttpServletRequest request) {
-		String unsecureCompleteURL = PortalUtil.getCurrentCompleteURL(request);
+	protected String getRedirect(HttpServletRequest httpServletRequest) {
+		String unsecureCompleteURL = PortalUtil.getCurrentCompleteURL(
+			httpServletRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Unsecure URL " + unsecureCompleteURL);
@@ -89,7 +92,7 @@ public class SecureRequestAction extends Action {
 		return secureCompleteURL;
 	}
 
-	protected boolean isRequiresSecure(HttpServletRequest request) {
+	protected boolean isRequiresSecure(HttpServletRequest httpServletRequest) {
 		return _REQUIRES_SECURE;
 	}
 

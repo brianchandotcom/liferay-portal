@@ -30,14 +30,14 @@ import javax.servlet.http.HttpSession;
 public class RenderParametersPool {
 
 	public static Map<String, Map<String, String[]>> clear(
-		HttpServletRequest request, long plid) {
+		HttpServletRequest httpServletRequest, long plid) {
 
 		if (plid <= 0) {
 			return null;
 		}
 
 		Map<Long, Map<String, Map<String, String[]>>> pool =
-			_getRenderParametersPool(request, false);
+			_getRenderParametersPool(httpServletRequest, false);
 
 		if (pool == null) {
 			return null;
@@ -47,9 +47,10 @@ public class RenderParametersPool {
 	}
 
 	public static Map<String, String[]> clear(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
-		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+		Map<String, Map<String, String[]>> plidPool = get(
+			httpServletRequest, plid);
 
 		if (plidPool == null) {
 			return null;
@@ -59,14 +60,14 @@ public class RenderParametersPool {
 	}
 
 	public static Map<String, Map<String, String[]>> get(
-		HttpServletRequest request, long plid) {
+		HttpServletRequest httpServletRequest, long plid) {
 
 		if (plid <= 0) {
 			return null;
 		}
 
 		Map<Long, Map<String, Map<String, String[]>>> pool =
-			_getRenderParametersPool(request, false);
+			_getRenderParametersPool(httpServletRequest, false);
 
 		if (pool == null) {
 			return null;
@@ -76,9 +77,10 @@ public class RenderParametersPool {
 	}
 
 	public static Map<String, String[]> get(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
-		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+		Map<String, Map<String, String[]>> plidPool = get(
+			httpServletRequest, plid);
 
 		if (plidPool == null) {
 			return null;
@@ -88,29 +90,29 @@ public class RenderParametersPool {
 	}
 
 	public static Map<String, Map<String, String[]>> getOrCreate(
-		HttpServletRequest request, long plid) {
+		HttpServletRequest httpServletRequest, long plid) {
 
 		if (plid <= 0) {
 			return new ConcurrentHashMap<>();
 		}
 
 		Map<Long, Map<String, Map<String, String[]>>> pool =
-			_getRenderParametersPool(request, true);
+			_getRenderParametersPool(httpServletRequest, true);
 
 		return pool.computeIfAbsent(plid, key -> new ConcurrentHashMap<>());
 	}
 
 	public static Map<String, String[]> getOrCreate(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
 		Map<String, Map<String, String[]>> plidPool = getOrCreate(
-			request, plid);
+			httpServletRequest, plid);
 
 		return plidPool.computeIfAbsent(portletId, key -> new HashMap<>());
 	}
 
 	public static void put(
-		HttpServletRequest request, long plid, String portletId,
+		HttpServletRequest httpServletRequest, long plid, String portletId,
 		Map<String, String[]> params) {
 
 		if (params.isEmpty()) {
@@ -118,16 +120,16 @@ public class RenderParametersPool {
 		}
 
 		Map<String, Map<String, String[]>> plidPool = getOrCreate(
-			request, plid);
+			httpServletRequest, plid);
 
 		plidPool.put(portletId, params);
 	}
 
 	private static Map<Long, Map<String, Map<String, String[]>>>
 		_getRenderParametersPool(
-			HttpServletRequest request, boolean createIfAbsent) {
+			HttpServletRequest httpServletRequest, boolean createIfAbsent) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		HttpSession portalSession = PortalSessionContext.get(session.getId());
 

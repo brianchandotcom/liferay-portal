@@ -43,10 +43,11 @@ public class SharedAssetsPreviewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+	public PortletURL getPortletURL(
+			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException {
 
-		PortletURL portletURL = super.getPortletURL(request, group);
+		PortletURL portletURL = super.getPortletURL(httpServletRequest, group);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/shared_assets/view_sharing_entry");

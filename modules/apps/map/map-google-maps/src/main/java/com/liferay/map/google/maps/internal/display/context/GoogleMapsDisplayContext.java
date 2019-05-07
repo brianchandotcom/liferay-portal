@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class GoogleMapsDisplayContext {
 
-	public GoogleMapsDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public GoogleMapsDisplayContext(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public String getCompanyGoogleMapsAPIKey() {

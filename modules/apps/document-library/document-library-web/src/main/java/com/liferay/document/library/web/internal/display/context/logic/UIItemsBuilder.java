@@ -92,23 +92,23 @@ import javax.servlet.http.HttpServletRequest;
 public class UIItemsBuilder {
 
 	public UIItemsBuilder(
-			HttpServletRequest request, FileShortcut fileShortcut,
+			HttpServletRequest httpServletRequest, FileShortcut fileShortcut,
 			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
 			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
-			request, fileShortcut.getFileVersion(), fileShortcut,
+			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
 			resourceBundle, dlTrashUtil, versioningStrategy, dlURLHelper);
 	}
 
 	public UIItemsBuilder(
-		HttpServletRequest request, FileVersion fileVersion,
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
-			request, fileVersion, null, resourceBundle, dlTrashUtil,
+			httpServletRequest, fileVersion, null, resourceBundle, dlTrashUtil,
 			versioningStrategy, dlURLHelper);
 	}
 
@@ -1016,13 +1016,13 @@ public class UIItemsBuilder {
 	}
 
 	private UIItemsBuilder(
-		HttpServletRequest request, FileVersion fileVersion,
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		FileShortcut fileShortcut, ResourceBundle resourceBundle,
 		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
 		DLURLHelper dlURLHelper) {
 
 		try {
-			_request = request;
+			_request = httpServletRequest;
 			_fileVersion = fileVersion;
 			_fileShortcut = fileShortcut;
 			_resourceBundle = resourceBundle;
@@ -1038,7 +1038,7 @@ public class UIItemsBuilder {
 
 			_fileEntry = fileEntry;
 
-			_themeDisplay = (ThemeDisplay)request.getAttribute(
+			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(

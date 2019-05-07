@@ -35,10 +35,11 @@ public class DefaultWikiPageInfoPanelDisplayContext
 	implements WikiPageInfoPanelDisplayContext {
 
 	public DefaultWikiPageInfoPanelDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		_wikiPageInfoPanelRequestHelper = new WikiPageInfoPanelRequestHelper(
-			request);
+			httpServletRequest);
 	}
 
 	@Override

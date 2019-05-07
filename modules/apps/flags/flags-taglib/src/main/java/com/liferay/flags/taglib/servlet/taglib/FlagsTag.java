@@ -81,17 +81,20 @@ public class FlagsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-flags:flags:className", _className);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:className", _className);
+		httpServletRequest.setAttribute(
 			"liferay-flags:flags:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-flags:flags:contentTitle", _contentTitle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:contentTitle", _contentTitle);
+		httpServletRequest.setAttribute(
 			"liferay-flags:flags:enabled", String.valueOf(_enabled));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-flags:flags:label", String.valueOf(_label));
-		request.setAttribute("liferay-flags:flags:message", _message);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-flags:flags:message", _message);
+		httpServletRequest.setAttribute(
 			"liferay-flags:flags:reportedUserId",
 			String.valueOf(_reportedUserId));
 	}

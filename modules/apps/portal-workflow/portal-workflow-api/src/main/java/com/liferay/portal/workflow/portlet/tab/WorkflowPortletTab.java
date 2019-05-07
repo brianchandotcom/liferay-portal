@@ -48,7 +48,7 @@ public interface WorkflowPortletTab extends DynamicInclude {
 		throws PortletException;
 
 	public void prepareRender(
-			RenderRequest actionRequest, RenderResponse actionResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException;
 
 }

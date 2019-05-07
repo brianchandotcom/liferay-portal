@@ -27,10 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDLRequestHelper extends BaseRequestHelper {
 
-	public DDLRequestHelper(HttpServletRequest request) {
-		super(request);
+	public DDLRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 
-		_renderRequest = (RenderRequest)request.getAttribute(
+		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		_portletPreferences = _renderRequest.getPreferences();

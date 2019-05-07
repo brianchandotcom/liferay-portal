@@ -33,7 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ResourceResponseFactory {
 
 	public static LiferayResourceResponse create(
-		ResourceRequest resourceRequest, HttpServletResponse response) {
+		ResourceRequest resourceRequest,
+		HttpServletResponse httpServletResponse) {
 
 		while (resourceRequest instanceof ResourceRequestWrapper) {
 			ResourceRequestWrapper resourceRequestWrapper =
@@ -45,7 +46,7 @@ public class ResourceResponseFactory {
 		ResourceResponseImpl resourceResponseImpl = new ResourceResponseImpl();
 
 		resourceResponseImpl.init(
-			(ResourceRequestImpl)resourceRequest, response);
+			(ResourceRequestImpl)resourceRequest, httpServletResponse);
 
 		return resourceResponseImpl;
 	}

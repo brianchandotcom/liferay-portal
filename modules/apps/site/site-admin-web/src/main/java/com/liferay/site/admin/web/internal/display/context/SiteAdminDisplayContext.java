@@ -63,15 +63,17 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteAdminDisplayContext {
 
 	public SiteAdminDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
-			SiteWebKeys.GROUP_SEARCH_PROVIDER);
+		_groupSearchProvider =
+			(GroupSearchProvider)httpServletRequest.getAttribute(
+				SiteWebKeys.GROUP_SEARCH_PROVIDER);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(Group group)

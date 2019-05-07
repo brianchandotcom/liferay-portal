@@ -46,17 +46,20 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	@Override
 	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
-		auditRequestThreadLocal.setClientHost(request.getRemoteHost());
-		auditRequestThreadLocal.setClientIP(getRemoteAddr(request));
-		auditRequestThreadLocal.setQueryString(request.getQueryString());
+		auditRequestThreadLocal.setClientHost(
+			httpServletRequest.getRemoteHost());
+		auditRequestThreadLocal.setClientIP(getRemoteAddr(httpServletRequest));
+		auditRequestThreadLocal.setQueryString(
+			httpServletRequest.getQueryString());
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
 
@@ -64,12 +67,14 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			auditRequestThreadLocal.setRealUserId(userId.longValue());
 		}
 
-		StringBuffer sb = request.getRequestURL();
+		StringBuffer sb = httpServletRequest.getRequestURL();
 
 		auditRequestThreadLocal.setRequestURL(sb.toString());
 
-		auditRequestThreadLocal.setServerName(request.getServerName());
-		auditRequestThreadLocal.setServerPort(request.getServerPort());
+		auditRequestThreadLocal.setServerName(
+			httpServletRequest.getServerName());
+		auditRequestThreadLocal.setServerPort(
+			httpServletRequest.getServerPort());
 		auditRequestThreadLocal.setSessionID(session.getId());
 
 		return null;
@@ -80,14 +85,15 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		return _log;
 	}
 
-	protected String getRemoteAddr(HttpServletRequest request) {
-		String remoteAddr = request.getHeader(HttpHeaders.X_FORWARDED_FOR);
+	protected String getRemoteAddr(HttpServletRequest httpServletRequest) {
+		String remoteAddr = httpServletRequest.getHeader(
+			HttpHeaders.X_FORWARDED_FOR);
 
 		if (remoteAddr != null) {
 			return remoteAddr;
 		}
 
-		return request.getRemoteAddr();
+		return httpServletRequest.getRemoteAddr();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AuditFilter.class);

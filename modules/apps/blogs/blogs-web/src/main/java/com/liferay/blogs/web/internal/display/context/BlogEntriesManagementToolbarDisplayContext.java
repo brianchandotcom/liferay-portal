@@ -56,17 +56,17 @@ public class BlogEntriesManagementToolbarDisplayContext
 	public BlogEntriesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, SearchContainer searchContainer,
+		HttpServletRequest httpServletRequest, SearchContainer searchContainer,
 		TrashHelper trashHelper, String displayStyle) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			searchContainer);
 
 		_trashHelper = trashHelper;
 		_displayStyle = displayStyle;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

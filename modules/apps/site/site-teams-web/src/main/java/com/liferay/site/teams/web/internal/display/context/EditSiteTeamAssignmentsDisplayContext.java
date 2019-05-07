@@ -37,11 +37,11 @@ public class EditSiteTeamAssignmentsDisplayContext {
 
 	public EditSiteTeamAssignmentsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
-		this.request = request;
+		this.request = httpServletRequest;
 	}
 
 	public PortletURL getEditTeamAssignmentsURL() {

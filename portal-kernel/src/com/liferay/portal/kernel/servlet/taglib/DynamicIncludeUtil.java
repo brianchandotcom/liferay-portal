@@ -51,7 +51,8 @@ public class DynamicIncludeUtil {
 	}
 
 	public static void include(
-		HttpServletRequest request, HttpServletResponse response, String key,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String key,
 		boolean ascendingPriority) {
 
 		List<DynamicInclude> dynamicIncludes = getDynamicIncludes(key);
@@ -73,7 +74,8 @@ public class DynamicIncludeUtil {
 			DynamicInclude dynamicInclude = iterator.next();
 
 			try {
-				dynamicInclude.include(request, response, key);
+				dynamicInclude.include(
+					httpServletRequest, httpServletResponse, key);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

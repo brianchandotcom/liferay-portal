@@ -63,14 +63,16 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		// Custom template context contributors
 
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {
 
-			templateContextContributor.prepare(contextObjects, request);
+			templateContextContributor.prepare(
+				contextObjects, httpServletRequest);
 		}
 	}
 

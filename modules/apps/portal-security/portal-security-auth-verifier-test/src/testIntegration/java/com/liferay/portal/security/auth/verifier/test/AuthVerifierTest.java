@@ -270,10 +270,11 @@ public class AuthVerifierTest {
 
 		@Override
 		protected void doGet(
-				HttpServletRequest request, HttpServletResponse response)
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse)
 			throws IOException {
 
-			PrintWriter printWriter = response.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write("guest-allowed");
 		}
@@ -284,10 +285,11 @@ public class AuthVerifierTest {
 
 		@Override
 		protected void doGet(
-				HttpServletRequest request, HttpServletResponse response)
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse)
 			throws IOException {
 
-			PrintWriter printWriter = response.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write(
 				String.valueOf(AccessControlThreadLocal.isRemoteAccess()));
@@ -299,12 +301,13 @@ public class AuthVerifierTest {
 
 		@Override
 		protected void doGet(
-				HttpServletRequest request, HttpServletResponse response)
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse)
 			throws IOException {
 
-			PrintWriter printWriter = response.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			String remoteUser = request.getRemoteUser();
+			String remoteUser = httpServletRequest.getRemoteUser();
 
 			if (Validator.isNull(remoteUser)) {
 				printWriter.write("no-remote-user");

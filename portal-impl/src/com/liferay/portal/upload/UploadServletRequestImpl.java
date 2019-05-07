@@ -68,15 +68,15 @@ public class UploadServletRequestImpl
 		_tempDir = tempDir;
 	}
 
-	public UploadServletRequestImpl(HttpServletRequest request) {
-		this(request, 0, null, 0, 0);
+	public UploadServletRequestImpl(HttpServletRequest httpServletRequest) {
+		this(httpServletRequest, 0, null, 0, 0);
 	}
 
 	public UploadServletRequestImpl(
-		HttpServletRequest request, int fileSizeThreshold, String location,
-		long maxRequestSize, long maxFileSize) {
+		HttpServletRequest httpServletRequest, int fileSizeThreshold,
+		String location, long maxRequestSize, long maxFileSize) {
 
-		super(request);
+		super(httpServletRequest);
 
 		_fileParameters = new LinkedHashMap<>();
 		_regularParameters = new LinkedHashMap<>();
@@ -84,7 +84,7 @@ public class UploadServletRequestImpl
 		LiferayServletRequest liferayServletRequest = null;
 
 		try {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.removeAttribute(ProgressTracker.PERCENT);
 
@@ -108,7 +108,8 @@ public class UploadServletRequestImpl
 				servletFileUpload.setFileSizeMax(maxFileSize);
 			}
 
-			liferayServletRequest = new LiferayServletRequest(request);
+			liferayServletRequest = new LiferayServletRequest(
+				httpServletRequest);
 
 			List<org.apache.commons.fileupload.FileItem> fileItems =
 				servletFileUpload.parseRequest(liferayServletRequest);
@@ -119,7 +120,7 @@ public class UploadServletRequestImpl
 				UploadServletRequestConfigurationHelperUtil.getMaxSize();
 			long uploadServletRequestImplSize = 0;
 
-			int contentLength = request.getContentLength();
+			int contentLength = httpServletRequest.getContentLength();
 
 			if ((uploadServletRequestImplMaxSize > 0) &&
 				((contentLength == -1) ||
@@ -149,7 +150,7 @@ public class UploadServletRequestImpl
 
 						uploadException.setExceededUploadRequestSizeLimit(true);
 
-						request.setAttribute(
+						httpServletRequest.setAttribute(
 							WebKeys.UPLOAD_EXCEPTION, uploadException);
 
 						continue;
@@ -159,7 +160,8 @@ public class UploadServletRequestImpl
 				}
 
 				if (liferayFileItem.isFormField()) {
-					liferayFileItem.setString(request.getCharacterEncoding());
+					liferayFileItem.setString(
+						httpServletRequest.getCharacterEncoding());
 
 					String fieldName = liferayFileItem.getFieldName();
 
@@ -187,7 +189,7 @@ public class UploadServletRequestImpl
 						uploadException.setExceededLiferayFileItemSizeLimit(
 							true);
 
-						request.setAttribute(
+						httpServletRequest.setAttribute(
 							WebKeys.UPLOAD_EXCEPTION, uploadException);
 					}
 
@@ -230,7 +232,8 @@ public class UploadServletRequestImpl
 				uploadException.setExceededUploadRequestSizeLimit(true);
 			}
 
-			request.setAttribute(WebKeys.UPLOAD_EXCEPTION, uploadException);
+			httpServletRequest.setAttribute(
+				WebKeys.UPLOAD_EXCEPTION, uploadException);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(e, e);
@@ -244,10 +247,11 @@ public class UploadServletRequestImpl
 	}
 
 	public UploadServletRequestImpl(
-		HttpServletRequest request, Map<String, FileItem[]> fileParameters,
+		HttpServletRequest httpServletRequest,
+		Map<String, FileItem[]> fileParameters,
 		Map<String, List<String>> regularParameters) {
 
-		super(request);
+		super(httpServletRequest);
 
 		_fileParameters = new LinkedHashMap<>();
 		_regularParameters = new LinkedHashMap<>();

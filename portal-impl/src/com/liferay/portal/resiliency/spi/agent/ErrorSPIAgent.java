@@ -45,38 +45,43 @@ public class ErrorSPIAgent implements SPIAgent {
 	}
 
 	@Override
-	public HttpServletRequest prepareRequest(HttpServletRequest request) {
-		return request;
+	public HttpServletRequest prepareRequest(
+		HttpServletRequest httpServletRequest) {
+
+		return httpServletRequest;
 	}
 
 	@Override
 	public HttpServletResponse prepareResponse(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		return response;
+		return httpServletResponse;
 	}
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalResiliencyException {
 
-		SPIAgent.Lifecycle lifecycle = (SPIAgent.Lifecycle)request.getAttribute(
-			WebKeys.SPI_AGENT_LIFECYCLE);
+		SPIAgent.Lifecycle lifecycle =
+			(SPIAgent.Lifecycle)httpServletRequest.getAttribute(
+				WebKeys.SPI_AGENT_LIFECYCLE);
 
 		if (lifecycle.equals(SPIAgent.Lifecycle.ACTION)) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.SPI_AGENT_ACTION_RESULT,
 				new ActionResult(
 					Collections.<Event>emptyList(), StringPool.SLASH));
 		}
 		else if (lifecycle.equals(SPIAgent.Lifecycle.EVENT)) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.SPI_AGENT_EVENT_RESULT, Collections.emptyList());
 		}
 		else if (lifecycle.equals(SPIAgent.Lifecycle.RENDER)) {
 			try {
-				PrintWriter printWriter = response.getWriter();
+				PrintWriter printWriter = httpServletResponse.getWriter();
 
 				printWriter.write("<div class=\"alert alert-error\">");
 				printWriter.write("SPI is temporarily unavailable.");
@@ -90,7 +95,8 @@ public class ErrorSPIAgent implements SPIAgent {
 
 	@Override
 	public void transferResponse(
-		HttpServletRequest request, HttpServletResponse response, Exception e) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Exception e) {
 	}
 
 }

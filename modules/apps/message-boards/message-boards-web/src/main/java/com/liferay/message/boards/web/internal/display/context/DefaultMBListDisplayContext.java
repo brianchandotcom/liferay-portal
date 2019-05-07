@@ -57,10 +57,10 @@ import javax.servlet.http.HttpServletResponse;
 public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	public DefaultMBListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId) {
 
-		_request = request;
+		_request = httpServletRequest;
 
 		_categoryId = categoryId;
 	}

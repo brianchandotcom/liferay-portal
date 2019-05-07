@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetDisplayDisplayContext {
 
-	public AssetDisplayDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public AssetDisplayDisplayContext(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public int getAbstractLength() {

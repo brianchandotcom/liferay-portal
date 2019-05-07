@@ -51,8 +51,8 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		if (!_monitoringConfiguration.monitorPortalRequest()) {
@@ -60,13 +60,14 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 		}
 
 		PortalRequestDataSample portalRequestDataSample =
-			(PortalRequestDataSample)request.getAttribute(
+			(PortalRequestDataSample)httpServletRequest.getAttribute(
 				MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE);
 
 		if (portalRequestDataSample != null) {
 			portalRequestDataSample.capture(RequestStatus.SUCCESS);
 
-			portalRequestDataSample.setStatusCode(response.getStatus());
+			portalRequestDataSample.setStatusCode(
+				httpServletResponse.getStatus());
 
 			DataSampleThreadLocal.addDataSample(portalRequestDataSample);
 		}
@@ -90,7 +91,7 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 
 		sb.append("-->");
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.println(sb);
 	}

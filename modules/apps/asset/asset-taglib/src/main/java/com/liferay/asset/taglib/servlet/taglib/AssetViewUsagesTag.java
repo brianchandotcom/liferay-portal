@@ -62,10 +62,10 @@ public class AssetViewUsagesTag<R> extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-view-usages:className", _className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-view-usages:classPK",
 			String.valueOf(_classPK));
 	}

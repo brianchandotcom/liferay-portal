@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseCometRequest implements CometRequest {
 
-	public BaseCometRequest(HttpServletRequest request) {
-		_request = request;
+	public BaseCometRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 
-		setRequest(request);
+		setRequest(httpServletRequest);
 	}
 
 	@Override
@@ -65,10 +65,10 @@ public abstract class BaseCometRequest implements CometRequest {
 		_pathInfo = pathInfo;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		setCompanyId(PortalUtil.getCompanyId(request));
-		setPathInfo(request.getPathInfo());
-		setUserId(PortalUtil.getUserId(request));
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		setCompanyId(PortalUtil.getCompanyId(httpServletRequest));
+		setPathInfo(httpServletRequest.getPathInfo());
+		setUserId(PortalUtil.getUserId(httpServletRequest));
 	}
 
 	@Override

@@ -76,29 +76,33 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, this);
 
-		return super.include(request, response);
+		return super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public boolean includeHeader(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, this);
+		httpServletRequest.setAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteAdministrationWebKeys.ITEM_SELECTOR, _itemSelector);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER,
 			_recentGroupManager);
 
-		return super.includeHeader(request, response);
+		return super.includeHeader(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

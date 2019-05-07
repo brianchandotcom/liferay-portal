@@ -34,12 +34,12 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 	public LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LayoutPageTemplateCollectionsDisplayContext
 			layoutPageTemplateCollectionsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			layoutPageTemplateCollectionsDisplayContext.getSearchContainer());
 	}
 

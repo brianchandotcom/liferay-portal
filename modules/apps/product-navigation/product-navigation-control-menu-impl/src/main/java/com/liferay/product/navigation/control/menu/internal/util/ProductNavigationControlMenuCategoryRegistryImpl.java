@@ -70,7 +70,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey,
-			final HttpServletRequest request) {
+			final HttpServletRequest httpServletRequest) {
 
 		List<ProductNavigationControlMenuCategory>
 			productNavigationControlMenuCategories =
@@ -86,7 +86,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 			productNavigationControlMenuCategory -> {
 				try {
 					if (!productNavigationControlMenuCategory.
-							hasAccessPermission(request)) {
+							hasAccessPermission(httpServletRequest)) {
 
 						return false;
 					}
@@ -96,7 +96,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 							_productNavigationControlMenuEntryRegistry.
 								getProductNavigationControlMenuEntries(
 									productNavigationControlMenuCategory,
-									request);
+									httpServletRequest);
 
 					if (productNavigationControlMenuEntries.isEmpty()) {
 						return false;

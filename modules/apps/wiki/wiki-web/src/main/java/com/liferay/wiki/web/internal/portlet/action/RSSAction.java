@@ -46,50 +46,55 @@ public class RSSAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!isRSSFeedsEnabled(request)) {
-			_portal.sendRSSFeedsDisabledError(request, response);
+		if (!isRSSFeedsEnabled(httpServletRequest)) {
+			_portal.sendRSSFeedsDisabledError(
+				httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 
 		try {
 			ServletResponseUtil.sendFile(
-				request, response, null, getRSS(request),
-				ContentTypes.TEXT_XML_UTF8);
+				httpServletRequest, httpServletResponse, null,
+				getRSS(httpServletRequest), ContentTypes.TEXT_XML_UTF8);
 
 			return null;
 		}
 		catch (Exception e) {
-			_portal.sendError(e, request, response);
+			_portal.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
-	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected byte[] getRSS(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String rss = StringPool.BLANK;
 
-		long nodeId = ParamUtil.getLong(request, "nodeId");
+		long nodeId = ParamUtil.getLong(httpServletRequest, "nodeId");
 
 		if (nodeId <= 0) {
 			return rss.getBytes(StringPool.UTF8);
 		}
 
-		String title = ParamUtil.getString(request, "title");
+		String title = ParamUtil.getString(httpServletRequest, "title");
 		int max = ParamUtil.getInteger(
-			request, "max", SearchContainer.DEFAULT_DELTA);
+			httpServletRequest, "max", SearchContainer.DEFAULT_DELTA);
 		String type = ParamUtil.getString(
-			request, "type", RSSUtil.FORMAT_DEFAULT);
+			httpServletRequest, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.VERSION_DEFAULT);
+			httpServletRequest, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			httpServletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		String layoutFullURL = _portal.getLayoutFullURL(
 			themeDisplay.getScopeGroupId(), WikiPortletKeys.WIKI);
@@ -122,10 +127,11 @@ public class RSSAction implements StrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+	protected boolean isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
+		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(
+			httpServletRequest);
 
 		WikiGroupServiceOverriddenConfiguration
 			wikiGroupServiceOverriddenConfiguration =

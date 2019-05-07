@@ -66,12 +66,12 @@ public class MBEntriesManagementToolbarDisplayContext {
 	public MBEntriesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, PortletURL currentURLObj,
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj,
 		TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_currentURLObj = currentURLObj;
 		_trashHelper = trashHelper;
 

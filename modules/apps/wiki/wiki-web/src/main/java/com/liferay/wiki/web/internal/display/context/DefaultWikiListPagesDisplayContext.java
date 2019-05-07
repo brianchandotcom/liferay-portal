@@ -92,14 +92,15 @@ public class DefaultWikiListPagesDisplayContext
 	implements WikiListPagesDisplayContext {
 
 	public DefaultWikiListPagesDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiNode wikiNode, TrashHelper trashHelper) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiNode wikiNode,
+		TrashHelper trashHelper) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_wikiNode = wikiNode;
 		_trashHelper = trashHelper;
 
-		_wikiRequestHelper = new WikiRequestHelper(request);
+		_wikiRequestHelper = new WikiRequestHelper(httpServletRequest);
 	}
 
 	@Override

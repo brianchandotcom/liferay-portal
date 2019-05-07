@@ -26,20 +26,23 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthToken {
 
 	public void addCSRFToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL);
 
 	public void addPortletInvocationToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL);
 
-	public void checkCSRFToken(HttpServletRequest request, String origin)
+	public void checkCSRFToken(
+			HttpServletRequest httpServletRequest, String origin)
 		throws PrincipalException;
 
-	public String getToken(HttpServletRequest request);
+	public String getToken(HttpServletRequest httpServletRequest);
 
 	public String getToken(
-		HttpServletRequest request, long plid, String portletId);
+		HttpServletRequest httpServletRequest, long plid, String portletId);
 
 	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, Layout layout, Portlet portlet);
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet);
 
 }

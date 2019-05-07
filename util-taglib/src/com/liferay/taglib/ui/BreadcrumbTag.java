@@ -104,7 +104,7 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	protected List<BreadcrumbEntry> getBreadcrumbEntries(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		List<BreadcrumbEntry> breadcrumbEntries = Collections.emptyList();
 
@@ -132,7 +132,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 		try {
 			breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(
-				request, ArrayUtil.toIntArray(breadcrumbEntryTypes));
+				httpServletRequest, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 		}
 		catch (Exception e) {
 		}
@@ -166,13 +166,13 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:breadcrumb:breadcrumbEntries",
-			getBreadcrumbEntries(request));
-		request.setAttribute(
+			getBreadcrumbEntries(httpServletRequest));
+		httpServletRequest.setAttribute(
 			"liferay-ui:breadcrumb:displayStyle", getDisplayStyle());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:breadcrumb:displayStyleGroupId",
 			getDisplayStyleGroupId());
 	}

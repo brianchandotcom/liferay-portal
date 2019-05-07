@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseStrutsRequestHelper extends BaseRequestHelper {
 
-	public BaseStrutsRequestHelper(HttpServletRequest request) {
-		super(request);
+	public BaseStrutsRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public String getMVCrenderCommandName() {

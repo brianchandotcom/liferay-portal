@@ -56,12 +56,14 @@ public class MapsEditCompanyPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public void setAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
 			MapProviderHelperUtil.getMapProviderKey(
 				themeDisplay.getCompanyId()));

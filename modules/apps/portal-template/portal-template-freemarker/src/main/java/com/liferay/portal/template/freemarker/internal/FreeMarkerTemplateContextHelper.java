@@ -66,14 +66,16 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		super.prepare(contextObjects, request);
+		super.prepare(contextObjects, httpServletRequest);
 
 		// Theme display
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			Theme theme = themeDisplay.getTheme();
@@ -103,7 +105,8 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		// Insert custom ftl variables
 
 		Map<String, Object> ftlVariables =
-			(Map<String, Object>)request.getAttribute(WebKeys.FTL_VARIABLES);
+			(Map<String, Object>)httpServletRequest.getAttribute(
+				WebKeys.FTL_VARIABLES);
 
 		if (ftlVariables != null) {
 			for (Map.Entry<String, Object> entry : ftlVariables.entrySet()) {
@@ -120,7 +123,8 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {
 
-			templateContextContributor.prepare(contextObjects, request);
+			templateContextContributor.prepare(
+				contextObjects, httpServletRequest);
 		}
 	}
 

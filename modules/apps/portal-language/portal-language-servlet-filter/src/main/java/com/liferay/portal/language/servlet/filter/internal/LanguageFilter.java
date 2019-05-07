@@ -41,11 +41,11 @@ public class LanguageFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String languageId = request.getParameter("languageId");
+		String languageId = httpServletRequest.getParameter("languageId");
 
 		if (languageId == null) {
 			if (_log.isInfoEnabled()) {
@@ -53,20 +53,21 @@ public class LanguageFilter extends BasePortalFilter {
 			}
 
 			processFilter(
-				LanguageFilter.class.getName(), request, response, filterChain);
+				LanguageFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
 
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(response);
+			new BufferCacheServletResponse(httpServletResponse);
 
 		processFilter(
-			LanguageFilter.class.getName(), request, bufferCacheServletResponse,
-			filterChain);
+			LanguageFilter.class.getName(), httpServletRequest,
+			bufferCacheServletResponse, filterChain);
 
 		if (_log.isDebugEnabled()) {
-			String completeURL = HttpUtil.getCompleteURL(request);
+			String completeURL = HttpUtil.getCompleteURL(httpServletRequest);
 
 			_log.debug("Translating response " + completeURL);
 		}
@@ -75,7 +76,7 @@ public class LanguageFilter extends BasePortalFilter {
 
 		content = translateResponse(languageId, content);
 
-		ServletResponseUtil.write(response, content);
+		ServletResponseUtil.write(httpServletResponse, content);
 	}
 
 	protected String translateResponse(String languageId, String content) {

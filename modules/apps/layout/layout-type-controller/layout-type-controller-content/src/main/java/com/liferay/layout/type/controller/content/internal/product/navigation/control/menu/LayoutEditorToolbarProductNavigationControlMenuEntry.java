@@ -56,9 +56,12 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -69,7 +72,8 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 			return false;
 		}
 
-		String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
+		String mode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (!Objects.equals(mode, Constants.EDIT)) {
 			return false;

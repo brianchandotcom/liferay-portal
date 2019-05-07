@@ -29,13 +29,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SiteNavigationBreadcrumbDisplayContext {
 
-	public SiteNavigationBreadcrumbDisplayContext(HttpServletRequest request)
+	public SiteNavigationBreadcrumbDisplayContext(
+			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = request;
+		_request = httpServletRequest;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

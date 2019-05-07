@@ -58,19 +58,23 @@ public class FragmentEntriesGeneratorProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			request, portletDisplay.getNamespace() + "mvcRenderCommandName");
+			httpServletRequest,
+			portletDisplay.getNamespace() + "mvcRenderCommandName");
 
 		if (Objects.equals(
 				mvcRenderCommandName, "/fragment/edit_fragment_entry")) {

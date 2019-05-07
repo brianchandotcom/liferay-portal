@@ -69,13 +69,15 @@ public class DDMFieldSettingsDDMFormContextServlet
 	extends BaseDDMFormBuilderServlet {
 
 	protected Map<String, Object> createFieldSettingsFormContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			String languageId = ParamUtil.getString(request, "languageId");
+			String languageId = ParamUtil.getString(
+				httpServletRequest, "languageId");
 			String portletNamespace = ParamUtil.getString(
-				request, "portletNamespace");
-			String type = ParamUtil.getString(request, "type");
+				httpServletRequest, "portletNamespace");
+			String type = ParamUtil.getString(httpServletRequest, "type");
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -94,14 +96,14 @@ public class DDMFieldSettingsDDMFormContextServlet
 				new DDMFormRenderingContext();
 
 			DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-				request, ddmFormFieldTypeSettingsDDMForm);
+				httpServletRequest, ddmFormFieldTypeSettingsDDMForm);
 
 			setTypeDDMFormFieldValue(ddmFormValues, type);
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
-			ddmFormRenderingContext.setHttpServletRequest(request);
-			ddmFormRenderingContext.setHttpServletResponse(response);
+			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+			ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
@@ -122,25 +124,28 @@ public class DDMFieldSettingsDDMFormContextServlet
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Map<String, Object> fieldSettingsFormContext =
-			createFieldSettingsFormContext(request, response);
+			createFieldSettingsFormContext(
+				httpServletRequest, httpServletResponse);
 
 		if (fieldSettingsFormContext == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
 			return;
 		}
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
 		ServletResponseUtil.write(
-			response, jsonSerializer.serializeDeep(fieldSettingsFormContext));
+			httpServletResponse,
+			jsonSerializer.serializeDeep(fieldSettingsFormContext));
 	}
 
 	protected Class<?> getDDMFormFieldTypeSettings(String type) {

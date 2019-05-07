@@ -46,7 +46,9 @@ import javax.servlet.http.HttpServletResponse;
 public class TunnelServlet extends HttpServlet {
 
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		PermissionChecker permissionChecker =
@@ -57,7 +59,7 @@ public class TunnelServlet extends HttpServlet {
 				_log.warn("Unauthenticated access is forbidden");
 			}
 
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 			return;
 		}
@@ -68,7 +70,8 @@ public class TunnelServlet extends HttpServlet {
 
 		try {
 			ois = new ProtectedClassLoaderObjectInputStream(
-				request.getInputStream(), thread.getContextClassLoader());
+				httpServletRequest.getInputStream(),
+				thread.getContextClassLoader());
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
@@ -125,7 +128,7 @@ public class TunnelServlet extends HttpServlet {
 
 		if (returnObj != null) {
 			try (ObjectOutputStream oos = new ObjectOutputStream(
-					response.getOutputStream())) {
+					httpServletResponse.getOutputStream())) {
 
 				oos.writeObject(returnObj);
 			}
@@ -139,13 +142,14 @@ public class TunnelServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		PortalUtil.sendError(
 			HttpServletResponse.SC_NOT_FOUND,
 			new IllegalArgumentException("The GET method is not supported"),
-			request, response);
+			httpServletRequest, httpServletResponse);
 	}
 
 	protected boolean isValidRequest(Class<?> clazz) {

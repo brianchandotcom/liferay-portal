@@ -71,7 +71,7 @@ public class PollerRequestHandlerImpl
 
 	@Override
 	public JSONObject processRequest(
-			HttpServletRequest request, String pollerRequestString)
+			HttpServletRequest httpServletRequest, String pollerRequestString)
 		throws Exception {
 
 		if (Validator.isNull(pollerRequestString)) {
@@ -94,7 +94,7 @@ public class PollerRequestHandlerImpl
 		}
 
 		boolean receiveRequest = isReceiveRequest(
-			HttpUtil.normalizePath(request.getPathInfo()));
+			HttpUtil.normalizePath(httpServletRequest.getPathInfo()));
 
 		String pollerSessionId = getPollerSessionId(pollerHeader);
 

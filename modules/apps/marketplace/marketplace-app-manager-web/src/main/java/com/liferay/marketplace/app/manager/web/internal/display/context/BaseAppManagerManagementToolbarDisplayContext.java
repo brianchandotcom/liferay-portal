@@ -50,9 +50,10 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	public BaseAppManagerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 	}
 
 	public String getCategory() {

@@ -32,18 +32,20 @@ import javax.servlet.http.HttpSession;
 public class SessionClicks {
 
 	public static String get(
-		HttpServletRequest request, String key, String defaultValue) {
+		HttpServletRequest httpServletRequest, String key,
+		String defaultValue) {
 
-		return get(request, _DEFAULT_NAMESPACE, key, defaultValue);
+		return get(httpServletRequest, _DEFAULT_NAMESPACE, key, defaultValue);
 	}
 
 	public static String get(
-		HttpServletRequest request, String namespace, String key,
+		HttpServletRequest httpServletRequest, String namespace, String key,
 		String defaultValue) {
 
 		try {
 			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					httpServletRequest);
 
 			return portalPreferences.getValue(namespace, key, defaultValue);
 		}
@@ -75,13 +77,13 @@ public class SessionClicks {
 	}
 
 	public static void put(
-		HttpServletRequest request, String key, String value) {
+		HttpServletRequest httpServletRequest, String key, String value) {
 
-		put(request, _DEFAULT_NAMESPACE, key, value);
+		put(httpServletRequest, _DEFAULT_NAMESPACE, key, value);
 	}
 
 	public static void put(
-		HttpServletRequest request, String namespace, String key,
+		HttpServletRequest httpServletRequest, String namespace, String key,
 		String value) {
 
 		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
@@ -101,7 +103,8 @@ public class SessionClicks {
 		while (true) {
 			try {
 				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						httpServletRequest);
 
 				int size = portalPreferences.size();
 

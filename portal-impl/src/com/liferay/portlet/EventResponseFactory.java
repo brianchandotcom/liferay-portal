@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 public class EventResponseFactory {
 
 	public static LiferayEventResponse create(
-			EventRequest eventRequest, HttpServletResponse response, User user,
-			Layout layout)
+			EventRequest eventRequest, HttpServletResponse httpServletResponse,
+			User user, Layout layout)
 		throws PortletModeException, WindowStateException {
 
 		while (eventRequest instanceof EventRequestWrapper) {
@@ -48,7 +48,7 @@ public class EventResponseFactory {
 		EventResponseImpl eventResponseImpl = new EventResponseImpl();
 
 		eventResponseImpl.init(
-			(EventRequestImpl)eventRequest, response, user, layout);
+			(EventRequestImpl)eventRequest, httpServletResponse, user, layout);
 
 		return eventResponseImpl;
 	}

@@ -29,10 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionURLImpl extends PortletURLImpl implements ActionURL {
 
 	public ActionURLImpl(
-		HttpServletRequest request, Portlet portlet, Layout layout,
+		HttpServletRequest httpServletRequest, Portlet portlet, Layout layout,
 		String lifecycle, MimeResponse.Copy copy) {
 
-		super(request, portlet, layout, lifecycle, copy);
+		super(httpServletRequest, portlet, layout, lifecycle, copy);
 	}
 
 	public ActionURLImpl(

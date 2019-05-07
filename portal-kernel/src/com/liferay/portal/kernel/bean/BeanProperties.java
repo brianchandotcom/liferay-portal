@@ -119,10 +119,12 @@ public interface BeanProperties {
 	public String getStringSilent(
 		Object bean, String param, String defaultValue);
 
-	public void setProperties(Object bean, HttpServletRequest request);
+	public void setProperties(
+		Object bean, HttpServletRequest httpServletRequest);
 
 	public void setProperties(
-		Object bean, HttpServletRequest request, String[] ignoreProperties);
+		Object bean, HttpServletRequest httpServletRequest,
+		String[] ignoreProperties);
 
 	public void setProperty(Object bean, String param, Object value);
 

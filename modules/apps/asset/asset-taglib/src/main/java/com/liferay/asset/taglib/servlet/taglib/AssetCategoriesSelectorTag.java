@@ -256,31 +256,31 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:categoryIdsTitles",
 			getCategoryIdsTitles());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:className", _className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:classTypePK",
 			String.valueOf(_classTypePK));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:eventName",
 			getEventName());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:hiddenInput",
 			_hiddenInput);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:portletURL",
 			getPortletURL());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:showRequiredLabel",
 			String.valueOf(_showRequiredLabel));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:singleSelect",
 			String.valueOf(_singleSelect));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-categories-selector:vocabularies",
 			getVocabularies());
 	}

@@ -158,9 +158,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getCompleteRedirectURL(
-		HttpServletRequest request, String redirect) {
+		HttpServletRequest httpServletRequest, String redirect) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		Boolean httpsInitial = (Boolean)session.getAttribute(
 			WebKeys.HTTPS_INITIAL);
@@ -171,10 +171,10 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
 			(httpsInitial != null) && !httpsInitial.booleanValue()) {
 
-			portalURL = _portal.getPortalURL(request, false);
+			portalURL = _portal.getPortalURL(httpServletRequest, false);
 		}
 		else {
-			portalURL = _portal.getPortalURL(request);
+			portalURL = _portal.getPortalURL(httpServletRequest);
 		}
 
 		return portalURL.concat(redirect);

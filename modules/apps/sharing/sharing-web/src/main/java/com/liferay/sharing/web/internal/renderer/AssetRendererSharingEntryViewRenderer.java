@@ -44,8 +44,8 @@ public class AssetRendererSharingEntryViewRenderer
 
 	@Override
 	public void render(
-			SharingEntry sharingEntry, HttpServletRequest request,
-			HttpServletResponse response)
+			SharingEntry sharingEntry, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException {
 
 		try {
@@ -55,11 +55,13 @@ public class AssetRendererSharingEntryViewRenderer
 			AssetRenderer assetRenderer =
 				AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
 
-			request.setAttribute(AssetRenderer.class.getName(), assetRenderer);
+			httpServletRequest.setAttribute(
+				AssetRenderer.class.getName(), assetRenderer);
 
-			request.setAttribute(SharingEntry.class.getName(), sharingEntry);
+			httpServletRequest.setAttribute(
+				SharingEntry.class.getName(), sharingEntry);
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (IOException | ServletException e) {
 			_log.error("Unable to include JSP " + _JSP_PATH, e);

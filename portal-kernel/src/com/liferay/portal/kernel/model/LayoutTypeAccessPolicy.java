@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface LayoutTypeAccessPolicy extends Serializable {
 
 	public void checkAccessAllowedToPortlet(
-			HttpServletRequest request, Layout layout, Portlet portlet)
+			HttpServletRequest httpServletRequest, Layout layout,
+			Portlet portlet)
 		throws PortalException;
 
 	public boolean isAddLayoutAllowed(

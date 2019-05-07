@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface Action {
 
 	public ActionForward execute(
-			ActionMapping mapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping mapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 }

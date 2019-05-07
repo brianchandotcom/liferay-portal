@@ -35,10 +35,12 @@ public class GetFileStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		_getFileActionHelper.processRequest(request, response);
+		_getFileActionHelper.processRequest(
+			httpServletRequest, httpServletResponse);
 
 		return null;
 	}

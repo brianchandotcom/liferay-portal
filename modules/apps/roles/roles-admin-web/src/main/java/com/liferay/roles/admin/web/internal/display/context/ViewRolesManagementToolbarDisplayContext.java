@@ -52,15 +52,15 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewRolesManagementToolbarDisplayContext {
 
 	public ViewRolesManagementToolbarDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 
-		_type = ParamUtil.getInteger(request, "type", 1);
+		_type = ParamUtil.getInteger(httpServletRequest, "type", 1);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

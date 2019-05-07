@@ -34,12 +34,12 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	public PortletConfigurationTemplatesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		PortletConfigurationTemplatesDisplayContext
 			portletConfigurationTemplatesDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			portletConfigurationTemplatesDisplayContext.
 				getArchivedSettingsSearchContainer());
 	}

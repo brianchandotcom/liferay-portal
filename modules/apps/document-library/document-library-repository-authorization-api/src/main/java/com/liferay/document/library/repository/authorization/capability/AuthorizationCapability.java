@@ -31,7 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface AuthorizationCapability extends Capability {
 
 	public void authorize(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException;
 
 	public void authorize(

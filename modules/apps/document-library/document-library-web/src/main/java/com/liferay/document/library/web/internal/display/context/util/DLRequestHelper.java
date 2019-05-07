@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLRequestHelper extends BaseRequestHelper {
 
-	public DLRequestHelper(HttpServletRequest request) {
-		super(request);
+	public DLRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public DLGroupServiceSettings getDLGroupServiceSettings() {

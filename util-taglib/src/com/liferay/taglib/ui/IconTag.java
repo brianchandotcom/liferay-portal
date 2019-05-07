@@ -489,41 +489,50 @@ public class IconTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		request.setAttribute("liferay-ui:icon:alt", _alt);
-		request.setAttribute("liferay-ui:icon:ariaRole", _ariaRole);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:icon:alt", _alt);
+		httpServletRequest.setAttribute("liferay-ui:icon:ariaRole", _ariaRole);
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:auiImage", String.valueOf(isAUIImage()));
-		request.setAttribute("liferay-ui:icon:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:icon:data", _getData());
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:icon:cssClass", _cssClass);
+		httpServletRequest.setAttribute("liferay-ui:icon:data", _getData());
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:details", _getDetails(themeDisplay));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:forcePost", String.valueOf(isForcePost()));
-		request.setAttribute("liferay-ui:icon:icon", _icon);
-		request.setAttribute("liferay-ui:icon:iconCssClass", _iconCssClass);
-		request.setAttribute("liferay-ui:icon:id", getId());
-		request.setAttribute("liferay-ui:icon:image", _image);
-		request.setAttribute("liferay-ui:icon:imageHover", _imageHover);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:icon:icon", _icon);
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:iconCssClass", _iconCssClass);
+		httpServletRequest.setAttribute("liferay-ui:icon:id", getId());
+		httpServletRequest.setAttribute("liferay-ui:icon:image", _image);
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:imageHover", _imageHover);
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:label", String.valueOf(isLabel()));
-		request.setAttribute("liferay-ui:icon:lang", _lang);
-		request.setAttribute("liferay-ui:icon:linkCssClass", _linkCssClass);
-		request.setAttribute("liferay-ui:icon:linkTitle", _linkTitle);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-ui:icon:lang", _lang);
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:linkCssClass", _linkCssClass);
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:linkTitle", _linkTitle);
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:localizeMessage",
 			String.valueOf(_localizeMessage));
-		request.setAttribute("liferay-ui:icon:markupView", _markupView);
-		request.setAttribute("liferay-ui:icon:message", getProcessedMessage());
-		request.setAttribute("liferay-ui:icon:method", getMethod());
-		request.setAttribute("liferay-ui:icon:onClick", getOnClick());
-		request.setAttribute("liferay-ui:icon:src", _getSrc(themeDisplay));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:markupView", _markupView);
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:message", getProcessedMessage());
+		httpServletRequest.setAttribute("liferay-ui:icon:method", getMethod());
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:onClick", getOnClick());
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:src", _getSrc(themeDisplay));
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:srcHover", _getSrcHover(themeDisplay));
-		request.setAttribute("liferay-ui:icon:target", _target);
+		httpServletRequest.setAttribute("liferay-ui:icon:target", _target);
 
 		boolean toolTip = false;
 
@@ -534,11 +543,12 @@ public class IconTag extends IncludeTag {
 			toolTip = true;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:toolTip", String.valueOf(toolTip));
 
-		request.setAttribute("liferay-ui:icon:url", getProcessedUrl());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:url", getProcessedUrl());
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:useDialog", String.valueOf(_useDialog));
 	}
 

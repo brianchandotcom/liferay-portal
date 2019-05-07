@@ -77,7 +77,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 	@Override
 	public String getAutocompleteJSON(
-			HttpServletRequest request, String language)
+			HttpServletRequest httpServletRequest, String language)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -86,7 +86,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		JSONObject variablesJSONObject = _jsonFactory.createJSONObject();
 
 		for (TemplateVariableDefinition templateVariableDefinition :
-				getAutocompleteTemplateVariableDefinitions(request, language)) {
+				getAutocompleteTemplateVariableDefinitions(
+					httpServletRequest, language)) {
 
 			Class<?> clazz = templateVariableDefinition.getClazz();
 
@@ -165,7 +166,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 	protected List<TemplateVariableDefinition>
 			getAutocompleteTemplateVariableDefinitions(
-				HttpServletRequest request, String language)
+				HttpServletRequest httpServletRequest, String language)
 		throws Exception {
 
 		if (!isAutocompleteEnabled(language)) {
@@ -177,15 +178,17 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 		// Declared variables
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute(
+		DDMTemplate ddmTemplate = (DDMTemplate)httpServletRequest.getAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
-		long classPK = BeanParamUtil.getLong(ddmTemplate, request, "classPK");
+		long classPK = BeanParamUtil.getLong(
+			ddmTemplate, httpServletRequest, "classPK");
 		long classNameId = BeanParamUtil.getLong(
-			ddmTemplate, request, "classNameId");
+			ddmTemplate, httpServletRequest, "classNameId");
 
 		if (classPK > 0) {
 			DDMStructure ddmStructure = _ddmStructureService.getStructure(

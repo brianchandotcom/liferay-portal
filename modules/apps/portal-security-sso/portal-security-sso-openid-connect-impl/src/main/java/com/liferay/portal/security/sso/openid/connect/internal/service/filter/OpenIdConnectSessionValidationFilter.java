@@ -50,9 +50,10 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		return _openIdConnect.isEnabled(companyId);
 	}
@@ -104,25 +105,26 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		HttpSession httpSession = request.getSession(false);
+		HttpSession httpSession = httpServletRequest.getSession(false);
 
 		if (httpSession != null) {
 			if (checkEndSession(httpSession)) {
 				httpSession.invalidate();
 
-				response.sendRedirect(_portal.getHomeURL(request));
+				httpServletResponse.sendRedirect(
+					_portal.getHomeURL(httpServletRequest));
 
 				return;
 			}
 		}
 
 		processFilter(
-			OpenIdConnectSessionValidationFilter.class.getName(), request,
-			response, filterChain);
+			OpenIdConnectSessionValidationFilter.class.getName(),
+			httpServletRequest, httpServletResponse, filterChain);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

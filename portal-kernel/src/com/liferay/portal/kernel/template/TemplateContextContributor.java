@@ -28,6 +28,7 @@ public interface TemplateContextContributor {
 	public static final String TYPE_THEME = "THEME";
 
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request);
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest);
 
 }

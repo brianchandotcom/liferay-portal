@@ -26,7 +26,8 @@ public class BaseStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		return null;
@@ -34,11 +35,12 @@ public class BaseStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			StrutsAction originalStrutsAction, HttpServletRequest request,
-			HttpServletResponse response)
+			StrutsAction originalStrutsAction,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		return execute(request, response);
+		return execute(httpServletRequest, httpServletResponse);
 	}
 
 }

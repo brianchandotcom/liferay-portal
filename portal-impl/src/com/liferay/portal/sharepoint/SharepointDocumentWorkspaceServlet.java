@@ -52,17 +52,19 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					request.getHeader(HttpHeaders.USER_AGENT), " ",
-					request.getMethod(), " ", request.getRequestURI()));
+					httpServletRequest.getHeader(HttpHeaders.USER_AGENT), " ",
+					httpServletRequest.getMethod(), " ",
+					httpServletRequest.getRequestURI()));
 		}
 
 		try {
-			getDwsMetaDataResponse(request, response);
+			getDwsMetaDataResponse(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -70,7 +72,8 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 	}
 
 	protected void getDwsMetaDataResponse(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(12);
@@ -83,7 +86,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		sb.append("http://schemas.microsoft.com/sharepoint/soap/dws/\">");
 		sb.append("<GetDwsMetaDataResult>");
 
-		String results = getResults(request);
+		String results = getResults(httpServletRequest);
 
 		int pos = results.indexOf("\n");
 
@@ -101,13 +104,15 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		sb.append("</SOAP-ENV:Body>");
 		sb.append("</SOAP-ENV:Envelope>");
 
-		response.setContentType(ContentTypes.TEXT_XML_UTF8);
+		httpServletResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
 
-		ServletResponseUtil.write(response, sb.toString());
+		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
-	protected String getResults(HttpServletRequest request) throws Exception {
-		String xml = StringUtil.read(request.getInputStream());
+	protected String getResults(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		String xml = StringUtil.read(httpServletRequest.getInputStream());
 
 		String documentName = null;
 
@@ -150,8 +155,8 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		Element root = doc.addElement("Results");
 
 		String url = StringBundler.concat(
-			"http://", request.getLocalAddr(), ":",
-			String.valueOf(request.getServerPort()), "/sharepoint");
+			"http://", httpServletRequest.getLocalAddr(), ":",
+			String.valueOf(httpServletRequest.getServerPort()), "/sharepoint");
 
 		Element subscribeUrlEl = root.addElement("SubscribeUrl");
 
@@ -174,7 +179,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		Element rolesEl = root.addElement("Roles");
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			PortalUtil.getCompanyId(request));
+			PortalUtil.getCompanyId(httpServletRequest));
 
 		for (Role role : roles) {
 			ResponseElement responseElement = new RoleResponseElement(role);
@@ -284,7 +289,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		resultsEl.addElement("LastUpdate");
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		User user = (User)session.getAttribute(WebKeys.USER);
 

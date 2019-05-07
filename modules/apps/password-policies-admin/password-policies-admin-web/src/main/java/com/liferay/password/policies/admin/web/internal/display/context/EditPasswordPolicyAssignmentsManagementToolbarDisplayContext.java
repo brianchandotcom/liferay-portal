@@ -61,17 +61,18 @@ import javax.servlet.http.HttpServletRequest;
 public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 
 	public EditPasswordPolicyAssignmentsManagementToolbarDisplayContext(
-			HttpServletRequest request, RenderRequest renderRequest,
+			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 			RenderResponse renderResponse, String displayStyle, String mvcPath)
 		throws PortalException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 		_mvcPath = mvcPath;
 
-		long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
+		long passwordPolicyId = ParamUtil.getLong(
+			httpServletRequest, "passwordPolicyId");
 
 		_passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
 			passwordPolicyId);

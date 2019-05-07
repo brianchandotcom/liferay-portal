@@ -52,16 +52,17 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		ScriptData scriptData = new ScriptData();
 
 		Map<String, String> values = new HashMap<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		values.put(
 			"cacheExpirationTime",
@@ -71,12 +72,13 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		values.put(
 			"clearScreensCache",
 			String.valueOf(
-				_spaUtil.isClearScreensCache(request, request.getSession())));
+				_spaUtil.isClearScreensCache(
+					httpServletRequest, httpServletRequest.getSession())));
 		values.put("debugEnabled", String.valueOf(_spaUtil.isDebugEnabled()));
 		values.put("excludedPaths", _spaUtil.getExcludedPaths());
 		values.put(
 			"loginRedirect",
-			_html.escapeJS(_spaUtil.getLoginRedirect(request)));
+			_html.escapeJS(_spaUtil.getLoginRedirect(httpServletRequest)));
 		values.put(
 			"message",
 			_language.get(
@@ -110,7 +112,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			initModuleName + " as frontendJsSpaWebLiferayInitEs",
 			ScriptData.ModulesType.ES6);
 
-		scriptData.writeTo(response.getWriter());
+		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override

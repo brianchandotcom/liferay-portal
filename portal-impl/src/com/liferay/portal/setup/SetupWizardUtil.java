@@ -72,9 +72,11 @@ public class SetupWizardUtil {
 		return LocaleUtil.toLanguageId(defaultLocale);
 	}
 
-	public static boolean isDefaultDatabase(HttpServletRequest request) {
+	public static boolean isDefaultDatabase(
+		HttpServletRequest httpServletRequest) {
+
 		boolean hsqldb = ParamUtil.getBoolean(
-			request, "defaultDatabase",
+			httpServletRequest, "defaultDatabase",
 			PropsValues.JDBC_DEFAULT_URL.contains("hsqldb"));
 
 		boolean jndi = Validator.isNotNull(PropsValues.JDBC_DEFAULT_JNDI_NAME);
@@ -86,17 +88,18 @@ public class SetupWizardUtil {
 		return false;
 	}
 
-	public static void testDatabase(HttpServletRequest request)
+	public static void testDatabase(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		String driverClassName = _getParameter(
-			request, PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME,
+			httpServletRequest, PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME,
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME);
-		String url = _getParameter(request, PropsKeys.JDBC_DEFAULT_URL, null);
+		String url = _getParameter(
+			httpServletRequest, PropsKeys.JDBC_DEFAULT_URL, null);
 		String userName = _getParameter(
-			request, PropsKeys.JDBC_DEFAULT_USERNAME, null);
+			httpServletRequest, PropsKeys.JDBC_DEFAULT_USERNAME, null);
 		String password = _getParameter(
-			request, PropsKeys.JDBC_DEFAULT_PASSWORD, null);
+			httpServletRequest, PropsKeys.JDBC_DEFAULT_PASSWORD, null);
 
 		String jndiName = StringPool.BLANK;
 
@@ -108,11 +111,12 @@ public class SetupWizardUtil {
 	}
 
 	public static void updateLanguage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		String languageId = ParamUtil.getString(
-			request, "companyLocale", getDefaultLanguageId());
+			httpServletRequest, "companyLocale", getDefaultLanguageId());
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -123,26 +127,29 @@ public class SetupWizardUtil {
 		CompanyLocalServiceUtil.updateDisplay(
 			PortalInstances.getDefaultCompanyId(), languageId, StringPool.UTC);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(WebKeys.LOCALE, locale);
 		session.setAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE, languageId);
 
-		LanguageUtil.updateCookie(request, response, locale);
+		LanguageUtil.updateCookie(
+			httpServletRequest, httpServletResponse, locale);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setLanguageId(languageId);
 		themeDisplay.setLocale(locale);
 	}
 
 	public static void updateSetup(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
-			request, _PROPERTIES_PREFIX);
+			httpServletRequest, _PROPERTIES_PREFIX);
 
 		unicodeProperties.setProperty(
 			PropsKeys.LIFERAY_HOME,
@@ -151,20 +158,21 @@ public class SetupWizardUtil {
 		boolean databaseConfigured = _isDatabaseConfigured(unicodeProperties);
 
 		_processDatabaseProperties(
-			request, unicodeProperties, databaseConfigured);
+			httpServletRequest, unicodeProperties, databaseConfigured);
 
-		_processOtherProperties(request, unicodeProperties);
+		_processOtherProperties(httpServletRequest, unicodeProperties);
 
-		updateLanguage(request, response);
+		updateLanguage(httpServletRequest, httpServletResponse);
 
 		unicodeProperties.put(
 			PropsKeys.SETUP_WIZARD_ENABLED, Boolean.FALSE.toString());
 
-		_updateCompany(request, unicodeProperties);
+		_updateCompany(httpServletRequest, unicodeProperties);
 
-		_updateAdminUser(request, response, unicodeProperties);
+		_updateAdminUser(
+			httpServletRequest, httpServletResponse, unicodeProperties);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
@@ -174,7 +182,8 @@ public class SetupWizardUtil {
 	}
 
 	private static String _getParameter(
-		HttpServletRequest request, String name, String defaultValue) {
+		HttpServletRequest httpServletRequest, String name,
+		String defaultValue) {
 
 		name = _PROPERTIES_PREFIX.concat(
 			name
@@ -182,7 +191,7 @@ public class SetupWizardUtil {
 			StringPool.DOUBLE_DASH
 		);
 
-		return ParamUtil.getString(request, name, defaultValue);
+		return ParamUtil.getString(httpServletRequest, name, defaultValue);
 	}
 
 	private static String _getUnicodePropertiesStringWithEmptyValue(
@@ -224,12 +233,12 @@ public class SetupWizardUtil {
 	}
 
 	private static void _processDatabaseProperties(
-			HttpServletRequest request, UnicodeProperties unicodeProperties,
-			boolean databaseConfigured)
+			HttpServletRequest httpServletRequest,
+			UnicodeProperties unicodeProperties, boolean databaseConfigured)
 		throws Exception {
 
 		boolean defaultDatabase = ParamUtil.getBoolean(
-			request, "defaultDatabase", true);
+			httpServletRequest, "defaultDatabase", true);
 
 		if (defaultDatabase || databaseConfigured) {
 			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_URL);
@@ -240,29 +249,31 @@ public class SetupWizardUtil {
 	}
 
 	private static void _processOtherProperties(
-			HttpServletRequest request, UnicodeProperties unicodeProperties)
+			HttpServletRequest httpServletRequest,
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		_processProperty(
-			request, unicodeProperties, "adminFirstName",
+			httpServletRequest, unicodeProperties, "adminFirstName",
 			PropsKeys.DEFAULT_ADMIN_FIRST_NAME,
 			PropsValues.DEFAULT_ADMIN_FIRST_NAME);
 		_processProperty(
-			request, unicodeProperties, "adminLastName",
+			httpServletRequest, unicodeProperties, "adminLastName",
 			PropsKeys.DEFAULT_ADMIN_LAST_NAME,
 			PropsValues.DEFAULT_ADMIN_LAST_NAME);
 		_processProperty(
-			request, unicodeProperties, "companyName",
+			httpServletRequest, unicodeProperties, "companyName",
 			PropsKeys.COMPANY_DEFAULT_NAME, PropsValues.COMPANY_DEFAULT_NAME);
 	}
 
 	private static void _processProperty(
-			HttpServletRequest request, UnicodeProperties unicodeProperties,
-			String parameterName, String propertyKey, String defaultValue)
+			HttpServletRequest httpServletRequest,
+			UnicodeProperties unicodeProperties, String parameterName,
+			String propertyKey, String defaultValue)
 		throws Exception {
 
 		String value = ParamUtil.getString(
-			request, parameterName, defaultValue);
+			httpServletRequest, parameterName, defaultValue);
 
 		if (!value.equals(defaultValue)) {
 			unicodeProperties.put(propertyKey, value);
@@ -294,18 +305,20 @@ public class SetupWizardUtil {
 	}
 
 	private static void _updateAdminUser(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			themeDisplay.getCompanyId());
 
 		String emailAddress = ParamUtil.getString(
-			request, "adminEmailAddress",
+			httpServletRequest, "adminEmailAddress",
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
 				company.getMx());
 
@@ -314,9 +327,11 @@ public class SetupWizardUtil {
 		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, emailAddress);
 
 		String firstName = ParamUtil.getString(
-			request, "adminFirstName", PropsValues.DEFAULT_ADMIN_FIRST_NAME);
+			httpServletRequest, "adminFirstName",
+			PropsValues.DEFAULT_ADMIN_FIRST_NAME);
 		String lastName = ParamUtil.getString(
-			request, "adminLastName", PropsValues.DEFAULT_ADMIN_LAST_NAME);
+			httpServletRequest, "adminLastName",
+			PropsValues.DEFAULT_ADMIN_LAST_NAME);
 
 		boolean passwordReset = false;
 
@@ -346,7 +361,7 @@ public class SetupWizardUtil {
 			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX,
 			emailAddress.substring(0, index));
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		session.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
 		session.setAttribute(
@@ -355,30 +370,33 @@ public class SetupWizardUtil {
 		session.setAttribute(WebKeys.USER_ID, user.getUserId());
 
 		EventsProcessorUtil.process(
-			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST, request,
-			response);
+			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST,
+			httpServletRequest, httpServletResponse);
 	}
 
 	private static void _updateCompany(
-			HttpServletRequest request, UnicodeProperties unicodeProperties)
+			HttpServletRequest httpServletRequest,
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			PortalInstances.getDefaultCompanyId());
 
 		String languageId = ParamUtil.getString(
-			request, "companyLocale", getDefaultLanguageId());
+			httpServletRequest, "companyLocale", getDefaultLanguageId());
 
 		unicodeProperties.put(PropsKeys.COMPANY_DEFAULT_LOCALE, languageId);
 
 		String companyName = ParamUtil.getString(
-			request, "companyName", PropsValues.COMPANY_DEFAULT_NAME);
+			httpServletRequest, "companyName",
+			PropsValues.COMPANY_DEFAULT_NAME);
 
 		SetupWizardSampleDataUtil.updateCompany(
 			company, companyName, languageId);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setCompany(company);
 	}

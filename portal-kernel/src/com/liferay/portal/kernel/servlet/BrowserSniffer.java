@@ -34,11 +34,12 @@ public interface BrowserSniffer {
 
 	public static final String BROWSER_ID_OTHER = "other";
 
-	public boolean acceptsGzip(HttpServletRequest request);
+	public boolean acceptsGzip(HttpServletRequest httpServletRequest);
 
-	public String getBrowserId(HttpServletRequest request);
+	public String getBrowserId(HttpServletRequest httpServletRequest);
 
-	public BrowserMetadata getBrowserMetadata(HttpServletRequest request);
+	public BrowserMetadata getBrowserMetadata(
+		HttpServletRequest httpServletRequest);
 
 	/**
 	 * Returns the browser's version number as a float. This differs from {@link
@@ -90,44 +91,44 @@ public interface BrowserSniffer {
 	 */
 	public String getVersion(HttpServletRequest request);
 
-	public boolean isAir(HttpServletRequest request);
+	public boolean isAir(HttpServletRequest httpServletRequest);
 
-	public boolean isAndroid(HttpServletRequest request);
+	public boolean isAndroid(HttpServletRequest httpServletRequest);
 
-	public boolean isChrome(HttpServletRequest request);
+	public boolean isChrome(HttpServletRequest httpServletRequest);
 
-	public boolean isEdge(HttpServletRequest request);
+	public boolean isEdge(HttpServletRequest httpServletRequest);
 
-	public boolean isFirefox(HttpServletRequest request);
+	public boolean isFirefox(HttpServletRequest httpServletRequest);
 
-	public boolean isGecko(HttpServletRequest request);
+	public boolean isGecko(HttpServletRequest httpServletRequest);
 
-	public boolean isIe(HttpServletRequest request);
+	public boolean isIe(HttpServletRequest httpServletRequest);
 
-	public boolean isIeOnWin32(HttpServletRequest request);
+	public boolean isIeOnWin32(HttpServletRequest httpServletRequest);
 
-	public boolean isIeOnWin64(HttpServletRequest request);
+	public boolean isIeOnWin64(HttpServletRequest httpServletRequest);
 
-	public boolean isIphone(HttpServletRequest request);
+	public boolean isIphone(HttpServletRequest httpServletRequest);
 
-	public boolean isLinux(HttpServletRequest request);
+	public boolean isLinux(HttpServletRequest httpServletRequest);
 
-	public boolean isMac(HttpServletRequest request);
+	public boolean isMac(HttpServletRequest httpServletRequest);
 
-	public boolean isMobile(HttpServletRequest request);
+	public boolean isMobile(HttpServletRequest httpServletRequest);
 
-	public boolean isMozilla(HttpServletRequest request);
+	public boolean isMozilla(HttpServletRequest httpServletRequest);
 
-	public boolean isOpera(HttpServletRequest request);
+	public boolean isOpera(HttpServletRequest httpServletRequest);
 
-	public boolean isRtf(HttpServletRequest request);
+	public boolean isRtf(HttpServletRequest httpServletRequest);
 
-	public boolean isSafari(HttpServletRequest request);
+	public boolean isSafari(HttpServletRequest httpServletRequest);
 
-	public boolean isSun(HttpServletRequest request);
+	public boolean isSun(HttpServletRequest httpServletRequest);
 
-	public boolean isWebKit(HttpServletRequest request);
+	public boolean isWebKit(HttpServletRequest httpServletRequest);
 
-	public boolean isWindows(HttpServletRequest request);
+	public boolean isWindows(HttpServletRequest httpServletRequest);
 
 }

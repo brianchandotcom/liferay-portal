@@ -44,11 +44,12 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 
 	@Override
 	public void applyAction(
-		MDRAction mdrAction, HttpServletRequest request,
-		HttpServletResponse response) {
+		MDRAction mdrAction, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 

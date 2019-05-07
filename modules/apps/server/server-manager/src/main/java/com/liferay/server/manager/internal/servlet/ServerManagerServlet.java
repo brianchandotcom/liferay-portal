@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
 public class ServerManagerServlet extends HttpServlet {
 
 	protected void execute(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			String pathInfo)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, String pathInfo)
 		throws Exception {
 
 		String executorPath = getExecutorPath(pathInfo);
@@ -72,19 +72,23 @@ public class ServerManagerServlet extends HttpServlet {
 
 		Queue<String> arguments = getExecutorArguments(executorPath, pathInfo);
 
-		String method = request.getMethod();
+		String method = httpServletRequest.getMethod();
 
 		if (StringUtil.equalsIgnoreCase(method, HttpMethods.DELETE)) {
-			executor.executeDelete(request, responseJSONObject, arguments);
+			executor.executeDelete(
+				httpServletRequest, responseJSONObject, arguments);
 		}
 		else if (StringUtil.equalsIgnoreCase(method, HttpMethods.GET)) {
-			executor.executeRead(request, responseJSONObject, arguments);
+			executor.executeRead(
+				httpServletRequest, responseJSONObject, arguments);
 		}
 		else if (StringUtil.equalsIgnoreCase(method, HttpMethods.POST)) {
-			executor.executeCreate(request, responseJSONObject, arguments);
+			executor.executeCreate(
+				httpServletRequest, responseJSONObject, arguments);
 		}
 		else if (StringUtil.equalsIgnoreCase(method, HttpMethods.PUT)) {
-			executor.executeUpdate(request, responseJSONObject, arguments);
+			executor.executeUpdate(
+				httpServletRequest, responseJSONObject, arguments);
 		}
 	}
 
@@ -114,9 +118,9 @@ public class ServerManagerServlet extends HttpServlet {
 		return executorPathResolver.getExecutorPath(pathInfo);
 	}
 
-	protected boolean isValidUser(HttpServletRequest request) {
+	protected boolean isValidUser(HttpServletRequest httpServletRequest) {
 		try {
-			User user = _portal.getUser(request);
+			User user = _portal.getUser(httpServletRequest);
 
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
@@ -134,11 +138,12 @@ public class ServerManagerServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!isValidUser(request)) {
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		if (!isValidUser(httpServletRequest)) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
 			return;
 		}
@@ -152,7 +157,9 @@ public class ServerManagerServlet extends HttpServlet {
 		);
 
 		try {
-			execute(request, responseJSONObject, request.getPathInfo());
+			execute(
+				httpServletRequest, responseJSONObject,
+				httpServletRequest.getPathInfo());
 		}
 		catch (Exception e) {
 			responseJSONObject.put(
@@ -162,19 +169,20 @@ public class ServerManagerServlet extends HttpServlet {
 			);
 		}
 
-		String format = ParamUtil.getString(request, "format");
+		String format = ParamUtil.getString(httpServletRequest, "format");
 
 		if (format.equals("raw")) {
-			response.setContentType(ContentTypes.TEXT_PLAIN);
+			httpServletResponse.setContentType(ContentTypes.TEXT_PLAIN);
 
 			String outputStream = responseJSONObject.getString(JSONKeys.OUTPUT);
 
-			ServletResponseUtil.write(response, outputStream);
+			ServletResponseUtil.write(httpServletResponse, outputStream);
 		}
 		else {
-			response.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-			ServletResponseUtil.write(response, responseJSONObject.toString());
+			ServletResponseUtil.write(
+				httpServletResponse, responseJSONObject.toString());
 		}
 	}
 

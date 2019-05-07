@@ -352,7 +352,7 @@ public class SoyPortlet extends MVCPortlet {
 
 	private void _callProcessAction(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			HttpServletResponse response, Portlet portlet)
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws Exception {
 
 		SoyPortletRequestFactory soyPortletRequestFactory =
@@ -377,7 +377,7 @@ public class SoyPortlet extends MVCPortlet {
 
 		redirect = HttpUtil.setParameter(redirect, "p_p_lifecycle", "2");
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 	}
 
 	private void _callRender(

@@ -38,7 +38,9 @@ public interface ConfigurationScreen {
 		return true;
 	}
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 }

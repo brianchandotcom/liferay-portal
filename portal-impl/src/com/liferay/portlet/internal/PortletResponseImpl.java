@@ -494,10 +494,11 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	public void init(
-		PortletRequestImpl portletRequestImpl, HttpServletResponse response) {
+		PortletRequestImpl portletRequestImpl,
+		HttpServletResponse httpServletResponse) {
 
 		this.portletRequestImpl = portletRequestImpl;
-		this.response = response;
+		this.response = httpServletResponse;
 
 		_portlet = portletRequestImpl.getPortlet();
 
@@ -578,8 +579,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	@Override
-	public void transferHeaders(HttpServletResponse response) {
-		TransferHeadersHelperUtil.transferHeaders(_headers, response);
+	public void transferHeaders(HttpServletResponse httpServletResponse) {
+		TransferHeadersHelperUtil.transferHeaders(
+			_headers, httpServletResponse);
 	}
 
 	@Override

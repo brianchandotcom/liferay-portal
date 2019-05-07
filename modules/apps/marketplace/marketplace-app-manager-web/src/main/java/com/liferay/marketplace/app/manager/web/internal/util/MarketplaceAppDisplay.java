@@ -62,18 +62,20 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 	}
 
 	@Override
-	public String getIconURL(HttpServletRequest request) {
+	public String getIconURL(HttpServletRequest httpServletRequest) {
 		return _app.getIconURL();
 	}
 
 	@Override
-	public String getStoreURL(HttpServletRequest request) {
+	public String getStoreURL(HttpServletRequest httpServletRequest) {
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, MarketplaceStorePortletKeys.MARKETPLACE_STORE,
+				httpServletRequest,
+				MarketplaceStorePortletKeys.MARKETPLACE_STORE,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

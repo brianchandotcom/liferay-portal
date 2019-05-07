@@ -67,8 +67,8 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 
 	@Override
 	protected String getURL(
-			MDRAction mdrAction, HttpServletRequest request,
-			HttpServletResponse response)
+			MDRAction mdrAction, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		UnicodeProperties typeSettingsProperties =
@@ -77,8 +77,9 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		long plid = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("plid"));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout themeDisplayLayout = themeDisplay.getLayout();
 

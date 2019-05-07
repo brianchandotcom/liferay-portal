@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class TempAttributesServletRequest extends HttpServletRequestWrapper {
 
-	public TempAttributesServletRequest(HttpServletRequest request) {
-		super(request);
+	public TempAttributesServletRequest(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	@Override

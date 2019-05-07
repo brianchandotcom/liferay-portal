@@ -70,7 +70,9 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		return "/message_boards/view_message_content.jsp";
 	}
 
@@ -98,40 +100,42 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+		httpServletRequest.setAttribute(
+			AssetWebKeys.ASSET_HELPER, _assetHelper);
 
 		MBMessageDisplay messageDisplay =
 			MBMessageServiceUtil.getMessageDisplay(
 				_rootMessage.getMessageId(), WorkflowConstants.STATUS_IN_TRASH);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		httpServletRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY,
 			messageDisplay.getCategory());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE,
 			treeWalker.getRoot());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.FALSE);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, _rootMessage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD,
 			messageDisplay.getThread());
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	private final AssetHelper _assetHelper;

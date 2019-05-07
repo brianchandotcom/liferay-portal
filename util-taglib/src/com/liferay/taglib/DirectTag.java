@@ -35,11 +35,15 @@ import javax.servlet.jsp.tagext.Tag;
 public interface DirectTag extends Tag {
 
 	public default void doBodyTag(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Consumer<PageContext> consumer)
 		throws JspException {
 
-		doBodyTag(PageContextFactoryUtil.create(request, response), consumer);
+		doBodyTag(
+			PageContextFactoryUtil.create(
+				httpServletRequest, httpServletResponse),
+			consumer);
 	}
 
 	public default void doBodyTag(
@@ -84,12 +88,15 @@ public interface DirectTag extends Tag {
 	}
 
 	public default String doBodyTagAsString(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Consumer<PageContext> consumer)
 		throws JspException {
 
 		return doBodyTagAsString(
-			PageContextFactoryUtil.create(request, response), consumer);
+			PageContextFactoryUtil.create(
+				httpServletRequest, httpServletResponse),
+			consumer);
 	}
 
 	public default String doBodyTagAsString(
@@ -105,10 +112,13 @@ public interface DirectTag extends Tag {
 	}
 
 	public default void doTag(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws JspException {
 
-		doTag(PageContextFactoryUtil.create(request, response));
+		doTag(
+			PageContextFactoryUtil.create(
+				httpServletRequest, httpServletResponse));
 	}
 
 	public default void doTag(PageContext pageContext) throws JspException {
@@ -119,10 +129,13 @@ public interface DirectTag extends Tag {
 	}
 
 	public default String doTagAsString(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws JspException {
 
-		return doTagAsString(PageContextFactoryUtil.create(request, response));
+		return doTagAsString(
+			PageContextFactoryUtil.create(
+				httpServletRequest, httpServletResponse));
 	}
 
 	public default String doTagAsString(PageContext pageContext)

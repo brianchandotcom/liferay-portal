@@ -45,9 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 public class KBServicePreAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		try {
-			doRun(request, response);
+			doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -55,21 +58,23 @@ public class KBServicePreAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		if (!_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isLifecycleRender()) {
 			return;
 		}
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		if (Validator.isNull(portletId)) {
 			return;
@@ -81,14 +86,15 @@ public class KBServicePreAction extends Action {
 			return;
 		}
 
-		String request_p_p_auth = ParamUtil.getString(request, "p_p_auth");
+		String request_p_p_auth = ParamUtil.getString(
+			httpServletRequest, "p_p_auth");
 
 		if (Validator.isNull(request_p_p_auth)) {
 			return;
 		}
 
 		String actual_p_p_auth = AuthTokenUtil.getToken(
-			request, themeDisplay.getPlid(), portletId);
+			httpServletRequest, themeDisplay.getPlid(), portletId);
 
 		if (request_p_p_auth.equals(actual_p_p_auth)) {
 			return;
@@ -105,7 +111,7 @@ public class KBServicePreAction extends Action {
 
 		redirect = _http.setParameter(redirect, "p_p_auth", actual_p_p_auth);
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 	}
 
 	private static final boolean _PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED =

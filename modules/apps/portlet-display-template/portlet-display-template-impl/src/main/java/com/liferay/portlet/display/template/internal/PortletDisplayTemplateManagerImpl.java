@@ -66,13 +66,13 @@ public class PortletDisplayTemplateManagerImpl
 
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			DDMTemplate ddmTemplate, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		return _portletDisplayTemplate.renderDDMTemplate(
-			request, response,
+			httpServletRequest, httpServletResponse,
 			ModelAdapterUtil.adapt(
 				com.liferay.dynamic.data.mapping.model.DDMTemplate.class,
 				ddmTemplate),
@@ -81,13 +81,14 @@ public class PortletDisplayTemplateManagerImpl
 
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long templateId, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long templateId,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		return _portletDisplayTemplate.renderDDMTemplate(
-			request, response, templateId, entries, contextObjects);
+			httpServletRequest, httpServletResponse, templateId, entries,
+			contextObjects);
 	}
 
 	@Reference(unbind = "-")

@@ -40,11 +40,11 @@ public class UpdateReminderQueryAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			return actionMapping.getActionForward(
@@ -52,14 +52,14 @@ public class UpdateReminderQueryAction implements Action {
 		}
 
 		try {
-			updateReminderQuery(request, response);
+			updateReminderQuery(httpServletRequest, httpServletResponse);
 
 			return actionMapping.getActionForward(
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserReminderQueryException) {
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward(
 					"portal.update_reminder_query");
@@ -67,31 +67,34 @@ public class UpdateReminderQueryAction implements Action {
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward("portal.error");
 			}
 
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
 	protected void updateReminderQuery(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		AuthTokenUtil.checkCSRFToken(
-			request, UpdateReminderQueryAction.class.getName());
+			httpServletRequest, UpdateReminderQueryAction.class.getName());
 
-		long userId = PortalUtil.getUserId(request);
-		String question = ParamUtil.getString(request, "reminderQueryQuestion");
-		String answer = ParamUtil.getString(request, "reminderQueryAnswer");
+		long userId = PortalUtil.getUserId(httpServletRequest);
+		String question = ParamUtil.getString(
+			httpServletRequest, "reminderQueryQuestion");
+		String answer = ParamUtil.getString(
+			httpServletRequest, "reminderQueryAnswer");
 
 		if (question.equals(UsersAdmin.CUSTOM_QUESTION)) {
 			question = ParamUtil.getString(
-				request, "reminderQueryCustomQuestion");
+				httpServletRequest, "reminderQueryCustomQuestion");
 		}
 
 		UserServiceUtil.updateReminderQuery(userId, question, answer);

@@ -50,13 +50,14 @@ public class PortletDisplayTemplateUtil {
 	}
 
 	public static String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long ddmTemplateId, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long ddmTemplateId,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		return _portletDisplayTemplate.renderDDMTemplate(
-			request, response, ddmTemplateId, entries, contextObjects);
+			httpServletRequest, httpServletResponse, ddmTemplateId, entries,
+			contextObjects);
 	}
 
 	@Deactivate

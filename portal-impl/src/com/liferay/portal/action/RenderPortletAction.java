@@ -41,33 +41,35 @@ public class RenderPortletAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setAjax(true);
 
-		String ajaxId = request.getParameter("ajax_id");
+		String ajaxId = httpServletRequest.getParameter("ajax_id");
 
-		long companyId = PortalUtil.getCompanyId(request);
-		User user = PortalUtil.getUser(request);
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+		User user = PortalUtil.getUser(httpServletRequest);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
-		String columnId = ParamUtil.getString(request, "p_p_col_id");
-		int columnPos = ParamUtil.getInteger(request, "p_p_col_pos");
-		int columnCount = ParamUtil.getInteger(request, "p_p_col_count");
+		String columnId = ParamUtil.getString(httpServletRequest, "p_p_col_id");
+		int columnPos = ParamUtil.getInteger(httpServletRequest, "p_p_col_pos");
+		int columnCount = ParamUtil.getInteger(
+			httpServletRequest, "p_p_col_count");
 
 		Boolean boundary = null;
 
 		String boundaryParam = ParamUtil.getString(
-			request, "p_p_boundary", null);
+			httpServletRequest, "p_p_boundary", null);
 
 		if (boundaryParam != null) {
 			boundary = GetterUtil.getBoolean(boundaryParam);
@@ -76,13 +78,14 @@ public class RenderPortletAction implements Action {
 		Boolean decorate = null;
 
 		String decorateParam = ParamUtil.getString(
-			request, "p_p_decorate", null);
+			httpServletRequest, "p_p_decorate", null);
 
 		if (decorateParam != null) {
 			decorate = GetterUtil.getBoolean(decorateParam);
 		}
 
-		boolean staticPortlet = ParamUtil.getBoolean(request, "p_p_static");
+		boolean staticPortlet = ParamUtil.getBoolean(
+			httpServletRequest, "p_p_static");
 
 		if (staticPortlet) {
 			portlet = (Portlet)portlet.clone();
@@ -90,29 +93,30 @@ public class RenderPortletAction implements Action {
 			portlet.setStatic(true);
 
 			boolean staticStartPortlet = ParamUtil.getBoolean(
-				request, "p_p_static_start");
+				httpServletRequest, "p_p_static_start");
 
 			portlet.setStaticStart(staticStartPortlet);
 		}
 
 		if (ajaxId != null) {
-			response.setHeader("Ajax-ID", ajaxId);
+			httpServletResponse.setHeader("Ajax-ID", ajaxId);
 		}
 
 		WindowState windowState = WindowStateFactory.getWindowState(
-			ParamUtil.getString(request, "p_p_state"));
+			ParamUtil.getString(httpServletRequest, "p_p_state"));
 
 		PortalUtil.updateWindowState(
-			portletId, user, layout, windowState, request);
+			portletId, user, layout, windowState, httpServletRequest);
 
-		request = PortletContainerUtil.setupOptionalRenderParameters(
-			request, null, columnId, columnPos, columnCount, boundary,
-			decorate);
+		httpServletRequest = PortletContainerUtil.setupOptionalRenderParameters(
+			httpServletRequest, null, columnId, columnPos, columnCount,
+			boundary, decorate);
 
 		PortletContainerUtil.processPublicRenderParameters(
-			request, themeDisplay.getLayout());
+			httpServletRequest, themeDisplay.getLayout());
 
-		PortletContainerUtil.render(request, response, portlet);
+		PortletContainerUtil.render(
+			httpServletRequest, httpServletResponse, portlet);
 
 		return null;
 	}

@@ -138,17 +138,19 @@ public class DLUtil {
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
-		RenderRequest request, String emailFromAddress, String emailFromName) {
+		RenderRequest renderRequest, String emailFromAddress,
+		String emailFromName) {
 
 		return getDL().getEmailDefinitionTerms(
-			request, emailFromAddress, emailFromName);
+			renderRequest, emailFromAddress, emailFromName);
 	}
 
 	public static Map<String, String> getEmailFromDefinitionTerms(
-		RenderRequest request, String emailFromAddress, String emailFromName) {
+		RenderRequest renderRequest, String emailFromAddress,
+		String emailFromName) {
 
 		return getDL().getEmailFromDefinitionTerms(
-			request, emailFromAddress, emailFromName);
+			renderRequest, emailFromAddress, emailFromName);
 	}
 
 	public static List<FileEntry> getFileEntries(Hits hits) {

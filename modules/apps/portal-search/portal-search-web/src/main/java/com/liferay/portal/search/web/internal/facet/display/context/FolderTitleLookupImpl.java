@@ -34,10 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderTitleLookupImpl implements FolderTitleLookup {
 
 	public FolderTitleLookupImpl(
-		FolderSearcher folderSearcher, HttpServletRequest request) {
+		FolderSearcher folderSearcher, HttpServletRequest httpServletRequest) {
 
 		_folderSearcher = folderSearcher;
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	@Override

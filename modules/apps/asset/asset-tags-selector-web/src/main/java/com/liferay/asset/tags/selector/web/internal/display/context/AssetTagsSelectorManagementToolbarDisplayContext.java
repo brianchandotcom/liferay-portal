@@ -32,11 +32,11 @@ public class AssetTagsSelectorManagementToolbarDisplayContext
 	public AssetTagsSelectorManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			assetTagsSelectorDisplayContext.getTagsSearchContainer());
 	}
 

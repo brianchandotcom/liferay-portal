@@ -206,8 +206,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		return ddmFormLayout;
 	}
 
-	protected Locale getLocale(HttpServletRequest request, DDMForm ddmForm) {
-		String languageId = LanguageUtil.getLanguageId(request);
+	protected Locale getLocale(
+		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
+
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -365,26 +367,30 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		setNamespacedAttribute(request, "ddmFormHTML", getDDMFormHTML());
 		setNamespacedAttribute(
-			request, "ddmFormInstance", getDDMFormInstance());
+			httpServletRequest, "ddmFormHTML", getDDMFormHTML());
 		setNamespacedAttribute(
-			request, "hasAddFormInstanceRecordPermission",
+			httpServletRequest, "ddmFormInstance", getDDMFormInstance());
+		setNamespacedAttribute(
+			httpServletRequest, "hasAddFormInstanceRecordPermission",
 			hasAddFormInstanceRecordPermission());
 		setNamespacedAttribute(
-			request, "hasViewFormInstancePermission",
+			httpServletRequest, "hasViewFormInstancePermission",
 			hasViewFormInstancePermission());
-		setNamespacedAttribute(request, "isFormAvailable", isFormAvailable());
 		setNamespacedAttribute(
-			request, "languageId",
-			LocaleUtil.toLanguageId(getLocale(request, getDDMForm())));
-		setNamespacedAttribute(request, "redirectURL", getRedirectURL());
+			httpServletRequest, "isFormAvailable", isFormAvailable());
 		setNamespacedAttribute(
-			request, "resourceBundle",
-			getResourceBundle(getLocale(request, getDDMForm())));
+			httpServletRequest, "languageId",
+			LocaleUtil.toLanguageId(
+				getLocale(httpServletRequest, getDDMForm())));
+		setNamespacedAttribute(
+			httpServletRequest, "redirectURL", getRedirectURL());
+		setNamespacedAttribute(
+			httpServletRequest, "resourceBundle",
+			getResourceBundle(getLocale(httpServletRequest, getDDMForm())));
 	}
 
 	protected void setDDMFormValues(

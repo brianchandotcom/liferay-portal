@@ -33,13 +33,13 @@ import javax.servlet.http.HttpServletRequest;
 public class XSLContentDisplayContext {
 
 	public XSLContentDisplayContext(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			XSLContentConfiguration xslContentConfiguration)
 		throws ConfigurationException {
 
 		_xslContentConfiguration = xslContentConfiguration;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();

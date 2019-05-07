@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectAssetListDisplayContext {
 
 	public SelectAssetListDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
 

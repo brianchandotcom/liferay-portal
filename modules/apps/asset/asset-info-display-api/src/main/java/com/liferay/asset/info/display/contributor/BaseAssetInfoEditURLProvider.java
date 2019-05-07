@@ -35,7 +35,8 @@ public class BaseAssetInfoEditURLProvider
 	implements InfoEditURLProvider<AssetEntry> {
 
 	@Override
-	public String getURL(AssetEntry assetEntry, HttpServletRequest request)
+	public String getURL(
+			AssetEntry assetEntry, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		if (assetEntry == null) {
@@ -57,8 +58,9 @@ public class BaseAssetInfoEditURLProvider
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!assetRenderer.hasEditPermission(
 				themeDisplay.getPermissionChecker())) {
@@ -67,7 +69,8 @@ public class BaseAssetInfoEditURLProvider
 		}
 
 		PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
-			request, LiferayWindowState.NORMAL, themeDisplay.getURLCurrent());
+			httpServletRequest, LiferayWindowState.NORMAL,
+			themeDisplay.getURLCurrent());
 
 		if (editAssetEntryURL == null) {
 			return StringPool.BLANK;

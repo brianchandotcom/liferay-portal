@@ -44,8 +44,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ExpandoDisplayContext {
 
-	public ExpandoDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public ExpandoDisplayContext(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

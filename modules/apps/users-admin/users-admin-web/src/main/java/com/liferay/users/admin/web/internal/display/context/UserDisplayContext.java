@@ -64,21 +64,23 @@ import javax.servlet.http.HttpServletRequest;
 public class UserDisplayContext {
 
 	public UserDisplayContext(
-			HttpServletRequest request, InitDisplayContext initDisplayContext)
+			HttpServletRequest httpServletRequest,
+			InitDisplayContext initDisplayContext)
 		throws PortalException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_initDisplayContext = initDisplayContext;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 
 		_renderResponse = (RenderResponse)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		_selUser = PortalUtil.getSelectedUser(request);
+		_selUser = PortalUtil.getSelectedUser(httpServletRequest);
 		_themeDisplay = themeDisplay;
 	}
 

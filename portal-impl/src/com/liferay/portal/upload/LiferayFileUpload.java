@@ -40,20 +40,21 @@ public class LiferayFileUpload extends ServletFileUpload {
 	public static final String PERCENT = ProgressTracker.PERCENT;
 
 	public LiferayFileUpload(
-		FileItemFactory fileItemFactory, HttpServletRequest request) {
+		FileItemFactory fileItemFactory,
+		HttpServletRequest httpServletRequest) {
 
 		super(fileItemFactory);
 
-		_session = request.getSession();
+		_session = httpServletRequest.getSession();
 	}
 
 	@Override
-	public List<FileItem> parseRequest(HttpServletRequest request)
+	public List<FileItem> parseRequest(HttpServletRequest httpServletRequest)
 		throws FileUploadException {
 
 		_session.removeAttribute(LiferayFileUpload.PERCENT);
 
-		return super.parseRequest(request);
+		return super.parseRequest(httpServletRequest);
 	}
 
 	private final HttpSession _session;

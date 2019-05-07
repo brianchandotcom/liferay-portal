@@ -53,8 +53,8 @@ public class CaptchaTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-captcha:captcha:url", _url);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-captcha:captcha:url", _url);
 	}
 
 	private static final String _PAGE = "/captcha/page.jsp";

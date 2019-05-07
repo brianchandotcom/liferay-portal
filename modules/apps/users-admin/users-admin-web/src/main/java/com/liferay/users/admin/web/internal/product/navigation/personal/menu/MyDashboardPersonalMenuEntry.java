@@ -53,11 +53,12 @@ public class MyDashboardPersonalMenuEntry implements PersonalMenuEntry {
 		return LanguageUtil.get(locale, "my-dashboard");
 	}
 
-	public String getPortletURL(HttpServletRequest request)
+	public String getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 

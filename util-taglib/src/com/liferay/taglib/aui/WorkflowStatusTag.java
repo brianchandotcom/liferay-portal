@@ -45,8 +45,8 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		Object bean = getBean();
 
@@ -70,9 +70,9 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 				"aui:model-context:model");
 		}
 
-		setNamespacedAttribute(request, "bean", bean);
-		setNamespacedAttribute(request, "helpMessage", helpMessage);
-		setNamespacedAttribute(request, "model", model);
+		setNamespacedAttribute(httpServletRequest, "bean", bean);
+		setNamespacedAttribute(httpServletRequest, "helpMessage", helpMessage);
+		setNamespacedAttribute(httpServletRequest, "model", model);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

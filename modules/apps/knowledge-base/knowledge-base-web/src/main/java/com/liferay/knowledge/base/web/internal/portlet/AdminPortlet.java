@@ -545,11 +545,12 @@ public class AdminPortlet extends BaseKBPortlet {
 		}
 	}
 
-	protected List<KBArticle> getKBArticles(HttpServletRequest request)
+	protected List<KBArticle> getKBArticles(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
-			request, "rowIdsKBArticle");
+			httpServletRequest, "rowIdsKBArticle");
 
 		List<KBArticle> kbArticles = new ArrayList<>();
 
@@ -563,10 +564,11 @@ public class AdminPortlet extends BaseKBPortlet {
 		return kbArticles;
 	}
 
-	protected List<KBFolder> getKBFolders(HttpServletRequest request)
+	protected List<KBFolder> getKBFolders(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long[] kbFolderIds = ParamUtil.getLongValues(request, "rowIdsKBFolder");
+		long[] kbFolderIds = ParamUtil.getLongValues(
+			httpServletRequest, "rowIdsKBFolder");
 
 		List<KBFolder> kbFolders = new ArrayList<>();
 

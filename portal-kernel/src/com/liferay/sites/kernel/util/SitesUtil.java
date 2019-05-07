@@ -54,27 +54,31 @@ public class SitesUtil {
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest request, PortletURL portletURL)
+			Group group, HttpServletRequest httpServletRequest,
+			PortletURL portletURL)
 		throws Exception {
 
-		getSites().addPortletBreadcrumbEntries(group, request, portletURL);
+		getSites().addPortletBreadcrumbEntries(
+			group, httpServletRequest, portletURL);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest request,
+			Group group, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
-		getSites().addPortletBreadcrumbEntries(group, request, renderResponse);
+		getSites().addPortletBreadcrumbEntries(
+			group, httpServletRequest, renderResponse);
 	}
 
 	public static void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,
-			HttpServletRequest request, RenderResponse renderResponse)
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		getSites().addPortletBreadcrumbEntries(
-			group, pagesName, redirectURL, request, renderResponse);
+			group, pagesName, redirectURL, httpServletRequest, renderResponse);
 	}
 
 	public static void applyLayoutPrototype(
@@ -122,10 +126,11 @@ public class SitesUtil {
 	}
 
 	public static Object[] deleteLayout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		return getSites().deleteLayout(request, response);
+		return getSites().deleteLayout(httpServletRequest, httpServletResponse);
 	}
 
 	public static Object[] deleteLayout(

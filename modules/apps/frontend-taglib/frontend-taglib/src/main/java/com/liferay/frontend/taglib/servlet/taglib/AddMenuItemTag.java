@@ -94,9 +94,9 @@ public class AddMenuItemTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		List<AddMenuItem> addMenuItems =
-			(List<AddMenuItem>)request.getAttribute(
+			(List<AddMenuItem>)httpServletRequest.getAttribute(
 				"liferay-frontend:add-menu:addMenuItems");
 
 		if (addMenuItems != null) {

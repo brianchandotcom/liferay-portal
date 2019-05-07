@@ -32,9 +32,9 @@ public class RequestHeaderTokenRetriever implements TokenRetriever {
 
 	@Override
 	public String getLoginToken(
-		HttpServletRequest request, String userTokenName) {
+		HttpServletRequest httpServletRequest, String userTokenName) {
 
-		return request.getHeader(userTokenName);
+		return httpServletRequest.getHeader(userTokenName);
 	}
 
 }

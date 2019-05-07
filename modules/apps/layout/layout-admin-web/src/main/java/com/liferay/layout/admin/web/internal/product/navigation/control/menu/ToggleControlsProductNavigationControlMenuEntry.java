@@ -57,18 +57,18 @@ public class ToggleControlsProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public Map<String, Object> getData(HttpServletRequest request) {
+	public Map<String, Object> getData(HttpServletRequest httpServletRequest) {
 		return _data;
 	}
 
 	@Override
-	public String getIcon(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest httpServletRequest) {
 		String stateCss = null;
 
 		String toggleControls = GetterUtil.getString(
 			SessionClicks.get(
-				request, "com.liferay.frontend.js.web_toggleControls",
-				"visible"));
+				httpServletRequest,
+				"com.liferay.frontend.js.web_toggleControls", "visible"));
 
 		if (toggleControls.equals("visible")) {
 			stateCss = "view";
@@ -89,19 +89,22 @@ public class ToggleControlsProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getLinkCssClass(HttpServletRequest request) {
+	public String getLinkCssClass(HttpServletRequest httpServletRequest) {
 		return "toggle-controls visible-xs";
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return "javascript:;";
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -124,7 +127,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)

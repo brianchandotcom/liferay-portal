@@ -59,14 +59,15 @@ public class FacebookSocialBookmark implements SocialBookmark {
 
 	@Override
 	public void render(
-			String target, String title, String url, HttpServletRequest request,
-			HttpServletResponse response)
+			String target, String title, String url,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/page.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Reference(

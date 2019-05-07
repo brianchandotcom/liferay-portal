@@ -44,8 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface LogoutProcessor {
 
 	public void logout(
-			HttpServletRequest request, HttpServletResponse response,
-			String... parameters)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String... parameters)
 		throws IOException;
 
 }

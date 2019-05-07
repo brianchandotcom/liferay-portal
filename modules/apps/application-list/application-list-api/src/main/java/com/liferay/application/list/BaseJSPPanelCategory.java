@@ -60,18 +60,22 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return includeJSP(request, response, getJspPath());
+		return includeJSP(
+			httpServletRequest, httpServletResponse, getJspPath());
 	}
 
 	@Override
 	public boolean includeHeader(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return includeJSP(request, response, getHeaderJspPath());
+		return includeJSP(
+			httpServletRequest, httpServletResponse, getHeaderJspPath());
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -79,8 +83,8 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 	}
 
 	protected boolean includeJSP(
-			HttpServletRequest request, HttpServletResponse response,
-			String jspPath)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String jspPath)
 		throws IOException {
 
 		if (Validator.isNull(jspPath)) {
@@ -91,7 +95,7 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include " + jspPath, se);

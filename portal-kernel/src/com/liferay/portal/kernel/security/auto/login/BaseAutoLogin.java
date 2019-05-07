@@ -34,42 +34,44 @@ public abstract class BaseAutoLogin implements AutoLogin {
 	@Deprecated
 	@Override
 	public String[] handleException(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e)
 		throws AutoLoginException {
 
-		return doHandleException(request, response, e);
+		return doHandleException(httpServletRequest, httpServletResponse, e);
 	}
 
 	@Override
 	public String[] login(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws AutoLoginException {
 
 		try {
-			return doLogin(request, response);
+			return doLogin(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			return doHandleException(request, response, e);
+			return doHandleException(
+				httpServletRequest, httpServletResponse, e);
 		}
 	}
 
-	protected void addRedirect(HttpServletRequest request) {
-		String redirect = ParamUtil.getString(request, "redirect");
+	protected void addRedirect(HttpServletRequest httpServletRequest) {
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				AUTO_LOGIN_REDIRECT_AND_CONTINUE,
 				PortalUtil.escapeRedirect(redirect));
 		}
 	}
 
 	protected String[] doHandleException(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e)
 		throws AutoLoginException {
 
-		if (request.getAttribute(AUTO_LOGIN_REDIRECT) == null) {
+		if (httpServletRequest.getAttribute(AUTO_LOGIN_REDIRECT) == null) {
 			throw new AutoLoginException(e);
 		}
 
@@ -79,7 +81,8 @@ public abstract class BaseAutoLogin implements AutoLogin {
 	}
 
 	protected abstract String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseAutoLogin.class);

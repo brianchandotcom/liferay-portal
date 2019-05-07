@@ -41,8 +41,8 @@ public interface Renderer {
 	public String getTitle(Locale locale);
 
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception;
 
 }

@@ -71,7 +71,8 @@ public class AtomServlet extends AbderaServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ServletException {
 
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
@@ -86,11 +87,11 @@ public class AtomServlet extends AbderaServlet {
 			User user = UserLocalServiceUtil.getUser(
 				authVerifierResult.getUserId());
 
-			AtomUtil.saveUserInRequest(request, user);
+			AtomUtil.saveUserInRequest(httpServletRequest, user);
 
 			AccessControlThreadLocal.setRemoteAccess(true);
 
-			super.service(request, response);
+			super.service(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ServletException(e);

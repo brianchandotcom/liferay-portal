@@ -35,12 +35,14 @@ public class RequestAttributes {
 	@Distributed(direction = Direction.RESPONSE, matchType = MatchType.EXACT)
 	public static final String ATTRIBUTE_3 = "ATTRIBUTE_3";
 
-	public static void setRequestAttributes(HttpServletRequest request) {
+	public static void setRequestAttributes(
+		HttpServletRequest httpServletRequest) {
+
 		DistributedRegistry.registerDistributed(RequestAttributes.class);
 
-		request.setAttribute(ATTRIBUTE_1, ATTRIBUTE_1);
-		request.setAttribute(ATTRIBUTE_2, ATTRIBUTE_2);
-		request.setAttribute(ATTRIBUTE_3, ATTRIBUTE_3);
+		httpServletRequest.setAttribute(ATTRIBUTE_1, ATTRIBUTE_1);
+		httpServletRequest.setAttribute(ATTRIBUTE_2, ATTRIBUTE_2);
+		httpServletRequest.setAttribute(ATTRIBUTE_3, ATTRIBUTE_3);
 	}
 
 }

@@ -23,9 +23,10 @@ import javax.servlet.http.HttpSession;
 public class SharedSessionUtil {
 
 	public static HttpSession getSharedSessionWrapper(
-		HttpSession portalSession, HttpServletRequest request) {
+		HttpSession portalSession, HttpServletRequest httpServletRequest) {
 
-		return _sharedSession.getSharedSessionWrapper(portalSession, request);
+		return _sharedSession.getSharedSessionWrapper(
+			portalSession, httpServletRequest);
 	}
 
 	public void setSharedSession(SharedSession sharedSession) {

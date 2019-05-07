@@ -142,8 +142,8 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		Object bean = getBean();
 
@@ -202,22 +202,24 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			}
 
 			if (!getIgnoreRequestValue()) {
-				value = ParamUtil.getString(request, name, value);
+				value = ParamUtil.getString(httpServletRequest, name, value);
 			}
 		}
 
-		setNamespacedAttribute(request, "bean", bean);
-		setNamespacedAttribute(request, "field", field);
-		setNamespacedAttribute(request, "id", id);
-		setNamespacedAttribute(request, "label", label);
-		setNamespacedAttribute(request, "listTypeFieldName", listTypeFieldName);
-		setNamespacedAttribute(request, "model", model);
-		setNamespacedAttribute(request, "title", String.valueOf(title));
-		setNamespacedAttribute(request, "value", value);
+		setNamespacedAttribute(httpServletRequest, "bean", bean);
+		setNamespacedAttribute(httpServletRequest, "field", field);
+		setNamespacedAttribute(httpServletRequest, "id", id);
+		setNamespacedAttribute(httpServletRequest, "label", label);
+		setNamespacedAttribute(
+			httpServletRequest, "listTypeFieldName", listTypeFieldName);
+		setNamespacedAttribute(httpServletRequest, "model", model);
+		setNamespacedAttribute(
+			httpServletRequest, "title", String.valueOf(title));
+		setNamespacedAttribute(httpServletRequest, "value", value);
 
 		if (Validator.isNotNull(bodyContent)) {
 			setNamespacedAttribute(
-				request, "bodyContent", bodyContent.getString());
+				httpServletRequest, "bodyContent", bodyContent.getString());
 		}
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
@@ -226,7 +228,7 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			(validatorTags.get("required") != null)) {
 
 			setNamespacedAttribute(
-				request, "required", Boolean.TRUE.toString());
+				httpServletRequest, "required", Boolean.TRUE.toString());
 		}
 	}
 

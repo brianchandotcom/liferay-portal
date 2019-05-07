@@ -66,7 +66,7 @@ public class HtmlEngine extends BaseWikiEngine {
 	}
 
 	@Override
-	public String getHelpPageTitle(HttpServletRequest request) {
+	public String getHelpPageTitle(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 

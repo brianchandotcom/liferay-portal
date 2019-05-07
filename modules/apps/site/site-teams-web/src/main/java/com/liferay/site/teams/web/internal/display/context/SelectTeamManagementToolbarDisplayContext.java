@@ -32,11 +32,11 @@ public class SelectTeamManagementToolbarDisplayContext
 	public SelectTeamManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SelectTeamDisplayContext selectTeamDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectTeamDisplayContext.getTeamSearchContainer());
 	}
 

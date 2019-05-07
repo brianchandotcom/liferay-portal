@@ -44,14 +44,16 @@ public class ControlPanelLayoutTypeAccessPolicy
 
 	@Override
 	public void checkAccessAllowedToPortlet(
-			HttpServletRequest request, Layout layout, Portlet portlet)
+			HttpServletRequest httpServletRequest, Layout layout,
+			Portlet portlet)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (PortletPermissionUtil.hasControlPanelAccessPermission(
 				permissionChecker, themeDisplay.getScopeGroupId(), portlet)) {
@@ -59,12 +61,12 @@ public class ControlPanelLayoutTypeAccessPolicy
 			return;
 		}
 
-		if (isAccessGrantedByRuntimePortlet(request)) {
+		if (isAccessGrantedByRuntimePortlet(httpServletRequest)) {
 			return;
 		}
 
 		if (isAccessGrantedByPortletAuthenticationToken(
-				request, layout, portlet)) {
+				httpServletRequest, layout, portlet)) {
 
 			return;
 		}

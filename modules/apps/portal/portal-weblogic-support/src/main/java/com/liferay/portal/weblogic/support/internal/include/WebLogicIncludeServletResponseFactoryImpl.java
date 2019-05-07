@@ -25,12 +25,12 @@ public class WebLogicIncludeServletResponseFactoryImpl
 	implements WebLogicIncludeServletResponseFactory {
 
 	@Override
-	public HttpServletResponse create(HttpServletResponse response) {
-		if (response instanceof WebLogicIncludeServletResponse) {
-			return response;
+	public HttpServletResponse create(HttpServletResponse httpServletResponse) {
+		if (httpServletResponse instanceof WebLogicIncludeServletResponse) {
+			return httpServletResponse;
 		}
 
-		return new WebLogicIncludeServletResponse(response);
+		return new WebLogicIncludeServletResponse(httpServletResponse);
 	}
 
 }

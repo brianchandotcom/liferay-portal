@@ -70,7 +70,8 @@ public class FindFolderAction extends FindStrutsAction {
 
 	@Override
 	protected void addRequiredParameters(
-		HttpServletRequest request, String portletId, PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, String portletId,
+		PortletURL portletURL) {
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 

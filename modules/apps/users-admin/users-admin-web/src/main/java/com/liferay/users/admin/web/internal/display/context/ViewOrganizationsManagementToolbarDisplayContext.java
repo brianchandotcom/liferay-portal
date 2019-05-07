@@ -63,10 +63,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	public ViewOrganizationsManagementToolbarDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;

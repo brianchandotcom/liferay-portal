@@ -177,7 +177,8 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
@@ -186,13 +187,13 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 			}
 
 			BufferCacheServletResponse bufferCacheServletResponse =
-				new BufferCacheServletResponse(response);
+				new BufferCacheServletResponse(httpServletResponse);
 
-			super.service(request, bufferCacheServletResponse);
+			super.service(httpServletRequest, bufferCacheServletResponse);
 
 			String contentType = bufferCacheServletResponse.getContentType();
 
-			response.setContentType(contentType);
+			httpServletResponse.setContentType(contentType);
 
 			String content = bufferCacheServletResponse.getString();
 
@@ -210,7 +211,7 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 			}
 
 			ServletResponseUtil.write(
-				new UncommittedServletResponse(response),
+				new UncommittedServletResponse(httpServletResponse),
 				content.getBytes(StringPool.UTF8));
 		}
 		catch (IOException ioe) {

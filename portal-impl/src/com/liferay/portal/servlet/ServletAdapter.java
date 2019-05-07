@@ -76,7 +76,8 @@ public class ServletAdapter extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Servlet servlet = getServlet();
@@ -90,12 +91,12 @@ public class ServletAdapter extends HttpServlet {
 					"A servlet matching the filter " +
 						servletConfig.getInitParameter("filter") +
 							" is unavailable"),
-				request, response);
+				httpServletRequest, httpServletResponse);
 
 			return;
 		}
 
-		servlet.service(request, response);
+		servlet.service(httpServletRequest, httpServletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ServletAdapter.class);

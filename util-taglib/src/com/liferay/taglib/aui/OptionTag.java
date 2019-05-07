@@ -43,8 +43,8 @@ public class OptionTag extends BaseOptionTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		Object value = getValue();
 
@@ -56,15 +56,16 @@ public class OptionTag extends BaseOptionTag {
 
 		if (getUseModelValue()) {
 			String selectValue = GetterUtil.getString(
-				(String)request.getAttribute("aui:select:value"));
+				(String)httpServletRequest.getAttribute("aui:select:value"));
 
 			if (Validator.isNotNull(selectValue)) {
 				selected = selectValue.equals(String.valueOf(value));
 			}
 		}
 
-		setNamespacedAttribute(request, "selected", String.valueOf(selected));
-		setNamespacedAttribute(request, "value", value);
+		setNamespacedAttribute(
+			httpServletRequest, "selected", String.valueOf(selected));
+		setNamespacedAttribute(httpServletRequest, "value", value);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

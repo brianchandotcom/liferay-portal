@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 public class FriendlyURLUtil {
 
 	public static String getFriendlyURL(
-		HttpServletRequest request, ServletConfig servletConfig) {
+		HttpServletRequest httpServletRequest, ServletConfig servletConfig) {
 
 		boolean privateParam = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("private"));
@@ -59,7 +59,7 @@ public class FriendlyURLUtil {
 
 		String pathInfo = null;
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		int pos = requestURI.indexOf(Portal.JSESSIONID);
 

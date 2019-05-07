@@ -52,11 +52,11 @@ public class FragmentManagementToolbarDisplayContext
 	public FragmentManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		FragmentDisplayContext fragmentDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			fragmentDisplayContext.getFragmentEntriesSearchContainer());
 
 		_fragmentDisplayContext = fragmentDisplayContext;

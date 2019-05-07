@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 public class RenderURLImpl extends PortletURLImpl implements RenderURL {
 
 	public RenderURLImpl(
-		HttpServletRequest request, Portlet portlet, Layout layout,
+		HttpServletRequest httpServletRequest, Portlet portlet, Layout layout,
 		String lifecycle, MimeResponse.Copy copy) {
 
-		super(request, portlet, layout, lifecycle, copy);
+		super(httpServletRequest, portlet, layout, lifecycle, copy);
 	}
 
 	public RenderURLImpl(

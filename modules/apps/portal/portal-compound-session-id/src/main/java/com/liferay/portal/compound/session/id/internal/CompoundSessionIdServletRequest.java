@@ -26,8 +26,10 @@ import javax.servlet.http.HttpSession;
 public class CompoundSessionIdServletRequest
 	extends PersistentHttpServletRequestWrapper {
 
-	public CompoundSessionIdServletRequest(HttpServletRequest request) {
-		super(request);
+	public CompoundSessionIdServletRequest(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 	@Override

@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MBBreadcrumbUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			long categoryId, HttpServletRequest request,
+			long categoryId, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -50,19 +50,21 @@ public class MBBreadcrumbUtil {
 			category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 		}
 
-		addPortletBreadcrumbEntries(category, request, renderResponse);
+		addPortletBreadcrumbEntries(
+			category, httpServletRequest, renderResponse);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			MBCategory category, HttpServletRequest request,
+			MBCategory category, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
+			httpServletRequest, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -72,7 +74,7 @@ public class MBBreadcrumbUtil {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("categories"),
+				httpServletRequest, themeDisplay.translate("categories"),
 				portletURL.toString());
 		}
 		else {
@@ -81,7 +83,8 @@ public class MBBreadcrumbUtil {
 		}
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, themeDisplay.translate("home"), portletURL.toString());
+			httpServletRequest, themeDisplay.translate("home"),
+			portletURL.toString());
 
 		if (category == null) {
 			return;
@@ -101,18 +104,19 @@ public class MBBreadcrumbUtil {
 				"mbCategoryId", String.valueOf(curCategory.getCategoryId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, curCategory.getName(), portletURL.toString());
+				httpServletRequest, curCategory.getName(),
+				portletURL.toString());
 		}
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(category.getCategoryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, category.getName(), portletURL.toString());
+			httpServletRequest, category.getName(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			MBMessage message, HttpServletRequest request,
+			MBMessage message, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -130,7 +134,8 @@ public class MBBreadcrumbUtil {
 			category = message.getCategory();
 		}
 
-		addPortletBreadcrumbEntries(category, request, renderResponse);
+		addPortletBreadcrumbEntries(
+			category, httpServletRequest, renderResponse);
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -140,7 +145,7 @@ public class MBBreadcrumbUtil {
 			"messageId", String.valueOf(message.getMessageId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, message.getSubject(), portletURL.toString());
+			httpServletRequest, message.getSubject(), portletURL.toString());
 	}
 
 }

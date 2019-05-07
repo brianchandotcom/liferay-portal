@@ -49,12 +49,12 @@ public class IndexingProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public Map<String, Object> getData(HttpServletRequest request) {
+	public Map<String, Object> getData(HttpServletRequest httpServletRequest) {
 		return _data;
 	}
 
 	@Override
-	public String getIcon(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest httpServletRequest) {
 		return "reload";
 	}
 
@@ -68,12 +68,14 @@ public class IndexingProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
 		int count = _indexWriterHelper.getReindexTaskCount(
 			CompanyConstants.SYSTEM, false);
 
@@ -81,7 +83,7 @@ public class IndexingProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	@Reference(unbind = "-")

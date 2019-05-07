@@ -64,11 +64,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SegmentsServicePreAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			doRun(request);
+			doRun(httpServletRequest);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -82,9 +84,10 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsServiceConfiguration.class, properties);
 	}
 
-	protected void doRun(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void doRun(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isLifecycleRender()) {
 			return;
@@ -98,21 +101,21 @@ public class SegmentsServicePreAction extends Action {
 			!layout.isTypeControlPanel()) {
 
 			segmentsEntryIds = _getSegmentsEntryIds(
-				request, themeDisplay.getScopeGroupId(),
+				httpServletRequest, themeDisplay.getScopeGroupId(),
 				themeDisplay.getUserId());
 		}
 
 		segmentsEntryIds = ArrayUtil.append(
 			segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
 		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
 			layout.getGroupId(), segmentsEntryIds,
 			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 			ArrayUtil.append(
 				segmentsExperienceIds,
@@ -120,7 +123,7 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	private long[] _getSegmentsEntryIds(
-		HttpServletRequest request, long groupId, long userId) {
+		HttpServletRequest httpServletRequest, long groupId, long userId) {
 
 		if ((_segmentsEntrySimulator != null) &&
 			_segmentsEntrySimulator.isSimulationActive(userId)) {
@@ -131,7 +134,7 @@ public class SegmentsServicePreAction extends Action {
 		try {
 			return _segmentsEntryProvider.getSegmentsEntryIds(
 				groupId, User.class.getName(), userId,
-				_requestContextMapper.map(request));
+				_requestContextMapper.map(httpServletRequest));
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

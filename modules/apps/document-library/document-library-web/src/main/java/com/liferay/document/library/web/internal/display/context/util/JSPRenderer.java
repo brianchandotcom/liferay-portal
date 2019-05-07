@@ -33,7 +33,9 @@ public class JSPRenderer {
 		_jspPath = jspPath;
 	}
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Map<String, Object> savedAttributes = new HashMap<>();
@@ -41,18 +43,18 @@ public class JSPRenderer {
 		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
 			String key = entry.getKey();
 
-			savedAttributes.put(key, request.getAttribute(key));
+			savedAttributes.put(key, httpServletRequest.getAttribute(key));
 
-			request.setAttribute(key, entry.getValue());
+			httpServletRequest.setAttribute(key, entry.getValue());
 		}
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			_jspPath);
+		RequestDispatcher requestDispatcher =
+			httpServletRequest.getRequestDispatcher(_jspPath);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 
 		for (Map.Entry<String, Object> entry : savedAttributes.entrySet()) {
-			request.setAttribute(entry.getKey(), entry.getValue());
+			httpServletRequest.setAttribute(entry.getKey(), entry.getValue());
 		}
 	}
 

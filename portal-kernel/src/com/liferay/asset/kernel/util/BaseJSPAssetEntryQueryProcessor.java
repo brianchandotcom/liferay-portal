@@ -38,7 +38,8 @@ public abstract class BaseJSPAssetEntryQueryProcessor
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		String jspPath = getJspPath();
@@ -51,7 +52,7 @@ public abstract class BaseJSPAssetEntryQueryProcessor
 			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include " + jspPath, se);

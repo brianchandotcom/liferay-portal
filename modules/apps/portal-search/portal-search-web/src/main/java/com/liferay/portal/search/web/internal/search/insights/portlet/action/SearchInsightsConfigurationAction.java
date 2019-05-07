@@ -34,7 +34,7 @@ public class SearchInsightsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/search/insights/configuration.jsp";
 	}
 

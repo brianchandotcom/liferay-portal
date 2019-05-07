@@ -32,11 +32,11 @@ public class SelectUsersManagementToolbarDisplayContext
 	public SelectUsersManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SelectUsersDisplayContext selectUsersDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectUsersDisplayContext.getUserSearchContainer());
 	}
 

@@ -104,7 +104,7 @@ public interface LiferayPortletResponse extends PortletResponse {
 
 	public void setURLEncoder(URLEncoder urlEncoder);
 
-	public void transferHeaders(HttpServletResponse response);
+	public void transferHeaders(HttpServletResponse httpServletResponse);
 
 	public void transferMarkupHeadElements();
 

@@ -79,19 +79,20 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		long displaStyleGroupId = getDisplayStyleGroupId();
 
 		if (displaStyleGroupId == 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			displaStyleGroupId = themeDisplay.getScopeGroupId();
 
 			setNamespacedAttribute(
-				request, "displayStyleGroupId", displaStyleGroupId);
+				httpServletRequest, "displayStyleGroupId", displaStyleGroupId);
 		}
 
 		_portletDisplayDDMTemplate =
@@ -100,7 +101,8 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 				getDisplayStyle(), true);
 
 		setNamespacedAttribute(
-			request, "portletDisplayDDMTemplate", _portletDisplayDDMTemplate);
+			httpServletRequest, "portletDisplayDDMTemplate",
+			_portletDisplayDDMTemplate);
 	}
 
 	private DDMTemplate _portletDisplayDDMTemplate;

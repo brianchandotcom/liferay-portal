@@ -423,7 +423,8 @@ public class JAASTest {
 
 		@Override
 		public void run(
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
 
 			_ran = true;
 		}

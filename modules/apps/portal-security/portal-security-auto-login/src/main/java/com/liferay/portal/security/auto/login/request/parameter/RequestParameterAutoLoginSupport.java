@@ -44,22 +44,24 @@ public class RequestParameterAutoLoginSupport extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String login = ParamUtil.getString(request, getLoginParam());
+		String login = ParamUtil.getString(httpServletRequest, getLoginParam());
 
 		if (Validator.isNull(login)) {
 			return null;
 		}
 
-		String password = ParamUtil.getString(request, getPasswordParam());
+		String password = ParamUtil.getString(
+			httpServletRequest, getPasswordParam());
 
 		if (Validator.isNull(password)) {
 			return null;
 		}
 
-		Company company = _portal.getCompany(request);
+		Company company = _portal.getCompany(httpServletRequest);
 
 		String authType = company.getAuthType();
 

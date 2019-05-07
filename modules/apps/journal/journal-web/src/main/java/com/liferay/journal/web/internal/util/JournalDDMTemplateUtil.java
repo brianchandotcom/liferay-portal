@@ -98,7 +98,7 @@ public class JournalDDMTemplateUtil {
 	}
 
 	public String getPaletteItemTitle(
-		HttpServletRequest request, ResourceBundle resourceBundle,
+		HttpServletRequest httpServletRequest, ResourceBundle resourceBundle,
 		TemplateVariableDefinition templateVariableDefinition) {
 
 		StringBundler sb = new StringBundler(12);
@@ -109,26 +109,30 @@ public class JournalDDMTemplateUtil {
 			sb.append("<p>");
 			sb.append(
 				HtmlUtil.escape(
-					LanguageUtil.get(request, resourceBundle, help)));
+					LanguageUtil.get(
+						httpServletRequest, resourceBundle, help)));
 			sb.append("</p>");
 		}
 
 		if (templateVariableDefinition.isCollection()) {
 			sb.append("<p><i>*");
 			sb.append(
-				LanguageUtil.get(request, "this-is-a-collection-of-fields"));
+				LanguageUtil.get(
+					httpServletRequest, "this-is-a-collection-of-fields"));
 			sb.append("</i></p>");
 		}
 		else if (templateVariableDefinition.isRepeatable()) {
 			sb.append("<p><i>*");
-			sb.append(LanguageUtil.get(request, "this-is-a-repeatable-field"));
+			sb.append(
+				LanguageUtil.get(
+					httpServletRequest, "this-is-a-repeatable-field"));
 			sb.append("</i></p>");
 		}
 
 		if (!Objects.equals(
 				templateVariableDefinition.getDataType(), "service-locator")) {
 
-			sb.append(LanguageUtil.get(request, "variable"));
+			sb.append(LanguageUtil.get(httpServletRequest, "variable"));
 			sb.append(StringPool.COLON);
 			sb.append(StringPool.NBSP);
 			sb.append(HtmlUtil.escape(templateVariableDefinition.getName()));
@@ -136,7 +140,8 @@ public class JournalDDMTemplateUtil {
 
 		sb.append(
 			_getPaletteItemTitle(
-				request, "class", templateVariableDefinition.getClazz()));
+				httpServletRequest, "class",
+				templateVariableDefinition.getClazz()));
 
 		if (templateVariableDefinition.isCollection()) {
 			TemplateVariableDefinition itemTemplateVariableDefinition =
@@ -144,7 +149,7 @@ public class JournalDDMTemplateUtil {
 
 			sb.append(
 				_getPaletteItemTitle(
-					request, "items-class",
+					httpServletRequest, "items-class",
 					itemTemplateVariableDefinition.getClazz()));
 		}
 
@@ -220,7 +225,7 @@ public class JournalDDMTemplateUtil {
 	}
 
 	private String _getPaletteItemTitle(
-		HttpServletRequest request, String label, Class<?> clazz) {
+		HttpServletRequest httpServletRequest, String label, Class<?> clazz) {
 
 		if (clazz == null) {
 			return StringPool.BLANK;
@@ -231,7 +236,7 @@ public class JournalDDMTemplateUtil {
 		String className = clazz.getName();
 
 		sb.append("<br />");
-		sb.append(LanguageUtil.get(request, label));
+		sb.append(LanguageUtil.get(httpServletRequest, label));
 		sb.append(StringPool.COLON);
 		sb.append(StringPool.NBSP);
 

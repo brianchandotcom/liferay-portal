@@ -63,39 +63,42 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		JSONArray dataProviderInstancesJSONArray =
-			getDataProviderInstancesJSONArray(request);
+			getDataProviderInstancesJSONArray(httpServletRequest);
 
 		if (dataProviderInstancesJSONArray == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
 			return;
 		}
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(
-			response, dataProviderInstancesJSONArray.toJSONString());
+			httpServletResponse, dataProviderInstancesJSONArray.toJSONString());
 	}
 
 	protected JSONArray getDataProviderInstancesJSONArray(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			String languageId = ParamUtil.getString(
-				request, "languageId", themeDisplay.getLanguageId());
+				httpServletRequest, "languageId", themeDisplay.getLanguageId());
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			long scopeGroupId = ParamUtil.getLong(
-				request, "scopeGroupId", themeDisplay.getScopeGroupId());
+				httpServletRequest, "scopeGroupId",
+				themeDisplay.getScopeGroupId());
 
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -107,8 +110,9 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 				scopeGroupId);
 
 			int start = ParamUtil.getInteger(
-				request, "start", QueryUtil.ALL_POS);
-			int end = ParamUtil.getInteger(request, "end", QueryUtil.ALL_POS);
+				httpServletRequest, "start", QueryUtil.ALL_POS);
+			int end = ParamUtil.getInteger(
+				httpServletRequest, "end", QueryUtil.ALL_POS);
 
 			DataProviderInstanceNameComparator
 				dataProviderInstanceNameComparator =

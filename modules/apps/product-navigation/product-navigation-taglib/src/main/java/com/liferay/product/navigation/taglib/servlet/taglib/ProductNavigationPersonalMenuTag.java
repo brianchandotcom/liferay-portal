@@ -62,10 +62,10 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-product-navigation:personal-menu:expanded", _expanded);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-product-navigation:personal-menu:label", _label);
 	}
 

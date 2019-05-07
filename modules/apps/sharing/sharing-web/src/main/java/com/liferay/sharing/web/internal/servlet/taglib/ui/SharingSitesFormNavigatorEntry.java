@@ -74,17 +74,19 @@ public class SharingSitesFormNavigatorEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+		Group liveGroup = (Group)httpServletRequest.getAttribute(
+			"site.liveGroup");
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SharingWebKeys.GROUP_SHARING_CONFIGURATION,
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				liveGroup));
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

@@ -28,11 +28,11 @@ import javax.servlet.http.HttpSession;
 public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 
 	public SharedSessionServletRequest(
-		HttpServletRequest request, boolean shared) {
+		HttpServletRequest httpServletRequest, boolean shared) {
 
-		super(request);
+		super(httpServletRequest);
 
-		_portalSession = request.getSession();
+		_portalSession = httpServletRequest.getSession();
 		_shared = shared;
 	}
 

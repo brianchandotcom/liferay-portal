@@ -117,7 +117,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	@Override
 	public void addPortletBreadcrumbEntries(
-			Organization organization, HttpServletRequest request,
+			Organization organization, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -137,7 +137,8 @@ public class UsersAdminImpl implements UsersAdmin {
 				String.valueOf(ancestorOrganization.getOrganizationId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorOrganization.getName(), portletURL.toString());
+				httpServletRequest, ancestorOrganization.getName(),
+				portletURL.toString());
 		}
 
 		Organization unescapedOrganization = organization.toUnescapedModel();
@@ -147,7 +148,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			String.valueOf(unescapedOrganization.getOrganizationId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, unescapedOrganization.getName(), portletURL.toString());
+			httpServletRequest, unescapedOrganization.getName(),
+			portletURL.toString());
 	}
 
 	@Override

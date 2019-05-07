@@ -127,37 +127,41 @@ public class VirtualLayout extends LayoutWrapper {
 	}
 
 	@Override
-	public String getRegularURL(HttpServletRequest request)
+	public String getRegularURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String layoutURL = _sourceLayout.getRegularURL(request);
+		String layoutURL = _sourceLayout.getRegularURL(httpServletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}
 
 	@Override
-	public String getResetLayoutURL(HttpServletRequest request)
+	public String getResetLayoutURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String layoutURL = _sourceLayout.getResetLayoutURL(request);
+		String layoutURL = _sourceLayout.getResetLayoutURL(httpServletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}
 
 	@Override
-	public String getResetMaxStateURL(HttpServletRequest request)
+	public String getResetMaxStateURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String layoutURL = _sourceLayout.getResetMaxStateURL(request);
+		String layoutURL = _sourceLayout.getResetMaxStateURL(
+			httpServletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}

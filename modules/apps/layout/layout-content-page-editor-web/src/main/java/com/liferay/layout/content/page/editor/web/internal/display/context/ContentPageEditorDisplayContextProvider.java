@@ -43,17 +43,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentPageEditorDisplayContextProvider {
 
 	public ContentPageEditorDisplayContext getContentPageEditorDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		String className = (String)request.getAttribute(
+		String className = (String)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME);
 
 		long classPK = GetterUtil.getLong(
-			request.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
+			httpServletRequest.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
 
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				request, renderResponse, className, classPK,
+				httpServletRequest, renderResponse, className, classPK,
 				_fragmentRendererController);
 		}
 
@@ -75,7 +75,7 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			request, renderResponse, Layout.class.getName(),
+			httpServletRequest, renderResponse, Layout.class.getName(),
 			draftLayout.getPlid(), showMapping, _fragmentRendererController);
 	}
 

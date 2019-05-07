@@ -77,17 +77,17 @@ import javax.servlet.http.HttpServletRequest;
 public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 	public EditRoleAssignmentsManagementToolbarDisplayContext(
-			HttpServletRequest request, RenderRequest renderRequest,
+			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 			RenderResponse renderResponse, String displayStyle, String tabs3)
 		throws PortalException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 		_tabs3 = tabs3;
 
-		long roleId = ParamUtil.getLong(request, "roleId");
+		long roleId = ParamUtil.getLong(httpServletRequest, "roleId");
 
 		_role = RoleServiceUtil.fetchRole(roleId);
 	}

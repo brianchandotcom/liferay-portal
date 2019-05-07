@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class UncommittedServletResponse extends HttpServletResponseWrapper {
 
-	public UncommittedServletResponse(HttpServletResponse response) {
-		super(response);
+	public UncommittedServletResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 	}
 
 	@Override

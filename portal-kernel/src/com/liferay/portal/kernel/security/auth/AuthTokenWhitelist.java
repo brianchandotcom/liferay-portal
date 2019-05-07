@@ -28,10 +28,10 @@ public interface AuthTokenWhitelist {
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin);
 
 	public boolean isPortletCSRFWhitelisted(
-		HttpServletRequest request, Portlet portlet);
+		HttpServletRequest httpServletRequest, Portlet portlet);
 
 	public boolean isPortletInvocationWhitelisted(
-		HttpServletRequest request, Portlet portlet);
+		HttpServletRequest httpServletRequest, Portlet portlet);
 
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL);

@@ -38,13 +38,14 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class NestedPortletsDisplayContext {
 
-	public NestedPortletsDisplayContext(HttpServletRequest request)
+	public NestedPortletsDisplayContext(HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = request;
+		_request = httpServletRequest;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -150,8 +151,10 @@ public class NestedPortletsDisplayContext {
 				layoutTemplatesUnsupported());
 	}
 
-	private boolean _isVirtualHostRequest(HttpServletRequest request) {
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+	private boolean _isVirtualHostRequest(
+		HttpServletRequest httpServletRequest) {
+
+		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 		if ((layoutSet != null) &&

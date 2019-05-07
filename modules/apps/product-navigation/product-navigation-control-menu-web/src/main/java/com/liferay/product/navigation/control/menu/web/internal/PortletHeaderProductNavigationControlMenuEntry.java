@@ -55,28 +55,33 @@ public class PortletHeaderProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION,
 			portletDisplay.getDescription());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
 			portletDisplay.getTitle());
 
-		return super.includeIcon(request, response);
+		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -90,7 +95,7 @@ public class PortletHeaderProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	@Override

@@ -25,23 +25,24 @@ public class ProtectedServletRequest
 	extends PersistentHttpServletRequestWrapper {
 
 	public ProtectedServletRequest(
-		HttpServletRequest request, String remoteUser) {
+		HttpServletRequest httpServletRequest, String remoteUser) {
 
-		this(request, remoteUser, null);
+		this(httpServletRequest, remoteUser, null);
 	}
 
 	public ProtectedServletRequest(
-		HttpServletRequest request, String remoteUser, String authType) {
+		HttpServletRequest httpServletRequest, String remoteUser,
+		String authType) {
 
-		super(request);
+		super(httpServletRequest);
 
 		if (remoteUser == null) {
 			throw new NullPointerException("Remote user is null");
 		}
 
-		if (request instanceof ProtectedServletRequest) {
+		if (httpServletRequest instanceof ProtectedServletRequest) {
 			ProtectedServletRequest parentRequest =
-				(ProtectedServletRequest)request;
+				(ProtectedServletRequest)httpServletRequest;
 
 			setRequest(parentRequest.getRequest());
 		}

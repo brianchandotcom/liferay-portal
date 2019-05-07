@@ -89,18 +89,19 @@ public class CustomAttributeTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute:className", _className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute:classPK",
 			String.valueOf(_classPK));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute:editable",
 			String.valueOf(_editable));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute:label", String.valueOf(_label));
-		request.setAttribute("liferay-expando:custom-attribute:name", _name);
+		httpServletRequest.setAttribute(
+			"liferay-expando:custom-attribute:name", _name);
 	}
 
 	private static final String _PAGE = "/custom_attribute/page.jsp";

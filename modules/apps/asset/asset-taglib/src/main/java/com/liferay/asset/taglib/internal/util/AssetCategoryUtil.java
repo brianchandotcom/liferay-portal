@@ -43,12 +43,13 @@ public class AssetCategoryUtil {
 	public static final String CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	public static void addPortletBreadcrumbEntries(
-			long assetCategoryId, HttpServletRequest request,
+			long assetCategoryId, HttpServletRequest httpServletRequest,
 			PortletURL portletURL)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -61,11 +62,12 @@ public class AssetCategoryUtil {
 		}
 
 		addPortletBreadcrumbEntries(
-			assetCategoryId, request, portletURL, portletBreadcrumbEntry);
+			assetCategoryId, httpServletRequest, portletURL,
+			portletBreadcrumbEntry);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long assetCategoryId, HttpServletRequest request,
+			long assetCategoryId, HttpServletRequest httpServletRequest,
 			PortletURL portletURL, boolean portletBreadcrumbEntry)
 		throws Exception {
 
@@ -76,8 +78,9 @@ public class AssetCategoryUtil {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<AssetCategory> ancestorCategories = assetCategory.getAncestors();
 
@@ -88,14 +91,16 @@ public class AssetCategoryUtil {
 				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorCategory.getTitle(themeDisplay.getLocale()),
+				httpServletRequest,
+				ancestorCategory.getTitle(themeDisplay.getLocale()),
 				portletURL.toString(), null, portletBreadcrumbEntry);
 		}
 
 		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, assetCategory.getTitle(themeDisplay.getLocale()),
+			httpServletRequest,
+			assetCategory.getTitle(themeDisplay.getLocale()),
 			portletURL.toString(), null, portletBreadcrumbEntry);
 	}
 

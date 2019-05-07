@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface InactiveRequestHandler {
 
 	public void processInactiveRequest(
-			HttpServletRequest request, HttpServletResponse response,
-			String messageKey)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String messageKey)
 		throws IOException;
 
 }

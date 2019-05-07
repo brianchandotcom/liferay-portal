@@ -262,8 +262,8 @@ public class InvokerFilterHelper {
 	}
 
 	protected InvokerFilterChain createInvokerFilterChain(
-		HttpServletRequest request, Dispatcher dispatcher, String uri,
-		FilterChain filterChain) {
+		HttpServletRequest httpServletRequest, Dispatcher dispatcher,
+		String uri, FilterChain filterChain) {
 
 		InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
 			filterChain);
@@ -276,7 +276,9 @@ public class InvokerFilterHelper {
 			}
 
 			for (FilterMapping filterMapping : filterMappings) {
-				if (filterMapping.isMatch(request, dispatcher, uri)) {
+				if (filterMapping.isMatch(
+						httpServletRequest, dispatcher, uri)) {
+
 					invokerFilterChain.addFilter(filterMapping.getFilter());
 				}
 			}

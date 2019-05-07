@@ -42,11 +42,11 @@ public class RESTProxyAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String url = ParamUtil.getString(request, "url");
+		String url = ParamUtil.getString(httpServletRequest, "url");
 
 		if (!validate(url)) {
 			return null;
@@ -71,7 +71,7 @@ public class RESTProxyAction implements Action {
 
 		String content = HttpUtil.URLtoString(options);
 
-		ServletResponseUtil.write(response, content);
+		ServletResponseUtil.write(httpServletResponse, content);
 
 		return null;
 	}

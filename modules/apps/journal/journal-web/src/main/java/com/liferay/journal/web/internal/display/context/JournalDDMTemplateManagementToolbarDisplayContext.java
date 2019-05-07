@@ -55,12 +55,12 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	public JournalDDMTemplateManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalDDMTemplateDisplayContext.getDDMTemplateSearch());
 
 		_journalDDMTemplateDisplayContext = journalDDMTemplateDisplayContext;

@@ -39,20 +39,22 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		String portletId = ParamUtil.getString(request, "portletId");
+		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
 
 		if (!PortletPermissionUtil.contains(
 				permissionChecker, layout, portletId,
@@ -61,8 +63,8 @@ public class UpdatePortletTitleAction extends JSONAction {
 			return null;
 		}
 
-		String languageId = LanguageUtil.getLanguageId(request);
-		String title = ParamUtil.getString(request, "title");
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+		String title = ParamUtil.getString(httpServletRequest, "title");
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
@@ -75,7 +77,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 		InvokerPortletUtil.clearResponse(
 			session, layout.getPrimaryKey(), portletId,
-			LanguageUtil.getLanguageId(request));
+			LanguageUtil.getLanguageId(httpServletRequest));
 
 		return null;
 	}

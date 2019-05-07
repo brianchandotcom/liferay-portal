@@ -39,22 +39,23 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 
 	public GoogleDocsDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType) {
 
 		super(
-			_UUID, parentDLEditFileEntryDisplayContext, request, response,
-			dlFileEntryType);
+			_UUID, parentDLEditFileEntryDisplayContext, httpServletRequest,
+			httpServletResponse, dlFileEntryType);
 	}
 
 	public GoogleDocsDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
 
 		super(
-			_UUID, parentDLEditFileEntryDisplayContext, request, response,
-			fileEntry);
+			_UUID, parentDLEditFileEntryDisplayContext, httpServletRequest,
+			httpServletResponse, fileEntry);
 	}
 
 	@Override

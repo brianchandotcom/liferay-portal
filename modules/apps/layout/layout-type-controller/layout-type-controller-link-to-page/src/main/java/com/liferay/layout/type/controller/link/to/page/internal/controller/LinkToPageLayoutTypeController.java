@@ -56,15 +56,16 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public String includeEditContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			LinkToPageLayoutTypeControllerWebKeys.ITEM_SELECTOR, _itemSelector);
-		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
-		return super.includeEditContent(request, response, layout);
+		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
 	}
 
 	@Override
@@ -94,9 +95,11 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	protected ServletResponse createServletResponse(
-		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
+		HttpServletResponse httpServletResponse,
+		UnsyncStringWriter unsyncStringWriter) {
 
-		return new PipingServletResponse(response, unsyncStringWriter);
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

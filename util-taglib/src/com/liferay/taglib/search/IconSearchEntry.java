@@ -76,15 +76,15 @@ public class IconSearchEntry extends TextSearchEntry {
 
 	@Override
 	public void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-icon:href", _href);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-icon:icon", _icon);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-icon:toggleRowChecker",
 			_toggleRowChecker);
 
@@ -93,7 +93,8 @@ public class IconSearchEntry extends TextSearchEntry {
 				getServletContext(), _PAGE);
 
 		requestDispatcher.include(
-			request, new PipingServletResponse(response, writer));
+			httpServletRequest,
+			new PipingServletResponse(httpServletResponse, writer));
 	}
 
 	@Override
@@ -105,12 +106,12 @@ public class IconSearchEntry extends TextSearchEntry {
 		_icon = icon;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
-	public void setResponse(HttpServletResponse response) {
-		_response = response;
+	public void setResponse(HttpServletResponse httpServletResponse) {
+		_response = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {

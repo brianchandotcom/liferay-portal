@@ -39,8 +39,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		Bundle bundle = _bundleContext.getBundle();
@@ -50,9 +50,10 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 				"/creole_dialog_definition.js");
 
 		StreamUtil.transfer(
-			entryURL.openStream(), response.getOutputStream(), false);
+			entryURL.openStream(), httpServletResponse.getOutputStream(),
+			false);
 
-		String toolbarSet = (String)request.getAttribute(
+		String toolbarSet = (String)httpServletRequest.getAttribute(
 			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
 		if (toolbarSet.equals("creole")) {
@@ -60,7 +61,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 				"/META-INF/resources/ckeditor/extension/creole_dialog_show.js");
 
 			StreamUtil.transfer(
-				entryURL.openStream(), response.getOutputStream(), false);
+				entryURL.openStream(), httpServletResponse.getOutputStream(),
+				false);
 		}
 	}
 

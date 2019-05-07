@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class DDMFormFieldFreeMarkerRendererHelper {
 
-	public static Editor getEditor(HttpServletRequest request) {
-		if (!BrowserSnifferUtil.isRtf(request)) {
+	public static Editor getEditor(HttpServletRequest httpServletRequest) {
+		if (!BrowserSnifferUtil.isRtf(httpServletRequest)) {
 			return _editors.get("simple");
 		}
 

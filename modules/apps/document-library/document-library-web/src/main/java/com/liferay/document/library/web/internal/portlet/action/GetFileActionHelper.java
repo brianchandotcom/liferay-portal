@@ -58,51 +58,58 @@ import javax.servlet.http.HttpServletResponse;
 public class GetFileActionHelper {
 
 	public void processRequest(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
-			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
+			long fileEntryId = ParamUtil.getLong(
+				httpServletRequest, "fileEntryId");
 
-			long folderId = ParamUtil.getLong(request, "folderId");
-			String name = ParamUtil.getString(request, "name");
-			String title = ParamUtil.getString(request, "title");
-			String version = ParamUtil.getString(request, "version");
+			long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
+			String name = ParamUtil.getString(httpServletRequest, "name");
+			String title = ParamUtil.getString(httpServletRequest, "title");
+			String version = ParamUtil.getString(httpServletRequest, "version");
 
-			long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
+			long fileShortcutId = ParamUtil.getLong(
+				httpServletRequest, "fileShortcutId");
 
-			String uuid = ParamUtil.getString(request, "uuid");
+			String uuid = ParamUtil.getString(httpServletRequest, "uuid");
 
 			String targetExtension = ParamUtil.getString(
-				request, "targetExtension");
+				httpServletRequest, "targetExtension");
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			long groupId = ParamUtil.getLong(
-				request, "groupId", themeDisplay.getScopeGroupId());
+				httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
 
 			getFile(
 				fileEntryId, folderId, name, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, request, response);
+				uuid, groupId, targetExtension, httpServletRequest,
+				httpServletResponse);
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, request, response);
+				HttpServletResponse.SC_NOT_FOUND, nsfee, httpServletRequest,
+				httpServletResponse);
 		}
 		catch (PrincipalException pe) {
-			processPrincipalException(pe, request, response);
+			processPrincipalException(
+				pe, httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 		}
 	}
 
 	protected void getFile(
 			long fileEntryId, long folderId, String name, String title,
 			String version, long fileShortcutId, String uuid, long groupId,
-			String targetExtension, HttpServletRequest request,
-			HttpServletResponse response)
+			String targetExtension, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		if (name.startsWith("DLFE-")) {
@@ -148,7 +155,7 @@ public class GetFileActionHelper {
 
 				if (dlFileEntry != null) {
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
+						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					PermissionChecker permissionChecker =
@@ -230,16 +237,18 @@ public class GetFileActionHelper {
 		is = flashMagicBytesUtilResult.getInputStream();
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentLength, contentType);
+			httpServletRequest, httpServletResponse, fileName, is,
+			contentLength, contentType);
 	}
 
 	protected void processPrincipalException(
-			Throwable t, HttpServletRequest request,
-			HttpServletResponse response)
+			Throwable t, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -248,19 +257,19 @@ public class GetFileActionHelper {
 
 		if ((user != null) && !user.isDefaultUser()) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_UNAUTHORIZED, (Exception)t, request,
-				response);
+				HttpServletResponse.SC_UNAUTHORIZED, (Exception)t,
+				httpServletRequest, httpServletResponse);
 
 			return;
 		}
 
 		String redirect = PortalUtil.getPathMain() + "/portal/login";
 
-		String currentURL = PortalUtil.getCurrentURL(request);
+		String currentURL = PortalUtil.getCurrentURL(httpServletRequest);
 
 		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 	}
 
 }

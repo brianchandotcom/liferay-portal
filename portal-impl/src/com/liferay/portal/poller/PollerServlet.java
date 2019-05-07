@@ -50,42 +50,47 @@ public class PollerServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			String content = getContent(request);
+			String content = getContent(httpServletRequest);
 
 			if (content == null) {
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND,
-					new NoSuchLayoutException(), request, response);
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
 			}
 			else {
-				response.setContentType(ContentTypes.TEXT_PLAIN_UTF8);
+				httpServletResponse.setContentType(
+					ContentTypes.TEXT_PLAIN_UTF8);
 
 				ServletResponseUtil.write(
-					response, content.getBytes(StringPool.UTF8));
+					httpServletResponse, content.getBytes(StringPool.UTF8));
 			}
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 	}
 
-	protected String getContent(HttpServletRequest request) throws Exception {
-		long userId = PortalUtil.getUserId(request);
+	protected String getContent(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		long userId = PortalUtil.getUserId(httpServletRequest);
 
 		if (userId == 0) {
 			return StringPool.BLANK;
 		}
 
 		String pollerRequestString = ParamUtil.getString(
-			request, "pollerRequest");
+			httpServletRequest, "pollerRequest");
 
 		PollerHeader pollerHeader = PollerRequestHandlerUtil.getPollerHeader(
 			pollerRequestString);
@@ -101,7 +106,7 @@ public class PollerServlet extends HttpServlet {
 		SynchronousPollerChannelListener synchronousPollerChannelListener =
 			new SynchronousPollerChannelListener();
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		ChannelHubManagerUtil.getChannel(companyId, userId, true);
 
@@ -111,7 +116,7 @@ public class PollerServlet extends HttpServlet {
 		try {
 			JSONObject pollerResponseHeaderJSONObject =
 				PollerRequestHandlerUtil.processRequest(
-					request, pollerRequestString);
+					httpServletRequest, pollerRequestString);
 
 			if (pollerResponseHeaderJSONObject == null) {
 				return StringPool.BLANK;

@@ -128,14 +128,15 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon-options:portletConfigurationIcons",
 			getPortletConfigurationIcons());
-		request.setAttribute("liferay-ui:icon:direction", _direction);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:icon:direction", _direction);
+		httpServletRequest.setAttribute(
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 	}
 

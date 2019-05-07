@@ -140,7 +140,7 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		String buttonLabel = _buttonLabel;
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
@@ -174,18 +174,20 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 			title = LanguageUtil.get(resourceBundle, "search");
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-search:autoFocus", String.valueOf(_autoFocus));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-search:buttonLabel", buttonLabel);
-		request.setAttribute("liferay-ui:input-search:cssClass", cssClass);
-		request.setAttribute("liferay-ui:input-search:id", id);
-		request.setAttribute("liferay-ui:input-search:name", _name);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-search:cssClass", cssClass);
+		httpServletRequest.setAttribute("liferay-ui:input-search:id", id);
+		httpServletRequest.setAttribute("liferay-ui:input-search:name", _name);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-search:placeholder", placeholder);
-		request.setAttribute("liferay-ui:input-search:showButton", _showButton);
-		request.setAttribute("liferay-ui:input-search:title", title);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-search:showButton", _showButton);
+		httpServletRequest.setAttribute("liferay-ui:input-search:title", title);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-search:useNamespace", _useNamespace);
 	}
 

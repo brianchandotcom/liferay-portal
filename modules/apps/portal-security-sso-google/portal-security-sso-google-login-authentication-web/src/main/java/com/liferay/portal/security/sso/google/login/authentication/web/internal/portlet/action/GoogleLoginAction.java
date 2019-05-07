@@ -59,11 +59,13 @@ public class GoogleLoginAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PrincipalException.MustBeEnabled(
@@ -71,23 +73,25 @@ public class GoogleLoginAction implements StrutsAction {
 				GoogleAuthorization.class.getName());
 		}
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (cmd.equals("login")) {
-			String returnRequestUri = getReturnRequestUri(request);
+			String returnRequestUri = getReturnRequestUri(httpServletRequest);
 
 			String loginRedirect = _googleAuthorization.getLoginRedirect(
 				themeDisplay.getCompanyId(), returnRequestUri, _scopesLogin);
 
-			response.sendRedirect(loginRedirect);
+			httpServletResponse.sendRedirect(loginRedirect);
 		}
 		else if (cmd.equals("token")) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
-			String authorizationCode = ParamUtil.getString(request, "code");
+			String authorizationCode = ParamUtil.getString(
+				httpServletRequest, "code");
 
 			if (Validator.isNotNull(authorizationCode)) {
-				String returnRequestUri = getReturnRequestUri(request);
+				String returnRequestUri = getReturnRequestUri(
+					httpServletRequest);
 
 				try {
 					User user = _googleAuthorization.addOrUpdateUser(
@@ -98,7 +102,8 @@ public class GoogleLoginAction implements StrutsAction {
 						(user.getStatus() ==
 							WorkflowConstants.STATUS_INCOMPLETE)) {
 
-						sendUpdateAccountRedirect(request, response, user);
+						sendUpdateAccountRedirect(
+							httpServletRequest, httpServletResponse, user);
 
 						return null;
 					}
@@ -110,20 +115,22 @@ public class GoogleLoginAction implements StrutsAction {
 
 					Class<?> clazz = pe.getClass();
 
-					sendError(clazz.getSimpleName(), request, response);
+					sendError(
+						clazz.getSimpleName(), httpServletRequest,
+						httpServletResponse);
 
 					return null;
 				}
 
-				sendLoginRedirect(request, response);
+				sendLoginRedirect(httpServletRequest, httpServletResponse);
 
 				return null;
 			}
 
-			String error = ParamUtil.getString(request, "error");
+			String error = ParamUtil.getString(httpServletRequest, "error");
 
 			if (error.equals("access_denied")) {
-				sendLoginRedirect(request, response);
+				sendLoginRedirect(httpServletRequest, httpServletResponse);
 
 				return null;
 			}
@@ -132,54 +139,58 @@ public class GoogleLoginAction implements StrutsAction {
 		return null;
 	}
 
-	protected String getReturnRequestUri(HttpServletRequest request) {
-		return _portal.getPortalURL(request) + _portal.getPathMain() +
-			_REDIRECT_URI;
+	protected String getReturnRequestUri(
+		HttpServletRequest httpServletRequest) {
+
+		return _portal.getPortalURL(httpServletRequest) +
+			_portal.getPathMain() + _REDIRECT_URI;
 	}
 
 	protected void sendError(
-			String error, HttpServletRequest request,
-			HttpServletResponse response)
+			String error, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/google_login_error");
 		portletURL.setParameter("error", error);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 	protected void sendLoginRedirect(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/login_redirect");
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 	protected void sendUpdateAccountRedirect(
-			HttpServletRequest request, HttpServletResponse response, User user)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/associate_google_user");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter(
 			"mvcRenderCommandName", "/login/login_redirect");
@@ -197,7 +208,7 @@ public class GoogleLoginAction implements StrutsAction {
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 	}
 
 	private static final String _REDIRECT_URI =

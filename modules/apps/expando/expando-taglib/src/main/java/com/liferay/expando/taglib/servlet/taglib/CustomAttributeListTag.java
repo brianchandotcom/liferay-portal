@@ -89,19 +89,19 @@ public class CustomAttributeListTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute-list:className", _className);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute-list:classPK",
 			String.valueOf(_classPK));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute-list:editable",
 			String.valueOf(_editable));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute-list:ignoreAttributeNames",
 			_ignoreAttributeNames);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute-list:label",
 			String.valueOf(_label));
 	}

@@ -47,10 +47,10 @@ public class IconVerticalCardTag extends VerticalCardTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		request.setAttribute("liferay-frontend:card:icon", _icon);
+		httpServletRequest.setAttribute("liferay-frontend:card:icon", _icon);
 	}
 
 	private String _icon;

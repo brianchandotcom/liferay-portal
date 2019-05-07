@@ -48,24 +48,26 @@ public class PortalMessages {
 
 	public static final String KEY_TIMEOUT = "timeout";
 
-	public static void add(HttpServletRequest request, Class<?> clazz) {
-		add(request.getSession(), clazz.getName());
+	public static void add(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		add(httpServletRequest.getSession(), clazz.getName());
 	}
 
 	public static void add(
-		HttpServletRequest request, Class<?> clazz, Object value) {
+		HttpServletRequest httpServletRequest, Class<?> clazz, Object value) {
 
-		add(request.getSession(), clazz.getName(), value);
+		add(httpServletRequest.getSession(), clazz.getName(), value);
 	}
 
-	public static void add(HttpServletRequest request, String key) {
-		add(request.getSession(), key);
+	public static void add(HttpServletRequest httpServletRequest, String key) {
+		add(httpServletRequest.getSession(), key);
 	}
 
 	public static void add(
-		HttpServletRequest request, String key, Object value) {
+		HttpServletRequest httpServletRequest, String key, Object value) {
 
-		add(request.getSession(), key, value);
+		add(httpServletRequest.getSession(), key, value);
 	}
 
 	public static void add(HttpSession session, Class<?> clazz) {
@@ -110,8 +112,8 @@ public class PortalMessages {
 		add(PortalUtil.getHttpServletRequest(portletRequest), key, value);
 	}
 
-	public static void clear(HttpServletRequest request) {
-		clear(request.getSession());
+	public static void clear(HttpServletRequest httpServletRequest) {
+		clear(httpServletRequest.getSession());
 	}
 
 	public static void clear(HttpSession session) {
@@ -126,12 +128,16 @@ public class PortalMessages {
 		clear(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static boolean contains(HttpServletRequest request, Class<?> clazz) {
-		return contains(request.getSession(), clazz.getName());
+	public static boolean contains(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		return contains(httpServletRequest.getSession(), clazz.getName());
 	}
 
-	public static boolean contains(HttpServletRequest request, String key) {
-		return contains(request.getSession(), key);
+	public static boolean contains(
+		HttpServletRequest httpServletRequest, String key) {
+
+		return contains(httpServletRequest.getSession(), key);
 	}
 
 	public static boolean contains(HttpSession session, Class<?> clazz) {
@@ -159,12 +165,16 @@ public class PortalMessages {
 		return contains(PortalUtil.getHttpServletRequest(portletRequest), key);
 	}
 
-	public static Object get(HttpServletRequest request, Class<?> clazz) {
-		return get(request.getSession(), clazz.getName());
+	public static Object get(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		return get(httpServletRequest.getSession(), clazz.getName());
 	}
 
-	public static Object get(HttpServletRequest request, String key) {
-		return get(request.getSession(), key);
+	public static Object get(
+		HttpServletRequest httpServletRequest, String key) {
+
+		return get(httpServletRequest.getSession(), key);
 	}
 
 	public static Object get(HttpSession session, Class<?> clazz) {
@@ -190,8 +200,8 @@ public class PortalMessages {
 		return get(PortalUtil.getHttpServletRequest(portletRequest), key);
 	}
 
-	public static boolean isEmpty(HttpServletRequest request) {
-		return isEmpty(request.getSession());
+	public static boolean isEmpty(HttpServletRequest httpServletRequest) {
+		return isEmpty(httpServletRequest.getSession());
 	}
 
 	public static boolean isEmpty(HttpSession session) {
@@ -208,8 +218,10 @@ public class PortalMessages {
 		return isEmpty(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static Iterator<String> iterator(HttpServletRequest request) {
-		return iterator(request.getSession());
+	public static Iterator<String> iterator(
+		HttpServletRequest httpServletRequest) {
+
+		return iterator(httpServletRequest.getSession());
 	}
 
 	public static Iterator<String> iterator(HttpSession session) {
@@ -230,8 +242,8 @@ public class PortalMessages {
 		return iterator(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static Set<String> keySet(HttpServletRequest request) {
-		return keySet(request.getSession());
+	public static Set<String> keySet(HttpServletRequest httpServletRequest) {
+		return keySet(httpServletRequest.getSession());
 	}
 
 	public static Set<String> keySet(HttpSession session) {
@@ -248,8 +260,8 @@ public class PortalMessages {
 		return keySet(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static void print(HttpServletRequest request) {
-		print(request.getSession());
+	public static void print(HttpServletRequest httpServletRequest) {
+		print(httpServletRequest.getSession());
 	}
 
 	public static void print(HttpSession session) {
@@ -264,8 +276,8 @@ public class PortalMessages {
 		print(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static int size(HttpServletRequest request) {
-		return size(request.getSession());
+	public static int size(HttpServletRequest httpServletRequest) {
+		return size(httpServletRequest.getSession());
 	}
 
 	public static int size(HttpSession session) {

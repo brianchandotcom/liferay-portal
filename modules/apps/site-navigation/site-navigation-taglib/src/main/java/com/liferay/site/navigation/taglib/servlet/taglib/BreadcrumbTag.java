@@ -57,8 +57,8 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-site-navigation:breadcrumb:breadcrumbEntries",
 			_breadcrumbEntries);
 	}

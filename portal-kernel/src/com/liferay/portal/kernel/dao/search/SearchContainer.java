@@ -220,13 +220,16 @@ public class SearchContainer<R> {
 		return _headerNames;
 	}
 
-	public String getId(HttpServletRequest request, String namespace) {
+	public String getId(
+		HttpServletRequest httpServletRequest, String namespace) {
+
 		if (_uniqueId) {
 			return _id;
 		}
 
 		if (Validator.isNotNull(_id)) {
-			_id = PortalUtil.getUniqueElementId(request, namespace, _id);
+			_id = PortalUtil.getUniqueElementId(
+				httpServletRequest, namespace, _id);
 			_uniqueId = true;
 
 			return _id;
@@ -250,7 +253,8 @@ public class SearchContainer<R> {
 
 			id = id.concat("SearchContainer");
 
-			_id = PortalUtil.getUniqueElementId(request, namespace, id);
+			_id = PortalUtil.getUniqueElementId(
+				httpServletRequest, namespace, id);
 
 			_uniqueId = true;
 

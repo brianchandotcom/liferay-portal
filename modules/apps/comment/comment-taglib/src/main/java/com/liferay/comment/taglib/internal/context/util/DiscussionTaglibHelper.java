@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DiscussionTaglibHelper {
 
-	public DiscussionTaglibHelper(HttpServletRequest request) {
-		_request = request;
+	public DiscussionTaglibHelper(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public String getClassName() {

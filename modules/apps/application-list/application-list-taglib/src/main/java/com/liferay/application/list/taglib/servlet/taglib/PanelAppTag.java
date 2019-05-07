@@ -139,11 +139,12 @@ public class PanelAppTag extends BasePanelTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		boolean active = false;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (_active != null) {
 			active = _active.booleanValue();
@@ -153,7 +154,7 @@ public class PanelAppTag extends BasePanelTag {
 				themeDisplay.getPpid(), _panelApp.getPortletId());
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:active", active);
 
 		if (_data == null) {
@@ -176,15 +177,17 @@ public class PanelAppTag extends BasePanelTag {
 			_data.put("title", _label);
 		}
 
-		request.setAttribute("liferay-application-list:panel-app:data", _data);
+		httpServletRequest.setAttribute(
+			"liferay-application-list:panel-app:data", _data);
 
 		if (Validator.isNull(_id)) {
 			_id = "portlet_" + _panelApp.getPortletId();
 		}
 
-		request.setAttribute("liferay-application-list:panel-app:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-application-list:panel-app:id", _id);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:label", _label);
 
 		int notificationsCount = 0;
@@ -194,18 +197,18 @@ public class PanelAppTag extends BasePanelTag {
 				themeDisplay.getUser());
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:notificationsCount",
 			notificationsCount);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:panelApp", _panelApp);
 
 		if (Validator.isNull(_url) && (_panelApp != null)) {
 			PortletURL portletURL = null;
 
 			try {
-				portletURL = _panelApp.getPortletURL(request);
+				portletURL = _panelApp.getPortletURL(httpServletRequest);
 			}
 			catch (PortalException pe) {
 				_log.error("Unable to get portlet URL", pe);
@@ -214,7 +217,8 @@ public class PanelAppTag extends BasePanelTag {
 			_url = portletURL.toString();
 		}
 
-		request.setAttribute("liferay-application-list:panel-app:url", _url);
+		httpServletRequest.setAttribute(
+			"liferay-application-list:panel-app:url", _url);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PanelAppTag.class);

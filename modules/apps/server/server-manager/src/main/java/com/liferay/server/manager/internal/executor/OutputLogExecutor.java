@@ -54,8 +54,8 @@ public class OutputLogExecutor extends BaseExecutor {
 
 	@Override
 	public void executeRead(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception {
 
 		File logFile = getLogFile();

@@ -125,7 +125,7 @@ public abstract class BaseAlloyControllerInvokerImpl
 	}
 
 	protected RenderResponse createRenderResponse(
-		final HttpServletRequest request, final String portletId,
+		final HttpServletRequest httpServletRequest, final String portletId,
 		final long plid, final String lifecycle) {
 
 		return new AlloyMockUtil.MockRenderResponse() {
@@ -133,7 +133,7 @@ public abstract class BaseAlloyControllerInvokerImpl
 			@Override
 			public PortletURL createRenderURL() {
 				return PortletURLFactoryUtil.create(
-					request, portletId, plid, lifecycle);
+					httpServletRequest, portletId, plid, lifecycle);
 			}
 
 			@Override

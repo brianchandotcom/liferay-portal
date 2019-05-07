@@ -46,7 +46,8 @@ import javax.servlet.jsp.tagext.Tag;
 public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 	public CustomizationSettingsProcessor(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
@@ -59,8 +60,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 				PortalClassLoaderUtil.getClassLoader());
 
 			_pageContext = jspFactory.getPageContext(
-				new JSPSupportServlet(request.getServletContext()), request,
-				response, null, false, 0, false);
+				new JSPSupportServlet(httpServletRequest.getServletContext()),
+				httpServletRequest, httpServletResponse, null, false, 0, false);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -71,7 +72,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		Layout selLayout = null;
 
 		long selPlid = ParamUtil.getLong(
-			request, "selPlid", LayoutConstants.DEFAULT_PLID);
+			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		if (selPlid != LayoutConstants.DEFAULT_PLID) {
 			selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);

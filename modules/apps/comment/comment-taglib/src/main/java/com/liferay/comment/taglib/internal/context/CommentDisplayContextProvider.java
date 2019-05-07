@@ -29,11 +29,13 @@ import javax.servlet.http.HttpServletResponse;
 public interface CommentDisplayContextProvider {
 
 	public CommentSectionDisplayContext getCommentSectionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission, Discussion discussion);
 
 	public CommentTreeDisplayContext getCommentTreeDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission,
 		DiscussionComment discussionComment);
 

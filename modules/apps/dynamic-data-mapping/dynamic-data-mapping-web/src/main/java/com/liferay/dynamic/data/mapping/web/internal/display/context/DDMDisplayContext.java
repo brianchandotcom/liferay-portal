@@ -168,10 +168,11 @@ public class DDMDisplayContext {
 	}
 
 	public String getAutocompleteJSON(
-			HttpServletRequest request, String language)
+			HttpServletRequest httpServletRequest, String language)
 		throws Exception {
 
-		return _ddmTemplateHelper.getAutocompleteJSON(request, language);
+		return _ddmTemplateHelper.getAutocompleteJSON(
+			httpServletRequest, language);
 	}
 
 	public String getClearResultsURL() throws PortletException {

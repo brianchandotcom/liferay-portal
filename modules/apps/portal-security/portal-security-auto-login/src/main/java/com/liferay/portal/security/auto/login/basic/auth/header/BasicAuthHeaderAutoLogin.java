@@ -73,16 +73,17 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!isEnabled(companyId)) {
 			return null;
 		}
 
-		return _autoLogin.login(request, response);
+		return _autoLogin.login(httpServletRequest, httpServletResponse);
 	}
 
 	protected boolean isEnabled(long companyId) {

@@ -37,8 +37,8 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		Bundle bundle = _bundleContext.getBundle();
@@ -47,13 +47,15 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 			"/META-INF/resources/ckeditor/extension/anchor_dialog_show.js");
 
 		StreamUtil.transfer(
-			entryURL.openStream(), response.getOutputStream(), false);
+			entryURL.openStream(), httpServletResponse.getOutputStream(),
+			false);
 
 		entryURL = bundle.getEntry(
 			"/META-INF/resources/ckeditor/extension/dialog_definition.js");
 
 		StreamUtil.transfer(
-			entryURL.openStream(), response.getOutputStream(), false);
+			entryURL.openStream(), httpServletResponse.getOutputStream(),
+			false);
 	}
 
 	@Override

@@ -44,8 +44,9 @@ public class DropHereInfoTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:drop-here-info:message", _message);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:drop-here-info:message", _message);
 	}
 
 	private static final String _PAGE =

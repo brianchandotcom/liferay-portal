@@ -174,7 +174,7 @@ public class AlertTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "liferay-ui:alert:";

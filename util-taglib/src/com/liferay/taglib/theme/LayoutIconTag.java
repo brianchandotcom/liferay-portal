@@ -89,10 +89,13 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 	@Deprecated
 	public static void doTag(
 			Layout layout, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		doTag(_PAGE, layout, servletContext, request, response);
+		doTag(
+			_PAGE, layout, servletContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 	/**
@@ -102,21 +105,23 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 	@Deprecated
 	public static void doTag(
 			String page, Layout layout, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		setRequestAttributes(request, layout);
+		setRequestAttributes(httpServletRequest, layout);
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(page);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	public static void setRequestAttributes(
-		HttpServletRequest request, Layout layout) {
+		HttpServletRequest httpServletRequest, Layout layout) {
 
-		request.setAttribute("liferay-theme:layout-icon:layout", layout);
+		httpServletRequest.setAttribute(
+			"liferay-theme:layout-icon:layout", layout);
 	}
 
 	@Override

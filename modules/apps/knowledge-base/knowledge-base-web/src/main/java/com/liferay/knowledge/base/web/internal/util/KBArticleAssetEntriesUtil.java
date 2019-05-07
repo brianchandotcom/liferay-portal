@@ -126,7 +126,7 @@ public class KBArticleAssetEntriesUtil {
 	}
 
 	public static String getURL(
-			HttpServletRequest request, ThemeDisplay themeDisplay,
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 			AssetRendererFactory assetRendererFactory,
 			AssetRenderer assetRenderer)
 		throws Exception {
@@ -142,7 +142,7 @@ public class KBArticleAssetEntriesUtil {
 
 		if (className.equals(BlogsEntry.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/blogs/view_entry");
@@ -153,7 +153,7 @@ public class KBArticleAssetEntriesUtil {
 				JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("struts_action", "/journal_content/view");
 			portletURL.setParameter(
@@ -162,7 +162,8 @@ public class KBArticleAssetEntriesUtil {
 		}
 		else if (className.equals(KBArticle.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
+				httpServletRequest,
+				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/article/view_article.jsp");
@@ -170,7 +171,7 @@ public class KBArticleAssetEntriesUtil {
 		}
 		else if (className.equals(MBMessage.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"struts_action", "/message_boards/view_message");
@@ -180,7 +181,7 @@ public class KBArticleAssetEntriesUtil {
 			WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(classPK);
 
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("struts_action", "/wiki/view");
 			portletURL.setParameter(
@@ -188,7 +189,7 @@ public class KBArticleAssetEntriesUtil {
 			portletURL.setParameter("title", wikiPage.getTitle());
 		}
 
-		String currentURL = PortalUtil.getCurrentURL(request);
+		String currentURL = PortalUtil.getCurrentURL(httpServletRequest);
 
 		if (portletURL == null) {
 			return currentURL;

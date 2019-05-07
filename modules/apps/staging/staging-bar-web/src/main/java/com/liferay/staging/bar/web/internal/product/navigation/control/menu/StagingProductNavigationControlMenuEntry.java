@@ -54,16 +54,18 @@ public class StagingProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		Boolean show = (Boolean)request.getAttribute(_SHOW);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		Boolean show = (Boolean)httpServletRequest.getAttribute(_SHOW);
 
 		if (show != null) {
 			return show;
 		}
 
-		show = _isShow(request);
+		show = _isShow(httpServletRequest);
 
-		request.setAttribute(_SHOW, show);
+		httpServletRequest.setAttribute(_SHOW, show);
 
 		return show;
 	}
@@ -77,9 +79,12 @@ public class StagingProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	private boolean _isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private boolean _isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -92,7 +97,7 @@ public class StagingProductNavigationControlMenuEntry
 		}
 
 		String layoutMode = ParamUtil.getString(
-			request, "p_l_mode", Constants.VIEW);
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			return false;

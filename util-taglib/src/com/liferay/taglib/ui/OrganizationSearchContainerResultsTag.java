@@ -69,7 +69,7 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		SearchContainerTag<R> searchContainerTag =
 			(SearchContainerTag<R>)findAncestorWithClass(
 				this, SearchContainerTag.class);
@@ -79,21 +79,21 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
 		_searchTerms = searchContainer.getSearchTerms();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:organization-search-container-results:forceDatabase",
 			_forceDatabase);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:organization-search-container-results:" +
 				"organizationParams",
 			_organizationParams);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:organization-search-container-results:" +
 				"parentOrganizationId",
 			_parentOrganizationId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:organization-search-container-results:searchContainer",
 			searchContainer);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:organization-search-container-results:searchTerms",
 			_searchTerms);
 	}

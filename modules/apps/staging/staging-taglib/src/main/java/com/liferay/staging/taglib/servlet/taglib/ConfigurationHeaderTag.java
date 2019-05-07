@@ -68,11 +68,11 @@ public class ConfigurationHeaderTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:configuration-header:exportImportConfiguration",
 			_exportImportConfiguration);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:configuration-header:label", _label);
 	}
 

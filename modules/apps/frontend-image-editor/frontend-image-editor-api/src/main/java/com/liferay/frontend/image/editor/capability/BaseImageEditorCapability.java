@@ -57,7 +57,7 @@ public abstract class BaseImageEditorCapability
 
 	@Override
 	public void prepareContext(
-		Map<String, Object> context, HttpServletRequest request) {
+		Map<String, Object> context, HttpServletRequest httpServletRequest) {
 	}
 
 	protected Bundle getBundle() {

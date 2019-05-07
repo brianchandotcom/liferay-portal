@@ -45,36 +45,40 @@ public class NetvibesServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			String content = getContent(request);
+			String content = getContent(httpServletRequest);
 
 			if (content == null) {
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND,
-					new NoSuchLayoutException(), request, response);
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
 			}
 			else {
-				request.setAttribute(WebKeys.NETVIBES, Boolean.TRUE);
+				httpServletRequest.setAttribute(WebKeys.NETVIBES, Boolean.TRUE);
 
-				response.setContentType(ContentTypes.TEXT_HTML);
+				httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
 
-				ServletResponseUtil.write(response, content);
+				ServletResponseUtil.write(httpServletResponse, content);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 	}
 
-	protected String getContent(HttpServletRequest request) throws Exception {
-		String path = GetterUtil.getString(request.getPathInfo());
+	protected String getContent(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
 		if (Validator.isNull(path)) {
 			return null;
@@ -86,7 +90,7 @@ public class NetvibesServlet extends HttpServlet {
 			return null;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		String portletId = path.substring(
 			pos + Portal.FRIENDLY_URL_SEPARATOR.length());
@@ -96,12 +100,12 @@ public class NetvibesServlet extends HttpServlet {
 
 		String title = HtmlUtil.escape(portlet.getDisplayName());
 
-		String portalURL = PortalUtil.getPortalURL(request);
+		String portalURL = PortalUtil.getPortalURL(httpServletRequest);
 
 		String iconURL =
 			portalURL + PortalUtil.getPathContext() + portlet.getIcon();
 
-		String widgetURL = String.valueOf(request.getRequestURL());
+		String widgetURL = String.valueOf(httpServletRequest.getRequestURL());
 
 		widgetURL = widgetURL.replaceFirst(
 			PropsValues.NETVIBES_SERVLET_MAPPING,

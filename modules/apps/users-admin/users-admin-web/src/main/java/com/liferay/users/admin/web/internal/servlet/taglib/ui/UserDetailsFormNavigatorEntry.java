@@ -48,14 +48,15 @@ public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			UserFileUploadsConfiguration.class.getName(),
 			_userFileUploadsConfiguration);
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Activate

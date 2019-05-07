@@ -114,18 +114,19 @@ public class RSSSettingsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-rss:rss-settings:delta", String.valueOf(_delta));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-rss:rss-settings:displayStyle", _displayStyle);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-rss:rss-settings:displayStyles", _displayStyles);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-rss:rss-settings:enabled", String.valueOf(_enabled));
-		request.setAttribute("liferay-rss:rss-settings:feedType", _feedType);
-		request.setAttribute("liferay-rss:rss-settings:name", _name);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-rss:rss-settings:feedType", _feedType);
+		httpServletRequest.setAttribute("liferay-rss:rss-settings:name", _name);
+		httpServletRequest.setAttribute(
 			"liferay-rss:rss-settings:nameEnabled",
 			String.valueOf(_nameEnabled));
 	}

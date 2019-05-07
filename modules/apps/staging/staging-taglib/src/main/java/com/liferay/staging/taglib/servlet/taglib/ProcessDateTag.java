@@ -77,11 +77,12 @@ public class ProcessDateTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:process-date:date", _date);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:process-date:date", _date);
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-date:labelKey", _labelKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-date:listView", _listView);
 	}
 

@@ -57,28 +57,29 @@ public class PanelTag extends BasePanelTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (_panelCategory == null) {
 			_panelCategory = RootPanelCategory.getInstance();
 		}
 
 		PanelCategoryRegistry panelCategoryRegistry =
-			(PanelCategoryRegistry)request.getAttribute(
+			(PanelCategoryRegistry)httpServletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<PanelCategory> childPanelCategories =
 			panelCategoryRegistry.getChildPanelCategories(
 				_panelCategory, themeDisplay.getPermissionChecker(),
 				getGroup());
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel:childPanelCategories",
 			childPanelCategories);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel:panelCategory", _panelCategory);
 	}
 

@@ -67,15 +67,15 @@ public class LayoutStagingBackgroundTaskDisplay
 	}
 
 	@Override
-	public String getDisplayName(HttpServletRequest request) {
+	public String getDisplayName(HttpServletRequest httpServletRequest) {
 		if ((sourceGroup != null) && !sourceGroup.isStagingGroup() &&
 			(backgroundTask.getGroupId() == sourceGroup.getGroupId())) {
 
-			return LanguageUtil.get(request, "initial-publication");
+			return LanguageUtil.get(httpServletRequest, "initial-publication");
 		}
 
 		if (Validator.isNull(backgroundTask.getName())) {
-			return LanguageUtil.get(request, "untitled");
+			return LanguageUtil.get(httpServletRequest, "untitled");
 		}
 
 		return backgroundTask.getName();

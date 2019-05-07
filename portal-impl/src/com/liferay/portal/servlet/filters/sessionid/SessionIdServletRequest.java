@@ -32,11 +32,12 @@ import javax.servlet.http.HttpSession;
 public class SessionIdServletRequest extends HttpServletRequestWrapper {
 
 	public SessionIdServletRequest(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(request);
+		super(httpServletRequest);
 
-		_response = response;
+		_response = httpServletResponse;
 	}
 
 	@Override

@@ -29,11 +29,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserResolver {
 
-	public UserResolver(HttpServletRequest request) throws PortalException {
-		long companyId = ParamUtil.getLong(request, "companyId");
+	public UserResolver(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		long companyId = ParamUtil.getLong(httpServletRequest, "companyId");
 		User user = null;
 
-		String remoteUser = request.getRemoteUser();
+		String remoteUser = httpServletRequest.getRemoteUser();
 
 		long userId = GetterUtil.getLong(remoteUser);
 
@@ -52,7 +54,7 @@ public class UserResolver {
 		}
 		else {
 			if (companyId == 0) {
-				companyId = PortalInstances.getCompanyId(request);
+				companyId = PortalInstances.getCompanyId(httpServletRequest);
 			}
 
 			if (companyId != 0) {

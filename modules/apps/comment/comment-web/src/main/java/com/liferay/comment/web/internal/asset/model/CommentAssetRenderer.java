@@ -97,7 +97,9 @@ public class CommentAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
@@ -240,16 +242,16 @@ public class CommentAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
 		Comment comment = CommentManagerUtil.fetchComment(
 			_workflowableComment.getCommentId());
 
-		request.setAttribute(WebKeys.COMMENT, comment);
+		httpServletRequest.setAttribute(WebKeys.COMMENT, comment);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	@Override

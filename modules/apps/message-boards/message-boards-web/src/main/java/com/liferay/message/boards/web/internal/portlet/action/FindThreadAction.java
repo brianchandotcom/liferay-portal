@@ -56,11 +56,11 @@ public class FindThreadAction extends FindStrutsAction {
 
 	@Override
 	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
+			HttpServletRequest httpServletRequest, PortletURL portletURL)
 		throws Exception {
 
 		long threadId = ParamUtil.getLong(
-			request, getPrimaryKeyParameterName());
+			httpServletRequest, getPrimaryKeyParameterName());
 
 		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
@@ -76,7 +76,8 @@ public class FindThreadAction extends FindStrutsAction {
 
 	@Override
 	protected void addRequiredParameters(
-		HttpServletRequest request, String portletId, PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, String portletId,
+		PortletURL portletURL) {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");

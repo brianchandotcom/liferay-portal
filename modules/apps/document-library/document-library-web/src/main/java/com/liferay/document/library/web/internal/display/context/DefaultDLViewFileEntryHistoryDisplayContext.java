@@ -40,19 +40,20 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 	implements DLViewFileEntryHistoryDisplayContext {
 
 	public DefaultDLViewFileEntryHistoryDisplayContext(
-		HttpServletRequest request, FileVersion fileVersion,
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		_resourceBundle = resourceBundle;
 
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
+		DLRequestHelper dlRequestHelper = new DLRequestHelper(
+			httpServletRequest);
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			dlRequestHelper);
 
 		_uiItemsBuilder = new UIItemsBuilder(
-			request, fileVersion, _resourceBundle, dlTrashUtil,
+			httpServletRequest, fileVersion, _resourceBundle, dlTrashUtil,
 			versioningStrategy, dlURLHelper);
 	}
 

@@ -165,7 +165,8 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest request, PortletURL portletURL)
+			Group group, HttpServletRequest httpServletRequest,
+			PortletURL portletURL)
 		throws Exception {
 
 		List<Group> ancestorGroups = group.getAncestors();
@@ -177,7 +178,7 @@ public class SitesImpl implements Sites {
 				"groupId", String.valueOf(ancestorGroup.getGroupId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorGroup.getDescriptiveName(),
+				httpServletRequest, ancestorGroup.getDescriptiveName(),
 				portletURL.toString());
 		}
 
@@ -187,33 +188,35 @@ public class SitesImpl implements Sites {
 			"groupId", String.valueOf(unescapedGroup.getGroupId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, unescapedGroup.getDescriptiveName(),
+			httpServletRequest, unescapedGroup.getDescriptiveName(),
 			portletURL.toString());
 	}
 
 	@Override
 	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest request,
+			Group group, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		addPortletBreadcrumbEntries(group, request, portletURL);
+		addPortletBreadcrumbEntries(group, httpServletRequest, portletURL);
 	}
 
 	@Override
 	public void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,
-			HttpServletRequest request, RenderResponse renderResponse)
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		if (renderResponse == null) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group unescapedGroup = group.toUnescapedModel();
 
@@ -221,20 +224,21 @@ public class SitesImpl implements Sites {
 
 		if (group.isLayoutPrototype()) {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, LanguageUtil.get(locale, "page-template"), null);
+				httpServletRequest, LanguageUtil.get(locale, "page-template"),
+				null);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, unescapedGroup.getDescriptiveName(),
+				httpServletRequest, unescapedGroup.getDescriptiveName(),
 				redirectURL.toString());
 		}
 		else {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, unescapedGroup.getDescriptiveName(), null);
+				httpServletRequest, unescapedGroup.getDescriptiveName(), null);
 		}
 
 		if (!group.isLayoutPrototype()) {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, LanguageUtil.get(locale, pagesName),
+				httpServletRequest, LanguageUtil.get(locale, pagesName),
 				redirectURL.toString());
 		}
 	}
@@ -541,20 +545,23 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public Object[] deleteLayout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long selPlid = ParamUtil.getLong(request, "selPlid");
+		long selPlid = ParamUtil.getLong(httpServletRequest, "selPlid");
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long layoutId = ParamUtil.getLong(request, "layoutId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
+		long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
 
 		Layout layout = null;
 
@@ -591,7 +598,8 @@ public class SitesImpl implements Sites {
 
 			EventsProcessorUtil.process(
 				PropsKeys.LAYOUT_CONFIGURATION_ACTION_DELETE,
-				layoutType.getConfigurationActionDelete(), request, response);
+				layoutType.getConfigurationActionDelete(), httpServletRequest,
+				httpServletResponse);
 		}
 
 		if (group.isGuest() && !layout.isPrivateLayout() &&
@@ -604,7 +612,7 @@ public class SitesImpl implements Sites {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			httpServletRequest);
 
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);

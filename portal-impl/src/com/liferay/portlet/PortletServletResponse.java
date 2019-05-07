@@ -42,10 +42,10 @@ import javax.servlet.http.HttpServletResponseWrapper;
 public class PortletServletResponse extends HttpServletResponseWrapper {
 
 	public PortletServletResponse(
-		HttpServletResponse response, PortletResponse portletResponse,
-		boolean include) {
+		HttpServletResponse httpServletResponse,
+		PortletResponse portletResponse, boolean include) {
 
-		super(response);
+		super(httpServletResponse);
 
 		_portletResponse = portletResponse;
 		_include = include;

@@ -28,12 +28,12 @@ import javax.servlet.http.HttpSession;
  */
 public class PasswordRetriever {
 
-	public PasswordRetriever(HttpServletRequest request) {
-		if (request == null) {
+	public PasswordRetriever(HttpServletRequest httpServletRequest) {
+		if (httpServletRequest == null) {
 			throw new IllegalStateException("Request is null");
 		}
 
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	public String getPassword(long accountId) throws PortalException {

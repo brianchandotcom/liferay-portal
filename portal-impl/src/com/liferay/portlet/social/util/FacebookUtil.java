@@ -36,8 +36,10 @@ public class FacebookUtil {
 
 	public static final String FACEBOOK_SERVLET_PATH = "/facebook/";
 
-	public static String[] getFacebookData(HttpServletRequest request) {
-		String path = GetterUtil.getString(request.getPathInfo());
+	public static String[] getFacebookData(
+		HttpServletRequest httpServletRequest) {
+
+		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
 		if (Validator.isNull(path)) {
 			return null;

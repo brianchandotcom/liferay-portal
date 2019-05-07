@@ -29,10 +29,11 @@ public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 
 	@Override
 	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String serverName = request.getServerName();
+		String serverName = httpServletRequest.getServerName();
 
 		String validPortalDomain = PortalUtil.getValidPortalDomain(
 			PortalUtil.getDefaultCompanyId(), serverName);

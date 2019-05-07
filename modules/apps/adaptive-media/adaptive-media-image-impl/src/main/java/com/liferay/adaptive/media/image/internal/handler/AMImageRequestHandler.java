@@ -62,11 +62,12 @@ public class AMImageRequestHandler
 
 	@Override
 	public Optional<AdaptiveMedia<AMImageProcessor>> handleRequest(
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws IOException, ServletException {
 
 		Optional<Tuple<FileVersion, AMImageAttributeMapping>>
-			interpretedPathOptional = _interpretPath(request.getPathInfo());
+			interpretedPathOptional = _interpretPath(
+				httpServletRequest.getPathInfo());
 
 		return interpretedPathOptional.flatMap(
 			tuple -> {

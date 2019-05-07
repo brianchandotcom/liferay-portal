@@ -34,40 +34,43 @@ public class TestAuthToken implements AuthToken {
 
 	@Override
 	public void addCSRFToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		liferayPortletURL.setParameter("p_auth", "TEST_TOKEN");
 	}
 
 	@Override
 	public void addPortletInvocationToken(
-		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletURL liferayPortletURL) {
 
 		liferayPortletURL.setParameter(
 			"p_p_auth", "TEST_TOKEN_BY_PLID_AND_PORTLET_ID");
 	}
 
 	@Override
-	public void checkCSRFToken(HttpServletRequest request, String origin) {
+	public void checkCSRFToken(
+		HttpServletRequest httpServletRequest, String origin) {
 	}
 
 	@Override
-	public String getToken(HttpServletRequest request) {
+	public String getToken(HttpServletRequest httpServletRequest) {
 		return "TEST_TOKEN";
 	}
 
 	@Override
 	public String getToken(
-		HttpServletRequest request, long plid, String portletId) {
+		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
 		return "TEST_TOKEN_BY_PLID_AND_PORTLET_ID";
 	}
 
 	@Override
 	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
-		String tokenValue = request.getParameter("p_p_auth");
+		String tokenValue = httpServletRequest.getParameter("p_p_auth");
 
 		return "VALID_PORTLET_INVOCATION_TOKEN".equals(tokenValue);
 	}

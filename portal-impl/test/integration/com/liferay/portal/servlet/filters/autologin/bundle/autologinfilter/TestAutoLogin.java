@@ -35,14 +35,16 @@ public class TestAutoLogin implements AutoLogin {
 
 	@Override
 	public String[] handleException(
-		HttpServletRequest request, HttpServletResponse response, Exception e) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Exception e) {
 
 		return null;
 	}
 
 	@Override
 	public String[] login(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		_atomicBoolean.set(Boolean.TRUE);
 

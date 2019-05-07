@@ -51,16 +51,17 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!_facebookConnect.isEnabled(companyId)) {
 			return null;
 		}
 
-		User user = getUser(request, companyId);
+		User user = getUser(httpServletRequest, companyId);
 
 		if (user == null) {
 			return null;
@@ -75,10 +76,11 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected User getUser(HttpServletRequest request, long companyId)
+	protected User getUser(
+			HttpServletRequest httpServletRequest, long companyId)
 		throws PortalException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		String emailAddress = (String)session.getAttribute(
 			WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);

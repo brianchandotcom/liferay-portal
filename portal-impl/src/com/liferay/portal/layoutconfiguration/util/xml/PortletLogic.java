@@ -52,10 +52,11 @@ public class PortletLogic extends RuntimeLogic {
 	public static final String OPEN_TAG = "<runtime-portlet";
 
 	public PortletLogic(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		_request = request;
-		_response = response;
+		_request = httpServletRequest;
+		_response = httpServletResponse;
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class CTProductNavigationControlMenuCategory
 	}
 
 	@Override
-	public boolean hasAccessPermission(HttpServletRequest request) {
+	public boolean hasAccessPermission(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 

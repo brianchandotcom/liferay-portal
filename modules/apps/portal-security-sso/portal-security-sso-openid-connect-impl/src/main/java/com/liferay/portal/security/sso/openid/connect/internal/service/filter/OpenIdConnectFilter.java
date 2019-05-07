@@ -55,9 +55,10 @@ public class OpenIdConnectFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		return _openIdConnect.isEnabled(companyId);
 	}
@@ -140,23 +141,23 @@ public class OpenIdConnectFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		processAuthenticationResponse(request, response);
+		processAuthenticationResponse(httpServletRequest, httpServletResponse);
 
 		processFilter(
-			OpenIdConnectFilter.class.getName(), request, response,
-			filterChain);
+			OpenIdConnectFilter.class.getName(), httpServletRequest,
+			httpServletResponse, filterChain);
 	}
 
 	protected void sendError(
-			String error, HttpServletRequest request,
-			HttpServletResponse response)
+			String error, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
 		if (session == null) {
 			return;
@@ -171,7 +172,7 @@ public class OpenIdConnectFilter extends BaseFilter {
 
 		actionURL = _http.addParameter(actionURL, "error", error);
 
-		response.sendRedirect(actionURL);
+		httpServletResponse.sendRedirect(actionURL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

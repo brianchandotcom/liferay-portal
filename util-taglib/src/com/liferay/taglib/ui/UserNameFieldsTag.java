@@ -77,14 +77,17 @@ public class UserNameFieldsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (_bean == null) {
 			_bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
-		request.setAttribute("liferay-ui:user-name-fields:bean", _bean);
-		request.setAttribute("liferay-ui:user-name-fields:contact", _contact);
-		request.setAttribute("liferay-ui:user-name-fields:user", getUser());
+		httpServletRequest.setAttribute(
+			"liferay-ui:user-name-fields:bean", _bean);
+		httpServletRequest.setAttribute(
+			"liferay-ui:user-name-fields:contact", _contact);
+		httpServletRequest.setAttribute(
+			"liferay-ui:user-name-fields:user", getUser());
 	}
 
 	private static final String _PAGE =

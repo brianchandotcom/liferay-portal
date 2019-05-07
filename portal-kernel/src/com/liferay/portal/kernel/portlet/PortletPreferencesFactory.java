@@ -67,7 +67,8 @@ public interface PortletPreferencesFactory {
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String defaultPreferences);
 
-	public PortalPreferences getPortalPreferences(HttpServletRequest request);
+	public PortalPreferences getPortalPreferences(
+		HttpServletRequest httpServletRequest);
 
 	public PortalPreferences getPortalPreferences(
 		HttpSession session, long userId, boolean signedIn);
@@ -79,15 +80,16 @@ public interface PortletPreferencesFactory {
 		PortletRequest portletRequest);
 
 	public PortletPreferences getPortletPreferences(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException;
 
 	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, Layout selLayout, String portletId)
+			HttpServletRequest httpServletRequest, Layout selLayout,
+			String portletId)
 		throws PortalException;
 
 	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException;
 
 	public PortletPreferencesIds getPortletPreferencesIds(
@@ -100,11 +102,11 @@ public interface PortletPreferencesFactory {
 		String settingsScope);
 
 	public PortletPreferences getPortletSetup(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException;
 
 	public PortletPreferences getPortletSetup(
-			HttpServletRequest request, String portletId,
+			HttpServletRequest httpServletRequest, String portletId,
 			String defaultPreferences)
 		throws PortalException;
 
@@ -126,7 +128,8 @@ public interface PortletPreferencesFactory {
 		long companyId, long groupId, long ownerId, int ownerType,
 		String portletId, boolean privateLayout);
 
-	public PortletPreferences getPreferences(HttpServletRequest request);
+	public PortletPreferences getPreferences(
+		HttpServletRequest httpServletRequest);
 
 	public PreferencesValidator getPreferencesValidator(Portlet portlet);
 

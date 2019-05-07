@@ -281,12 +281,15 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
-	public PortalPreferences getPortalPreferences(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public PortalPreferences getPortalPreferences(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return getPortalPreferences(
-			request.getSession(), themeDisplay.getUserId(),
+			httpServletRequest.getSession(), themeDisplay.getUserId(),
 			themeDisplay.isSignedIn());
 	}
 
@@ -377,11 +380,11 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletPreferences(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
 		PortletPreferencesIds portletPreferencesIds = getPortletPreferencesIds(
-			request, portletId);
+			httpServletRequest, portletId);
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			portletPreferencesIds);
@@ -389,11 +392,13 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, Layout layout, String portletId)
+			HttpServletRequest httpServletRequest, Layout layout,
+			String portletId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long siteGroupId = themeDisplay.getSiteGroupId();
 
@@ -402,7 +407,8 @@ public class PortletPreferencesFactoryImpl
 
 		boolean modeEditGuest = false;
 
-		String portletMode = ParamUtil.getString(request, "p_p_mode");
+		String portletMode = ParamUtil.getString(
+			httpServletRequest, "p_p_mode");
 
 		if (portletMode.equals(LiferayPortletMode.EDIT_GUEST.toString()) ||
 			((layoutTypePortlet != null) &&
@@ -412,18 +418,18 @@ public class PortletPreferencesFactoryImpl
 		}
 
 		return _getPortletPreferencesIds(
-			themeDisplay, siteGroupId, PortalUtil.getUserId(request), layout,
-			portletId, modeEditGuest);
+			themeDisplay, siteGroupId, PortalUtil.getUserId(httpServletRequest),
+			layout, portletId, modeEditGuest);
 	}
 
 	@Override
 	public PortletPreferencesIds getPortletPreferencesIds(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
-		return getPortletPreferencesIds(request, layout, portletId);
+		return getPortletPreferencesIds(httpServletRequest, layout, portletId);
 	}
 
 	@Override
@@ -477,18 +483,19 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public PortletPreferences getPortletSetup(
-		HttpServletRequest request, String portletId) {
+		HttpServletRequest httpServletRequest, String portletId) {
 
-		return getPortletSetup(request, portletId, null);
+		return getPortletSetup(httpServletRequest, portletId, null);
 	}
 
 	@Override
 	public PortletPreferences getPortletSetup(
-		HttpServletRequest request, String portletId,
+		HttpServletRequest httpServletRequest, String portletId,
 		String defaultPreferences) {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest instanceof ConfigurationPortletRequest) {
 			PortletRequestWrapper portletRequestWrapper =
@@ -497,8 +504,9 @@ public class PortletPreferencesFactoryImpl
 			return portletRequestWrapper.getPreferences();
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return getPortletSetup(
 			themeDisplay.getSiteGroupId(), themeDisplay.getLayout(), portletId,
@@ -576,9 +584,12 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
-	public PortletPreferences getPreferences(HttpServletRequest request) {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+	public PortletPreferences getPreferences(
+		HttpServletRequest httpServletRequest) {
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		PortletPreferences portletPreferences = null;
 

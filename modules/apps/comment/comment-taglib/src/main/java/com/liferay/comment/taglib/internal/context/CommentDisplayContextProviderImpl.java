@@ -40,13 +40,14 @@ public class CommentDisplayContextProviderImpl
 
 	@Override
 	public CommentSectionDisplayContext getCommentSectionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission, Discussion discussion) {
 
 		DiscussionRequestHelper discussionRequestHelper =
-			new DiscussionRequestHelper(request);
+			new DiscussionRequestHelper(httpServletRequest);
 		DiscussionTaglibHelper discussionTaglibHelper =
-			new DiscussionTaglibHelper(request);
+			new DiscussionTaglibHelper(httpServletRequest);
 
 		CommentSectionDisplayContext commentSectionDisplayContext =
 			new DefaultCommentSectionDisplayContext(
@@ -58,8 +59,8 @@ public class CommentDisplayContextProviderImpl
 
 			commentSectionDisplayContext =
 				commentDisplayContextFactory.getCommentSectionDisplayContext(
-					commentSectionDisplayContext, request, response,
-					discussionPermission, discussion);
+					commentSectionDisplayContext, httpServletRequest,
+					httpServletResponse, discussionPermission, discussion);
 		}
 
 		return commentSectionDisplayContext;
@@ -67,14 +68,15 @@ public class CommentDisplayContextProviderImpl
 
 	@Override
 	public CommentTreeDisplayContext getCommentTreeDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission,
 		DiscussionComment discussionComment) {
 
 		DiscussionRequestHelper discussionRequestHelper =
-			new DiscussionRequestHelper(request);
+			new DiscussionRequestHelper(httpServletRequest);
 		DiscussionTaglibHelper discussionTaglibHelper =
-			new DiscussionTaglibHelper(request);
+			new DiscussionTaglibHelper(httpServletRequest);
 
 		CommentTreeDisplayContext commentTreeDisplayContext =
 			new DefaultCommentTreeDisplayContext(
@@ -86,8 +88,9 @@ public class CommentDisplayContextProviderImpl
 
 			commentTreeDisplayContext =
 				commentDisplayContextFactory.getCommentTreeDisplayContext(
-					commentTreeDisplayContext, request, response,
-					discussionPermission, discussionComment);
+					commentTreeDisplayContext, httpServletRequest,
+					httpServletResponse, discussionPermission,
+					discussionComment);
 		}
 
 		return commentTreeDisplayContext;

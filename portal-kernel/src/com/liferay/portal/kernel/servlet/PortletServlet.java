@@ -59,13 +59,14 @@ public class PortletServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		if (request.getAttribute(WebKeys.EXTEND_SESSION) != null) {
-			request.removeAttribute(WebKeys.EXTEND_SESSION);
+		if (httpServletRequest.getAttribute(WebKeys.EXTEND_SESSION) != null) {
+			httpServletRequest.removeAttribute(WebKeys.EXTEND_SESSION);
 
-			HttpSession session = request.getSession(false);
+			HttpSession session = httpServletRequest.getSession(false);
 
 			if (session != null) {
 				session.setAttribute(WebKeys.EXTEND_SESSION, Boolean.TRUE);
@@ -76,31 +77,37 @@ public class PortletServlet extends HttpServlet {
 			return;
 		}
 
-		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+		String portletId = (String)httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		String lifecycle = (String)request.getAttribute(
+		String lifecycle = (String)httpServletRequest.getAttribute(
 			PortletRequest.LIFECYCLE_PHASE);
 
-		FilterChain filterChain = (FilterChain)request.getAttribute(
+		FilterChain filterChain = (FilterChain)httpServletRequest.getAttribute(
 			PORTLET_SERVLET_FILTER_CHAIN);
 
 		LiferayPortletSession portletSession =
 			(LiferayPortletSession)portletRequest.getPortletSession();
 
 		portletRequest.setAttribute(PORTLET_SERVLET_CONFIG, getServletConfig());
-		portletRequest.setAttribute(PORTLET_SERVLET_REQUEST, request);
-		portletRequest.setAttribute(PORTLET_SERVLET_RESPONSE, response);
+		portletRequest.setAttribute(
+			PORTLET_SERVLET_REQUEST, httpServletRequest);
+		portletRequest.setAttribute(
+			PORTLET_SERVLET_RESPONSE, httpServletResponse);
 		portletRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
 
 		// LPS-66826
 
-		HttpSession session = _getSharedSession(request, portletRequest);
+		HttpSession session = _getSharedSession(
+			httpServletRequest, portletRequest);
 
 		portletSession.setHttpSession(session);
 
@@ -116,7 +123,7 @@ public class PortletServlet extends HttpServlet {
 	}
 
 	private HttpSession _getSharedSession(
-		HttpServletRequest request, PortletRequest portletRequest) {
+		HttpServletRequest httpServletRequest, PortletRequest portletRequest) {
 
 		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(portletRequest);
@@ -133,7 +140,7 @@ public class PortletServlet extends HttpServlet {
 		}
 
 		return SharedSessionUtil.getSharedSessionWrapper(
-			portalSession, request);
+			portalSession, httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletServlet.class);

@@ -79,10 +79,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		TokenConfiguration tokenCompanyServiceSettings =
 			_configurationProvider.getConfiguration(
@@ -109,7 +110,8 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		String login = tokenRetriever.getLoginToken(request, userTokenName);
+		String login = tokenRetriever.getLoginToken(
+			httpServletRequest, userTokenName);
 
 		if (Validator.isNull(login)) {
 			if (_log.isInfoEnabled()) {
@@ -121,7 +123,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		User user = getUser(companyId, login, tokenCompanyServiceSettings);
 
-		addRedirect(request);
+		addRedirect(httpServletRequest);
 
 		String[] credentials = new String[3];
 

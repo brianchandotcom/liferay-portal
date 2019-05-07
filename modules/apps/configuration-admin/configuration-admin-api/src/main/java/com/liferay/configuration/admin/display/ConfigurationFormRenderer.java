@@ -28,9 +28,12 @@ public interface ConfigurationFormRenderer {
 
 	public String getPid();
 
-	public Map<String, Object> getRequestParameters(HttpServletRequest request);
+	public Map<String, Object> getRequestParameters(
+		HttpServletRequest httpServletRequest);
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 }

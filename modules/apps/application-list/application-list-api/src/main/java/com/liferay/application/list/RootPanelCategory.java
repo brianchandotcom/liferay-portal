@@ -59,22 +59,24 @@ public class RootPanelCategory implements PanelCategory {
 
 	@Override
 	public boolean include(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		return false;
 	}
 
 	@Override
 	public boolean includeHeader(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		return false;
 	}
 
 	@Override
 	public boolean isActive(
-		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper,
-		Group group) {
+		HttpServletRequest httpServletRequest,
+		PanelCategoryHelper panelCategoryHelper, Group group) {
 
 		return false;
 	}

@@ -87,7 +87,8 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		StringWriter stringWriter = new StringWriter();
@@ -130,7 +131,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 		printWriter.close();
 
-		_writeResponse(response, stringWriter.toString());
+		_writeResponse(httpServletResponse, stringWriter.toString());
 	}
 
 	@Reference(unbind = "-")
@@ -140,12 +141,14 @@ public class JSBundleConfigServlet extends HttpServlet {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private void _writeResponse(HttpServletResponse response, String content)
+	private void _writeResponse(
+			HttpServletResponse httpServletResponse, String content)
 		throws IOException {
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
+		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 
-		ServletOutputStream servletOutputStream = response.getOutputStream();
+		ServletOutputStream servletOutputStream =
+			httpServletResponse.getOutputStream();
 
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 

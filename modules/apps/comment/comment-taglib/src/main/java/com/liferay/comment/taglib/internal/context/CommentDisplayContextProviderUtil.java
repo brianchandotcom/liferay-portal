@@ -29,20 +29,24 @@ import javax.servlet.http.HttpServletResponse;
 public class CommentDisplayContextProviderUtil {
 
 	public static CommentSectionDisplayContext getCommentSectionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission, Discussion discussion) {
 
 		return _commentDisplayContextProvider.getCommentSectionDisplayContext(
-			request, response, discussionPermission, discussion);
+			httpServletRequest, httpServletResponse, discussionPermission,
+			discussion);
 	}
 
 	public static CommentTreeDisplayContext getCommentTreeDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DiscussionPermission discussionPermission,
 		DiscussionComment discussionComment) {
 
 		return _commentDisplayContextProvider.getCommentTreeDisplayContext(
-			request, response, discussionPermission, discussionComment);
+			httpServletRequest, httpServletResponse, discussionPermission,
+			discussionComment);
 	}
 
 	private static final CommentDisplayContextProvider

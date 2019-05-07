@@ -40,32 +40,34 @@ import javax.servlet.http.HttpServletRequest;
 public class IGUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			Folder folder, HttpServletRequest request,
+			Folder folder, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
+			httpServletRequest, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (mvcRenderCommandName.equals("/document_library/select_folder")) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", mvcRenderCommandName);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
+				httpServletRequest, themeDisplay.translate("home"),
+				portletURL.toString());
 		}
 		else {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/image_gallery_display/view");
 		}
 
-		long rootFolderId = getRootFolderId(request);
+		long rootFolderId = getRootFolderId(httpServletRequest);
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
@@ -94,18 +96,19 @@ public class IGUtil {
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorFolder.getName(), portletURL.toString());
+				httpServletRequest, ancestorFolder.getName(),
+				portletURL.toString());
 		}
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, folder.getName(), portletURL.toString());
+			httpServletRequest, folder.getName(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
+			long folderId, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -115,15 +118,16 @@ public class IGUtil {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
-		addPortletBreadcrumbEntries(folder, request, renderResponse);
+		addPortletBreadcrumbEntries(folder, httpServletRequest, renderResponse);
 	}
 
-	protected static long getRootFolderId(HttpServletRequest request)
+	protected static long getRootFolderId(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
-				request, PortalUtil.getPortletId(request));
+				httpServletRequest,
+				PortalUtil.getPortletId(httpServletRequest));
 
 		return GetterUtil.getLong(
 			portletPreferences.getValue(

@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class LiferayServletRequest extends HttpServletRequestWrapper {
 
-	public LiferayServletRequest(HttpServletRequest request) {
-		super(request);
+	public LiferayServletRequest(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 
-		_request = request;
+		_request = httpServletRequest;
 	}
 
 	public void cleanUp() {

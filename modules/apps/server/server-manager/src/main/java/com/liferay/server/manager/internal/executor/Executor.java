@@ -27,23 +27,23 @@ import javax.servlet.http.HttpServletRequest;
 public interface Executor {
 
 	public void executeCreate(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception;
 
 	public void executeDelete(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception;
 
 	public void executeRead(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception;
 
 	public void executeUpdate(
-			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			HttpServletRequest httpServletRequest,
+			JSONObject responseJSONObject, Queue<String> arguments)
 		throws Exception;
 
 }

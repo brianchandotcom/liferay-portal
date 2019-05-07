@@ -58,7 +58,8 @@ public abstract class BaseAssetEntryQueryProcessor
 	@Deprecated
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 	}
 

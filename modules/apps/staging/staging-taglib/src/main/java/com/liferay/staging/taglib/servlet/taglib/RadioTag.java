@@ -138,18 +138,23 @@ public class RadioTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:radio:checked", _checked);
-		request.setAttribute("liferay-staging:radio:description", _description);
-		request.setAttribute("liferay-staging:radio:disabled", _disabled);
-		request.setAttribute("liferay-staging:radio:id", _id);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:radio:checked", _checked);
+		httpServletRequest.setAttribute(
+			"liferay-staging:radio:description", _description);
+		httpServletRequest.setAttribute(
+			"liferay-staging:radio:disabled", _disabled);
+		httpServletRequest.setAttribute("liferay-staging:radio:id", _id);
+		httpServletRequest.setAttribute(
 			"liferay-staging:radio:ignoreRequestValue", _ignoreRequestValue);
-		request.setAttribute("liferay-staging:radio:inline", _inline);
-		request.setAttribute("liferay-staging:radio:label", _label);
-		request.setAttribute("liferay-staging:radio:name", _name);
-		request.setAttribute("liferay-staging:radio:popover", _popover);
-		request.setAttribute("liferay-staging:radio:value", _value);
+		httpServletRequest.setAttribute(
+			"liferay-staging:radio:inline", _inline);
+		httpServletRequest.setAttribute("liferay-staging:radio:label", _label);
+		httpServletRequest.setAttribute("liferay-staging:radio:name", _name);
+		httpServletRequest.setAttribute(
+			"liferay-staging:radio:popover", _popover);
+		httpServletRequest.setAttribute("liferay-staging:radio:value", _value);
 	}
 
 	private static final String _PAGE = "/radio/page.jsp";

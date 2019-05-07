@@ -48,9 +48,10 @@ public class TermsOfUseEditCompanyPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public void setAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			PortalSettingsWebKeys.TERMS_OF_USE_CONTENT_PROVIDER,
 			_termsOfUseContentProvider);
 	}

@@ -51,19 +51,21 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalContentSearchDisplayContext {
 
 	public JournalContentSearchDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		JournalContentSearchPortletInstanceConfiguration
 			journalContentSearchPortletInstanceConfiguration) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_journalContentSearchPortletInstanceConfiguration =
 			journalContentSearchPortletInstanceConfiguration;
 
-		_summaryBuilderFactory = (SummaryBuilderFactory)request.getAttribute(
-			JournalContentSearchWebKeys.SUMMARY_BUILDER_FACTORY);
+		_summaryBuilderFactory =
+			(SummaryBuilderFactory)httpServletRequest.getAttribute(
+				JournalContentSearchWebKeys.SUMMARY_BUILDER_FACTORY);
 	}
 
 	public Hits getHits() throws Exception {

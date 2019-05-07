@@ -58,10 +58,10 @@ public class DefaultMBAdminListDisplayContext
 	implements MBAdminListDisplayContext {
 
 	public DefaultMBAdminListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId) {
 
-		_request = request;
+		_request = httpServletRequest;
 
 		_categoryId = categoryId;
 	}

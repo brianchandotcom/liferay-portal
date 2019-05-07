@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface WrapHttpServletRequestFilter extends DirectCallFilter {
 
 	public HttpServletRequest getWrappedHttpServletRequest(
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

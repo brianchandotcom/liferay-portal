@@ -265,7 +265,7 @@ public class AlloyMockUtil {
 	public static class MockHttpServletRequest implements HttpServletRequest {
 
 		@Override
-		public boolean authenticate(HttpServletResponse response) {
+		public boolean authenticate(HttpServletResponse httpServletResponse) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -1500,7 +1500,7 @@ public class AlloyMockUtil {
 		}
 
 		@Override
-		public void transferHeaders(HttpServletResponse response) {
+		public void transferHeaders(HttpServletResponse httpServletResponse) {
 			throw new UnsupportedOperationException();
 		}
 

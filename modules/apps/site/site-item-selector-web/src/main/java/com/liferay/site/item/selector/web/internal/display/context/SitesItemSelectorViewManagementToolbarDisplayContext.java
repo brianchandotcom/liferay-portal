@@ -32,13 +32,13 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 	public SitesItemSelectorViewManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SitesItemSelectorViewDisplayContext
 				sitesItemSelectorViewDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			sitesItemSelectorViewDisplayContext.getGroupSearch());
 
 		_sitesItemSelectorViewDisplayContext =

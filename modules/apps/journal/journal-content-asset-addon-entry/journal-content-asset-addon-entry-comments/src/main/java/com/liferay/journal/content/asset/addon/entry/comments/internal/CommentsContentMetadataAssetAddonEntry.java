@@ -76,18 +76,21 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(WebKeys.ASSET_ADDON_ENTRY, this);
+		httpServletRequest.setAttribute(WebKeys.ASSET_ADDON_ENTRY, this);
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
-	public boolean isCommentsRatingsSelected(HttpServletRequest request) {
+	public boolean isCommentsRatingsSelected(
+		HttpServletRequest httpServletRequest) {
+
 		if (_commentRatingsContentMetadataAssetAddonEntry != null) {
 			List<AssetAddonEntry> assetAddonEntries =
-				(List<AssetAddonEntry>)request.getAttribute(
+				(List<AssetAddonEntry>)httpServletRequest.getAttribute(
 					WebKeys.ASSET_ADDON_ENTRIES);
 
 			if ((assetAddonEntries != null) &&

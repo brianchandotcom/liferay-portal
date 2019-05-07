@@ -27,6 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface AssetEntryUsageActionMenuContributor {
 
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
-		AssetEntryUsage assetEntryUsage, HttpServletRequest request);
+		AssetEntryUsage assetEntryUsage, HttpServletRequest httpServletRequest);
 
 }

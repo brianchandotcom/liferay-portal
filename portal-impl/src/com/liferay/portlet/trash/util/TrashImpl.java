@@ -84,25 +84,26 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public void addBaseModelBreadcrumbEntries(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
 		throws PortalException, PortletException {
 
 		addBreadcrumbEntries(
-			request, liferayPortletResponse, className, classPK, "classPK",
-			containerModelURL, true);
+			httpServletRequest, liferayPortletResponse, className, classPK,
+			"classPK", containerModelURL, true);
 	}
 
 	@Override
 	public void addContainerModelBreadcrumbEntries(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
 		throws PortalException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
@@ -112,7 +113,7 @@ public class TrashImpl implements Trash {
 
 		if (classPK == 0) {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, rootContainerModelTitle, null);
+				httpServletRequest, rootContainerModelTitle, null);
 
 			return;
 		}
@@ -120,10 +121,11 @@ public class TrashImpl implements Trash {
 		containerModelURL.setParameter("containerModelId", "0");
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, rootContainerModelTitle, containerModelURL.toString());
+			httpServletRequest, rootContainerModelTitle,
+			containerModelURL.toString());
 
 		addBreadcrumbEntries(
-			request, liferayPortletResponse, className, classPK,
+			httpServletRequest, liferayPortletResponse, className, classPK,
 			"containerModelId", containerModelURL, false);
 	}
 
@@ -380,19 +382,21 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, long trashEntryId)
+			HttpServletRequest httpServletRequest, long trashEntryId)
 		throws PortalException {
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
 			trashEntryId);
 
 		return getViewContentURL(
-			request, trashEntry.getClassName(), trashEntry.getClassPK());
+			httpServletRequest, trashEntry.getClassName(),
+			trashEntry.getClassPK());
 	}
 
 	@Override
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, String className, long classPK)
+			HttpServletRequest httpServletRequest, String className,
+			long classPK)
 		throws PortalException {
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
@@ -413,11 +417,13 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+			httpServletRequest, TrashEntry.class.getName(),
+			PortletProvider.Action.VIEW);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -440,11 +446,12 @@ public class TrashImpl implements Trash {
 	}
 
 	@Override
-	public PortletURL getViewURL(HttpServletRequest request)
+	public PortletURL getViewURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return PortletProviderUtil.getPortletURL(
-			request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+			httpServletRequest, TrashEntry.class.getName(),
+			PortletProvider.Action.VIEW);
 	}
 
 	@Override
@@ -488,14 +495,15 @@ public class TrashImpl implements Trash {
 	}
 
 	protected void addBreadcrumbEntries(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, String paramName, PortletURL containerModelURL,
 			boolean checkInTrashContainers)
 		throws PortalException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLUtil.clone(
 			containerModelURL, liferayPortletResponse);
@@ -533,13 +541,14 @@ public class TrashImpl implements Trash {
 			}
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, name, portletURL.toString());
+				httpServletRequest, name, portletURL.toString());
 		}
 
 		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, trashRenderer.getTitle(themeDisplay.getLocale()), null);
+			httpServletRequest,
+			trashRenderer.getTitle(themeDisplay.getLocale()), null);
 	}
 
 	protected String getOriginalTitle(

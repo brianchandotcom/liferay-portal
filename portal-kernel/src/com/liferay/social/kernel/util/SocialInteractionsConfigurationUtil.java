@@ -30,21 +30,22 @@ public class SocialInteractionsConfigurationUtil {
 
 	public static SocialInteractionsConfiguration
 		getSocialInteractionsConfiguration(
-			long companyId, HttpServletRequest request, String serviceName) {
+			long companyId, HttpServletRequest httpServletRequest,
+			String serviceName) {
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId, true);
 
 		boolean socialInteractionsFriendsEnabled = PrefsParamUtil.getBoolean(
-			portletPreferences, request,
+			portletPreferences, httpServletRequest,
 			"socialInteractionsFriendsEnabled" + serviceName, true);
 		boolean socialInteractionsSitesEnabled = PrefsParamUtil.getBoolean(
-			portletPreferences, request,
+			portletPreferences, httpServletRequest,
 			"socialInteractionsSitesEnabled" + serviceName, true);
 		SocialInteractionsType socialInteractionsType =
 			SocialInteractionsType.parse(
 				PrefsParamUtil.getString(
-					portletPreferences, request,
+					portletPreferences, httpServletRequest,
 					"socialInteractionsType" + serviceName,
 					SocialInteractionsType.ALL_USERS.toString()));
 

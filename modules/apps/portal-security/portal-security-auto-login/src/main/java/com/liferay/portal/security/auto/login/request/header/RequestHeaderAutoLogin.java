@@ -54,18 +54,19 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!isEnabled(companyId)) {
 			return null;
 		}
 
-		String remoteAddr = request.getRemoteAddr();
+		String remoteAddr = httpServletRequest.getRemoteAddr();
 
-		if (isAccessAllowed(companyId, request)) {
+		if (isAccessAllowed(companyId, httpServletRequest)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Access allowed for " + remoteAddr);
 			}
@@ -78,7 +79,8 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		String screenName = request.getHeader(HttpHeaders.LIFERAY_SCREEN_NAME);
+		String screenName = httpServletRequest.getHeader(
+			HttpHeaders.LIFERAY_SCREEN_NAME);
 
 		if (Validator.isNull(screenName)) {
 			return null;
@@ -109,7 +111,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	}
 
 	protected boolean isAccessAllowed(
-		long companyId, HttpServletRequest request) {
+		long companyId, HttpServletRequest httpServletRequest) {
 
 		RequestHeaderAutoLoginConfiguration
 			requestHeaderAutoLoginConfiguration =
@@ -128,7 +130,8 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 			hostsAllowed.add(hostAllowed);
 		}
 
-		return AccessControlUtil.isAccessAllowed(request, hostsAllowed);
+		return AccessControlUtil.isAccessAllowed(
+			httpServletRequest, hostsAllowed);
 	}
 
 	protected boolean isEnabled(long companyId) {

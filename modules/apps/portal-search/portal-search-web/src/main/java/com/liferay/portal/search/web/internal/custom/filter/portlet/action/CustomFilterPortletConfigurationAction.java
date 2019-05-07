@@ -39,23 +39,23 @@ public class CustomFilterPortletConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/custom/filter/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		ConfigurationDisplayContext configurationDisplayContext =
 			new ConfigurationDisplayContext();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, configurationDisplayContext);
 
-		super.include(portletConfig, request, response);
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 }

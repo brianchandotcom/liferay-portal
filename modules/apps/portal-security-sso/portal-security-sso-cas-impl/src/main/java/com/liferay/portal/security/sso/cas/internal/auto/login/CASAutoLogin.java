@@ -72,10 +72,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doHandleException(
-		HttpServletRequest request, HttpServletResponse response, Exception e) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Exception e) {
 
 		if (e instanceof NoSuchUserException) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.removeAttribute(CASWebKeys.CAS_LOGIN);
 
@@ -90,12 +91,13 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		CASConfiguration casConfiguration =
 			_configurationProvider.getConfiguration(
@@ -123,7 +125,8 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 			String redirect = casConfiguration.noSuchUserRedirectURL();
 
-			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
+			httpServletRequest.setAttribute(
+				AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 
 			return null;
 		}
@@ -165,7 +168,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		addRedirect(request);
+		addRedirect(httpServletRequest);
 
 		String[] credentials = new String[3];
 

@@ -29,18 +29,20 @@ import javax.servlet.http.HttpServletRequest;
 public class TranslationManagerTag extends BaseTranslationManagerTag {
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		if (getGroupId() > 0) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		setNamespacedAttribute(
-			request, "groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+			httpServletRequest, "groupId",
+			String.valueOf(themeDisplay.getSiteGroupId()));
 	}
 
 }

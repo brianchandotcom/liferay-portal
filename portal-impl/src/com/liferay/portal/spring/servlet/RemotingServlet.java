@@ -55,7 +55,8 @@ public class RemotingServlet extends DispatcherServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ServletException {
 
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
@@ -63,7 +64,7 @@ public class RemotingServlet extends DispatcherServlet {
 		try {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
-			super.service(request, response);
+			super.service(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ServletException(e);

@@ -174,11 +174,11 @@ public class ViewAuthorizationRequestMVCRenderCommand
 	}
 
 	protected Map<String, String> getOAuth2Parameters(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, String> oAuth2Parameters = new HashMap<>();
 
-		Enumeration<String> names = request.getParameterNames();
+		Enumeration<String> names = httpServletRequest.getParameterNames();
 
 		while (names.hasMoreElements()) {
 			String name = names.nextElement();
@@ -186,7 +186,7 @@ public class ViewAuthorizationRequestMVCRenderCommand
 			if (name.startsWith("oauth2_")) {
 				oAuth2Parameters.put(
 					name.substring("oauth2_".length()),
-					ParamUtil.getString(request, name));
+					ParamUtil.getString(httpServletRequest, name));
 			}
 		}
 

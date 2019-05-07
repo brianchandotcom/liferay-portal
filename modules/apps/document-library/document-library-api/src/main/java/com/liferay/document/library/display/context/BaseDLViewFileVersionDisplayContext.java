@@ -40,10 +40,12 @@ public class BaseDLViewFileVersionDisplayContext
 
 	public BaseDLViewFileVersionDisplayContext(
 		UUID uuid, DLViewFileVersionDisplayContext parentDLDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		super(uuid, parentDLDisplayContext, request, response);
+		super(
+			uuid, parentDLDisplayContext, httpServletRequest,
+			httpServletResponse);
 
 		this.fileVersion = fileVersion;
 	}
@@ -139,18 +141,22 @@ public class BaseDLViewFileVersionDisplayContext
 
 	@Override
 	public void renderCustomThumbnail(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		parentDisplayContext.renderCustomThumbnail(request, response);
+		parentDisplayContext.renderCustomThumbnail(
+			httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public void renderPreview(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		parentDisplayContext.renderPreview(request, response);
+		parentDisplayContext.renderPreview(
+			httpServletRequest, httpServletResponse);
 	}
 
 	protected FileVersion fileVersion;

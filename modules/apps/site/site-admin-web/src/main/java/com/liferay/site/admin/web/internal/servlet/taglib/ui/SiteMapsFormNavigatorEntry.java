@@ -62,21 +62,24 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+		Group liveGroup = (Group)httpServletRequest.getAttribute(
+			"site.liveGroup");
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
 			MapProviderHelperUtil.getMapProviderKey(
 				_groupLocalService, themeDisplay.getCompanyId(),
 				liveGroup.getGroupId()));
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

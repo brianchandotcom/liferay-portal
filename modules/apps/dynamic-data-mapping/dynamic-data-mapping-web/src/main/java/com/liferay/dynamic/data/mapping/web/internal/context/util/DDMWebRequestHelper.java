@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMWebRequestHelper extends BaseRequestHelper {
 
-	public DDMWebRequestHelper(HttpServletRequest request) {
-		super(request);
+	public DDMWebRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public DDMGroupServiceConfiguration getDDMGroupServiceConfiguration() {

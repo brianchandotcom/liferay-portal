@@ -28,18 +28,20 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Captcha {
 
-	public void check(HttpServletRequest request) throws CaptchaException;
+	public void check(HttpServletRequest httpServletRequest)
+		throws CaptchaException;
 
 	public void check(PortletRequest portletRequest) throws CaptchaException;
 
 	public String getTaglibPath();
 
-	public boolean isEnabled(HttpServletRequest request);
+	public boolean isEnabled(HttpServletRequest httpServletRequest);
 
 	public boolean isEnabled(PortletRequest portletRequest);
 
 	public void serveImage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	public void serveImage(

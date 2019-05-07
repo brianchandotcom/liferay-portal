@@ -57,12 +57,13 @@ public class UrlRewriteFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		if (_urlRewriteFilter != null) {
-			_urlRewriteFilter.doFilter(request, response, filterChain);
+			_urlRewriteFilter.doFilter(
+				httpServletRequest, httpServletResponse, filterChain);
 		}
 	}
 

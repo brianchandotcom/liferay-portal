@@ -39,8 +39,8 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		ScriptData scriptData = new ScriptData();
@@ -48,7 +48,7 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 		scriptData.append(
 			null, _TMPL_CONTENT, null, ScriptData.ModulesType.AUI);
 
-		scriptData.writeTo(response.getWriter());
+		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
 	@Override

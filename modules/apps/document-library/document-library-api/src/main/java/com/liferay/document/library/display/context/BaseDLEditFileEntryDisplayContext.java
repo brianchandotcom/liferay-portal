@@ -37,10 +37,13 @@ public class BaseDLEditFileEntryDisplayContext
 	public BaseDLEditFileEntryDisplayContext(
 		UUID uuid,
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType) {
 
-		super(uuid, parentDLEditFileEntryDisplayContext, request, response);
+		super(
+			uuid, parentDLEditFileEntryDisplayContext, httpServletRequest,
+			httpServletResponse);
 
 		this.dlFileEntryType = dlFileEntryType;
 	}
@@ -48,10 +51,12 @@ public class BaseDLEditFileEntryDisplayContext
 	public BaseDLEditFileEntryDisplayContext(
 		UUID uuid,
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
 
-		super(uuid, parentDLEditFileEntryDisplayContext, request, response);
+		super(
+			uuid, parentDLEditFileEntryDisplayContext, httpServletRequest,
+			httpServletResponse);
 
 		this.fileEntry = fileEntry;
 

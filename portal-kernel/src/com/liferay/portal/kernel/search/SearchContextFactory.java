@@ -36,13 +36,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchContextFactory {
 
-	public static SearchContext getInstance(HttpServletRequest request) {
+	public static SearchContext getInstance(
+		HttpServletRequest httpServletRequest) {
+
 		SearchContext searchContext = new SearchContext();
 
 		// Theme display
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		searchContext.setCompanyId(themeDisplay.getCompanyId());
 		searchContext.setGroupIds(new long[] {themeDisplay.getScopeGroupId()});
@@ -55,7 +58,7 @@ public class SearchContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		Map<String, String[]> parameters = request.getParameterMap();
+		Map<String, String[]> parameters = httpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String[] values = entry.getValue();
@@ -91,17 +94,17 @@ public class SearchContextFactory {
 		// Asset
 
 		long[] assetCategoryIds = StringUtil.split(
-			ParamUtil.getString(request, "assetCategoryIds"), 0L);
+			ParamUtil.getString(httpServletRequest, "assetCategoryIds"), 0L);
 
 		String[] assetTagNames = StringUtil.split(
-			ParamUtil.getString(request, "assetTagNames"));
+			ParamUtil.getString(httpServletRequest, "assetTagNames"));
 
 		searchContext.setAssetCategoryIds(assetCategoryIds);
 		searchContext.setAssetTagNames(assetTagNames);
 
 		// Keywords
 
-		String keywords = ParamUtil.getString(request, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		searchContext.setKeywords(keywords);
 

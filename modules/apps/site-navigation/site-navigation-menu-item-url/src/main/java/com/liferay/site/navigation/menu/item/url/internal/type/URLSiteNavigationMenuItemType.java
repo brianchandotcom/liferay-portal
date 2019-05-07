@@ -58,7 +58,7 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public String getRegularURL(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
@@ -102,25 +102,29 @@ public class URLSiteNavigationMenuItemType
 
 	@Override
 	public void renderAddPage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_url.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_url.jsp");
 	}
 
 	@Override
 	public void renderEditPage(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_url.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_url.jsp");
 	}
 
 	@Reference

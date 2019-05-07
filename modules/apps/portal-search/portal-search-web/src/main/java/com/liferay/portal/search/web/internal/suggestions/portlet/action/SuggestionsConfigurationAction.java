@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class SuggestionsConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/suggestions/configuration.jsp";
 	}
 

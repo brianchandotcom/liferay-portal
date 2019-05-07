@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WorkflowTaskRequestHelper extends BaseRequestHelper {
 
-	public WorkflowTaskRequestHelper(HttpServletRequest request) {
-		super(request);
+	public WorkflowTaskRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 }

@@ -50,10 +50,11 @@ public class UnlockMethodImpl implements Method {
 		return HttpServletResponse.SC_PRECONDITION_FAILED;
 	}
 
-	protected String getToken(HttpServletRequest request) {
+	protected String getToken(HttpServletRequest httpServletRequest) {
 		String token = StringPool.BLANK;
 
-		String value = GetterUtil.getString(request.getHeader("Lock-Token"));
+		String value = GetterUtil.getString(
+			httpServletRequest.getHeader("Lock-Token"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("\"Lock-Token\" header is " + value);

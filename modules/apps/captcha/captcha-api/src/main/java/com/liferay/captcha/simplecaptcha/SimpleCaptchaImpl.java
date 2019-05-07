@@ -66,16 +66,18 @@ import org.osgi.service.component.annotations.Modified;
 public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
-	public void check(HttpServletRequest request) throws CaptchaException {
-		if (!isEnabled(request)) {
+	public void check(HttpServletRequest httpServletRequest)
+		throws CaptchaException {
+
+		if (!isEnabled(httpServletRequest)) {
 			return;
 		}
 
-		if (!validateChallenge(request)) {
+		if (!validateChallenge(httpServletRequest)) {
 			throw new CaptchaTextException();
 		}
 
-		incrementCounter(request);
+		incrementCounter(httpServletRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("CAPTCHA text is valid");
@@ -105,8 +107,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public boolean isEnabled(HttpServletRequest request) {
-		if (isExceededMaxChallenges(request)) {
+	public boolean isEnabled(HttpServletRequest httpServletRequest) {
+		if (isExceededMaxChallenges(httpServletRequest)) {
 			return false;
 		}
 
@@ -132,19 +134,20 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public void serveImage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
 		session.setAttribute(WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
 
-		response.setContentType(ContentTypes.IMAGE_PNG);
+		httpServletResponse.setContentType(ContentTypes.IMAGE_PNG);
 
 		CaptchaServletUtil.writeImage(
-			response.getOutputStream(), simpleCaptcha.getImage());
+			httpServletResponse.getOutputStream(), simpleCaptcha.getImage());
 	}
 
 	@Override
@@ -254,11 +257,11 @@ public class SimpleCaptchaImpl implements Captcha {
 		return _wordRenderers[pos];
 	}
 
-	protected void incrementCounter(HttpServletRequest request) {
+	protected void incrementCounter(HttpServletRequest httpServletRequest) {
 		if ((_captchaConfiguration.maxChallenges() > 0) &&
-			Validator.isNotNull(request.getRemoteUser())) {
+			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			Integer count = (Integer)session.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
@@ -365,9 +368,11 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
-	protected boolean isExceededMaxChallenges(HttpServletRequest request) {
+	protected boolean isExceededMaxChallenges(
+		HttpServletRequest httpServletRequest) {
+
 		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			Integer count = (Integer)session.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
@@ -407,16 +412,16 @@ public class SimpleCaptchaImpl implements Captcha {
 		_captchaConfiguration = captchaConfiguration;
 	}
 
-	protected boolean validateChallenge(HttpServletRequest request)
+	protected boolean validateChallenge(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		String captchaText = (String)session.getAttribute(WebKeys.CAPTCHA_TEXT);
 
-		if (request instanceof UploadPortletRequest) {
+		if (httpServletRequest instanceof UploadPortletRequest) {
 			UploadPortletRequest uploadPortletRequest =
-				(UploadPortletRequest)request;
+				(UploadPortletRequest)httpServletRequest;
 
 			PortletRequest portletRequest =
 				uploadPortletRequest.getPortletRequest();
@@ -429,19 +434,20 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		if (captchaText == null) {
 			_log.error(
-				"CAPTCHA text is null. User " + request.getRemoteUser() +
-					" may be trying to circumvent the CAPTCHA.");
+				"CAPTCHA text is null. User " +
+					httpServletRequest.getRemoteUser() +
+						" may be trying to circumvent the CAPTCHA.");
 
 			throw new CaptchaTextException();
 		}
 
 		boolean valid = captchaText.equals(
-			ParamUtil.getString(request, "captchaText"));
+			ParamUtil.getString(httpServletRequest, "captchaText"));
 
 		if (valid) {
-			if (request instanceof UploadPortletRequest) {
+			if (httpServletRequest instanceof UploadPortletRequest) {
 				UploadPortletRequest uploadPortletRequest =
-					(UploadPortletRequest)request;
+					(UploadPortletRequest)httpServletRequest;
 
 				PortletRequest portletRequest =
 					uploadPortletRequest.getPortletRequest();

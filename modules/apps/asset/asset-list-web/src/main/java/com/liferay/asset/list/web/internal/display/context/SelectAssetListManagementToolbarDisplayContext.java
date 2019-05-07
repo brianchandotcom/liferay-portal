@@ -32,11 +32,11 @@ public class SelectAssetListManagementToolbarDisplayContext
 	public SelectAssetListManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SelectAssetListDisplayContext selectAssetListDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			selectAssetListDisplayContext.getSearchContainer());
 	}
 

@@ -26,16 +26,16 @@ public interface OpenSearch {
 	public boolean isEnabled();
 
 	public String search(
-			HttpServletRequest request, long groupId, long userId,
+			HttpServletRequest httpServletRequest, long groupId, long userId,
 			String keywords, int startPage, int itemsPerPage, String format)
 		throws SearchException;
 
 	public String search(
-			HttpServletRequest request, long userId, String keywords,
+			HttpServletRequest httpServletRequest, long userId, String keywords,
 			int startPage, int itemsPerPage, String format)
 		throws SearchException;
 
-	public String search(HttpServletRequest request, String url)
+	public String search(HttpServletRequest httpServletRequest, String url)
 		throws SearchException;
 
 }

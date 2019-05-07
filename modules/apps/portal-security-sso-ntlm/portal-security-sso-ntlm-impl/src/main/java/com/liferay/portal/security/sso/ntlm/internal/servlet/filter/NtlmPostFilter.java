@@ -60,19 +60,21 @@ public class NtlmPostFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (!_browserSniffer.isIe(request)) {
+		if (!_browserSniffer.isIe(httpServletRequest)) {
 			return false;
 		}
 
-		String method = request.getMethod();
+		String method = httpServletRequest.getMethod();
 
 		if (!method.equals(HttpMethods.POST)) {
 			return false;
 		}
 
-		long companyId = _portalInstancesLocalService.getCompanyId(request);
+		long companyId = _portalInstancesLocalService.getCompanyId(
+			httpServletRequest);
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
@@ -97,12 +99,12 @@ public class NtlmPostFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		String authorization = GetterUtil.getString(
-			request.getHeader(HttpHeaders.AUTHORIZATION));
+			httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
 
 		if (authorization.startsWith("NTLM ")) {
 			byte[] src = Base64.decode(authorization.substring(5));
@@ -114,20 +116,22 @@ public class NtlmPostFilter extends BaseFilter {
 
 				authorization = Base64.encode(type2.toByteArray());
 
-				response.setHeader(
+				httpServletResponse.setHeader(
 					HttpHeaders.WWW_AUTHENTICATE, "NTLM " + authorization);
 
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				response.setContentLength(0);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.setContentLength(0);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 
 				return;
 			}
 		}
 
 		processFilter(
-			NtlmPostFilter.class.getName(), request, response, filterChain);
+			NtlmPostFilter.class.getName(), httpServletRequest,
+			httpServletResponse, filterChain);
 	}
 
 	@Reference(unbind = "-")

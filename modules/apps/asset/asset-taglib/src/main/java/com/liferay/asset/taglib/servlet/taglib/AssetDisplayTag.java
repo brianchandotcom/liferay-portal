@@ -201,11 +201,13 @@ public class AssetDisplayTag extends IncludeTag {
 	}
 
 	@Override
-	protected void includePage(String page, HttpServletResponse response)
+	protected void includePage(
+			String page, HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		try {
-			boolean include = _renderer.include(request, response, _template);
+			boolean include = _renderer.include(
+				request, httpServletResponse, _template);
 
 			if (include) {
 				return;
@@ -215,12 +217,13 @@ public class AssetDisplayTag extends IncludeTag {
 			_log.error("Unable to include asset renderer template", e);
 		}
 
-		super.includePage("/asset_display/" + _template + ".jsp", response);
+		super.includePage(
+			"/asset_display/" + _template + ".jsp", httpServletResponse);
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH, _abstractLength);
 
 		AssetEntry assetEntry = _assetEntry;
@@ -236,7 +239,7 @@ public class AssetDisplayTag extends IncludeTag {
 			}
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-display:assetEntry", assetEntry);
 
 		if ((_renderer == null) && (assetEntry != null)) {
@@ -246,10 +249,11 @@ public class AssetDisplayTag extends IncludeTag {
 		if (_renderer instanceof AssetRenderer) {
 			AssetRenderer<?> assetRenderer = (AssetRenderer<?>)_renderer;
 
-			request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+			httpServletRequest.setAttribute(
+				WebKeys.ASSET_RENDERER, assetRenderer);
 		}
 		else {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-asset:asset-display:renderer", _renderer);
 		}
 
@@ -260,11 +264,11 @@ public class AssetDisplayTag extends IncludeTag {
 		}
 
 		if (assetRendererFactory != null) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
 		}
 
-		request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, _viewURL);
+		httpServletRequest.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, _viewURL);
 
 		addParam("showComments", String.valueOf(_showComments));
 		addParam("showExtraInfo", String.valueOf(_showExtraInfo));

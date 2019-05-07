@@ -28,7 +28,9 @@ public class InvokerAction extends Action {
 	}
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		Thread currentThread = Thread.currentThread();
@@ -38,7 +40,7 @@ public class InvokerAction extends Action {
 		try {
 			currentThread.setContextClassLoader(_classLoader);
 
-			_action.run(request, response);
+			_action.run(httpServletRequest, httpServletResponse);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

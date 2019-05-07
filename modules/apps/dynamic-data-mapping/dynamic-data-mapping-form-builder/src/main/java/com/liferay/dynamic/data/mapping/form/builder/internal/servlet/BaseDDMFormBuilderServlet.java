@@ -36,21 +36,24 @@ public class BaseDDMFormBuilderServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		createContext(request, response);
+		createContext(httpServletRequest, httpServletResponse);
 
-		super.service(request, response);
+		super.service(httpServletRequest, httpServletResponse);
 	}
 
 	protected void createContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
 			EventsProcessorUtil.process(
 				PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
-				PropsValues.SERVLET_SERVICE_EVENTS_PRE, request, response);
+				PropsValues.SERVLET_SERVICE_EVENTS_PRE, httpServletRequest,
+				httpServletResponse);
 		}
 		catch (ActionException ae) {
 			if (_log.isDebugEnabled()) {

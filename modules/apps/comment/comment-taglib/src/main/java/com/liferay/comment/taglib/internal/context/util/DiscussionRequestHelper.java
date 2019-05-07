@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DiscussionRequestHelper extends BaseRequestHelper {
 
-	public DiscussionRequestHelper(HttpServletRequest request) {
-		super(request);
+	public DiscussionRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 }

@@ -47,13 +47,13 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileShortcut fileShortcut) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		try {
 			return getDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
-				fileShortcut.getFileVersion());
+				parentDLViewFileVersionDisplayContext, httpServletRequest,
+				httpServletResponse, fileShortcut.getFileVersion());
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -69,15 +69,16 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return new DLOpenerGoogleDriveDLViewFileVersionDisplayContext(
-			parentDLViewFileVersionDisplayContext, request, response,
-			fileVersion,
+			parentDLViewFileVersionDisplayContext, httpServletRequest,
+			httpServletResponse, fileVersion,
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				DLOpenerGoogleDriveDLDisplayContextFactory.class),

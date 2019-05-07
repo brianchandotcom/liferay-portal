@@ -48,12 +48,14 @@ public class AssetListScopeFormNavigatorEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
+		httpServletRequest.setAttribute(
+			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

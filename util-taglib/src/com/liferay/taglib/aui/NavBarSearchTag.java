@@ -112,11 +112,12 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		setNamespacedAttribute(request, "id", _getNamespacedId());
-		setNamespacedAttribute(request, "searchResults", _hasSearchResults());
+		setNamespacedAttribute(httpServletRequest, "id", _getNamespacedId());
+		setNamespacedAttribute(
+			httpServletRequest, "searchResults", _hasSearchResults());
 	}
 
 	private String _getNamespacedId() {

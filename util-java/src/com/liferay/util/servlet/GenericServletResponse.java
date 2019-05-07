@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class GenericServletResponse extends HttpServletResponseWrapper {
 
-	public GenericServletResponse(HttpServletResponse response) {
-		super(response);
+	public GenericServletResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 
 		_ubaos = new UnsyncByteArrayOutputStream();
 	}

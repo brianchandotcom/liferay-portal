@@ -188,7 +188,9 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (_article.isInTrash() && template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/trash/" + template + ".jsp";
 		}
@@ -280,18 +282,21 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLEdit(HttpServletRequest request) throws Exception {
+	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
+		throws Exception {
+
 		Group group = GroupLocalServiceUtil.fetchGroup(_article.getGroupId());
 
 		if (group.isCompany()) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			group = themeDisplay.getScopeGroup();
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, group, JournalPortletKeys.JOURNAL, 0, 0,
+			httpServletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
@@ -453,7 +458,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String getURLViewUsages(HttpServletRequest request)
+	public String getURLViewUsages(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
@@ -465,11 +470,12 @@ public class JournalArticleAssetRenderer
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(
-			request, AssetEntryUsage.class.getName(),
+			httpServletRequest, AssetEntryUsage.class.getName(),
 			PortletProvider.Action.VIEW);
 
 		viewUsagesURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -519,17 +525,17 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
+		httpServletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY,
-			getArticleDisplay(request, response));
+			getArticleDisplay(httpServletRequest, httpServletResponse));
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	@Override
@@ -589,27 +595,30 @@ public class JournalArticleAssetRenderer
 	}
 
 	protected JournalArticleDisplay getArticleDisplay(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		boolean workflowAssetPreview = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+			httpServletRequest.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
 
-		String ddmTemplateKey = (String)request.getAttribute(
+		String ddmTemplateKey = (String)httpServletRequest.getAttribute(
 			WebKeys.JOURNAL_TEMPLATE_ID);
 
 		if (Validator.isNull(ddmTemplateKey)) {
-			ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
+			ddmTemplateKey = ParamUtil.getString(
+				httpServletRequest, "ddmTemplateKey");
 		}
 
 		String viewMode = ParamUtil.getString(
-			request, "viewMode", Constants.VIEW);
-		String languageId = LanguageUtil.getLanguageId(request);
-		int articlePage = ParamUtil.getInteger(request, "page", 1);
+			httpServletRequest, "viewMode", Constants.VIEW);
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+		int articlePage = ParamUtil.getInteger(httpServletRequest, "page", 1);
 		PortletRequestModel portletRequestModel = getPortletRequestModel(
-			request, response);
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			httpServletRequest, httpServletResponse);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!workflowAssetPreview && _article.isApproved()) {
 			return _journalContent.getDisplay(
@@ -648,12 +657,15 @@ public class JournalArticleAssetRenderer
 	}
 
 	protected PortletRequestModel getPortletRequestModel(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest == null) || (portletResponse == null)) {
 			return null;

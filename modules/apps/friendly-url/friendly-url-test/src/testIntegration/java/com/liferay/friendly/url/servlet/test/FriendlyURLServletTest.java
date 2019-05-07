@@ -214,14 +214,14 @@ public class FriendlyURLServletTest {
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
-	protected String getI18nLanguageId(HttpServletRequest request) {
-		String path = GetterUtil.getString(request.getPathInfo());
+	protected String getI18nLanguageId(HttpServletRequest httpServletRequest) {
+		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
 		if (Validator.isNull(path)) {
 			return null;
 		}
 
-		String i18nLanguageId = request.getServletPath();
+		String i18nLanguageId = httpServletRequest.getServletPath();
 
 		int pos = i18nLanguageId.lastIndexOf(CharPool.SLASH);
 
@@ -300,14 +300,14 @@ public class FriendlyURLServletTest {
 	}
 
 	protected void testGetRedirect(
-			HttpServletRequest request, String path, String mainPath,
+			HttpServletRequest httpServletRequest, String path, String mainPath,
 			Object expectedRedirect)
 		throws Throwable {
 
 		try {
 			Assert.assertEquals(
 				expectedRedirect,
-				_getRedirectMethod.invoke(_servlet, request, path));
+				_getRedirectMethod.invoke(_servlet, httpServletRequest, path));
 		}
 		catch (InvocationTargetException ite) {
 			throw ite.getCause();

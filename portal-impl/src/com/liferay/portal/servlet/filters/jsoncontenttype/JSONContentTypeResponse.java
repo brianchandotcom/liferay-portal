@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class JSONContentTypeResponse extends HttpServletResponseWrapper {
 
-	public JSONContentTypeResponse(HttpServletResponse response) {
-		super(response);
+	public JSONContentTypeResponse(HttpServletResponse httpServletResponse) {
+		super(httpServletResponse);
 	}
 
 	@Override

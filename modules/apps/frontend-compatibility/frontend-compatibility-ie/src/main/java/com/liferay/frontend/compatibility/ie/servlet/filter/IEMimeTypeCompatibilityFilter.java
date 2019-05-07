@@ -42,20 +42,22 @@ public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		return _browserSniffer.isIe(request);
+		return _browserSniffer.isIe(httpServletRequest);
 	}
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		processFilter(
-			IEMimeTypeCompatibilityFilter.class.getName(), request,
-			new IEMimeTypeCompatibilityResponseWrapper(response), filterChain);
+			IEMimeTypeCompatibilityFilter.class.getName(), httpServletRequest,
+			new IEMimeTypeCompatibilityResponseWrapper(httpServletResponse),
+			filterChain);
 	}
 
 	@Reference
@@ -74,9 +76,9 @@ public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 		}
 
 		private IEMimeTypeCompatibilityResponseWrapper(
-			HttpServletResponse response) {
+			HttpServletResponse httpServletResponse) {
 
-			super(response);
+			super(httpServletResponse);
 		}
 
 	}

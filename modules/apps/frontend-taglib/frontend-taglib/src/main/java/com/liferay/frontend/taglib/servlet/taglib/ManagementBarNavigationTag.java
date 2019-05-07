@@ -138,8 +138,8 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-navigation:disabled",
 			isDisabled());
 
@@ -147,7 +147,8 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 			_managementBarFilterItems = new ArrayList<>();
 		}
 
-		String navigationKey = ParamUtil.getString(request, _navigationParam);
+		String navigationKey = ParamUtil.getString(
+			httpServletRequest, _navigationParam);
 
 		for (Map.Entry<String, String> entry : _navigationKeys.entrySet()) {
 			String label = entry.getKey();
@@ -169,7 +170,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 			_managementBarFilterItems.add(managementBarFilterItem);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-navigation:" +
 				"managementBarFilterItems",
 			_managementBarFilterItems);
@@ -191,7 +192,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 			}
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:management-bar-navigation:label", _label);
 	}
 

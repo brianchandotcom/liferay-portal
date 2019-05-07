@@ -51,14 +51,16 @@ public class GetPageAttachmentAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
-			long nodeId = ParamUtil.getLong(request, "nodeId");
+			long nodeId = ParamUtil.getLong(httpServletRequest, "nodeId");
 
-			String title = ParamUtil.getString(request, "title");
-			String fileName = ParamUtil.getString(request, "fileName");
+			String title = ParamUtil.getString(httpServletRequest, "title");
+			String fileName = ParamUtil.getString(
+				httpServletRequest, "fileName");
 
 			if (fileName.startsWith(
 					MediaWikiImporter.SHARED_IMAGES_TITLE + StringPool.SLASH)) {
@@ -72,9 +74,12 @@ public class GetPageAttachmentAction implements StrutsAction {
 			}
 
 			int status = ParamUtil.getInteger(
-				request, "status", WorkflowConstants.STATUS_APPROVED);
+				httpServletRequest, "status",
+				WorkflowConstants.STATUS_APPROVED);
 
-			getFile(nodeId, title, fileName, status, request, response);
+			getFile(
+				nodeId, title, fileName, status, httpServletRequest,
+				httpServletResponse);
 
 			return null;
 		}
@@ -87,7 +92,7 @@ public class GetPageAttachmentAction implements StrutsAction {
 				}
 			}
 			else {
-				_portal.sendError(e, request, response);
+				_portal.sendError(e, httpServletRequest, httpServletResponse);
 			}
 
 			return null;
@@ -96,7 +101,8 @@ public class GetPageAttachmentAction implements StrutsAction {
 
 	protected void getFile(
 			long nodeId, String title, String fileName, int status,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		WikiPage wikiPage = _wikiPageService.getPage(nodeId, title);
@@ -126,8 +132,8 @@ public class GetPageAttachmentAction implements StrutsAction {
 		is = flashMagicBytesUtilResult.getInputStream();
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, fileEntry.getSize(),
-			fileEntry.getMimeType());
+			httpServletRequest, httpServletResponse, fileName, is,
+			fileEntry.getSize(), fileEntry.getMimeType());
 	}
 
 	@Reference(unbind = "-")

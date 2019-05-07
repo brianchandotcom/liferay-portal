@@ -142,7 +142,9 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowInstance.getEndDate();
 	}
 
-	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+	public DropdownItemList getFilterOptions(
+		HttpServletRequest httpServletRequest) {
+
 		return new DropdownItemList() {
 			{
 				addGroup(
@@ -165,7 +167,7 @@ public class WorkflowInstanceViewDisplayContext
 							});
 
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter"));
+							LanguageUtil.get(httpServletRequest, "filter"));
 					});
 
 				addGroup(
@@ -182,7 +184,7 @@ public class WorkflowInstanceViewDisplayContext
 							});
 
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -321,10 +323,11 @@ public class WorkflowInstanceViewDisplayContext
 		return portletURL.toString();
 	}
 
-	public String getSortingURL(HttpServletRequest request)
+	public String getSortingURL(HttpServletRequest httpServletRequest)
 		throws PortletException {
 
-		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+		String orderByType = ParamUtil.getString(
+			httpServletRequest, "orderByType", "asc");
 
 		LiferayPortletResponse response =
 			workflowInstanceRequestHelper.getLiferayPortletResponse();
@@ -334,7 +337,8 @@ public class WorkflowInstanceViewDisplayContext
 		portletURL.setParameter(
 			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
 
-		String instanceNavigation = ParamUtil.getString(request, "navigation");
+		String instanceNavigation = ParamUtil.getString(
+			httpServletRequest, "navigation");
 
 		if (Validator.isNotNull(instanceNavigation)) {
 			portletURL.setParameter("navigation", instanceNavigation);

@@ -68,7 +68,8 @@ public interface PortletConfigurationIcon {
 	public double getWeight();
 
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException;
 
 	public boolean isLabel();

@@ -40,53 +40,60 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class MBDisplayContextProvider {
 
 	public MBAdminListDisplayContext getMbAdminListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId) {
 
 		MBAdminListDisplayContext mbAdminListDisplayContext =
-			new DefaultMBAdminListDisplayContext(request, response, categoryId);
+			new DefaultMBAdminListDisplayContext(
+				httpServletRequest, httpServletResponse, categoryId);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
 				_mbDisplayContextFactories) {
 
 			mbAdminListDisplayContext =
 				mbDisplayContextFactory.getMBAdminListDisplayContext(
-					mbAdminListDisplayContext, request, response, categoryId);
+					mbAdminListDisplayContext, httpServletRequest,
+					httpServletResponse, categoryId);
 		}
 
 		return mbAdminListDisplayContext;
 	}
 
 	public MBHomeDisplayContext getMBHomeDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		MBHomeDisplayContext mbHomeDisplayContext =
-			new DefaultMBHomeDisplayContext(request, response);
+			new DefaultMBHomeDisplayContext(
+				httpServletRequest, httpServletResponse);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
 				_mbDisplayContextFactories) {
 
 			mbHomeDisplayContext =
 				mbDisplayContextFactory.getMBHomeDisplayContext(
-					mbHomeDisplayContext, request, response);
+					mbHomeDisplayContext, httpServletRequest,
+					httpServletResponse);
 		}
 
 		return mbHomeDisplayContext;
 	}
 
 	public MBListDisplayContext getMbListDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId) {
 
 		MBListDisplayContext mbListDisplayContext =
-			new DefaultMBListDisplayContext(request, response, categoryId);
+			new DefaultMBListDisplayContext(
+				httpServletRequest, httpServletResponse, categoryId);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
 				_mbDisplayContextFactories) {
 
 			mbListDisplayContext =
 				mbDisplayContextFactory.getMBListDisplayContext(
-					mbListDisplayContext, request, response, categoryId);
+					mbListDisplayContext, httpServletRequest,
+					httpServletResponse, categoryId);
 		}
 
 		return mbListDisplayContext;

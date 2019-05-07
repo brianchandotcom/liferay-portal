@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JournalWebRequestHelper {
 
-	public JournalWebRequestHelper(HttpServletRequest request) {
-		_request = request;
+	public JournalWebRequestHelper(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public JournalGroupServiceConfiguration

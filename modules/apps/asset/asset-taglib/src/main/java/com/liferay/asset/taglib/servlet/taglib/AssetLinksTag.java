@@ -130,7 +130,7 @@ public class AssetLinksTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (_page == null) {
 			return;
 		}
@@ -174,7 +174,7 @@ public class AssetLinksTag extends IncludeTag {
 			return;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:asset-links:assetLinkEntries", assetLinkEntries);
 	}
 

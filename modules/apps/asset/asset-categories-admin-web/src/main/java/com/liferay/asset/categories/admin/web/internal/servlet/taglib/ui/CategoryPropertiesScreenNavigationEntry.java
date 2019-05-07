@@ -75,10 +75,14 @@ public class CategoryPropertiesScreenNavigationEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		_jspRenderer.renderJSP(request, response, "/category/properties.jsp");
+		_jspRenderer.renderJSP(
+			httpServletRequest, httpServletResponse,
+			"/category/properties.jsp");
 	}
 
 	@Reference

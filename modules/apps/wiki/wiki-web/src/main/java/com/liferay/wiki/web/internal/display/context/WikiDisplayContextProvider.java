@@ -44,89 +44,101 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class WikiDisplayContextProvider {
 
 	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
 
 		WikiEditPageDisplayContext wikiEditPageDisplayContext =
-			new DefaultWikiEditPageDisplayContext(request, response, wikiPage);
+			new DefaultWikiEditPageDisplayContext(
+				httpServletRequest, httpServletResponse, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
 
 			wikiEditPageDisplayContext =
 				wikiDisplayContextFactory.getWikiEditPageDisplayContext(
-					wikiEditPageDisplayContext, request, response, wikiPage);
+					wikiEditPageDisplayContext, httpServletRequest,
+					httpServletResponse, wikiPage);
 		}
 
 		return wikiEditPageDisplayContext;
 	}
 
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiNode wikiNode) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiNode wikiNode) {
 
 		WikiListPagesDisplayContext wikiListPagesDisplayContext =
 			new DefaultWikiListPagesDisplayContext(
-				request, response, wikiNode, _trashHelper);
+				httpServletRequest, httpServletResponse, wikiNode,
+				_trashHelper);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
 
 			wikiListPagesDisplayContext =
 				wikiDisplayContextFactory.getWikiListPagesDisplayContext(
-					wikiListPagesDisplayContext, request, response, wikiNode);
+					wikiListPagesDisplayContext, httpServletRequest,
+					httpServletResponse, wikiNode);
 		}
 
 		return wikiListPagesDisplayContext;
 	}
 
 	public WikiNodeInfoPanelDisplayContext getWikiNodeInfoPanelDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext =
-			new DefaultWikiNodeInfoPanelDisplayContext(request, response);
+			new DefaultWikiNodeInfoPanelDisplayContext(
+				httpServletRequest, httpServletResponse);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
 
 			wikiNodeInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiNodeInfoPanelDisplayContext(
-					wikiNodeInfoPanelDisplayContext, request, response);
+					wikiNodeInfoPanelDisplayContext, httpServletRequest,
+					httpServletResponse);
 		}
 
 		return wikiNodeInfoPanelDisplayContext;
 	}
 
 	public WikiPageInfoPanelDisplayContext getWikiPageInfoPanelDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext =
-			new DefaultWikiPageInfoPanelDisplayContext(request, response);
+			new DefaultWikiPageInfoPanelDisplayContext(
+				httpServletRequest, httpServletResponse);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
 
 			wikiPageInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiPageInfoPanelDisplayContext(
-					wikiPageInfoPanelDisplayContext, request, response);
+					wikiPageInfoPanelDisplayContext, httpServletRequest,
+					httpServletResponse);
 		}
 
 		return wikiPageInfoPanelDisplayContext;
 	}
 
 	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
 
 		WikiViewPageDisplayContext wikiViewPageDisplayContext =
-			new DefaultWikiViewPageDisplayContext(request, response, wikiPage);
+			new DefaultWikiViewPageDisplayContext(
+				httpServletRequest, httpServletResponse, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
 
 			wikiViewPageDisplayContext =
 				wikiDisplayContextFactory.getWikiViewPageDisplayContext(
-					wikiViewPageDisplayContext, request, response, wikiPage);
+					wikiViewPageDisplayContext, httpServletRequest,
+					httpServletResponse, wikiPage);
 		}
 
 		return wikiViewPageDisplayContext;

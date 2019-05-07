@@ -452,16 +452,16 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
-	public String getCompleteURL(HttpServletRequest request) {
-		StringBuffer sb = request.getRequestURL();
+	public String getCompleteURL(HttpServletRequest httpServletRequest) {
+		StringBuffer sb = httpServletRequest.getRequestURL();
 
 		if (sb == null) {
 			sb = new StringBuffer();
 		}
 
-		if (request.getQueryString() != null) {
+		if (httpServletRequest.getQueryString() != null) {
 			sb.append(StringPool.QUESTION);
-			sb.append(request.getQueryString());
+			sb.append(httpServletRequest.getQueryString());
 		}
 
 		String proxyPath = PortalUtil.getPathProxy();
@@ -478,8 +478,8 @@ public class HttpImpl implements Http {
 
 		String completeURL = sb.toString();
 
-		if (request.isRequestedSessionIdFromURL()) {
-			HttpSession session = request.getSession();
+		if (httpServletRequest.isRequestedSessionIdFromURL()) {
+			HttpSession session = httpServletRequest.getSession();
 
 			String sessionId = session.getId();
 
@@ -635,8 +635,8 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
-	public String getProtocol(HttpServletRequest request) {
-		return getProtocol(request.isSecure());
+	public String getProtocol(HttpServletRequest httpServletRequest) {
+		return getProtocol(httpServletRequest.isSecure());
 	}
 
 	@Override
@@ -673,8 +673,8 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
-	public String getRequestURL(HttpServletRequest request) {
-		return String.valueOf(request.getRequestURL());
+	public String getRequestURL(HttpServletRequest httpServletRequest) {
+		return String.valueOf(httpServletRequest.getRequestURL());
 	}
 
 	@Override
@@ -927,8 +927,10 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
-	public String protocolize(String url, HttpServletRequest request) {
-		return protocolize(url, request.isSecure());
+	public String protocolize(
+		String url, HttpServletRequest httpServletRequest) {
+
+		return protocolize(url, httpServletRequest.isSecure());
 	}
 
 	@Override

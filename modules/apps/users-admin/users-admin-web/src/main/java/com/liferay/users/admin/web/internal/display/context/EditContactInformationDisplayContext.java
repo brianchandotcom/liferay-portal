@@ -36,15 +36,15 @@ public class EditContactInformationDisplayContext {
 
 	public EditContactInformationDisplayContext(
 		String contactInfoTypeName, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		_renderResponse = renderResponse;
-		_request = request;
+		_request = httpServletRequest;
 
-		_className = ParamUtil.getString(request, "className");
-		_classPK = ParamUtil.getLong(request, "classPK");
-		_primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
-		_redirect = ParamUtil.getString(request, "redirect");
+		_className = ParamUtil.getString(httpServletRequest, "className");
+		_classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		_primaryKey = ParamUtil.getLong(httpServletRequest, "primaryKey", 0L);
+		_redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (_primaryKey > 0) {
 			_sheetTitle = LanguageUtil.get(

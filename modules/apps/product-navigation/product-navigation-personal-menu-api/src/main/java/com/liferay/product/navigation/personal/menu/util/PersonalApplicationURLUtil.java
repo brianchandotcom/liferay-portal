@@ -52,17 +52,18 @@ import org.osgi.util.tracker.ServiceTracker;
 public class PersonalApplicationURLUtil {
 
 	public static String getPersonalApplicationURL(
-			HttpServletRequest request, String portletId)
+			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
-		User user = PortalUtil.getUser(request);
+		User user = PortalUtil.getUser(httpServletRequest);
 
 		Group group = user.getGroup();
 
 		boolean privateLayout = true;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
 			_getPersonalMenuConfigurationTracker().
@@ -77,7 +78,7 @@ public class PersonalApplicationURLUtil {
 				themeDisplay.getCompanyId());
 
 			group = GroupLocalServiceUtil.getGroup(
-				PortalUtil.getScopeGroupId(request));
+				PortalUtil.getScopeGroupId(httpServletRequest));
 
 			Layout currentLayout = themeDisplay.getLayout();
 
@@ -106,7 +107,7 @@ public class PersonalApplicationURLUtil {
 		}
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, portletId, layout, PortletRequest.RENDER_PHASE);
+			httpServletRequest, portletId, layout, PortletRequest.RENDER_PHASE);
 
 		return liferayPortletURL.toString();
 	}

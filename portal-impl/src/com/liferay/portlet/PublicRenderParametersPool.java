@@ -36,14 +36,14 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	public static Map<String, String[]> get(
-		HttpServletRequest request, long plid) {
+		HttpServletRequest httpServletRequest, long plid) {
 
 		if (PropsValues.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT) {
 			return RenderParametersPool.getOrCreate(
-				request, plid, _PUBLIC_RENDER_PARAMETERS);
+				httpServletRequest, plid, _PUBLIC_RENDER_PARAMETERS);
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		HttpSession portalSession = PortalSessionContext.get(session.getId());
 

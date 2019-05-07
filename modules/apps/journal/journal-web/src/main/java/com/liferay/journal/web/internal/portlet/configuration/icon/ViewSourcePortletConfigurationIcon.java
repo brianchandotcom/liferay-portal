@@ -76,21 +76,22 @@ public class ViewSourcePortletConfigurationIcon
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		try {
 			PortletRequest portletRequest =
-				(PortletRequest)request.getAttribute(
+				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.JOURNAL_ARTICLE, _getArticle(portletRequest));
 		}
 		catch (Exception e) {
 		}
 
-		return super.include(request, response);
+		return super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

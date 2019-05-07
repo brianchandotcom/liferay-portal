@@ -41,11 +41,11 @@ public class NotificationsManagementToolbarDisplayContext {
 	public NotificationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, PortletURL currentURLObj) {
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_currentURLObj = currentURLObj;
 	}
 

@@ -52,22 +52,24 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		if (!verifyRequest(request)) {
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		if (!verifyRequest(httpServletRequest)) {
+			httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 
 			return;
 		}
 
 		try {
-			String hostId = request.getParameter("host_id");
-			String id = request.getParameter("id");
-			String status = request.getParameter("status");
+			String hostId = httpServletRequest.getParameter("host_id");
+			String id = httpServletRequest.getParameter("id");
+			String status = httpServletRequest.getParameter("status");
 
 			if ((hostId == null) || (id == null) || (status == null)) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				httpServletResponse.sendError(
+					HttpServletResponse.SC_BAD_REQUEST);
 
 				return;
 			}
@@ -92,7 +94,7 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 				}
 			}
 
-			response.setStatus(HttpServletResponse.SC_OK);
+			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 		}
 		catch (Exception e) {
 			throw new IOException(e);
@@ -133,8 +135,8 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 		return GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 	}
 
-	protected boolean verifyRequest(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
+	protected boolean verifyRequest(HttpServletRequest httpServletRequest) {
+		String authorization = httpServletRequest.getHeader("Authorization");
 
 		if (authorization == null) {
 			return false;

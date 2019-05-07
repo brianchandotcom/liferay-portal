@@ -135,17 +135,18 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		PanelAppRegistry panelAppRegistry =
-			(PanelAppRegistry)request.getAttribute(
+			(PanelAppRegistry)httpServletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_APP_REGISTRY);
 
 		PanelCategoryRegistry panelCategoryRegistry =
-			(PanelCategoryRegistry)request.getAttribute(
+			(PanelCategoryRegistry)httpServletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = getGroup();
 
@@ -155,11 +156,11 @@ public class PanelCategoryTag extends BasePanelTag {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			panelAppRegistry, panelCategoryRegistry);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:active",
 			isActive(panelApps, panelCategoryHelper, group));
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:id", getId());
 
 		int notificationsCount = panelCategoryHelper.getNotificationsCount(
@@ -172,33 +173,33 @@ public class PanelCategoryTag extends BasePanelTag {
 			panelCategoryHelper.containsPortlet(
 				portletId, _panelCategory.getKey())) {
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-application-list:panel-category:headerActive",
 				Boolean.TRUE);
 		}
 		else {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-application-list:panel-category:headerActive",
 				Boolean.FALSE);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:notificationsCount",
 			notificationsCount);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:panelApps", panelApps);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:persistState",
 			isPersistState());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:showBody", _showBody);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:showOpen", _showOpen);
 	}
 

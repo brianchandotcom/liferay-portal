@@ -33,35 +33,40 @@ public class AuthenticatedSessionManagerUtil {
 	}
 
 	public static long getAuthenticatedUserId(
-			HttpServletRequest request, String login, String password,
-			String authType)
+			HttpServletRequest httpServletRequest, String login,
+			String password, String authType)
 		throws PortalException {
 
 		return getAuthenticatedSessionManager().getAuthenticatedUserId(
-			request, login, password, authType);
+			httpServletRequest, login, password, authType);
 	}
 
 	public static void login(
-			HttpServletRequest request, HttpServletResponse response,
-			String login, String password, boolean rememberMe, String authType)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String login,
+			String password, boolean rememberMe, String authType)
 		throws Exception {
 
 		getAuthenticatedSessionManager().login(
-			request, response, login, password, rememberMe, authType);
+			httpServletRequest, httpServletResponse, login, password,
+			rememberMe, authType);
 	}
 
 	public static void logout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		getAuthenticatedSessionManager().logout(request, response);
+		getAuthenticatedSessionManager().logout(
+			httpServletRequest, httpServletResponse);
 	}
 
 	public static HttpSession renewSession(
-			HttpServletRequest request, HttpSession session)
+			HttpServletRequest httpServletRequest, HttpSession session)
 		throws Exception {
 
-		return getAuthenticatedSessionManager().renewSession(request, session);
+		return getAuthenticatedSessionManager().renewSession(
+			httpServletRequest, session);
 	}
 
 	public static void signOutSimultaneousLogins(long userId) throws Exception {

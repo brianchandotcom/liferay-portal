@@ -222,46 +222,53 @@ public class CardTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:card:actionJsp", _actionJsp);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:actionJsp", _actionJsp);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:actionJspServletContext",
 			getActionJspServletContext());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:cardCssClass", _cardCssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxChecked",
 			String.valueOf(_checkboxChecked));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxCSSClass", _checkboxCSSClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxData", _checkboxData);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxDisabled",
 			String.valueOf(_checkboxDisabled));
-		request.setAttribute("liferay-frontend:card:checkboxId", _checkboxId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:checkboxId", _checkboxId);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxName", _checkboxName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:checkboxValue", _checkboxValue);
-		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
-		request.setAttribute("liferay-frontend:card:data", _data);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:cssClass", _cssClass);
+		httpServletRequest.setAttribute("liferay-frontend:card:data", _data);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:card:imageUrl", _imageUrl);
-		request.setAttribute("liferay-frontend:card:resultRow", _resultRow);
-		request.setAttribute("liferay-frontend:card:rowChecker", _rowChecker);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:imageUrl", _imageUrl);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:resultRow", _resultRow);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:rowChecker", _rowChecker);
 
 		if (_rowChecker != null) {
 			_showCheckbox = true;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:showCheckbox", _showCheckbox);
 
-		request.setAttribute("liferay-frontend:card:url", _url);
+		httpServletRequest.setAttribute("liferay-frontend:card:url", _url);
 
-		request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, _resultRow);
+		httpServletRequest.setAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW, _resultRow);
 	}
 
 	private String _actionJsp;

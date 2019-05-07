@@ -48,11 +48,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JournalEditDDMStructuresDisplayContext {
 
-	public JournalEditDDMStructuresDisplayContext(HttpServletRequest request) {
-		_request = request;
+	public JournalEditDDMStructuresDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		_request = httpServletRequest;
 
 		_journalWebConfiguration =
-			(JournalWebConfiguration)request.getAttribute(
+			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 	}
 

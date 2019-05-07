@@ -43,9 +43,11 @@ public class UADExportProcessManagementToolbarDisplayContext
 	public UADExportProcessManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, SearchContainer searchContainer) {
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
 
-		super(liferayPortletRequest, liferayPortletResponse, request);
+		super(
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
 
 		_liferayPortletResponse = liferayPortletResponse;
 		_searchContainer = searchContainer;

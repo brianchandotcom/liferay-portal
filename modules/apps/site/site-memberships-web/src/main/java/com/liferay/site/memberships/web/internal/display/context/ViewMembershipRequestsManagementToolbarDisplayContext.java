@@ -29,12 +29,12 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 	public ViewMembershipRequestsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		ViewMembershipRequestsDisplayContext
 			viewMembershipRequestsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			viewMembershipRequestsDisplayContext.
 				getSiteMembershipSearchContainer());
 	}

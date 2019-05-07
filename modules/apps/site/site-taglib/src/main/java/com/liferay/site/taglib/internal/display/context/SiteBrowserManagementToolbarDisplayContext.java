@@ -33,11 +33,11 @@ public class SiteBrowserManagementToolbarDisplayContext
 	public SiteBrowserManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteBrowserDisplayContext siteBrowserDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			siteBrowserDisplayContext.getSearchContainer());
 
 		_siteBrowserDisplayContext = siteBrowserDisplayContext;

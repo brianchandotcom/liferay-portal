@@ -44,9 +44,9 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 
 	public EditSiteTeamAssignmentsUsersDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		super(renderRequest, renderResponse, request);
+		super(renderRequest, renderResponse, httpServletRequest);
 	}
 
 	public String getDisplayStyle() {

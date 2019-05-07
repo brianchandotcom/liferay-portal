@@ -218,16 +218,18 @@ public class TemplateContextHelper {
 	}
 
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		// Request
 
-		contextObjects.put("request", request);
+		contextObjects.put("request", httpServletRequest);
 
 		// Portlet config
 
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (portletConfig != null) {
 			contextObjects.put("portletConfig", portletConfig);
@@ -236,7 +238,7 @@ public class TemplateContextHelper {
 		// Render request
 
 		final PortletRequest portletRequest =
-			(PortletRequest)request.getAttribute(
+			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest != null) {
@@ -248,7 +250,7 @@ public class TemplateContextHelper {
 		// Render response
 
 		final PortletResponse portletResponse =
-			(PortletResponse)request.getAttribute(
+			(PortletResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse != null) {
@@ -285,18 +287,19 @@ public class TemplateContextHelper {
 
 		// Theme display
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			Layout layout = themeDisplay.getLayout();
 			List<Layout> layouts = themeDisplay.getLayouts();
 
 			HttpServletRequest originalRequest =
-				PortalUtil.getOriginalServletRequest(request);
+				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			String namespace = PortalUtil.getPortletNamespace(
-				ParamUtil.getString(request, "p_p_id"));
+				ParamUtil.getString(httpServletRequest, "p_p_id"));
 
 			String bodyCssClass = ParamUtil.getString(
 				originalRequest, namespace + "bodyCssClass");
@@ -327,7 +330,7 @@ public class TemplateContextHelper {
 			if (layout != null) {
 				try {
 					List<NavItem> navItems = NavItem.fromLayouts(
-						request, themeDisplay, contextObjects);
+						httpServletRequest, themeDisplay, contextObjects);
 
 					contextObjects.put("navItems", navItems);
 				}
@@ -344,7 +347,7 @@ public class TemplateContextHelper {
 
 		// Theme
 
-		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
+		Theme theme = (Theme)httpServletRequest.getAttribute(WebKeys.THEME);
 
 		if ((theme == null) && (themeDisplay != null)) {
 			theme = themeDisplay.getTheme();
@@ -356,12 +359,13 @@ public class TemplateContextHelper {
 
 		// Tiles attributes
 
-		prepareTiles(contextObjects, request);
+		prepareTiles(contextObjects, httpServletRequest);
 
 		// Page title and subtitle
 
 		ListMergeable<String> pageTitleListMergeable =
-			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
+			(ListMergeable<String>)httpServletRequest.getAttribute(
+				WebKeys.PAGE_TITLE);
 
 		if (pageTitleListMergeable != null) {
 			String pageTitle = pageTitleListMergeable.mergeToString(
@@ -371,7 +375,8 @@ public class TemplateContextHelper {
 		}
 
 		ListMergeable<String> pageSubtitleListMergeable =
-			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
+			(ListMergeable<String>)httpServletRequest.getAttribute(
+				WebKeys.PAGE_SUBTITLE);
 
 		if (pageSubtitleListMergeable != null) {
 			String pageSubtitle = pageSubtitleListMergeable.mergeToString(
@@ -861,12 +866,14 @@ public class TemplateContextHelper {
 	}
 
 	protected void prepareTiles(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		Definition definition = (Definition)request.getAttribute(
+		Definition definition = (Definition)httpServletRequest.getAttribute(
 			TilesUtil.DEFINITION);
 
 		if (definition == null) {
@@ -995,8 +1002,8 @@ public class TemplateContextHelper {
 		}
 
 		@Override
-		public String getCompleteURL(HttpServletRequest request) {
-			return _http.getCompleteURL(request);
+		public String getCompleteURL(HttpServletRequest httpServletRequest) {
+			return _http.getCompleteURL(httpServletRequest);
 		}
 
 		@Override
@@ -1045,8 +1052,8 @@ public class TemplateContextHelper {
 		}
 
 		@Override
-		public String getProtocol(HttpServletRequest request) {
-			return _http.getProtocol(request);
+		public String getProtocol(HttpServletRequest httpServletRequest) {
+			return _http.getProtocol(httpServletRequest);
 		}
 
 		@Override
@@ -1065,8 +1072,8 @@ public class TemplateContextHelper {
 		}
 
 		@Override
-		public String getRequestURL(HttpServletRequest request) {
-			return _http.getRequestURL(request);
+		public String getRequestURL(HttpServletRequest httpServletRequest) {
+			return _http.getRequestURL(httpServletRequest);
 		}
 
 		@Override
@@ -1134,8 +1141,10 @@ public class TemplateContextHelper {
 		}
 
 		@Override
-		public String protocolize(String url, HttpServletRequest request) {
-			return _http.protocolize(url, request);
+		public String protocolize(
+			String url, HttpServletRequest httpServletRequest) {
+
+			return _http.protocolize(url, httpServletRequest);
 		}
 
 		@Override

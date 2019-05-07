@@ -34,7 +34,7 @@ public class StatusExecutor extends BaseExecutor {
 
 	@Override
 	public void executeRead(
-		HttpServletRequest request, JSONObject responseJSONObject,
+		HttpServletRequest httpServletRequest, JSONObject responseJSONObject,
 		Queue<String> arguments) {
 	}
 

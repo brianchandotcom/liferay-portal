@@ -162,20 +162,27 @@ public class CheckboxTag extends BaseCssTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:checkbox:checked", _checked);
-		request.setAttribute("liferay-staging:checkbox:deletions", _deletions);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:checked", _checked);
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:deletions", _deletions);
+		httpServletRequest.setAttribute(
 			"liferay-staging:checkbox:description", _description);
-		request.setAttribute("liferay-staging:checkbox:disabled", _disabled);
-		request.setAttribute("liferay-staging:checkbox:id", _id);
-		request.setAttribute("liferay-staging:checkbox:items", _items);
-		request.setAttribute("liferay-staging:checkbox:label", _label);
-		request.setAttribute("liferay-staging:checkbox:name", _name);
-		request.setAttribute("liferay-staging:checkbox:popover", _popover);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:disabled", _disabled);
+		httpServletRequest.setAttribute("liferay-staging:checkbox:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:items", _items);
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:label", _label);
+		httpServletRequest.setAttribute("liferay-staging:checkbox:name", _name);
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:popover", _popover);
+		httpServletRequest.setAttribute(
 			"liferay-staging:checkbox:suggestion", _suggestion);
-		request.setAttribute("liferay-staging:checkbox:warning", _warning);
+		httpServletRequest.setAttribute(
+			"liferay-staging:checkbox:warning", _warning);
 	}
 
 	private static final String _PAGE = "/checkbox/aui/page.jsp";

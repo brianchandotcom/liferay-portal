@@ -46,18 +46,18 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetDisplayPagesItemSelectorViewDisplayContext {
 
 	public AssetDisplayPagesItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_assetDisplayPageSelectorCriterion = assetDisplayPageSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
 
-		_portletRequest = (PortletRequest)request.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
-		_portletResponse = (PortletResponse)request.getAttribute(
+		_portletResponse = (PortletResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

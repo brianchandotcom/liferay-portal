@@ -34,9 +34,9 @@ public class RestrictedByteBufferCacheServletResponse
 	extends MetaInfoCacheServletResponse {
 
 	public RestrictedByteBufferCacheServletResponse(
-		HttpServletResponse response, int cacheCapacity) {
+		HttpServletResponse httpServletResponse, int cacheCapacity) {
 
-		super(response);
+		super(httpServletResponse);
 
 		_cacheCapacity = cacheCapacity;
 	}

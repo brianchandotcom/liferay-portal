@@ -64,14 +64,14 @@ import javax.servlet.http.HttpServletRequest;
 public class ImageEditorDLDisplayContextHelper {
 
 	public ImageEditorDLDisplayContextHelper(
-		FileVersion fileVersion, HttpServletRequest request,
+		FileVersion fileVersion, HttpServletRequest httpServletRequest,
 		DLURLHelper dlURLHelper) {
 
 		_fileVersion = fileVersion;
-		_request = request;
+		_request = httpServletRequest;
 		_dlURLHelper = dlURLHelper;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {

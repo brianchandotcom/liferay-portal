@@ -64,7 +64,9 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/asset/" + template + ".jsp";
 		}
@@ -130,13 +132,13 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.LAYOUT, _layout);
+		httpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	private final Layout _layout;

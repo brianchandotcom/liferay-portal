@@ -118,9 +118,9 @@ public class RSSTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-rss:rss:message", _message);
-		request.setAttribute("liferay-rss:rss:url", _getURL());
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-rss:rss:message", _message);
+		httpServletRequest.setAttribute("liferay-rss:rss:url", _getURL());
 	}
 
 	private String _getURL() {

@@ -32,20 +32,22 @@ public class SharepointWebServicesServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					request.getHeader(HttpHeaders.USER_AGENT), " ",
-					request.getMethod(), " ", request.getRequestURI()));
+					httpServletRequest.getHeader(HttpHeaders.USER_AGENT), " ",
+					httpServletRequest.getMethod(), " ",
+					httpServletRequest.getRequestURI()));
 		}
 
 		try {
-			String uri = request.getRequestURI();
+			String uri = httpServletRequest.getRequestURI();
 
 			if (uri.equals("/_vti_bin/webs.asmx")) {
-				vtiBinWebsAsmx(request, response);
+				vtiBinWebsAsmx(httpServletRequest, httpServletResponse);
 			}
 		}
 		catch (Exception e) {
@@ -54,14 +56,15 @@ public class SharepointWebServicesServlet extends HttpServlet {
 	}
 
 	protected void vtiBinWebsAsmx(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(12);
 
 		String url = StringBundler.concat(
-			"http://", request.getLocalAddr(), ":",
-			String.valueOf(request.getServerPort()), "/sharepoint");
+			"http://", httpServletRequest.getLocalAddr(), ":",
+			String.valueOf(httpServletRequest.getServerPort()), "/sharepoint");
 
 		sb.append("<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"");
 		sb.append("http://schemas.xmlsoap.org/soap/envelope/\">");
@@ -76,9 +79,9 @@ public class SharepointWebServicesServlet extends HttpServlet {
 		sb.append("</SOAP-ENV:Body>");
 		sb.append("</SOAP-ENV:Envelope>");
 
-		response.setContentType(ContentTypes.TEXT_XML_UTF8);
+		httpServletResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
 
-		ServletResponseUtil.write(response, sb.toString());
+		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

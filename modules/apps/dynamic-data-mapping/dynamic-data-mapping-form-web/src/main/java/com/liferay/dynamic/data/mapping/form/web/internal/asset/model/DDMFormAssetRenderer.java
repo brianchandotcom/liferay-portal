@@ -120,7 +120,9 @@ public class DDMFormAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
@@ -189,26 +191,27 @@ public class DDMFormAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD,
 			_formInstanceRecord);
 
 		DDMFormViewFormInstanceRecordDisplayContext
 			ddmFormViewFormInstanceRecordDisplayContext =
 				new DDMFormViewFormInstanceRecordDisplayContext(
-					request, response, _ddmFormInstanceRecordLocalService,
+					httpServletRequest, httpServletResponse,
+					_ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			ddmFormViewFormInstanceRecordDisplayContext);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

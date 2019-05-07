@@ -37,16 +37,16 @@ public class GoogleDocsIGViewFileVersionDisplayContext
 
 	public GoogleDocsIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		GoogleDocsMetadataHelper googleDocsMetadataHelper) {
 
 		super(
-			_UUID, parentIGViewFileVersionDisplayContext, request, response,
-			fileVersion);
+			_UUID, parentIGViewFileVersionDisplayContext, httpServletRequest,
+			httpServletResponse, fileVersion);
 
 		_googleDocsUIItemsProcessor = new GoogleDocsUIItemsProcessor(
-			request, googleDocsMetadataHelper);
+			httpServletRequest, googleDocsMetadataHelper);
 	}
 
 	@Override

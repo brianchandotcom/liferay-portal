@@ -41,12 +41,13 @@ public interface AutoLogin {
 	 */
 	@Deprecated
 	public String[] handleException(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception e)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception e)
 		throws AutoLoginException;
 
 	public String[] login(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws AutoLoginException;
 
 }

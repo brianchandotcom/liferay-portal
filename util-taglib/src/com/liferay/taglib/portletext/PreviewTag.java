@@ -32,33 +32,35 @@ public class PreviewTag extends IncludeTag {
 	public static void doTag(
 			String portletName, String queryString, boolean showBorders,
 			String width, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		doTag(
 			_PAGE, portletName, queryString, showBorders, width, servletContext,
-			request, response);
+			httpServletRequest, httpServletResponse);
 	}
 
 	public static void doTag(
 			String page, String portletName, String queryString,
 			boolean showBorders, String width, ServletContext servletContext,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-portlet:preview:portletName", portletName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-portlet:preview:queryString", queryString);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-portlet:preview:showBorders", String.valueOf(showBorders));
-		request.setAttribute("liferay-portlet:preview:width", width);
+		httpServletRequest.setAttribute("liferay-portlet:preview:width", width);
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, page);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

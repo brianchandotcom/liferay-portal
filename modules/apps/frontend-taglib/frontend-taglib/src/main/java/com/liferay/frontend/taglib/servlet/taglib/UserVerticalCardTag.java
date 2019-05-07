@@ -56,17 +56,19 @@ public class UserVerticalCardTag extends VerticalCardTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		String cardCssClass = GetterUtil.getString(
-			request.getAttribute("liferay-frontend:card:cardCssClass"));
+			httpServletRequest.getAttribute(
+				"liferay-frontend:card:cardCssClass"));
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:card:cardCssClass",
 			cardCssClass + StringPool.BLANK + "user-card");
 
-		request.setAttribute("liferay-frontend:card:user", getUser());
+		httpServletRequest.setAttribute(
+			"liferay-frontend:card:user", getUser());
 	}
 
 	private long _userId;

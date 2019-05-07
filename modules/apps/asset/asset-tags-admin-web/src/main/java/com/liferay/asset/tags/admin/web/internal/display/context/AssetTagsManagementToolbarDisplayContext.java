@@ -43,12 +43,12 @@ public class AssetTagsManagementToolbarDisplayContext
 	public AssetTagsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			AssetTagsDisplayContext assetTagsDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			assetTagsDisplayContext.getTagsSearchContainer());
 
 		_assetTagsDisplayContext = assetTagsDisplayContext;

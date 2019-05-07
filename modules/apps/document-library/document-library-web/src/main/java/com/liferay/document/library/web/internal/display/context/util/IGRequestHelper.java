@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IGRequestHelper extends DLRequestHelper {
 
-	public IGRequestHelper(HttpServletRequest request) {
-		super(request);
+	public IGRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 }

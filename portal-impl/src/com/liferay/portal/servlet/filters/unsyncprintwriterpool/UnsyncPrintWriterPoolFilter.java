@@ -32,11 +32,13 @@ public class UnsyncPrintWriterPoolFilter
 
 	@Override
 	public void doFilterFinally(
-		HttpServletRequest request, HttpServletResponse response,
-		Object object) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Object object) {
 
-		if (request.isAsyncSupported() && request.isAsyncStarted()) {
-			AsyncContext asyncContext = request.getAsyncContext();
+		if (httpServletRequest.isAsyncSupported() &&
+			httpServletRequest.isAsyncStarted()) {
+
+			AsyncContext asyncContext = httpServletRequest.getAsyncContext();
 
 			asyncContext.addListener(
 				new UnsyncPrintWriterPoolFilterAsyncListener(asyncContext));
@@ -48,7 +50,8 @@ public class UnsyncPrintWriterPoolFilter
 
 	@Override
 	public Object doFilterTry(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		UnsyncPrintWriterPool.setEnabled(true);
 

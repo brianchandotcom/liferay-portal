@@ -71,10 +71,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditArticleDisplayContext {
 
 	public JournalEditArticleDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, JournalArticle article) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_article = article;
 

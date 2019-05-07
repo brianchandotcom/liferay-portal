@@ -100,8 +100,8 @@ public class HttpUtil {
 		return getHttp().fixPath(path, leading, trailing);
 	}
 
-	public static String getCompleteURL(HttpServletRequest request) {
-		return getHttp().getCompleteURL(request);
+	public static String getCompleteURL(HttpServletRequest httpServletRequest) {
+		return getHttp().getCompleteURL(httpServletRequest);
 	}
 
 	public static Cookie[] getCookies() {
@@ -146,8 +146,8 @@ public class HttpUtil {
 		return getHttp().getProtocol(secure);
 	}
 
-	public static String getProtocol(HttpServletRequest request) {
-		return getHttp().getProtocol(request);
+	public static String getProtocol(HttpServletRequest httpServletRequest) {
+		return getHttp().getProtocol(httpServletRequest);
 	}
 
 	public static String getProtocol(RenderRequest renderRequest) {
@@ -162,8 +162,8 @@ public class HttpUtil {
 		return getHttp().getQueryString(url);
 	}
 
-	public static String getRequestURL(HttpServletRequest request) {
-		return getHttp().getRequestURL(request);
+	public static String getRequestURL(HttpServletRequest httpServletRequest) {
+		return getHttp().getRequestURL(httpServletRequest);
 	}
 
 	public static boolean hasDomain(String url) {
@@ -220,8 +220,10 @@ public class HttpUtil {
 		return getHttp().protocolize(url, secure);
 	}
 
-	public static String protocolize(String url, HttpServletRequest request) {
-		return getHttp().protocolize(url, request);
+	public static String protocolize(
+		String url, HttpServletRequest httpServletRequest) {
+
+		return getHttp().protocolize(url, httpServletRequest);
 	}
 
 	public static String protocolize(String url, int port, boolean secure) {

@@ -169,10 +169,10 @@ public class NavTag extends BaseNavTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		setNamespacedAttribute(request, "id", _getNamespacedId());
+		setNamespacedAttribute(httpServletRequest, "id", _getNamespacedId());
 	}
 
 	private String _getNamespacedId() {

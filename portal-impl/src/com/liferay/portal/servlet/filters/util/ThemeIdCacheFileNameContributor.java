@@ -32,11 +32,11 @@ public class ThemeIdCacheFileNameContributor
 	}
 
 	@Override
-	public String getParameterValue(HttpServletRequest request) {
-		String themeId = request.getParameter(getParameterName());
+	public String getParameterValue(HttpServletRequest httpServletRequest) {
+		String themeId = httpServletRequest.getParameter(getParameterName());
 
 		Theme theme = ThemeLocalServiceUtil.fetchTheme(
-			PortalUtil.getCompanyId(request), themeId);
+			PortalUtil.getCompanyId(httpServletRequest), themeId);
 
 		if (theme == null) {
 			return null;

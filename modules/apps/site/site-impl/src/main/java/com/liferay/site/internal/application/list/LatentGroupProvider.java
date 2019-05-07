@@ -35,9 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 public class LatentGroupProvider implements GroupProvider {
 
 	@Override
-	public Group getGroup(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public Group getGroup(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -46,7 +47,7 @@ public class LatentGroupProvider implements GroupProvider {
 		}
 
 		HttpServletRequest originalRequest = _portal.getOriginalServletRequest(
-			request);
+			httpServletRequest);
 
 		long groupId = GetterUtil.getLong(
 			SessionClicks.get(
@@ -60,9 +61,9 @@ public class LatentGroupProvider implements GroupProvider {
 	}
 
 	@Override
-	public void setGroup(HttpServletRequest request, Group group) {
+	public void setGroup(HttpServletRequest httpServletRequest, Group group) {
 		HttpServletRequest originalRequest = _portal.getOriginalServletRequest(
-			request);
+			httpServletRequest);
 
 		SessionClicks.put(
 			originalRequest.getSession(), _KEY_LATENT_GROUP,

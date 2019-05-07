@@ -32,11 +32,11 @@ public class SiteMySitesManagementToolbarDisplayContext
 	public SiteMySitesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SiteMySitesDisplayContext siteMySitesDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			siteMySitesDisplayContext.getGroupSearchContainer());
 	}
 

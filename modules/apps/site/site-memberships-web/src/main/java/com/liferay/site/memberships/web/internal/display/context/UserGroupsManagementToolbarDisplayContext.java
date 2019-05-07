@@ -48,11 +48,11 @@ public class UserGroupsManagementToolbarDisplayContext
 	public UserGroupsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		UserGroupsDisplayContext userGroupsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			userGroupsDisplayContext.getUserGroupSearchContainer());
 
 		_userGroupsDisplayContext = userGroupsDisplayContext;

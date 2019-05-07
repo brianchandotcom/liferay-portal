@@ -79,11 +79,13 @@ public class PollsUtil {
 		return defaultCategoryDataset;
 	}
 
-	public static boolean hasVoted(HttpServletRequest request, long questionId)
+	public static boolean hasVoted(
+			HttpServletRequest httpServletRequest, long questionId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isSignedIn()) {
 			PollsVote vote = PollsVoteLocalServiceUtil.fetchQuestionUserVote(
@@ -97,14 +99,14 @@ public class PollsUtil {
 		}
 
 		String cookie = CookieKeys.getCookie(
-			request, _getCookieName(questionId));
+			httpServletRequest, _getCookieName(questionId));
 
 		return GetterUtil.getBoolean(cookie);
 	}
 
 	public static void saveVote(
-		HttpServletRequest request, HttpServletResponse response,
-		long questionId) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long questionId) {
 
 		Cookie cookie = new Cookie(_getCookieName(questionId), StringPool.TRUE);
 
@@ -112,7 +114,7 @@ public class PollsUtil {
 		cookie.setPath(StringPool.SLASH);
 		cookie.setHttpOnly(true);
 
-		CookieKeys.addCookie(request, response, cookie);
+		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
 	public static void saveVote(

@@ -49,17 +49,18 @@ public class DynamicResourceServlet extends WebServerServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String servletPath = request.getServletPath();
+		String servletPath = httpServletRequest.getServletPath();
 		String pathInfo = URLDecoder.decode(
-			request.getPathInfo(), StringPool.UTF8);
+			httpServletRequest.getPathInfo(), StringPool.UTF8);
 
 		String path = servletPath.concat(pathInfo);
 
 		if (!isAllowedPath(path)) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
@@ -84,7 +85,7 @@ public class DynamicResourceServlet extends WebServerServlet {
 			file.isHidden() ||
 			!canonicalPath.startsWith(rootDir.getCanonicalPath())) {
 
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
@@ -92,18 +93,20 @@ public class DynamicResourceServlet extends WebServerServlet {
 		long lastModified = file.lastModified();
 
 		if (lastModified > 0) {
-			long ifModifiedSince = request.getDateHeader(
+			long ifModifiedSince = httpServletRequest.getDateHeader(
 				HttpHeaders.IF_MODIFIED_SINCE);
 
 			if ((ifModifiedSince > 0) && (ifModifiedSince == lastModified)) {
-				response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+				httpServletResponse.setStatus(
+					HttpServletResponse.SC_NOT_MODIFIED);
 
 				return;
 			}
 		}
 
 		if (lastModified > 0) {
-			response.setDateHeader(HttpHeaders.LAST_MODIFIED, lastModified);
+			httpServletResponse.setDateHeader(
+				HttpHeaders.LAST_MODIFIED, lastModified);
 		}
 
 		String fileName = file.getName();
@@ -116,13 +119,13 @@ public class DynamicResourceServlet extends WebServerServlet {
 
 		if (isSupportsRangeHeader(contentType)) {
 			ServletResponseUtil.sendFileWithRangeHeader(
-				request, response, fileName, new FileInputStream(file),
-				file.length(), contentType);
+				httpServletRequest, httpServletResponse, fileName,
+				new FileInputStream(file), file.length(), contentType);
 		}
 		else {
 			ServletResponseUtil.sendFile(
-				request, response, fileName, new FileInputStream(file),
-				file.length(), contentType);
+				httpServletRequest, httpServletResponse, fileName,
+				new FileInputStream(file), file.length(), contentType);
 		}
 	}
 

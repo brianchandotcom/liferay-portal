@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface DeviceRecognitionProvider {
 
-	public Device detectDevice(HttpServletRequest request);
+	public Device detectDevice(HttpServletRequest httpServletRequest);
 
 	public KnownDevices getKnownDevices();
 

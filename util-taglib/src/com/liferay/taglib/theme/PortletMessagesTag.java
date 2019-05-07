@@ -47,9 +47,10 @@ public class PortletMessagesTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-theme:portlet-messages:group", _group);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-theme:portlet-messages:group", _group);
+		httpServletRequest.setAttribute(
 			"liferay-theme:portlet-messages:portlet", _portlet);
 	}
 

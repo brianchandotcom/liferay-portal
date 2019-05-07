@@ -55,13 +55,18 @@ public class AddContentProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		if (!ProductNavigationControlMenuUtil.isEditEnabled(request)) {
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (!ProductNavigationControlMenuUtil.isEditEnabled(
+				httpServletRequest)) {
+
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -69,7 +74,7 @@ public class AddContentProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	@Override

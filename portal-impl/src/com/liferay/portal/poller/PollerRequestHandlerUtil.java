@@ -33,11 +33,11 @@ public class PollerRequestHandlerUtil {
 	}
 
 	public static JSONObject processRequest(
-			HttpServletRequest request, String pollerRequestString)
+			HttpServletRequest httpServletRequest, String pollerRequestString)
 		throws Exception {
 
 		return getPollerRequestHandler().processRequest(
-			request, pollerRequestString);
+			httpServletRequest, pollerRequestString);
 	}
 
 	public void setPollerRequestHandler(

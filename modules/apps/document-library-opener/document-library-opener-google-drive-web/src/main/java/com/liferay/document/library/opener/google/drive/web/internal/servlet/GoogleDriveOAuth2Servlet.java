@@ -49,52 +49,56 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		State state = State.get(_portal.getOriginalServletRequest(request));
+		State state = State.get(
+			_portal.getOriginalServletRequest(httpServletRequest));
 
 		if (state == null) {
 			throw new IllegalStateException(
 				"Authorization state not initialized");
 		}
-		else if (!state.isValid(request)) {
-			state.goToFailurePage(request, response);
+		else if (!state.isValid(httpServletRequest)) {
+			state.goToFailurePage(httpServletRequest, httpServletResponse);
 		}
 		else {
-			_requestAuthorizationToken(request, response, state);
+			_requestAuthorizationToken(
+				httpServletRequest, httpServletResponse, state);
 		}
 	}
 
 	@Override
 	protected void doPost(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		doGet(request, response);
+		doGet(httpServletRequest, httpServletResponse);
 	}
 
 	private void _requestAuthorizationToken(
-			HttpServletRequest request, HttpServletResponse response,
-			State state)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, State state)
 		throws IOException {
 
-		String code = ParamUtil.getString(request, "code");
+		String code = ParamUtil.getString(httpServletRequest, "code");
 
 		if (Validator.isNull(code)) {
-			state.goToFailurePage(request, response);
+			state.goToFailurePage(httpServletRequest, httpServletResponse);
 		}
 		else {
 			try {
 				_dlOpenerGoogleDriveManager.requestAuthorizationToken(
-					_portal.getCompanyId(request), state.getUserId(), code,
-					_oAuth2Helper.getRedirectURI(request));
+					_portal.getCompanyId(httpServletRequest), state.getUserId(),
+					code, _oAuth2Helper.getRedirectURI(httpServletRequest));
 			}
 			catch (PortalException pe) {
 				throw new IOException(pe);
 			}
 
-			state.goToSuccessPage(request, response);
+			state.goToSuccessPage(httpServletRequest, httpServletResponse);
 		}
 	}
 

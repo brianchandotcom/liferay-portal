@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface DynamicInclude {
 
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException;
 
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry);

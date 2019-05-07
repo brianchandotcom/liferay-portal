@@ -25,11 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 public interface SharingMenuItemFactory {
 
 	public MenuItem createManageCollaboratorsMenuItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public MenuItem createShareMenuItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

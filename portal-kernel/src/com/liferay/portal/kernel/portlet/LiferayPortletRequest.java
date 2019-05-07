@@ -55,6 +55,7 @@ public interface LiferayPortletRequest extends PortletRequest {
 
 	public void invalidateSession();
 
-	public void setPortletRequestDispatcherRequest(HttpServletRequest request);
+	public void setPortletRequestDispatcherRequest(
+		HttpServletRequest httpServletRequest);
 
 }

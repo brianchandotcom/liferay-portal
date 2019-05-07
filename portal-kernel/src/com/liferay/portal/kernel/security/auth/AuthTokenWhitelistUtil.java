@@ -40,10 +40,12 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	public static boolean isPortletCSRFWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
-			if (authTokenWhitelist.isPortletCSRFWhitelisted(request, portlet)) {
+			if (authTokenWhitelist.isPortletCSRFWhitelisted(
+					httpServletRequest, portlet)) {
+
 				return true;
 			}
 		}
@@ -52,11 +54,11 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	public static boolean isPortletInvocationWhitelisted(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletInvocationWhitelisted(
-					request, portlet)) {
+					httpServletRequest, portlet)) {
 
 				return true;
 			}

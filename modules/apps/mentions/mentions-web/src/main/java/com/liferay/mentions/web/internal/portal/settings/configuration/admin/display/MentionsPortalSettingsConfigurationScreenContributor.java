@@ -64,18 +64,21 @@ public class MentionsPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public void setAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
 
 		boolean companyMentionsEnabled = PrefsParamUtil.getBoolean(
-			companyPortletPreferences, request, "mentionsEnabled", true);
+			companyPortletPreferences, httpServletRequest, "mentionsEnabled",
+			true);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 	}
 

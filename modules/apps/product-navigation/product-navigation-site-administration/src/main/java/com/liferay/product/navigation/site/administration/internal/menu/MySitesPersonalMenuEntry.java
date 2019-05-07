@@ -68,10 +68,10 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Override
-	public String getPortletURL(HttpServletRequest request)
+	public String getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String namespace = AUIUtil.getNamespace(request);
+		String namespace = AUIUtil.getNamespace(httpServletRequest);
 
 		String eventName = namespace + "selectSite";
 
@@ -82,8 +82,8 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 			new URLItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(request), eventName,
-			itemSelectorCriterion);
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			eventName, itemSelectorCriterion);
 
 		StringBuilder sb = new StringBuilder(11);
 
@@ -94,7 +94,7 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 		sb.append("', id:'");
 		sb.append(namespace);
 		sb.append("selectSite', title: '");
-		sb.append(LanguageUtil.get(request, "select-site"));
+		sb.append(LanguageUtil.get(httpServletRequest, "select-site"));
 		sb.append("', uri:'");
 		sb.append(HtmlUtil.escapeJS(itemSelectorURL.toString()));
 		sb.append("'}, function(event) {location.href = event.url;});");

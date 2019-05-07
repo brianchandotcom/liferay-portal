@@ -104,11 +104,11 @@ public class PublishChangesetTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:publish-changeset:changesetUuid",
 			_changesetUuid);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:publish-changeset:groupId",
 			_groupId);
 	}

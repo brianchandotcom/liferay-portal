@@ -146,22 +146,22 @@ public class AUIUtil {
 	}
 
 	public static Object getAttribute(
-		HttpServletRequest request, String namespace, String key) {
+		HttpServletRequest httpServletRequest, String namespace, String key) {
 
 		Map<String, Object> dynamicAttributes =
-			(Map<String, Object>)request.getAttribute(
+			(Map<String, Object>)httpServletRequest.getAttribute(
 				namespace.concat("dynamicAttributes"));
 
 		if ((dynamicAttributes != null) && dynamicAttributes.containsKey(key)) {
-			return request.getAttribute(namespace.concat(key));
+			return httpServletRequest.getAttribute(namespace.concat(key));
 		}
 
 		return null;
 	}
 
-	public static String getNamespace(HttpServletRequest request) {
+	public static String getNamespace(HttpServletRequest httpServletRequest) {
 		return GetterUtil.getString(
-			request.getAttribute("aui:form:portletNamespace"));
+			httpServletRequest.getAttribute("aui:form:portletNamespace"));
 	}
 
 	public static String getNamespace(

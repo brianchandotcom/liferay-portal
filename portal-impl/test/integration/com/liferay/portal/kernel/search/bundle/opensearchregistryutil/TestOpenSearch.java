@@ -41,22 +41,22 @@ public class TestOpenSearch implements OpenSearch {
 
 	@Override
 	public String search(
-		HttpServletRequest request, long groupId, long userId, String keywords,
-		int startPage, int itemsPerPage, String format) {
+		HttpServletRequest httpServletRequest, long groupId, long userId,
+		String keywords, int startPage, int itemsPerPage, String format) {
 
 		return groupId + ":" + userId;
 	}
 
 	@Override
 	public String search(
-		HttpServletRequest request, long userId, String keywords, int startPage,
-		int itemsPerPage, String format) {
+		HttpServletRequest httpServletRequest, long userId, String keywords,
+		int startPage, int itemsPerPage, String format) {
 
 		return userId + ":" + startPage;
 	}
 
 	@Override
-	public String search(HttpServletRequest request, String url) {
+	public String search(HttpServletRequest httpServletRequest, String url) {
 		return url;
 	}
 

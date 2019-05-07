@@ -67,7 +67,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 	@Override
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
-		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
+		AssetEntryUsage assetEntryUsage,
+		HttpServletRequest httpServletRequest) {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryUsage.getAssetEntryId());
@@ -82,8 +83,9 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 						assetEntry.getClassPK(),
 						WorkflowConstants.STATUS_APPROVED);
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				ResourceBundle resourceBundle =
 					_resourceBundleLoader.loadResourceBundle(
@@ -96,7 +98,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 								_getURL(
 									assetEntryUsage,
 									AssetRendererFactory.TYPE_LATEST_APPROVED,
-									request));
+									httpServletRequest));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -129,7 +131,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 										_getURL(
 											assetEntryUsage,
 											AssetRendererFactory.TYPE_LATEST,
-											request));
+											httpServletRequest));
 									dropdownItem.setLabel(label);
 								});
 						}
@@ -144,11 +146,12 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 	private String _getURL(
 			AssetEntryUsage assetEntryUsage, int previewAssetEntryType,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String layoutURL = null;
 
@@ -169,7 +172,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 		}
 		else {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, assetEntryUsage.getContainerKey(),
+				httpServletRequest, assetEntryUsage.getContainerKey(),
 				assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

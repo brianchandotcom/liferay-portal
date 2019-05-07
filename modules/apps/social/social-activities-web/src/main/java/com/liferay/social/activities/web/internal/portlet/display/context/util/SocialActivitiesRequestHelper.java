@@ -35,8 +35,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 
-	public SocialActivitiesRequestHelper(HttpServletRequest request) {
-		super(request);
+	public SocialActivitiesRequestHelper(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
 	}
 
 	public int getEnd() {

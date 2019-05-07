@@ -108,13 +108,17 @@ public class EmptyTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-trash:empty:confirmMessage", _confirmMessage);
-		request.setAttribute("liferay-trash:empty:emptyMessage", _emptyMessage);
-		request.setAttribute("liferay-trash:empty:infoMessage", _infoMessage);
-		request.setAttribute("liferay-trash:empty:portletURL", _portletURL);
-		request.setAttribute("liferay-trash:empty:totalEntries", _totalEntries);
+		httpServletRequest.setAttribute(
+			"liferay-trash:empty:emptyMessage", _emptyMessage);
+		httpServletRequest.setAttribute(
+			"liferay-trash:empty:infoMessage", _infoMessage);
+		httpServletRequest.setAttribute(
+			"liferay-trash:empty:portletURL", _portletURL);
+		httpServletRequest.setAttribute(
+			"liferay-trash:empty:totalEntries", _totalEntries);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

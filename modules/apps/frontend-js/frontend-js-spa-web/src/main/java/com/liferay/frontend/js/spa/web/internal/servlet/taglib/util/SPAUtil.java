@@ -103,8 +103,8 @@ public class SPAUtil {
 		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 
-	public String getLoginRedirect(HttpServletRequest request) {
-		return ParamUtil.getString(request, _REDIRECT_PARAM_NAME);
+	public String getLoginRedirect(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, _REDIRECT_PARAM_NAME);
 	}
 
 	public String getNavigationExceptionSelectors() {
@@ -154,16 +154,17 @@ public class SPAUtil {
 	}
 
 	public boolean isClearScreensCache(
-		HttpServletRequest request, HttpSession session) {
+		HttpServletRequest httpServletRequest, HttpSession session) {
 
 		boolean singlePageApplicationClearCache = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
+			httpServletRequest.getAttribute(
+				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
 
 		if (singlePageApplicationClearCache) {
 			return true;
 		}
 
-		String portletId = request.getParameter("p_p_id");
+		String portletId = httpServletRequest.getParameter("p_p_id");
 
 		if (Validator.isNull(portletId)) {
 			return false;

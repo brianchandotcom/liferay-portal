@@ -44,8 +44,10 @@ public class ResourceActionsUtil {
 		getResourceActions().checkAction(name, actionId);
 	}
 
-	public static String getAction(HttpServletRequest request, String action) {
-		return getResourceActions().getAction(request, action);
+	public static String getAction(
+		HttpServletRequest httpServletRequest, String action) {
+
+		return getResourceActions().getAction(httpServletRequest, action);
 	}
 
 	public static String getAction(Locale locale, String action) {
@@ -73,9 +75,9 @@ public class ResourceActionsUtil {
 	}
 
 	public static String getModelResource(
-		HttpServletRequest request, String name) {
+		HttpServletRequest httpServletRequest, String name) {
 
-		return getResourceActions().getModelResource(request, name);
+		return getResourceActions().getModelResource(httpServletRequest, name);
 	}
 
 	public static String getModelResource(Locale locale, String name) {

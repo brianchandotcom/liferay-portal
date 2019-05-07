@@ -82,18 +82,21 @@ public class JSONServiceAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String className = ParamUtil.getString(request, "serviceClassName");
-		String methodName = ParamUtil.getString(request, "serviceMethodName");
+		String className = ParamUtil.getString(
+			httpServletRequest, "serviceClassName");
+		String methodName = ParamUtil.getString(
+			httpServletRequest, "serviceMethodName");
 
 		String[] serviceParameters = getStringArrayFromJSON(
-			request, "serviceParameters");
+			httpServletRequest, "serviceParameters");
 		String[] serviceParameterTypes = getStringArrayFromJSON(
-			request, "serviceParameterTypes");
+			httpServletRequest, "serviceParameterTypes");
 
-		if (!isValidRequest(request)) {
+		if (!isValidRequest(httpServletRequest)) {
 			return null;
 		}
 
@@ -117,7 +120,7 @@ public class JSONServiceAction extends JSONAction {
 
 		for (int i = 0; i < serviceParameters.length; i++) {
 			args[i] = getArgValue(
-				request, clazz, methodName, serviceParameters[i],
+				httpServletRequest, clazz, methodName, serviceParameters[i],
 				parameterTypes[i]);
 		}
 
@@ -163,14 +166,14 @@ public class JSONServiceAction extends JSONAction {
 	}
 
 	protected Object getArgValue(
-			HttpServletRequest request, Class<?> clazz, String methodName,
-			String parameter, Type parameterType)
+			HttpServletRequest httpServletRequest, Class<?> clazz,
+			String methodName, String parameter, Type parameterType)
 		throws Exception {
 
 		String typeNameOrClassDescriptor = getTypeNameOrClassDescriptor(
 			parameterType);
 
-		String value = ParamUtil.getString(request, parameter);
+		String value = ParamUtil.getString(httpServletRequest, parameter);
 
 		if (Validator.isNull(value) &&
 			!typeNameOrClassDescriptor.equals("[Ljava.lang.String;")) {
@@ -180,37 +183,43 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("boolean") ||
 				 typeNameOrClassDescriptor.equals(Boolean.class.getName())) {
 
-			return Boolean.valueOf(ParamUtil.getBoolean(request, parameter));
+			return Boolean.valueOf(
+				ParamUtil.getBoolean(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("double") ||
 				 typeNameOrClassDescriptor.equals(Double.class.getName())) {
 
-			return Double.valueOf(ParamUtil.getDouble(request, parameter));
+			return Double.valueOf(
+				ParamUtil.getDouble(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("int") ||
 				 typeNameOrClassDescriptor.equals(Integer.class.getName())) {
 
-			return Integer.valueOf(ParamUtil.getInteger(request, parameter));
+			return Integer.valueOf(
+				ParamUtil.getInteger(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("long") ||
 				 typeNameOrClassDescriptor.equals(Long.class.getName())) {
 
-			return Long.valueOf(ParamUtil.getLong(request, parameter));
+			return Long.valueOf(
+				ParamUtil.getLong(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("short") ||
 				 typeNameOrClassDescriptor.equals(Short.class.getName())) {
 
-			return Short.valueOf(ParamUtil.getShort(request, parameter));
+			return Short.valueOf(
+				ParamUtil.getShort(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals(Calendar.class.getName())) {
 			Calendar cal = Calendar.getInstance(LocaleUtil.getDefault());
 
-			cal.setTimeInMillis(ParamUtil.getLong(request, parameter));
+			cal.setTimeInMillis(
+				ParamUtil.getLong(httpServletRequest, parameter));
 
 			return cal;
 		}
 		else if (typeNameOrClassDescriptor.equals(Date.class.getName())) {
-			return new Date(ParamUtil.getLong(request, parameter));
+			return new Date(ParamUtil.getLong(httpServletRequest, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals(
 					ServiceContext.class.getName())) {
@@ -225,28 +234,28 @@ public class JSONServiceAction extends JSONAction {
 			return value;
 		}
 		else if (typeNameOrClassDescriptor.equals("[Z")) {
-			return ParamUtil.getBooleanValues(request, parameter);
+			return ParamUtil.getBooleanValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[D")) {
-			return ParamUtil.getDoubleValues(request, parameter);
+			return ParamUtil.getDoubleValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[F")) {
-			return ParamUtil.getFloatValues(request, parameter);
+			return ParamUtil.getFloatValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[I")) {
-			return ParamUtil.getIntegerValues(request, parameter);
+			return ParamUtil.getIntegerValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[J")) {
-			return ParamUtil.getLongValues(request, parameter);
+			return ParamUtil.getLongValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[S")) {
-			return ParamUtil.getShortValues(request, parameter);
+			return ParamUtil.getShortValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[Ljava.lang.String;")) {
-			return ParamUtil.getParameterValues(request, parameter);
+			return ParamUtil.getParameterValues(httpServletRequest, parameter);
 		}
 		else if (typeNameOrClassDescriptor.equals("[[Z")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -268,7 +277,7 @@ public class JSONServiceAction extends JSONAction {
 			return new boolean[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[D")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -290,7 +299,7 @@ public class JSONServiceAction extends JSONAction {
 			return new double[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[F")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -312,7 +321,7 @@ public class JSONServiceAction extends JSONAction {
 			return new float[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[I")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -333,7 +342,7 @@ public class JSONServiceAction extends JSONAction {
 			return new int[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[J")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -354,7 +363,7 @@ public class JSONServiceAction extends JSONAction {
 			return new long[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[S")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -376,7 +385,7 @@ public class JSONServiceAction extends JSONAction {
 			return new short[0][0];
 		}
 		else if (typeNameOrClassDescriptor.equals("[[Ljava.lang.String")) {
-			String[] values = request.getParameterValues(parameter);
+			String[] values = httpServletRequest.getParameterValues(parameter);
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
@@ -422,7 +431,7 @@ public class JSONServiceAction extends JSONAction {
 	 *      HttpServletRequest)
 	 */
 	@Override
-	protected String getCSRFOrigin(HttpServletRequest request) {
+	protected String getCSRFOrigin(HttpServletRequest httpServletRequest) {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(ClassUtil.getClassName(this));
@@ -430,14 +439,14 @@ public class JSONServiceAction extends JSONAction {
 		sb.append(StringPool.SLASH);
 
 		String serviceClassName = ParamUtil.getString(
-			request, "serviceClassName");
+			httpServletRequest, "serviceClassName");
 
 		sb.append(serviceClassName);
 
 		sb.append(StringPool.POUND);
 
 		String serviceMethodName = ParamUtil.getString(
-			request, "serviceMethodName");
+			httpServletRequest, "serviceMethodName");
 
 		sb.append(serviceMethodName);
 
@@ -567,10 +576,10 @@ public class JSONServiceAction extends JSONAction {
 	}
 
 	protected String[] getStringArrayFromJSON(
-			HttpServletRequest request, String param)
+			HttpServletRequest httpServletRequest, String param)
 		throws JSONException {
 
-		String json = ParamUtil.getString(request, param, "[]");
+		String json = ParamUtil.getString(httpServletRequest, param, "[]");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -635,9 +644,11 @@ public class JSONServiceAction extends JSONAction {
 		throw new IllegalArgumentException(type.toString() + " is invalid");
 	}
 
-	protected boolean isValidRequest(HttpServletRequest request) {
-		String className = ParamUtil.getString(request, "serviceClassName");
-		String methodName = ParamUtil.getString(request, "serviceMethodName");
+	protected boolean isValidRequest(HttpServletRequest httpServletRequest) {
+		String className = ParamUtil.getString(
+			httpServletRequest, "serviceClassName");
+		String methodName = ParamUtil.getString(
+			httpServletRequest, "serviceMethodName");
 
 		if (className.contains(".service.") &&
 			className.endsWith("ServiceUtil") &&

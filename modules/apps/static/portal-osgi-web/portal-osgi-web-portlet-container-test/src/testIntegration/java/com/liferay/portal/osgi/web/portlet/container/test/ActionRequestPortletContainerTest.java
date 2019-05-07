@@ -385,11 +385,13 @@ public class ActionRequestPortletContainerTest
 
 		@Override
 		public void addCSRFToken(
-			HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+			HttpServletRequest httpServletRequest,
+			LiferayPortletURL liferayPortletURL) {
 		}
 
 		@Override
-		public void checkCSRFToken(HttpServletRequest request, String origin) {
+		public void checkCSRFToken(
+			HttpServletRequest httpServletRequest, String origin) {
 		}
 
 	}

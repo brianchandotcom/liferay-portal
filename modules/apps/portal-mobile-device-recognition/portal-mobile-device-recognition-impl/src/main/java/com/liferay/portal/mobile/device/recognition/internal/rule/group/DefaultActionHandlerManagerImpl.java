@@ -44,12 +44,12 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 
 	@Override
 	public void applyActions(
-			List<MDRAction> mdrActions, HttpServletRequest request,
-			HttpServletResponse response)
+			List<MDRAction> mdrActions, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		for (MDRAction mdrAction : mdrActions) {
-			applyAction(mdrAction, request, response);
+			applyAction(mdrAction, httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -96,15 +96,16 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 	}
 
 	protected void applyAction(
-			MDRAction mdrAction, HttpServletRequest request,
-			HttpServletResponse response)
+			MDRAction mdrAction, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		ActionHandler actionHandler = _deviceActionHandlers.get(
 			mdrAction.getType());
 
 		if (actionHandler != null) {
-			actionHandler.applyAction(mdrAction, request, response);
+			actionHandler.applyAction(
+				mdrAction, httpServletRequest, httpServletResponse);
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn(

@@ -66,11 +66,12 @@ public class BreadcrumbUtil {
 	public static final int ENTRY_TYPE_PORTLET = 5;
 
 	public static List<BreadcrumbEntry> getBreadcrumbEntries(
-			HttpServletRequest request, int[] types)
+			HttpServletRequest httpServletRequest, int[] types)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
@@ -104,7 +105,8 @@ public class BreadcrumbUtil {
 		}
 
 		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_PORTLET)) {
-			breadcrumbEntries.addAll(getPortletBreadcrumbEntries(request));
+			breadcrumbEntries.addAll(
+				getPortletBreadcrumbEntries(httpServletRequest));
 		}
 
 		return breadcrumbEntries;
@@ -180,17 +182,18 @@ public class BreadcrumbUtil {
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(name);
+			(List<BreadcrumbEntry>)httpServletRequest.getAttribute(name);
 
 		if (Validator.isNotNull(portletDisplay.getId()) &&
 			!portletDisplay.isFocused() &&
@@ -204,7 +207,7 @@ public class BreadcrumbUtil {
 				StringPool.UNDERLINE.concat(portletDisplay.getId()));
 
 			List<BreadcrumbEntry> portletBreadcrumbEntries =
-				(List<BreadcrumbEntry>)request.getAttribute(name);
+				(List<BreadcrumbEntry>)httpServletRequest.getAttribute(name);
 
 			if (portletBreadcrumbEntries != null) {
 				breadcrumbEntries = portletBreadcrumbEntries;
@@ -220,8 +223,10 @@ public class BreadcrumbUtil {
 
 			String url = portletBreadcrumbEntry.getURL();
 
-			if (Validator.isNotNull(url) && !CookieKeys.hasSessionId(request)) {
-				HttpSession session = request.getSession();
+			if (Validator.isNotNull(url) &&
+				!CookieKeys.hasSessionId(httpServletRequest)) {
+
+				HttpSession session = httpServletRequest.getSession();
 
 				portletBreadcrumbEntry.setURL(
 					PortalUtil.getURLWithSessionId(url, session.getId()));

@@ -88,11 +88,11 @@ public class PanelCategoryContentTag extends BasePanelTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category-content:panelCategory",
 			_panelCategory);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category-content:showOpen",
 			_showOpen);
 	}

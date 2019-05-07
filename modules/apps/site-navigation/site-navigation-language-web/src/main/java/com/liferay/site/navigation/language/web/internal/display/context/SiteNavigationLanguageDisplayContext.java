@@ -42,13 +42,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SiteNavigationLanguageDisplayContext {
 
-	public SiteNavigationLanguageDisplayContext(HttpServletRequest request)
+	public SiteNavigationLanguageDisplayContext(
+			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_portletDisplayTemplate = (PortletDisplayTemplate)request.getAttribute(
-			WebKeys.PORTLET_DISPLAY_TEMPLATE);
+		_portletDisplayTemplate =
+			(PortletDisplayTemplate)httpServletRequest.getAttribute(
+				WebKeys.PORTLET_DISPLAY_TEMPLATE);
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();

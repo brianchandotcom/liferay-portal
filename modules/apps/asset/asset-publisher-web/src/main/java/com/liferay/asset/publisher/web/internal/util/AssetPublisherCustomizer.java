@@ -24,30 +24,36 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AssetPublisherCustomizer {
 
-	public Integer getDelta(HttpServletRequest request);
+	public Integer getDelta(HttpServletRequest httpServletRequest);
 
 	public String getPortletId();
 
-	public boolean isEnablePermissions(HttpServletRequest request);
+	public boolean isEnablePermissions(HttpServletRequest httpServletRequest);
 
-	public boolean isOrderingAndGroupingEnabled(HttpServletRequest request);
+	public boolean isOrderingAndGroupingEnabled(
+		HttpServletRequest httpServletRequest);
 
-	public boolean isOrderingByTitleEnabled(HttpServletRequest request);
+	public boolean isOrderingByTitleEnabled(
+		HttpServletRequest httpServletRequest);
 
-	public boolean isSelectionStyleEnabled(HttpServletRequest request);
+	public boolean isSelectionStyleEnabled(
+		HttpServletRequest httpServletRequest);
 
 	public boolean isShowAssetEntryQueryProcessor(
 		AssetEntryQueryProcessor assetEntryQueryProcessor);
 
-	public boolean isShowEnableAddContentButton(HttpServletRequest request);
+	public boolean isShowEnableAddContentButton(
+		HttpServletRequest httpServletRequest);
 
-	public boolean isShowEnableRelatedAssets(HttpServletRequest request);
+	public boolean isShowEnableRelatedAssets(
+		HttpServletRequest httpServletRequest);
 
-	public boolean isShowScopeSelector(HttpServletRequest request);
+	public boolean isShowScopeSelector(HttpServletRequest httpServletRequest);
 
-	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request);
+	public boolean isShowSubtypeFieldsFilter(
+		HttpServletRequest httpServletRequest);
 
 	public void setAssetEntryQueryOptions(
-		AssetEntryQuery assetEntryQuery, HttpServletRequest request);
+		AssetEntryQuery assetEntryQuery, HttpServletRequest httpServletRequest);
 
 }

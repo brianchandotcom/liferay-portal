@@ -23,6 +23,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ClayTagDataSource<T> {
 
-	public List<T> getItems(HttpServletRequest request);
+	public List<T> getItems(HttpServletRequest httpServletRequest);
 
 }

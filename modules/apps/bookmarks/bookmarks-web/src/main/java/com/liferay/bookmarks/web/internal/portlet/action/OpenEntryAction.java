@@ -38,17 +38,19 @@ public class OpenEntryAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
-			long entryId = ParamUtil.getLong(request, "entryId");
+			long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
 
 			BookmarksEntry entry = _bookmarksEntryService.getEntry(entryId);
 
 			if (entry.isInTrash()) {
 				int status = ParamUtil.getInteger(
-					request, "status", WorkflowConstants.STATUS_APPROVED);
+					httpServletRequest, "status",
+					WorkflowConstants.STATUS_APPROVED);
 
 				if (status != WorkflowConstants.STATUS_IN_TRASH) {
 					throw new NoSuchEntryException("{entryId=" + entryId + "}");
@@ -57,12 +59,12 @@ public class OpenEntryAction implements StrutsAction {
 
 			entry = _bookmarksEntryService.openEntry(entry);
 
-			response.sendRedirect(entry.getUrl());
+			httpServletResponse.sendRedirect(entry.getUrl());
 
 			return null;
 		}
 		catch (Exception e) {
-			_portal.sendError(e, request, response);
+			_portal.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}

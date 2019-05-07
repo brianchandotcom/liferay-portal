@@ -44,10 +44,11 @@ import javax.servlet.http.HttpServletResponse;
 public class PanelAppContentHelper {
 
 	public PanelAppContentHelper(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		_request = request;
-		_response = response;
+		_request = httpServletRequest;
+		_response = httpServletResponse;
 	}
 
 	public boolean isValidPortletSelected() {
@@ -103,7 +104,7 @@ public class PanelAppContentHelper {
 	}
 
 	protected HttpServletRequest getOriginalHttpServletRequest(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		LiferayPortletRequest liferayPortletRequest =
 			LiferayPortletUtil.getLiferayPortletRequest(
@@ -115,12 +116,13 @@ public class PanelAppContentHelper {
 		}
 
 		HttpServletRequest originalServletRequest =
-			PortalUtil.getOriginalServletRequest(request);
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 		Portlet portlet = getPortlet();
 
 		return DynamicServletRequestUtil.createDynamicServletRequest(
-			originalServletRequest, portlet, request.getParameterMap(), false);
+			originalServletRequest, portlet,
+			httpServletRequest.getParameterMap(), false);
 	}
 
 	protected Portlet getPortlet() {

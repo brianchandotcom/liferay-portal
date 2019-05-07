@@ -60,10 +60,12 @@ public class MentionsSitesFormNavigatorEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+		Group liveGroup = (Group)httpServletRequest.getAttribute(
+			"site.liveGroup");
 
 		UnicodeProperties typeSettingsProperties = null;
 
@@ -77,10 +79,10 @@ public class MentionsSitesFormNavigatorEntry
 		boolean groupMentionsEnabled = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("mentionsEnabled"), true);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

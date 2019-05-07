@@ -43,10 +43,11 @@ public class ETagFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (ParamUtil.getBoolean(request, _ETAG, true) &&
-			!isAlreadyFiltered(request)) {
+		if (ParamUtil.getBoolean(httpServletRequest, _ETAG, true) &&
+			!isAlreadyFiltered(httpServletRequest)) {
 
 			return true;
 		}
@@ -54,8 +55,8 @@ public class ETagFilter extends BasePortalFilter {
 		return false;
 	}
 
-	protected boolean isAlreadyFiltered(HttpServletRequest request) {
-		if (request.getAttribute(SKIP_FILTER) != null) {
+	protected boolean isAlreadyFiltered(HttpServletRequest httpServletRequest) {
+		if (httpServletRequest.getAttribute(SKIP_FILTER) != null) {
 			return true;
 		}
 
@@ -74,37 +75,41 @@ public class ETagFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
+		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
 		RestrictedByteBufferCacheServletResponse
 			restrictedByteBufferCacheServletResponse =
 				new RestrictedByteBufferCacheServletResponse(
-					response, PropsValues.ETAG_RESPONSE_SIZE_MAX);
+					httpServletResponse, PropsValues.ETAG_RESPONSE_SIZE_MAX);
 
 		processFilter(
-			ETagFilter.class.getName(), request,
+			ETagFilter.class.getName(), httpServletRequest,
 			restrictedByteBufferCacheServletResponse, filterChain);
 
-		if (request.isAsyncSupported() && request.isAsyncStarted()) {
-			AsyncContext asyncContext = request.getAsyncContext();
+		if (httpServletRequest.isAsyncSupported() &&
+			httpServletRequest.isAsyncStarted()) {
+
+			AsyncContext asyncContext = httpServletRequest.getAsyncContext();
 
 			asyncContext.addListener(
 				new ETagFilterAsyncListener(
-					asyncContext, request, response,
+					asyncContext, httpServletRequest, httpServletResponse,
 					restrictedByteBufferCacheServletResponse));
 		}
 		else {
 			_postProcessETag(
-				request, response, restrictedByteBufferCacheServletResponse);
+				httpServletRequest, httpServletResponse,
+				restrictedByteBufferCacheServletResponse);
 		}
 	}
 
 	private void _postProcessETag(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			RestrictedByteBufferCacheServletResponse
 				restrictedByteBufferCacheServletResponse)
 		throws IOException {
@@ -115,7 +120,8 @@ public class ETagFilter extends BasePortalFilter {
 
 			if (!isEligibleForETag(
 					restrictedByteBufferCacheServletResponse.getStatus()) ||
-				!ETagUtil.processETag(request, response, byteBuffer)) {
+				!ETagUtil.processETag(
+					httpServletRequest, httpServletResponse, byteBuffer)) {
 
 				restrictedByteBufferCacheServletResponse.flushCache();
 			}

@@ -1186,10 +1186,10 @@ public class HttpClientSPIAgentTest {
 
 		@Override
 		public void captureResponse(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			BufferCacheServletResponse bufferCacheServletResponse) {
 
-			_request = request;
+			_request = httpServletRequest;
 			_bufferCacheServletResponse = bufferCacheServletResponse;
 		}
 

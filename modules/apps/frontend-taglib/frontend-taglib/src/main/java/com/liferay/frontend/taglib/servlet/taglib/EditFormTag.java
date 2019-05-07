@@ -191,36 +191,43 @@ public class EditFormTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-frontend:edit-form:action", _getAction(request));
-		request.setAttribute("liferay-frontend:edit-form:cssClass", _cssClass);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:action",
+			_getAction(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:escapeXml", String.valueOf(_escapeXml));
-		request.setAttribute("liferay-frontend:edit-form:fluid", _fluid);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:fluid", _fluid);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:inlineLabels",
 			String.valueOf(_inlineLabels));
-		request.setAttribute("liferay-frontend:edit-form:method", _method);
-		request.setAttribute("liferay-frontend:edit-form:name", _name);
-		request.setAttribute("liferay-frontend:edit-form:onSubmit", _onSubmit);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:method", _method);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:name", _name);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:onSubmit", _onSubmit);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:portletNamespace", _portletNamespace);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:useNamespace",
 			String.valueOf(_useNamespace));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:validateOnBlur",
 			String.valueOf(_validateOnBlur));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_aui:form:validatorTagsMap", _validatorTagsMap);
 	}
 
-	private String _getAction(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private String _getAction(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isAddSessionIdToURL()) {
 			return PortalUtil.getURLWithSessionId(

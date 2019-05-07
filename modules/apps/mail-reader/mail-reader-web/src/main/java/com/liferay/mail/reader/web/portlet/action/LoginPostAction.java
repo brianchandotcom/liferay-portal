@@ -42,21 +42,24 @@ import org.osgi.service.component.annotations.Reference;
 public class LoginPostAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			initiateSynchronization(request);
+			initiateSynchronization(httpServletRequest);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
 	}
 
-	protected void initiateSynchronization(HttpServletRequest request)
+	protected void initiateSynchronization(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long userId = _portal.getUserId(request);
+		long userId = _portal.getUserId(httpServletRequest);
 
 		if (userId <= 0) {
 			return;
@@ -68,7 +71,7 @@ public class LoginPostAction extends Action {
 			return;
 		}
 
-		MailManager mailManager = MailManager.getInstance(request);
+		MailManager mailManager = MailManager.getInstance(httpServletRequest);
 
 		for (Account account : accounts) {
 			mailManager.synchronizeAccount(account.getAccountId());

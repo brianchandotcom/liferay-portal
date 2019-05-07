@@ -72,12 +72,13 @@ import javax.servlet.jsp.PageContext;
 public class VelocityTaglibImpl implements VelocityTaglib {
 
 	public VelocityTaglibImpl(
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, Map<String, Object> contextObjects) {
+		ServletContext servletContext, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
+		Map<String, Object> contextObjects) {
 
 		_servletContext = servletContext;
-		_request = request;
-		_response = response;
+		_request = httpServletRequest;
+		_response = httpServletResponse;
 		_contextObjects = contextObjects;
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();

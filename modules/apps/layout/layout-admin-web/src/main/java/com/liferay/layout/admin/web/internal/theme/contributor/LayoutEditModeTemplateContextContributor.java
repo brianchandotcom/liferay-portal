@@ -39,10 +39,11 @@ public class LayoutEditModeTemplateContextContributor
 
 	@Override
 	public void prepare(
-		Map<String, Object> contextObjects, HttpServletRequest request) {
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
 
 		String layoutMode = ParamUtil.getString(
-			request, "p_l_mode", Constants.VIEW);
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			StringBuilder sb = new StringBuilder(3);

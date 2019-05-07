@@ -31,11 +31,11 @@ public class SessionMaxAllowedFilter
 
 	@Override
 	public void doFilterFinally(
-		HttpServletRequest request, HttpServletResponse response,
-		Object object) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Object object) {
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			Boolean sessionMaxAllowed = (Boolean)session.getAttribute(
 				WebKeys.SESSION_MAX_ALLOWED);
@@ -48,7 +48,8 @@ public class SessionMaxAllowedFilter
 
 	@Override
 	public Object doFilterTry(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		return null;
 	}

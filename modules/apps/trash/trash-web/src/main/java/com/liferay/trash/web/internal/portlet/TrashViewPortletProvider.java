@@ -61,11 +61,12 @@ public class TrashViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String portletId = PortletProviderUtil.getPortletId(
 			TrashEntry.class.getName(), PortletProvider.Action.VIEW);
@@ -80,7 +81,7 @@ public class TrashViewPortletProvider
 		}
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
+			httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 

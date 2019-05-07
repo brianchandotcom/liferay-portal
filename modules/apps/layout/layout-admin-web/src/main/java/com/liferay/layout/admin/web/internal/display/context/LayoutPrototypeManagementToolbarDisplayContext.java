@@ -46,11 +46,11 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 	public LayoutPrototypeManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LayoutPrototypeDisplayContext layoutPrototypeDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			layoutPrototypeDisplayContext.getSearchContainer());
 
 		_layoutPrototypeDisplayContext = layoutPrototypeDisplayContext;

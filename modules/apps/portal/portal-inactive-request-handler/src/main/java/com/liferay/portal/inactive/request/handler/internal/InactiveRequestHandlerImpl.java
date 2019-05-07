@@ -56,21 +56,21 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 	@Override
 	public void processInactiveRequest(
-			HttpServletRequest request, HttpServletResponse response,
-			String messageKey)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String messageKey)
 		throws IOException {
 
-		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 		if (!_showInactiveRequestMessage) {
 			return;
 		}
 
-		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
+		httpServletResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		String message = null;
 

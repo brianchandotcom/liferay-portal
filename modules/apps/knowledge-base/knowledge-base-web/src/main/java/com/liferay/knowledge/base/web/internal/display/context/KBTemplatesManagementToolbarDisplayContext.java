@@ -57,12 +57,12 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	public KBTemplatesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request, String templatePath)
+			HttpServletRequest httpServletRequest, String templatePath)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_templatePath = templatePath;
 
 		_currentURLObj = PortletURLUtil.getCurrent(

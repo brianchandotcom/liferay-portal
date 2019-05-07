@@ -71,11 +71,13 @@ public class InputResourceTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:input-resource:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:input-resource:id", _id);
-		request.setAttribute("liferay-ui:input-resource:title", _title);
-		request.setAttribute("liferay-ui:input-resource:url", _url);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-resource:cssClass", _cssClass);
+		httpServletRequest.setAttribute("liferay-ui:input-resource:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-resource:title", _title);
+		httpServletRequest.setAttribute("liferay-ui:input-resource:url", _url);
 	}
 
 	private static final String _PAGE =

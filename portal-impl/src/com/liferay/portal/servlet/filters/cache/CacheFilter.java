@@ -80,10 +80,12 @@ public class CacheFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (isCacheableRequest(request) && !isInclude(request) &&
-			!isAlreadyFiltered(request)) {
+		if (isCacheableRequest(httpServletRequest) &&
+			!isInclude(httpServletRequest) &&
+			!isAlreadyFiltered(httpServletRequest)) {
 
 			return true;
 		}
@@ -91,26 +93,27 @@ public class CacheFilter extends BasePortalFilter {
 		return false;
 	}
 
-	protected String getCacheKey(HttpServletRequest request) {
+	protected String getCacheKey(HttpServletRequest httpServletRequest) {
 		StringBundler sb = new StringBundler(11);
 
 		// Method
 
-		sb.append(request.getMethod());
+		sb.append(httpServletRequest.getMethod());
 
 		// URL
 
 		sb.append(StringPool.POUND);
-		sb.append(request.getRequestURL());
+		sb.append(httpServletRequest.getRequestURL());
 
-		String queryString = request.getQueryString();
+		String queryString = httpServletRequest.getQueryString();
 
 		if (queryString == null) {
-			queryString = (String)request.getAttribute(
+			queryString = (String)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 
 			if (queryString == null) {
-				String url = PortalUtil.getCurrentCompleteURL(request);
+				String url = PortalUtil.getCurrentCompleteURL(
+					httpServletRequest);
 
 				int pos = url.indexOf(CharPool.QUESTION);
 
@@ -129,11 +132,11 @@ public class CacheFilter extends BasePortalFilter {
 
 		sb.append(StringPool.POUND);
 
-		String languageId = (String)request.getAttribute(
+		String languageId = (String)httpServletRequest.getAttribute(
 			WebKeys.I18N_LANGUAGE_ID);
 
 		if (Validator.isNull(languageId)) {
-			languageId = LanguageUtil.getLanguageId(request);
+			languageId = LanguageUtil.getLanguageId(httpServletRequest);
 		}
 
 		sb.append(languageId);
@@ -142,7 +145,7 @@ public class CacheFilter extends BasePortalFilter {
 
 		if (_includeUserAgent) {
 			String userAgent = GetterUtil.getString(
-				request.getHeader(HttpHeaders.USER_AGENT));
+				httpServletRequest.getHeader(HttpHeaders.USER_AGENT));
 
 			sb.append(StringPool.POUND);
 
@@ -154,7 +157,7 @@ public class CacheFilter extends BasePortalFilter {
 		// Gzip compression
 
 		sb.append(StringPool.POUND);
-		sb.append(BrowserSnifferUtil.acceptsGzip(request));
+		sb.append(BrowserSnifferUtil.acceptsGzip(httpServletRequest));
 
 		return StringUtil.toUpperCase(StringUtil.trim(sb.toString()));
 	}
@@ -270,8 +273,8 @@ public class CacheFilter extends BasePortalFilter {
 		}
 	}
 
-	protected boolean isAlreadyFiltered(HttpServletRequest request) {
-		if (request.getAttribute(SKIP_FILTER) != null) {
+	protected boolean isAlreadyFiltered(HttpServletRequest httpServletRequest) {
+		if (httpServletRequest.getAttribute(SKIP_FILTER) != null) {
 			return true;
 		}
 
@@ -279,7 +282,7 @@ public class CacheFilter extends BasePortalFilter {
 	}
 
 	protected boolean isCacheableData(
-		long companyId, HttpServletRequest request) {
+		long companyId, HttpServletRequest httpServletRequest) {
 
 		try {
 			if (_pattern == _PATTERN_RESOURCE) {
@@ -287,8 +290,9 @@ public class CacheFilter extends BasePortalFilter {
 			}
 
 			long plid = getPlid(
-				companyId, request.getPathInfo(), request.getServletPath(),
-				ParamUtil.getLong(request, "p_l_id"));
+				companyId, httpServletRequest.getPathInfo(),
+				httpServletRequest.getServletPath(),
+				ParamUtil.getLong(httpServletRequest, "p_l_id"));
 
 			if (plid <= 0) {
 				return false;
@@ -310,16 +314,18 @@ public class CacheFilter extends BasePortalFilter {
 		}
 	}
 
-	protected boolean isCacheableRequest(HttpServletRequest request) {
-		String portletId = ParamUtil.getString(request, "p_p_id");
+	protected boolean isCacheableRequest(
+		HttpServletRequest httpServletRequest) {
+
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		if (Validator.isNotNull(portletId)) {
 			return false;
 		}
 
 		if ((_pattern == _PATTERN_FRIENDLY) || (_pattern == _PATTERN_LAYOUT)) {
-			long userId = PortalUtil.getUserId(request);
-			String remoteUser = request.getRemoteUser();
+			long userId = PortalUtil.getUserId(httpServletRequest);
+			String remoteUser = httpServletRequest.getRemoteUser();
 
 			if ((userId > 0) || Validator.isNotNull(remoteUser)) {
 				return false;
@@ -327,7 +333,7 @@ public class CacheFilter extends BasePortalFilter {
 		}
 
 		if (_pattern == _PATTERN_LAYOUT) {
-			String plid = ParamUtil.getString(request, "p_l_id");
+			String plid = ParamUtil.getString(httpServletRequest, "p_l_id");
 
 			if (Validator.isNull(plid)) {
 				return false;
@@ -351,8 +357,8 @@ public class CacheFilter extends BasePortalFilter {
 		return false;
 	}
 
-	protected boolean isInclude(HttpServletRequest request) {
-		String uri = (String)request.getAttribute(
+	protected boolean isInclude(HttpServletRequest httpServletRequest) {
+		String uri = (String)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
 
 		if (uri == null) {
@@ -364,20 +370,20 @@ public class CacheFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
+		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
-		String key = getCacheKey(request);
+		String key = getCacheKey(httpServletRequest);
 
-		String pAuth = request.getParameter("p_auth");
+		String pAuth = httpServletRequest.getParameter("p_auth");
 
 		if (Validator.isNotNull(pAuth)) {
 			try {
 				AuthTokenUtil.checkCSRFToken(
-					request, CacheFilter.class.getName());
+					httpServletRequest, CacheFilter.class.getName());
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
@@ -388,8 +394,8 @@ public class CacheFilter extends BasePortalFilter {
 				}
 
 				processFilter(
-					CacheFilter.class.getName(), request, response,
-					filterChain);
+					CacheFilter.class.getName(), httpServletRequest,
+					httpServletResponse, filterChain);
 
 				return;
 			}
@@ -397,14 +403,14 @@ public class CacheFilter extends BasePortalFilter {
 			key = key.replace(StringUtil.toUpperCase(pAuth), "VALID");
 		}
 
-		long companyId = PortalInstances.getCompanyId(request);
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		CacheResponseData cacheResponseData = CacheUtil.getCacheResponseData(
 			companyId, key);
 
 		if ((cacheResponseData == null) || !cacheResponseData.isValid()) {
 			if (!_isValidCache(cacheResponseData) ||
-				!isCacheableData(companyId, request)) {
+				!isCacheableData(companyId, httpServletRequest)) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Request is not cacheable " + key);
@@ -420,8 +426,8 @@ public class CacheFilter extends BasePortalFilter {
 				}
 
 				processFilter(
-					CacheFilter.class.getName(), request, response,
-					filterChain);
+					CacheFilter.class.getName(), httpServletRequest,
+					httpServletResponse, filterChain);
 
 				return;
 			}
@@ -431,16 +437,16 @@ public class CacheFilter extends BasePortalFilter {
 			}
 
 			BufferCacheServletResponse bufferCacheServletResponse =
-				new BufferCacheServletResponse(response);
+				new BufferCacheServletResponse(httpServletResponse);
 
 			processFilter(
-				CacheFilter.class.getName(), request,
+				CacheFilter.class.getName(), httpServletRequest,
 				bufferCacheServletResponse, filterChain);
 
 			cacheResponseData = new CacheResponseData(
 				bufferCacheServletResponse);
 
-			LastPath lastPath = (LastPath)request.getAttribute(
+			LastPath lastPath = (LastPath)httpServletRequest.getAttribute(
 				WebKeys.LAST_PATH);
 
 			if (lastPath != null) {
@@ -458,7 +464,7 @@ public class CacheFilter extends BasePortalFilter {
 
 			if (isCacheableResponse(bufferCacheServletResponse) &&
 				!cacheControl.contains(HttpHeaders.PRAGMA_NO_CACHE_VALUE) &&
-				isCacheableRequest(request)) {
+				isCacheableRequest(httpServletRequest)) {
 
 				CacheUtil.putCacheResponseData(
 					companyId, key, cacheResponseData);
@@ -469,13 +475,13 @@ public class CacheFilter extends BasePortalFilter {
 				WebKeys.LAST_PATH);
 
 			if (lastPath != null) {
-				HttpSession session = request.getSession();
+				HttpSession session = httpServletRequest.getSession();
 
 				session.setAttribute(WebKeys.LAST_PATH, lastPath);
 			}
 		}
 
-		CacheResponseUtil.write(response, cacheResponseData);
+		CacheResponseUtil.write(httpServletResponse, cacheResponseData);
 	}
 
 	private boolean _isValidCache(CacheResponseData cacheResponseData) {

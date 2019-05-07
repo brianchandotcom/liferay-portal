@@ -56,8 +56,8 @@ public class IncompleteProcessMessageTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:incomplete-process-message:localPublishing",
 			_localPublishing);
 	}

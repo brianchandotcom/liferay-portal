@@ -42,10 +42,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SoyComponentRendererHelper {
 
 	public SoyComponentRendererHelper(
-		HttpServletRequest request, ComponentDescriptor componentDescriptor,
-		Map<String, ?> context, Portal portal, SoyRenderer soyRenderer) {
+		HttpServletRequest httpServletRequest,
+		ComponentDescriptor componentDescriptor, Map<String, ?> context,
+		Portal portal, SoyRenderer soyRenderer) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
 		_context = new HashMap<>(context);
 		_portal = portal;

@@ -79,10 +79,10 @@ import javax.servlet.http.HttpSession;
 public class PortletConfigurationPermissionsDisplayContext {
 
 	public PortletConfigurationPermissionsDisplayContext(
-			HttpServletRequest request, RenderRequest renderRequest)
+			HttpServletRequest httpServletRequest, RenderRequest renderRequest)
 		throws PortalException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 
 		long groupId = _getResourceGroupId();

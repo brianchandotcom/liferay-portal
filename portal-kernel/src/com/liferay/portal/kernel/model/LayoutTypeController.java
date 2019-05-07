@@ -33,13 +33,13 @@ public interface LayoutTypeController extends Serializable {
 	public String getURL();
 
 	public String includeEditContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception;
 
 	public boolean includeLayoutContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception;
 
 	public boolean isBrowsable();
@@ -67,6 +67,7 @@ public interface LayoutTypeController extends Serializable {
 	}
 
 	public boolean matches(
-		HttpServletRequest request, String friendlyURL, Layout layout);
+		HttpServletRequest httpServletRequest, String friendlyURL,
+		Layout layout);
 
 }

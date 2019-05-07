@@ -55,12 +55,13 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute("extension", getExtension());
+		httpServletRequest.setAttribute("extension", getExtension());
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

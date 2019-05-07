@@ -109,11 +109,11 @@ public class AudioDLPreviewRendererProvider
 	}
 
 	private List<String> _getPreviewFileURLs(
-			FileVersion fileVersion, HttpServletRequest request)
+			FileVersion fileVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		int status = ParamUtil.getInteger(
-			request, "status", WorkflowConstants.STATUS_ANY);
+			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
 		String previewQueryString = "&audioPreview=1";
 
@@ -121,8 +121,9 @@ public class AudioDLPreviewRendererProvider
 			previewQueryString += "&status=" + status;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<String> previewFileURLs = new ArrayList<>();
 

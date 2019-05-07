@@ -175,26 +175,28 @@ public class HTMLTag extends BaseHTMLTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
-		setNamespacedAttribute(request, "ddmForm", getDDMForm());
+		setNamespacedAttribute(httpServletRequest, "ddmForm", getDDMForm());
 		setNamespacedAttribute(
-			request, "ddmFormValuesInputName", getDDMFormValuesInputName());
-		setNamespacedAttribute(request, "fields", getFields());
+			httpServletRequest, "ddmFormValuesInputName",
+			getDDMFormValuesInputName());
+		setNamespacedAttribute(httpServletRequest, "fields", getFields());
 
 		if (getGroupId() <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			setNamespacedAttribute(
-				request, "groupId",
+				httpServletRequest, "groupId",
 				String.valueOf(themeDisplay.getSiteGroupId()));
 		}
 
-		setNamespacedAttribute(request, "mode", getMode());
+		setNamespacedAttribute(httpServletRequest, "mode", getMode());
 		setNamespacedAttribute(
-			request, "randomNamespace", getRandomNamespace());
+			httpServletRequest, "randomNamespace", getRandomNamespace());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HTMLTag.class);

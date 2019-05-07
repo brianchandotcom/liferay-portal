@@ -55,8 +55,9 @@ public class MenuItemTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:menu_item:menuItem", _menuItem);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:menu_item:menuItem", _menuItem);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

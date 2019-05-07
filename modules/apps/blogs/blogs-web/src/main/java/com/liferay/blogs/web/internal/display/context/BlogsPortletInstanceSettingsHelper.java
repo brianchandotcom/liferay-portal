@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsPortletInstanceSettingsHelper {
 
 	public BlogsPortletInstanceSettingsHelper(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_blogsPortletInstanceConfiguration = blogsPortletInstanceConfiguration;
 	}
 

@@ -55,11 +55,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ThemeUtil {
 
-	public static String getPortletId(HttpServletRequest request) {
+	public static String getPortletId(HttpServletRequest httpServletRequest) {
 		String portletId = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -71,16 +72,20 @@ public class ThemeUtil {
 	}
 
 	public static void include(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme)
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme)
 		throws Exception {
 
-		include(servletContext, request, response, path, theme, true);
+		include(
+			servletContext, httpServletRequest, httpServletResponse, path,
+			theme, true);
 	}
 
 	public static String include(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme,
 			boolean write)
 		throws Exception {
 
@@ -109,7 +114,8 @@ public class ThemeUtil {
 
 		try {
 			return doIncludeFTL(
-				servletContext, request, response, path, theme, false, write);
+				servletContext, httpServletRequest, httpServletResponse, path,
+				theme, false, write);
 		}
 		finally {
 			if ((pluginClassLoader != null) &&
@@ -125,12 +131,15 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	public static String includeFTL(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme,
 			boolean write)
 		throws Exception {
 
-		return include(servletContext, request, response, path, theme, write);
+		return include(
+			servletContext, httpServletRequest, httpServletResponse, path,
+			theme, write);
 	}
 
 	/**
@@ -138,13 +147,14 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	public static void includeJSP(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme)
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme)
 		throws Exception {
 
 		doDispatch(
-			servletContext, request, response, path, theme, true,
-			ThemeHelper.TEMPLATE_EXTENSION_JSP);
+			servletContext, httpServletRequest, httpServletResponse, path,
+			theme, true, ThemeHelper.TEMPLATE_EXTENSION_JSP);
 	}
 
 	/**
@@ -152,14 +162,15 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	public static String includeVM(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme,
 			boolean write)
 		throws Exception {
 
 		return doDispatch(
-			servletContext, request, response, path, theme, write,
-			ThemeHelper.TEMPLATE_EXTENSION_VM);
+			servletContext, httpServletRequest, httpServletResponse, path,
+			theme, write, ThemeHelper.TEMPLATE_EXTENSION_VM);
 	}
 
 	/**
@@ -169,17 +180,21 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	protected static String doDispatch(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme,
 			boolean write, String extension)
 		throws Exception {
 
-		return include(servletContext, request, response, path, theme, write);
+		return include(
+			servletContext, httpServletRequest, httpServletResponse, path,
+			theme, write);
 	}
 
 	protected static String doIncludeFTL(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme,
 			boolean restricted, boolean write)
 		throws Exception {
 
@@ -200,7 +215,7 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String portletId = getPortletId(request);
+		String portletId = getPortletId(httpServletRequest);
 
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, path);
@@ -240,14 +255,14 @@ public class ThemeUtil {
 
 		// FreeMarker variables
 
-		template.prepare(request);
+		template.prepare(httpServletRequest);
 
 		// Custom theme variables
 
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {
 
-			templateContextContributor.prepare(template, request);
+			templateContextContributor.prepare(template, httpServletRequest);
 		}
 
 		// Theme servlet context
@@ -260,21 +275,23 @@ public class ThemeUtil {
 		Writer writer = null;
 
 		if (write) {
-			writer = response.getWriter();
+			writer = httpServletResponse.getWriter();
 		}
 		else {
 			writer = new UnsyncStringWriter();
 
-			response = new PipingServletResponse(response, writer);
+			httpServletResponse = new PipingServletResponse(
+				httpServletResponse, writer);
 		}
 
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
 
-		templateManager.addTaglibSupport(template, request, response);
+		templateManager.addTaglibSupport(
+			template, httpServletRequest, httpServletResponse);
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request, response);
+			template, "taglibLiferay", httpServletRequest, httpServletResponse);
 
 		template.put(TemplateConstants.WRITER, writer);
 
@@ -294,8 +311,9 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	protected static void doIncludeJSP(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String path, Theme theme)
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path, Theme theme)
 		throws Exception {
 
 		if (theme.isWARFile()) {
@@ -319,7 +337,8 @@ public class ThemeUtil {
 							path));
 				}
 				else {
-					requestDispatcher.include(request, response);
+					requestDispatcher.include(
+						httpServletRequest, httpServletResponse);
 				}
 			}
 		}
@@ -333,7 +352,8 @@ public class ThemeUtil {
 						"Theme ", theme.getThemeId(), " does not have ", path));
 			}
 			else {
-				requestDispatcher.include(request, response);
+				requestDispatcher.include(
+					httpServletRequest, httpServletResponse);
 			}
 		}
 	}
@@ -343,8 +363,9 @@ public class ThemeUtil {
 	 */
 	@Deprecated
 	protected static String doIncludeVM(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, String page, Theme theme,
+			ServletContext servletContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String page, Theme theme,
 			boolean restricted, boolean write)
 		throws Exception {
 
@@ -365,7 +386,7 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String portletId = getPortletId(request);
+		String portletId = getPortletId(httpServletRequest);
 
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, page);
@@ -422,14 +443,14 @@ public class ThemeUtil {
 
 		// Velocity variables
 
-		template.prepare(request);
+		template.prepare(httpServletRequest);
 
 		// Custom theme variables
 
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {
 
-			templateContextContributor.prepare(template, request);
+			templateContextContributor.prepare(template, httpServletRequest);
 		}
 
 		// Theme servlet context
@@ -444,16 +465,17 @@ public class ThemeUtil {
 		Writer writer = null;
 
 		if (write) {
-			writer = response.getWriter();
+			writer = httpServletResponse.getWriter();
 		}
 		else {
 			writer = new UnsyncStringWriter();
 
-			response = new PipingServletResponse(response, writer);
+			httpServletResponse = new PipingServletResponse(
+				httpServletResponse, writer);
 		}
 
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request, response);
+			template, "taglibLiferay", httpServletRequest, httpServletResponse);
 
 		template.put(TemplateConstants.WRITER, writer);
 

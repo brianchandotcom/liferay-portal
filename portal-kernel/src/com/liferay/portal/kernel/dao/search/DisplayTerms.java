@@ -32,10 +32,12 @@ public class DisplayTerms {
 
 	public static final String KEYWORDS = "keywords";
 
-	public DisplayTerms(HttpServletRequest request) {
-		advancedSearch = ParamUtil.getBoolean(request, ADVANCED_SEARCH);
-		andOperator = ParamUtil.getBoolean(request, AND_OPERATOR, true);
-		keywords = ParamUtil.getString(request, KEYWORDS);
+	public DisplayTerms(HttpServletRequest httpServletRequest) {
+		advancedSearch = ParamUtil.getBoolean(
+			httpServletRequest, ADVANCED_SEARCH);
+		andOperator = ParamUtil.getBoolean(
+			httpServletRequest, AND_OPERATOR, true);
+		keywords = ParamUtil.getString(httpServletRequest, KEYWORDS);
 	}
 
 	public DisplayTerms(PortletRequest portletRequest) {

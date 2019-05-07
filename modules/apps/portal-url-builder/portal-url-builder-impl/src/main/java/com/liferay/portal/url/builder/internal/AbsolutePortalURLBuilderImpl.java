@@ -43,10 +43,10 @@ import org.osgi.framework.Bundle;
 public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 	public AbsolutePortalURLBuilderImpl(
-		Portal portal, HttpServletRequest request) {
+		Portal portal, HttpServletRequest httpServletRequest) {
 
 		_portal = portal;
-		_request = request;
+		_request = httpServletRequest;
 
 		String pathContext = portal.getPathContext();
 
@@ -253,11 +253,11 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 			_ignoreCDNHost, _ignorePathProxy, pathPrefix, relativeURL);
 	}
 
-	private String _getCDNHost(HttpServletRequest request) {
+	private String _getCDNHost(HttpServletRequest httpServletRequest) {
 		String cdnHost;
 
 		try {
-			cdnHost = _portal.getCDNHost(request);
+			cdnHost = _portal.getCDNHost(httpServletRequest);
 		}
 		catch (PortalException pe) {
 			cdnHost = StringPool.BLANK;

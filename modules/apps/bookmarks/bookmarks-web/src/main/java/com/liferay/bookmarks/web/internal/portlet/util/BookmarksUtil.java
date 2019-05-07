@@ -60,7 +60,7 @@ import javax.servlet.http.HttpServletRequest;
 public class BookmarksUtil {
 
 	public static void addPortletBreadcrumbEntries(
-			BookmarksEntry entry, HttpServletRequest request,
+			BookmarksEntry entry, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -69,20 +69,22 @@ public class BookmarksUtil {
 		if (folder.getFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(folder, request, renderResponse);
+			addPortletBreadcrumbEntries(
+				folder, httpServletRequest, renderResponse);
 		}
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			BookmarksFolder folder, HttpServletRequest request,
+			BookmarksFolder folder, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
+			httpServletRequest, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -96,7 +98,8 @@ public class BookmarksUtil {
 		}
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, themeDisplay.translate("home"), portletURL.toString());
+			httpServletRequest, themeDisplay.translate("home"),
+			portletURL.toString());
 
 		if (folder == null) {
 			return;
@@ -116,7 +119,8 @@ public class BookmarksUtil {
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorFolder.getName(), portletURL.toString());
+				httpServletRequest, ancestorFolder.getName(),
+				portletURL.toString());
 		}
 
 		portletURL.setParameter(
@@ -128,12 +132,13 @@ public class BookmarksUtil {
 			BookmarksFolder unescapedFolder = folder.toUnescapedModel();
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, unescapedFolder.getName(), portletURL.toString());
+				httpServletRequest, unescapedFolder.getName(),
+				portletURL.toString());
 		}
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
+			long folderId, HttpServletRequest httpServletRequest,
 			RenderResponse renderResponse)
 		throws Exception {
 
@@ -144,7 +149,7 @@ public class BookmarksUtil {
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			folderId);
 
-		addPortletBreadcrumbEntries(folder, request, renderResponse);
+		addPortletBreadcrumbEntries(folder, httpServletRequest, renderResponse);
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

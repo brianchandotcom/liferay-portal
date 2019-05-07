@@ -56,16 +56,17 @@ public class JSResolveModulesServlet extends HttpServlet {
 
 	@Override
 	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		response.setCharacterEncoding(StringPool.UTF8);
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		PrintWriter printWriter = new PrintWriter(
-			response.getOutputStream(), true);
+			httpServletResponse.getOutputStream(), true);
 
-		List<String> moduleNames = _getModuleNames(request);
+		List<String> moduleNames = _getModuleNames(httpServletRequest);
 
 		BrowserModulesResolution browserModulesResolution =
 			_browserModulesResolver.resolve(moduleNames);
@@ -75,20 +76,22 @@ public class JSResolveModulesServlet extends HttpServlet {
 		printWriter.close();
 	}
 
-	private List<String> _getModuleNames(HttpServletRequest request)
+	private List<String> _getModuleNames(HttpServletRequest httpServletRequest)
 		throws IOException {
 
 		String[] moduleNames = null;
 
-		String method = request.getMethod();
+		String method = httpServletRequest.getMethod();
 
 		if (method.equals("GET")) {
-			moduleNames = ParamUtil.getStringValues(request, "modules");
+			moduleNames = ParamUtil.getStringValues(
+				httpServletRequest, "modules");
 		}
 		else {
-			String body = StringUtil.read(request.getInputStream());
+			String body = StringUtil.read(httpServletRequest.getInputStream());
 
-			body = URLDecoder.decode(body, request.getCharacterEncoding());
+			body = URLDecoder.decode(
+				body, httpServletRequest.getCharacterEncoding());
 
 			body = body.substring(8);
 

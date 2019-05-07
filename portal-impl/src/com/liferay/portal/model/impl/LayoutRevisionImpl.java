@@ -113,22 +113,23 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
-	public String getRegularURL(HttpServletRequest request)
+	public String getRegularURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String portalURL = PortalUtil.getPortalURL(request);
+		String portalURL = PortalUtil.getPortalURL(httpServletRequest);
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(getPlid());
 
 		String url = PortalUtil.getLayoutURL(layout, themeDisplay);
 
-		if (!CookieKeys.hasSessionId(request) &&
+		if (!CookieKeys.hasSessionId(httpServletRequest) &&
 			(url.startsWith(portalURL) || url.startsWith(StringPool.SLASH))) {
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			url = PortalUtil.getURLWithSessionId(url, session.getId());
 		}

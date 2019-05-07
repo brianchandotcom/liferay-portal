@@ -73,18 +73,20 @@ public class Header implements Externalizable {
 		_stringValue = string;
 	}
 
-	public void addToResponse(String key, HttpServletResponse response) {
+	public void addToResponse(
+		String key, HttpServletResponse httpServletResponse) {
+
 		if (_type == Type.COOKIE) {
-			response.addCookie(_cookieValue);
+			httpServletResponse.addCookie(_cookieValue);
 		}
 		else if (_type == Type.DATE) {
-			response.addDateHeader(key, _dateValue);
+			httpServletResponse.addDateHeader(key, _dateValue);
 		}
 		else if (_type == Type.INTEGER) {
-			response.addIntHeader(key, _intValue);
+			httpServletResponse.addIntHeader(key, _intValue);
 		}
 		else if (_type == Type.STRING) {
-			response.addHeader(key, _stringValue);
+			httpServletResponse.addHeader(key, _stringValue);
 		}
 		else {
 			throw new IllegalStateException("Invalid type " + _type);
@@ -175,18 +177,20 @@ public class Header implements Externalizable {
 		_type = Type.values()[objectInput.readInt()];
 	}
 
-	public void setToResponse(String key, HttpServletResponse response) {
+	public void setToResponse(
+		String key, HttpServletResponse httpServletResponse) {
+
 		if (_type == Type.COOKIE) {
-			response.addCookie(_cookieValue);
+			httpServletResponse.addCookie(_cookieValue);
 		}
 		else if (_type == Type.DATE) {
-			response.setDateHeader(key, _dateValue);
+			httpServletResponse.setDateHeader(key, _dateValue);
 		}
 		else if (_type == Type.INTEGER) {
-			response.setIntHeader(key, _intValue);
+			httpServletResponse.setIntHeader(key, _intValue);
 		}
 		else if (_type == Type.STRING) {
-			response.setHeader(key, _stringValue);
+			httpServletResponse.setHeader(key, _stringValue);
 		}
 		else {
 			throw new IllegalStateException("Invalid type " + _type);

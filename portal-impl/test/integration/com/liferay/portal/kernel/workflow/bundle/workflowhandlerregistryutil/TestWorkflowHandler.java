@@ -128,8 +128,8 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 
 	@Override
 	public boolean include(
-		long classPK, HttpServletRequest request, HttpServletResponse response,
-		String template) {
+		long classPK, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String template) {
 
 		return false;
 	}

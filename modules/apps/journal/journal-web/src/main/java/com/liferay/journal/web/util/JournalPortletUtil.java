@@ -113,7 +113,7 @@ public class JournalPortletUtil {
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
-			JournalFolder folder, HttpServletRequest request,
+			JournalFolder folder, HttpServletRequest httpServletRequest,
 			PortletURL portletURL)
 		throws Exception {
 
@@ -121,7 +121,7 @@ public class JournalPortletUtil {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(request, "home"));
+		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "home"));
 
 		portletURL.setParameter(
 			"folderId",

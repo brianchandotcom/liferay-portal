@@ -38,11 +38,11 @@ public class EventResponseImpl
 	}
 
 	public void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			User user, Layout layout)
+			PortletRequestImpl portletRequestImpl,
+			HttpServletResponse httpServletResponse, User user, Layout layout)
 		throws PortletModeException, WindowStateException {
 
-		init(portletRequestImpl, response, user, layout, false);
+		init(portletRequestImpl, httpServletResponse, user, layout, false);
 	}
 
 	@Override

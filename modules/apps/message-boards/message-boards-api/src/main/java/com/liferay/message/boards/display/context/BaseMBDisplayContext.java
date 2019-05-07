@@ -28,10 +28,13 @@ public abstract class BaseMBDisplayContext<T extends MBDisplayContext>
 	extends BaseDisplayContext<T> implements MBDisplayContext {
 
 	public BaseMBDisplayContext(
-		UUID uuid, T parentDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentDisplayContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(
+			uuid, parentDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

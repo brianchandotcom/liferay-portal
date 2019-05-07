@@ -33,9 +33,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DLAdminDisplayContextProvider {
 
 	public DLAdminDisplayContext getDLAdminDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
+		DLRequestHelper dlRequestHelper = new DLRequestHelper(
+			httpServletRequest);
 
 		return new DLAdminDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
@@ -44,15 +46,17 @@ public class DLAdminDisplayContextProvider {
 
 	public DLAdminManagementToolbarDisplayContext
 			getDLAdminManagementToolbarDisplayContext(
-				HttpServletRequest request, HttpServletResponse response)
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
+		DLRequestHelper dlRequestHelper = new DLRequestHelper(
+			httpServletRequest);
 
 		return new DLAdminManagementToolbarDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse(), request,
-			getDLAdminDisplayContext(request, response));
+			dlRequestHelper.getLiferayPortletResponse(), httpServletRequest,
+			getDLAdminDisplayContext(httpServletRequest, httpServletResponse));
 	}
 
 	@Reference(

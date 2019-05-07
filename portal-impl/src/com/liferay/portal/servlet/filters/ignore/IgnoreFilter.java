@@ -31,17 +31,18 @@ public class IgnoreFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Ignore " + PortalUtil.getCurrentURL(request));
+			_log.debug(
+				"Ignore " + PortalUtil.getCurrentURL(httpServletRequest));
 		}
 
 		PortalUtil.sendError(
 			HttpServletResponse.SC_NOT_FOUND, new NoSuchLayoutException(),
-			request, response);
+			httpServletRequest, httpServletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(IgnoreFilter.class);

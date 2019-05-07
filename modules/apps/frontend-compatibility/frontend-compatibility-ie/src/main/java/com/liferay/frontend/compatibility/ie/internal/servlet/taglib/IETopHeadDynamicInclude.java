@@ -43,16 +43,16 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (_browserSniffer.isIe(request)) {
-			PrintWriter printWriter = response.getWriter();
+		if (_browserSniffer.isIe(httpServletRequest)) {
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-					request);
+					httpServletRequest);
 
 			for (String fileName : _FILE_NAMES) {
 				printWriter.print(

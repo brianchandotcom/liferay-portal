@@ -28,17 +28,17 @@ import javax.servlet.http.HttpSession;
 public class SessionLayoutClone implements LayoutClone {
 
 	@Override
-	public String get(HttpServletRequest request, long plid) {
-		HttpSession session = getPortalSession(request);
+	public String get(HttpServletRequest httpServletRequest, long plid) {
+		HttpSession session = getPortalSession(httpServletRequest);
 
 		return (String)session.getAttribute(encodeKey(plid));
 	}
 
 	@Override
 	public void update(
-		HttpServletRequest request, long plid, String typeSettings) {
+		HttpServletRequest httpServletRequest, long plid, String typeSettings) {
 
-		HttpSession session = getPortalSession(request);
+		HttpSession session = getPortalSession(httpServletRequest);
 
 		session.setAttribute(encodeKey(plid), typeSettings);
 	}
@@ -52,8 +52,10 @@ public class SessionLayoutClone implements LayoutClone {
 		);
 	}
 
-	protected HttpSession getPortalSession(HttpServletRequest request) {
-		HttpServletRequest originalRequest = request;
+	protected HttpSession getPortalSession(
+		HttpServletRequest httpServletRequest) {
+
+		HttpServletRequest originalRequest = httpServletRequest;
 
 		while (originalRequest instanceof HttpServletRequestWrapper) {
 			if (originalRequest instanceof SharedSessionServletRequest) {
@@ -68,7 +70,7 @@ public class SessionLayoutClone implements LayoutClone {
 					((HttpServletRequestWrapper)originalRequest).getRequest();
 		}
 
-		return request.getSession();
+		return httpServletRequest.getSession();
 	}
 
 }

@@ -62,11 +62,11 @@ public class JSPSearchEntry extends SearchEntry {
 
 	@Override
 	public void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		request.setAttribute(WebKeys.SEARCH_ENTRY_HREF, getHref());
+		httpServletRequest.setAttribute(WebKeys.SEARCH_ENTRY_HREF, getHref());
 
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
@@ -74,16 +74,17 @@ public class JSPSearchEntry extends SearchEntry {
 					_servletContext, _path);
 
 			requestDispatcher.include(
-				_request, new PipingServletResponse(response, writer));
+				_request,
+				new PipingServletResponse(httpServletResponse, writer));
 		}
 		else {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-				_path);
+			RequestDispatcher requestDispatcher =
+				httpServletRequest.getRequestDispatcher(_path);
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 
-		request.removeAttribute(WebKeys.SEARCH_ENTRY_HREF);
+		httpServletRequest.removeAttribute(WebKeys.SEARCH_ENTRY_HREF);
 	}
 
 	public void setHref(String href) {
@@ -94,12 +95,12 @@ public class JSPSearchEntry extends SearchEntry {
 		_path = path;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
-	public void setResponse(HttpServletResponse response) {
-		_response = response;
+	public void setResponse(HttpServletResponse httpServletResponse) {
+		_response = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {

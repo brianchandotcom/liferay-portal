@@ -41,27 +41,29 @@ public class SharingMenuItemFactoryImpl
 
 	@Override
 	public MenuItem createManageCollaboratorsMenuItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
 		javaScriptMenuItem.setJavaScript(
 			_sharingJavaScriptFactory.createManageCollaboratorsJavaScript(
-				request));
+				httpServletRequest));
 		javaScriptMenuItem.setKey("#manage-collaborators");
 		javaScriptMenuItem.setLabel(
-			LanguageUtil.get(request, "manage-collaborators"));
+			LanguageUtil.get(httpServletRequest, "manage-collaborators"));
 		javaScriptMenuItem.setOnClick(
 			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
-				className, classPK, request));
+				className, classPK, httpServletRequest));
 
 		return javaScriptMenuItem;
 	}
 
 	@Override
 	public ToolbarItem createManageCollaboratorsToolbarItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		JavaScriptToolbarItem javaScriptToolbarItem =
@@ -69,50 +71,56 @@ public class SharingMenuItemFactoryImpl
 
 		javaScriptToolbarItem.setJavaScript(
 			_sharingJavaScriptFactory.createManageCollaboratorsJavaScript(
-				request));
+				httpServletRequest));
 		javaScriptToolbarItem.setKey("#manage-collaborators");
 		javaScriptToolbarItem.setLabel(
-			LanguageUtil.get(request, "manage-collaborators"));
+			LanguageUtil.get(httpServletRequest, "manage-collaborators"));
 		javaScriptToolbarItem.setOnClick(
 			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
-				className, classPK, request));
+				className, classPK, httpServletRequest));
 
 		return javaScriptToolbarItem;
 	}
 
 	@Override
 	public MenuItem createShareMenuItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
 		javaScriptMenuItem.setJavaScript(
-			_sharingJavaScriptFactory.createSharingJavaScript(request));
+			_sharingJavaScriptFactory.createSharingJavaScript(
+				httpServletRequest));
 		javaScriptMenuItem.setKey("#share");
-		javaScriptMenuItem.setLabel(LanguageUtil.get(request, "share"));
+		javaScriptMenuItem.setLabel(
+			LanguageUtil.get(httpServletRequest, "share"));
 		javaScriptMenuItem.setOnClick(
 			_sharingJavaScriptFactory.createSharingOnClickMethod(
-				className, classPK, request));
+				className, classPK, httpServletRequest));
 
 		return javaScriptMenuItem;
 	}
 
 	@Override
 	public ToolbarItem createShareToolbarItem(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		JavaScriptToolbarItem javaScriptToolbarItem =
 			new JavaScriptToolbarItem();
 
 		javaScriptToolbarItem.setJavaScript(
-			_sharingJavaScriptFactory.createSharingJavaScript(request));
+			_sharingJavaScriptFactory.createSharingJavaScript(
+				httpServletRequest));
 		javaScriptToolbarItem.setKey("#share");
-		javaScriptToolbarItem.setLabel(LanguageUtil.get(request, "share"));
+		javaScriptToolbarItem.setLabel(
+			LanguageUtil.get(httpServletRequest, "share"));
 		javaScriptToolbarItem.setOnClick(
 			_sharingJavaScriptFactory.createSharingOnClickMethod(
-				className, classPK, request));
+				className, classPK, httpServletRequest));
 
 		return javaScriptToolbarItem;
 	}

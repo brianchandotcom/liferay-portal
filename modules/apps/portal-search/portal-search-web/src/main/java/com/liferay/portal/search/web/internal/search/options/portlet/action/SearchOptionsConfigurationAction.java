@@ -34,7 +34,7 @@ public class SearchOptionsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/search/options/configuration.jsp";
 	}
 

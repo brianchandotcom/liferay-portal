@@ -41,13 +41,14 @@ public class QuickAccessTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		List<QuickAccessEntry> quickAccessEntries =
-			(List<QuickAccessEntry>)request.getAttribute(
+			(List<QuickAccessEntry>)httpServletRequest.getAttribute(
 				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES);
 
-		request.setAttribute("liferay-ui:quick-access:contentId", _contentId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:quick-access:contentId", _contentId);
+		httpServletRequest.setAttribute(
 			"liferay-ui:quick-access:quickAccessEntries", quickAccessEntries);
 	}
 

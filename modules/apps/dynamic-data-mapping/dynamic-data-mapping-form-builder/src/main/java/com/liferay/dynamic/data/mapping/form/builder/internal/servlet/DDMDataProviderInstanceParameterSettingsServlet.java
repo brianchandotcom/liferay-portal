@@ -115,23 +115,24 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		JSONObject parametersJSONObject = getParameterSettingsJSONObject(
-			request);
+			httpServletRequest);
 
 		if (parametersJSONObject == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
 			return;
 		}
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(
-			response, parametersJSONObject.toJSONString());
+			httpServletResponse, parametersJSONObject.toJSONString());
 	}
 
 	protected DDMFormValues getDataProviderFormValues(
@@ -144,11 +145,11 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 	}
 
 	protected DDMDataProviderInstance getDDMDataProviderInstance(
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long ddmDataProviderInstanceId = ParamUtil.getLong(
-			request, "ddmDataProviderInstanceId");
+			httpServletRequest, "ddmDataProviderInstanceId");
 
 		return _ddmDataProviderInstanceService.getDataProviderInstance(
 			ddmDataProviderInstanceId);
@@ -242,11 +243,11 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 	}
 
 	protected JSONObject getParameterSettingsJSONObject(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		try {
 			DDMDataProviderInstance ddmDataProviderInstance =
-				getDDMDataProviderInstance(request);
+				getDDMDataProviderInstance(httpServletRequest);
 
 			DDMDataProvider ddmDataProvider =
 				_ddmDataProviderTracker.getDDMDataProvider(

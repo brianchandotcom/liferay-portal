@@ -51,10 +51,11 @@ public class UsersManagementToolbarDisplayContext
 	public UsersManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, UsersDisplayContext usersDisplayContext) {
+		HttpServletRequest httpServletRequest,
+		UsersDisplayContext usersDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			usersDisplayContext.getUserSearchContainer());
 
 		_usersDisplayContext = usersDisplayContext;

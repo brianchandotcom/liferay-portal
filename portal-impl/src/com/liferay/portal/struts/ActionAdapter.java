@@ -33,11 +33,12 @@ public class ActionAdapter implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String forward = _strutsAction.execute(request, response);
+		String forward = _strutsAction.execute(
+			httpServletRequest, httpServletResponse);
 
 		if (Validator.isNull(forward)) {
 			return null;

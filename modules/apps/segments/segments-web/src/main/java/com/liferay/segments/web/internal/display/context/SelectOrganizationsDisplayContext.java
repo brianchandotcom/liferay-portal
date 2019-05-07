@@ -51,11 +51,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectOrganizationsDisplayContext {
 
 	public SelectOrganizationsDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		OrganizationLocalService organizationLocalService) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_organizationLocalService = organizationLocalService;

@@ -28,12 +28,12 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class WebProxyServletRequest extends HttpServletRequestWrapper {
 
-	public WebProxyServletRequest(HttpServletRequest request)
+	public WebProxyServletRequest(HttpServletRequest httpServletRequest)
 		throws IOException {
 
-		super(request);
+		super(httpServletRequest);
 
-		_liferayServletRequest = new LiferayServletRequest(request);
+		_liferayServletRequest = new LiferayServletRequest(httpServletRequest);
 
 		readInputStream(_liferayServletRequest.getInputStream());
 

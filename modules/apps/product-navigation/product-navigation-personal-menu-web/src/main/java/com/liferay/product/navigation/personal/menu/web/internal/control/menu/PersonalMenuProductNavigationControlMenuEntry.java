@@ -59,18 +59,20 @@ public class PersonalMenuProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 
 		if (!user.isDefaultUser() &&
 			(_userNotificationEventLocalService != null)) {
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				PersonalMenuWebKeys.NOTIFICATIONS_COUNT,
 				_userNotificationEventLocalService.
 					getArchivedUserNotificationEventsCount(
@@ -78,13 +80,16 @@ public class PersonalMenuProductNavigationControlMenuEntry
 						UserNotificationDeliveryConstants.TYPE_WEBSITE, false));
 		}
 
-		return super.includeIcon(request, response);
+		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
 			_personalMenuConfigurationTracker.
@@ -103,7 +108,7 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	@Override

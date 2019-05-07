@@ -28,10 +28,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static UserGroup getUserGroup(HttpServletRequest request)
+	public static UserGroup getUserGroup(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long userGroupId = ParamUtil.getLong(request, "userGroupId");
+		long userGroupId = ParamUtil.getLong(httpServletRequest, "userGroupId");
 
 		UserGroup userGroup = null;
 

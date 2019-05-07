@@ -36,7 +36,7 @@ public class AnnouncementsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/announcements/configuration.jsp";
 	}
 

@@ -21,6 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WebLogicIncludeServletResponseFactory {
 
-	public HttpServletResponse create(HttpServletResponse response);
+	public HttpServletResponse create(HttpServletResponse httpServletResponse);
 
 }

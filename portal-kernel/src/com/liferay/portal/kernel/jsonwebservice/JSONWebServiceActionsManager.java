@@ -31,11 +31,11 @@ public interface JSONWebServiceActionsManager {
 	public Set<String> getContextNames();
 
 	public JSONWebServiceAction getJSONWebServiceAction(
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws NoSuchJSONWebServiceException;
 
 	public JSONWebServiceAction getJSONWebServiceAction(
-			HttpServletRequest request, String path, String method,
+			HttpServletRequest httpServletRequest, String path, String method,
 			Map<String, Object> parameters)
 		throws NoSuchJSONWebServiceException;
 

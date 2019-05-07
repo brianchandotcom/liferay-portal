@@ -88,12 +88,12 @@ public class AlertTag extends IncludeTag implements BodyTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:alert:dismissible", String.valueOf(_dismissible));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:alert:fluid", String.valueOf(_fluid));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:alert:type", _type.getAlertCode());
 	}
 

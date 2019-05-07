@@ -45,17 +45,18 @@ public class NotificationsViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return _panelApp.getPortletURL(request);
+		return _panelApp.getPortletURL(httpServletRequest);
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+	public PortletURL getPortletURL(
+			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException {
 
-		return getPortletURL(request);
+		return getPortletURL(httpServletRequest);
 	}
 
 	@Reference(

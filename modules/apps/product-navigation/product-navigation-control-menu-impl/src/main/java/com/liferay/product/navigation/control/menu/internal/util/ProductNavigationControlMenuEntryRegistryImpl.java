@@ -67,7 +67,7 @@ public class ProductNavigationControlMenuEntryRegistryImpl
 		getProductNavigationControlMenuEntries(
 			ProductNavigationControlMenuCategory
 				productNavigationControlMenuCategory,
-			final HttpServletRequest request) {
+			final HttpServletRequest httpServletRequest) {
 
 		List<ProductNavigationControlMenuEntry>
 			productNavigationControlMenuEntries =
@@ -82,7 +82,8 @@ public class ProductNavigationControlMenuEntryRegistryImpl
 			productNavigationControlMenuEntries,
 			productNavigationControlMenuEntry -> {
 				try {
-					return productNavigationControlMenuEntry.isShow(request);
+					return productNavigationControlMenuEntry.isShow(
+						httpServletRequest);
 				}
 				catch (PortalException pe) {
 					_log.error(pe, pe);

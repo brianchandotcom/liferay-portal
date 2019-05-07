@@ -47,11 +47,12 @@ public class PortletConfigurationViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+	public PortletURL getPortletURL(
+			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException {
 
 		return PortletURLFactoryUtil.create(
-			request, getPortletName(), PortletRequest.RENDER_PHASE);
+			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
 
 	/**

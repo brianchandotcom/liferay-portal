@@ -354,14 +354,16 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			DDMTemplate ddmTemplate, List<?> entries)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
+			List<?> entries)
 		throws Exception {
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
 		return renderDDMTemplate(
-			request, response, ddmTemplate, entries, contextObjects);
+			httpServletRequest, httpServletResponse, ddmTemplate, entries,
+			contextObjects);
 	}
 
 	/**
@@ -495,28 +497,31 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long ddmTemplateId, List<?> entries)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long ddmTemplateId,
+			List<?> entries)
 		throws Exception {
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
 		return renderDDMTemplate(
-			request, response, ddmTemplateId, entries, contextObjects);
+			httpServletRequest, httpServletResponse, ddmTemplateId, entries,
+			contextObjects);
 	}
 
 	@Override
 	public String renderDDMTemplate(
-			HttpServletRequest request, HttpServletResponse response,
-			long ddmTemplateId, List<?> entries,
-			Map<String, Object> contextObjects)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long ddmTemplateId,
+			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
 			ddmTemplateId);
 
 		return renderDDMTemplate(
-			request, response, ddmTemplate, entries, contextObjects);
+			httpServletRequest, httpServletResponse, ddmTemplate, entries,
+			contextObjects);
 	}
 
 	private Map<String, Object> _mergePortletPreferences(

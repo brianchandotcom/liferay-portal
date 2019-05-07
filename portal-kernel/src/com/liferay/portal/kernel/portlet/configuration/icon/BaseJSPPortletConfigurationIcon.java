@@ -40,7 +40,8 @@ public abstract class BaseJSPPortletConfigurationIcon
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		String jspPath = getJspPath();
@@ -53,7 +54,7 @@ public abstract class BaseJSPPortletConfigurationIcon
 			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include JSP " + jspPath, se);

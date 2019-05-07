@@ -32,10 +32,11 @@ public class DefaultWikiNodeInfoPanelDisplayContext
 	implements WikiNodeInfoPanelDisplayContext {
 
 	public DefaultWikiNodeInfoPanelDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		_wikiNodeInfoPanelRequestHelper = new WikiNodeInfoPanelRequestHelper(
-			request);
+			httpServletRequest);
 	}
 
 	@Override

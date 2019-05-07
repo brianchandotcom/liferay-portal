@@ -32,13 +32,13 @@ public class JournalSelectDDMStructureManagementToolbarDisplayContext
 	public JournalSelectDDMStructureManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			JournalSelectDDMStructureDisplayContext
 				journalSelectDDMStructureDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalSelectDDMStructureDisplayContext.getDDMStructureSearch());
 
 		_journalSelectDDMStructureDisplayContext =

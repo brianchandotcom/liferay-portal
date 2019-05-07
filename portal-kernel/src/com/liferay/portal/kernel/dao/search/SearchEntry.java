@@ -47,8 +47,8 @@ public interface SearchEntry {
 	public boolean isTruncate();
 
 	public void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 	public void setAlign(String align);

@@ -28,10 +28,13 @@ public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
 	extends BaseDisplayContext<T> implements DLDisplayContext {
 
 	public BaseDLDisplayContext(
-		UUID uuid, T parentDLDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentDLDisplayContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDLDisplayContext, request, response);
+		super(
+			uuid, parentDLDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

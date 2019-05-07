@@ -48,22 +48,25 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 	public static final long THRESHOLD_SIZE = GetterUtil.getLong(
 		PropsUtil.get(LiferayInputStream.class.getName() + ".threshold.size"));
 
-	public LiferayInputStream(HttpServletRequest request) throws IOException {
-		super(request.getInputStream());
+	public LiferayInputStream(HttpServletRequest httpServletRequest)
+		throws IOException {
 
-		_session = request.getSession();
+		super(httpServletRequest.getInputStream());
 
-		long totalSize = request.getContentLength();
+		_session = httpServletRequest.getSession();
+
+		long totalSize = httpServletRequest.getContentLength();
 
 		if (totalSize < 0) {
 			totalSize = GetterUtil.getLong(
-				request.getHeader(HttpHeaders.CONTENT_LENGTH), totalSize);
+				httpServletRequest.getHeader(HttpHeaders.CONTENT_LENGTH),
+				totalSize);
 		}
 
 		_totalSize = totalSize;
 
 		boolean createTempFile = GetterUtil.getBoolean(
-			request.getAttribute(
+			httpServletRequest.getAttribute(
 				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE),
 			Boolean.TRUE);
 
@@ -73,7 +76,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		else {
 			_tempFile = null;
 
-			request.removeAttribute(
+			httpServletRequest.removeAttribute(
 				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE);
 		}
 	}

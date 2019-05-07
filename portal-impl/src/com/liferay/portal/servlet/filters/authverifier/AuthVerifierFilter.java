@@ -121,28 +121,30 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (!_isAccessAllowed(request, response)) {
+		if (!_isAccessAllowed(httpServletRequest, httpServletResponse)) {
 			return;
 		}
 
-		if (_isApplySSL(request, response)) {
+		if (_isApplySSL(httpServletRequest, httpServletResponse)) {
 			return;
 		}
 
-		if (_isCORSPreflightRequest(request)) {
+		if (_isCORSPreflightRequest(httpServletRequest)) {
 			Class<?> clazz = getClass();
 
-			processFilter(clazz.getName(), request, response, filterChain);
+			processFilter(
+				clazz.getName(), httpServletRequest, httpServletResponse,
+				filterChain);
 
 			return;
 		}
 
 		AccessControlUtil.initAccessControlContext(
-			request, response, _initParametersMap);
+			httpServletRequest, httpServletResponse, _initParametersMap);
 
 		AuthVerifierResult.State state = AccessControlUtil.verifyRequest();
 
@@ -170,10 +172,10 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Guest is not allowed to access " +
-						request.getRequestURI());
+						httpServletRequest.getRequestURI());
 			}
 
-			response.sendError(
+			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN, "Authorization required");
 		}
 		else if (_guestAllowed || (state == AuthVerifierResult.State.SUCCESS)) {
@@ -187,14 +189,14 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 			ProtectedServletRequest protectedServletRequest =
 				new ProtectedServletRequest(
-					request, String.valueOf(userId), authType);
+					httpServletRequest, String.valueOf(userId), authType);
 
 			accessControlContext.setRequest(protectedServletRequest);
 
 			Class<?> clazz = getClass();
 
 			processFilter(
-				clazz.getName(), protectedServletRequest, response,
+				clazz.getName(), protectedServletRequest, httpServletResponse,
 				filterChain);
 		}
 		else {
@@ -203,12 +205,15 @@ public class AuthVerifierFilter extends BasePortalFilter {
 	}
 
 	private boolean _isAccessAllowed(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String remoteAddr = request.getRemoteAddr();
+		String remoteAddr = httpServletRequest.getRemoteAddr();
 
-		if (AccessControlUtil.isAccessAllowed(request, _hostsAllowed)) {
+		if (AccessControlUtil.isAccessAllowed(
+				httpServletRequest, _hostsAllowed)) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Access allowed for " + remoteAddr);
 			}
@@ -220,7 +225,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			_log.warn("Access denied for " + remoteAddr);
 		}
 
-		response.sendError(
+		httpServletResponse.sendError(
 			HttpServletResponse.SC_FORBIDDEN,
 			"Access denied for " + remoteAddr);
 
@@ -228,15 +233,16 @@ public class AuthVerifierFilter extends BasePortalFilter {
 	}
 
 	private boolean _isApplySSL(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!_httpsRequired || request.isSecure()) {
+		if (!_httpsRequired || httpServletRequest.isSecure()) {
 			return false;
 		}
 
 		if (_log.isDebugEnabled()) {
-			String completeURL = HttpUtil.getCompleteURL(request);
+			String completeURL = HttpUtil.getCompleteURL(httpServletRequest);
 
 			_log.debug("Securing " + completeURL);
 		}
@@ -244,28 +250,30 @@ public class AuthVerifierFilter extends BasePortalFilter {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(Http.HTTPS_WITH_SLASH);
-		sb.append(request.getServerName());
-		sb.append(request.getServletPath());
+		sb.append(httpServletRequest.getServerName());
+		sb.append(httpServletRequest.getServletPath());
 
-		String queryString = request.getQueryString();
+		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
 			sb.append(StringPool.QUESTION);
-			sb.append(request.getQueryString());
+			sb.append(httpServletRequest.getQueryString());
 		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Redirect to " + sb.toString());
 		}
 
-		response.sendRedirect(sb.toString());
+		httpServletResponse.sendRedirect(sb.toString());
 
 		return true;
 	}
 
-	private boolean _isCORSPreflightRequest(HttpServletRequest request) {
-		if (StringUtil.equals(request.getMethod(), "OPTIONS") &&
-			Validator.isNotNull(request.getHeader("Origin"))) {
+	private boolean _isCORSPreflightRequest(
+		HttpServletRequest httpServletRequest) {
+
+		if (StringUtil.equals(httpServletRequest.getMethod(), "OPTIONS") &&
+			Validator.isNotNull(httpServletRequest.getHeader("Origin"))) {
 
 			return true;
 		}

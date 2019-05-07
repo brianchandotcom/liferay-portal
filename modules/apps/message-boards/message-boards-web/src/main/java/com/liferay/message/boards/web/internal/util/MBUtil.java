@@ -43,12 +43,12 @@ import javax.servlet.http.HttpServletRequest;
 public class MBUtil {
 
 	public static String getBBCodeQuoteBody(
-		HttpServletRequest request, MBMessage parentMessage) {
+		HttpServletRequest httpServletRequest, MBMessage parentMessage) {
 
 		String parentAuthor = null;
 
 		if (parentMessage.isAnonymous()) {
-			parentAuthor = LanguageUtil.get(request, "anonymous");
+			parentAuthor = LanguageUtil.get(httpServletRequest, "anonymous");
 		}
 		else {
 			parentAuthor = HtmlUtil.escape(
@@ -69,7 +69,9 @@ public class MBUtil {
 		return sb.toString();
 	}
 
-	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
+	public static String getBBCodeSplitThreadBody(
+		HttpServletRequest httpServletRequest) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("[url=");
@@ -79,11 +81,12 @@ public class MBUtil {
 		sb.append("[/url]");
 
 		return LanguageUtil.format(
-			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
+			httpServletRequest, "the-new-thread-can-be-found-at-x",
+			sb.toString(), false);
 	}
 
 	public static long getCategoryId(
-		HttpServletRequest request, MBCategory category) {
+		HttpServletRequest httpServletRequest, MBCategory category) {
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 
@@ -91,13 +94,14 @@ public class MBUtil {
 			categoryId = category.getCategoryId();
 		}
 
-		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
+		categoryId = ParamUtil.getLong(
+			httpServletRequest, "mbCategoryId", categoryId);
 
 		return categoryId;
 	}
 
 	public static long getCategoryId(
-		HttpServletRequest request, MBMessage message) {
+		HttpServletRequest httpServletRequest, MBMessage message) {
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 
@@ -105,18 +109,19 @@ public class MBUtil {
 			categoryId = message.getCategoryId();
 		}
 
-		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
+		categoryId = ParamUtil.getLong(
+			httpServletRequest, "mbCategoryId", categoryId);
 
 		return categoryId;
 	}
 
 	public static String getHtmlQuoteBody(
-		HttpServletRequest request, MBMessage parentMessage) {
+		HttpServletRequest httpServletRequest, MBMessage parentMessage) {
 
 		String parentAuthor = null;
 
 		if (parentMessage.isAnonymous()) {
-			parentAuthor = LanguageUtil.get(request, "anonymous");
+			parentAuthor = LanguageUtil.get(httpServletRequest, "anonymous");
 		}
 		else {
 			parentAuthor = HtmlUtil.escape(
@@ -134,7 +139,9 @@ public class MBUtil {
 		return sb.toString();
 	}
 
-	public static String getHtmlSplitThreadBody(HttpServletRequest request) {
+	public static String getHtmlSplitThreadBody(
+		HttpServletRequest httpServletRequest) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<a href=");
@@ -144,7 +151,8 @@ public class MBUtil {
 		sb.append("</a>");
 
 		return LanguageUtil.format(
-			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
+			httpServletRequest, "the-new-thread-can-be-found-at-x",
+			sb.toString(), false);
 	}
 
 	public static String[] getThreadPriority(

@@ -44,13 +44,14 @@ public class AssetEntryUsagesViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = super.getPortletURL(request);
+		PortletURL portletURL = super.getPortletURL(httpServletRequest);
 
 		portletURL.setParameter("mvcPath", "/view_asset_entry_usages.jsp");
-		portletURL.setParameter("redirect", _portal.getCurrentURL(request));
+		portletURL.setParameter(
+			"redirect", _portal.getCurrentURL(httpServletRequest));
 
 		return portletURL;
 	}

@@ -62,45 +62,50 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Override
 	public String createManageCollaboratorsJavaScript(
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return _getOpenDialogJavaScript(
-			request, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID);
+			httpServletRequest, SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID);
 	}
 
 	@Override
 	public String createManageCollaboratorsOnClickMethod(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			request.getLocale(), SharingJavaScriptFactoryImpl.class);
+			httpServletRequest.getLocale(), SharingJavaScriptFactoryImpl.class);
 
 		return _getOpenDialogOnClickMethod(
-			_getManageCollaboratorsPortletURL(className, classPK, request),
+			_getManageCollaboratorsPortletURL(
+				className, classPK, httpServletRequest),
 			LanguageUtil.get(resourceBundle, "collaborators"), true,
 			SharingWebKeys.MANAGE_COLLABORATORS_DIALOG_ID,
-			_getNamespace(request));
+			_getNamespace(httpServletRequest));
 	}
 
 	@Override
-	public String createSharingJavaScript(HttpServletRequest request)
+	public String createSharingJavaScript(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return _getOpenDialogJavaScript(
-			request, SharingWebKeys.SHARING_DIALOG_ID);
+			httpServletRequest, SharingWebKeys.SHARING_DIALOG_ID);
 	}
 
 	@Override
 	public String createSharingOnClickMethod(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return _getOpenDialogOnClickMethod(
-			_getSharingPortletURL(className, classPK, request),
-			_getSharingDialogTitle(className, classPK, request.getLocale()),
-			false, SharingWebKeys.SHARING_DIALOG_ID, _getNamespace(request));
+			_getSharingPortletURL(className, classPK, httpServletRequest),
+			_getSharingDialogTitle(
+				className, classPK, httpServletRequest.getLocale()),
+			false, SharingWebKeys.SHARING_DIALOG_ID,
+			_getNamespace(httpServletRequest));
 	}
 
 	private String _getAssetTitle(
@@ -137,11 +142,12 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	}
 
 	private PortletURL _getManageCollaboratorsPortletURL(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletURL manageCollaboratorsURL = PortletProviderUtil.getPortletURL(
-			request, SharingEntry.class.getName(),
+			httpServletRequest, SharingEntry.class.getName(),
 			PortletProvider.Action.MANAGE);
 
 		manageCollaboratorsURL.setParameter(
@@ -152,15 +158,16 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		return manageCollaboratorsURL;
 	}
 
-	private String _getNamespace(HttpServletRequest request) {
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+	private String _getNamespace(HttpServletRequest httpServletRequest) {
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		return portletResponse.getNamespace();
 	}
 
 	private String _getOpenDialogJavaScript(
-			HttpServletRequest request, String dialogId)
+			HttpServletRequest httpServletRequest, String dialogId)
 		throws TemplateException {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -178,7 +185,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
 		template.put("dialogId", dialogId);
-		template.put("namespace", _getNamespace(request));
+		template.put("namespace", _getNamespace(httpServletRequest));
 
 		template.processTemplate(unsyncStringWriter);
 
@@ -232,11 +239,13 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	}
 
 	private PortletURL _getSharingPortletURL(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletURL sharingURL = PortletProviderUtil.getPortletURL(
-			request, SharingEntry.class.getName(), PortletProvider.Action.EDIT);
+			httpServletRequest, SharingEntry.class.getName(),
+			PortletProvider.Action.EDIT);
 
 		sharingURL.setParameter(
 			"classNameId",

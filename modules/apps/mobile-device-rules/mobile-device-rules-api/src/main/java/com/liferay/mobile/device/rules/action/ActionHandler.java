@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface ActionHandler {
 
 	public void applyAction(
-			MDRAction mdrAction, HttpServletRequest request,
-			HttpServletResponse response)
+			MDRAction mdrAction, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public String getEditorJSP();

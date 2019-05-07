@@ -38,12 +38,13 @@ public class GetCategoriesAction extends JSONAction {
 
 	@Override
 	public String getJSON(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories = getCategories(request);
+		List<AssetCategory> categories = getCategories(httpServletRequest);
 
 		for (AssetCategory category : categories) {
 			List<AssetCategory> childCategories =
@@ -70,14 +71,19 @@ public class GetCategoriesAction extends JSONAction {
 		return jsonArray.toString();
 	}
 
-	protected List<AssetCategory> getCategories(HttpServletRequest request)
+	protected List<AssetCategory> getCategories(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long scopeGroupId = ParamUtil.getLong(request, "scopeGroupId");
-		long categoryId = ParamUtil.getLong(request, "categoryId");
-		long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
-		int start = ParamUtil.getInteger(request, "start", QueryUtil.ALL_POS);
-		int end = ParamUtil.getInteger(request, "end", QueryUtil.ALL_POS);
+		long scopeGroupId = ParamUtil.getLong(
+			httpServletRequest, "scopeGroupId");
+		long categoryId = ParamUtil.getLong(httpServletRequest, "categoryId");
+		long vocabularyId = ParamUtil.getLong(
+			httpServletRequest, "vocabularyId");
+		int start = ParamUtil.getInteger(
+			httpServletRequest, "start", QueryUtil.ALL_POS);
+		int end = ParamUtil.getInteger(
+			httpServletRequest, "end", QueryUtil.ALL_POS);
 
 		List<AssetCategory> categories = Collections.emptyList();
 
@@ -93,7 +99,7 @@ public class GetCategoriesAction extends JSONAction {
 		}
 		else if (vocabularyId > 0) {
 			long parentCategoryId = ParamUtil.getLong(
-				request, "parentCategoryId",
+				httpServletRequest, "parentCategoryId",
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 			if (scopeGroupId > 0) {

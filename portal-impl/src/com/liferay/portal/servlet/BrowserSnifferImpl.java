@@ -35,8 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 public class BrowserSnifferImpl implements BrowserSniffer {
 
 	@Override
-	public boolean acceptsGzip(HttpServletRequest request) {
-		String acceptEncoding = request.getHeader(HttpHeaders.ACCEPT_ENCODING);
+	public boolean acceptsGzip(HttpServletRequest httpServletRequest) {
+		String acceptEncoding = httpServletRequest.getHeader(
+			HttpHeaders.ACCEPT_ENCODING);
 
 		if ((acceptEncoding != null) && acceptEncoding.contains("gzip")) {
 			return true;
@@ -46,8 +47,9 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
-	public String getBrowserId(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public String getBrowserId(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		if (browserMetadata.isEdge()) {
 			return BROWSER_ID_EDGE;
@@ -63,18 +65,20 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
-	public BrowserMetadata getBrowserMetadata(HttpServletRequest request) {
-		return new BrowserMetadata(getUserAgent(request));
+	public BrowserMetadata getBrowserMetadata(
+		HttpServletRequest httpServletRequest) {
+
+		return new BrowserMetadata(getUserAgent(httpServletRequest));
 	}
 
 	@Override
-	public float getMajorVersion(HttpServletRequest request) {
-		return GetterUtil.getFloat(getVersion(request));
+	public float getMajorVersion(HttpServletRequest httpServletRequest) {
+		return GetterUtil.getFloat(getVersion(httpServletRequest));
 	}
 
 	@Override
-	public String getRevision(HttpServletRequest request) {
-		String revision = (String)request.getAttribute(
+	public String getRevision(HttpServletRequest httpServletRequest) {
+		String revision = (String)httpServletRequest.getAttribute(
 			WebKeys.BROWSER_SNIFFER_REVISION);
 
 		if (revision != null) {
@@ -82,23 +86,25 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		}
 
 		revision = parseVersion(
-			getUserAgent(request), revisionLeadings, revisionSeparators);
+			getUserAgent(httpServletRequest), revisionLeadings,
+			revisionSeparators);
 
-		request.setAttribute(WebKeys.BROWSER_SNIFFER_REVISION, revision);
+		httpServletRequest.setAttribute(
+			WebKeys.BROWSER_SNIFFER_REVISION, revision);
 
 		return revision;
 	}
 
 	@Override
-	public String getVersion(HttpServletRequest request) {
-		String version = (String)request.getAttribute(
+	public String getVersion(HttpServletRequest httpServletRequest) {
+		String version = (String)httpServletRequest.getAttribute(
 			WebKeys.BROWSER_SNIFFER_VERSION);
 
 		if (version != null) {
 			return version;
 		}
 
-		String userAgent = getUserAgent(request);
+		String userAgent = getUserAgent(httpServletRequest);
 
 		version = parseVersion(userAgent, versionLeadings, versionSeparators);
 
@@ -107,147 +113,168 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 				userAgent, revisionLeadings, revisionSeparators);
 		}
 
-		request.setAttribute(WebKeys.BROWSER_SNIFFER_VERSION, version);
+		httpServletRequest.setAttribute(
+			WebKeys.BROWSER_SNIFFER_VERSION, version);
 
 		return version;
 	}
 
 	@Override
-	public boolean isAir(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isAir(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isAir();
 	}
 
 	@Override
-	public boolean isAndroid(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isAndroid(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isAndroid();
 	}
 
 	@Override
-	public boolean isChrome(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isChrome(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isChrome();
 	}
 
 	@Override
-	public boolean isEdge(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isEdge(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isEdge();
 	}
 
 	@Override
-	public boolean isFirefox(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isFirefox(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isFirefox();
 	}
 
 	@Override
-	public boolean isGecko(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isGecko(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isGecko();
 	}
 
 	@Override
-	public boolean isIe(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isIe(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isIe();
 	}
 
 	@Override
-	public boolean isIeOnWin32(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isIeOnWin32(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isIeOnWin32();
 	}
 
 	@Override
-	public boolean isIeOnWin64(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isIeOnWin64(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isIeOnWin64();
 	}
 
 	@Override
-	public boolean isIphone(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isIphone(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isIphone();
 	}
 
 	@Override
-	public boolean isLinux(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isLinux(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isLinux();
 	}
 
 	@Override
-	public boolean isMac(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isMac(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isMac();
 	}
 
 	@Override
-	public boolean isMobile(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isMobile(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isMobile();
 	}
 
 	@Override
-	public boolean isMozilla(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isMozilla(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isMozilla();
 	}
 
 	@Override
-	public boolean isOpera(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isOpera(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isOpera();
 	}
 
 	@Override
-	public boolean isRtf(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isRtf(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
-		return browserMetadata.isRtf(getVersion(request));
+		return browserMetadata.isRtf(getVersion(httpServletRequest));
 	}
 
 	@Override
-	public boolean isSafari(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isSafari(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isSafari();
 	}
 
 	@Override
-	public boolean isSun(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isSun(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isSun();
 	}
 
 	@Override
-	public boolean isWebKit(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isWebKit(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isWebKit();
 	}
 
 	@Override
-	public boolean isWindows(HttpServletRequest request) {
-		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+	public boolean isWindows(HttpServletRequest httpServletRequest) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(
+			httpServletRequest);
 
 		return browserMetadata.isWindows();
 	}
@@ -346,20 +373,21 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		return StringPool.BLANK;
 	}
 
-	protected String getAccept(HttpServletRequest request) {
+	protected String getAccept(HttpServletRequest httpServletRequest) {
 		String accept = StringPool.BLANK;
 
-		if (request == null) {
+		if (httpServletRequest == null) {
 			return accept;
 		}
 
-		accept = String.valueOf(request.getAttribute(HttpHeaders.ACCEPT));
+		accept = String.valueOf(
+			httpServletRequest.getAttribute(HttpHeaders.ACCEPT));
 
 		if (Validator.isNotNull(accept)) {
 			return accept;
 		}
 
-		accept = request.getHeader(HttpHeaders.ACCEPT);
+		accept = httpServletRequest.getHeader(HttpHeaders.ACCEPT);
 
 		if (accept != null) {
 			accept = StringUtil.toLowerCase(accept);
@@ -368,23 +396,24 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 			accept = StringPool.BLANK;
 		}
 
-		request.setAttribute(HttpHeaders.ACCEPT, accept);
+		httpServletRequest.setAttribute(HttpHeaders.ACCEPT, accept);
 
 		return accept;
 	}
 
-	protected String getUserAgent(HttpServletRequest request) {
-		if (request == null) {
+	protected String getUserAgent(HttpServletRequest httpServletRequest) {
+		if (httpServletRequest == null) {
 			return StringPool.BLANK;
 		}
 
-		Object userAgentObject = request.getAttribute(HttpHeaders.USER_AGENT);
+		Object userAgentObject = httpServletRequest.getAttribute(
+			HttpHeaders.USER_AGENT);
 
 		if (userAgentObject != null) {
 			return userAgentObject.toString();
 		}
 
-		String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+		String userAgent = httpServletRequest.getHeader(HttpHeaders.USER_AGENT);
 
 		if (userAgent != null) {
 			userAgent = StringUtil.toLowerCase(userAgent);
@@ -393,7 +422,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 			userAgent = StringPool.BLANK;
 		}
 
-		request.setAttribute(HttpHeaders.USER_AGENT, userAgent);
+		httpServletRequest.setAttribute(HttpHeaders.USER_AGENT, userAgent);
 
 		return userAgent;
 	}

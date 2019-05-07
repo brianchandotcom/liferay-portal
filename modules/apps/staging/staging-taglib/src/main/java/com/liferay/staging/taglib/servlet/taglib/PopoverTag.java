@@ -80,10 +80,11 @@ public class PopoverTag extends BaseCssTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:popover:id", _id);
-		request.setAttribute("liferay-staging:popover:text", _text);
-		request.setAttribute("liferay-staging:popover:title", _title);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-staging:popover:id", _id);
+		httpServletRequest.setAttribute("liferay-staging:popover:text", _text);
+		httpServletRequest.setAttribute(
+			"liferay-staging:popover:title", _title);
 	}
 
 	private static final String _PAGE = "/popover/page.jsp";

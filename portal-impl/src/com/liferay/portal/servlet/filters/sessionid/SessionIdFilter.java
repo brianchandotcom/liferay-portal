@@ -33,9 +33,11 @@ public class SessionIdFilter
 
 	@Override
 	public HttpServletRequest getWrappedHttpServletRequest(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		return new SessionIdServletRequest(request, response);
+		return new SessionIdServletRequest(
+			httpServletRequest, httpServletResponse);
 	}
 
 }

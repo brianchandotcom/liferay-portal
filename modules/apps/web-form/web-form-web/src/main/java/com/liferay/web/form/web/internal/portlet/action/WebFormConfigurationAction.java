@@ -60,8 +60,8 @@ import org.osgi.service.component.annotations.Component;
 public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+	public String getJspPath(HttpServletRequest httpServletRequest) {
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ADD)) {
 			return "/edit_field.jsp";

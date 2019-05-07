@@ -182,7 +182,7 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(_bodyLabel)) {
 			_bodyLabel = "body";
 		}
@@ -195,7 +195,7 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 			_fieldPrefixSeparator = "--";
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:bodyLabel",
 			_bodyLabel);
 
@@ -208,17 +208,17 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 				_emailBodyLocalizedValuesMap, _emailParam + "Body");
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:emailBody",
 			emailBody);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:emailDefinitionTerms",
 			_emailDefinitionTerms);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:emailEnabled",
 			String.valueOf(_emailEnabled));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:emailParam",
 			_emailParam);
 
@@ -231,23 +231,23 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 				_emailSubjectLocalizedValuesMap, _emailParam + "Subject");
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:emailSubject",
 			emailSubject);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:fieldPrefix",
 			_fieldPrefix);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:fieldPrefixSeparator",
 			_fieldPrefixSeparator);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:helpMessage",
 			_helpMessage);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:showEmailEnabled",
 			_showEmailEnabled);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:email-notification-settings:showSubject",
 			_showSubject);
 	}

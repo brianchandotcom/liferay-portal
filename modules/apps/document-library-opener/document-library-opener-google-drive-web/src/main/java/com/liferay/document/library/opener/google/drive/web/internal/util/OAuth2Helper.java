@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = OAuth2Helper.class)
 public class OAuth2Helper {
 
-	public String getRedirectURI(HttpServletRequest request) {
-		return _getRedirectURI(_portal.getPortalURL(request));
+	public String getRedirectURI(HttpServletRequest httpServletRequest) {
+		return _getRedirectURI(_portal.getPortalURL(httpServletRequest));
 	}
 
 	public String getRedirectURI(PortletRequest portletRequest) {

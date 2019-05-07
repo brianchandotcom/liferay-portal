@@ -52,15 +52,16 @@ public class LoginAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (PropsValues.AUTH_LOGIN_DISABLED) {
-			response.sendRedirect(
+			httpServletResponse.sendRedirect(
 				themeDisplay.getPathMain() +
 					PropsValues.AUTH_LOGIN_DISABLED_PATH);
 
@@ -68,34 +69,38 @@ public class LoginAction implements Action {
 		}
 
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-			!request.isSecure()) {
+			!httpServletRequest.isSecure()) {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(PortalUtil.getPortalURL(request, true));
-			sb.append(request.getRequestURI());
+			sb.append(PortalUtil.getPortalURL(httpServletRequest, true));
+			sb.append(httpServletRequest.getRequestURI());
 			sb.append(StringPool.QUESTION);
-			sb.append(request.getQueryString());
+			sb.append(httpServletRequest.getQueryString());
 
-			response.sendRedirect(sb.toString());
+			httpServletResponse.sendRedirect(sb.toString());
 
 			return null;
 		}
 
-		String login = ParamUtil.getString(request, "login");
-		String password = request.getParameter("password");
+		String login = ParamUtil.getString(httpServletRequest, "login");
+		String password = httpServletRequest.getParameter("password");
 
 		if (Validator.isNotNull(login) && Validator.isNotNull(password)) {
-			AuthTokenUtil.checkCSRFToken(request, LoginAction.class.getName());
+			AuthTokenUtil.checkCSRFToken(
+				httpServletRequest, LoginAction.class.getName());
 
-			boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
-			String authType = ParamUtil.getString(request, "authType");
+			boolean rememberMe = ParamUtil.getBoolean(
+				httpServletRequest, "rememberMe");
+			String authType = ParamUtil.getString(
+				httpServletRequest, "authType");
 
 			AuthenticatedSessionManagerUtil.login(
-				request, response, login, password, rememberMe, authType);
+				httpServletRequest, httpServletResponse, login, password,
+				rememberMe, authType);
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		if ((session.getAttribute("j_username") != null) &&
 			(session.getAttribute("j_password") != null)) {
@@ -105,7 +110,8 @@ public class LoginAction implements Action {
 					"/portal/touch_protected.jsp");
 			}
 
-			String redirect = ParamUtil.getString(request, "redirect");
+			String redirect = ParamUtil.getString(
+				httpServletRequest, "redirect");
 
 			redirect = PortalUtil.escapeRedirect(redirect);
 
@@ -115,14 +121,14 @@ public class LoginAction implements Action {
 
 			if (redirect.charAt(0) == CharPool.SLASH) {
 				String portalURL = PortalUtil.getPortalURL(
-					request, request.isSecure());
+					httpServletRequest, httpServletRequest.isSecure());
 
 				if (Validator.isNotNull(portalURL)) {
 					redirect = portalURL.concat(redirect);
 				}
 			}
 
-			response.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(redirect);
 
 			return null;
 		}
@@ -135,19 +141,21 @@ public class LoginAction implements Action {
 
 		if (Validator.isNull(redirect)) {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
+				httpServletRequest, PortletKeys.LOGIN,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 			portletURL.setParameter("mvcRenderCommandName", "/login/login");
 			portletURL.setPortletMode(PortletMode.VIEW);
-			portletURL.setWindowState(getWindowState(request));
+			portletURL.setWindowState(getWindowState(httpServletRequest));
 
 			redirect = portletURL.toString();
 		}
 
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) {
-			String portalURL = PortalUtil.getPortalURL(request);
-			String portalURLSecure = PortalUtil.getPortalURL(request, true);
+			String portalURL = PortalUtil.getPortalURL(httpServletRequest);
+			String portalURLSecure = PortalUtil.getPortalURL(
+				httpServletRequest, true);
 
 			if (!portalURL.equals(portalURLSecure)) {
 				redirect = StringUtil.replaceFirst(
@@ -155,7 +163,8 @@ public class LoginAction implements Action {
 			}
 		}
 
-		String loginRedirect = ParamUtil.getString(request, "redirect");
+		String loginRedirect = ParamUtil.getString(
+			httpServletRequest, "redirect");
 
 		loginRedirect = PortalUtil.escapeRedirect(loginRedirect);
 
@@ -179,15 +188,18 @@ public class LoginAction implements Action {
 			}
 		}
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 
 		return null;
 	}
 
-	protected WindowState getWindowState(HttpServletRequest request) {
+	protected WindowState getWindowState(
+		HttpServletRequest httpServletRequest) {
+
 		WindowState windowState = WindowState.MAXIMIZED;
 
-		String windowStateString = ParamUtil.getString(request, "windowState");
+		String windowStateString = ParamUtil.getString(
+			httpServletRequest, "windowState");
 
 		if (Validator.isNotNull(windowStateString)) {
 			windowState = WindowStateFactory.getWindowState(windowStateString);

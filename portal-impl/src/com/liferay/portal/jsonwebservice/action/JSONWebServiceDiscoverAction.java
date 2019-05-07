@@ -63,15 +63,15 @@ import jodd.util.ReflectUtil;
  */
 public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
-	public JSONWebServiceDiscoverAction(HttpServletRequest request) {
-		_basePath = request.getServletPath();
-		_baseURL = String.valueOf(request.getRequestURL());
+	public JSONWebServiceDiscoverAction(HttpServletRequest httpServletRequest) {
+		_basePath = httpServletRequest.getServletPath();
+		_baseURL = String.valueOf(httpServletRequest.getRequestURL());
 
-		ServletContext servletContext = request.getServletContext();
+		ServletContext servletContext = httpServletRequest.getServletContext();
 
 		_contextName = GetterUtil.getString(
 			ParamUtil.getString(
-				request, "contextName",
+				httpServletRequest, "contextName",
 				servletContext.getServletContextName()));
 
 		_jsonWebServiceNaming =

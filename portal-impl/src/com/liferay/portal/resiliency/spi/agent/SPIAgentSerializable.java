@@ -57,18 +57,19 @@ import javax.servlet.http.HttpSession;
 public class SPIAgentSerializable implements Serializable {
 
 	public static Map<String, Serializable> extractDistributedRequestAttributes(
-		HttpServletRequest request, Direction direction) {
+		HttpServletRequest httpServletRequest, Direction direction) {
 
 		Map<String, Serializable> distributedRequestAttributes =
 			new HashMap<>();
 
-		Enumeration<String> enumeration = request.getAttributeNames();
+		Enumeration<String> enumeration =
+			httpServletRequest.getAttributeNames();
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
 
 			if (DistributedRegistry.isDistributed(name, direction)) {
-				Object value = request.getAttribute(name);
+				Object value = httpServletRequest.getAttribute(name);
 
 				if (value instanceof Serializable) {
 					distributedRequestAttributes.put(name, (Serializable)value);
@@ -87,7 +88,7 @@ public class SPIAgentSerializable implements Serializable {
 						"Nondistributed request attribute name ", name,
 						" with direction ", String.valueOf(direction),
 						" and value ",
-						String.valueOf(request.getAttribute(name))));
+						String.valueOf(httpServletRequest.getAttribute(name))));
 			}
 		}
 
@@ -95,11 +96,12 @@ public class SPIAgentSerializable implements Serializable {
 	}
 
 	public static Map<String, List<String>> extractRequestHeaders(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		Enumeration<String> nameEnumeration = request.getHeaderNames();
+		Enumeration<String> nameEnumeration =
+			httpServletRequest.getHeaderNames();
 
 		while (nameEnumeration.hasMoreElements()) {
 			String headerName = nameEnumeration.nextElement();
@@ -118,8 +120,8 @@ public class SPIAgentSerializable implements Serializable {
 				continue;
 			}
 
-			Enumeration<String> valueEnumeration = request.getHeaders(
-				headerName);
+			Enumeration<String> valueEnumeration =
+				httpServletRequest.getHeaders(headerName);
 
 			if (valueEnumeration != null) {
 				List<String> values = new ArrayList<>();
@@ -144,9 +146,9 @@ public class SPIAgentSerializable implements Serializable {
 	}
 
 	public static Map<String, Serializable> extractSessionAttributes(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		Portlet portlet = (Portlet)request.getAttribute(
+		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.SPI_AGENT_PORTLET);
 
 		String portletSessionAttributesKey =
@@ -154,7 +156,7 @@ public class SPIAgentSerializable implements Serializable {
 
 		Map<String, Serializable> sessionAttributes = new HashMap<>();
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		Enumeration<String> enumeration = session.getAttributeNames();
 
@@ -180,11 +182,12 @@ public class SPIAgentSerializable implements Serializable {
 			}
 		}
 
-		HttpSession portletSession = (HttpSession)request.getAttribute(
-			WebKeys.PORTLET_SESSION);
+		HttpSession portletSession =
+			(HttpSession)httpServletRequest.getAttribute(
+				WebKeys.PORTLET_SESSION);
 
 		if (portletSession != null) {
-			request.removeAttribute(WebKeys.PORTLET_SESSION);
+			httpServletRequest.removeAttribute(WebKeys.PORTLET_SESSION);
 
 			HashMap<String, Serializable> portletSessionAttributes =
 				new HashMap<>();

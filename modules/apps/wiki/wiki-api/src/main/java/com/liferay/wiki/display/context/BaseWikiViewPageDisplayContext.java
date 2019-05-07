@@ -28,9 +28,12 @@ public abstract class BaseWikiViewPageDisplayContext
 
 	public BaseWikiViewPageDisplayContext(
 		UUID uuid, WikiViewPageDisplayContext parentDisplayContext,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(
+			uuid, parentDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

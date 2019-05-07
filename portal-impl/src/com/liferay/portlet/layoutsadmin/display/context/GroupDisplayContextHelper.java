@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class GroupDisplayContextHelper {
 
-	public GroupDisplayContextHelper(HttpServletRequest request) {
-		_request = request;
+	public GroupDisplayContextHelper(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
 	public Group getGroup() {

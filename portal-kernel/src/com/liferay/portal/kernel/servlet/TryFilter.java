@@ -23,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface TryFilter extends DirectCallFilter {
 
 	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 }

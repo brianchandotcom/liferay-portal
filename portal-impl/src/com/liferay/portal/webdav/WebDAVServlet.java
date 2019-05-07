@@ -53,28 +53,31 @@ public class WebDAVServlet extends HttpServlet {
 
 	@Override
 	public void service(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		int status = HttpServletResponse.SC_PRECONDITION_FAILED;
 
-		String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+		String userAgent = httpServletRequest.getHeader(HttpHeaders.USER_AGENT);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("User agent " + userAgent);
 		}
 
 		try {
-			if (isIgnoredResource(request)) {
+			if (isIgnoredResource(httpServletRequest)) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 
 				return;
 			}
 
-			WebDAVStorage storage = getStorage(request);
+			WebDAVStorage storage = getStorage(httpServletRequest);
 
 			if (storage == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Invalid WebDAV path " + request.getPathInfo());
+					_log.debug(
+						"Invalid WebDAV path " +
+							httpServletRequest.getPathInfo());
 				}
 
 				return;
@@ -84,12 +87,12 @@ public class WebDAVServlet extends HttpServlet {
 			// and only if the servlet is not mapped to more than one URL.
 
 			if (storage.getRootPath() == null) {
-				storage.setRootPath(getRootPath(request));
+				storage.setRootPath(getRootPath(httpServletRequest));
 			}
 
 			PermissionChecker permissionChecker = null;
 
-			String remoteUser = request.getRemoteUser();
+			String remoteUser = httpServletRequest.getRemoteUser();
 
 			if (remoteUser != null) {
 				PrincipalThreadLocal.setName(remoteUser);
@@ -107,13 +110,14 @@ public class WebDAVServlet extends HttpServlet {
 
 			MethodFactory methodFactory = storage.getMethodFactory();
 
-			Method method = methodFactory.create(request);
+			Method method = methodFactory.create(httpServletRequest);
 
 			// Process the method
 
 			try {
 				WebDAVRequest webDAVRequest = new WebDAVRequestImpl(
-					storage, request, response, userAgent, permissionChecker);
+					storage, httpServletRequest, httpServletResponse, userAgent,
+					permissionChecker);
 
 				status = method.process(webDAVRequest);
 			}
@@ -144,11 +148,11 @@ public class WebDAVServlet extends HttpServlet {
 			_log.error(e, e);
 		}
 		finally {
-			response.setStatus(status);
+			httpServletResponse.setStatus(status);
 
 			if (_log.isInfoEnabled()) {
 				String xLitmus = GetterUtil.getString(
-					request.getHeader("X-Litmus"));
+					httpServletRequest.getHeader("X-Litmus"));
 
 				if (Validator.isNotNull(xLitmus)) {
 					xLitmus += " ";
@@ -156,24 +160,25 @@ public class WebDAVServlet extends HttpServlet {
 
 				_log.info(
 					StringBundler.concat(
-						xLitmus, request.getMethod(), " ",
-						request.getRequestURI(), " ", String.valueOf(status)));
+						xLitmus, httpServletRequest.getMethod(), " ",
+						httpServletRequest.getRequestURI(), " ",
+						String.valueOf(status)));
 			}
 		}
 	}
 
-	protected String getRootPath(HttpServletRequest request) {
+	protected String getRootPath(HttpServletRequest httpServletRequest) {
 		String contextPath = HttpUtil.fixPath(
-			PortalUtil.getPathContext(request), false, true);
+			PortalUtil.getPathContext(httpServletRequest), false, true);
 		String servletPath = HttpUtil.fixPath(
-			request.getServletPath(), false, true);
+			httpServletRequest.getServletPath(), false, true);
 
 		return contextPath.concat(servletPath);
 	}
 
-	protected WebDAVStorage getStorage(HttpServletRequest request) {
+	protected WebDAVStorage getStorage(HttpServletRequest httpServletRequest) {
 		String pathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
-			request.getPathInfo());
+			httpServletRequest.getPathInfo());
 
 		pathInfo = WebDAVUtil.stripOfficeExtension(pathInfo);
 
@@ -196,9 +201,9 @@ public class WebDAVServlet extends HttpServlet {
 		return storage;
 	}
 
-	protected boolean isIgnoredResource(HttpServletRequest request) {
+	protected boolean isIgnoredResource(HttpServletRequest httpServletRequest) {
 		String[] pathArray = WebDAVUtil.getPathArray(
-			request.getPathInfo(), true);
+			httpServletRequest.getPathInfo(), true);
 
 		if (ArrayUtil.isEmpty(pathArray)) {
 			return false;
@@ -227,8 +232,8 @@ public class WebDAVServlet extends HttpServlet {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Skipping over ", request.getMethod(), " ",
-							request.getPathInfo()));
+							"Skipping over ", httpServletRequest.getMethod(),
+							" ", httpServletRequest.getPathInfo()));
 				}
 
 				return true;

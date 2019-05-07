@@ -44,52 +44,57 @@ public class RSSAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!isRSSFeedsEnabled(request)) {
-			_portal.sendRSSFeedsDisabledError(request, response);
+		if (!isRSSFeedsEnabled(httpServletRequest)) {
+			_portal.sendRSSFeedsDisabledError(
+				httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 
 		try {
 			ServletResponseUtil.sendFile(
-				request, response, null, getRSS(request),
-				ContentTypes.TEXT_XML_UTF8);
+				httpServletRequest, httpServletResponse, null,
+				getRSS(httpServletRequest), ContentTypes.TEXT_XML_UTF8);
 
 			return null;
 		}
 		catch (Exception e) {
-			_portal.sendError(e, request, response);
+			_portal.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
-	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected byte[] getRSS(HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		long plid = ParamUtil.getLong(request, "plid");
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			plid = themeDisplay.getPlid();
 		}
 
-		long companyId = ParamUtil.getLong(request, "companyId");
-		long groupId = ParamUtil.getLong(request, "groupId");
-		long userId = ParamUtil.getLong(request, "userId");
-		long categoryId = ParamUtil.getLong(request, "mbCategoryId");
-		long threadId = ParamUtil.getLong(request, "threadId");
+		long companyId = ParamUtil.getLong(httpServletRequest, "companyId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		long userId = ParamUtil.getLong(httpServletRequest, "userId");
+		long categoryId = ParamUtil.getLong(httpServletRequest, "mbCategoryId");
+		long threadId = ParamUtil.getLong(httpServletRequest, "threadId");
 		int max = ParamUtil.getInteger(
-			request, "max", SearchContainer.DEFAULT_DELTA);
+			httpServletRequest, "max", SearchContainer.DEFAULT_DELTA);
 		String type = ParamUtil.getString(
-			request, "type", RSSUtil.FORMAT_DEFAULT);
+			httpServletRequest, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.VERSION_DEFAULT);
+			httpServletRequest, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			httpServletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		String entryURL = StringBundler.concat(
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
@@ -119,7 +124,7 @@ public class RSSAction implements StrutsAction {
 		}
 		else if (groupId > 0) {
 			String mvcRenderCommandName = ParamUtil.getString(
-				request, "mvcRenderCommandName");
+				httpServletRequest, "mvcRenderCommandName");
 
 			String feedURL = null;
 
@@ -160,11 +165,12 @@ public class RSSAction implements StrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+	protected boolean isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		MBGroupServiceSettings mbGroupServiceSettings =
 			MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId());

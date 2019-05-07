@@ -28,10 +28,13 @@ public abstract class BaseIGDisplayContext<T extends IGDisplayContext>
 	extends BaseDisplayContext<T> implements IGDisplayContext {
 
 	public BaseIGDisplayContext(
-		UUID uuid, T parentIGDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentIGDisplayContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentIGDisplayContext, request, response);
+		super(
+			uuid, parentIGDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

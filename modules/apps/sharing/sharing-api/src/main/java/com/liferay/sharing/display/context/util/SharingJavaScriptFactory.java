@@ -24,18 +24,20 @@ import javax.servlet.http.HttpServletRequest;
 public interface SharingJavaScriptFactory {
 
 	public String createManageCollaboratorsJavaScript(
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public String createManageCollaboratorsOnClickMethod(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public String createSharingJavaScript(HttpServletRequest request)
+	public String createSharingJavaScript(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public String createSharingOnClickMethod(
-			String className, long classPK, HttpServletRequest request)
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

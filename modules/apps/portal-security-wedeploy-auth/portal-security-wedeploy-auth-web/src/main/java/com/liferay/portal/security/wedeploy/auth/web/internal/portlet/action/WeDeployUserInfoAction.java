@@ -49,17 +49,18 @@ public class WeDeployUserInfoAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setHeader(
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String accessToken = ParamUtil.getString(request, "token");
+		String accessToken = ParamUtil.getString(httpServletRequest, "token");
 
 		try {
 			WeDeployAuthToken weDeployAuthToken =
@@ -88,7 +89,7 @@ public class WeDeployUserInfoAction implements StrutsAction {
 						"resource"));
 		}
 
-		ServletResponseUtil.write(response, jsonObject.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 
 		return null;
 	}

@@ -135,9 +135,10 @@ public class LocalizationUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
-		HttpServletRequest request, String parameter) {
+		HttpServletRequest httpServletRequest, String parameter) {
 
-		return getLocalization().getLocalizationMap(request, parameter);
+		return getLocalization().getLocalizationMap(
+			httpServletRequest, parameter);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

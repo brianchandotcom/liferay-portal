@@ -44,9 +44,11 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+		String contentType = httpServletRequest.getHeader(
+			HttpHeaders.CONTENT_TYPE);
 
 		if ((contentType != null) &&
 			contentType.startsWith(ContentTypes.MULTIPART_FORM_DATA)) {
@@ -59,11 +61,11 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 	@Override
 	public void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String portletId = ParamUtil.getString(request, "p_p_id");
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		int fileSizeThreshold = 0;
 		String location = null;
@@ -71,14 +73,15 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 		long maxFileSize = 0;
 
 		if (Validator.isNotNull(portletId)) {
-			long companyId = PortalUtil.getCompanyId(request);
+			long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				companyId, portletId);
 
 			if (portlet != null) {
 				ServletContext servletContext =
-					(ServletContext)request.getAttribute(WebKeys.CTX);
+					(ServletContext)httpServletRequest.getAttribute(
+						WebKeys.CTX);
 
 				InvokerPortlet invokerPortlet =
 					PortletInstanceFactoryUtil.create(portlet, servletContext);
@@ -89,7 +92,7 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 				if (liferayPortletConfig.isCopyRequestParameters() ||
 					!liferayPortletConfig.isWARFile()) {
 
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						UploadServletRequestFilter.
 							COPY_MULTIPART_STREAM_TO_FILE,
 						Boolean.FALSE);
@@ -104,13 +107,13 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 		UploadServletRequest uploadServletRequest =
 			PortalUtil.getUploadServletRequest(
-				request, fileSizeThreshold, location, maxRequestSize,
+				httpServletRequest, fileSizeThreshold, location, maxRequestSize,
 				maxFileSize);
 
 		try {
 			processFilter(
 				UploadServletRequestFilter.class.getName(),
-				uploadServletRequest, response, filterChain);
+				uploadServletRequest, httpServletResponse, filterChain);
 		}
 		finally {
 			uploadServletRequest.cleanUp();

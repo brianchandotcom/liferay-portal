@@ -48,24 +48,28 @@ public abstract class BaseJSPProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
 	public boolean includeBody(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return include(request, response, getBodyJspPath());
+		return include(
+			httpServletRequest, httpServletResponse, getBodyJspPath());
 	}
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		return include(request, response, getIconJspPath());
+		return include(
+			httpServletRequest, httpServletResponse, getIconJspPath());
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -73,8 +77,8 @@ public abstract class BaseJSPProductNavigationControlMenuEntry
 	}
 
 	protected boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String jspPath)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String jspPath)
 		throws IOException {
 
 		if (Validator.isNull(jspPath)) {
@@ -85,7 +89,7 @@ public abstract class BaseJSPProductNavigationControlMenuEntry
 			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			_log.error("Unable to include " + jspPath, se);

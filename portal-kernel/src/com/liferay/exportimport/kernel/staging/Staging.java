@@ -162,7 +162,8 @@ public interface Staging {
 		throws PortalException;
 
 	public void deleteRecentLayoutRevisionId(
-		HttpServletRequest request, long layoutSetBranchId, long plid);
+		HttpServletRequest httpServletRequest, long layoutSetBranchId,
+		long plid);
 
 	public void deleteRecentLayoutRevisionId(
 		long userId, long layoutSetBranchId, long plid);
@@ -219,7 +220,8 @@ public interface Staging {
 	public Group getPermissionStagingGroup(Group group);
 
 	public long getRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid)
 		throws PortalException;
 
 	public long getRecentLayoutRevisionId(
@@ -227,7 +229,7 @@ public interface Staging {
 		throws PortalException;
 
 	public long getRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetId);
+		HttpServletRequest httpServletRequest, long layoutSetId);
 
 	public long getRecentLayoutSetBranchId(User user, long layoutSetId);
 
@@ -411,8 +413,8 @@ public interface Staging {
 		throws PortalException;
 
 	public void setRecentLayoutBranchId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutBranchId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutBranchId)
 		throws PortalException;
 
 	public void setRecentLayoutBranchId(
@@ -420,8 +422,8 @@ public interface Staging {
 		throws PortalException;
 
 	public void setRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid,
-			long layoutRevisionId)
+			HttpServletRequest httpServletRequest, long layoutSetBranchId,
+			long plid, long layoutRevisionId)
 		throws PortalException;
 
 	public void setRecentLayoutRevisionId(
@@ -429,7 +431,7 @@ public interface Staging {
 		throws PortalException;
 
 	public void setRecentLayoutSetBranchId(
-			HttpServletRequest request, long layoutSetId,
+			HttpServletRequest httpServletRequest, long layoutSetId,
 			long layoutSetBranchId)
 		throws PortalException;
 

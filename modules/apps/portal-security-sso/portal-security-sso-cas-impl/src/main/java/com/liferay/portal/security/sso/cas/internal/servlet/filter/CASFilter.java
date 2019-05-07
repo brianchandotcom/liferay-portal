@@ -98,10 +98,11 @@ public class CASFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			long companyId = _portal.getCompanyId(request);
+			long companyId = _portal.getCompanyId(httpServletRequest);
 
 			CASConfiguration casConfiguration =
 				_configurationProvider.getConfiguration(
@@ -163,13 +164,13 @@ public class CASFilter extends BaseFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		CASConfiguration casConfiguration =
 			_configurationProvider.getConfiguration(
@@ -184,12 +185,12 @@ public class CASFilter extends BaseFilter {
 
 			String logoutUrl = casConfiguration.logoutURL();
 
-			response.sendRedirect(logoutUrl);
+			httpServletResponse.sendRedirect(logoutUrl);
 
 			return;
 		}
 
-		String pathInfo = request.getPathInfo();
+		String pathInfo = httpServletRequest.getPathInfo();
 
 		if (Validator.isNotNull(pathInfo) &&
 			pathInfo.contains("/portal/logout")) {
@@ -198,7 +199,7 @@ public class CASFilter extends BaseFilter {
 
 			String logoutUrl = casConfiguration.logoutURL();
 
-			response.sendRedirect(logoutUrl);
+			httpServletResponse.sendRedirect(logoutUrl);
 
 			return;
 		}
@@ -207,7 +208,8 @@ public class CASFilter extends BaseFilter {
 
 		if (Validator.isNotNull(login)) {
 			processFilter(
-				CASFilter.class.getName(), request, response, filterChain);
+				CASFilter.class.getName(), httpServletRequest,
+				httpServletResponse, filterChain);
 
 			return;
 		}
@@ -218,17 +220,18 @@ public class CASFilter extends BaseFilter {
 
 		if (Validator.isNull(serviceURL)) {
 			serviceURL = CommonUtils.constructServiceUrl(
-				request, response, serviceURL, serverName, "ticket", false);
+				httpServletRequest, httpServletResponse, serviceURL, serverName,
+				"ticket", false);
 		}
 
-		String ticket = ParamUtil.getString(request, "ticket");
+		String ticket = ParamUtil.getString(httpServletRequest, "ticket");
 
 		if (Validator.isNull(ticket)) {
 			String loginUrl = casConfiguration.loginURL();
 
 			loginUrl = _http.addParameter(loginUrl, "service", serviceURL);
 
-			response.sendRedirect(loginUrl);
+			httpServletResponse.sendRedirect(loginUrl);
 
 			return;
 		}
@@ -246,7 +249,8 @@ public class CASFilter extends BaseFilter {
 		}
 
 		processFilter(
-			CASFilter.class.getName(), request, response, filterChain);
+			CASFilter.class.getName(), httpServletRequest, httpServletResponse,
+			filterChain);
 	}
 
 	@Reference(unbind = "-")

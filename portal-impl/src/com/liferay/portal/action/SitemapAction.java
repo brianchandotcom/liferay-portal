@@ -49,16 +49,18 @@ public class SitemapAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			String layoutUuid = ParamUtil.getString(request, "layoutUuid");
-			long groupId = ParamUtil.getLong(request, "groupId");
+			String layoutUuid = ParamUtil.getString(
+				httpServletRequest, "layoutUuid");
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 			LayoutSet layoutSet = null;
 
@@ -70,13 +72,13 @@ public class SitemapAction implements Action {
 				}
 
 				boolean privateLayout = ParamUtil.getBoolean(
-					request, "privateLayout");
+					httpServletRequest, "privateLayout");
 
 				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 			}
 			else {
-				String host = PortalUtil.getHost(request);
+				String host = PortalUtil.getHost(httpServletRequest);
 
 				host = StringUtil.toLowerCase(host);
 				host = host.trim();
@@ -111,12 +113,13 @@ public class SitemapAction implements Action {
 				themeDisplay);
 
 			ServletResponseUtil.sendFile(
-				request, response, null, sitemap.getBytes(StringPool.UTF8),
-				ContentTypes.TEXT_XML_UTF8);
+				httpServletRequest, httpServletResponse, null,
+				sitemap.getBytes(StringPool.UTF8), ContentTypes.TEXT_XML_UTF8);
 		}
 		catch (NoSuchLayoutSetException nslse) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nslse, request, response);
+				HttpServletResponse.SC_NOT_FOUND, nslse, httpServletRequest,
+				httpServletResponse);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -124,8 +127,8 @@ public class SitemapAction implements Action {
 			}
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				httpServletRequest, httpServletResponse);
 		}
 
 		return null;

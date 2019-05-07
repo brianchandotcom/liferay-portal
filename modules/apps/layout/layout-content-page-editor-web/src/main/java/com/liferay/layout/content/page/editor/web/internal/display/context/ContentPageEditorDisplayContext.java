@@ -127,29 +127,30 @@ import org.jsoup.select.Elements;
 public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK,
 		FragmentRendererController fragmentRendererController) {
 
-		this.request = request;
+		this.request = httpServletRequest;
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
 
 		classNameId = PortalUtil.getClassNameId(className);
 		infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)request.getAttribute(
+			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
-		themeDisplay = (ThemeDisplay)request.getAttribute(
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_fragmentRendererController = fragmentRendererController;
 		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)request.getAttribute(
-				ContentPageEditorWebKeys.
-					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
+			(FragmentCollectionContributorTracker)
+				httpServletRequest.getAttribute(
+					ContentPageEditorWebKeys.
+						FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_fragmentRendererTracker =
-			(FragmentRendererTracker)request.getAttribute(
+			(FragmentRendererTracker)httpServletRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
-		_itemSelector = (ItemSelector)request.getAttribute(
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 

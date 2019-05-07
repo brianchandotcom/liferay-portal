@@ -194,10 +194,11 @@ public class HeaderResponseImpl
 	}
 
 	public void init(
-		PortletRequestImpl portletRequestImpl, HttpServletResponse response,
+		PortletRequestImpl portletRequestImpl,
+		HttpServletResponse httpServletResponse,
 		List<PortletDependency> portletDependencies) {
 
-		super.init(portletRequestImpl, response);
+		super.init(portletRequestImpl, httpServletResponse);
 
 		if (portletDependencies != null) {
 			for (PortletDependency portletDependency : portletDependencies) {

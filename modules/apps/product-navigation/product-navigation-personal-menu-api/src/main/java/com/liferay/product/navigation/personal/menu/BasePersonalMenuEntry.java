@@ -55,7 +55,7 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Override
-	public String getPortletURL(HttpServletRequest request)
+	public String getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		if (Validator.isNull(getPortletId())) {
@@ -63,7 +63,7 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 		}
 
 		return PersonalApplicationURLUtil.getPersonalApplicationURL(
-			request, getPortletId());
+			httpServletRequest, getPortletId());
 	}
 
 	@Override

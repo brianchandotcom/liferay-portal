@@ -171,7 +171,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public PortletURL getURLEdit(
-			HttpServletRequest request, WindowState windowState,
+			HttpServletRequest httpServletRequest, WindowState windowState,
 			PortletURL redirectURL)
 		throws Exception {
 
@@ -181,23 +181,24 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			redirect = redirectURL.toString();
 		}
 
-		return getURLEdit(request, windowState, redirect);
+		return getURLEdit(httpServletRequest, windowState, redirect);
 	}
 
 	@Override
 	public PortletURL getURLEdit(
-			HttpServletRequest request, WindowState windowState,
+			HttpServletRequest httpServletRequest, WindowState windowState,
 			String redirect)
 		throws Exception {
 
 		LiferayPortletURL editPortletURL = (LiferayPortletURL)getURLEdit(
-			request);
+			httpServletRequest);
 
 		if (editPortletURL == null) {
 			return null;
 		}
 
-		return _getURLEdit(editPortletURL, request, windowState, redirect);
+		return _getURLEdit(
+			editPortletURL, httpServletRequest, windowState, redirect);
 	}
 
 	@Override
@@ -429,12 +430,14 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	private PortletURL _getURLEdit(
-			LiferayPortletURL editPortletURL, HttpServletRequest request,
-			WindowState windowState, String redirect)
+			LiferayPortletURL editPortletURL,
+			HttpServletRequest httpServletRequest, WindowState windowState,
+			String redirect)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -455,7 +458,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String portletResource = ParamUtil.getString(
-			request, "portletResource", portletDisplay.getId());
+			httpServletRequest, "portletResource", portletDisplay.getId());
 
 		if (Validator.isNotNull(portletResource)) {
 			editPortletURL.setParameter(

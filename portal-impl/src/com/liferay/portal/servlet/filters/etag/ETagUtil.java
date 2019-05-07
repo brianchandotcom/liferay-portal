@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ETagUtil {
 
 	public static boolean processETag(
-		HttpServletRequest request, HttpServletResponse response,
-		ByteBuffer byteBuffer) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, ByteBuffer byteBuffer) {
 
-		if (response.isCommitted()) {
+		if (httpServletResponse.isCommitted()) {
 			return false;
 		}
 
@@ -46,13 +46,14 @@ public class ETagUtil {
 			StringPool.QUOTE
 		);
 
-		response.setHeader(HttpHeaders.ETAG, eTag);
+		httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
 
-		String ifNoneMatch = request.getHeader(HttpHeaders.IF_NONE_MATCH);
+		String ifNoneMatch = httpServletRequest.getHeader(
+			HttpHeaders.IF_NONE_MATCH);
 
 		if (eTag.equals(ifNoneMatch)) {
-			response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-			response.setContentLength(0);
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+			httpServletResponse.setContentLength(0);
 
 			return true;
 		}

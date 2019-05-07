@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface TryFinallyFilter extends TryFilter {
 
 	public void doFilterFinally(
-			HttpServletRequest request, HttpServletResponse response,
-			Object object)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Object object)
 		throws Exception;
 
 }

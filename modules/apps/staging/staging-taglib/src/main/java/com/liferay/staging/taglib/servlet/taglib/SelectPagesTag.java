@@ -139,32 +139,36 @@ public class SelectPagesTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:select-pages:action", _action);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-staging:select-pages:action", _action);
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:disableInputs", _disableInputs);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:exportImportConfigurationId",
 			_exportImportConfigurationId);
-		request.setAttribute("liferay-staging:select-pages:groupId", _groupId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-staging:select-pages:groupId", _groupId);
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:layoutSetBranchId",
 			_layoutSetBranchId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:layoutSetSettings",
 			_layoutSetSettings);
-		request.setAttribute("liferay-staging:select-pages:logo", _logo);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-staging:select-pages:logo", _logo);
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:privateLayout", _privateLayout);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:selectedLayoutIds",
 			_selectedLayoutIds);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:showDeleteMissingLayouts",
 			_showDeleteMissingLayouts);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:select-pages:themeReference", _themeReference);
-		request.setAttribute("liferay-staging:select-pages:treeId", _treeId);
+		httpServletRequest.setAttribute(
+			"liferay-staging:select-pages:treeId", _treeId);
 	}
 
 	private static final String _PAGE = "/select_pages/page.jsp";

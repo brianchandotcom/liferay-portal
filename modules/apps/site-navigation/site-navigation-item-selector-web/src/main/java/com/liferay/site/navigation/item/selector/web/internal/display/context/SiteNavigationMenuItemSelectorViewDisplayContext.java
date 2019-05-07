@@ -39,10 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationMenuItemSelectorViewDisplayContext {
 
 	public SiteNavigationMenuItemSelectorViewDisplayContext(
-		HttpServletRequest request, PortletURL portletURL,
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 	}

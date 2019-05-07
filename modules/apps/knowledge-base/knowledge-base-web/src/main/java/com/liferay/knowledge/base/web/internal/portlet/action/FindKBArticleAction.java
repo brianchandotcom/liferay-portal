@@ -77,17 +77,21 @@ public class FindKBArticleAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long plid = ParamUtil.getLong(request, "plid");
-		long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
+		long resourcePrimKey = ParamUtil.getLong(
+			httpServletRequest, "resourcePrimKey");
 		int status = ParamUtil.getInteger(
-			request, "status", WorkflowConstants.STATUS_APPROVED);
-		boolean maximized = ParamUtil.getBoolean(request, "maximized");
+			httpServletRequest, "status", WorkflowConstants.STATUS_APPROVED);
+		boolean maximized = ParamUtil.getBoolean(
+			httpServletRequest, "maximized");
 
 		KBArticle kbArticle = getKBArticle(resourcePrimKey, status);
 
@@ -98,23 +102,25 @@ public class FindKBArticleAction implements StrutsAction {
 		PortletURL portletURL = null;
 
 		if (kbArticle == null) {
-			portletURL = getDynamicPortletURL(plid, status, request);
+			portletURL = getDynamicPortletURL(plid, status, httpServletRequest);
 		}
 
 		if (status != WorkflowConstants.STATUS_APPROVED) {
-			portletURL = getDynamicPortletURL(plid, status, request);
+			portletURL = getDynamicPortletURL(plid, status, httpServletRequest);
 		}
 
 		if (portletURL == null) {
-			portletURL = getKBArticleURL(plid, false, kbArticle, request);
+			portletURL = getKBArticleURL(
+				plid, false, kbArticle, httpServletRequest);
 		}
 
 		if (portletURL == null) {
-			portletURL = getKBArticleURL(plid, true, kbArticle, request);
+			portletURL = getKBArticleURL(
+				plid, true, kbArticle, httpServletRequest);
 		}
 
 		if (portletURL == null) {
-			portletURL = getDynamicPortletURL(plid, status, request);
+			portletURL = getDynamicPortletURL(plid, status, httpServletRequest);
 		}
 
 		if (maximized) {
@@ -122,7 +128,7 @@ public class FindKBArticleAction implements StrutsAction {
 			portletURL.setPortletMode(PortletMode.VIEW);
 		}
 
-		response.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(portletURL.toString());
 
 		return null;
 	}
@@ -161,19 +167,21 @@ public class FindKBArticleAction implements StrutsAction {
 	}
 
 	protected PortletURL getDynamicPortletURL(
-			long plid, int status, HttpServletRequest request)
+			long plid, int status, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		String portletId = getPortletId(plid);
 
-		PortletURL portletURL = getKBArticleURL(plid, portletId, null, request);
+		PortletURL portletURL = getKBArticleURL(
+			plid, portletId, null, httpServletRequest);
 
 		if (status != WorkflowConstants.STATUS_APPROVED) {
 			portletURL.setParameter("status", String.valueOf(status));
 		}
 
 		if (_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
-			String token = AuthTokenUtil.getToken(request, plid, portletId);
+			String token = AuthTokenUtil.getToken(
+				httpServletRequest, plid, portletId);
 
 			portletURL.setParameter("p_p_auth", token);
 		}
@@ -214,7 +222,7 @@ public class FindKBArticleAction implements StrutsAction {
 
 	protected PortletURL getKBArticleURL(
 			long plid, boolean privateLayout, KBArticle kbArticle,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		PortletURL firstMatchPortletURL = null;
@@ -257,7 +265,7 @@ public class FindKBArticleAction implements StrutsAction {
 
 							return getKBArticleURL(
 								layout.getPlid(), portlet.getPortletId(),
-								kbArticle, request);
+								kbArticle, httpServletRequest);
 						}
 					}
 					else if (resourcePrimKey ==
@@ -265,13 +273,13 @@ public class FindKBArticleAction implements StrutsAction {
 
 						return getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,
-							request);
+							httpServletRequest);
 					}
 
 					if (firstMatchPortletURL == null) {
 						firstMatchPortletURL = getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,
-							request);
+							httpServletRequest);
 					}
 				}
 
@@ -304,7 +312,7 @@ public class FindKBArticleAction implements StrutsAction {
 
 						return getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,
-							request);
+							httpServletRequest);
 					}
 				}
 
@@ -334,13 +342,13 @@ public class FindKBArticleAction implements StrutsAction {
 					if (rootResourcePrimKey == selRootResourcePrimKey) {
 						return getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,
-							request);
+							httpServletRequest);
 					}
 
 					if (firstMatchPortletURL == null) {
 						firstMatchPortletURL = getKBArticleURL(
 							layout.getPlid(), portlet.getPortletId(), kbArticle,
-							request);
+							httpServletRequest);
 					}
 				}
 			}
@@ -351,10 +359,11 @@ public class FindKBArticleAction implements StrutsAction {
 
 	protected PortletURL getKBArticleURL(
 			long plid, String portletId, KBArticle kbArticle,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
+		long resourcePrimKey = ParamUtil.getLong(
+			httpServletRequest, "resourcePrimKey");
 
 		String mvcPath = null;
 
@@ -368,7 +377,7 @@ public class FindKBArticleAction implements StrutsAction {
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portletId, plid, PortletRequest.RENDER_PHASE);
+			httpServletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (mvcPath != null) {
 			portletURL.setParameter("mvcPath", mvcPath);

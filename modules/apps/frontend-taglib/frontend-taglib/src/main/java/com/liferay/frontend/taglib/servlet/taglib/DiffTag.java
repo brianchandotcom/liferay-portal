@@ -74,10 +74,13 @@ public class DiffTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-frontend:diff:diffResults", _diffResults);
-		request.setAttribute("liferay-frontend:diff:sourceName", _sourceName);
-		request.setAttribute("liferay-frontend:diff:targetName", _targetName);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-frontend:diff:diffResults", _diffResults);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:diff:sourceName", _sourceName);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:diff:targetName", _targetName);
 	}
 
 	private static final String _PAGE = "/diff/page.jsp";

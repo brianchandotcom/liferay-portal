@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface BackgroundTaskDisplay extends Serializable {
 
-	public String getDisplayName(HttpServletRequest request);
+	public String getDisplayName(HttpServletRequest httpServletRequest);
 
 	public int getPercentage();
 

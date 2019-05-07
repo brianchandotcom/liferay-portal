@@ -67,17 +67,19 @@ public class ModificationDeniedLayoutTypeAccessPolicyImpl
 
 	@Override
 	protected boolean hasAccessPermission(
-			HttpServletRequest request, Layout layout, Portlet portlet)
+			HttpServletRequest httpServletRequest, Layout layout,
+			Portlet portlet)
 		throws PortalException {
 
-		return super.hasAccessPermission(request, layout, portlet);
+		return super.hasAccessPermission(httpServletRequest, layout, portlet);
 	}
 
 	@Override
 	protected boolean isAccessAllowedToLayoutPortlet(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
-		return super.isAccessAllowedToLayoutPortlet(request, layout, portlet);
+		return super.isAccessAllowedToLayoutPortlet(
+			httpServletRequest, layout, portlet);
 	}
 
 }

@@ -136,7 +136,9 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
@@ -376,13 +378,14 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
+		httpServletRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
 
-		String version = ParamUtil.getString(request, "version");
+		String version = ParamUtil.getString(httpServletRequest, "version");
 
 		if ((getAssetRendererType() == AssetRendererFactory.TYPE_LATEST) ||
 			Validator.isNotNull(version)) {
@@ -391,16 +394,16 @@ public class DLFileEntryAssetRenderer
 				_fileVersion = _fileEntry.getFileVersion(version);
 			}
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 		}
 		else {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
 				_fileEntry.getFileVersion());
 		}
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	@Override

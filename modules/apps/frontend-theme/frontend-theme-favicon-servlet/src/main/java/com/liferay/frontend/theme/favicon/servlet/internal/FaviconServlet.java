@@ -45,25 +45,28 @@ public class FaviconServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			response.sendRedirect(themeDisplay.getPathImage() + "/favicon.ico");
+			httpServletResponse.sendRedirect(
+				themeDisplay.getPathImage() + "/favicon.ico");
 
 			return;
 		}
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 		if (layoutSet != null) {
 			Theme theme = layoutSet.getTheme();
 
-			response.sendRedirect(
+			httpServletResponse.sendRedirect(
 				theme.getContextPath() + theme.getImagesPath() +
 					"/favicon.ico");
 		}

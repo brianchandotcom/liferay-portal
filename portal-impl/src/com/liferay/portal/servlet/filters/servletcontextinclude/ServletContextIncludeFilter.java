@@ -53,16 +53,17 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			Theme theme = getTheme(request);
+			Theme theme = getTheme(httpServletRequest);
 
 			if (theme == null) {
 				return false;
 			}
 
-			Boolean strict = (Boolean)request.getAttribute(
+			Boolean strict = (Boolean)httpServletRequest.getAttribute(
 				WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 
 			if ((strict != null) && strict) {
@@ -73,15 +74,15 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 
 			ServletContext servletContext = filterConfig.getServletContext();
 
-			String portletId = ThemeUtil.getPortletId(request);
+			String portletId = ThemeUtil.getPortletId(httpServletRequest);
 
-			String uri = (String)request.getAttribute(
+			String uri = (String)httpServletRequest.getAttribute(
 				WebKeys.INVOKER_FILTER_URI);
 
 			if (theme.resourceExists(servletContext, portletId, uri)) {
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_PATH, uri);
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_THEME, theme);
 
 				return true;
@@ -94,19 +95,21 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 		return false;
 	}
 
-	protected Theme getTheme(HttpServletRequest request) throws Exception {
-		String themeId = ParamUtil.getString(request, "themeId");
+	protected Theme getTheme(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		String themeId = ParamUtil.getString(httpServletRequest, "themeId");
 
 		if (Validator.isNotNull(themeId)) {
-			long companyId = PortalUtil.getCompanyId(request);
+			long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 			return ThemeLocalServiceUtil.getTheme(companyId, themeId);
 		}
 
-		long plid = ParamUtil.getLong(request, "plid");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid <= 0) {
-			plid = ParamUtil.getLong(request, "p_l_id");
+			plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 		}
 
 		if (plid > 0) {
@@ -115,20 +118,21 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 			return layout.getTheme();
 		}
 
-		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
+		Theme theme = (Theme)httpServletRequest.getAttribute(WebKeys.THEME);
 
 		if (theme != null) {
 			return theme;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			return themeDisplay.getTheme();
 		}
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+		LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 		if (layoutSet != null) {
@@ -140,14 +144,14 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		Theme theme = (Theme)request.getAttribute(
+		Theme theme = (Theme)httpServletRequest.getAttribute(
 			WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_THEME);
 
-		request.setAttribute(WebKeys.THEME, theme);
+		httpServletRequest.setAttribute(WebKeys.THEME, theme);
 
 		FilterConfig filterConfig = getFilterConfig();
 
@@ -157,7 +161,7 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 			servletContext.getRequestDispatcher(
 				"/WEB-INF/jsp/_servlet_context_include.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

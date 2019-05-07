@@ -70,15 +70,16 @@ public class MimeTypeStickerTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-document-library:mime-type-sticker:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-document-library:mime-type-sticker:" +
 				"dlViewFileVersionDisplayContext",
 			DLViewFileVersionDisplayContextUtil.
 				getDLViewFileVersionDisplayContext(
-					request, (HttpServletResponse)pageContext.getResponse(),
+					httpServletRequest,
+					(HttpServletResponse)pageContext.getResponse(),
 					_fileVersion));
 	}
 

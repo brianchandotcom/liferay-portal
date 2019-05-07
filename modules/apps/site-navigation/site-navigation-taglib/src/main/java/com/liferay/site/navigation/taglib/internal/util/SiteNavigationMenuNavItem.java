@@ -32,16 +32,16 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationMenuNavItem extends NavItem {
 
 	public SiteNavigationMenuNavItem(
-		HttpServletRequest request, ThemeDisplay themeDisplay,
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		super(request, themeDisplay, themeDisplay.getLayout(), null);
+		super(httpServletRequest, themeDisplay, themeDisplay.getLayout(), null);
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			ServletContextUtil.getSiteNavigationMenuItemType(
 				siteNavigationMenuItem.getType());
 
-		_request = request;
+		_request = httpServletRequest;
 		_themeDisplay = themeDisplay;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 		_siteNavigationMenuItemType = siteNavigationMenuItemType;

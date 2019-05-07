@@ -32,8 +32,8 @@ public class BrowserIdCacheFileNameContributor
 	}
 
 	@Override
-	public String getParameterValue(HttpServletRequest request) {
-		String browserId = ParamUtil.getString(request, "browserId");
+	public String getParameterValue(HttpServletRequest httpServletRequest) {
+		String browserId = ParamUtil.getString(httpServletRequest, "browserId");
 
 		if (ArrayUtil.contains(_BROWSER_IDS, browserId)) {
 			return browserId;

@@ -39,6 +39,6 @@ public interface ImageEditorCapability {
 	public ServletContext getServletContext();
 
 	public void prepareContext(
-		Map<String, Object> context, HttpServletRequest request);
+		Map<String, Object> context, HttpServletRequest httpServletRequest);
 
 }

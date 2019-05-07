@@ -85,15 +85,15 @@ public class EmptyResultMessageTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:empty-result-message:compact",
 			String.valueOf(_compact));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:empty-result-message:cssClass", getCssClass());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:empty-result-message:search", String.valueOf(_search));
 	}
 

@@ -51,30 +51,31 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		if (!_jsJQueryConfiguration.enableJQuery()) {
 			return;
 		}
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		StringBundler sb = new StringBundler();
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				request);
+				httpServletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
 			sb.append("<script data-senna-track=\"permanent\" src=\"");
 			sb.append(
 				_portal.getStaticResourceURL(
-					request, _portal.getPathContext() + "/combo",
+					httpServletRequest, _portal.getPathContext() + "/combo",
 					"minifierType=js", _lastModified));
 
 			for (String fileName : _FILE_NAMES) {

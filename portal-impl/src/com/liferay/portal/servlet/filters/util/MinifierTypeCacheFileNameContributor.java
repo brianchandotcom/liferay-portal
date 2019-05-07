@@ -30,8 +30,9 @@ public class MinifierTypeCacheFileNameContributor
 	}
 
 	@Override
-	public String getParameterValue(HttpServletRequest request) {
-		String minifierType = request.getParameter(getParameterName());
+	public String getParameterValue(HttpServletRequest httpServletRequest) {
+		String minifierType = httpServletRequest.getParameter(
+			getParameterName());
 
 		if (Validator.isNull(minifierType)) {
 			return null;

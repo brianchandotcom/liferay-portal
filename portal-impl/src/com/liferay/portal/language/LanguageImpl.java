@@ -802,8 +802,8 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String get(
-		HttpServletRequest request, ResourceBundle resourceBundle, String key,
-		String defaultValue) {
+		HttpServletRequest httpServletRequest, ResourceBundle resourceBundle,
+		String key, String defaultValue) {
 
 		String value = _get(resourceBundle, key);
 
@@ -811,12 +811,12 @@ public class LanguageImpl implements Language, Serializable {
 			return value;
 		}
 
-		return get(request, key, defaultValue);
+		return get(httpServletRequest, key, defaultValue);
 	}
 
 	@Override
-	public String get(HttpServletRequest request, String key) {
-		return get(request, key, key);
+	public String get(HttpServletRequest httpServletRequest, String key) {
+		return get(httpServletRequest, key, key);
 	}
 
 	/**
@@ -987,8 +987,8 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public String getBCP47LanguageId(HttpServletRequest request) {
-		Locale locale = PortalUtil.getLocale(request);
+	public String getBCP47LanguageId(HttpServletRequest httpServletRequest) {
+		Locale locale = PortalUtil.getLocale(httpServletRequest);
 
 		return getBCP47LanguageId(locale);
 	}
@@ -1635,15 +1635,15 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public void updateCookie(
-		HttpServletRequest request, HttpServletResponse response,
-		Locale locale) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Locale locale) {
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
 		Cookie languageIdCookie = new Cookie(
 			CookieKeys.GUEST_LANGUAGE_ID, languageId);
 
-		String domain = CookieKeys.getDomain(request);
+		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		if (Validator.isNotNull(domain)) {
 			languageIdCookie.setDomain(domain);
@@ -1652,7 +1652,8 @@ public class LanguageImpl implements Language, Serializable {
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
 		languageIdCookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(request, response, languageIdCookie);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, languageIdCookie);
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {
@@ -1739,10 +1740,10 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	private String _decorateMessageFormat(
-		HttpServletRequest request, String pattern,
+		HttpServletRequest httpServletRequest, String pattern,
 		Object[] formattedArguments) {
 
-		Locale locale = _getLocale(request);
+		Locale locale = _getLocale(httpServletRequest);
 
 		return _decorateMessageFormat(locale, pattern, formattedArguments);
 	}
@@ -1901,17 +1902,18 @@ public class LanguageImpl implements Language, Serializable {
 		return groupLanguageIdLocalesMap;
 	}
 
-	private Locale _getLocale(HttpServletRequest request) {
+	private Locale _getLocale(HttpServletRequest httpServletRequest) {
 		Locale locale = null;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			locale = themeDisplay.getLocale();
 		}
 		else {
-			locale = request.getLocale();
+			locale = httpServletRequest.getLocale();
 
 			if (!isAvailableLocale(locale)) {
 				locale = LocaleUtil.getDefault();

@@ -55,27 +55,34 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleComboURLs(request, response, _jsResourceURLs);
+				_renderBundleComboURLs(
+					httpServletRequest, httpServletResponse, _jsResourceURLs);
 			}
 			else {
-				_renderBundleComboURLs(request, response, _allJsResourceURLs);
+				_renderBundleComboURLs(
+					httpServletRequest, httpServletResponse,
+					_allJsResourceURLs);
 			}
 		}
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleURLs(request, response, _jsResourceURLs);
+				_renderBundleURLs(
+					httpServletRequest, httpServletResponse, _jsResourceURLs);
 			}
 			else {
-				_renderBundleURLs(request, response, _allJsResourceURLs);
+				_renderBundleURLs(
+					httpServletRequest, httpServletResponse,
+					_allJsResourceURLs);
 			}
 		}
 	}
@@ -223,11 +230,11 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private void _renderBundleComboURLs(
-			HttpServletRequest request, HttpServletResponse response,
-			List<String> urls)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, List<String> urls)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		StringBundler sb = new StringBundler();
 
@@ -238,14 +245,16 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 
 		String comboURL = _portal.getStaticResourceURL(
-			request, _comboContextPath, "minifierType=js", jsLastModified);
+			httpServletRequest, _comboContextPath, "minifierType=js",
+			jsLastModified);
 
 		for (String url : urls) {
 			if (sb.length() == 0) {
 				sb.append("<script data-senna-track=\"permanent\" src=\"");
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				sb.append(themeDisplay.getCDNBaseURL() + comboURL);
 			}
@@ -270,18 +279,18 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private void _renderBundleURLs(
-			HttpServletRequest request, HttpServletResponse response,
-			List<String> urls)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, List<String> urls)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		for (String url : urls) {
 			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-					request);
+					httpServletRequest);
 
 			printWriter.print(
 				absolutePortalURLBuilder.forResource(

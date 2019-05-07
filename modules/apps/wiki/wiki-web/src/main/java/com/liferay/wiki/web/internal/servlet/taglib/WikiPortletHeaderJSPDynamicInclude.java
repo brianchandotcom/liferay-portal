@@ -44,12 +44,13 @@ public class WikiPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		String mvcRenderCommandName = ParamUtil.getString(
 			portletRequest, "mvcRenderCommandName");
@@ -72,13 +73,14 @@ public class WikiPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+		WikiNode node = (WikiNode)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_NODE);
 
 		if (node == null) {
 			return;
 		}
 
-		super.include(request, response, key);
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
 	@Override

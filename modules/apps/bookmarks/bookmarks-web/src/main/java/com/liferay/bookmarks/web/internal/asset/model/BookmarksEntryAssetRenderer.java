@@ -88,7 +88,9 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/bookmarks/asset/" + template + ".jsp";
 		}
@@ -218,13 +220,14 @@ public class BookmarksEntryAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
+		httpServletRequest.setAttribute(
+			BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	@Override

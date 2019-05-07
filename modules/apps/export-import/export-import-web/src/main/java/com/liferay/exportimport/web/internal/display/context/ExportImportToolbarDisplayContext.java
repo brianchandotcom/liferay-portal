@@ -48,9 +48,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ExportImportToolbarDisplayContext {
 
 	public ExportImportToolbarDisplayContext(
-		HttpServletRequest request, LiferayPortletResponse portletResponse) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse portletResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 
 		_portletResponse = portletResponse;
 

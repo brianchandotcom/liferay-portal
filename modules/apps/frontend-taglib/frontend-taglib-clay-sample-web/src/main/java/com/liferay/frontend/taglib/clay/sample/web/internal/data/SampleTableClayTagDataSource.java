@@ -36,7 +36,9 @@ public class SampleTableClayTagDataSource
 	implements ClayTagDataSource<Map<String, Object>> {
 
 	@Override
-	public List<Map<String, Object>> getItems(HttpServletRequest request) {
+	public List<Map<String, Object>> getItems(
+		HttpServletRequest httpServletRequest) {
+
 		return Arrays.asList(
 			_getItem("Blueberry", 57, 100), _getItem("Strawberry", 33, 100),
 			_getItem("Raspberry", 53, 100));

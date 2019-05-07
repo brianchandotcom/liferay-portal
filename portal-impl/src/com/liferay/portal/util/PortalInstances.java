@@ -77,12 +77,13 @@ public class PortalInstances {
 		_companyIds = companyIds;
 	}
 
-	public static long getCompanyId(HttpServletRequest request) {
+	public static long getCompanyId(HttpServletRequest httpServletRequest) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get company id");
 		}
 
-		Long companyIdObj = (Long)request.getAttribute(WebKeys.COMPANY_ID);
+		Long companyIdObj = (Long)httpServletRequest.getAttribute(
+			WebKeys.COMPANY_ID);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Company id from request " + companyIdObj);
@@ -92,7 +93,7 @@ public class PortalInstances {
 			return companyIdObj.longValue();
 		}
 
-		long companyId = _getCompanyIdByVirtualHosts(request);
+		long companyId = _getCompanyIdByVirtualHosts(httpServletRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Company id from host " + companyId);
@@ -100,7 +101,8 @@ public class PortalInstances {
 
 		if (companyId <= 0) {
 			long cookieCompanyId = GetterUtil.getLong(
-				CookieKeys.getCookie(request, CookieKeys.COMPANY_ID, false));
+				CookieKeys.getCookie(
+					httpServletRequest, CookieKeys.COMPANY_ID, false));
 
 			if (cookieCompanyId > 0) {
 				try {
@@ -139,12 +141,14 @@ public class PortalInstances {
 			_log.debug("Set company id " + companyId);
 		}
 
-		request.setAttribute(WebKeys.COMPANY_ID, Long.valueOf(companyId));
+		httpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, Long.valueOf(companyId));
 
 		CompanyThreadLocal.setCompanyId(companyId);
 
 		if (Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
-			(request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET) == null)) {
+			(httpServletRequest.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET) ==
+				null)) {
 
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(
@@ -154,7 +158,7 @@ public class PortalInstances {
 					group.getGroupId(), false);
 
 				if (Validator.isNull(layoutSet.getVirtualHostname())) {
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 				}
 			}
@@ -421,9 +425,9 @@ public class PortalInstances {
 	}
 
 	private static long _getCompanyIdByVirtualHosts(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		String host = PortalUtil.getHost(request);
+		String host = PortalUtil.getHost(httpServletRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Host " + host);
@@ -454,7 +458,7 @@ public class PortalInstances {
 							String.valueOf(virtualHost.getLayoutSetId())));
 				}
 
-				request.setAttribute(
+				httpServletRequest.setAttribute(
 					WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 			}
 

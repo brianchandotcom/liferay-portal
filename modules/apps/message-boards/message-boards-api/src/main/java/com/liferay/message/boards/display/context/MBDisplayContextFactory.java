@@ -26,16 +26,17 @@ public interface MBDisplayContextFactory extends DisplayContextFactory {
 
 	public MBAdminListDisplayContext getMBAdminListDisplayContext(
 		MBAdminListDisplayContext parentMBAdminListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId);
 
 	public MBHomeDisplayContext getMBHomeDisplayContext(
 		MBHomeDisplayContext parentMBHomeDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public MBListDisplayContext getMBListDisplayContext(
 		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long categoryId);
 
 }

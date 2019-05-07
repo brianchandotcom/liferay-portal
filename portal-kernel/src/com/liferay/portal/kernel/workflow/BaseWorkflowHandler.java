@@ -232,14 +232,15 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 	@Override
 	public boolean include(
-		long classPK, HttpServletRequest request, HttpServletResponse response,
-		String template) {
+		long classPK, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String template) {
 
 		try {
 			AssetRenderer<?> assetRenderer = getAssetRenderer(classPK);
 
 			if (assetRenderer != null) {
-				return assetRenderer.include(request, response, template);
+				return assetRenderer.include(
+					httpServletRequest, httpServletResponse, template);
 			}
 		}
 		catch (Exception e) {

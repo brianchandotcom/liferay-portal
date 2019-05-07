@@ -83,10 +83,10 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 	}
 
 	@Override
-	public String getHelpPageTitle(HttpServletRequest request) {
+	public String getHelpPageTitle(HttpServletRequest httpServletRequest) {
 		return LanguageUtil.format(
-			request, "x-syntax-help", getFormatLabel(request.getLocale()),
-			false);
+			httpServletRequest, "x-syntax-help",
+			getFormatLabel(httpServletRequest.getLocale()), false);
 	}
 
 	@Override

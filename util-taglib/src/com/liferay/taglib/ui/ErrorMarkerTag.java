@@ -49,14 +49,16 @@ public class ErrorMarkerTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (Validator.isNotNull(_key) && Validator.isNotNull(_value)) {
-			request.setAttribute("liferay-ui:error-marker:key", _key);
-			request.setAttribute("liferay-ui:error-marker:value", _value);
+			httpServletRequest.setAttribute(
+				"liferay-ui:error-marker:key", _key);
+			httpServletRequest.setAttribute(
+				"liferay-ui:error-marker:value", _value);
 		}
 		else {
-			request.removeAttribute("liferay-ui:error-marker:key");
-			request.removeAttribute("liferay-ui:error-marker:value");
+			httpServletRequest.removeAttribute("liferay-ui:error-marker:key");
+			httpServletRequest.removeAttribute("liferay-ui:error-marker:value");
 		}
 	}
 

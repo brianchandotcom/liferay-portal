@@ -35,15 +35,17 @@ public class FindEntryAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long entryId = ParamUtil.getLong(request, "entryId");
+		long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
 
-		response.sendRedirect(
+		httpServletResponse.sendRedirect(
 			themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" +
 				entryId);
 

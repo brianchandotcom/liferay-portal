@@ -41,12 +41,12 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	public EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		EditSiteTeamAssignmentsUserGroupsDisplayContext
 			editSiteTeamAssignmentsUserGroupsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			editSiteTeamAssignmentsUserGroupsDisplayContext.
 				getUserGroupSearchContainer());
 

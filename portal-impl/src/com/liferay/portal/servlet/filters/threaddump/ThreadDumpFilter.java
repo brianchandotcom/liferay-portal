@@ -35,8 +35,8 @@ public class ThreadDumpFilter
 
 	@Override
 	public void doFilterFinally(
-		HttpServletRequest request, HttpServletResponse response,
-		Object object) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Object object) {
 
 		ScheduledFuture<?> scheduledFuture = (ScheduledFuture<?>)object;
 
@@ -45,7 +45,8 @@ public class ThreadDumpFilter
 
 	@Override
 	public Object doFilterTry(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		return _scheduledExecutorService.schedule(
 			_threadDumper, PropsValues.THREAD_DUMP_SPEED_THRESHOLD,

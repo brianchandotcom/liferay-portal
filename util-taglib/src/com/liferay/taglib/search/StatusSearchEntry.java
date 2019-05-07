@@ -73,16 +73,16 @@ public class StatusSearchEntry extends TextSearchEntry {
 
 	@Override
 	public void print(
-			Writer writer, HttpServletRequest request,
-			HttpServletResponse response)
+			Writer writer, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-status:status", _status);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-status:statusByUserId",
 			_statusByUserId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-column-status:statusDate",
 			_statusDate);
 
@@ -91,15 +91,16 @@ public class StatusSearchEntry extends TextSearchEntry {
 				getServletContext(), _PAGE);
 
 		requestDispatcher.include(
-			request, new PipingServletResponse(response, writer));
+			httpServletRequest,
+			new PipingServletResponse(httpServletResponse, writer));
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
-	public void setResponse(HttpServletResponse response) {
-		_response = response;
+	public void setResponse(HttpServletResponse httpServletResponse) {
+		_response = httpServletResponse;
 	}
 
 	public void setServletContext(ServletContext servletContext) {

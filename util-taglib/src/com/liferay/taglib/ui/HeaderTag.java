@@ -112,34 +112,38 @@ public class HeaderTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:header:backLabel", _backLabel);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-ui:header:backLabel", _backLabel);
 
 		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(request, "redirect"));
+			ParamUtil.getString(httpServletRequest, "redirect"));
 
 		if (Validator.isNull(_backURL) && Validator.isNotNull(redirect)) {
-			request.setAttribute("liferay-ui:header:backURL", redirect);
+			httpServletRequest.setAttribute(
+				"liferay-ui:header:backURL", redirect);
 		}
 		else if (Validator.isNotNull(_backURL) &&
 				 !_backURL.equals("javascript:history.go(-1);")) {
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:header:backURL",
 				PortalUtil.escapeRedirect(_backURL));
 		}
 		else {
-			request.setAttribute("liferay-ui:header:backURL", _backURL);
+			httpServletRequest.setAttribute(
+				"liferay-ui:header:backURL", _backURL);
 		}
 
-		request.setAttribute("liferay-ui:header:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:header:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-ui:header:escapeXml", String.valueOf(_escapeXml));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:header:localizeTitle", String.valueOf(_localizeTitle));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:header:showBackURL", String.valueOf(_showBackURL));
-		request.setAttribute("liferay-ui:header:title", _title);
+		httpServletRequest.setAttribute("liferay-ui:header:title", _title);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

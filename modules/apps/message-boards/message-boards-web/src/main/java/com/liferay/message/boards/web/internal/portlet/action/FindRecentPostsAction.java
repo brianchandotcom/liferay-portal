@@ -46,14 +46,15 @@ public class FindRecentPostsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
+			long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, MBPortletKeys.MESSAGE_BOARDS, plid,
+				httpServletRequest, MBPortletKeys.MESSAGE_BOARDS, plid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
@@ -61,12 +62,12 @@ public class FindRecentPostsAction implements StrutsAction {
 			portletURL.setPortletMode(PortletMode.VIEW);
 			portletURL.setWindowState(WindowState.NORMAL);
 
-			response.sendRedirect(portletURL.toString());
+			httpServletResponse.sendRedirect(portletURL.toString());
 
 			return null;
 		}
 		catch (Exception e) {
-			_portal.sendError(e, request, response);
+			_portal.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}

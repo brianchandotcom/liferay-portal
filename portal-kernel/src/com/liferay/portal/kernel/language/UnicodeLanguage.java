@@ -28,33 +28,35 @@ import javax.servlet.http.HttpServletRequest;
 public interface UnicodeLanguage {
 
 	public String format(
-		HttpServletRequest request, String pattern, LanguageWrapper argument);
+		HttpServletRequest httpServletRequest, String pattern,
+		LanguageWrapper argument);
 
 	public String format(
-		HttpServletRequest request, String pattern, LanguageWrapper argument,
-		boolean translateArguments);
+		HttpServletRequest httpServletRequest, String pattern,
+		LanguageWrapper argument, boolean translateArguments);
 
 	public String format(
-		HttpServletRequest request, String pattern,
+		HttpServletRequest httpServletRequest, String pattern,
 		LanguageWrapper[] arguments);
 
 	public String format(
-		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
+		HttpServletRequest httpServletRequest, String pattern,
+		LanguageWrapper[] arguments, boolean translateArguments);
+
+	public String format(
+		HttpServletRequest httpServletRequest, String pattern, Object argument);
+
+	public String format(
+		HttpServletRequest httpServletRequest, String pattern, Object argument,
 		boolean translateArguments);
 
 	public String format(
-		HttpServletRequest request, String pattern, Object argument);
+		HttpServletRequest httpServletRequest, String pattern,
+		Object[] arguments);
 
 	public String format(
-		HttpServletRequest request, String pattern, Object argument,
-		boolean translateArguments);
-
-	public String format(
-		HttpServletRequest request, String pattern, Object[] arguments);
-
-	public String format(
-		HttpServletRequest request, String pattern, Object[] arguments,
-		boolean translateArguments);
+		HttpServletRequest httpServletRequest, String pattern,
+		Object[] arguments, boolean translateArguments);
 
 	public String format(Locale locale, String pattern, Object argument);
 
@@ -82,10 +84,10 @@ public interface UnicodeLanguage {
 		ResourceBundle resourceBundle, String pattern, Object[] arguments,
 		boolean translateArguments);
 
-	public String get(HttpServletRequest request, String key);
+	public String get(HttpServletRequest httpServletRequest, String key);
 
 	public String get(
-		HttpServletRequest request, String key, String defaultValue);
+		HttpServletRequest httpServletRequest, String key, String defaultValue);
 
 	public String get(Locale locale, String key);
 
@@ -97,9 +99,9 @@ public interface UnicodeLanguage {
 		ResourceBundle resourceBundle, String key, String defaultValue);
 
 	public String getTimeDescription(
-		HttpServletRequest request, long milliseconds);
+		HttpServletRequest httpServletRequest, long milliseconds);
 
 	public String getTimeDescription(
-		HttpServletRequest request, Long milliseconds);
+		HttpServletRequest httpServletRequest, Long milliseconds);
 
 }

@@ -77,9 +77,9 @@ public class PortletExportImportBackgroundTaskDisplay
 	}
 
 	@Override
-	public String getDisplayName(HttpServletRequest request) {
+	public String getDisplayName(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(backgroundTask.getName())) {
-			return LanguageUtil.get(request, "untitled");
+			return LanguageUtil.get(httpServletRequest, "untitled");
 		}
 
 		return portlet.getDisplayName();

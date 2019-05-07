@@ -29,17 +29,19 @@ public class WebLogicIncludeFilter
 
 	@Override
 	public HttpServletResponse getWrappedHttpServletResponse(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		WebLogicIncludeServletResponseFactory
 			webLogicIncludeServletResponseFactory =
 				_webLogicIncludeServletResponseFactory;
 
 		if (webLogicIncludeServletResponseFactory != null) {
-			return webLogicIncludeServletResponseFactory.create(response);
+			return webLogicIncludeServletResponseFactory.create(
+				httpServletResponse);
 		}
 
-		return response;
+		return httpServletResponse;
 	}
 
 	@Override

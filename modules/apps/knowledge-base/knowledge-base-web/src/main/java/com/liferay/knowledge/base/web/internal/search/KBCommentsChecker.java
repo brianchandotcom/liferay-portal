@@ -61,14 +61,14 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public String getAllRowsCheckBox(HttpServletRequest request) {
+	public String getAllRowsCheckBox(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
 	public String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String primaryKey) {
+		HttpServletRequest httpServletRequest, boolean checked,
+		boolean disabled, String primaryKey) {
 
 		long kbCommentId = GetterUtil.getLong(primaryKey);
 
@@ -102,7 +102,7 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 		String checkBoxRowIds = sb.toString();
 
 		return getRowCheckBox(
-			request, checked, disabled,
+			httpServletRequest, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				KBComment.class.getSimpleName(),
 			primaryKey, checkBoxRowIds, getAllRowIds(), StringPool.BLANK);

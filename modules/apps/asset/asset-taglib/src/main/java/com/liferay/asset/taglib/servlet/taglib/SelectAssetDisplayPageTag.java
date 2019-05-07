@@ -107,25 +107,25 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:classNameId",
 			String.valueOf(_classNameId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:classPK",
 			String.valueOf(_classPK));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:classTypeId",
 			String.valueOf(_classTypeId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:eventName", _eventName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:groupId",
 			String.valueOf(_groupId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:showPortletLayouts",
 			String.valueOf(_showPortletLayouts));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:select-asset-display-page:showViewInContextLink",
 			String.valueOf(_showViewInContextLink));
 	}

@@ -29,8 +29,8 @@ public class DefaultWikiViewPageDisplayContext
 	implements WikiViewPageDisplayContext {
 
 	public DefaultWikiViewPageDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
 	}
 
 	@Override

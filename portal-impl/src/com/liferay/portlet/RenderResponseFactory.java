@@ -37,7 +37,7 @@ public class RenderResponseFactory {
 	}
 
 	public static LiferayRenderResponse create(
-		RenderRequest renderRequest, HttpServletResponse response) {
+		RenderRequest renderRequest, HttpServletResponse httpServletResponse) {
 
 		while (renderRequest instanceof RenderRequestWrapper) {
 			RenderRequestWrapper renderRequestWrapper =
@@ -48,7 +48,8 @@ public class RenderResponseFactory {
 
 		RenderResponseImpl renderResponseImpl = new RenderResponseImpl();
 
-		renderResponseImpl.init((RenderRequestImpl)renderRequest, response);
+		renderResponseImpl.init(
+			(RenderRequestImpl)renderRequest, httpServletResponse);
 
 		return renderResponseImpl;
 	}

@@ -28,25 +28,27 @@ public interface WikiDisplayContextFactory extends DisplayContextFactory {
 
 	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(
 		WikiEditPageDisplayContext parentWikiEditPageDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage);
 
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
 		WikiListPagesDisplayContext parentWikiListPagesDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		WikiNode wikiNode);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiNode wikiNode);
 
 	public WikiNodeInfoPanelDisplayContext getWikiNodeInfoPanelDisplayContext(
 		WikiNodeInfoPanelDisplayContext parentWikiNodeInfoPanelDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public WikiPageInfoPanelDisplayContext getWikiPageInfoPanelDisplayContext(
 		WikiPageInfoPanelDisplayContext parentWikiPageInfoPanelDisplayContext,
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
 		WikiViewPageDisplayContext parentWikiViewPageDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage);
 
 }

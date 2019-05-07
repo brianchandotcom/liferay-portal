@@ -93,24 +93,25 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			setWorkflowTaskRenderRequestAttribute(request);
+			setWorkflowTaskRenderRequestAttribute(renderRequest);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
-				hideDefaultErrorMessage(request);
+				hideDefaultErrorMessage(renderRequest);
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Activate

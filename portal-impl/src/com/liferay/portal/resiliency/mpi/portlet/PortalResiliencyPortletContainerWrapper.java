@@ -63,35 +63,37 @@ public class PortalResiliencyPortletContainerWrapper
 	}
 
 	@Override
-	public void preparePortlet(HttpServletRequest request, Portlet portlet)
+	public void preparePortlet(
+			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.preparePortlet(request, portlet);
+		_portletContainer.preparePortlet(httpServletRequest, portlet);
 	}
 
 	@Override
 	public ActionResult processAction(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		SPIAgent spiAgent = getSPIAgentForPortlet(portlet);
 
 		if (spiAgent == null) {
-			return _portletContainer.processAction(request, response, portlet);
+			return _portletContainer.processAction(
+				httpServletRequest, httpServletResponse, portlet);
 		}
 
 		Object[] requestAttributeValues = captureRequestAttibutes(
-			request, _ACTION_REQUEST_ATTRIBUTE_NAMES);
+			httpServletRequest, _ACTION_REQUEST_ATTRIBUTE_NAMES);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.ACTION);
-		request.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
 
 		try {
-			spiAgent.service(request, response);
+			spiAgent.service(httpServletRequest, httpServletResponse);
 
-			return (ActionResult)request.getAttribute(
+			return (ActionResult)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_ACTION_RESULT);
 		}
 		catch (PortalResiliencyException pre) {
@@ -100,40 +102,42 @@ public class PortalResiliencyPortletContainerWrapper
 			return ActionResult.EMPTY_ACTION_RESULT;
 		}
 		finally {
-			request.removeAttribute(WebKeys.SPI_AGENT_ACTION_RESULT);
+			httpServletRequest.removeAttribute(WebKeys.SPI_AGENT_ACTION_RESULT);
 
 			restoreRequestAttibutes(
-				request, _ACTION_REQUEST_ATTRIBUTE_NAMES,
+				httpServletRequest, _ACTION_REQUEST_ATTRIBUTE_NAMES,
 				requestAttributeValues);
 		}
 	}
 
 	@Override
 	public List<Event> processEvent(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, Layout layout, Event event)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet,
+			Layout layout, Event event)
 		throws PortletContainerException {
 
 		SPIAgent spiAgent = getSPIAgentForPortlet(portlet);
 
 		if (spiAgent == null) {
 			return _portletContainer.processEvent(
-				request, response, portlet, layout, event);
+				httpServletRequest, httpServletResponse, portlet, layout,
+				event);
 		}
 
 		Object[] requestAttributeValues = captureRequestAttibutes(
-			request, _EVENT_REQUEST_ATTRIBUTE_NAMES);
+			httpServletRequest, _EVENT_REQUEST_ATTRIBUTE_NAMES);
 
-		request.setAttribute(WebKeys.SPI_AGENT_EVENT, event);
-		request.setAttribute(WebKeys.SPI_AGENT_LAYOUT, layout);
-		request.setAttribute(
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_EVENT, event);
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_LAYOUT, layout);
+		httpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.EVENT);
-		request.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
 
 		try {
-			spiAgent.service(request, response);
+			spiAgent.service(httpServletRequest, httpServletResponse);
 
-			return (List<Event>)request.getAttribute(
+			return (List<Event>)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_EVENT_RESULT);
 		}
 		catch (PortalResiliencyException pre) {
@@ -142,92 +146,96 @@ public class PortalResiliencyPortletContainerWrapper
 			return Collections.emptyList();
 		}
 		finally {
-			request.removeAttribute(WebKeys.SPI_AGENT_EVENT_RESULT);
+			httpServletRequest.removeAttribute(WebKeys.SPI_AGENT_EVENT_RESULT);
 
 			restoreRequestAttibutes(
-				request, _EVENT_REQUEST_ATTRIBUTE_NAMES,
+				httpServletRequest, _EVENT_REQUEST_ATTRIBUTE_NAMES,
 				requestAttributeValues);
 		}
 	}
 
 	@Override
 	public void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout) {
+		HttpServletRequest httpServletRequest, Layout layout) {
 
-		_portletContainer.processPublicRenderParameters(request, layout);
+		_portletContainer.processPublicRenderParameters(
+			httpServletRequest, layout);
 	}
 
 	@Override
 	public void processPublicRenderParameters(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
 		_portletContainer.processPublicRenderParameters(
-			request, layout, portlet);
+			httpServletRequest, layout, portlet);
 	}
 
 	@Override
 	public void render(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		_render(
-			request, response, portlet,
-			() -> _portletContainer.render(request, response, portlet));
+			httpServletRequest, httpServletResponse, portlet,
+			() -> _portletContainer.render(
+				httpServletRequest, httpServletResponse, portlet));
 	}
 
 	@Override
 	public void renderHeaders(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		_render(
-			request, response, portlet,
-			() -> _portletContainer.renderHeaders(request, response, portlet));
+			httpServletRequest, httpServletResponse, portlet,
+			() -> _portletContainer.renderHeaders(
+				httpServletRequest, httpServletResponse, portlet));
 	}
 
 	@Override
 	public void serveResource(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet)
 		throws PortletContainerException {
 
 		SPIAgent spiAgent = getSPIAgentForPortlet(portlet);
 
 		if (spiAgent == null) {
-			_portletContainer.serveResource(request, response, portlet);
+			_portletContainer.serveResource(
+				httpServletRequest, httpServletResponse, portlet);
 
 			return;
 		}
 
 		Object[] requestAttributeValues = captureRequestAttibutes(
-			request, _RESOURCE_REQUEST_ATTRIBUTE_NAMES);
+			httpServletRequest, _RESOURCE_REQUEST_ATTRIBUTE_NAMES);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.RESOURCE);
-		request.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
 
 		try {
-			spiAgent.service(request, response);
+			spiAgent.service(httpServletRequest, httpServletResponse);
 		}
 		catch (PortalResiliencyException pre) {
 			_log.error(pre, pre);
 		}
 		finally {
 			restoreRequestAttibutes(
-				request, _RESOURCE_REQUEST_ATTRIBUTE_NAMES,
+				httpServletRequest, _RESOURCE_REQUEST_ATTRIBUTE_NAMES,
 				requestAttributeValues);
 		}
 	}
 
 	protected Object[] captureRequestAttibutes(
-		HttpServletRequest request, String... names) {
+		HttpServletRequest httpServletRequest, String... names) {
 
 		Object[] values = new Object[names.length];
 
 		for (int i = 0; i < names.length; i++) {
-			values[i] = request.getAttribute(names[i]);
+			values[i] = httpServletRequest.getAttribute(names[i]);
 		}
 
 		return values;
@@ -258,24 +266,26 @@ public class PortalResiliencyPortletContainerWrapper
 	}
 
 	protected void restoreRequestAttibutes(
-		HttpServletRequest request, String[] names, Object[] values) {
+		HttpServletRequest httpServletRequest, String[] names,
+		Object[] values) {
 
 		for (int i = 0; i < names.length; i++) {
 			String name = names[i];
 			Object value = values[i];
 
 			if (value == null) {
-				request.removeAttribute(name);
+				httpServletRequest.removeAttribute(name);
 			}
 			else {
-				request.setAttribute(name, value);
+				httpServletRequest.setAttribute(name, value);
 			}
 		}
 	}
 
 	private void _render(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet, Renderable renderable)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Portlet portlet,
+			Renderable renderable)
 		throws PortletContainerException {
 
 		SPIAgent spiAgent = getSPIAgentForPortlet(portlet);
@@ -287,21 +297,21 @@ public class PortalResiliencyPortletContainerWrapper
 		}
 
 		Object[] requestAttributeValues = captureRequestAttibutes(
-			request, _RENDER_REQUEST_ATTRIBUTE_NAMES);
+			httpServletRequest, _RENDER_REQUEST_ATTRIBUTE_NAMES);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE, SPIAgent.Lifecycle.RENDER);
-		request.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+		httpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
 
 		try {
-			spiAgent.service(request, response);
+			spiAgent.service(httpServletRequest, httpServletResponse);
 		}
 		catch (PortalResiliencyException pre) {
 			_log.error(pre, pre);
 		}
 		finally {
 			restoreRequestAttibutes(
-				request, _RENDER_REQUEST_ATTRIBUTE_NAMES,
+				httpServletRequest, _RENDER_REQUEST_ATTRIBUTE_NAMES,
 				requestAttributeValues);
 		}
 	}

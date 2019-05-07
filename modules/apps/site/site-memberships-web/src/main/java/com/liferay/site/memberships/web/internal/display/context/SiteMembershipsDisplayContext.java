@@ -41,10 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteMembershipsDisplayContext {
 
 	public SiteMembershipsDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 

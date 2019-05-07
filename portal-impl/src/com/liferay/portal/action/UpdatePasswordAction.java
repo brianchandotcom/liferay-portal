@@ -61,26 +61,28 @@ public class UpdatePasswordAction implements Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		Ticket ticket = getTicket(request);
+		Ticket ticket = getTicket(httpServletRequest);
 
 		if ((ticket != null) &&
-			StringUtil.equals(request.getMethod(), HttpMethods.GET)) {
+			StringUtil.equals(
+				httpServletRequest.getMethod(), HttpMethods.GET)) {
 
-			resendAsPost(request, response);
+			resendAsPost(httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 
-		request.setAttribute(WebKeys.TICKET, ticket);
+		httpServletRequest.setAttribute(WebKeys.TICKET, ticket);
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			if (ticket != null) {
@@ -93,7 +95,7 @@ public class UpdatePasswordAction implements Action {
 						user.getUserId(), true);
 				}
 				catch (UserLockoutException ule) {
-					SessionErrors.add(request, ule.getClass(), ule);
+					SessionErrors.add(httpServletRequest, ule.getClass(), ule);
 				}
 			}
 
@@ -101,9 +103,11 @@ public class UpdatePasswordAction implements Action {
 		}
 
 		try {
-			updatePassword(request, response, themeDisplay, ticket);
+			updatePassword(
+				httpServletRequest, httpServletResponse, themeDisplay, ticket);
 
-			String redirect = ParamUtil.getString(request, WebKeys.REFERER);
+			String redirect = ParamUtil.getString(
+				httpServletRequest, WebKeys.REFERER);
 
 			if (Validator.isNotNull(redirect)) {
 				redirect = PortalUtil.escapeRedirect(redirect);
@@ -113,32 +117,32 @@ public class UpdatePasswordAction implements Action {
 				redirect = themeDisplay.getPathMain();
 			}
 
-			response.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(redirect);
 
 			return null;
 		}
 		catch (Exception e) {
 			if (e instanceof UserPasswordException) {
-				SessionErrors.add(request, e.getClass(), e);
+				SessionErrors.add(httpServletRequest, e.getClass(), e);
 
 				return actionMapping.getActionForward("portal.update_password");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(httpServletRequest, e.getClass());
 
 				return actionMapping.getActionForward("portal.error");
 			}
 
-			PortalUtil.sendError(e, request, response);
+			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
 	}
 
-	protected Ticket getTicket(HttpServletRequest request) {
-		String ticketKey = ParamUtil.getString(request, "ticketKey");
+	protected Ticket getTicket(HttpServletRequest httpServletRequest) {
+		String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
 		if (Validator.isNull(ticketKey)) {
 			return null;
@@ -165,8 +169,10 @@ public class UpdatePasswordAction implements Action {
 		return null;
 	}
 
-	protected boolean isValidatePassword(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	protected boolean isValidatePassword(
+		HttpServletRequest httpServletRequest) {
+
+		HttpSession session = httpServletRequest.getSession();
 
 		Boolean setupWizardPasswordUpdated = (Boolean)session.getAttribute(
 			WebKeys.SETUP_WIZARD_PASSWORD_UPDATED);
@@ -181,27 +187,29 @@ public class UpdatePasswordAction implements Action {
 	}
 
 	protected void resendAsPost(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		response.setHeader(
+		httpServletResponse.setHeader(
 			"Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0");
-		response.setHeader("Pragma", "no-cache");
+		httpServletResponse.setHeader("Expires", "0");
+		httpServletResponse.setHeader("Pragma", "no-cache");
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		StringBundler sb = new StringBundler(7 + parameterMap.size() * 5);
 
 		sb.append("<html><body onload=\"document.fm.submit();\">");
 		sb.append("<form action=\"");
-		sb.append(PortalUtil.getPortalURL(request));
+		sb.append(PortalUtil.getPortalURL(httpServletRequest));
 		sb.append("/c/portal/update_password\" method=\"post\" name=\"fm\">");
 
 		for (String name : parameterMap.keySet()) {
-			String value = ParamUtil.getString(request, name);
+			String value = ParamUtil.getString(httpServletRequest, name);
 
 			sb.append("<input name=\"");
 			sb.append(HtmlUtil.escapeAttribute(name));
@@ -220,12 +228,13 @@ public class UpdatePasswordAction implements Action {
 	}
 
 	protected void updatePassword(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay, Ticket ticket)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, ThemeDisplay themeDisplay,
+			Ticket ticket)
 		throws Exception {
 
 		AuthTokenUtil.checkCSRFToken(
-			request, UpdatePasswordAction.class.getName());
+			httpServletRequest, UpdatePasswordAction.class.getName());
 
 		long userId = 0;
 
@@ -236,14 +245,14 @@ public class UpdatePasswordAction implements Action {
 			userId = themeDisplay.getUserId();
 		}
 
-		String password1 = request.getParameter("password1");
-		String password2 = request.getParameter("password2");
+		String password1 = httpServletRequest.getParameter("password1");
+		String password2 = httpServletRequest.getParameter("password2");
 		boolean passwordReset = false;
 
 		boolean previousValidate = PwdToolkitUtilThreadLocal.isValidate();
 
 		try {
-			boolean currentValidate = isValidatePassword(request);
+			boolean currentValidate = isValidatePassword(httpServletRequest);
 
 			PwdToolkitUtilThreadLocal.setValidate(currentValidate);
 
@@ -280,7 +289,8 @@ public class UpdatePasswordAction implements Action {
 		}
 
 		AuthenticatedSessionManagerUtil.login(
-			request, response, login, password1, false, null);
+			httpServletRequest, httpServletResponse, login, password1, false,
+			null);
 	}
 
 }

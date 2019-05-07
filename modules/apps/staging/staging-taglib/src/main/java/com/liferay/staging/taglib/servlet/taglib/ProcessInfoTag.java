@@ -57,8 +57,8 @@ public class ProcessInfoTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-staging:process-info:backgroundTask", _backgroundTask);
 	}
 

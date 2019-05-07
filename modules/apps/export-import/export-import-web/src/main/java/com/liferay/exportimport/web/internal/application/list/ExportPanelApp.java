@@ -50,15 +50,16 @@ public class ExportPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
+	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getSiteGroup();
 
-		PortletURL portletURL = super.getPortletURL(request);
+		PortletURL portletURL = super.getPortletURL(httpServletRequest);
 
 		if ((!group.hasPublicLayouts() && group.hasPrivateLayouts()) ||
 			group.isLayoutSetPrototype()) {

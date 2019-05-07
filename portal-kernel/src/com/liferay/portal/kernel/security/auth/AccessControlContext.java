@@ -48,12 +48,12 @@ public class AccessControlContext {
 		_authVerifierResult = authVerifierResult;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
 	}
 
-	public void setResponse(HttpServletResponse response) {
-		_response = response;
+	public void setResponse(HttpServletResponse httpServletResponse) {
+		_response = httpServletResponse;
 	}
 
 	public static enum Settings {

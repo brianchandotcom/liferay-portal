@@ -30,9 +30,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InitDisplayContext {
 
-	public InitDisplayContext(HttpServletRequest request, String portletName) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public InitDisplayContext(
+		HttpServletRequest httpServletRequest, String portletName) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

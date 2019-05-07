@@ -42,12 +42,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK, boolean showMapping,
 		FragmentRendererController fragmentRendererController) {
 
 		super(
-			request, renderResponse, className, classPK,
+			httpServletRequest, renderResponse, className, classPK,
 			fragmentRendererController);
 
 		_showMapping = showMapping;

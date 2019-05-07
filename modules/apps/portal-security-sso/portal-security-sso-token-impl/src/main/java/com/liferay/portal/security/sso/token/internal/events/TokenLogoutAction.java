@@ -71,9 +71,12 @@ import org.osgi.service.component.annotations.Reference;
 public class TokenLogoutAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		try {
-			long companyId = _portal.getCompanyId(request);
+			long companyId = _portal.getCompanyId(httpServletRequest);
 
 			TokenConfiguration tokenCompanyServiceSettings =
 				_configurationProvider.getConfiguration(
@@ -94,7 +97,8 @@ public class TokenLogoutAction extends Action {
 
 				if (cookieLogoutProcessor != null) {
 					cookieLogoutProcessor.logout(
-						request, response, authenticationCookies);
+						httpServletRequest, httpServletResponse,
+						authenticationCookies);
 				}
 			}
 
@@ -107,7 +111,8 @@ public class TokenLogoutAction extends Action {
 
 				if (redirectLogoutProcessor != null) {
 					redirectLogoutProcessor.logout(
-						request, response, logoutRedirectURL);
+						httpServletRequest, httpServletResponse,
+						logoutRedirectURL);
 				}
 			}
 		}

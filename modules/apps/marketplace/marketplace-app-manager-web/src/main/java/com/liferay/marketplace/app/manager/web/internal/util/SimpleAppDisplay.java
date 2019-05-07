@@ -64,12 +64,13 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 	}
 
 	@Override
-	public String getIconURL(HttpServletRequest request) {
-		return PortalUtil.getPathContext(request) + "/images/icons.svg#apps";
+	public String getIconURL(HttpServletRequest httpServletRequest) {
+		return PortalUtil.getPathContext(httpServletRequest) +
+			"/images/icons.svg#apps";
 	}
 
 	@Override
-	public String getStoreURL(HttpServletRequest request) {
+	public String getStoreURL(HttpServletRequest httpServletRequest) {
 		return StringPool.BLANK;
 	}
 

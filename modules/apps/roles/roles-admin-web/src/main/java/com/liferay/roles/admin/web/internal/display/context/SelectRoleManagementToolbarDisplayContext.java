@@ -51,10 +51,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectRoleManagementToolbarDisplayContext {
 
 	public SelectRoleManagementToolbarDisplayContext(
-		HttpServletRequest request, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String eventName) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_eventName = eventName;

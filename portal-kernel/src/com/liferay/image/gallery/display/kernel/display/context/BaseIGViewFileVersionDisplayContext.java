@@ -34,10 +34,12 @@ public class BaseIGViewFileVersionDisplayContext
 
 	public BaseIGViewFileVersionDisplayContext(
 		UUID uuid, IGViewFileVersionDisplayContext parentIGDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		super(uuid, parentIGDisplayContext, request, response);
+		super(
+			uuid, parentIGDisplayContext, httpServletRequest,
+			httpServletResponse);
 
 		this.fileVersion = fileVersion;
 	}

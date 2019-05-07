@@ -34,9 +34,12 @@ public class BaseWikiListPagesDisplayContext
 
 	public BaseWikiListPagesDisplayContext(
 		UUID uuid, WikiListPagesDisplayContext parentDisplayContext,
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(
+			uuid, parentDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 	@Override

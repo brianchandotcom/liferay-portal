@@ -28,10 +28,13 @@ public abstract class BaseWikiDisplayContext<T extends WikiDisplayContext>
 	extends BaseDisplayContext<T> implements WikiDisplayContext {
 
 	public BaseWikiDisplayContext(
-		UUID uuid, T parentDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentDisplayContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		super(uuid, parentDisplayContext, request, response);
+		super(
+			uuid, parentDisplayContext, httpServletRequest,
+			httpServletResponse);
 	}
 
 }

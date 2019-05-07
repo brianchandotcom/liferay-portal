@@ -51,21 +51,21 @@ public class ActionRequestImpl
 
 	@Override
 	public void init(
-		HttpServletRequest request, Portlet portlet,
+		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
 		PortletPreferences preferences, long plid) {
 
 		super.init(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, preferences, plid);
+			httpServletRequest, portlet, invokerPortlet, portletContext,
+			windowState, portletMode, preferences, plid);
 
 		if (getPortletSpecMajorVersion() >= 3) {
 			String portletNamespace = PortalUtil.getPortletNamespace(
 				getPortletName());
 
 			_actionParameters = new ActionParametersImpl(
-				getPortletParameterMap(request, portletNamespace),
+				getPortletParameterMap(httpServletRequest, portletNamespace),
 				portletNamespace);
 		}
 	}

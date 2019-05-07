@@ -28,13 +28,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SitesDirectoryDisplayContext {
 
-	public SitesDirectoryDisplayContext(HttpServletRequest request)
+	public SitesDirectoryDisplayContext(HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_request = request;
+		_request = httpServletRequest;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

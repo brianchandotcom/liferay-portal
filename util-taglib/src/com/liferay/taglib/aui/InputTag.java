@@ -167,8 +167,8 @@ public class InputTag extends BaseInputTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		Object bean = getBean();
 
@@ -189,8 +189,9 @@ public class InputTag extends BaseInputTag {
 			if ((model != null) &&
 				ModelHintsUtil.hasField(model.getName(), "groupId")) {
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				defaultLanguageId = LocaleUtil.toLanguageId(
 					themeDisplay.getSiteDefaultLocale());
@@ -246,7 +247,8 @@ public class InputTag extends BaseInputTag {
 			}
 			else {
 				id = PortalUtil.getUniqueElementId(
-					request, StringPool.BLANK, AUIUtil.normalizeId(name));
+					httpServletRequest, StringPool.BLANK,
+					AUIUtil.normalizeId(name));
 			}
 		}
 
@@ -285,19 +287,23 @@ public class InputTag extends BaseInputTag {
 			wrappedField = true;
 		}
 
-		setNamespacedAttribute(request, "baseType", getBaseType());
-		setNamespacedAttribute(request, "bean", bean);
-		setNamespacedAttribute(request, "defaultLanguageId", defaultLanguageId);
-		setNamespacedAttribute(request, "field", field);
-		setNamespacedAttribute(request, "forLabel", forLabel);
-		setNamespacedAttribute(request, "formName", formName);
-		setNamespacedAttribute(request, "id", id);
-		setNamespacedAttribute(request, "label", label);
-		setNamespacedAttribute(request, "model", model);
-		setNamespacedAttribute(request, "title", String.valueOf(title));
-		setNamespacedAttribute(request, "wrappedField", wrappedField);
+		setNamespacedAttribute(httpServletRequest, "baseType", getBaseType());
+		setNamespacedAttribute(httpServletRequest, "bean", bean);
+		setNamespacedAttribute(
+			httpServletRequest, "defaultLanguageId", defaultLanguageId);
+		setNamespacedAttribute(httpServletRequest, "field", field);
+		setNamespacedAttribute(httpServletRequest, "forLabel", forLabel);
+		setNamespacedAttribute(httpServletRequest, "formName", formName);
+		setNamespacedAttribute(httpServletRequest, "id", id);
+		setNamespacedAttribute(httpServletRequest, "label", label);
+		setNamespacedAttribute(httpServletRequest, "model", model);
+		setNamespacedAttribute(
+			httpServletRequest, "title", String.valueOf(title));
+		setNamespacedAttribute(
+			httpServletRequest, "wrappedField", wrappedField);
 
-		request.setAttribute(getAttributeNamespace() + "value", getValue());
+		httpServletRequest.setAttribute(
+			getAttributeNamespace() + "value", getValue());
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
@@ -305,7 +311,7 @@ public class InputTag extends BaseInputTag {
 			(validatorTags.get("required") != null)) {
 
 			setNamespacedAttribute(
-				request, "required", Boolean.TRUE.toString());
+				httpServletRequest, "required", Boolean.TRUE.toString());
 		}
 	}
 

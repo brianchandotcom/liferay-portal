@@ -56,8 +56,8 @@ public class FiftyOneDegreesEngineProxy {
 		return _provider.dataSet;
 	}
 
-	public Device getDevice(HttpServletRequest request) {
-		String userAgent = request.getHeader("User-Agent");
+	public Device getDevice(HttpServletRequest httpServletRequest) {
+		String userAgent = httpServletRequest.getHeader("User-Agent");
 
 		try {
 			Match match = _provider.match(userAgent);

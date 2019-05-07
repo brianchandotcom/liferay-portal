@@ -43,7 +43,7 @@ public class InputAssetLinksTag extends AssetLinksTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		long assetEntryId = getAssetEntryId();
 		String className = getClassName();
 		long classPK = getClassPK();
@@ -67,10 +67,10 @@ public class InputAssetLinksTag extends AssetLinksTag {
 			}
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:input-asset-links:assetEntryId",
 			String.valueOf(assetEntryId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-asset:input-asset-links:className", className);
 	}
 

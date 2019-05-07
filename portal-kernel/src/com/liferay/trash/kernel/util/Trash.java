@@ -45,13 +45,13 @@ public interface Trash {
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";
 
 	public void addBaseModelBreadcrumbEntries(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
 		throws PortalException, PortletException;
 
 	public void addContainerModelBreadcrumbEntries(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
 		throws PortalException, PortletException;
@@ -98,14 +98,15 @@ public interface Trash {
 	public String getTrashTitle(long trashEntryId);
 
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, long trashEntryId)
+			HttpServletRequest httpServletRequest, long trashEntryId)
 		throws PortalException;
 
 	public PortletURL getViewContentURL(
-			HttpServletRequest request, String className, long classPK)
+			HttpServletRequest httpServletRequest, String className,
+			long classPK)
 		throws PortalException;
 
-	public PortletURL getViewURL(HttpServletRequest request)
+	public PortletURL getViewURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public boolean isInTrash(String className, long classPK)

@@ -30,10 +30,11 @@ public class AssetListEntryUsagesManagementToolbarDisplayContext
 	public AssetListEntryUsagesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request, SearchContainer searchContainer) {
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			searchContainer);
 	}
 

@@ -53,7 +53,8 @@ public class GoogleDocsDLDisplayContextFactory
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType) {
 
 		DDMStructure googleDocsDDMStructure =
@@ -61,8 +62,8 @@ public class GoogleDocsDLDisplayContextFactory
 
 		if (googleDocsDDMStructure != null) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
-				parentDLEditFileEntryDisplayContext, request, response,
-				dlFileEntryType);
+				parentDLEditFileEntryDisplayContext, httpServletRequest,
+				httpServletResponse, dlFileEntryType);
 		}
 
 		return parentDLEditFileEntryDisplayContext;
@@ -71,8 +72,8 @@ public class GoogleDocsDLDisplayContextFactory
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
 
 		Object model = fileEntry.getModel();
 
@@ -85,8 +86,8 @@ public class GoogleDocsDLDisplayContextFactory
 
 			if (googleDocsMetadataHelper.isGoogleDocs()) {
 				return new GoogleDocsDLEditFileEntryDisplayContext(
-					parentDLEditFileEntryDisplayContext, request, response,
-					fileEntry);
+					parentDLEditFileEntryDisplayContext, httpServletRequest,
+					httpServletResponse, fileEntry);
 			}
 		}
 
@@ -96,8 +97,8 @@ public class GoogleDocsDLDisplayContextFactory
 	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileShortcut fileShortcut) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		try {
 			long fileEntryId = fileShortcut.getToFileEntryId();
@@ -107,8 +108,8 @@ public class GoogleDocsDLDisplayContextFactory
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			return getDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
-				fileVersion);
+				parentDLViewFileVersionDisplayContext, httpServletRequest,
+				httpServletResponse, fileVersion);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -121,8 +122,8 @@ public class GoogleDocsDLDisplayContextFactory
 	@Override
 	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
 		Object model = fileVersion.getModel();
 
@@ -135,8 +136,8 @@ public class GoogleDocsDLDisplayContextFactory
 
 			if (googleDocsMetadataHelper.isGoogleDocs()) {
 				return new GoogleDocsDLViewFileVersionDisplayContext(
-					parentDLViewFileVersionDisplayContext, request, response,
-					fileVersion, googleDocsMetadataHelper);
+					parentDLViewFileVersionDisplayContext, httpServletRequest,
+					httpServletResponse, fileVersion, googleDocsMetadataHelper);
 			}
 		}
 

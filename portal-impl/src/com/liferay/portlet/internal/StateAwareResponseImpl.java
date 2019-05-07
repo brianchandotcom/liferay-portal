@@ -127,11 +127,12 @@ public abstract class StateAwareResponseImpl
 	}
 
 	public void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			User user, Layout layout, boolean setWindowStateAndPortletMode)
+			PortletRequestImpl portletRequestImpl,
+			HttpServletResponse httpServletResponse, User user, Layout layout,
+			boolean setWindowStateAndPortletMode)
 		throws PortletModeException, WindowStateException {
 
-		super.init(portletRequestImpl, response);
+		super.init(portletRequestImpl, httpServletResponse);
 
 		_user = user;
 		_layout = layout;

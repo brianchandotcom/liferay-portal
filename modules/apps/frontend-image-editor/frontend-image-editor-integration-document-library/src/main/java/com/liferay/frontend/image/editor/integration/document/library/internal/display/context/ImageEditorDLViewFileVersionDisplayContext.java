@@ -41,17 +41,19 @@ public class ImageEditorDLViewFileVersionDisplayContext
 
 	public ImageEditorDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle,
-		DLURLHelper dlURLHelper) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion,
+		ResourceBundle resourceBundle, DLURLHelper dlURLHelper) {
 
-		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+		super(
+			_UUID, parentDLDisplayContext, httpServletRequest,
+			httpServletResponse, fileVersion);
 
 		_resourceBundle = resourceBundle;
 
 		_imageEditorDLDisplayContextHelper =
 			new ImageEditorDLDisplayContextHelper(
-				fileVersion, request, dlURLHelper);
+				fileVersion, httpServletRequest, dlURLHelper);
 	}
 
 	@Override

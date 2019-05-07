@@ -141,29 +141,32 @@ public class FieldsetTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(_id) && Validator.isNotNull(_label) &&
 			_collapsible) {
 
 			String id = PortalUtil.getUniqueElementId(
-				request, _getNamespace(), AUIUtil.normalizeId(_label));
+				httpServletRequest, _getNamespace(),
+				AUIUtil.normalizeId(_label));
 
 			setId(_getNamespace() + id);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:fieldset:collapsed", String.valueOf(_collapsed));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:fieldset:collapsible",
 			String.valueOf(_collapsible));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-frontend:fieldset:column", String.valueOf(_column));
-		request.setAttribute("liferay-frontend:fieldset:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-frontend:fieldset:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:fieldset:helpMessage", _helpMessage);
-		request.setAttribute("liferay-frontend:fieldset:id", _id);
-		request.setAttribute("liferay-frontend:fieldset:label", _label);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-frontend:fieldset:id", _id);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:fieldset:label", _label);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:fieldset:localizeLabel",
 			String.valueOf(_localizeLabel));
 	}

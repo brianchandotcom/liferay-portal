@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogThreadCountAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Active Threads:\t" + Thread.activeCount());
 		}

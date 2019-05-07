@@ -55,15 +55,17 @@ public class RolesServlet extends BaseDDMFormBuilderServlet {
 
 	@Override
 	protected void doGet(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		JSONArray jsonArray = getRolesJSONArray();
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(response, jsonArray.toJSONString());
+		ServletResponseUtil.write(
+			httpServletResponse, jsonArray.toJSONString());
 	}
 
 	protected JSONArray getRolesJSONArray() {

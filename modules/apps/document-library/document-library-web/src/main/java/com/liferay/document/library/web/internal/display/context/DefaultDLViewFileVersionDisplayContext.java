@@ -74,8 +74,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	implements DLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
 			DLTrashUtil dlTrashUtil,
@@ -84,15 +84,15 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws PortalException {
 
 		this(
-			request, fileShortcut.getFileVersion(), fileShortcut,
+			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
 			dlTrashUtil, dlPreviewRendererProvider, versioningStrategy,
 			dlURLHelper);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashUtil dlTrashUtil,
@@ -100,7 +100,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
-			request, fileVersion, null, dlMimeTypeDisplayContext,
+			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine, dlTrashUtil,
 			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
@@ -284,7 +284,8 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public void renderCustomThumbnail(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Optional<DLPreviewRenderer> dlPreviewRendererOptional =
@@ -296,12 +297,14 @@ public class DefaultDLViewFileVersionDisplayContext
 					getThumbnailDLPreviewRendererOptional(_fileVersion);
 		}
 
-		_renderPreview(request, response, dlPreviewRendererOptional);
+		_renderPreview(
+			httpServletRequest, httpServletResponse, dlPreviewRendererOptional);
 	}
 
 	@Override
 	public void renderPreview(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Optional<DLPreviewRenderer> dlPreviewRendererOptional =
@@ -313,11 +316,12 @@ public class DefaultDLViewFileVersionDisplayContext
 					_fileVersion);
 		}
 
-		_renderPreview(request, response, dlPreviewRendererOptional);
+		_renderPreview(
+			httpServletRequest, httpServletResponse, dlPreviewRendererOptional);
 	}
 
 	private DefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest request, FileVersion fileVersion,
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
@@ -332,7 +336,8 @@ public class DefaultDLViewFileVersionDisplayContext
 			_storageEngine = storageEngine;
 			_dlPreviewRendererProvider = dlPreviewRendererProvider;
 
-			DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
+			DLRequestHelper dlRequestHelper = new DLRequestHelper(
+				httpServletRequest);
 
 			_dlPortletInstanceSettingsHelper =
 				new DLPortletInstanceSettingsHelper(dlRequestHelper);
@@ -346,13 +351,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileVersion, _resourceBundle, dlTrashUtil,
-					versioningStrategy, dlURLHelper);
+					httpServletRequest, fileVersion, _resourceBundle,
+					dlTrashUtil, versioningStrategy, dlURLHelper);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileShortcut, _resourceBundle, dlTrashUtil,
-					versioningStrategy, dlURLHelper);
+					httpServletRequest, fileShortcut, _resourceBundle,
+					dlTrashUtil, versioningStrategy, dlURLHelper);
 			}
 		}
 		catch (PortalException pe) {
@@ -416,7 +421,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private void _renderPreview(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Optional<DLPreviewRenderer> dlPreviewRendererOptional)
 		throws IOException, ServletException {
 
@@ -428,7 +434,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			DLPreviewRenderer dlPreviewRenderer =
 				dlPreviewRendererOptional.get();
 
-			dlPreviewRenderer.render(request, response);
+			dlPreviewRenderer.render(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof DLFileEntryPreviewGenerationException ||
@@ -455,7 +461,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			jspRenderer.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION, e);
 
-			jspRenderer.render(request, response);
+			jspRenderer.render(httpServletRequest, httpServletResponse);
 		}
 	}
 

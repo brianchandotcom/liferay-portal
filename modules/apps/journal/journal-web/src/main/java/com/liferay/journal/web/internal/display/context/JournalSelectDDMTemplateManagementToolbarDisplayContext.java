@@ -32,13 +32,13 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 	public JournalSelectDDMTemplateManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			JournalSelectDDMTemplateDisplayContext
 				journalSelectDDMTemplateDisplayContext)
 		throws Exception {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalSelectDDMTemplateDisplayContext.getTemplateSearch());
 
 		_journalSelectDDMTemplateDisplayContext =

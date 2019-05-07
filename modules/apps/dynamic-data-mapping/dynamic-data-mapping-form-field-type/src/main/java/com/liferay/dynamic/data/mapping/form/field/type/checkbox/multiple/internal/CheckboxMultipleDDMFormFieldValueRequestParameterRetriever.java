@@ -81,19 +81,20 @@ public class CheckboxMultipleDDMFormFieldValueRequestParameterRetriever
 	}
 
 	protected String[] getParameterValues(
-		HttpServletRequest request, String ddmFormFieldParameterName,
+		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String[] defaultDDMFormFieldParameterValues) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isLifecycleAction()) {
 			return ParamUtil.getParameterValues(
-				request, ddmFormFieldParameterName);
+				httpServletRequest, ddmFormFieldParameterName);
 		}
 
 		return ParamUtil.getParameterValues(
-			request, ddmFormFieldParameterName,
+			httpServletRequest, ddmFormFieldParameterName,
 			defaultDDMFormFieldParameterValues);
 	}
 

@@ -43,17 +43,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class NavItemUtil {
 
-	public static List<NavItem> getBranchNavItems(HttpServletRequest request)
+	public static List<NavItem> getBranchNavItems(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isRootLayout()) {
 			return Collections.singletonList(
-				new NavItem(request, themeDisplay, layout, null));
+				new NavItem(httpServletRequest, themeDisplay, layout, null));
 		}
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
@@ -64,20 +66,23 @@ public class NavItemUtil {
 			Layout ancestorLayout = ancestorLayouts.get(i);
 
 			navItems.add(
-				new NavItem(request, themeDisplay, ancestorLayout, null));
+				new NavItem(
+					httpServletRequest, themeDisplay, ancestorLayout, null));
 		}
 
-		navItems.add(new NavItem(request, themeDisplay, layout, null));
+		navItems.add(
+			new NavItem(httpServletRequest, themeDisplay, layout, null));
 
 		return navItems;
 	}
 
 	public static List<NavItem> getChildNavItems(
-		HttpServletRequest request, long siteNavigationMenuId,
+		HttpServletRequest httpServletRequest, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
@@ -104,7 +109,8 @@ public class NavItemUtil {
 
 				navItems.add(
 					new SiteNavigationMenuNavItem(
-						request, themeDisplay, siteNavigationMenuItem));
+						httpServletRequest, themeDisplay,
+						siteNavigationMenuItem));
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
@@ -117,20 +123,22 @@ public class NavItemUtil {
 	}
 
 	public static List<NavItem> getNavItems(
-			HttpServletRequest request, String rootLayoutType,
+			HttpServletRequest httpServletRequest, String rootLayoutType,
 			int rootLayoutLevel, String rootLayoutUuid,
 			List<NavItem> branchNavItems)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<NavItem> navItems = null;
 		NavItem rootNavItem = null;
 
 		if (rootLayoutType.equals("absolute")) {
 			if (rootLayoutLevel == 0) {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
+				navItems = NavItem.fromLayouts(
+					httpServletRequest, themeDisplay, null);
 			}
 			else if (branchNavItems.size() >= rootLayoutLevel) {
 				rootNavItem = branchNavItems.get(rootLayoutLevel - 1);
@@ -143,7 +151,8 @@ public class NavItemUtil {
 				int absoluteLevel = branchNavItems.size() - 1 - rootLayoutLevel;
 
 				if (absoluteLevel == -1) {
-					navItems = NavItem.fromLayouts(request, themeDisplay, null);
+					navItems = NavItem.fromLayouts(
+						httpServletRequest, themeDisplay, null);
 				}
 				else if ((absoluteLevel >= 0) &&
 						 (absoluteLevel < branchNavItems.size())) {
@@ -162,10 +171,11 @@ public class NavItemUtil {
 						layout.isPrivateLayout());
 
 				rootNavItem = new NavItem(
-					request, themeDisplay, rootLayout, null);
+					httpServletRequest, themeDisplay, rootLayout, null);
 			}
 			else {
-				navItems = NavItem.fromLayouts(request, themeDisplay, null);
+				navItems = NavItem.fromLayouts(
+					httpServletRequest, themeDisplay, null);
 			}
 		}
 

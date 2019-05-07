@@ -32,9 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 public class YouTubeDisplayContext {
 
 	public YouTubeDisplayContext(
-		HttpServletRequest request, PortletPreferences portletPreferences) {
+		HttpServletRequest httpServletRequest,
+		PortletPreferences portletPreferences) {
 
-		_request = request;
+		_request = httpServletRequest;
 		_portletPreferences = portletPreferences;
 	}
 

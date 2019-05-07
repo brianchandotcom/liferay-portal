@@ -25,8 +25,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class ServletRequestUtil {
 
-	public static void logRequestWrappers(HttpServletRequest request) {
-		HttpServletRequest tempRequest = request;
+	public static void logRequestWrappers(
+		HttpServletRequest httpServletRequest) {
+
+		HttpServletRequest tempRequest = httpServletRequest;
 
 		while (true) {
 			if (_log.isInfoEnabled()) {

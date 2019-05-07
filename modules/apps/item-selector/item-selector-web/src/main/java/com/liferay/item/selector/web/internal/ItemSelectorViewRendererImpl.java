@@ -75,12 +75,13 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 				@Override
 				public void renderHTML(
-						HttpServletRequest request,
-						HttpServletResponse response)
+						HttpServletRequest httpServletRequest,
+						HttpServletResponse httpServletResponse)
 					throws IOException, ServletException {
 
 					_itemSelectorView.renderHTML(
-						request, response, _itemSelectorCriterion, _portletURL,
+						httpServletRequest, httpServletResponse,
+						_itemSelectorCriterion, _portletURL,
 						_itemSelectedEventName, _search);
 				}
 

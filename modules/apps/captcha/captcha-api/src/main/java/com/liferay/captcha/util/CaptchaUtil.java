@@ -54,10 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CaptchaUtil {
 
-	public static void check(HttpServletRequest request)
+	public static void check(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		getCaptcha().check(request);
+		getCaptcha().check(httpServletRequest);
 	}
 
 	public static void check(PortletRequest portletRequest)
@@ -76,8 +76,8 @@ public class CaptchaUtil {
 		return getCaptcha().getTaglibPath();
 	}
 
-	public static boolean isEnabled(HttpServletRequest request) {
-		return getCaptcha().isEnabled(request);
+	public static boolean isEnabled(HttpServletRequest httpServletRequest) {
+		return getCaptcha().isEnabled(httpServletRequest);
 	}
 
 	public static boolean isEnabled(PortletRequest portletRequest) {
@@ -85,10 +85,11 @@ public class CaptchaUtil {
 	}
 
 	public static void serveImage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		getCaptcha().serveImage(request, response);
+		getCaptcha().serveImage(httpServletRequest, httpServletResponse);
 	}
 
 	public static void serveImage(

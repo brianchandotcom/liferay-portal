@@ -55,7 +55,7 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 
 	@Override
 	public String getDialogURL(
-			HttpServletRequest request, AssetRenderer assetRenderer)
+			HttpServletRequest httpServletRequest, AssetRenderer assetRenderer)
 		throws PortalException {
 
 		JournalArticle article = (JournalArticle)assetRenderer.getAssetObject();
@@ -65,9 +65,9 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 		try {
 			permissionURL = PermissionsURLTag.doTag(
 				StringPool.BLANK, JournalArticle.class.getName(),
-				article.getTitle(request.getLocale()), null,
+				article.getTitle(httpServletRequest.getLocale()), null,
 				String.valueOf(article.getResourcePrimKey()),
-				LiferayWindowState.POP_UP.toString(), null, request);
+				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

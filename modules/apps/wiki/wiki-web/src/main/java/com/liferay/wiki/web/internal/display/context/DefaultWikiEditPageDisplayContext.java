@@ -29,8 +29,8 @@ public class DefaultWikiEditPageDisplayContext
 	implements WikiEditPageDisplayContext {
 
 	public DefaultWikiEditPageDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
 	}
 
 	@Override

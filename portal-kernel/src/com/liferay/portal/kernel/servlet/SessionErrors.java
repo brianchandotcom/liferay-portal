@@ -39,24 +39,26 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionErrors {
 
-	public static void add(HttpServletRequest request, Class<?> clazz) {
-		add(_getPortalSession(request), clazz.getName());
+	public static void add(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		add(_getPortalSession(httpServletRequest), clazz.getName());
 	}
 
 	public static void add(
-		HttpServletRequest request, Class<?> clazz, Object value) {
+		HttpServletRequest httpServletRequest, Class<?> clazz, Object value) {
 
-		add(_getPortalSession(request), clazz.getName(), value);
+		add(_getPortalSession(httpServletRequest), clazz.getName(), value);
 	}
 
-	public static void add(HttpServletRequest request, String key) {
-		add(_getPortalSession(request), key);
+	public static void add(HttpServletRequest httpServletRequest, String key) {
+		add(_getPortalSession(httpServletRequest), key);
 	}
 
 	public static void add(
-		HttpServletRequest request, String key, Object value) {
+		HttpServletRequest httpServletRequest, String key, Object value) {
 
-		add(_getPortalSession(request), key, value);
+		add(_getPortalSession(httpServletRequest), key, value);
 	}
 
 	public static void add(HttpSession session, Class<?> clazz) {
@@ -119,8 +121,8 @@ public class SessionErrors {
 		map.put(key, value);
 	}
 
-	public static void clear(HttpServletRequest request) {
-		clear(_getPortalSession(request));
+	public static void clear(HttpServletRequest httpServletRequest) {
+		clear(_getPortalSession(httpServletRequest));
 	}
 
 	public static void clear(HttpSession session) {
@@ -139,18 +141,22 @@ public class SessionErrors {
 		}
 	}
 
-	public static boolean contains(HttpServletRequest request, Class<?> clazz) {
-		return contains(_getPortalSession(request), clazz.getName());
+	public static boolean contains(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		return contains(_getPortalSession(httpServletRequest), clazz.getName());
 	}
 
 	public static boolean contains(
-		HttpServletRequest request, Class<?>[] classes) {
+		HttpServletRequest httpServletRequest, Class<?>[] classes) {
 
-		return contains(_getPortalSession(request), classes);
+		return contains(_getPortalSession(httpServletRequest), classes);
 	}
 
-	public static boolean contains(HttpServletRequest request, String key) {
-		return contains(_getPortalSession(request), key);
+	public static boolean contains(
+		HttpServletRequest httpServletRequest, String key) {
+
+		return contains(_getPortalSession(httpServletRequest), key);
 	}
 
 	public static boolean contains(HttpSession session, Class<?> clazz) {
@@ -205,12 +211,16 @@ public class SessionErrors {
 		return map.containsKey(key);
 	}
 
-	public static Object get(HttpServletRequest request, Class<?> clazz) {
-		return get(_getPortalSession(request), clazz.getName());
+	public static Object get(
+		HttpServletRequest httpServletRequest, Class<?> clazz) {
+
+		return get(_getPortalSession(httpServletRequest), clazz.getName());
 	}
 
-	public static Object get(HttpServletRequest request, String key) {
-		return get(_getPortalSession(request), key);
+	public static Object get(
+		HttpServletRequest httpServletRequest, String key) {
+
+		return get(_getPortalSession(httpServletRequest), key);
 	}
 
 	public static Object get(HttpSession session, Class<?> clazz) {
@@ -241,8 +251,8 @@ public class SessionErrors {
 		return map.get(key);
 	}
 
-	public static boolean isEmpty(HttpServletRequest request) {
-		return isEmpty(_getPortalSession(request));
+	public static boolean isEmpty(HttpServletRequest httpServletRequest) {
+		return isEmpty(_getPortalSession(httpServletRequest));
 	}
 
 	public static boolean isEmpty(HttpSession session) {
@@ -265,8 +275,10 @@ public class SessionErrors {
 		return map.isEmpty();
 	}
 
-	public static Iterator<String> iterator(HttpServletRequest request) {
-		return iterator(_getPortalSession(request));
+	public static Iterator<String> iterator(
+		HttpServletRequest httpServletRequest) {
+
+		return iterator(_getPortalSession(httpServletRequest));
 	}
 
 	public static Iterator<String> iterator(HttpSession session) {
@@ -297,8 +309,8 @@ public class SessionErrors {
 		return set.iterator();
 	}
 
-	public static Set<String> keySet(HttpServletRequest request) {
-		return keySet(_getPortalSession(request));
+	public static Set<String> keySet(HttpServletRequest httpServletRequest) {
+		return keySet(_getPortalSession(httpServletRequest));
 	}
 
 	public static Set<String> keySet(HttpSession session) {
@@ -321,8 +333,8 @@ public class SessionErrors {
 		return Collections.unmodifiableSet(map.keySet());
 	}
 
-	public static void print(HttpServletRequest request) {
-		print(_getPortalSession(request));
+	public static void print(HttpServletRequest httpServletRequest) {
+		print(_getPortalSession(httpServletRequest));
 	}
 
 	public static void print(HttpSession session) {
@@ -341,8 +353,8 @@ public class SessionErrors {
 		}
 	}
 
-	public static int size(HttpServletRequest request) {
-		return size(_getPortalSession(request));
+	public static int size(HttpServletRequest httpServletRequest) {
+		return size(_getPortalSession(httpServletRequest));
 	}
 
 	public static int size(HttpSession session) {
@@ -416,9 +428,11 @@ public class SessionErrors {
 			createIfAbsent);
 	}
 
-	private static HttpSession _getPortalSession(HttpServletRequest request) {
+	private static HttpSession _getPortalSession(
+		HttpServletRequest httpServletRequest) {
+
 		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 		return originalRequest.getSession();
 	}

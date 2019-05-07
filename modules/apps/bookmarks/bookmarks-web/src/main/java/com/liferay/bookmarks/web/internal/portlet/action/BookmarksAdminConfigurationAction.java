@@ -47,7 +47,7 @@ public class BookmarksAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/bookmarks_admin/configuration.jsp";
 	}
 

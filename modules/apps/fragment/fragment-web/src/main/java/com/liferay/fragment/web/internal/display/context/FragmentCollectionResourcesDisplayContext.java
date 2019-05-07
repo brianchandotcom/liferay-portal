@@ -40,12 +40,12 @@ public class FragmentCollectionResourcesDisplayContext {
 
 	public FragmentCollectionResourcesDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		FragmentDisplayContext fragmentDisplayContext) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+		_request = httpServletRequest;
 		_fragmentDisplayContext = fragmentDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(

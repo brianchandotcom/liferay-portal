@@ -48,11 +48,11 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	public ViewUADEntitiesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		ViewUADEntitiesDisplay viewUADEntitiesDisplay) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			viewUADEntitiesDisplay.getSearchContainer());
 
 		_viewUADEntitiesDisplay = viewUADEntitiesDisplay;

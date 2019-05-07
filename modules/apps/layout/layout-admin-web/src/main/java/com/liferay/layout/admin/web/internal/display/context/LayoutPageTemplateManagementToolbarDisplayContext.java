@@ -47,17 +47,17 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	public LayoutPageTemplateManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateEntriesSearchContainer());
 
 		_layoutPageTemplateDisplayContext = layoutPageTemplateDisplayContext;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

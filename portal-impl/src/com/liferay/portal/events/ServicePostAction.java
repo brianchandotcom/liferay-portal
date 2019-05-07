@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ServicePostAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response) {
+	public void run(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		try {
 
 			// Make sure this is called only once per full request, ignore

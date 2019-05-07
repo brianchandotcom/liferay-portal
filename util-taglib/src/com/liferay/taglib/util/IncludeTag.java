@@ -261,15 +261,16 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	protected String getCustomPage(
-		ServletContext servletContext, HttpServletRequest request,
+		ServletContext servletContext, HttpServletRequest httpServletRequest,
 		String page) {
 
 		if (Validator.isNull(page)) {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay == null) {
 			return null;
@@ -387,14 +388,15 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 	}
 
-	protected void includePage(String page, HttpServletResponse response)
+	protected void includePage(
+			String page, HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, page);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(request, httpServletResponse);
 	}
 
 	protected boolean isCleanUpSetAttributes() {
@@ -485,7 +487,7 @@ public class IncludeTag extends AttributesTagSupport {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
 
 	protected boolean themeResourceExists(String page) throws Exception {
@@ -547,9 +549,10 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 
 		private TrackedServletRequest(
-			HttpServletRequest request, Set<String> setAttributeNames) {
+			HttpServletRequest httpServletRequest,
+			Set<String> setAttributeNames) {
 
-			super(request);
+			super(httpServletRequest);
 
 			_setAttributeNames = setAttributeNames;
 		}

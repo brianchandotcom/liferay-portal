@@ -79,9 +79,9 @@ public class PortletResourceStaticURLGenerator {
 		return urls;
 	}
 
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_request = httpServletRequest;
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

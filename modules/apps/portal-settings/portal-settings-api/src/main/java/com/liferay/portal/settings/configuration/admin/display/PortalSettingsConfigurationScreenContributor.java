@@ -61,7 +61,8 @@ public interface PortalSettingsConfigurationScreenContributor {
 	}
 
 	public default void setAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 	}
 
 }

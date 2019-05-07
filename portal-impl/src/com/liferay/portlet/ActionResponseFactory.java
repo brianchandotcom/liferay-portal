@@ -36,8 +36,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ActionResponseFactory {
 
 	public static LiferayActionResponse create(
-			ActionRequest actionRequest, HttpServletResponse response,
-			User user, Layout layout)
+			ActionRequest actionRequest,
+			HttpServletResponse httpServletResponse, User user, Layout layout)
 		throws PortletException {
 
 		while (actionRequest instanceof ActionRequestWrapper) {
@@ -50,7 +50,8 @@ public class ActionResponseFactory {
 		ActionResponseImpl actionResponseImpl = new ActionResponseImpl();
 
 		actionResponseImpl.init(
-			(ActionRequestImpl)actionRequest, response, user, layout, true);
+			(ActionRequestImpl)actionRequest, httpServletResponse, user, layout,
+			true);
 
 		return actionResponseImpl;
 	}

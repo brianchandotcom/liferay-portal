@@ -39,16 +39,17 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!_openIdConnect.isEnabled(companyId)) {
 			return null;
 		}
 
-		HttpSession httpSession = request.getSession(false);
+		HttpSession httpSession = httpServletRequest.getSession(false);
 
 		if (httpSession == null) {
 			return null;

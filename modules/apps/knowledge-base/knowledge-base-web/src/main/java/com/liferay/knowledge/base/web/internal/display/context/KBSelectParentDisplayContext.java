@@ -37,12 +37,12 @@ public class KBSelectParentDisplayContext {
 
 	public KBSelectParentDisplayContext(
 		long parentResourceClassNameId, long parentResourcePrimKey,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_parentResourceClassNameId = parentResourceClassNameId;
 		_parentResourcePrimKey = parentResourcePrimKey;
-		_request = request;
+		_request = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 

@@ -26,19 +26,20 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		if (isModuleRequest(request)) {
+		if (isModuleRequest(httpServletRequest)) {
 			return false;
 		}
 
-		return super.isFilterEnabled(request, response);
+		return super.isFilterEnabled(httpServletRequest, httpServletResponse);
 	}
 
-	protected boolean isModuleRequest(HttpServletRequest request) {
-		String contextPath = request.getContextPath();
+	protected boolean isModuleRequest(HttpServletRequest httpServletRequest) {
+		String contextPath = httpServletRequest.getContextPath();
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		String resourcePath = requestURI;
 

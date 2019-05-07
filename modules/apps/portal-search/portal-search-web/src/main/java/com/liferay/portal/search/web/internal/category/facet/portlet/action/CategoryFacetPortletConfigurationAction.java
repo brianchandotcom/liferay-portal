@@ -34,7 +34,7 @@ public class CategoryFacetPortletConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/category/facet/configuration.jsp";
 	}
 

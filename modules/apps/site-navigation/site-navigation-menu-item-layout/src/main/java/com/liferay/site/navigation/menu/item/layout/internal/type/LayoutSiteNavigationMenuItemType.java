@@ -133,35 +133,35 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getRegularURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
-		return layout.getRegularURL(request);
+		return layout.getRegularURL(httpServletRequest);
 	}
 
 	@Override
 	public String getResetLayoutURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
-		return layout.getResetLayoutURL(request);
+		return layout.getResetLayoutURL(httpServletRequest);
 	}
 
 	@Override
 	public String getResetMaxStateURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
-		return layout.getResetMaxStateURL(request);
+		return layout.getResetMaxStateURL(httpServletRequest);
 	}
 
 	@Override
@@ -370,44 +370,49 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public void renderAddPage(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/add_layout.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/add_layout.jsp");
 	}
 
 	@Override
 	public void renderEditPage(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.SEL_LAYOUT, _fetchLayout(siteNavigationMenuItem));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME,
 			_isUseCustomName(siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_layout.jsp");
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_layout.jsp");
 	}
 
 	private Layout _fetchLayout(SiteNavigationMenuItem siteNavigationMenuItem) {

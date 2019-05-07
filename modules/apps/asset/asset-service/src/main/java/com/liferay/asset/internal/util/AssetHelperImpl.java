@@ -98,15 +98,16 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public Set<String> addLayoutTags(
-		HttpServletRequest request, List<AssetTag> tags) {
+		HttpServletRequest httpServletRequest, List<AssetTag> tags) {
 
-		Set<String> tagNames = (Set<String>)request.getAttribute(
+		Set<String> tagNames = (Set<String>)httpServletRequest.getAttribute(
 			WebKeys.ASSET_LAYOUT_TAG_NAMES);
 
 		if (tagNames == null) {
 			tagNames = new HashSet<>();
 
-			request.setAttribute(WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
+			httpServletRequest.setAttribute(
+				WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
 		}
 
 		for (AssetTag tag : tags) {
@@ -419,11 +420,12 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public Hits search(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		return search(searchContext, assetEntryQuery, start, end);
 	}
@@ -458,11 +460,12 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public BaseModelSearchResult<AssetEntry> searchAssetEntries(
-			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
-			int start, int end)
+			HttpServletRequest httpServletRequest,
+			AssetEntryQuery assetEntryQuery, int start, int end)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
 	}

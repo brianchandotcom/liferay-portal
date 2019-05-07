@@ -36,8 +36,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
-	public WikiRequestHelper(HttpServletRequest request) {
-		super(request);
+	public WikiRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	public long getCategoryId() {

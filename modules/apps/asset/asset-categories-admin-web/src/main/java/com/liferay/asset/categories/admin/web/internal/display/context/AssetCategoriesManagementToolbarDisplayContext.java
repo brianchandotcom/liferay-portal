@@ -49,12 +49,12 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	public AssetCategoriesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			assetCategoriesDisplayContext.getCategoriesSearchContainer());
 
 		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;

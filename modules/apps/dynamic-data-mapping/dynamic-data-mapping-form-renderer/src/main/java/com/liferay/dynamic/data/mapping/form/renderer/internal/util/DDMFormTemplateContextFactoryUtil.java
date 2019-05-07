@@ -24,9 +24,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMFormTemplateContextFactoryUtil {
 
-	public static String getPathThemeImages(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public static String getPathThemeImages(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathThemeImages();
 	}

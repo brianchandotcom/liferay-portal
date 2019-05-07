@@ -48,12 +48,14 @@ public class AssetListSourceFormNavigatorEntry
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		request.setAttribute(AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
+		httpServletRequest.setAttribute(
+			AssetListWebKeys.DDM_INDEXER, _ddmIndexer);
 
-		super.include(request, response);
+		super.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

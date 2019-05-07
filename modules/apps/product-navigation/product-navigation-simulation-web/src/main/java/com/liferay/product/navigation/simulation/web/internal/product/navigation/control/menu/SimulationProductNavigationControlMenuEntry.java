@@ -90,13 +90,14 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
+	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
 
 	@Override
 	public boolean includeBody(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		BodyBottomTag bodyBottomTag = new BodyBottomTag();
@@ -105,7 +106,8 @@ public class SimulationProductNavigationControlMenuEntry
 
 		try {
 			bodyBottomTag.doBodyTag(
-				request, response, this::_processBodyBottomTagBody);
+				httpServletRequest, httpServletResponse,
+				this::_processBodyBottomTagBody);
 		}
 		catch (JspException je) {
 			throw new IOException(je);
@@ -116,11 +118,12 @@ public class SimulationProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		PortletURL simulationPanelURL = _portletURLFactory.create(
-			request,
+			httpServletRequest,
 			ProductNavigationSimulationPortletKeys.
 				PRODUCT_NAVIGATION_SIMULATION,
 			PortletRequest.RENDER_PHASE);
@@ -141,7 +144,9 @@ public class SimulationProductNavigationControlMenuEntry
 		iconTag.setMarkupView("lexicon");
 
 		try {
-			values.put("iconTag", iconTag.doTagAsString(request, response));
+			values.put(
+				"iconTag",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
 		}
 		catch (JspException je) {
 			ReflectionUtil.throwException(je);
@@ -149,9 +154,11 @@ public class SimulationProductNavigationControlMenuEntry
 
 		values.put("portletNamespace", _portletNamespace);
 		values.put("simulationPanelURL", simulationPanelURL.toString());
-		values.put("title", _html.escape(_language.get(request, "simulation")));
+		values.put(
+			"title",
+			_html.escape(_language.get(httpServletRequest, "simulation")));
 
-		Writer writer = response.getWriter();
+		Writer writer = httpServletResponse.getWriter();
 
 		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
@@ -159,9 +166,12 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -174,7 +184,7 @@ public class SimulationProductNavigationControlMenuEntry
 		}
 
 		String layoutMode = ParamUtil.getString(
-			request, "p_l_mode", Constants.VIEW);
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			return false;
@@ -188,7 +198,7 @@ public class SimulationProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return super.isShow(request);
+		return super.isShow(httpServletRequest);
 	}
 
 	@Reference(

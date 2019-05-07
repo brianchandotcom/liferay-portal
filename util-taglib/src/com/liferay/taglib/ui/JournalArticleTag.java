@@ -83,28 +83,28 @@ public class JournalArticleTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:articleId", _articleId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:articlePage",
 			String.valueOf(_articlePage));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:articleResourcePrimKey",
 			String.valueOf(_articleResourcePrimKey));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:ddmTemplateKey", _ddmTemplateKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:groupId", String.valueOf(_groupId));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:languageId", _languageId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:portletRequestModel",
 			_portletRequestModel);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:showAvailableLocales",
 			String.valueOf(_showAvailableLocales));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:journal-article:showTitle", String.valueOf(_showTitle));
 	}
 

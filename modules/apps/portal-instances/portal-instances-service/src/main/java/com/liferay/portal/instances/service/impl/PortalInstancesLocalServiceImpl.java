@@ -49,8 +49,8 @@ public class PortalInstancesLocalServiceImpl
 	}
 
 	@Override
-	public long getCompanyId(HttpServletRequest request) {
-		return PortalInstances.getCompanyId(request);
+	public long getCompanyId(HttpServletRequest httpServletRequest) {
+		return PortalInstances.getCompanyId(httpServletRequest);
 	}
 
 	@Override

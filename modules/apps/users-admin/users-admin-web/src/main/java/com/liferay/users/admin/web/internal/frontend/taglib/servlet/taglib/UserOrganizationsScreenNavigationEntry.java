@@ -62,7 +62,8 @@ public class UserOrganizationsScreenNavigationEntry
 
 	@Override
 	public boolean isEditable(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

@@ -46,12 +46,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static void copyPreferences(
-			HttpServletRequest request, Layout targetLayout,
+			HttpServletRequest httpServletRequest, Layout targetLayout,
 			Layout sourceLayout)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet sourceLayoutTypePortlet =
 			(LayoutTypePortlet)sourceLayout.getLayoutType();
@@ -64,14 +65,14 @@ public class ActionUtil {
 
 			PortletPreferencesIds portletPreferencesIds =
 				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-					request, targetLayout, sourcePortletId);
+					httpServletRequest, targetLayout, sourcePortletId);
 
 			PortletPreferencesLocalServiceUtil.getPreferences(
 				portletPreferencesIds);
 
 			PortletPreferencesIds sourcePortletPreferencesIds =
 				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-					request, sourceLayout, sourcePortletId);
+					httpServletRequest, sourceLayout, sourcePortletId);
 
 			PortletPreferences sourcePreferences =
 				PortletPreferencesLocalServiceUtil.getPreferences(
@@ -133,10 +134,12 @@ public class ActionUtil {
 		copyPreferences(request, targetLayout, sourceLayout);
 	}
 
-	public static Group getGroup(HttpServletRequest request) throws Exception {
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+	public static Group getGroup(HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
+
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		Group group = null;
 
@@ -144,13 +147,14 @@ public class ActionUtil {
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 		else if (!cmd.equals(Constants.ADD)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			group = themeDisplay.getSiteGroup();
 		}
 
-		request.setAttribute(WebKeys.GROUP, group);
+		httpServletRequest.setAttribute(WebKeys.GROUP, group);
 
 		return group;
 	}
@@ -165,11 +169,12 @@ public class ActionUtil {
 	}
 
 	public static void removePortletIds(
-			HttpServletRequest request, Layout layout)
+			HttpServletRequest httpServletRequest, Layout layout)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

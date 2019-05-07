@@ -38,11 +38,12 @@ public class BasicAuthHeaderAutoLoginSupport extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(request);
+			HttpAuthManagerUtil.parse(httpServletRequest);
 
 		if (httpAuthorizationHeader == null) {
 			return null;
@@ -59,7 +60,7 @@ public class BasicAuthHeaderAutoLoginSupport extends BaseAutoLogin {
 		}
 
 		long userId = HttpAuthManagerUtil.getUserId(
-			request, httpAuthorizationHeader);
+			httpServletRequest, httpAuthorizationHeader);
 
 		if (userId <= 0) {
 			throw new AuthException();

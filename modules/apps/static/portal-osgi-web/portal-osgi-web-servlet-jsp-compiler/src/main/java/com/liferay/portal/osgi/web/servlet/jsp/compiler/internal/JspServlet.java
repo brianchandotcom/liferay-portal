@@ -281,7 +281,8 @@ public class JspServlet extends HttpServlet {
 
 	@Override
 	public void service(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		Thread currentThread = Thread.currentThread();
@@ -292,11 +293,11 @@ public class JspServlet extends HttpServlet {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
 
 			if (_logVerbosityLevelDebug) {
-				String path = (String)request.getAttribute(
+				String path = (String)httpServletRequest.getAttribute(
 					RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 				if (path != null) {
-					String pathInfo = (String)request.getAttribute(
+					String pathInfo = (String)httpServletRequest.getAttribute(
 						RequestDispatcher.INCLUDE_PATH_INFO);
 
 					if (pathInfo != null) {
@@ -304,9 +305,9 @@ public class JspServlet extends HttpServlet {
 					}
 				}
 				else {
-					path = request.getServletPath();
+					path = httpServletRequest.getServletPath();
 
-					String pathInfo = request.getPathInfo();
+					String pathInfo = httpServletRequest.getPathInfo();
 
 					if (pathInfo != null) {
 						path += pathInfo;
@@ -318,7 +319,7 @@ public class JspServlet extends HttpServlet {
 						"[JSP DEBUG] ", _bundle, " invoking ", path));
 			}
 
-			_jspServlet.service(request, response);
+			_jspServlet.service(httpServletRequest, httpServletResponse);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

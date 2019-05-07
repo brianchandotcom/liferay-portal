@@ -37,15 +37,16 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSDisplayContext {
 
 	public RSSDisplayContext(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			RSSWebCacheConfiguration rssWebCacheConfiguration)
 		throws ConfigurationException {
 
-		_request = request;
+		_request = httpServletRequest;
 		_rssWebCacheConfiguration = rssWebCacheConfiguration;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

@@ -36,46 +36,58 @@ public class RelatedAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isEnablePermissions(HttpServletRequest request) {
+	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 
 	@Override
-	public boolean isOrderingAndGroupingEnabled(HttpServletRequest request) {
+	public boolean isOrderingAndGroupingEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return true;
 	}
 
 	@Override
-	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
+	public boolean isOrderingByTitleEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isSelectionStyleEnabled(HttpServletRequest request) {
+	public boolean isSelectionStyleEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isShowEnableRelatedAssets(HttpServletRequest request) {
+	public boolean isShowEnableRelatedAssets(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
-	public boolean isShowScopeSelector(HttpServletRequest request) {
+	public boolean isShowScopeSelector(HttpServletRequest httpServletRequest) {
 		return false;
 	}
 
 	@Override
-	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
+	public boolean isShowSubtypeFieldsFilter(
+		HttpServletRequest httpServletRequest) {
+
 		return false;
 	}
 
 	@Override
 	public void setAssetEntryQueryOptions(
-		AssetEntryQuery assetEntryQuery, HttpServletRequest request) {
+		AssetEntryQuery assetEntryQuery,
+		HttpServletRequest httpServletRequest) {
 
-		AssetEntry layoutAssetEntry = (AssetEntry)request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
+		AssetEntry layoutAssetEntry =
+			(AssetEntry)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY);
 
 		if (layoutAssetEntry != null) {
 			assetEntryQuery.setLinkedAssetEntryId(

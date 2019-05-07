@@ -65,14 +65,15 @@ public class WikiPageItemSelectorViewDisplayContext {
 	}
 
 	public PortletURL getPortletURL(
-			HttpServletRequest request,
+			HttpServletRequest httpServletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter("selectedTab", getTitle(request.getLocale()));
+		portletURL.setParameter(
+			"selectedTab", getTitle(httpServletRequest.getLocale()));
 
 		return portletURL;
 	}

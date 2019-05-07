@@ -76,11 +76,11 @@ public class DeletionsTag extends IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-staging:deletions:cmd", _cmd);
-		request.setAttribute(
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-staging:deletions:cmd", _cmd);
+		httpServletRequest.setAttribute(
 			"liferay-staging:deletions:disableInputs", _disableInputs);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-staging:deletions:exportImportConfigurationId",
 			_exportImportConfigurationId);
 	}

@@ -35,8 +35,9 @@ public class RecentContentAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
 
 	@Override
-	public Integer getDelta(HttpServletRequest request) {
-		PortletPreferences portletPreferences = getPortletPreferences(request);
+	public Integer getDelta(HttpServletRequest httpServletRequest) {
+		PortletPreferences portletPreferences = getPortletPreferences(
+			httpServletRequest);
 
 		return GetterUtil.getInteger(
 			portletPreferences.getValue("delta", null),
@@ -49,17 +50,21 @@ public class RecentContentAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isEnablePermissions(HttpServletRequest request) {
+	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 
 	@Override
-	public boolean isOrderingAndGroupingEnabled(HttpServletRequest request) {
+	public boolean isOrderingAndGroupingEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		return true;
 	}
 
 	@Override
-	public boolean isOrderingByTitleEnabled(HttpServletRequest request) {
+	public boolean isOrderingByTitleEnabled(
+		HttpServletRequest httpServletRequest) {
+
 		if (!assetPublisherWebConfiguration.searchWithIndex()) {
 			return false;
 		}
@@ -68,7 +73,9 @@ public class RecentContentAssetPublisherCustomizer
 	}
 
 	@Override
-	public boolean isShowSubtypeFieldsFilter(HttpServletRequest request) {
+	public boolean isShowSubtypeFieldsFilter(
+		HttpServletRequest httpServletRequest) {
+
 		return true;
 	}
 

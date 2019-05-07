@@ -34,7 +34,7 @@ public class IconHelpTag extends IconTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setCssClass("taglib-icon-help");
 		setIcon("question-circle-full");
 		setId(StringUtil.randomId());
@@ -48,7 +48,7 @@ public class IconHelpTag extends IconTag {
 
 		setToolTip(true);
 
-		super.setAttributes(request);
+		super.setAttributes(httpServletRequest);
 	}
 
 }

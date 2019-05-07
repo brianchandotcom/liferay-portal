@@ -29,10 +29,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static AnnouncementsEntry getEntry(HttpServletRequest request)
+	public static AnnouncementsEntry getEntry(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long entryId = ParamUtil.getLong(request, "entryId");
+		long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
 
 		if (entryId > 0) {
 			return AnnouncementsEntryServiceUtil.getEntry(entryId);

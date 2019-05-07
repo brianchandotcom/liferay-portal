@@ -34,11 +34,11 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	public OrphanPortletsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		OrphanPortletsDisplayContext orphanPortletsDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, request,
+			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			orphanPortletsDisplayContext.getOrphanPortletsSearchContainer());
 	}
 

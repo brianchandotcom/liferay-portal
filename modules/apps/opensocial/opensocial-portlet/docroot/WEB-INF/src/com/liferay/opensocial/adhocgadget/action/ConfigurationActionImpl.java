@@ -44,32 +44,33 @@ import org.apache.shindig.gadgets.spec.OAuthService;
 public class ConfigurationActionImpl extends BaseConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest request) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/adhoc_gadget/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (hasUserPrefs(portletConfig, request)) {
-			doInclude(portletConfig, request, response);
+		if (hasUserPrefs(portletConfig, httpServletRequest)) {
+			doInclude(portletConfig, httpServletRequest, httpServletResponse);
 		}
 
 		try {
-			Gadget gadget = getGadget(portletConfig, request);
+			Gadget gadget = getGadget(portletConfig, httpServletRequest);
 
 			Map<String, OAuthService> oAuthServices =
 				ShindigUtil.getOAuthServices(gadget.getUrl());
 
-			request.setAttribute(WebKeys.OAUTH_SERVICES, oAuthServices);
+			httpServletRequest.setAttribute(
+				WebKeys.OAUTH_SERVICES, oAuthServices);
 		}
 		catch (Exception e) {
 		}
 
-		super.include(portletConfig, request, response);
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -118,11 +119,12 @@ public class ConfigurationActionImpl extends BaseConfigurationAction {
 
 	@Override
 	protected Gadget getGadget(
-			PortletConfig portletConfig, HttpServletRequest request)
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		RenderRequest renderRequest =
+			(RenderRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 

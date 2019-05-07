@@ -27,16 +27,20 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionParamUtil {
 
-	public static boolean getBoolean(HttpServletRequest request, String param) {
-		return getBoolean(request, param, GetterUtil.DEFAULT_BOOLEAN);
+	public static boolean getBoolean(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getBoolean(
+			httpServletRequest, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
-		HttpServletRequest request, String param, boolean defaultValue) {
+		HttpServletRequest httpServletRequest, String param,
+		boolean defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			boolean value = GetterUtil.getBoolean(requestValue);
@@ -92,16 +96,19 @@ public class SessionParamUtil {
 		return defaultValue;
 	}
 
-	public static double getDouble(HttpServletRequest request, String param) {
-		return getDouble(request, param, GetterUtil.DEFAULT_DOUBLE);
+	public static double getDouble(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getDouble(httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
-		HttpServletRequest request, String param, double defaultValue) {
+		HttpServletRequest httpServletRequest, String param,
+		double defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			double value = GetterUtil.getDouble(requestValue);
@@ -125,12 +132,12 @@ public class SessionParamUtil {
 	}
 
 	public static double getDouble(
-		HttpServletRequest request, String param, double defaultValue,
-		Locale locale) {
+		HttpServletRequest httpServletRequest, String param,
+		double defaultValue, Locale locale) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			double value = GetterUtil.getDouble(requestValue, locale);
@@ -154,9 +161,10 @@ public class SessionParamUtil {
 	}
 
 	public static double getDouble(
-		HttpServletRequest request, String param, Locale locale) {
+		HttpServletRequest httpServletRequest, String param, Locale locale) {
 
-		return getDouble(request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+		return getDouble(
+			httpServletRequest, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDouble(
@@ -227,16 +235,19 @@ public class SessionParamUtil {
 			portletRequest, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
-	public static int getInteger(HttpServletRequest request, String param) {
-		return getInteger(request, param, GetterUtil.DEFAULT_INTEGER);
+	public static int getInteger(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getInteger(
+			httpServletRequest, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
-		HttpServletRequest request, String param, int defaultValue) {
+		HttpServletRequest httpServletRequest, String param, int defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			int value = GetterUtil.getInteger(requestValue);
@@ -290,16 +301,19 @@ public class SessionParamUtil {
 		return defaultValue;
 	}
 
-	public static long getLong(HttpServletRequest request, String param) {
-		return getLong(request, param, GetterUtil.DEFAULT_LONG);
+	public static long getLong(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getLong(httpServletRequest, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(
-		HttpServletRequest request, String param, long defaultValue) {
+		HttpServletRequest httpServletRequest, String param,
+		long defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			long value = GetterUtil.getLong(requestValue);
@@ -352,16 +366,19 @@ public class SessionParamUtil {
 		return defaultValue;
 	}
 
-	public static short getShort(HttpServletRequest request, String param) {
-		return getShort(request, param, GetterUtil.DEFAULT_SHORT);
+	public static short getShort(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getShort(httpServletRequest, param, GetterUtil.DEFAULT_SHORT);
 	}
 
 	public static short getShort(
-		HttpServletRequest request, String param, short defaultValue) {
+		HttpServletRequest httpServletRequest, String param,
+		short defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			short value = GetterUtil.getShort(requestValue);
@@ -415,16 +432,19 @@ public class SessionParamUtil {
 		return defaultValue;
 	}
 
-	public static String getString(HttpServletRequest request, String param) {
-		return getString(request, param, GetterUtil.DEFAULT_STRING);
+	public static String getString(
+		HttpServletRequest httpServletRequest, String param) {
+
+		return getString(httpServletRequest, param, GetterUtil.DEFAULT_STRING);
 	}
 
 	public static String getString(
-		HttpServletRequest request, String param, String defaultValue) {
+		HttpServletRequest httpServletRequest, String param,
+		String defaultValue) {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = httpServletRequest.getSession(false);
 
-		String requestValue = request.getParameter(param);
+		String requestValue = httpServletRequest.getParameter(param);
 
 		if (requestValue != null) {
 			String value = GetterUtil.getString(requestValue);

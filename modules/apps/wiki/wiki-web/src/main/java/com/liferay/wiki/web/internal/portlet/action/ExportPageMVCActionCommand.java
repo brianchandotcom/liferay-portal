@@ -133,8 +133,8 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 	protected void getFile(
 			long nodeId, String title, double version, String targetExtension,
 			PortletURL viewPageURL, PortletURL editPageURL,
-			ThemeDisplay themeDisplay, HttpServletRequest request,
-			HttpServletResponse response)
+			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		WikiPage page = _wikiPageService.getPage(nodeId, title, version);
@@ -216,7 +216,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentType);
+			httpServletRequest, httpServletResponse, fileName, is, contentType);
 	}
 
 	@Reference(unbind = "-")

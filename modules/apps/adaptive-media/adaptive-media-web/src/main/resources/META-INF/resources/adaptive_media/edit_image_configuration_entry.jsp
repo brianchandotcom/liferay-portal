@@ -179,5 +179,7 @@ if (amImageConfigurationEntry != null) {
 </liferay-frontend:edit-form>
 
 <c:if test="<%= configurationEntryEditable %>">
-	<liferay-frontend:component module="adaptive_media/js/EditAdaptiveMediaConfig.es" />
+	<liferay-frontend:component
+		module="adaptive_media/js/EditAdaptiveMediaConfig.es"
+	/>
 </c:if>

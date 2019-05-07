@@ -150,8 +150,9 @@ Map<String, Object> context = new HashMap<>();
 
 context.put("uuid", entryUuid);
 %>
+
 <liferay-frontend:component
-	componentId="<%= liferayPortletResponse.getNamespace() + "OptionsHandler" + entryUuid %>"
+	componentId='<%= liferayPortletResponse.getNamespace() + "OptionsHandler" + entryUuid %>'
 	context="<%= context %>"
 	module="adaptive_media/js/AdaptiveMediaOptionsHandler.es"
 />

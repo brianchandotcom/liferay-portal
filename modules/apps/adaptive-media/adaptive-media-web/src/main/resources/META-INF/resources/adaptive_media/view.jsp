@@ -167,17 +167,18 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 						context.put("adaptedImages", Math.min(adaptedImages, totalImages));
 						context.put("autoStartProgress", autoStartProgress);
+						context.put("autoStartProgress", autoStartProgress);
 						context.put("disabled", !amImageConfigurationEntry.isEnabled());
 						context.put("percentageUrl", adaptedImagesPercentageURL.toString());
 						context.put("totalImages", totalImages);
-						context.put("autoStartProgress", autoStartProgress);
 						context.put("uuid", uuid);
 						%>
+
 						<liferay-frontend:component
-							context="<%= context %>"
-							module="adaptive_media/js/AdaptiveMediaProgress.es"
 							componentId='<%= renderResponse.getNamespace() + "AdaptRemaining" + uuid %>'
 							containerId='<%= "#" + renderResponse.getNamespace() + "AdaptRemainingContainer_" + rowId %>'
+							context="<%= context %>"
+							module="adaptive_media/js/AdaptiveMediaProgress.es"
 						/>
 					</liferay-ui:search-container-column-text>
 

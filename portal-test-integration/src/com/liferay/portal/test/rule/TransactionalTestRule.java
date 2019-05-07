@@ -15,6 +15,7 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -24,7 +25,9 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 
 import java.io.Closeable;
 
@@ -45,11 +48,6 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Shuyang Zhou
@@ -254,12 +252,10 @@ public class TransactionalTestRule implements TestRule {
 		Deque<Object> transactionExecutors =
 			transactionExecutorsThreadLocal.get();
 
-		Bundle bundle = FrameworkUtil.getBundle(TransactionalTestRule.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
+		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceReference<?>[] serviceReferences =
-			bundleContext.getAllServiceReferences(
+			registry.getAllServiceReferences(
 				"com.liferay.portal.spring.transaction.TransactionExecutor",
 				"(origin.bundle.symbolic.name=" + originBundleSymbolicName +
 					")");
@@ -272,7 +268,7 @@ public class TransactionalTestRule implements TestRule {
 
 		ServiceReference<?> serviceReference = serviceReferences[0];
 
-		Object portletTransactionExecutor = bundleContext.getService(
+		Object portletTransactionExecutor = registry.getService(
 			serviceReference);
 
 		if (portletTransactionExecutor == transactionExecutors.peek()) {
@@ -285,7 +281,7 @@ public class TransactionalTestRule implements TestRule {
 		return () -> {
 			transactionExecutors.pop();
 
-			bundleContext.ungetService(serviceReference);
+			registry.ungetService(serviceReference);
 		};
 	}
 

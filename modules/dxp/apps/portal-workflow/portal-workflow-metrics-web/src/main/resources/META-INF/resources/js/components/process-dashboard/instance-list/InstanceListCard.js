@@ -1,9 +1,11 @@
+import React, { Fragment } from 'react';
 import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
+import InstanceListFilter from './InstanceListFilter';
 import InstanceListTable from './InstanceListTable';
 import ListView from '../../../shared/components/list/ListView';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar';
-import React from 'react';
+import { parse } from '../../../shared/components/router/queryString';
 import ReloadButton from '../../../shared/components/list/ReloadButton';
 
 class InstanceListCard extends React.Component {
@@ -26,6 +28,24 @@ class InstanceListCard extends React.Component {
 		this.loadInstances(nextProps);
 	}
 
+	getRequestUrl({ page, pageSize, processId, query } = this.props) {
+		const requestUrl = `/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`;
+
+		const filters = parse(query).filters;
+
+		if (typeof filters === 'object') {
+			return (
+				requestUrl +
+				Object.keys(filters).reduce(
+					(acc, cur) => `${acc}&${cur}=${filters[cur]}`,
+					''
+				)
+			);
+		}
+
+		return requestUrl;
+	}
+
 	@autobind
 	handleRequestError() {
 		this.setState({
@@ -36,16 +56,16 @@ class InstanceListCard extends React.Component {
 		});
 	}
 
-	loadInstances({ page, pageSize, processId } = this.props) {
+	loadInstances(props = this.props) {
 		const { loading } = this.state;
 
 		if (loading) {
 			return;
 		}
 
-		return this.requestData(
-			`/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`
-		)
+		const requestUrl = this.getRequestUrl(props);
+
+		return this.requestData(requestUrl)
 			.then(({ items, totalCount }) => {
 				this.setState({
 					items,
@@ -88,31 +108,39 @@ class InstanceListCard extends React.Component {
 
 	render() {
 		const { error, items = [], loading, totalCount } = this.state;
-		const { page, pageSize } = this.props;
+		const { page, pageSize, processId, query } = this.props;
 
 		const fetching = !loading && !totalCount;
 
 		return (
-			<div className="container-fluid-1280 mt-4">
-				<ListView
-					emptyActionButton={<ReloadButton />}
-					emptyMessageText={Liferay.Language.get(
-						'there-are-no-process-items-at-the-moment'
-					)}
-					errorMessageText={error}
-					fetching={fetching}
-					loading={loading}
-				>
-					<InstanceListTable items={items} />
+			<Fragment>
+				<InstanceListFilter
+					processId={processId}
+					query={query}
+					totalCount={totalCount}
+				/>
 
-					<PaginationBar
-						page={page}
-						pageCount={items.length}
-						pageSize={pageSize}
-						totalCount={totalCount}
-					/>
-				</ListView>
-			</div>
+				<div className="container-fluid-1280 mt-4">
+					<ListView
+						emptyActionButton={<ReloadButton />}
+						emptyMessageText={Liferay.Language.get(
+							'there-are-no-process-items-at-the-moment'
+						)}
+						errorMessageText={error}
+						fetching={fetching}
+						loading={loading}
+					>
+						<InstanceListTable items={items} />
+
+						<PaginationBar
+							page={page}
+							pageCount={items.length}
+							pageSize={pageSize}
+							totalCount={totalCount}
+						/>
+					</ListView>
+				</div>
+			</Fragment>
 		);
 	}
 }

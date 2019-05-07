@@ -19,7 +19,6 @@ import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -53,7 +52,6 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -385,11 +383,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 
-			boolean iconImage = false;
 			byte[] imageBytes = null;
 
 			if (image != null) {
-				iconImage = true;
 				imageBytes = image.getTextObj();
 			}
 
@@ -407,26 +403,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());
 
-			Map<Locale, String> nameMap = _targetLayout.getNameMap();
-			Map<Locale, String> titleMap = _targetLayout.getTitleMap();
-
-			LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(_sourceLayout.getPlid());
-
-			if (sourceLayoutPageTemplateEntry == null) {
-				nameMap = _sourceLayout.getNameMap();
-				titleMap = _sourceLayout.getTitleMap();
-			}
-
-			return _layoutLocalService.updateLayout(
-				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(), _targetLayout.getParentLayoutId(),
-				nameMap, titleMap, _sourceLayout.getDescriptionMap(),
-				_sourceLayout.getKeywordsMap(), _sourceLayout.getRobotsMap(),
-				_targetLayout.getType(), _targetLayout.isHidden(),
-				_targetLayout.getFriendlyURLMap(), iconImage, imageBytes,
-				serviceContext);
+			return _layoutLocalService.updateIconImage(
+				_targetLayout.getPlid(), imageBytes);
 		}
 
 		private CopyLayoutCallable(Layout sourceLayout, Layout targetLayout) {

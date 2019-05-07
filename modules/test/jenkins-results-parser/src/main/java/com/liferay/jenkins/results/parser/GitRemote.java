@@ -25,10 +25,6 @@ public class GitRemote {
 
 	public static final Pattern gitLsRemotePattern = Pattern.compile(
 		"(?<sha>[^\\s]{40}+)[\\s]+refs/(?<type>[^/]+)+/(?<name>[^\\s]+)");
-	public static final Pattern remoteURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"git@(?<hostname>[^:]+):(?<username>[^/]+)/",
-			"(?<gitRepositoryName>[^\\.]+)(.git)?"));
 
 	public String getGitRepositoryName() {
 		return _gitRepositoryName;
@@ -142,8 +138,7 @@ public class GitRemote {
 	}
 
 	protected void parseRemoteURL() {
-		Matcher remoteURLMatcher = _remoteURLMultiPattern.matches(
-			_fetchRemoteURL);
+		Matcher remoteURLMatcher = GitUtil.getRemoteURLMatcher(_fetchRemoteURL);
 
 		if (remoteURLMatcher == null) {
 			throw new RuntimeException(
@@ -153,7 +148,14 @@ public class GitRemote {
 		}
 
 		_hostname = remoteURLMatcher.group("hostname");
-		_username = remoteURLMatcher.group("username");
+
+		try {
+			_username = remoteURLMatcher.group("username");
+		}
+		catch (IllegalArgumentException iae) {
+			_username = "liferay";
+		}
+
 		_gitRepositoryName = remoteURLMatcher.group("gitRepositoryName");
 	}
 
@@ -161,11 +163,6 @@ public class GitRemote {
 		JenkinsResultsParserUtil.combine(
 			"(?<name>[^\\s]+)[\\s]+(?<remoteURL>[^\\s]+)[\\s]+\\(",
 			"(?<type>[^\\s]+)\\)"));
-	private static final MultiPattern _remoteURLMultiPattern = new MultiPattern(
-		"git@(?<hostname>[^:]+):(?<username>[^/]+)" +
-			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
-		"https://(?<hostname>[^/]+)/(?<username>[^/]+)" +
-			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*");
 
 	private final String _fetchRemoteURL;
 	private String _gitRepositoryName;

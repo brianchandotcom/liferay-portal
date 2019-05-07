@@ -702,10 +702,7 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Remote URL is null");
 		}
 
-		Matcher remoteURLMatcher = GitRemote.remoteURLPattern.matcher(
-			remoteURL);
-
-		if (!remoteURLMatcher.find()) {
+		if (!GitUtil.isValidRemoteURL(remoteURL)) {
 			throw new IllegalArgumentException(
 				"Invalid remote url " + remoteURL);
 		}
@@ -1496,10 +1493,7 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Remote URL is null");
 		}
 
-		Matcher remoteURLMatcher = GitRemote.remoteURLPattern.matcher(
-			remoteURL);
-
-		if (!remoteURLMatcher.find()) {
+		if (!GitUtil.isValidRemoteURL(remoteURL)) {
 			throw new IllegalArgumentException(
 				"Invalid remote url " + remoteURL);
 		}
@@ -1697,10 +1691,7 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Remote URL is null");
 		}
 
-		Matcher remoteURLMatcher = GitRemote.remoteURLPattern.matcher(
-			remoteURL);
-
-		if (!remoteURLMatcher.find()) {
+		if (!GitUtil.isValidRemoteURL(remoteURL)) {
 			throw new IllegalArgumentException(
 				"Invalid remote url " + remoteURL);
 		}

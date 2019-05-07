@@ -187,10 +187,7 @@ public class GitUtil {
 	public static List<RemoteGitRef> getRemoteGitRefs(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 
-		Matcher remoteURLMatcher = GitRemote.remoteURLPattern.matcher(
-			remoteURL);
-
-		if (!remoteURLMatcher.find()) {
+		if (!isValidRemoteURL(remoteURL)) {
 			throw new IllegalArgumentException(
 				"Invalid remote url " + remoteURL);
 		}
@@ -221,11 +218,20 @@ public class GitUtil {
 
 		List<RemoteGitRef> remoteGitRefs = new ArrayList<>();
 
+		Matcher remoteURLMatcher = getRemoteURLMatcher(remoteURL);
+
+		String username = "liferay";
+
+		try {
+			username = remoteURLMatcher.group("username");
+		}
+		catch (IllegalArgumentException iae) {
+		}
+
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
 				remoteURLMatcher.group("hostname"),
-				remoteURLMatcher.group("gitRepositoryName"),
-				remoteURLMatcher.group("username"));
+				remoteURLMatcher.group("gitRepositoryName"), username);
 
 		for (String line : input.split("\n")) {
 			Pattern gitLsRemotePattern = GitRemote.gitLsRemotePattern;
@@ -250,6 +256,10 @@ public class GitUtil {
 		return remoteGitRefs;
 	}
 
+	public static Matcher getRemoteURLMatcher(String remoteURL) {
+		return _remoteURLMultiPattern.matches(remoteURL);
+	}
+
 	public static boolean isValidGitHubRefURL(String gitHubURL) {
 		Matcher matcher = _gitHubRefURLPattern.matcher(gitHubURL);
 
@@ -258,6 +268,16 @@ public class GitUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isValidRemoteURL(String remoteURL) {
+		Matcher matcher = getRemoteURLMatcher(remoteURL);
+
+		if (matcher != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static class ExecutionResult {
@@ -377,5 +397,12 @@ public class GitUtil {
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",
 			"(?<gitRepositoryName>[^/]+)/tree/(?<refName>[^/]+)"));
+	private static final MultiPattern _remoteURLMultiPattern = new MultiPattern(
+		"git@(?<hostname>[^:]+):(?<username>[^/]+)" +
+			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
+		"https://(?<hostname>[^/]+)/(?<username>[^/]+)" +
+			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
+		"root@(?<hostname>[^:]+):/opt/dev/projects/github" +
+			"/(?<gitRepositoryName>[^\\\\.]+)");
 
 }

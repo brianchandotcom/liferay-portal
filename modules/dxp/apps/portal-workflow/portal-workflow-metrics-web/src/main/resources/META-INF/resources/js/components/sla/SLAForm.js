@@ -172,7 +172,7 @@ class SLAForm extends React.Component {
 			const callback = () => {
 				const { errors } = this.state;
 				const errorText = Liferay.Language.get(
-					'selected-option-is-no-longer-available-please-choose-another-option'
+					'selected-option-is-no-longer-available'
 				);
 				const {
 					pauseNodeKeys,

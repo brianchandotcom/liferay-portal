@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServ
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.headless.form.dto.v1_0.FieldValue;
+import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
@@ -134,7 +134,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			_ddmFormInstanceService.getFormInstance(formId);
 
 		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);
@@ -160,7 +160,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			ddmFormInstanceRecord.getFormInstance();
 
 		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);
@@ -175,7 +175,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	}
 
 	private DDMFormValues _createDDMFormValues(
-			DDMFormInstance ddmFormInstance, FieldValue[] fieldValues,
+			DDMFormInstance ddmFormInstance, FormFieldValue[] formFieldValues,
 			Locale locale)
 		throws Exception {
 
@@ -192,9 +192,9 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 		ddmFormValues.setDDMFormFieldValues(
 			transformToList(
-				fieldValues,
-				fieldValue -> _toDDMFormFieldValue(
-					ddmFormFieldsMap, fieldValue)));
+				formFieldValues,
+				formFieldValue -> _toDDMFormFieldValue(
+					ddmFormFieldsMap, formFieldValue)));
 
 		ddmFormValues.setDefaultLocale(locale);
 
@@ -307,19 +307,21 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	}
 
 	private DDMFormFieldValue _toDDMFormFieldValue(
-		Map<String, DDMFormField> ddmFormFieldsMap, FieldValue fieldValue) {
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		FormFieldValue formFieldValue) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setName(fieldValue.getName());
+		ddmFormFieldValue.setName(formFieldValue.getName());
 
 		Value value = _VALUE;
 
-		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldValue.getName());
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(
+			formFieldValue.getName());
 
 		if (ddmFormField != null) {
 			value = Optional.ofNullable(
-				fieldValue.getValue()
+				formFieldValue.getValue()
 			).map(
 				Object::toString
 			).map(

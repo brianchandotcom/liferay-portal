@@ -29,12 +29,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.headless.form.dto.v1_0.Column;
 import com.liferay.headless.form.dto.v1_0.Field;
-import com.liferay.headless.form.dto.v1_0.FormPage;
+import com.liferay.headless.form.dto.v1_0.FormLayoutPage;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
+import com.liferay.headless.form.dto.v1_0.FormSuccessPageSettings;
 import com.liferay.headless.form.dto.v1_0.Grid;
 import com.liferay.headless.form.dto.v1_0.Option;
 import com.liferay.headless.form.dto.v1_0.Row;
-import com.liferay.headless.form.dto.v1_0.SuccessPage;
 import com.liferay.headless.form.dto.v1_0.Validation;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -80,22 +80,22 @@ public class StructureUtil {
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				description = ddmStructure.getDescription(locale);
-				formPages = TransformUtil.transformToArray(
+				formLayoutPages = TransformUtil.transformToArray(
 					ddmFormLayout.getDDMFormLayoutPages(),
-					ddmFormLayoutPage -> _toFormPage(
+					ddmFormLayoutPage -> _toFormLayoutPage(
 						ddmFormLayoutPage, ddmStructure, locale),
-					FormPage.class);
+					FormLayoutPage.class);
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(locale);
 				siteId = ddmStructure.getGroupId();
 
-				setSuccessPage(
+				setFormSuccessPageSettings(
 					() -> {
 						if (!ddmFormSuccessPageSettings.isEnabled()) {
 							return null;
 						}
 
-						return new SuccessPage() {
+						return new FormSuccessPageSettings() {
 							{
 								description = _toString(
 									locale,
@@ -282,7 +282,7 @@ public class StructureUtil {
 		};
 	}
 
-	private static FormPage _toFormPage(
+	private static FormLayoutPage _toFormLayoutPage(
 		DDMFormLayoutPage ddmFormLayoutPage, DDMStructure ddmStructure,
 		Locale locale) {
 
@@ -314,7 +314,7 @@ public class StructureUtil {
 			DDMFormField[]::new
 		);
 
-		return new FormPage() {
+		return new FormLayoutPage() {
 			{
 				headline = _toString(locale, ddmFormLayoutPage.getTitle());
 				fields = TransformUtil.transform(

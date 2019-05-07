@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -90,13 +91,9 @@ public class OrganizationStagedModelDataHandler
 	public List<Organization> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<Organization> organizations = new ArrayList<>();
-
-		organizations.add(
+		return ListUtil.toList(
 			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				uuid, companyId));
-
-		return organizations;
 	}
 
 	@Override

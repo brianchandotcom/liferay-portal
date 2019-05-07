@@ -144,11 +144,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 	public List<String> getAvailableActionDropdownItems(
 		Organization organization) {
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
-		availableActionDropdownItems.add(Constants.DELETE);
-
-		return availableActionDropdownItems;
+		return ListUtil.toList(Constants.DELETE);
 	}
 
 	public List<String> getAvailableActionDropdownItems(User user) {

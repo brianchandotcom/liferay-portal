@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -471,11 +472,7 @@ public class JournalRSSUtil {
 
 		selfSyndLink.setRel("self");
 
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndLinks.add(selfSyndLink);
-
-		syndFeed.setLinks(syndLinks);
+		syndFeed.setLinks(ListUtil.toList(selfSyndLink));
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(feed.getName());

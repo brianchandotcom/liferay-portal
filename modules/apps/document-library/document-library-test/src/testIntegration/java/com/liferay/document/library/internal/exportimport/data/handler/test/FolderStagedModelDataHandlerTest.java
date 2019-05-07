@@ -42,10 +42,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -224,13 +224,9 @@ public class FolderStagedModelDataHandlerTest
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 
-		List<Long> dlFileEntryTypeIds = new ArrayList<>();
-
-		dlFileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
-
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
-			dlFolder, dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId(),
-			serviceContext);
+			dlFolder, ListUtil.toList(dlFileEntryType.getFileEntryTypeId()),
+			dlFileEntryType.getFileEntryTypeId(), serviceContext);
 
 		return folder;
 	}

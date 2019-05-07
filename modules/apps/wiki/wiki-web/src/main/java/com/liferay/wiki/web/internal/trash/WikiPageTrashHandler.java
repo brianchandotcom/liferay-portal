@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,11 +156,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<>();
-
-		containerModels.add(getParentContainerModel(classPK));
-
-		return containerModels;
+		return ListUtil.toList(getParentContainerModel(classPK));
 	}
 
 	@Override

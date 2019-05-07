@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -119,11 +119,7 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 		uadAnonymizer.deleteAll(user.getUserId());
 
-		List<T> baseModels = new ArrayList<>();
-
-		baseModels.add(deletedBaseModel);
-
-		deleteBaseModels(baseModels);
+		deleteBaseModels(ListUtil.toList(deletedBaseModel));
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 

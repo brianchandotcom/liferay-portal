@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -563,14 +564,10 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		DDMStructureVersion ddmStructureVersion = mock(
 			DDMStructureVersion.class);
 
-		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
-
-		ddmStructureVersions.add(ddmStructureVersion);
-
 		when(
 			ddmFormInstanceRecordExporter.getStructureVersions(1L)
 		).thenReturn(
-			ddmStructureVersions
+			ListUtil.toList(ddmStructureVersion)
 		);
 
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();

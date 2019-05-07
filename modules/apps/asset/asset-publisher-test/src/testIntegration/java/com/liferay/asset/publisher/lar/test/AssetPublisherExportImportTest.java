@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1138,11 +1139,7 @@ public class AssetPublisherExportImportTest
 	protected void testExportImportAssetEntries(Group scopeGroup)
 		throws Exception {
 
-		List<Group> groups = new ArrayList<>();
-
-		groups.add(scopeGroup);
-
-		testExportImportAssetEntries(groups);
+		testExportImportAssetEntries(ListUtil.toList(scopeGroup));
 	}
 
 	protected void testExportImportAssetEntries(List<Group> scopeGroups)

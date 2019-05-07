@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,13 +68,9 @@ public class PasswordPolicyStagedModelDataHandler
 	public List<PasswordPolicy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<PasswordPolicy> passwordPolicies = new ArrayList<>();
-
-		passwordPolicies.add(
+		return ListUtil.toList(
 			_passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(
 				uuid, companyId));
-
-		return passwordPolicies;
 	}
 
 	@Override

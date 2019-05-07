@@ -16,8 +16,8 @@ package com.liferay.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,12 +36,7 @@ public class MediaItemSelectorCriterionHandler
 		getItemSelectorViews(
 			MediaItemSelectorCriterion mediaItemSelectorCriterion) {
 
-		List<ItemSelectorView<MediaItemSelectorCriterion>> itemSelectorViews =
-			new ArrayList<>();
-
-		itemSelectorViews.add(new MediaItemSelectorView());
-
-		return itemSelectorViews;
+		return ListUtil.toList(new MediaItemSelectorView());
 	}
 
 }

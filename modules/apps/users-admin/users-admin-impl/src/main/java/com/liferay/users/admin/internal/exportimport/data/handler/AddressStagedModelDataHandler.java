@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,13 +78,9 @@ public class AddressStagedModelDataHandler
 	public List<Address> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<Address> addresses = new ArrayList<>();
-
-		addresses.add(
+		return ListUtil.toList(
 			_addressLocalService.fetchAddressByUuidAndCompanyId(
 				uuid, companyId));
-
-		return addresses;
 	}
 
 	@Override

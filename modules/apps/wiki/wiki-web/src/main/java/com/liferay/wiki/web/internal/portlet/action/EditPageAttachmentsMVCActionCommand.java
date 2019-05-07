@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -67,9 +68,7 @@ import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
 import com.liferay.wiki.web.internal.upload.TempAttachmentWikiUploadFileEntryHandler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -136,12 +135,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			Map<String, Object> data = new HashMap<>();
 
 			data.put(Constants.CMD, Constants.REMOVE);
-
-			List<TrashedModel> trashedModels = new ArrayList<>();
-
-			trashedModels.add(trashedModel);
-
-			data.put("trashedModels", trashedModels);
+			data.put("trashedModels", ListUtil.toList(trashedModel));
 
 			addDeleteSuccessData(actionRequest, data);
 		}

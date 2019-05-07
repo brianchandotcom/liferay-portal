@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.whip;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.File;
 
@@ -110,11 +111,7 @@ public class WhipTaskExtension {
 	}
 
 	protected Iterable<Object> getAsJvmArgs() {
-		List<Object> jvmArgs = new ArrayList<>(1);
-
-		jvmArgs.add(getWhipAgent());
-
-		return jvmArgs;
+		return ListUtil.toList(getWhipAgent());
 	}
 
 	protected Map<String, Object> getAsSystemProperties() {

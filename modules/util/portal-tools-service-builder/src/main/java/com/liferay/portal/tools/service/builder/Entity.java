@@ -639,13 +639,8 @@ public class Entity implements Comparable<Entity> {
 
 		for (EntityColumn entityColumn : _entityColumns) {
 			if (entityColumn.isUADUserId()) {
-				List<EntityColumn> uadAnonymizableEntityColumns =
-					new ArrayList<>();
-
-				uadAnonymizableEntityColumns.add(entityColumn);
-
 				uadAnonymizableEntityColumnsMap.put(
-					entityColumn.getName(), uadAnonymizableEntityColumns);
+					entityColumn.getName(), ListUtil.toList(entityColumn));
 			}
 		}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -107,11 +108,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
+			long bitwiseValue = getBitwiseValue(
+				bitwiseValues, ListUtil.toList(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId,
@@ -254,12 +252,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				"com.liferay.portlet.documentlibrary.model.DLFolder");
 
-			List<String> guestActionIds = new ArrayList<>();
-
-			guestActionIds.add(ActionKeys.VIEW);
-
 			long guestBitwiseValue = getBitwiseValue(
-				bitwiseValues, guestActionIds);
+				bitwiseValues, ListUtil.toList(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId, "com.liferay.portlet.documentlibrary.model.DLFolder",

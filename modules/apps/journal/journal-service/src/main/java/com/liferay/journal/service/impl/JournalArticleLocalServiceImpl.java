@@ -3572,12 +3572,8 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return journalArticleFinder.countByG_F(
-			groupId, folderIds, queryDefinition);
+			groupId, ListUtil.toList(folderId), queryDefinition);
 	}
 
 	/**
@@ -4501,13 +4497,9 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return search(
-			groupId, folderIds, LocaleUtil.getMostRelevantLocale(), status,
-			start, end);
+			groupId, ListUtil.toList(folderId),
+			LocaleUtil.getMostRelevantLocale(), status, start, end);
 	}
 
 	/**
@@ -5008,11 +5000,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
-		return searchCount(groupId, folderIds, status);
+		return searchCount(groupId, ListUtil.toList(folderId), status);
 	}
 
 	/**

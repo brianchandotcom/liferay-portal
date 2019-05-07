@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -46,11 +46,7 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 
 	@Override
 	public List<String> getEntryAuthors(User user) {
-		List<String> authors = new ArrayList<>();
-
-		authors.add(user.getFullName());
-
-		return authors;
+		return ListUtil.toList(user.getFullName());
 	}
 
 	@Override

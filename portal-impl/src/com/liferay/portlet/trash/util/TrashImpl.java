@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -166,11 +167,8 @@ public class TrashImpl implements Trash {
 	public void addTrashSessionMessages(
 		ActionRequest actionRequest, TrashedModel trashedModel, String cmd) {
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		trashedModels.add(trashedModel);
-
-		addTrashSessionMessages(actionRequest, trashedModels, cmd);
+		addTrashSessionMessages(
+			actionRequest, ListUtil.toList(trashedModel), cmd);
 	}
 
 	@Override

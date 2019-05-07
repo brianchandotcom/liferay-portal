@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -56,11 +57,7 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public int countByOrganizationId(long organizationId) {
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
-		return countByOrganizationIds(organizationIds);
+		return countByOrganizationIds(ListUtil.toList(organizationId));
 	}
 
 	@Override
@@ -165,11 +162,8 @@ public class BlogsStatsUserFinderImpl
 		long organizationId, int start, int end,
 		OrderByComparator<BlogsStatsUser> obc) {
 
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
-		return findByOrganizationIds(organizationIds, start, end, obc);
+		return findByOrganizationIds(
+			ListUtil.toList(organizationId), start, end, obc);
 	}
 
 	@Override

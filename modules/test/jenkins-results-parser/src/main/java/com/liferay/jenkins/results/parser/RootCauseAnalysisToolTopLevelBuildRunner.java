@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -203,11 +205,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 			LocalGitCommit localGitCommit = localGitCommits.get(0);
 
-			List<String> portalBranchSHAList = new ArrayList<>();
-
-			portalBranchSHAList.add(localGitCommit.getSHA());
-
-			return portalBranchSHAList;
+			return ListUtil.toList(localGitCommit.getSHA());
 		}
 
 		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAs);

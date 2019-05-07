@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,13 +65,9 @@ public class WebsiteStagedModelDataHandler
 	public List<Website> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<Website> websites = new ArrayList<>();
-
-		websites.add(
+		return ListUtil.toList(
 			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
 				uuid, companyId));
-
-		return websites;
 	}
 
 	@Override

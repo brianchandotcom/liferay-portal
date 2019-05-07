@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -66,12 +66,8 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
 		return countByOrganizationIds(
-			organizationIds, displayDate, queryDefinition);
+			ListUtil.toList(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override
@@ -195,12 +191,8 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
 		return findByOrganizationIds(
-			organizationIds, displayDate, queryDefinition);
+			ListUtil.toList(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override

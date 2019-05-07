@@ -29,6 +29,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONObjectUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -234,12 +235,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected List<DDMFormFieldValue> createSeparatorNestedDDMFormFieldValues(
 		int index, String instanceId) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
-
-		ddmFormFieldValues.add(
+		return ListUtil.toList(
 			createTextBoxDDMFormFieldValue(index, instanceId));
-
-		return ddmFormFieldValues;
 	}
 
 	protected DDMFormFieldValue createTextBoxDDMFormFieldValue(

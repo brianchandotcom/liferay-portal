@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,11 +52,7 @@ public class FolderAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(Folder folder) {
-		List<String> authors = new ArrayList<>();
-
-		authors.add(folder.getUserName());
-
-		return authors;
+		return ListUtil.toList(folder.getUserName());
 	}
 
 	@Override

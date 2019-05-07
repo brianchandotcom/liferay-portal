@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -639,12 +640,9 @@ public class JournalArticleServiceTest {
 	protected int countArticlesByKeyword(String keyword, int status)
 		throws Exception {
 
-		List<Long> folderIds = new ArrayList<>(1);
-
-		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		return JournalArticleLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			ListUtil.toList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, true);
 	}
@@ -694,12 +692,9 @@ public class JournalArticleServiceTest {
 			String keyword, int status)
 		throws Exception {
 
-		List<Long> folderIds = new ArrayList<>(1);
-
-		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		return JournalArticleLocalServiceUtil.search(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			ListUtil.toList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);

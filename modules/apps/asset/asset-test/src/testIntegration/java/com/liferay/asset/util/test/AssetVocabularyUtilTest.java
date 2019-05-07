@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -110,13 +111,10 @@ public class AssetVocabularyUtilTest {
 	public void testGetUnambiguousVocabularyTitleWithoutAmbiguity()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies = new ArrayList<>();
-
-		vocabularies.add(_companyVocabulary);
-
 		String unambiguousCompanyVocabularyTitle =
 			_companyVocabulary.getUnambiguousTitle(
-				vocabularies, _group.getGroupId(), _LOCALE);
+				ListUtil.toList(_companyVocabulary), _group.getGroupId(),
+				_LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousCompanyVocabularyTitle);
 	}

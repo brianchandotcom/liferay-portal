@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,13 +66,9 @@ public class UserGroupStagedModelDataHandler
 	public List<UserGroup> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<UserGroup> userGroups = new ArrayList<>();
-
-		userGroups.add(
+		return ListUtil.toList(
 			_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 				uuid, companyId));
-
-		return userGroups;
 	}
 
 	@Override

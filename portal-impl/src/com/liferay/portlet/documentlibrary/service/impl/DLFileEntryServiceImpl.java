@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -350,12 +351,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return dlFileEntryFinder.filterCountByG_F(
-			groupId, folderIds, new QueryDefinition<>(status));
+			groupId, ListUtil.toList(folderId), new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -378,12 +375,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getFileEntriesCount(
 		long groupId, long folderId, String[] mimeTypes, int status) {
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return dlFileEntryFinder.filterCountByG_U_F_M(
-			groupId, 0, folderIds, mimeTypes, new QueryDefinition<>(status));
+			groupId, 0, ListUtil.toList(folderId), mimeTypes,
+			new QueryDefinition<>(status));
 	}
 
 	@Override

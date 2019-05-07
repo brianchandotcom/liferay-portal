@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -533,11 +534,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public Enumeration<String> getResponseContentTypes() {
-		List<String> responseContentTypes = new ArrayList<>();
-
-		responseContentTypes.add(getResponseContentType());
-
-		return Collections.enumeration(responseContentTypes);
+		return Collections.enumeration(
+			ListUtil.toList(getResponseContentType()));
 	}
 
 	@Override

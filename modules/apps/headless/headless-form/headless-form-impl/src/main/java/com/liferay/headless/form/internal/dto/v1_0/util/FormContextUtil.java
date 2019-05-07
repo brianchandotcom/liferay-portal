@@ -18,9 +18,9 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormFieldContext;
+import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormPageContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -40,7 +40,7 @@ public class FormContextUtil {
 			DDMFormInstance ddmFormInstance,
 			DDMFormRenderingContext ddmFormRenderingContext,
 			DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
-			FieldValue[] fieldValues, Locale locale)
+			FormFieldValue[] fieldValues, Locale locale)
 		throws Exception {
 
 		ddmFormRenderingContext.setDDMFormValues(

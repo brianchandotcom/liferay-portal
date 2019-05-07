@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.headless.form.dto.v1_0.FieldValue;
+import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
@@ -36,7 +36,7 @@ import java.util.Optional;
 public class DDMFormValuesUtil {
 
 	public static DDMFormValues toDDMFormValues(
-			DDMFormInstance ddmFormInstance, FieldValue[] fieldValues,
+			DDMFormInstance ddmFormInstance, FormFieldValue[] fieldValues,
 			Locale locale)
 		throws Exception {
 
@@ -63,7 +63,7 @@ public class DDMFormValuesUtil {
 	}
 
 	private static DDMFormFieldValue _toDDMFormFieldValue(
-		Map<String, DDMFormField> ddmFormFieldsMap, FieldValue fieldValue,
+		Map<String, DDMFormField> ddmFormFieldsMap, FormFieldValue fieldValue,
 		Locale locale) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();

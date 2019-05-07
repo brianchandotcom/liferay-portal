@@ -129,7 +129,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			_ddmFormInstanceService.getFormInstance(formId);
 
 		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);
@@ -155,7 +155,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			ddmFormInstanceRecord.getFormInstance();
 
 		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			ddmFormInstance, formRecord.getFieldValues(),
+			ddmFormInstance, formRecord.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
 		_linkFileEntries(ddmFormInstance.getDDMForm(), ddmFormValues);

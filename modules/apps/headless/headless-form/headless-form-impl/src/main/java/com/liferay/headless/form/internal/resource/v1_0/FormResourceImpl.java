@@ -104,7 +104,8 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 
 		return FormContextUtil.evaluateContext(
 			ddmFormInstance, ddmFormRenderingContext,
-			_ddmFormTemplateContextFactory, formContextForm.getFieldValues(),
+			_ddmFormTemplateContextFactory,
+			formContextForm.getFormFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
 

@@ -33,7 +33,9 @@ import java.util.TreeMap;
  */
 public class DTOOpenAPIParser {
 
-	public static Map<String, Schema> getEnumSchemas(Schema schema) {
+	public static Map<String, Schema> getEnumSchemas(
+		OpenAPIYAML openAPIYAML, Schema schema) {
+
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
 		if (propertySchemas == null) {
@@ -50,7 +52,7 @@ public class DTOOpenAPIParser {
 
 			if ((enumValues != null) && !enumValues.isEmpty()) {
 				enumSchemas.put(
-					StringUtil.upperCaseFirstLetter(propertySchemaName),
+					_getEnumName(openAPIYAML, propertySchemaName),
 					propertySchema);
 			}
 		}
@@ -74,7 +76,8 @@ public class DTOOpenAPIParser {
 			String propertyName = _getPropertyName(
 				propertySchema, propertySchemaName);
 			String propertyType = _getPropertyType(
-				javaDataTypeMap, propertySchema, propertySchemaName);
+				javaDataTypeMap, openAPIYAML, propertySchema,
+				propertySchemaName);
 
 			properties.put(propertyName, propertyType);
 		}
@@ -141,6 +144,32 @@ public class DTOOpenAPIParser {
 		return false;
 	}
 
+	private static String _getEnumName(
+		OpenAPIYAML openAPIYAML, String propertySchemaName) {
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+
+		for (String schemaName : schemas.keySet()) {
+			if (propertySchemaName.length() <= schemaName.length()) {
+				continue;
+			}
+
+			if (StringUtil.startsWith(
+					StringUtil.toLowerCase(propertySchemaName),
+					StringUtil.toLowerCase(schemaName))) {
+
+				String suffix = propertySchemaName.substring(
+					schemaName.length());
+
+				if (Character.isUpperCase(suffix.charAt(0))) {
+					return schemaName + suffix;
+				}
+			}
+		}
+
+		return StringUtil.upperCaseFirstLetter(propertySchemaName);
+	}
+
 	private static String _getPropertyName(
 		Schema propertySchema, String propertySchemaName) {
 
@@ -178,13 +207,13 @@ public class DTOOpenAPIParser {
 	}
 
 	private static String _getPropertyType(
-		Map<String, String> javaDataTypeMap, Schema propertySchema,
-		String propertySchemaName) {
+		Map<String, String> javaDataTypeMap, OpenAPIYAML openAPIYAML,
+		Schema propertySchema, String propertySchemaName) {
 
 		List<String> enumValues = propertySchema.getEnumValues();
 
 		if ((enumValues != null) && !enumValues.isEmpty()) {
-			return StringUtil.upperCaseFirstLetter(propertySchemaName);
+			return _getEnumName(openAPIYAML, propertySchemaName);
 		}
 
 		Items items = propertySchema.getItems();

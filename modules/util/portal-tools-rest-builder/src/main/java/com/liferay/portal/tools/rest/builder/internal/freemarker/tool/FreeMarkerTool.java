@@ -48,8 +48,10 @@ public class FreeMarkerTool {
 		return _instance;
 	}
 
-	public Map<String, Schema> getDTOEnumSchemas(Schema schema) {
-		return DTOOpenAPIParser.getEnumSchemas(schema);
+	public Map<String, Schema> getDTOEnumSchemas(
+		OpenAPIYAML openAPIYAML, Schema schema) {
+
+		return DTOOpenAPIParser.getEnumSchemas(openAPIYAML, schema);
 	}
 
 	public String getDTOParentClassName(

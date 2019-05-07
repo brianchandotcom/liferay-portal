@@ -654,6 +654,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateExpirationDate(expirationDate);
 
+		sharingEntry.setUserId(serviceContext.getUserId());
 		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
 

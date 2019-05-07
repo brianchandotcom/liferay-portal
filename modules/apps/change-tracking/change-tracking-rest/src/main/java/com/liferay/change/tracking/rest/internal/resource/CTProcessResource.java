@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -83,6 +84,7 @@ public class CTProcessResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CTProcessModel> getCtProcessModels(
 			@QueryParam("companyId") long companyId,
+			@QueryParam("keywords") String keywords,
 			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type,
 			@QueryParam("offset") int offset, @QueryParam("limit") int limit,
 			@QueryParam("sort") String sort)
@@ -91,29 +93,17 @@ public class CTProcessResource {
 		CTJaxRsUtil.checkCompany(companyId);
 
 		if (_TYPE_ALL.equals(type)) {
-			List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-				companyId, _getQueryDefinition(offset, limit, sort));
+			List<CTProcess> ctProcesses = null;
 
-			return _getCTProcessModels(ctProcesses);
-		}
-		else if (_TYPE_FAILED.equals(type)) {
-			List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-				companyId, BackgroundTaskConstants.STATUS_FAILED,
-				_getQueryDefinition(offset, limit, sort));
-
-			return _getCTProcessModels(ctProcesses);
-		}
-		else if (_TYPE_IN_PROGRESS.equals(type)) {
-			List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-				companyId, BackgroundTaskConstants.STATUS_IN_PROGRESS,
-				_getQueryDefinition(offset, limit, sort));
-
-			return _getCTProcessModels(ctProcesses);
-		}
-		else if (_TYPE_PUBLISHED.equals(type)) {
-			List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-				companyId, BackgroundTaskConstants.STATUS_SUCCESSFUL,
-				_getQueryDefinition(offset, limit, sort));
+			if (Validator.isNull(keywords)) {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, _getQueryDefinition(offset, limit, sort));
+			}
+			else {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, keywords,
+					_getQueryDefinition(offset, limit, sort));
+			}
 
 			return _getCTProcessModels(ctProcesses);
 		}
@@ -123,8 +113,24 @@ public class CTProcessResource {
 
 			return Collections.singletonList(ctProcessModel);
 		}
+		else {
+			int status = _getStatus(type);
 
-		return Collections.emptyList();
+			List<CTProcess> ctProcesses = null;
+
+			if (Validator.isNull(keywords)) {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, status,
+					_getQueryDefinition(offset, limit, sort));
+			}
+			else {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, keywords, status,
+					_getQueryDefinition(offset, limit, sort));
+			}
+
+			return _getCTProcessModels(ctProcesses);
+		}
 	}
 
 	private Optional<com.liferay.portal.kernel.backgroundtask.BackgroundTask>
@@ -307,6 +313,22 @@ public class CTProcessResource {
 		queryDefinition.setOrderByComparator(orderByComparator);
 
 		return queryDefinition;
+	}
+
+	private int _getStatus(String type) {
+		int status = 0;
+
+		if (_TYPE_FAILED.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_FAILED;
+		}
+		else if (_TYPE_IN_PROGRESS.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_IN_PROGRESS;
+		}
+		else if (_TYPE_PUBLISHED.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
+		}
+
+		return status;
 	}
 
 	private static final String _TYPE_ALL = "all";

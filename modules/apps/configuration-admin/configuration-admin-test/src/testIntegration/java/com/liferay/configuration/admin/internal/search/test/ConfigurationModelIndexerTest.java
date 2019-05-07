@@ -100,11 +100,6 @@ public class ConfigurationModelIndexerTest {
 
 	@Test
 	public void testLocalizedAttributes() throws Exception {
-		Configuration configuration = OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.createFactoryConfiguration(
-				_PID, StringPool.QUESTION));
-
 		Map<String, String> extensionAttributes = new HashMap<>();
 
 		extensionAttributes.put("factoryInstanceLabelAttribute", "companyId");
@@ -119,11 +114,10 @@ public class ConfigurationModelIndexerTest {
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			new SimpleExtendedObjectClassDefinition(
-				configuration, extendedAttributeDefinitions,
-				extensionAttributes);
+				extendedAttributeDefinitions, extensionAttributes);
 
 		Object configurationModel = _configurationModelConstructor.newInstance(
-			extendedObjectClassDefinition, configuration,
+			extendedObjectClassDefinition, null,
 			"com.liferay.configuration.admin.web", StringPool.QUESTION, true);
 
 		Document document = _indexer.getDocument(configurationModel);
@@ -294,21 +288,17 @@ public class ConfigurationModelIndexerTest {
 
 		public SimpleExtendedObjectClassDefinition(
 			Configuration configuration,
-			ExtendedAttributeDefinition[] extendedAttributeDefinitions,
 			Map<String, String> extensionAttributes) {
 
-			_configuration = configuration;
-			_extendedAttributeDefinitions = extendedAttributeDefinitions;
-			_extensionAttributes = extensionAttributes;
+			this(new ExtendedAttributeDefinition[0], extensionAttributes);
 		}
 
 		public SimpleExtendedObjectClassDefinition(
-			Configuration configuration,
+			ExtendedAttributeDefinition[] extendedAttributeDefinitions,
 			Map<String, String> extensionAttributes) {
 
-			this(
-				configuration, new ExtendedAttributeDefinition[0],
-				extensionAttributes);
+			_extendedAttributeDefinitions = extendedAttributeDefinitions;
+			_extensionAttributes = extensionAttributes;
 		}
 
 		@Override
@@ -340,7 +330,7 @@ public class ConfigurationModelIndexerTest {
 
 		@Override
 		public String getID() {
-			return _configuration.getFactoryPid();
+			return _PID;
 		}
 
 		@Override
@@ -348,7 +338,6 @@ public class ConfigurationModelIndexerTest {
 			return null;
 		}
 
-		private final Configuration _configuration;
 		private final ExtendedAttributeDefinition[]
 			_extendedAttributeDefinitions;
 		private final Map<String, String> _extensionAttributes;

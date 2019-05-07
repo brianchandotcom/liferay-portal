@@ -533,8 +533,8 @@ public interface MBMessageLocalService
 		String className, long classPK, int status);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
-	 String, long, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #getRootDiscussionMessages(String, long, int)}
 	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -543,8 +543,8 @@ public interface MBMessageLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
-	 String, long, int, int, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #getRootDiscussionMessages(String, long, int, int, int)}
 	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -785,8 +785,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
-	 String, long, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #getRootDiscussionMessages(String, long, int)}
 	 */
 	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage>
@@ -797,8 +797,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
-	 String, long, int, int, int)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #getRootDiscussionMessages(String, long, int, int, int)}
 	 */
 	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage>

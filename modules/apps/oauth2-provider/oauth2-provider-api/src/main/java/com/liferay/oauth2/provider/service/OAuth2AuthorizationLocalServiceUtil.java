@@ -42,7 +42,9 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addOAuth2Authorization(long, long, String, long,long, String, Date, Date, String, String, String, Date, Date)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addOAuth2Authorization(long, long, String, long,long,
+	 String, Date, Date, String, String, String, Date, Date)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2Authorization

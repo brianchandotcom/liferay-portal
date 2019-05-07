@@ -280,14 +280,14 @@ public interface SharingEntryLocalService
 	public SharingEntry fetchSharingEntry(long sharingEntryId);
 
 	/**
-	 * Returns the sharing entry for the resource shared with the user or null
-	 * if there's none. The class name ID and class primary key identify the
-	 * resource's type and instance, respectively.
+	 * Returns the sharing entry for the resource shared with the user or
+	 * <code>null</code> if there's none. The class name ID and class primary
+	 * key identify the resource's type and instance, respectively.
 	 *
 	 * @param toUserId the user's ID
 	 * @param classNameId the resource's class name ID
 	 * @param classPK the class primary key of the resource
-	 * @return the sharing entry or null if none
+	 * @return the sharing entry or <code>null</code> if none
 	 * @review
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -330,8 +330,8 @@ public interface SharingEntryLocalService
 		OrderByComparator<SharingEntry> orderByComparator);
 
 	/**
-	 * Returns the number of sharing entries for the type of resource shared
-	 * by the user. The class name ID identifies the resource type.
+	 * Returns the number of sharing entries for the type of resource shared by
+	 * the user. The class name ID identifies the resource type.
 	 *
 	 * @param fromUserId the user's ID
 	 * @param classNameId the class name ID of the resources

@@ -85,7 +85,9 @@ public class DLFileEntryServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, DLVersionNumberIncrease, String, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #checkInFileEntry(long, DLVersionNumberIncrease, String,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public static void checkInFileEntry(

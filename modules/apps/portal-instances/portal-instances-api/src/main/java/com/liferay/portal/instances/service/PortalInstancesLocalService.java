@@ -54,7 +54,7 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	public void addCompanyId(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCompanyId(HttpServletRequest request);
+	public long getCompanyId(HttpServletRequest httpServletRequest);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCompanyIds();

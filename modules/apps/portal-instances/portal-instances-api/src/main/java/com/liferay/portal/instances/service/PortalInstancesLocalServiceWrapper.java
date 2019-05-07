@@ -42,8 +42,10 @@ public class PortalInstancesLocalServiceWrapper
 	}
 
 	@Override
-	public long getCompanyId(javax.servlet.http.HttpServletRequest request) {
-		return _portalInstancesLocalService.getCompanyId(request);
+	public long getCompanyId(
+		javax.servlet.http.HttpServletRequest httpServletRequest) {
+
+		return _portalInstancesLocalService.getCompanyId(httpServletRequest);
 	}
 
 	@Override

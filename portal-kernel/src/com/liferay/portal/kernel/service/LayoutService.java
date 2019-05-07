@@ -638,8 +638,7 @@ public interface LayoutService extends BaseService {
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param parentLayoutId the layout ID to be assigned to the parent
-	 layout
+	 * @param parentLayoutId the layout ID to be assigned to the parent layout
 	 * @return the matching layout
 	 * @throws PortalException if a portal exception occurred
 	 */

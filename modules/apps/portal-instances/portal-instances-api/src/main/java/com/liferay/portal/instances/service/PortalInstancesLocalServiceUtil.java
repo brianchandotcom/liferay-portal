@@ -45,9 +45,9 @@ public class PortalInstancesLocalServiceUtil {
 	}
 
 	public static long getCompanyId(
-		javax.servlet.http.HttpServletRequest request) {
+		javax.servlet.http.HttpServletRequest httpServletRequest) {
 
-		return getService().getCompanyId(request);
+		return getService().getCompanyId(httpServletRequest);
 	}
 
 	public static long[] getCompanyIds() {

@@ -66,7 +66,9 @@ public interface OAuth2AuthorizationLocalService
 	 */
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addOAuth2Authorization(long, long, String, long,long, String, Date, Date, String, String, String, Date, Date)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addOAuth2Authorization(long, long, String, long,long,
+	 String, Date, Date, String, String, String, Date, Date)}
 	 */
 	@Deprecated
 	public OAuth2Authorization addOAuth2Authorization(

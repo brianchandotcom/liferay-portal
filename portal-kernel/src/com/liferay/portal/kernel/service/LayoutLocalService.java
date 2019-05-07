@@ -378,7 +378,6 @@ public interface LayoutLocalService
 	 * @param layout the layout that need to anonymized
 	 * @param userId the primary key of the owner user
 	 * @param anonymousUser the anonymized user information
-	 * @return the anonymized layout
 	 */
 	public void anonymizeLayout(Layout layout, long userId, User anonymousUser)
 		throws PortalException;
@@ -614,7 +613,8 @@ public interface LayoutLocalService
 	 * @param uuid the layout's UUID
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @return the matching layout, or <code>null</code> if a matching layout
+	 could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayoutByUuidAndGroupId(
@@ -995,8 +995,10 @@ public interface LayoutLocalService
 	 * @param companyId the primary key of the company
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching layouts, or an empty list if no matches were found
+	 * @param orderByComparator the comparator to order the results by
+	 (optionally <code>null</code>)
+	 * @return the range of matching layouts, or an empty list if no matches
+	 were found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayoutsByUuidAndCompanyId(
@@ -1407,8 +1409,7 @@ public interface LayoutLocalService
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param parentLayoutId the layout ID to be assigned to the parent
-	 layout
+	 * @param parentLayoutId the layout ID to be assigned to the parent layout
 	 * @return the matching layout
 	 * @throws PortalException if a portal exception occurred
 	 */

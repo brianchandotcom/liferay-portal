@@ -69,7 +69,7 @@
 <!--ASSET_ABSTRACT-->
 <tr>
 	<td>ASSET_ABSTRACT_TITLE</td>
-	<td>//section[@class='portlet']//h4[contains(@class,'component-title')][contains(.,'${key_assetTitle}')]</td>
+	<td>//section[@class='portlet']//h4/*[contains(@class,'asset-title')][contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

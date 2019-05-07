@@ -747,11 +747,11 @@ public class JournalPortlet extends MVCPortlet {
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
 
-		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
-			!_hasDefaultLocale(titleMap, content)) {
+		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+			LocalizationUtil.getDefaultLanguageId(content));
 
-			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-				LocalizationUtil.getDefaultLanguageId(content));
+		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
+			!_hasDefaultLocale(titleMap, articleDefaultLocale)) {
 
 			titleMap.put(
 				articleDefaultLocale,
@@ -1349,6 +1349,8 @@ public class JournalPortlet extends MVCPortlet {
 			actionRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("portletResource", portletResource);
@@ -1363,10 +1365,11 @@ public class JournalPortlet extends MVCPortlet {
 		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()));
-		portletURL.setParameter(
-			"languageId",
-			ParamUtil.getString(
-				actionRequest, "languageId", article.getDefaultLanguageId()));
+
+		if (Validator.isNotNull(languageId)) {
+			portletURL.setParameter("languageId", languageId);
+		}
+
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
@@ -1556,15 +1559,12 @@ public class JournalPortlet extends MVCPortlet {
 			portletResource, articleId, true);
 	}
 
-	private boolean _hasDefaultLocale(Map<Locale, String> map, String content) {
+	private boolean _hasDefaultLocale(Map<Locale, String> map, Locale locale) {
 		if (MapUtil.isEmpty(map)) {
 			return false;
 		}
 
-		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-			LocalizationUtil.getDefaultLanguageId(content));
-
-		if (Validator.isNull(map.get(articleDefaultLocale))) {
+		if (Validator.isNull(map.get(locale))) {
 			return false;
 		}
 

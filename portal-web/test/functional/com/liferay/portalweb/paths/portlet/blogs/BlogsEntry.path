@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>RELATED_ASSETS_TITLE</td>
-	<td>//div[contains(@class,'asset-links')]/ul//a[contains(.,'${key_assetTitle}')]</td>
+	<td>//div[contains(@class,'entry-links')][contains(.,'Related Assets')]//a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

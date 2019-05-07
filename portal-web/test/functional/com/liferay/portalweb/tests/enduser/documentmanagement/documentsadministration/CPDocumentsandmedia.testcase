@@ -711,7 +711,7 @@ definition {
 
 	@priority = "5"
 	test ViewImageEditorControls {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

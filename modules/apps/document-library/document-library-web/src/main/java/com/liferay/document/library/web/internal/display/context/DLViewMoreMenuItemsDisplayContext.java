@@ -175,10 +175,10 @@ public class DLViewMoreMenuItemsDisplayContext {
 
 	private String _eventName;
 	private final long _folderId;
+	private final HttpServletRequest _httpServletRequest;
 	private boolean _inherited = true;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

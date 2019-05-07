@@ -406,8 +406,8 @@ public class DDMFormTemplateContextFactoryTest {
 	@Inject
 	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
+	private HttpServletRequest _httpServletRequest;
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;
-	private HttpServletRequest _httpServletRequest;
 
 }

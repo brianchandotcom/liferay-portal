@@ -66,7 +66,7 @@ public class ServerDisplayContext {
 		"external-services", "script", "shutdown"
 	};
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 
 }

@@ -194,13 +194,13 @@ public class DisplayPageDisplayContext {
 	}
 
 	private SearchContainer _displayPagesSearchContainer;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

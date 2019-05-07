@@ -500,12 +500,12 @@ public class KBAdminManagementToolbarDisplayContext {
 		return _portletConfig.getInitParameter("template-path");
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletConfig _portletConfig;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

@@ -417,13 +417,13 @@ public class AssetListDisplayContext {
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
 	private Integer _assetListEntryType;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private Long _segmentsEntryId;
 	private final ThemeDisplay _themeDisplay;
 

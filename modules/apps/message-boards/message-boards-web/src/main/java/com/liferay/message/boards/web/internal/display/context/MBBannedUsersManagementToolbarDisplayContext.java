@@ -114,10 +114,10 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 		return displayStyle;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

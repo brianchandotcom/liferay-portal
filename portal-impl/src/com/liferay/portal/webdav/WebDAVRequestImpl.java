@@ -162,12 +162,12 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 	private final long _companyId;
 	private final long _groupId;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private final String _lockUuid;
 	private final boolean _manualCheckInRequired;
 	private final String _path;
 	private final PermissionChecker _permissionChecker;
-	private final HttpServletRequest _httpServletRequest;
-	private final HttpServletResponse _httpServletResponse;
 	private final WebDAVStorage _storage;
 	private final String _userAgent;
 	private final long _userId;

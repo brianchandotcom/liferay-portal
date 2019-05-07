@@ -236,6 +236,7 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 	private SearchContainer _archivedSettingsSearch;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
@@ -243,7 +244,6 @@ public class PortletConfigurationTemplatesDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private String _returnToFullPageURL;
 
 }

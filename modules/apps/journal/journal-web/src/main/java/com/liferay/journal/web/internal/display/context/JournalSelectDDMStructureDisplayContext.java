@@ -266,12 +266,12 @@ public class JournalSelectDDMStructureDisplayContext {
 
 	private Long _classPK;
 	private SearchContainer _ddmStructureSearch;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private Boolean _searchRestriction;
 	private Long _searchRestrictionClassNameId;
 	private Long _searchRestrictionClassPK;

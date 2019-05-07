@@ -755,9 +755,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	private final Map<String, Object> _contextObjects;
-	private final PageContext _pageContext;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final PageContext _pageContext;
 	private final ServletContext _servletContext;
 
 }

@@ -56,7 +56,7 @@ public class ServiceContextFunction
 		}
 	}
 
-	private final PortletRequest _portletRequest;
 	private final HttpServletRequest _httpServletRequest;
+	private final PortletRequest _portletRequest;
 
 }

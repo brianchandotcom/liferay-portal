@@ -178,12 +178,12 @@ public class JournalHistoryDisplayContext {
 	private final JournalArticle _article;
 	private String _backURL;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _redirect;
 	private String _referringPortletResource;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

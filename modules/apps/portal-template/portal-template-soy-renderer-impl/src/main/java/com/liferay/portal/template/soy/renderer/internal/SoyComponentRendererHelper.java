@@ -197,9 +197,9 @@ public class SoyComponentRendererHelper {
 	private final ComponentDescriptor _componentDescriptor;
 	private final Map<String, Object> _context;
 	private final String _elementSelector;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _moduleName;
 	private final Portal _portal;
-	private final HttpServletRequest _httpServletRequest;
 	private final SoyRenderer _soyRenderer;
 	private final String _wrapperId;
 

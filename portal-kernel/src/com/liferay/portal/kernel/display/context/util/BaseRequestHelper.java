@@ -268,6 +268,7 @@ public abstract class BaseRequestHelper {
 	private Company _company;
 	private Long _companyId;
 	private String _currentURL;
+	private final HttpServletRequest _httpServletRequest;
 	private Layout _layout;
 	private LiferayPortletRequest _liferayPortletRequest;
 	private LiferayPortletResponse _liferayPortletResponse;
@@ -278,7 +279,6 @@ public abstract class BaseRequestHelper {
 	private String _portletName;
 	private String _portletResource;
 	private String _portletTitle;
-	private final HttpServletRequest _httpServletRequest;
 	private String _resourcePortletId;
 	private String _resourcePortletName;
 	private Long _scopeGroupId;

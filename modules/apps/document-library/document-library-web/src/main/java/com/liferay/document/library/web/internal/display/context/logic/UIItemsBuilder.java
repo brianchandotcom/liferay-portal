@@ -1332,9 +1332,9 @@ public class UIItemsBuilder {
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
+	private final HttpServletRequest _httpServletRequest;
 	private Boolean _ieOnWin32;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;

@@ -133,9 +133,9 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 		return false;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutTypeController _layoutTypeController;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final String _type;
 

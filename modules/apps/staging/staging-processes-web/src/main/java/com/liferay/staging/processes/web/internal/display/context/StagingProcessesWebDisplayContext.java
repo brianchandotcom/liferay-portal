@@ -71,7 +71,7 @@ public class StagingProcessesWebDisplayContext {
 		};
 	}
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 
 }

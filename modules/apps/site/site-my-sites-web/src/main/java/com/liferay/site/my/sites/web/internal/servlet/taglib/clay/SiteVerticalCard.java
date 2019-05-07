@@ -125,9 +125,9 @@ public class SiteVerticalCard implements VerticalCard {
 
 	private final Group _group;
 	private final int _groupUsersCount;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 

@@ -391,10 +391,10 @@ public class BookmarksManagementToolbarDisplayContext {
 		_bookmarksGroupServiceOverriddenConfiguration;
 	private final PortletURL _currentURLObj;
 	private final long _folderId;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

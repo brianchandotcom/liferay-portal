@@ -122,8 +122,8 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 	}
 
 	private final DDMTemplate _ddmTemplate;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalSelectDDMTemplateDisplayContext
 		_journalSelectDDMTemplateDisplayContext;
-	private final HttpServletRequest _httpServletRequest;
 
 }

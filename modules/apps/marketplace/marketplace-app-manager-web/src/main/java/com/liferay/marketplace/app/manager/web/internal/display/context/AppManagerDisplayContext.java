@@ -99,7 +99,7 @@ public class AppManagerDisplayContext {
 		return portletURL.toString();
 	}
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 
 }

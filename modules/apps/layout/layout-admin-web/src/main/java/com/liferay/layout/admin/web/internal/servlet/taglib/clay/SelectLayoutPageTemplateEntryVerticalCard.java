@@ -137,9 +137,9 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 		return false;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

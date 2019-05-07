@@ -128,9 +128,9 @@ public class ArchivedSettingsActionDropdownItemsProvider {
 	}
 
 	private final ArchivedSettings _archivedSettings;
+	private final HttpServletRequest _httpServletRequest;
 	private String _portletResource;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

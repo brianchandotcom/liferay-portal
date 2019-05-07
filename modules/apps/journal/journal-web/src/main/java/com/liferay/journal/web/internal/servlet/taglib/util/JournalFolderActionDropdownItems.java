@@ -400,10 +400,10 @@ public class JournalFolderActionDropdownItems {
 		JournalFolderActionDropdownItems.class);
 
 	private final JournalFolder _folder;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

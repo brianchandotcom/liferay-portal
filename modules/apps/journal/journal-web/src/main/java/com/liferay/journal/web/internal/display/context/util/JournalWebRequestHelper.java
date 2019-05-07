@@ -76,7 +76,7 @@ public class JournalWebRequestHelper {
 		}
 	}
 
-	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 	private final HttpServletRequest _httpServletRequest;
+	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 
 }

@@ -339,9 +339,9 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private final Group _group;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 

@@ -183,9 +183,9 @@ public class GroupDisplayContextHelper {
 	private Group _group;
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
+	private final HttpServletRequest _httpServletRequest;
 	private Group _liveGroup;
 	private Long _liveGroupId;
-	private final HttpServletRequest _httpServletRequest;
 	private Group _selGroup;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;

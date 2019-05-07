@@ -356,11 +356,11 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		return updateLayoutPrototypeURL.toString();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

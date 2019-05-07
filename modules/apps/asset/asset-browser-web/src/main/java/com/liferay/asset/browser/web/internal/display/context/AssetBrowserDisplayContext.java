@@ -439,6 +439,7 @@ public class AssetBrowserDisplayContext {
 	private String _displayStyle;
 	private String _eventName;
 	private Long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private Boolean _multipleSelection;
 	private String _orderByCol;
@@ -446,7 +447,6 @@ public class AssetBrowserDisplayContext {
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showAddButton;
 	private Boolean _showNonindexable;
 	private Boolean _showScheduled;

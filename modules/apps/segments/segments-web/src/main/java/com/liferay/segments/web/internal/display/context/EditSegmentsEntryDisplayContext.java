@@ -293,10 +293,10 @@ public class EditSegmentsEntryDisplayContext {
 		return criterion.getFilterString();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
 	private SegmentsEntry _segmentsEntry;

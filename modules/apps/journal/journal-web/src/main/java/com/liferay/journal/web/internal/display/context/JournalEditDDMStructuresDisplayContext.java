@@ -249,10 +249,10 @@ public class JournalEditDDMStructuresDisplayContext {
 
 	private DDMStructure _ddmStructure;
 	private Long _ddmStructureId;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private Long _parentDDMStructureId;
 	private String _parentDDMStructureName;
-	private final HttpServletRequest _httpServletRequest;
 	private String _script;
 
 }

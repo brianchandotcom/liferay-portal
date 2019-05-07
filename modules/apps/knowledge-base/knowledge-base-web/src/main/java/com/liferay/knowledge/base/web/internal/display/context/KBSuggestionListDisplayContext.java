@@ -255,9 +255,9 @@ public class KBSuggestionListDisplayContext {
 	}
 
 	private final long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private KBArticle _kbArticle;
 	private final String _navigation;
-	private final HttpServletRequest _httpServletRequest;
 	private final String _templatePath;
 
 }

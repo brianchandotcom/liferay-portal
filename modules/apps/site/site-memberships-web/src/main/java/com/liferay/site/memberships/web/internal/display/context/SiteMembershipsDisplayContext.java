@@ -199,9 +199,9 @@ public class SiteMembershipsDisplayContext {
 	}
 
 	private Group _group;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private User _selUser;
 	private String _tabs1;
 	private Long _userGroupId;

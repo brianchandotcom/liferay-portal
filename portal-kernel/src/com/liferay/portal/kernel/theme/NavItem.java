@@ -422,8 +422,8 @@ public class NavItem implements Serializable {
 	private List<NavItem> _browsableChildren;
 	private List<NavItem> _children;
 	private final Map<String, Object> _contextObjects;
-	private final Layout _layout;
 	private final HttpServletRequest _httpServletRequest;
+	private final Layout _layout;
 	private final ThemeDisplay _themeDisplay;
 
 }

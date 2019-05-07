@@ -305,9 +305,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 		return renderURL;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final PageContext _pageContext;
 	private final String _portletNamespace;
 	private final LiferayPortletResponse _portletResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

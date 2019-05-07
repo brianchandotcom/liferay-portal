@@ -327,10 +327,10 @@ public class UserDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserDisplayContext.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final InitDisplayContext _initDisplayContext;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final User _selUser;
 	private final ThemeDisplay _themeDisplay;
 

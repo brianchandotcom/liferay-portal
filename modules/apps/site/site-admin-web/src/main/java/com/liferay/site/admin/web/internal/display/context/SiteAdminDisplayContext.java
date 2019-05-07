@@ -294,8 +294,8 @@ public class SiteAdminDisplayContext {
 	private Group _group;
 	private long _groupId;
 	private final GroupSearchProvider _groupSearchProvider;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

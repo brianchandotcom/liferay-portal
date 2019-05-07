@@ -1240,9 +1240,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRequestImpl.class);
 
+	private HttpServletRequest _httpServletRequest;
 	private boolean _invalidSession;
 	private Locale _locale;
-	private HttpServletRequest _httpServletRequest;
 	private long _plid;
 	private PortalContext _portalContext;
 	private Portlet _portlet;

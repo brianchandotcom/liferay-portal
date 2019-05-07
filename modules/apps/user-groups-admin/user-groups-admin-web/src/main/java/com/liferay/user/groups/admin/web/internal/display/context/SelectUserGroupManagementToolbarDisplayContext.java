@@ -175,9 +175,9 @@ public class SelectUserGroupManagementToolbarDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectUserGroupManagementToolbarDisplayContext.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private UserGroupSearch _userGroupSearch;
 
 }

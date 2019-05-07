@@ -196,10 +196,10 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return true;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateCollectionId;
 	private List<String> _primaryTypes;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;
 	private List<String> _types;

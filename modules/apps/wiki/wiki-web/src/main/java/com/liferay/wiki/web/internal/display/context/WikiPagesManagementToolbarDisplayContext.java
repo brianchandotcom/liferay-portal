@@ -400,9 +400,9 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 	private final PortletURL _currentURLObj;
 	private final String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

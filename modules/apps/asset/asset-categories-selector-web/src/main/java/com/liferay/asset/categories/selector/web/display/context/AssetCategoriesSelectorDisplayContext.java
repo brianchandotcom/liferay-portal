@@ -283,9 +283,9 @@ public class AssetCategoriesSelectorDisplayContext {
 	private Boolean _allowedSelectVocabularies;
 	private long _categoryId;
 	private String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
 	private String _type;

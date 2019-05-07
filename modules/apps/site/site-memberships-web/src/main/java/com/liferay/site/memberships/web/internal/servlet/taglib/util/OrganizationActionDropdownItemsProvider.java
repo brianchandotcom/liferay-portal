@@ -92,9 +92,9 @@ public class OrganizationActionDropdownItemsProvider {
 		};
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final Organization _organization;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

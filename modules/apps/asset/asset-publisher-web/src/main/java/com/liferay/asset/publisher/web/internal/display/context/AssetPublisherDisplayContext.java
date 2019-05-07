@@ -1901,6 +1901,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _excludeZeroViewCount;
 	private String[] _extensions;
 	private long[] _groupIds;
+	private final HttpServletRequest _httpServletRequest;
 	private final InfoListProviderTracker _infoListProviderTracker;
 	private Boolean _mergeURLTags;
 	private String[] _metadataFields;
@@ -1914,7 +1915,6 @@ public class AssetPublisherDisplayContext {
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
 	private long[] _referencedModelsGroupIds;
-	private final HttpServletRequest _httpServletRequest;
 	private Integer _rssDelta;
 	private String _rssDisplayStyle;
 	private String _rssFeedType;

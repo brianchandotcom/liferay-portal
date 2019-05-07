@@ -82,8 +82,8 @@ public abstract class BaseCometRequest implements CometRequest {
 	}
 
 	private long _companyId;
-	private String _pathInfo;
 	private final HttpServletRequest _httpServletRequest;
+	private String _pathInfo;
 	private long _timestamp = System.currentTimeMillis();
 	private long _userId;
 

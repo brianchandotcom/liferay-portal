@@ -1695,6 +1695,7 @@ public class LayoutsAdminDisplayContext {
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
@@ -1707,7 +1708,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

@@ -332,9 +332,9 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private final BlogsEntry _blogsEntry;
+	private final HttpServletRequest _httpServletRequest;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ResourceBundle _resourceBundle;
 	private final TrashHelper _trashHelper;
 

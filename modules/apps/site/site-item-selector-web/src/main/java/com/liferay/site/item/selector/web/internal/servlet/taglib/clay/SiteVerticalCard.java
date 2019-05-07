@@ -101,8 +101,8 @@ public class SiteVerticalCard implements VerticalCard {
 
 	private final Group _group;
 	private final GroupURLProvider _groupURLProvider;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

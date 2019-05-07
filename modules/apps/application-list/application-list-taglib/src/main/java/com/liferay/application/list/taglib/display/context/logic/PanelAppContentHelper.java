@@ -149,9 +149,9 @@ public class PanelAppContentHelper {
 	}
 
 	private Long _companyId;
-	private Portlet _portlet;
-	private String _portletId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private Portlet _portlet;
+	private String _portletId;
 
 }

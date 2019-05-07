@@ -703,13 +703,13 @@ public class TrashDisplayContext {
 	private boolean _approximate;
 	private String _displayStyle;
 	private EntrySearch _entrySearch;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _trashContainerSearchContainer;
 	private TrashEntry _trashEntry;
 	private TrashHandler _trashHandler;

@@ -270,9 +270,9 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	private final PortletURL _currentURLObj;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final String _templatePath;
 	private final ThemeDisplay _themeDisplay;

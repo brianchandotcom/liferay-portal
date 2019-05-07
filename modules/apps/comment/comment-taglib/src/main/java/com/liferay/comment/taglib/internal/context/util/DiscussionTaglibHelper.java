@@ -136,10 +136,10 @@ public class DiscussionTaglibHelper {
 	private String _formAction;
 	private String _formName;
 	private Boolean _hideControls;
+	private final HttpServletRequest _httpServletRequest;
 	private String _paginationURL;
 	private Boolean _ratingsEnabled;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private Long _userId;
 
 }

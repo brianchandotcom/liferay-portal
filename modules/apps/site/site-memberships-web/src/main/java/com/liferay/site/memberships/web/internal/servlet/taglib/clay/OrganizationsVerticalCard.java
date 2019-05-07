@@ -111,10 +111,10 @@ public class OrganizationsVerticalCard
 		return _organization.getName();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final Organization _organization;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final boolean _showActions;
 
 }

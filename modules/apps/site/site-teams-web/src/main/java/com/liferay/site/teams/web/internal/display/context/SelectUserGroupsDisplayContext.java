@@ -231,13 +231,13 @@ public class SelectUserGroupsDisplayContext {
 
 	private String _displayStyle;
 	private String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private Team _team;
 	private Long _teamId;
 	private SearchContainer _userGroupSearchContainer;

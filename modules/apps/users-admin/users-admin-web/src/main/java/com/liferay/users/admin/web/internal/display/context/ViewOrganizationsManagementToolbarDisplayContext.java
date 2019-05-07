@@ -358,9 +358,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	private final PortletURL _currentURL;
 	private final String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private OrganizationSearch _organizationSearch;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

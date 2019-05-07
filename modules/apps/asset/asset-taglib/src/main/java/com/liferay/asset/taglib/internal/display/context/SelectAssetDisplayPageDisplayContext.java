@@ -428,9 +428,9 @@ public class SelectAssetDisplayPageDisplayContext {
 	private Integer _displayPageType;
 	private final String _eventName;
 	private final long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final boolean _showPortletLayouts;
 	private final boolean _showViewInContextLink;
 

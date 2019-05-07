@@ -216,6 +216,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 	private SearchContainer _assetDisplayPageSearchContainer;
 	private final AssetDisplayPageSelectorCriterion
 		_assetDisplayPageSelectorCriterion;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private String _orderByCol;
@@ -223,7 +224,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -239,11 +239,11 @@ public class ViewMembershipRequestsDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _siteMembershipSearch;
 	private String _tabs1;
 

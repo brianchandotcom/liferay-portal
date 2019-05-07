@@ -183,12 +183,12 @@ public class AssetTagsSelectorDisplayContext {
 
 	private String _eventName;
 	private long[] _groupIds;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private String[] _selectedTagNames;
 	private SearchContainer _tagsSearchContainer;
 

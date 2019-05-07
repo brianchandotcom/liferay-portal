@@ -167,9 +167,9 @@ public class NestedPortletsDisplayContext {
 		return false;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private String _layoutTemplateId;
 	private final NestedPortletsPortletInstanceConfiguration
 		_nestedPortletsPortletInstanceConfiguration;
-	private final HttpServletRequest _httpServletRequest;
 
 }

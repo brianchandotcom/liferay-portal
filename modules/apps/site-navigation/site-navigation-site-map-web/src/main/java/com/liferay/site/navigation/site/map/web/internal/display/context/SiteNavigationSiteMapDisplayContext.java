@@ -302,8 +302,8 @@ public class SiteNavigationSiteMapDisplayContext {
 	}
 
 	private Long _displayStyleGroupId;
-	private Boolean _includeRootInTree;
 	private final HttpServletRequest _httpServletRequest;
+	private Boolean _includeRootInTree;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;
 	private final SiteNavigationSiteMapPortletInstanceConfiguration

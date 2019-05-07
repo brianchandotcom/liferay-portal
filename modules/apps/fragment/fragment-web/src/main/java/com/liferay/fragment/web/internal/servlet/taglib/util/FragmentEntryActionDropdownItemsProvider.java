@@ -346,9 +346,9 @@ public class FragmentEntryActionDropdownItemsProvider {
 
 	private final FragmentEntry _fragmentEntry;
 	private final FragmentPortletConfiguration _fragmentPortletConfiguration;
+	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

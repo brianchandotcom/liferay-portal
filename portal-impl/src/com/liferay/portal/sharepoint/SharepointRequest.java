@@ -172,9 +172,9 @@ public class SharepointRequest {
 	}
 
 	private byte[] _bytes;
-	private final Map<String, String[]> _params = new HashMap<>();
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final Map<String, String[]> _params = new HashMap<>();
 	private String _rootPath = StringPool.BLANK;
 	private SharepointStorage _storage;
 	private final User _user;

@@ -115,11 +115,11 @@ public class SiteBrowserDisplayContext {
 	private final String _emptyResultsMessage;
 	private final List<Group> _groups;
 	private final int _groupsCount;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

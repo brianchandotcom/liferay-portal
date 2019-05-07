@@ -181,8 +181,8 @@ public class SiteNavigationBreadcrumbDisplayContext {
 	private String _ddmTemplateKey;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
-	private String _portletResource;
 	private final HttpServletRequest _httpServletRequest;
+	private String _portletResource;
 	private Boolean _showCurrentGroup;
 	private Boolean _showGuestGroup;
 	private Boolean _showLayout;

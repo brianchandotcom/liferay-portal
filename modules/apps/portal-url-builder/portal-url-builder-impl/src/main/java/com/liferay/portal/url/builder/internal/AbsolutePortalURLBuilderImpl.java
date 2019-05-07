@@ -293,6 +293,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AbsolutePortalURLBuilderImpl.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private boolean _ignoreCDNHost;
 	private boolean _ignorePathProxy;
 	private final String _pathContext;
@@ -300,6 +301,5 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	private final String _pathMain;
 	private final String _pathModule;
 	private final Portal _portal;
-	private final HttpServletRequest _httpServletRequest;
 
 }

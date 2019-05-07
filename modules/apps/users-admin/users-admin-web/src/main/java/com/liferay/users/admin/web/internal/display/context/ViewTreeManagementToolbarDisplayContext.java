@@ -546,6 +546,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 	}
 
 	private final String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _navigation;
 	private String _orderByCol;
@@ -554,7 +555,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 	private final PermissionChecker _permissionChecker;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

@@ -278,12 +278,12 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 		SelectOrganizationUsersManagementToolbarDisplayContext.class);
 
 	private final String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private final Organization _organization;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private UserSearch _userSearch;
 
 }

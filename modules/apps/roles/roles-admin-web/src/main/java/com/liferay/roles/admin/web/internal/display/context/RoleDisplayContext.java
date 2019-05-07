@@ -355,7 +355,7 @@ public class RoleDisplayContext {
 		"users", "sites", "organizations", "user-groups"
 	};
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 
 }

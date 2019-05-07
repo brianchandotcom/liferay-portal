@@ -287,9 +287,9 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Mock
-	private Portal _portal;
+	private HttpServletRequest _httpServletRequest;
 
 	@Mock
-	private HttpServletRequest _httpServletRequest;
+	private Portal _portal;
 
 }

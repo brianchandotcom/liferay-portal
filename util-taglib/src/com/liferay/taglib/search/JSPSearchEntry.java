@@ -108,9 +108,9 @@ public class JSPSearchEntry extends SearchEntry {
 	}
 
 	private String _href;
-	private String _path;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private String _path;
 	private ServletContext _servletContext;
 
 }

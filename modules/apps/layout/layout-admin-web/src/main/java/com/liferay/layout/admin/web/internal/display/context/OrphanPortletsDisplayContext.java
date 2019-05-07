@@ -246,11 +246,11 @@ public class OrphanPortletsDisplayContext {
 
 	private String _backURL;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByType;
 	private SearchContainer _orphanPortletsSearchContainer;
-	private final HttpServletRequest _httpServletRequest;
 	private Layout _selLayout;
 	private Long _selPlid;
 

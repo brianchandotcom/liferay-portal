@@ -1308,6 +1308,7 @@ public class JournalDisplayContext {
 	private String _displayStyle;
 	private JournalFolder _folder;
 	private Long _folderId;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -1317,7 +1318,6 @@ public class JournalDisplayContext {
 	private String _orderByType;
 	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private Integer _restrictionType;
 	private Integer _status;
 	private String _tabs1;

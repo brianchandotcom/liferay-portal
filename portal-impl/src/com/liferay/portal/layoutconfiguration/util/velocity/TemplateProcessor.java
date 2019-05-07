@@ -391,11 +391,11 @@ public class TemplateProcessor implements ColumnProcessor {
 	private static final RenderWeightComparator _renderWeightComparator =
 		new RenderWeightComparator();
 
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private final Portlet _portlet;
 	private final boolean _portletAjaxRender;
 	private final Map<Integer, List<PortletRenderer>> _portletRenderers;
-	private final HttpServletRequest _httpServletRequest;
-	private final HttpServletResponse _httpServletResponse;
 
 	private static class RenderWeightComparator implements Comparator<Integer> {
 

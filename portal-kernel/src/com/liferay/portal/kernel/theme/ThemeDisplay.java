@@ -1930,6 +1930,8 @@ public class ThemeDisplay
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;
 	private boolean _freeformLayout;
+	private transient HttpServletRequest _httpServletRequest;
+	private transient HttpServletResponse _httpServletResponse;
 	private boolean _hubAction;
 	private boolean _hubPartialAction;
 	private boolean _hubResource;
@@ -1985,8 +1987,6 @@ public class ThemeDisplay
 	private Group _refererGroup;
 	private long _refererGroupId;
 	private long _refererPlid;
-	private transient HttpServletRequest _httpServletRequest;
-	private transient HttpServletResponse _httpServletResponse;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
 	private boolean _secure;

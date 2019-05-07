@@ -339,11 +339,11 @@ public class TrashContainerModelDisplayContext {
 	private List<ContainerModel> _containerModels;
 	private Integer _containerModelsCount;
 	private String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Object[] _missingContainerMessageArguments;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private Boolean _showBackIcon;
 	private TrashHandler _trashHandler;

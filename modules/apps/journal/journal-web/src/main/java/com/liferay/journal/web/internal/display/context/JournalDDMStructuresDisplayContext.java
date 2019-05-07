@@ -193,12 +193,12 @@ public class JournalDDMStructuresDisplayContext {
 	}
 
 	private SearchContainer _ddmStructureSearch;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

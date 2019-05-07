@@ -116,9 +116,9 @@ public class EditDisplayPageMenuDisplayContext {
 		};
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
 	private final InfoEditURLProvider _infoEditURLProvider;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

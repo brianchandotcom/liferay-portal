@@ -82,8 +82,8 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 	}
 
 	private final FileEntry _fileEntry;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

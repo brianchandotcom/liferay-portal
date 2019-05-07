@@ -910,6 +910,7 @@ public class SearchResultSummaryDisplayBuilder {
 	private DocumentBuilderFactory _documentBuilderFactory;
 	private FastDateFormatFactory _fastDateFormatFactory;
 	private boolean _highlightEnabled;
+	private HttpServletRequest _httpServletRequest;
 	private boolean _imageRequested;
 	private IndexerRegistry _indexerRegistry;
 	private Language _language;
@@ -918,7 +919,6 @@ public class SearchResultSummaryDisplayBuilder {
 	private PortletURLFactory _portletURLFactory;
 	private RenderRequest _renderRequest;
 	private RenderResponse _renderResponse;
-	private HttpServletRequest _httpServletRequest;
 	private ResourceActions _resourceActions;
 	private Stream<SearchResultImageContributor>
 		_searchResultImageContributorsStream = Stream.empty();

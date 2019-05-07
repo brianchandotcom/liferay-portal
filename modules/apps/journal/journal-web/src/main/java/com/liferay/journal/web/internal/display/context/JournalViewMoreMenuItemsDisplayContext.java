@@ -207,13 +207,13 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	private SearchContainer _ddmStructuresSearchContainer;
 	private String _eventName;
 	private final long _folderId;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final int _restrictionType;
 
 }

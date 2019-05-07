@@ -399,10 +399,10 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	private final PortletURL _currentURL;
 	private final String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _navigation;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final int _status;
 	private UserSearch _userSearch;
 

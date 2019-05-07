@@ -193,9 +193,9 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreviewSegmentsEntryUsersDisplayContext.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SegmentsEntry _segmentsEntry;
 	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;

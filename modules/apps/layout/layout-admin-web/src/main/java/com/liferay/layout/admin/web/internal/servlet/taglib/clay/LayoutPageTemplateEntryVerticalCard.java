@@ -171,8 +171,8 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 		return HtmlUtil.escape(_layoutPageTemplateEntry.getName());
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

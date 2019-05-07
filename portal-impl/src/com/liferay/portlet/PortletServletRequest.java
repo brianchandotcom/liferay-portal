@@ -532,6 +532,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletServletRequest.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final boolean _include;
 	private final String _lifecycle;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -539,7 +540,6 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	private final String _pathInfo;
 	private final PortletRequest _portletRequest;
 	private final String _queryString;
-	private final HttpServletRequest _httpServletRequest;
 	private final String _requestURI;
 	private final String _servletPath;
 

@@ -336,6 +336,7 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
@@ -347,7 +348,6 @@ public class LayoutPageTemplateDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

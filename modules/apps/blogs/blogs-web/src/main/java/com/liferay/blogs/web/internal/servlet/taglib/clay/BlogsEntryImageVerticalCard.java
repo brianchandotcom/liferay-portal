@@ -183,9 +183,9 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 	}
 
 	private final FileEntry _fileEntry;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final RowChecker _rowChecker;
 	private final ThemeDisplay _themeDisplay;
 

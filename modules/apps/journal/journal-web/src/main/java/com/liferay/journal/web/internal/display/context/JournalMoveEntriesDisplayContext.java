@@ -228,6 +228,7 @@ public class JournalMoveEntriesDisplayContext {
 		}
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private List<JournalArticle> _invalidMoveArticles;
 	private List<JournalFolder> _invalidMoveFolders;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -236,7 +237,6 @@ public class JournalMoveEntriesDisplayContext {
 	private String _newFolderName;
 	private PermissionChecker _permissionChecker;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private List<JournalArticle> _validMoveArticles;
 	private List<JournalFolder> _validMoveFolders;
 

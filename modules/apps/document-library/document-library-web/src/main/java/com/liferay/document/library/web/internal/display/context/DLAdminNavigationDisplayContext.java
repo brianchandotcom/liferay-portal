@@ -176,9 +176,9 @@ public class DLAdminNavigationDisplayContext {
 
 	private final PortletURL _currentURLObj;
 	private final DLRequestHelper _dlRequestHelper;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

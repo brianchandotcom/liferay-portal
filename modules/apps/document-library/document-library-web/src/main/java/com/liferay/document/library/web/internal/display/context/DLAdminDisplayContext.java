@@ -708,11 +708,11 @@ public class DLAdminDisplayContext {
 	private final DLRequestHelper _dlRequestHelper;
 	private Folder _folder;
 	private long _folderId;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private long _rootFolderId;
 	private String _rootFolderName;
 	private SearchContainer _searchContainer;

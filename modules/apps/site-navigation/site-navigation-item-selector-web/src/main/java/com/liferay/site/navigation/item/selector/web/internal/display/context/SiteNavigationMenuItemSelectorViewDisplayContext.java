@@ -197,12 +197,12 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletURL _portletURL;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

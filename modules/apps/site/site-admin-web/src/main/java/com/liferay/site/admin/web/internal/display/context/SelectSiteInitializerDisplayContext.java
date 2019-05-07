@@ -146,10 +146,10 @@ public class SelectSiteInitializerDisplayContext {
 	}
 
 	private String _backURL;
+	private final HttpServletRequest _httpServletRequest;
 	private Long _parentGroupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final SiteInitializerRegistry _siteInitializerRegistry;
 
 }

@@ -1647,6 +1647,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private boolean _failOnPortalException = true;
 	private Date _formDate;
 	private transient Map<String, String> _headers;
+	private transient HttpServletRequest _httpServletRequest;
 	private boolean _indexingEnabled = true;
 	private String _languageId;
 	private String _layoutFullURL;
@@ -1663,7 +1664,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	private PortletPreferencesIds _portletPreferencesIds;
 	private String _remoteAddr;
 	private String _remoteHost;
-	private transient HttpServletRequest _httpServletRequest;
 	private long _scopeGroupId;
 	private boolean _signedIn;
 	private TimeZone _timeZone;

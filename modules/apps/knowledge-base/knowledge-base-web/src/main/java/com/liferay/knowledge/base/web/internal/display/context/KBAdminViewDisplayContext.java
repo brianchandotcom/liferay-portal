@@ -110,9 +110,9 @@ public class KBAdminViewDisplayContext {
 		}
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final long _parentResourceClassNameId;
 	private final long _parentResourcePrimKey;
-	private final HttpServletRequest _httpServletRequest;
 
 }

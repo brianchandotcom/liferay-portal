@@ -158,9 +158,9 @@ public class FragmentEntryVerticalCard
 	}
 
 	private final FragmentEntry _fragmentEntry;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

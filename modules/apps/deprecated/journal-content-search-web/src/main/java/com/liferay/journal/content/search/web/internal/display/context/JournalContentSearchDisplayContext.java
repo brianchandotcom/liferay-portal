@@ -181,12 +181,12 @@ public class JournalContentSearchDisplayContext {
 	}
 
 	private Hits _hits;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalContentSearchPortletInstanceConfiguration
 		_journalContentSearchPortletInstanceConfiguration;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final SummaryBuilderFactory _summaryBuilderFactory;
 

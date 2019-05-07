@@ -108,10 +108,10 @@ public class EditContactInformationDisplayContext {
 
 	private final String _className;
 	private final long _classPK;
+	private final HttpServletRequest _httpServletRequest;
 	private final long _primaryKey;
 	private final String _redirect;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final String _sheetTitle;
 
 }

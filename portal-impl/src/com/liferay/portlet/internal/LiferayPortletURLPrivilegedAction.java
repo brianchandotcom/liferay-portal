@@ -176,6 +176,7 @@ public class LiferayPortletURLPrivilegedAction {
 	private final Map<String, Constructor<? extends PortletURLImpl>>
 		_constructors;
 	private final MimeResponse.Copy _copy;
+	private final HttpServletRequest _httpServletRequest;
 	private final boolean _includeLinkToLayoutUuid;
 	private final Layout _layout;
 	private final String _lifecycle;
@@ -185,7 +186,6 @@ public class LiferayPortletURLPrivilegedAction {
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private final PortletResponseImpl _portletResponseImpl;
-	private final HttpServletRequest _httpServletRequest;
 	private final long _requestPlid;
 
 }

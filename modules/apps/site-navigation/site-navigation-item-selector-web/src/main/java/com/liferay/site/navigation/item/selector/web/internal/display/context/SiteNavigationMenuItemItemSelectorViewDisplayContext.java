@@ -309,8 +309,8 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		return _siteNavigationMenuType;
 	}
 
-	private final String _itemSelectedEventName;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _itemSelectedEventName;
 	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuItemId;
 	private final SiteNavigationMenuItemTypeRegistry

@@ -52,8 +52,8 @@ public class UserActionDisplayContext {
 				_liferayPortletRequest, _user, _selUser));
 	}
 
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final User _selUser;
 	private final User _user;
 

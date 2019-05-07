@@ -355,10 +355,10 @@ public class BlogEntriesDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogEntriesDisplayContext.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private Integer _status;
 	private final TrashHelper _trashHelper;
 

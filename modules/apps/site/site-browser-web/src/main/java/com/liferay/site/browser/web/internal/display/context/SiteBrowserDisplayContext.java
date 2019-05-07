@@ -595,6 +595,7 @@ public class SiteBrowserDisplayContext {
 	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;
 	private GroupSearch _groupSearch;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _manualMembership;
@@ -602,7 +603,6 @@ public class SiteBrowserDisplayContext {
 	private String _orderByType;
 	private Boolean _privateLayout;
 	private String _puid;
-	private final HttpServletRequest _httpServletRequest;
 	private final User _selUser;
 	private String _target;
 	private String _type;

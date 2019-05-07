@@ -76,8 +76,8 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 			_httpServletRequest, "x-ago", createDateDateDescription);
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final MembershipRequest _membershipRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

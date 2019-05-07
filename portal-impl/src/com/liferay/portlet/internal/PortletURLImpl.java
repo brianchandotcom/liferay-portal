@@ -1724,6 +1724,7 @@ public class PortletURLImpl
 	private String _encodedNamespace;
 	private boolean _encrypt;
 	private boolean _escapeXml = PropsValues.PORTLET_URL_ESCAPE_XML;
+	private final HttpServletRequest _httpServletRequest;
 	private Layout _layout;
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
@@ -1742,7 +1743,6 @@ public class PortletURLImpl
 	private long _refererPlid;
 	private Set<String> _removedParameterNames;
 	private final Set<String> _removePublicRenderParameters;
-	private final HttpServletRequest _httpServletRequest;
 	private String _resourceID;
 	private boolean _secure;
 	private String _toString;

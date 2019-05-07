@@ -202,9 +202,9 @@ public class SelectRoleManagementToolbarDisplayContext {
 		SelectRoleManagementToolbarDisplayContext.class);
 
 	private final String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private RoleSearch _roleSearch;
 	private final int _roleType;
 

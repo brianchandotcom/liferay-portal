@@ -109,8 +109,8 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 		return StringPool.BLANK;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final MembershipRequest _membershipRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

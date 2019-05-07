@@ -90,7 +90,7 @@ public class JournalArticleCommentsVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private final MBMessage _mbMessage;
 	private final HttpServletRequest _httpServletRequest;
+	private final MBMessage _mbMessage;
 
 }

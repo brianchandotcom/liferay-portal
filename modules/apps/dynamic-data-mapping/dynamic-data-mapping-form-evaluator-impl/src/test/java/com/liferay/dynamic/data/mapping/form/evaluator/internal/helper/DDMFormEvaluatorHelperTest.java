@@ -1359,10 +1359,11 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	private Company _company;
 
 	private DDMExpressionFactory _ddmExpressionFactory;
-	private Language _language;
 
 	@Mock
 	private HttpServletRequest _httpServletRequest;
+
+	private Language _language;
 
 	@Mock
 	private Role _role;

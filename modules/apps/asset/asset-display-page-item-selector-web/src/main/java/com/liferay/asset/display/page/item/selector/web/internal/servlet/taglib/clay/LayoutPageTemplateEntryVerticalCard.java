@@ -88,7 +88,7 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final HttpServletRequest _httpServletRequest;
+	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 
 }

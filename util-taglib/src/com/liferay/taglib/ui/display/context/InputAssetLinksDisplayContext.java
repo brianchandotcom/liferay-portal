@@ -484,10 +484,10 @@ public class InputAssetLinksDisplayContext {
 	private final long _assetEntryId;
 	private List<AssetLink> _assetLinks;
 	private String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private final PageContext _pageContext;
 	private final PortletRequest _portletRequest;
 	private String _randomNamespace;
-	private final HttpServletRequest _httpServletRequest;
 	private Boolean _stagedLocally;
 	private Boolean _stagedReferrerPortlet;
 	private final ThemeDisplay _themeDisplay;

@@ -238,9 +238,9 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		};
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPrototype _layoutPrototype;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

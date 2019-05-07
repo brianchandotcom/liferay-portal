@@ -201,9 +201,9 @@ public class PasswordPolicyDisplayContext {
 			_permissionChecker, passwordPolicyId, actionId);
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final Long _passwordPolicyId;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

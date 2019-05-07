@@ -126,9 +126,9 @@ public class IconSearchEntry extends TextSearchEntry {
 		"/html/taglib/ui/search_container/icon.jsp";
 
 	private String _href;
-	private String _icon;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private String _icon;
 	private ServletContext _servletContext;
 	private boolean _toggleRowChecker;
 

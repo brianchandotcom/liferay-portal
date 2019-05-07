@@ -78,8 +78,8 @@ public class MySubscriptionsManagementToolbarDisplayContext {
 		return false;
 	}
 
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final int _totalItems;
 	private final User _user;
 

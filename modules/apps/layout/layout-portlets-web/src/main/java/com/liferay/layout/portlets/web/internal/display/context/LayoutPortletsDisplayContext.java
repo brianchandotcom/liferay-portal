@@ -180,6 +180,7 @@ public class LayoutPortletsDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final Map<String, String[]> _layoutPortletCategories =
 		new HashMap<>();
 	private final ArrayList<Portlet> _layoutPortlets = new ArrayList<>();
@@ -187,6 +188,5 @@ public class LayoutPortletsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

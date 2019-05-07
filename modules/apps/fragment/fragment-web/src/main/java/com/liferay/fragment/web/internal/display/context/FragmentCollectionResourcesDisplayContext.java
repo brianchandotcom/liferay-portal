@@ -109,9 +109,9 @@ public class FragmentCollectionResourcesDisplayContext {
 
 	private Long _folderId;
 	private final FragmentDisplayContext _fragmentDisplayContext;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

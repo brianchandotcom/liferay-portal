@@ -183,8 +183,8 @@ public class AssetEntryListActionDropdownItems {
 	}
 
 	private final AssetListEntry _assetListEntry;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

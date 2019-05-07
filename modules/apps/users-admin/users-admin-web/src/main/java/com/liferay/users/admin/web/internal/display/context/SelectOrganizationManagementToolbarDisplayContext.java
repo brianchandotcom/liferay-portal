@@ -310,9 +310,9 @@ public class SelectOrganizationManagementToolbarDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectOrganizationManagementToolbarDisplayContext.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private OrganizationSearch _organizationSearch;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

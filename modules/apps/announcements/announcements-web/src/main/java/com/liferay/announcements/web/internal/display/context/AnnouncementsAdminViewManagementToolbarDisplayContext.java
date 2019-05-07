@@ -256,9 +256,9 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	private final AnnouncementsAdminViewDisplayContext
 		_announcementsAdminViewDisplayContext;
 	private final PortletURL _currentURLObj;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final SearchContainer _searchContainer;
 
 }

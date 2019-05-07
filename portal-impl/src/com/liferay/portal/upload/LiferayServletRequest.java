@@ -68,7 +68,7 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 
 	private ServletInputStream _cachedInputStream;
 	private boolean _finishedReadingOriginalStream;
-	private LiferayInputStream _lis;
 	private final HttpServletRequest _httpServletRequest;
+	private LiferayInputStream _lis;
 
 }

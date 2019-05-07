@@ -81,8 +81,8 @@ public class UserActionDropdownItemsProvider {
 		};
 	}
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final long _teamId;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;

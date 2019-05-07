@@ -230,11 +230,11 @@ public class UADExportProcessDisplayContext {
 		return _searchContainer;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 
 }

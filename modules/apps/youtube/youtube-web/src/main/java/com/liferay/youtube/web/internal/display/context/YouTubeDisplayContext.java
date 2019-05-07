@@ -257,11 +257,11 @@ public class YouTubeDisplayContext {
 	private Boolean _closedCaptioning;
 	private Boolean _enableKeyboardControls;
 	private String _height;
+	private final HttpServletRequest _httpServletRequest;
 	private String _id;
 	private Boolean _loop;
 	private final PortletPreferences _portletPreferences;
 	private String _presetSize;
-	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showThumbnail;
 	private String _startTime;
 	private String _url;

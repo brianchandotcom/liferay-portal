@@ -303,13 +303,13 @@ public class AssetTagsDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private List<String> _mergeTagNames;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private Boolean _showTagsActions;
 	private AssetTag _tag;
 	private Long _tagId;

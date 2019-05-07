@@ -95,9 +95,9 @@ public class ArchivedSettingsVerticalCard implements VerticalCard {
 	}
 
 	private final ArchivedSettings _archivedSettings;
+	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -148,9 +148,9 @@ public class AssetEntryActionDropdownItemsProvider {
 	private final List<AssetEntryAction> _assetEntryActions;
 	private final AssetRenderer _assetRenderer;
 	private final String _fullContentRedirect;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -680,11 +680,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private Group _group;
 	private final long _groupId;
 	private List<String> _guestUnsupportedActions;
+	private final HttpServletRequest _httpServletRequest;
 	private String _modelResource;
 	private String _modelResourceDescription;
 	private String _portletResource;
 	private final RenderRequest _renderRequest;
-	private final HttpServletRequest _httpServletRequest;
 	private Resource _resource;
 	private Long _resourceGroupId;
 	private String _resourcePrimKey;

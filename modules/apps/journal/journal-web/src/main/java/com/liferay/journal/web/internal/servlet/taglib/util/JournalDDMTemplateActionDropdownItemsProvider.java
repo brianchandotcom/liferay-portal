@@ -167,8 +167,8 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 	}
 
 	private final DDMTemplate _ddmTemplate;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

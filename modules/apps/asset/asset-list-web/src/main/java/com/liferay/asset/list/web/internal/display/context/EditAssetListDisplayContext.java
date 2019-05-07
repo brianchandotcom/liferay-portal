@@ -1068,6 +1068,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;
@@ -1077,7 +1078,6 @@ public class EditAssetListDisplayContext {
 	private final UnicodeProperties _properties;
 	private String _redirect;
 	private long[] _referencedModelsGroupIds;
-	private final HttpServletRequest _httpServletRequest;
 	private SearchContainer _searchContainer;
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;

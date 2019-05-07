@@ -251,12 +251,12 @@ public class JournalDDMTemplateDisplayContext {
 	private DDMStructure _ddmStructure;
 	private SearchContainer _ddmTemplateSearch;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 
 }

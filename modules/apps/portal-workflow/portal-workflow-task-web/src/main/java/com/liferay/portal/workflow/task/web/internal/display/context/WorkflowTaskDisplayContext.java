@@ -1131,12 +1131,12 @@ public class WorkflowTaskDisplayContext {
 
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;
 	private final PortalPreferences _portalPreferences;
-	private final HttpServletRequest _httpServletRequest;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;

@@ -120,8 +120,8 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		return false;
 	}
 
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final SiteInitializerItem _siteInitializerItem;
 
 }

@@ -203,8 +203,8 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	private final JournalArticle _article;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final TrashHelper _trashHelper;
 
 }

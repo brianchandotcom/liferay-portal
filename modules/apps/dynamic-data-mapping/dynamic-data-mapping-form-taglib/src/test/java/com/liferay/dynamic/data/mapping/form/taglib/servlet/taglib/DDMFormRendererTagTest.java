@@ -485,10 +485,10 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	@Mock
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 
-	@Mock
-	private Language _language;
-
 	private final HttpServletRequest _httpServletRequest =
 		new MockHttpServletRequest();
+
+	@Mock
+	private Language _language;
 
 }

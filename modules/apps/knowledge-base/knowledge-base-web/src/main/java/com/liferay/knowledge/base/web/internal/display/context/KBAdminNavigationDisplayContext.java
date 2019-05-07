@@ -166,7 +166,7 @@ public class KBAdminNavigationDisplayContext {
 		return navigationItems;
 	}
 
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

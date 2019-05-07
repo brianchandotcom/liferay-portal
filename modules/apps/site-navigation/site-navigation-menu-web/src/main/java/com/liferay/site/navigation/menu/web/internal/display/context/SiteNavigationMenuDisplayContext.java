@@ -402,9 +402,9 @@ public class SiteNavigationMenuDisplayContext {
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
+	private final HttpServletRequest _httpServletRequest;
 	private Integer _navigationMenuType;
 	private Boolean _preview;
-	private final HttpServletRequest _httpServletRequest;
 	private String _rootMenuItemId;
 	private Integer _rootMenuItemLevel;
 	private String _rootMenuItemType;

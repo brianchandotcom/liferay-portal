@@ -145,9 +145,9 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 	}
 
 	private final Group _group;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 

@@ -68,9 +68,9 @@ public class LifecycleEvent {
 		return _session;
 	}
 
-	private final String[] _ids;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final String[] _ids;
 	private final HttpSession _session;
 
 }

@@ -186,12 +186,12 @@ public class SelectThemeDisplayContext {
 
 	private String _displayStyle;
 	private String _eventName;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private String _themeId;
 	private SearchContainer _themesSearchContainer;
 

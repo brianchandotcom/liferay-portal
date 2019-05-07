@@ -238,11 +238,11 @@ public class SiteMySitesDisplayContext {
 
 	private String _displayStyle;
 	private GroupSearch _groupSearch;
+	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private String _tabs1;
 
 }

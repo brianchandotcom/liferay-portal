@@ -133,7 +133,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 	}
 
 	private final DDMTemplate _ddmTemplate;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 
 }

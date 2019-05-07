@@ -249,8 +249,8 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private final Group _group;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _httpServletRequest;
+	private final RenderResponse _renderResponse;
 	private final String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 

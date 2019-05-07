@@ -360,12 +360,12 @@ public class JournalEditDDMTemplateDisplayContext {
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
 	private Long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private final JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _language;
 	private String _redirect;
-	private final HttpServletRequest _httpServletRequest;
 	private String _script;
 	private Boolean _smallImage;
 	private String _smallImageSource;

@@ -619,6 +619,7 @@ public class FragmentDisplayContext {
 	private final FragmentEntryProcessorRegistry
 		_fragmentEntryProcessorRegistry;
 	private String _htmlContent;
+	private final HttpServletRequest _httpServletRequest;
 	private String _jsContent;
 	private String _keywords;
 	private String _name;
@@ -627,7 +628,6 @@ public class FragmentDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _httpServletRequest;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 

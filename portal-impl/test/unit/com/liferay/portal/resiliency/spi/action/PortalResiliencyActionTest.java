@@ -330,12 +330,12 @@ public class PortalResiliencyActionTest {
 
 	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
 
+	private HttpServletResponse _httpServletResponse;
 	private Layout _layout;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockPortletContainer _mockPortletContainer;
 	private final PortalResiliencyAction _portalResiliencyAction =
 		new PortalResiliencyAction();
 	private Portlet _portlet;
-	private HttpServletResponse _httpServletResponse;
 
 }

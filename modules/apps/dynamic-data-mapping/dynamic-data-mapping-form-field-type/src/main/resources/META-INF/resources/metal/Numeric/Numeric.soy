@@ -3,11 +3,11 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
-	{@param? _value: string}
+	{@param? _value: any}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
-	{@param? predefinedValue: string}
+	{@param? predefinedValue: any}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
@@ -44,9 +44,9 @@
 	{@param? _handleFieldChanged: any}
 	{@param? id: string}
 	{@param? placeholder: string}
-	{@param? predefinedValue: string}
+	{@param? predefinedValue: any}
 	{@param? readOnly: bool}
-	{@param? value: string}
+	{@param? value: any}
 
 	{let $attributes kind="attributes"}
 		class="form-control"

@@ -1,3 +1,7 @@
+import {
+	filterKeys,
+	processStatusKeys
+} from '../instance-list/filterConstants';
 import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
 import { ChildLink } from '../../../shared/components/router/routerWrapper';
@@ -31,6 +35,17 @@ class SummaryCard extends React.Component {
 		return formatNumber(this.props.value, '0[,0][.]0a');
 	}
 
+	getFiltersQuery() {
+		const { completed, slaStatusFilter } = this.props;
+
+		return {
+			[filterKeys.processStatus]: [
+				completed ? processStatusKeys.completed : processStatusKeys.pending
+			],
+			[filterKeys.slaStatus]: [slaStatusFilter]
+		};
+	}
+
 	@autobind
 	handleMouseOver(evt, callback) {
 		this.setState({ hovered: true }, callback);
@@ -48,13 +63,12 @@ class SummaryCard extends React.Component {
 			iconColor,
 			iconName,
 			processId,
+			slaStatusFilter,
 			total,
 			value
 		} = this.props;
 		const { defaultDelta } = this.context;
 		const { hovered } = this.state;
-
-		const dashboardItemsPath = `/instances/${processId}/${defaultDelta}/1`;
 
 		const disabled = !total && value === undefined;
 
@@ -68,6 +82,7 @@ class SummaryCard extends React.Component {
 			</span>
 		);
 
+		const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
 		const title = getTitle(completed);
 
 		return (
@@ -75,7 +90,8 @@ class SummaryCard extends React.Component {
 				className={`${disabledClassName} process-dashboard-summary-card`}
 				onMouseOut={this.handleMouseOut}
 				onMouseOver={this.handleMouseOver}
-				to={dashboardItemsPath}
+				query={{ filters: this.getFiltersQuery(slaStatusFilter) }}
+				to={instancesListPath}
 			>
 				<div>
 					<div className={'header'}>

@@ -20,7 +20,14 @@ class BackRedirectWrapper extends React.Component {
 
 class ChildLinkWrapper extends React.Component {
 	render() {
-		const { children, className, currentPath, to, ...props } = this.props;
+		const {
+			children,
+			className,
+			currentPath,
+			query,
+			to,
+			...props
+		} = this.props;
 
 		const eventProps = getEventProps(props);
 
@@ -31,7 +38,7 @@ class ChildLinkWrapper extends React.Component {
 				className={className}
 				to={{
 					pathname: to,
-					search: stringify({ backPath: currentPath })
+					search: stringify({ backPath: currentPath, ...query })
 				}}
 			/>
 		);

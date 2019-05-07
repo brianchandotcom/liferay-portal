@@ -8,7 +8,7 @@ export default class WorkloadByStepTable extends React.Component {
 	}
 
 	render() {
-		const { items } = this.props;
+		const { items, processId } = this.props;
 		const onTimeTitle = Liferay.Language.get('on-time');
 		const overdueTitle = Liferay.Language.get('overdue');
 		const stepNameTitle = Liferay.Language.get('step-name');
@@ -49,7 +49,12 @@ export default class WorkloadByStepTable extends React.Component {
 
 					<tbody>
 						{items.map((step, index) => (
-							<WorkloadByStepItem {...step} key={index} />
+							<WorkloadByStepItem
+								{...step}
+								key={index}
+								processId={processId}
+								taskKey={step.key}
+							/>
 						))}
 					</tbody>
 				</table>

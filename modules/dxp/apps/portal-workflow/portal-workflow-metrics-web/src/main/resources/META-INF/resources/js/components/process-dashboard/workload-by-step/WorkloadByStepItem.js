@@ -1,17 +1,37 @@
+import {
+	filterKeys,
+	processStatusKeys
+} from '../instance-list/filterConstants';
+import { AppContext } from '../../AppContext';
+import { ChildLink } from '../../../shared/components/router/routerWrapper';
 import React from 'react';
 
-export default class WorkloadByStepItem extends React.Component {
+class WorkloadByStepItem extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
+	getFiltersQuery(slaStatusFilter) {
+		const { taskKey } = this.props;
+
+		return {
+			[filterKeys.processStatus]: [processStatusKeys.pending],
+			[filterKeys.processStep]: [taskKey],
+			[filterKeys.slaStatus]: [slaStatusFilter]
+		};
+	}
+
 	render() {
+		const { defaultDelta } = this.context;
 		const {
 			instanceCount = '-',
 			name,
 			onTimeInstanceCount = '-',
-			overdueInstanceCount = '-'
+			overdueInstanceCount = '-',
+			processId
 		} = this.props;
+
+		const instancesListPath = `/instances/${processId}/${defaultDelta}/1`;
 
 		return (
 			<tr>
@@ -19,12 +39,39 @@ export default class WorkloadByStepItem extends React.Component {
 					{name}
 				</td>
 
-				<td className="text-right">{overdueInstanceCount}</td>
+				<td className="text-right">
+					<ChildLink
+						className="workload-by-step-link"
+						query={{ filters: this.getFiltersQuery('Overdue') }}
+						to={instancesListPath}
+					>
+						{overdueInstanceCount}
+					</ChildLink>
+				</td>
 
-				<td className="text-right">{onTimeInstanceCount}</td>
+				<td className="text-right">
+					<ChildLink
+						className="workload-by-step-link"
+						query={{ filters: this.getFiltersQuery('OnTime') }}
+						to={instancesListPath}
+					>
+						{onTimeInstanceCount}
+					</ChildLink>
+				</td>
 
-				<td className="text-right">{instanceCount}</td>
+				<td className="text-right">
+					<ChildLink
+						className="workload-by-step-link"
+						query={{ filters: this.getFiltersQuery() }}
+						to={instancesListPath}
+					>
+						{instanceCount}
+					</ChildLink>
+				</td>
 			</tr>
 		);
 	}
 }
+
+WorkloadByStepItem.contextType = AppContext;
+export default WorkloadByStepItem;

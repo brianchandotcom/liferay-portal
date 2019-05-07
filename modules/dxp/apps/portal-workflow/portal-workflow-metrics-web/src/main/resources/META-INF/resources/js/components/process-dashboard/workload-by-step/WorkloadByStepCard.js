@@ -88,7 +88,7 @@ class WorkloadByStepCard extends React.Component {
 			'there-are-no-pending-items-at-the-moment'
 		);
 		const { error, items = [], loading, totalCount } = this.state;
-		const { page, pageSize } = this.props;
+		const { page, pageSize, processId } = this.props;
 
 		const fetching = !loading && !totalCount;
 
@@ -119,7 +119,7 @@ class WorkloadByStepCard extends React.Component {
 						hideAnimation
 						loading={loading}
 					>
-						<WorkloadByStepTable items={items} />
+						<WorkloadByStepTable items={items} processId={processId} />
 
 						<PaginationBar
 							page={page}

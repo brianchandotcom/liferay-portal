@@ -144,6 +144,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		validateFragmentEntryHTML(html);
 
+		String widgetHTML = _renderWidgetHTML(
+			fragmentEntryLink.getEditableValues(),
+			fragmentEntryProcessorContext);
+
+		if (Validator.isNotNull(widgetHTML)) {
+			return widgetHTML;
+		}
+
 		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
@@ -387,6 +395,34 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		Element preferencesBody = preferencesDocument.body();
 
 		return preferencesBody.html();
+	}
+
+	private String _renderWidgetHTML(
+			String editableValues,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		String portletId = jsonObject.getString("portletId");
+
+		if (Validator.isNull(portletId)) {
+			return StringPool.BLANK;
+		}
+
+		String instanceId = jsonObject.getString("instanceId");
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				portletId);
+
+		return _fragmentPortletRenderer.renderPortlet(
+			fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
+			instanceId,
+			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 	}
 
 	private void _updateLayoutPortletSetup(

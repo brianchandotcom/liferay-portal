@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
@@ -105,12 +106,11 @@ public class ProductMenuProductNavigationControlMenuEntry
 			@Override
 			public int doEndTag() throws JspException {
 				try {
-					String bodyContentString =
-						getBodyContentAsStringBundler().toString();
-
 					JspWriter jspWriter = pageContext.getOut();
 
-					jspWriter.write(bodyContentString);
+					StringBundler sb = getBodyContentAsStringBundler();
+
+					jspWriter.write(sb.toString());
 
 					return EVAL_PAGE;
 				}

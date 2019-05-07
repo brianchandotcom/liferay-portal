@@ -75,7 +75,7 @@ public class CustomJspBagRegistryUtilTest {
 				CustomJspBag.class, testCustomJspBag,
 				new HashMap<String, Object>() {
 					{
-						put("context.id", "TestCustomJspBag");
+						put("context.id", _TEST_CUSTOM_JSP_BAG);
 						put("context.name", "Test Custom JSP Bag");
 					}
 				});
@@ -87,6 +87,14 @@ public class CustomJspBagRegistryUtilTest {
 			Assert.assertSame(
 				testCustomJspBag,
 				customJspBags.get(serviceRegistration.getServiceReference()));
+
+			Set<String> servletContextNames =
+				CustomJspRegistryUtil.getServletContextNames();
+
+			Assert.assertTrue(
+				_TEST_CUSTOM_JSP_BAG + " not found in " +
+					servletContextNames.toString(),
+				servletContextNames.contains(_TEST_CUSTOM_JSP_BAG));
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -104,7 +112,7 @@ public class CustomJspBagRegistryUtilTest {
 				CustomJspBag.class, testCustomJspBag,
 				new HashMap<String, Object>() {
 					{
-						put("context.id", "TestGlobalCustomJspBag");
+						put("context.id", _TEST_GLOBAL_CUSTOM_JSP_BAG);
 						put("context.name", "Test Global Custom JSP Bag");
 					}
 				});
@@ -116,11 +124,24 @@ public class CustomJspBagRegistryUtilTest {
 			Assert.assertSame(
 				testCustomJspBag,
 				customJspBags.get(serviceRegistration.getServiceReference()));
+
+			Set<String> servletContextNames =
+				CustomJspRegistryUtil.getServletContextNames();
+
+			Assert.assertFalse(
+				_TEST_GLOBAL_CUSTOM_JSP_BAG + " should not be found in " +
+					servletContextNames.toString(),
+				servletContextNames.contains(_TEST_GLOBAL_CUSTOM_JSP_BAG));
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
 	}
+
+	private static final String _TEST_CUSTOM_JSP_BAG = "TEST_CUSTOM_JSP_BAG";
+
+	private static final String _TEST_GLOBAL_CUSTOM_JSP_BAG =
+		"TEST_GLOBAL_CUSTOM_JSP_BAG";
 
 	private static class TestCustomJspBag implements CustomJspBag {
 

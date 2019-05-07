@@ -102,26 +102,71 @@
 	<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_GEOLOCATION) %>">
 
 		<%
-		String defaultLatitude = StringPool.BLANK;
-		String defaultLongitude = StringPool.BLANK;
+		String name = "defaultValue";
 
-		if ((defaultValue != null) && (expandoColumn != null)) {
-			JSONObject defaultValuesJSONOBject = (JSONObject)expandoBridge.getAttributeDefault(expandoColumn.getName());
+		Serializable value = "{\"latitude\": 0, \"longitude\": 0}";
 
-			defaultLatitude = defaultValuesJSONOBject.getString("latitude");
-			defaultLongitude = defaultValuesJSONOBject.getString("longitude");
+		if (defaultValue != null) {
+			value = defaultValue;
 		}
 		%>
 
-		<div class="form-group-autofit">
-			<div class="form-group-item">
-				<aui:input label="default-latitude" name="latitude" type="text" value="<%= defaultLatitude %>" />
+		<div id="<portlet:namespace />CoordinatesContainer">
+			<div class="glyphicon glyphicon-map-marker" id="<%= portletDisplay.getNamespace() + name + "Location" %>">
 			</div>
 
-			<div class="form-group-item">
-				<aui:input label="default-longitude" name="longitude" type="text" value="<%= defaultLongitude %>" />
-			</div>
+			<%
+			JSONObject geolocationJSONObject = JSONFactoryUtil.createJSONObject(value.toString());
+			%>
+
+			<liferay-map:map-display
+				geolocation="<%= true %>"
+				latitude='<%= geolocationJSONObject.getDouble("latitude", 0) %>'
+				longitude='<%= geolocationJSONObject.getDouble("longitude", 0) %>'
+				name="<%= name %>"
+			/>
 		</div>
+
+		<aui:script require="map-common/js/MapBase.es as MapBase">
+			var geolocationField = {
+				init: function() {
+					Liferay.MapBase.get(
+						"<%= portletDisplay.getNamespace() + name %>",
+						function(map) {
+							map.on('positionChange', geolocationField.onPositionChange, geolocationField);
+						}
+					);
+				},
+				onPositionChange: function(event) {
+					var inputName = "<%= portletDisplay.getNamespace() + name %>";
+					var inputNode = document.querySelector('[name="' + inputName + '"]');
+
+					var location = event.newVal.location;
+
+					if (inputNode) {
+						inputNode.setAttribute(
+							'value',
+							JSON.stringify(
+								{
+									latitude: location.lat,
+									longitude: location.lng
+								}
+							)
+						);
+					}
+
+					var locationNode = document.getElementById(inputName + 'Location');
+
+					if (locationNode) {
+						locationNode.innerHTML = event.newVal.address;
+					}
+				}
+			};
+
+			geolocationField.init();
+		</aui:script>
+
+		<aui:input name="<%= name %>" type="hidden" value="<%= HtmlUtil.escape(value.toString()) %>" />
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) %>">

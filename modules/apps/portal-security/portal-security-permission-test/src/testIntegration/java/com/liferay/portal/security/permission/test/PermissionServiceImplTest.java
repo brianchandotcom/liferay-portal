@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.impl.test;
+package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;

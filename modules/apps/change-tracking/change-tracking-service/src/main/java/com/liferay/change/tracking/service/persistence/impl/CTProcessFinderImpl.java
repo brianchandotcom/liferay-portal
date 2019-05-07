@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -99,6 +100,15 @@ public class CTProcessFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_S);
 
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(CTProcess.companyId = ?) AND",
+					"(CTProcess.companyId = ?)");
+
+				sql = StringUtil.replace(
+					sql, "(BackgroundTask.status = ?)", StringPool.BLANK);
+			}
+
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -109,7 +119,9 @@ public class CTProcessFinderImpl
 
 			qPos.add(companyId);
 
-			qPos.add(status);
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
 
 			return (List<CTProcess>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -190,6 +202,15 @@ public class CTProcessFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_C_N_D_S);
 
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(CTProcess.companyId = ?) AND",
+					"(CTProcess.companyId = ?)");
+
+				sql = StringUtil.replace(
+					sql, "(BackgroundTask.status = ?)", StringPool.BLANK);
+			}
+
 			String[] names = _customSQL.keywords(
 				keywords, true, WildcardMode.SURROUND);
 			String[] descriptions = _customSQL.keywords(
@@ -212,7 +233,9 @@ public class CTProcessFinderImpl
 
 			qPos.add(companyId);
 
-			qPos.add(status);
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
 
 			qPos.add(names, 2);
 

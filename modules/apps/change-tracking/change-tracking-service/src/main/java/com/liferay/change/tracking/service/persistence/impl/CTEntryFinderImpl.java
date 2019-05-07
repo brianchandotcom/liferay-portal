@@ -67,13 +67,15 @@ public class CTEntryFinderImpl
 			sql = _customSQL.appendCriteria(
 				sql, "AND (CTEntry.originalCTCollectionId = ?)");
 
-			if (queryDefinition.isExcludeStatus()) {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status != ?)");
-			}
-			else {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status = ?)");
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				if (queryDefinition.isExcludeStatus()) {
+					sql = _customSQL.appendCriteria(
+						sql, "AND (CTEntry.status != ?)");
+				}
+				else {
+					sql = _customSQL.appendCriteria(
+						sql, "AND (CTEntry.status = ?)");
+				}
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -84,7 +86,10 @@ public class CTEntryFinderImpl
 
 			qPos.add(ctCollectionId);
 			qPos.add(ctCollectionId);
-			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
 
 			Iterator<Long> itr = q.iterate();
 
@@ -181,13 +186,15 @@ public class CTEntryFinderImpl
 			sql = _customSQL.appendCriteria(
 				sql, "AND (CTEntry.originalCTCollectionId = ?)");
 
-			if (queryDefinition.isExcludeStatus()) {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status != ?)");
-			}
-			else {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status = ?)");
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				if (queryDefinition.isExcludeStatus()) {
+					sql = _customSQL.appendCriteria(
+						sql, "AND (CTEntry.status != ?)");
+				}
+				else {
+					sql = _customSQL.appendCriteria(
+						sql, "AND (CTEntry.status = ?)");
+				}
 			}
 
 			sql = _customSQL.replaceOrderBy(
@@ -201,7 +208,10 @@ public class CTEntryFinderImpl
 
 			qPos.add(ctCollectionId);
 			qPos.add(ctCollectionId);
-			qPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
 
 			return (List<CTEntry>)QueryUtil.list(
 				q, getDialect(), queryDefinition.getStart(),

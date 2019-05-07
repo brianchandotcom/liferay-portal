@@ -122,7 +122,7 @@ components:
                     type: string
                 draft:
                     type: boolean
-                fieldValues:
+                formFieldValues:
                     description: https://www.schema.org/FormFieldValue
                     items:
                         properties:
@@ -174,7 +174,7 @@ components:
                     type: string
                 description:
                     type: string
-                formPages:
+                formLayoutPages:
                     description: https://www.schema.org/FormLayoutPage
                     items:
                         properties:
@@ -305,7 +305,7 @@ components:
                 siteId:
                     format: int64
                     type: integer
-                successPage:
+                formSuccessPageSettings:
                     description: https://www.schema.org/FormSuccessPageSettings
                     properties:
                         description:

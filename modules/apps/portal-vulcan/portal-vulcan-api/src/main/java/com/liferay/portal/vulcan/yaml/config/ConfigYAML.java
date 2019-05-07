@@ -55,6 +55,10 @@ public class ConfigYAML {
 		return _forcePredictableOperationId;
 	}
 
+	public boolean isForcePredictableSchemaPropertyName() {
+		return _forcePredictableSchemaPropertyName;
+	}
+
 	public boolean isWarningsEnabled() {
 		return _warningsEnabled;
 	}
@@ -92,6 +96,13 @@ public class ConfigYAML {
 		_forcePredictableOperationId = forcePredictableOperationId;
 	}
 
+	public void setForcePredictableSchemaPropertyName(
+		boolean forcePredictableSchemaPropertyName) {
+
+		_forcePredictableSchemaPropertyName =
+			forcePredictableSchemaPropertyName;
+	}
+
 	public void setImplDir(String implDir) {
 		_implDir = implDir;
 	}
@@ -111,6 +122,7 @@ public class ConfigYAML {
 	private String _clientDir;
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId = true;
+	private boolean _forcePredictableSchemaPropertyName = true;
 	private String _implDir = "src/main/java";
 	private String _testDir;
 	private boolean _warningsEnabled = true;

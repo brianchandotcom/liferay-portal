@@ -262,6 +262,10 @@ public class RESTBuilder {
 
 		String s = _fixOpenAPIPathParameters(FileUtil.read(file));
 
+		if (_configYAML.isForcePredictableSchemaPropertyName()) {
+			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, s);
+		}
+
 		if (_configYAML.isForcePredictableOperationId()) {
 			s = _fixOpenAPIOperationIds(freeMarkerTool, s);
 		}
@@ -1148,6 +1152,56 @@ public class RESTBuilder {
 				"{" + selParameterName + "}", "{" + newParameterName + "}");
 
 			s = s.replace(pathLine, newPathLine);
+		}
+
+		return s;
+	}
+
+	private String _fixOpenAPISchemaPropertyNames(
+		FreeMarkerTool freeMarkerTool, String s) {
+
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (Map.Entry<String, Schema> entry1 : schemas.entrySet()) {
+			Schema schema = entry1.getValue();
+
+			Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+			for (Map.Entry<String, Schema> entry2 :
+					propertySchemas.entrySet()) {
+
+				Schema propertySchema = entry2.getValue();
+
+				String description = propertySchema.getDescription();
+
+				if ((description == null) ||
+					!description.startsWith("https://www.schema.org/")) {
+
+					continue;
+				}
+
+				int x = s.indexOf(' ' + entry1.getKey() + ':');
+
+				int y = s.indexOf(' ' + entry2.getKey() + ':', x);
+
+				int z = s.indexOf(':', y);
+
+				String schemaVarName = freeMarkerTool.getSchemaVarName(
+					description.substring(description.lastIndexOf('/') + 1));
+
+				if (Objects.equals(propertySchema.getType(), "array")) {
+					String plural = TextFormatter.formatPlural(schemaVarName);
+
+					s = s.substring(0, y + 1) + plural + s.substring(z);
+				}
+				else {
+					s = s.substring(0, y + 1) + schemaVarName + s.substring(z);
+				}
+			}
 		}
 
 		return s;

@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_LANGUAGE</td>
+	<td>//div[@class='panel-body']/p[@class='article-structure']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

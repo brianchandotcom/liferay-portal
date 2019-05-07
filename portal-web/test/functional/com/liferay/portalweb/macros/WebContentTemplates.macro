@@ -305,18 +305,18 @@ definition {
 			}
 
 			if ("${templateLanguage}" == "vm") {
-				AssertSelectedLabel(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				AssertTextEquals.assertPartialText(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
 					value1 = "Velocity (.vm)");
 			}
 			else if ("${templateLanguage}" == "xsl") {
-				AssertSelectedLabel(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				AssertTextEquals.assertPartialText(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
 					value1 = "Extensible Stylesheet Language (.xsl)");
 			}
 			else {
-				AssertSelectedLabel(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
+				AssertTextEquals.assertPartialText(
+					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
 					value1 = "FreeMarker (.ftl)");
 			}
 

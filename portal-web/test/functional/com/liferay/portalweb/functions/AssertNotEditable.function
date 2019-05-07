@@ -6,6 +6,8 @@ definition {
 
 		selenium.waitForVisible();
 
+		selenium.waitForNotEditable();
+
 		selenium.assertNotEditable();
 
 		selenium.assertJavaScriptErrors();

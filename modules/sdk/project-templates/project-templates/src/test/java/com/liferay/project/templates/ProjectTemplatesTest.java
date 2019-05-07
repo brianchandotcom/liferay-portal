@@ -20,7 +20,6 @@ import aQute.bnd.main.bnd;
 import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
@@ -3732,8 +3731,10 @@ public class ProjectTemplatesTest {
 			customArchetypesDirPath.resolve(
 				"custom.name.project.templates.foo.bar-1.2.3.jar"));
 
+		List<File> customArchetypesDirs = Arrays.asList(customArchetypesDir);
+
 		Map<String, String> customTemplatesMap = ProjectTemplates.getTemplates(
-			ListUtil.toList(customArchetypesDir));
+			customArchetypesDirs);
 
 		Map<String, String> templatesMap = ProjectTemplates.getTemplates();
 

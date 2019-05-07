@@ -14,31 +14,23 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
-import com.liferay.portal.util.bundle.portalimpl.TestAlwaysAllowDoAsUser;
-import com.liferay.portal.util.test.AtomicState;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
@@ -48,20 +40,8 @@ public class PortalImplTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleClassTestRule("bundle.portalimpl"));
-
-	@BeforeClass
-	public static void setUpClass() {
-		_atomicState = new AtomicState();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_atomicState.close();
-	}
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetUploadPortletRequestWithInvalidHttpServletRequest() {
@@ -99,45 +79,5 @@ public class PortalImplTest {
 		Assert.assertTrue(
 			uploadServletRequest instanceof UploadServletRequestImpl);
 	}
-
-	@Test
-	public void testGetUserId() {
-		_atomicState.reset();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setParameter(
-			"_TestAlwaysAllowDoAsUser_actionName",
-			TestAlwaysAllowDoAsUser.ACTION_NAME);
-		mockHttpServletRequest.setParameter(
-			"_TestAlwaysAllowDoAsUser_struts_action",
-			TestAlwaysAllowDoAsUser.STRUTS_ACTION);
-		mockHttpServletRequest.setParameter("doAsUserId", "0");
-		mockHttpServletRequest.setParameter(
-			"p_p_id", "TestAlwaysAllowDoAsUser");
-
-		long userId = PortalUtil.getUserId(mockHttpServletRequest);
-
-		Assert.assertEquals(0, userId);
-
-		Assert.assertTrue(_atomicState.isSet());
-
-		_atomicState.reset();
-
-		mockHttpServletRequest = new MockHttpServletRequest();
-
-		mockHttpServletRequest.setParameter("doAsUserId", "0");
-		mockHttpServletRequest.setPathInfo(
-			"/TestAlwaysAllowDoAsUser/" + RandomTestUtil.randomString());
-
-		userId = PortalUtil.getUserId(mockHttpServletRequest);
-
-		Assert.assertEquals(0, userId);
-
-		Assert.assertTrue(_atomicState.isSet());
-	}
-
-	private static AtomicState _atomicState;
 
 }

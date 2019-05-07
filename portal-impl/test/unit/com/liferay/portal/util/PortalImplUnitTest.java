@@ -15,16 +15,27 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -33,6 +44,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Miguel Pastor
  */
 public class PortalImplUnitTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
 
 	@Test
 	public void testGetForwardedHost() {
@@ -287,6 +303,88 @@ public class PortalImplUnitTest {
 		Assert.assertNotSame(requestWrapper3, originalHttpServletRequest);
 		Assert.assertSame(
 			httpServletRequest, getWrappedRequest(originalHttpServletRequest));
+	}
+
+	@Test
+	public void testGetUserId() {
+		PropsUtil.setProps(new PropsImpl());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		boolean[] calledAlwaysAllowDoAsUser = {false};
+
+		ServiceRegistration<AlwaysAllowDoAsUser> serviceRegistration =
+			registry.registerService(
+				AlwaysAllowDoAsUser.class,
+				new AlwaysAllowDoAsUser() {
+
+					@Override
+					public Collection<String> getActionNames() {
+						calledAlwaysAllowDoAsUser[0] = true;
+
+						return Collections.singletonList(_ACTION_NAME);
+					}
+
+					@Override
+					public Collection<String> getMVCRenderCommandNames() {
+						calledAlwaysAllowDoAsUser[0] = true;
+
+						return Collections.singletonList(
+							_MVC_RENDER_COMMMAND_NAME);
+					}
+
+					@Override
+					public Collection<String> getPaths() {
+						calledAlwaysAllowDoAsUser[0] = true;
+
+						return Collections.singletonList(_PATH);
+					}
+
+					@Override
+					public Collection<String> getStrutsActions() {
+						calledAlwaysAllowDoAsUser[0] = true;
+
+						return Collections.singletonList(_STRUTS_ACTION);
+					}
+
+				});
+
+		try {
+			MockHttpServletRequest mockHttpServletRequest1 =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest1.setParameter(
+				"_TestAlwaysAllowDoAsUser_actionName", _ACTION_NAME);
+			mockHttpServletRequest1.setParameter(
+				"_TestAlwaysAllowDoAsUser_struts_action", _STRUTS_ACTION);
+			mockHttpServletRequest1.setParameter("doAsUserId", "0");
+			mockHttpServletRequest1.setParameter(
+				"p_p_id", "TestAlwaysAllowDoAsUser");
+
+			Assert.assertEquals(
+				0, _portalImpl.getUserId(mockHttpServletRequest1));
+
+			Assert.assertTrue(
+				"AlwaysAllowDoAsUser not called", calledAlwaysAllowDoAsUser[0]);
+
+			calledAlwaysAllowDoAsUser[0] = false;
+
+			MockHttpServletRequest mockHttpServletRequest2 =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest2.setParameter("doAsUserId", "0");
+			mockHttpServletRequest2.setPathInfo(
+				_PATH + RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				0, _portalImpl.getUserId(mockHttpServletRequest2));
+
+			Assert.assertTrue(
+				"AlwaysAllowDoAsUser not called", calledAlwaysAllowDoAsUser[0]);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -555,6 +653,17 @@ public class PortalImplUnitTest {
 
 		ReflectionTestUtil.setFieldValue(PropsValues.class, fieldName, value);
 	}
+
+	private static final String _ACTION_NAME =
+		"/TestAlwaysAllowDoAsUser/action/name";
+
+	private static final String _MVC_RENDER_COMMMAND_NAME =
+		"/TestAlwaysAllowDoAsUser/mvc/render/command/name";
+
+	private static final String _PATH = "/TestAlwaysAllowDoAsUser/";
+
+	private static final String _STRUTS_ACTION =
+		"/TestAlwaysAllowDoAsUser/struts/action";
 
 	private final PortalImpl _portalImpl = new PortalImpl();
 

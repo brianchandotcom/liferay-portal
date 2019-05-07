@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.CustomJspRegistryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -80,13 +81,9 @@ public class CustomJspBagRegistryUtilTest {
 					}
 				});
 
-		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
-			CustomJspBagRegistryUtil.getCustomJspBags();
-
 		try {
 			Assert.assertSame(
-				testCustomJspBag,
-				customJspBags.get(serviceRegistration.getServiceReference()));
+				testCustomJspBag, _getCustomJspBag(_TEST_CUSTOM_JSP_BAG));
 
 			Set<String> servletContextNames =
 				CustomJspRegistryUtil.getServletContextNames();
@@ -117,13 +114,10 @@ public class CustomJspBagRegistryUtilTest {
 					}
 				});
 
-		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
-			CustomJspBagRegistryUtil.getCustomJspBags();
-
 		try {
 			Assert.assertSame(
 				testCustomJspBag,
-				customJspBags.get(serviceRegistration.getServiceReference()));
+				_getCustomJspBag(_TEST_GLOBAL_CUSTOM_JSP_BAG));
 
 			Set<String> servletContextNames =
 				CustomJspRegistryUtil.getServletContextNames();
@@ -136,6 +130,26 @@ public class CustomJspBagRegistryUtilTest {
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	private CustomJspBag _getCustomJspBag(String targetContextId) {
+		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
+			CustomJspBagRegistryUtil.getCustomJspBags();
+
+		for (Map.Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
+				customJspBags.entrySet()) {
+
+			ServiceReference<CustomJspBag> serviceReference = entry.getKey();
+
+			String contextId = GetterUtil.getString(
+				serviceReference.getProperty("context.id"));
+
+			if (contextId.equals(targetContextId)) {
+				return entry.getValue();
+			}
+		}
+
+		return null;
 	}
 
 	private static final String _TEST_CUSTOM_JSP_BAG = "TEST_CUSTOM_JSP_BAG";

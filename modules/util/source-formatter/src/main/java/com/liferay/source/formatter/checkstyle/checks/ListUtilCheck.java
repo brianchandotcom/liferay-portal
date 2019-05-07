@@ -14,15 +14,26 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Hugo Huijser
@@ -101,7 +112,62 @@ public class ListUtilCheck extends BaseCheck {
 			}
 		}
 
+		FileContents fileContents = getFileContents();
+
+		String fileName = StringUtil.replace(
+			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
+
+		String absolutePath = SourceUtil.getAbsolutePath(fileName);
+
+		if (absolutePath.contains("/modules/")) {
+			String buildGradleContent = _getBuildGradleContent(absolutePath);
+
+			if (!buildGradleContent.contains("com.liferay.portal.kernel")) {
+				return;
+			}
+		}
+
 		log(detailAST, _MSG_USE_LIST_UTIL);
+	}
+
+	private String _getBuildGradleContent(String absolutePath) {
+		String buildGradleLocation = absolutePath;
+
+		while (true) {
+			int pos = buildGradleLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			buildGradleLocation = buildGradleLocation.substring(0, pos + 1);
+
+			String buildGradleContent = _buildGradleContentsMap.get(
+				buildGradleLocation);
+
+			if (buildGradleContent != null) {
+				return buildGradleContent;
+			}
+
+			File file = new File(buildGradleLocation + "build.gradle");
+
+			if (file.exists()) {
+				try {
+					buildGradleContent = FileUtil.read(file);
+
+					_buildGradleContentsMap.put(
+						buildGradleLocation, buildGradleContent);
+
+					return buildGradleContent;
+				}
+				catch (IOException ioe) {
+					return null;
+				}
+			}
+
+			buildGradleLocation = StringUtil.replaceLast(
+				buildGradleLocation, CharPool.SLASH, StringPool.BLANK);
+		}
 	}
 
 	private List<DetailAST> _getIdentDetailASTList(
@@ -223,5 +289,8 @@ public class ListUtilCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_USE_LIST_UTIL = "list.util.use";
+
+	private final Map<String, String> _buildGradleContentsMap =
+		new ConcurrentHashMap<>();
 
 }

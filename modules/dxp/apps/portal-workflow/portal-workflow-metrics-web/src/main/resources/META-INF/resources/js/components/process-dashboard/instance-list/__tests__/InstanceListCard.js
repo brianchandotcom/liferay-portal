@@ -13,7 +13,7 @@ test('Should build request url with query filters', () => {
 				assetType: 'Process',
 				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				status: 'Overdue',
+				slaStatus: 'Overdue',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
 				userName: 'User Test'
 			}
@@ -50,7 +50,7 @@ test('Should component load process instances', () => {
 				assetType: 'Process',
 				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				status: 'Overdue',
+				slaStatus: 'Overdue',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
 				userName: 'User Test'
 			}
@@ -187,7 +187,7 @@ test('Should render component', () => {
 				assetType: 'Process',
 				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				status: 'Untracked',
+				slaStatus: 'Untracked',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
 				userName: 'User Test'
 			}

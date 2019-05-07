@@ -10,7 +10,7 @@ test('Should render component', () => {
 			assetType: 'Process',
 			dateCreated: new Date('2019', '01', '01'),
 			id: 12351,
-			status: 'OnTime',
+			slaStatus: 'OnTime',
 			taskNames: ['Step 1', 'Step 2', 'Step 3'],
 			userName: 'User Test'
 		},
@@ -19,7 +19,7 @@ test('Should render component', () => {
 			assetType: 'Process',
 			dateCreated: new Date('2019', '01', '02'),
 			id: 12351,
-			status: 'Overdue',
+			slaStatus: 'Overdue',
 			taskNames: ['Step 1', 'Step 2'],
 			userName: 'User Test'
 		},
@@ -28,7 +28,7 @@ test('Should render component', () => {
 			assetType: 'Process',
 			dateCreated: new Date('2019', '01', '03'),
 			id: 12351,
-			status: 'Untracked',
+			slaStatus: 'Untracked',
 			userName: 'User Test'
 		},
 		{

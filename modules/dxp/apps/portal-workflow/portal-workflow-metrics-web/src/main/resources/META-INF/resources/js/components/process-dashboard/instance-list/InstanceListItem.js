@@ -37,12 +37,12 @@ export default class InstanceListItem extends React.Component {
 			assetType,
 			dateCreated,
 			id,
-			status,
+			slaStatus,
 			taskNames = [],
 			userName
 		} = this.props;
 
-		const statusIcon = this.getStatusIcon(status);
+		const statusIcon = this.getStatusIcon(slaStatus);
 
 		return (
 			<tr>

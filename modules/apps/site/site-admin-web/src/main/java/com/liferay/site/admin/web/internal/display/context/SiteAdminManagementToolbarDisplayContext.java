@@ -112,7 +112,8 @@ public class SiteAdminManagementToolbarDisplayContext
 		try {
 			PortletURL addSiteURL = liferayPortletResponse.createRenderURL();
 
-			addSiteURL.setParameter("mvcPath", "/select_site_initializer.jsp");
+			addSiteURL.setParameter(
+				"mvcRenderCommandName", "/site/select_site_initializer");
 			addSiteURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 			Group group = _siteAdminDisplayContext.getGroup();

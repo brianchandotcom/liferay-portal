@@ -103,7 +103,8 @@ public class SelectSiteInitializerDisplayContext {
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/select_site_initializer.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/site/select_site_initializer");
 		portletURL.setParameter("redirect", getBackURL());
 
 		return portletURL;

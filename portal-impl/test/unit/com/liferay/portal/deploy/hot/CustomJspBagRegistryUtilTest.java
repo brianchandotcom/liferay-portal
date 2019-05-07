@@ -61,9 +61,7 @@ public class CustomJspBagRegistryUtilTest {
 
 		fileUtil.setFile(new FileImpl());
 
-		_registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(_registry);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	@Test
@@ -77,8 +75,10 @@ public class CustomJspBagRegistryUtilTest {
 
 		};
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		ServiceRegistration<CustomJspBag> serviceRegistration =
-			_registry.registerService(
+			registry.registerService(
 				CustomJspBag.class, testCustomJspBag,
 				new HashMap<String, Object>() {
 					{
@@ -111,8 +111,10 @@ public class CustomJspBagRegistryUtilTest {
 
 		};
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		ServiceRegistration<CustomJspBag> serviceRegistration =
-			_registry.registerService(
+			registry.registerService(
 				CustomJspBag.class, testCustomJspBag,
 				new HashMap<String, Object>() {
 					{
@@ -133,8 +135,6 @@ public class CustomJspBagRegistryUtilTest {
 			serviceRegistration.unregister();
 		}
 	}
-
-	private static Registry _registry;
 
 	private abstract static class TestCustomJspBag implements CustomJspBag {
 

@@ -40,9 +40,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(_registry);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -61,7 +59,9 @@ public class RepositoryClassDefinitionCatalogImplTest {
 
 	@Before
 	public void setUp() {
-		_serviceRegistration = _registry.registerService(
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
 			RepositoryDefiner.class,
 			_getRepositoryDefiner(
 				_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME, true));
@@ -103,8 +103,10 @@ public class RepositoryClassDefinitionCatalogImplTest {
 
 	@Test
 	public void testGetRepositoryClassDefinition() {
+		Registry registry = RegistryUtil.getRegistry();
+
 		ServiceRegistration<RepositoryDefiner> serviceRegistration =
-			_registry.registerService(
+			registry.registerService(
 				RepositoryDefiner.class,
 				_getRepositoryDefiner(_REPOSITORY_DEFINER_CLASS_NAME, false));
 
@@ -165,7 +167,6 @@ public class RepositoryClassDefinitionCatalogImplTest {
 	private static final String _REPOSITORY_DEFINER_CLASS_NAME =
 		"TestRepositoryDefiner";
 
-	private static Registry _registry;
 	private static RepositoryClassDefinitionCatalogImpl
 		_repositoryClassDefinitionCatalogImpl;
 

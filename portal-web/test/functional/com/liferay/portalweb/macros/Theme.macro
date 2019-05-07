@@ -29,15 +29,29 @@ definition {
 		Click(locator1 = "Radio#SPECIFIC_LOOK");
 	}
 
-	macro viewMaxMinPortletOptions {
+	macro viewMaxPortletOption {
 		AssertTextEquals(
 			key_menuItem = "Maximize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Maximize");
 
-		AssertTextEquals(
+	}
+
+	macro viewMinPortlet {
+		AssertClick(
 			key_menuItem = "Minimize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Minimize");
+	}
+
+	macro viewRestorePortlet {
+		Click(
+			key_menuItem = "Restore",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Restore");
+
+		// Refresh step is a workaround for LPS-91762
+
+		Refresh();
 	}
 }

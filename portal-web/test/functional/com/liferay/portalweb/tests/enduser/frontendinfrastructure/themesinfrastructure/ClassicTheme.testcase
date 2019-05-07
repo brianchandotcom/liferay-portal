@@ -56,6 +56,22 @@ definition {
 
 		Portlet.gotoPortletOptions(portletName = "Hello World");
 
-		Theme.viewMaxMinPortletOptions();
+		Theme.viewMaxPortletOption();
+
+		Theme.viewMinPortlet();
+
+		AssertTextEquals(
+			locator1 = "HelloWorld#PORTLET_TITLE",
+			value1 = "Hello World");
+
+		AssertTextNotPresent(
+			locator1 = "HelloWorld#PORTLET_CONTENT",
+			value1 = "Welcome to Liferay");
+
+		Portlet.gotoPortletOptions(portletName = "Hello World");
+
+		Theme.viewRestorePortlet();
+
+		Smoke.viewWelcomePage();
 	}
 }

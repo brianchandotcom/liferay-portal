@@ -21,7 +21,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -62,13 +62,9 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 					return null;
 				}),
-			new HashMap<String, Object>() {
-				{
-					put(
-						"javax.portlet.name",
-						"SocialActivityInterpreterLocalServiceImplTest");
-				}
-			});
+			Collections.singletonMap(
+				"javax.portlet.name",
+				"SocialActivityInterpreterLocalServiceImplTest"));
 	}
 
 	@AfterClass

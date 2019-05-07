@@ -24,6 +24,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -61,11 +62,7 @@ public class AuthVerifierPipelineTest {
 
 						return null;
 					}),
-				new HashMap<String, Object>() {
-					{
-						put("urls.includes", _BASE_URL + "/*");
-					}
-				});
+				Collections.singletonMap("urls.includes", _BASE_URL + "/*"));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(new MockServletContext());

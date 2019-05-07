@@ -19,7 +19,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,11 +38,8 @@ public class AuthPublicPathRegistryTest {
 		ServiceRegistration<Object> serviceRegistration =
 			registry.registerService(
 				Object.class, new Object(),
-				new HashMap<String, Object>() {
-					{
-						put("auth.public.path", _TEST_AUTH_PUBLIC_PATH);
-					}
-				});
+				Collections.singletonMap(
+					"auth.public.path", _TEST_AUTH_PUBLIC_PATH));
 
 		try {
 			Assert.assertTrue(

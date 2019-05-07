@@ -21,7 +21,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,11 +61,7 @@ public class TemplateManagerUtilTest {
 
 		_serviceRegistration = registry.registerService(
 			TemplateManager.class, _templateManager,
-			new HashMap() {
-				{
-					put("language.type", "test");
-				}
-			});
+			Collections.singletonMap("language.type", "test"));
 	}
 
 	@AfterClass

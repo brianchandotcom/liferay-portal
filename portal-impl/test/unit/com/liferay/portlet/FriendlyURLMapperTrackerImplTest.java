@@ -26,7 +26,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,11 +56,7 @@ public class FriendlyURLMapperTrackerImplTest {
 		ServiceRegistration<FriendlyURLMapper> serviceRegistration =
 			registry.registerService(
 				FriendlyURLMapper.class, friendlyURLMapper,
-				new HashMap<String, Object>() {
-					{
-						put("javax.portlet.name", _PORTLET_NAME);
-					}
-				});
+				Collections.singletonMap("javax.portlet.name", _PORTLET_NAME));
 
 		try {
 			Assert.assertSame(

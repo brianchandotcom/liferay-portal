@@ -23,7 +23,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.HashMap;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,11 +49,8 @@ public class PollerProcessorUtilTest {
 		ServiceRegistration<PollerProcessor> serviceRegistration =
 			registry.registerService(
 				PollerProcessor.class, pollerProcessor,
-				new HashMap<String, Object>() {
-					{
-						put("javax.portlet.name", _TEST_PORTLET_ID);
-					}
-				});
+				Collections.singletonMap(
+					"javax.portlet.name", _TEST_PORTLET_ID));
 
 		try {
 			Assert.assertSame(

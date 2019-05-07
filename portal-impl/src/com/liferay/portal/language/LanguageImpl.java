@@ -278,17 +278,15 @@ public class LanguageImpl implements Language, Serializable {
 
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
-						formattedArguments[i] =
-							arguments[i].getBefore() +
-								get(
-									httpServletRequest,
-									arguments[i].getText()) +
-										arguments[i].getAfter();
+						formattedArguments[i] = StringBundler.concat(
+							arguments[i].getBefore(),
+							get(httpServletRequest, arguments[i].getText()),
+							arguments[i].getAfter());
 					}
 					else {
-						formattedArguments[i] =
-							arguments[i].getBefore() + arguments[i].getText() +
-								arguments[i].getAfter();
+						formattedArguments[i] = StringBundler.concat(
+							arguments[i].getBefore(), arguments[i].getText(),
+							arguments[i].getAfter());
 					}
 				}
 

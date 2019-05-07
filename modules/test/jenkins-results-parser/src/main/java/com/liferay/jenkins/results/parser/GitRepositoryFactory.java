@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 /**
@@ -91,6 +93,19 @@ public class GitRepositoryFactory {
 
 		if (hostname.equalsIgnoreCase("github.com")) {
 			return new GitHubRemoteGitRepository(gitRepositoryName, username);
+		}
+
+		if (hostname.contains("github-dev")) {
+			List<String> gitHubCacheHostnames =
+				GitHubDevSyncUtil.getGitHubCacheHostnames();
+
+			hostname = gitHubCacheHostnames.get(
+				JenkinsResultsParserUtil.getRandomValue(
+					0, gitHubCacheHostnames.size() - 1));
+
+			if (hostname.startsWith("slave-")) {
+				hostname = hostname.substring(6);
+			}
 		}
 
 		return new DefaultRemoteGitRepository(

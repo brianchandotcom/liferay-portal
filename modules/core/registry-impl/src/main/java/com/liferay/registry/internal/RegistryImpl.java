@@ -124,6 +124,22 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
+	public <T> ServiceReference<T>[] getAllServiceReferences(
+			String className, String filterString)
+		throws Exception {
+
+		org.osgi.framework.ServiceReference<T>[] osgiServiceReferences =
+			(org.osgi.framework.ServiceReference<T>[])
+				_bundleContext.getAllServiceReferences(className, filterString);
+
+		if (osgiServiceReferences == null) {
+			return null;
+		}
+
+		return _toServiceReferences(osgiServiceReferences);
+	}
+
+	@Override
 	public Filter getFilter(String filterString) throws RuntimeException {
 		try {
 			return new FilterWrapper(_bundleContext.createFilter(filterString));
@@ -258,18 +274,7 @@ public class RegistryImpl implements Registry {
 			return null;
 		}
 
-		ServiceReference<T>[] serviceReferences =
-			new ServiceReference[osgiServiceReferences.length];
-
-		for (int i = 0; i < osgiServiceReferences.length; i++) {
-			org.osgi.framework.ServiceReference<T> osgiServiceReference =
-				osgiServiceReferences[i];
-
-			serviceReferences[i] = new ServiceReferenceWrapper<>(
-				osgiServiceReference);
-		}
-
-		return serviceReferences;
+		return _toServiceReferences(osgiServiceReferences);
 	}
 
 	@Override
@@ -559,6 +564,23 @@ public class RegistryImpl implements Registry {
 
 			_serviceTrackerReferences.remove(reference);
 		}
+	}
+
+	private static <T> ServiceReference<T>[] _toServiceReferences(
+		org.osgi.framework.ServiceReference<T>[] osgiServiceReferences) {
+
+		ServiceReference<T>[] serviceReferences =
+			new ServiceReference[osgiServiceReferences.length];
+
+		for (int i = 0; i < osgiServiceReferences.length; i++) {
+			org.osgi.framework.ServiceReference<T> osgiServiceReference =
+				osgiServiceReferences[i];
+
+			serviceReferences[i] = new ServiceReferenceWrapper<>(
+				osgiServiceReference);
+		}
+
+		return serviceReferences;
 	}
 
 	private Map<String, Object> _addBundleContextProperties(

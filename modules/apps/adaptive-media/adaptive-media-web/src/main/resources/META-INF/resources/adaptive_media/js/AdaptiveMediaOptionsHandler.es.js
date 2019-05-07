@@ -47,17 +47,19 @@ class AdaptiveMediaOptionsHandler extends PortletBase {
 	 */
 	bindEventsProgressBarComponent_() {
 		if (!this.progressBarComponent_) {
-			Liferay.componentReady(this.ns('AdaptRemaining' + this.uuid)).then(progressBarComponent => {
-				this.progressBarComponent_ = progressBarComponent;
+			Liferay.componentReady(this.ns('AdaptRemaining' + this.uuid)).then(
+				progressBarComponent => {
+					this.progressBarComponent_ = progressBarComponent;
 
-				this.eventHandler_.add(
-					progressBarComponent.on('start', () => this.onStart_())
-				);
+					this.eventHandler_.add(
+						progressBarComponent.on('start', () => this.onStart_())
+					);
 
-				this.eventHandler_.add(
-					progressBarComponent.on('finish', () => this.onFinish_())
-				);
-			});
+					this.eventHandler_.add(
+						progressBarComponent.on('finish', () => this.onFinish_())
+					);
+				}
+			);
 		}
 	}
 

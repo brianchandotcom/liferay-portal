@@ -23,7 +23,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		let idOptions = this.one('#idOptions');
+		const idOptions = this.one('#idOptions');
 
 		if (idOptions) {
 			dom.delegate(
@@ -34,7 +34,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 			);
 		}
 
-		let nameInput = this.one('#name');
+		const nameInput = this.one('#name');
 
 		if (nameInput) {
 			nameInput.addEventListener(
@@ -45,8 +45,8 @@ class EditAdaptiveMediaConfig extends PortletBase {
 
 		this.nameInput = nameInput;
 
-		let maxHeightInput = this.one('#maxHeight');
-		let maxWidthInput = this.one('#maxWidth');
+		const maxHeightInput = this.one('#maxHeight');
+		const maxWidthInput = this.one('#maxWidth');
 
 		if (maxWidthInput) {
 			maxWidthInput.addEventListener(
@@ -80,7 +80,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		this.newUuidInput = this.one('#newUuid');
 		this.newUuidLabel = this.one('label', this.newUuidInput.parentNode);
 
-		let saveButton = this.one('button[type=submit]');
+		const saveButton = this.one('button[type=submit]');
 
 		saveButton.addEventListener(
 			'click',
@@ -93,9 +93,9 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * if the "Automatic" option is selected
 	 */
 	updateUuid() {
-		let newUuidInput = this.newUuidInput;
+		const newUuidInput = this.newUuidInput;
 
-		let uuidEmpty = !newUuidInput.value;
+		const uuidEmpty = !newUuidInput.value;
 
 		if (this.isAutomaticUuid_() && (uuidEmpty || this._originalUuidChanged)) {
 			newUuidInput.value = Liferay.Util.normalizeFriendlyURL(this.nameInput.value);
@@ -110,7 +110,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @param {KeyboardEvent} event The keyboard event.
 	 */
 	handleKeyDown_(event) {
-		let code = event.keyCode || event.charCode;
+		const code = event.keyCode || event.charCode;
 
 		if (this.validInputKeyCodes_.indexOf(code) == -1) {
 			event.preventDefault();
@@ -132,7 +132,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @protected
 	 */
 	onChangeUuidOptions_() {
-		let newUuidInput = this.newUuidInput;
+		const newUuidInput = this.newUuidInput;
 		const newUuidLabel = this.newUuidLabel;
 
 		if (this.isAutomaticUuid_()) {
@@ -162,7 +162,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	onSubmitForm_(event) {
 		this.validateDimensions_();
 
-		let form = Liferay.Form.get(this.ns('fm'));
+		const form = Liferay.Form.get(this.ns('fm'));
 
 		form.formValidator.validate();
 
@@ -180,13 +180,13 @@ class EditAdaptiveMediaConfig extends PortletBase {
 	 * @protected
 	 */
 	validateDimensions_() {
-		let form = Liferay.Form.get(this.ns('fm'));
+		const form = Liferay.Form.get(this.ns('fm'));
 
-		let nsMaxWidth = this.ns('maxWidth');
-		let nsMaxHeight = this.ns('maxHeight');
+		const nsMaxHeight = this.ns('maxHeight');
+		const nsMaxWidth = this.ns('maxWidth');
 
-		let inputErrorMessage = Liferay.Language.get('at-least-one-value-is-required');
-		let STR_BLANK = ' ';
+		const inputErrorMessage = Liferay.Language.get('at-least-one-value-is-required');
+		const STR_BLANK = ' ';
 
 		if (this.maxWidthInput.value || this.maxHeightInput.value) {
 			form.removeRule(nsMaxWidth, 'required');

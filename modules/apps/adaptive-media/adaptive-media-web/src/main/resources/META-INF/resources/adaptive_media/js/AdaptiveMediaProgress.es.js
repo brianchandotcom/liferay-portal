@@ -81,13 +81,9 @@ class AdaptiveMediaProgress extends PortletBase {
 		Ajax.request(this.percentageUrl).then(
 			(xhr) => {
 				try {
-					let json = JSON.parse(xhr.response);
+					const json = JSON.parse(xhr.response);
 
-					let adaptedImages = json.adaptedImages;
-
-					let totalImages = json.totalImages;
-
-					this.updateProgressBar_(adaptedImages, totalImages);
+					this.updateProgressBar_(json.adaptedImages, json.totalImages);
 
 					if (this.percentage_ >= 100) {
 						this.onProgressBarComplete_();

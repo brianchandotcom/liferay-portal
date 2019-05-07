@@ -17,7 +17,7 @@ class SLAConfirmDialog extends React.Component {
 
 	render() {
 		return (
-			<div className="modal" role="dialog" tabIndex="-1">
+			<div className="modal show" role="dialog" tabIndex="-1">
 				<div className="modal-dialog modal-lg">
 					<div className="modal-content">
 						<div className="modal-body">

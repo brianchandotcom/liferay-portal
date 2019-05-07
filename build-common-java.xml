@@ -198,7 +198,7 @@
 				<available file="classes/META-INF/MANIFEST.MF" />
 			</not>
 			<then>
-				<manifest-helper analyze="true" />
+				<manifest-helper />
 
 				<mkdir dir="classes/META-INF" />
 
@@ -211,8 +211,6 @@
 					<attribute name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5" />
 					<attribute name="Bundle-Vendor" value="${release.info.vendor}" />
 					<attribute name="Bundle-Version" value="${artifact.version}" />
-					<attribute name="Export-Package" value="${export.packages}" />
-					<attribute name="Import-Package" value="${import.packages}" />
 					<attribute name="Javac-Compiler" value="${javac.compiler}" />
 					<attribute name="Javac-Debug" value="${javac.debug}" />
 					<attribute name="Javac-Deprecation" value="${javac.deprecation}" />

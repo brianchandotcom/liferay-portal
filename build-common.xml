@@ -1169,7 +1169,6 @@ information.
 	</macrodef>
 
 	<macrodef name="manifest-helper">
-		<attribute default="false" name="analyze" />
 		<sequential>
 			<trycatch>
 				<try>
@@ -1192,7 +1191,6 @@ information.
 			</trycatch>
 
 			<liferay-manifest-helper
-				analyze="@{analyze}"
 				classpathref="project.classpath"
 				projectDirPropertyName="project.dir"
 			/>

@@ -14,9 +14,6 @@
 
 package com.liferay.util.ant;
 
-import aQute.bnd.osgi.Analyzer;
-import aQute.bnd.osgi.Constants;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -29,8 +26,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -53,8 +48,11 @@ public class ManifestHelperTask extends Task {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 */
+	@Deprecated
 	public void setAnalyze(boolean analyze) {
-		_analyze = analyze;
 	}
 
 	public void setClasspathRef(Reference reference) {
@@ -104,40 +102,6 @@ public class ManifestHelperTask extends Task {
 			project.setProperty(
 				"release.info.version", ReleaseInfo.getVersion());
 		}
-
-		if (!_analyze) {
-			return;
-		}
-
-		try (Analyzer analyzer = new Analyzer()) {
-			analyzer.setBase(project.getBaseDir());
-
-			File classesDir = new File(project.getBaseDir(), "classes");
-
-			analyzer.setJar(classesDir);
-
-			File file = new File(project.getBaseDir(), "bnd.bnd");
-
-			if (file.exists()) {
-				analyzer.setProperties(file);
-			}
-			else {
-				analyzer.setProperty(Constants.EXPORT_PACKAGE, "*");
-				analyzer.setProperty(
-					Constants.IMPORT_PACKAGE, "*;resolution:=optional");
-			}
-
-			Manifest manifest = analyzer.calcManifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			project.setProperty(
-				"export.packages",
-				attributes.getValue(Constants.EXPORT_PACKAGE));
-			project.setProperty(
-				"import.packages",
-				attributes.getValue(Constants.IMPORT_PACKAGE));
-		}
 	}
 
 	protected String execute(String command) throws Exception {
@@ -185,7 +149,6 @@ public class ManifestHelperTask extends Task {
 
 	private static final String _PATTERN = "EEE MMM d HH:mm:ss z yyyy";
 
-	private boolean _analyze;
 	private Path _path;
 	private String _projectDirPropertyName;
 

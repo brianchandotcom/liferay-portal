@@ -12,19 +12,20 @@ for (state in states) {
 	slaStatuses = state.slaStatuses;
 
 	for (entry in state.slaStatusMap.entrySet()) {
-		slaStatusMap.merge(entry.key, entry.value, (slaStatus1, slaStatus2) -> {
-			if (slaStatus1.equals(slaStatus2)) {
-				return slaStatus1;
-			}
-			else if (slaStatus1.equals('overdue') ||
-					 slaStatus2.equals('overdue')) {
+		slaStatusMap.merge(
+			entry.key, entry.value,
+			(slaStatus1, slaStatus2) -> {
+				if (slaStatus1.equals(slaStatus2)) {
+					return slaStatus1;
+				}
+				else if (slaStatus1.equals("overdue") ||
+						 slaStatus2.equals("overdue")) {
 
-				return 'overdue';
-			}
-			else {
-				return 'onTime';
-			}
-		});
+					return "overdue";
+				}
+
+				return "onTime";
+			});
 	}
 
 	statusInstanceIds.addAll(state.statusInstanceIds);
@@ -41,18 +42,18 @@ for (instanceId in statusInstanceIds) {
 		if (slaStatuses == null) {
 			instanceCount += 1;
 		}
-		else if (slaStatuses.contains('OnTime') &&
-				 slaStatusMap.get(instanceId).equals('onTime')) {
+		else if (slaStatuses.contains("OnTime") &&
+				 slaStatusMap.get(instanceId).equals("onTime")) {
 
 			instanceCount += 1;
 		}
-		else if (slaStatuses.contains('Overdue') &&
-				 slaStatusMap.get(instanceId).equals('overdue')) {
+		else if (slaStatuses.contains("Overdue") &&
+				 slaStatusMap.get(instanceId).equals("overdue")) {
 
 			instanceCount += 1;
 		}
-		else if (slaStatuses.contains('Untracked') &&
-				 slaStatusMap.get(instanceId).equals('untracked')) {
+		else if (slaStatuses.contains("Untracked") &&
+				 slaStatusMap.get(instanceId).equals("untracked")) {
 
 			instanceCount += 1;
 		}	

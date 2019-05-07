@@ -1,6 +1,6 @@
 def instanceId = doc.instanceId.value;
 
-if (doc.uid.value.startsWith('WorkflowMetricsSLAProcessResult') &&
+if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult") &&
 	(doc.elapsedTime.value != 0) && !doc.onTime.empty) {
 
 	state.map.merge(

@@ -1,37 +1,36 @@
 def instanceId = doc.instanceId.value;
 
-if (doc.uid.value.startsWith('WorkflowMetricsSLAProcessResult')) {
+if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult")) {
 	state.slaStatusMap.compute(
 		instanceId,
 		(key, oldSLAStatus) -> {
 			if (doc.elapsedTime.value == 0) {
-				return 'untracked';
+				return "untracked";
 			}
 			else if (((oldSLAStatus == null) ||
-					  oldSLAStatus.equals('onTime')) &&
+					  oldSLAStatus.equals("onTime")) &&
 					 doc.onTime.value) {
 
-				return 'onTime';
+				return "onTime";
 			}
-			else {
-				return 'overdue';
-			}
+
+			return "overdue";
 		});
 }
 
-if (doc.uid.value.startsWith('WorkflowMetricsInstance') &&
+if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
 	((state.statuses == null) ||
-	 (state.statuses.contains('Completed') && doc.completed.value) ||
-	 (state.statuses.contains('Pending') && !doc.completed.value))) {
+	 (state.statuses.contains("Completed") && doc.completed.value) ||
+	 (state.statuses.contains("Pending") && !doc.completed.value))) {
 
 	state.statusInstanceIds.add(instanceId);
 
 	state.slaStatusMap.compute(
 		instanceId,
-		(key, slaStatus) -> (slaStatus == null) ? 'untracked' : slaStatus);
+		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
 }
 
-if (doc.uid.value.startsWith('WorkflowMetricsToken') &&
+if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
 	((state.taskNames == null) ||
 	 state.taskNames.contains(doc.taskName.value))) {
 

@@ -34,13 +34,17 @@ class InstanceListCard extends React.Component {
 		const filters = parse(query).filters;
 
 		if (typeof filters === 'object') {
-			return (
-				requestUrl +
-				Object.keys(filters).reduce(
-					(acc, cur) => `${acc}&${cur}=${filters[cur]}`,
-					''
-				)
-			);
+			const queryParams = Object.keys(filters).reduce((acc, cur) => {
+				const currentFilter = filters[cur];
+
+				const filterQuery = currentFilter
+					.map(filter => `${cur}=${filter}`)
+					.join('&');
+
+				return `${acc}&${filterQuery}`;
+			}, '');
+
+			return requestUrl + queryParams;
 		}
 
 		return requestUrl;

@@ -12,48 +12,60 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.preferences.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.bundle.portletpreferencesfactoryimplgetpreferencesids.TestCompanyPortlet;
-import com.liferay.portlet.bundle.portletpreferencesfactoryimplgetpreferencesids.TestGroupLayoutPortlet;
-import com.liferay.portlet.bundle.portletpreferencesfactoryimplgetpreferencesids.TestGroupPortlet;
-import com.liferay.portlet.bundle.portletpreferencesfactoryimplgetpreferencesids.TestUserLayoutPortlet;
-import com.liferay.portlet.bundle.portletpreferencesfactoryimplgetpreferencesids.TestUserPortlet;
 
+import javax.portlet.Portlet;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
+@RunWith(Arquillian.class)
 public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleClassTestRule(
-				"bundle.portletpreferencesfactoryimplgetpreferencesids"));
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PortletPreferencesFactoryImplGetPreferencesIdsTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -67,19 +79,30 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 		_layout = LayoutTestUtil.addLayout(_group, true);
 	}
 
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
+	}
+
 	@Test
 	public void testPreferencesOwnedByCompany() throws Exception {
-		long siteGroupId = _layout.getGroupId();
-		String portletId = TestCompanyPortlet.PORTLET_NAME;
-		boolean modeEditGuest = false;
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put("com.liferay.portlet.preferences-company-wide", "true");
+					put("javax.portlet.name", _TEST_COMPANY_PORTLET_NAME);
+				}
+			});
 
 		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout, portletId, "column-1", null);
+			TestPropsValues.getUserId(), _layout, _TEST_COMPANY_PORTLET_NAME,
+			"column-1", null);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-				modeEditGuest);
+				_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+				_TEST_COMPANY_PORTLET_NAME, false);
 
 		Assert.assertEquals(
 			"The owner type should be of type company",
@@ -95,14 +118,29 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByGroup() throws Exception {
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"com.liferay.portlet.preferences-company-wide",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-owned-by-group",
+						"true");
+					put(
+						"com.liferay.portlet.preferences-unique-per-layout",
+						"false");
+					put("javax.portlet.name", _TEST_GROUP_PORTLET_NAME);
+				}
+			});
+
 		long siteGroupId = _layout.getGroupId();
-		String portletId = TestGroupPortlet.PORTLET_NAME;
-		boolean modeEditGuest = false;
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-				modeEditGuest);
+				siteGroupId, TestPropsValues.getUserId(), _layout,
+				_TEST_GROUP_PORTLET_NAME, false);
 
 		Assert.assertEquals(
 			"The owner type should be of type group",
@@ -118,14 +156,27 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByGroupLayout() throws Exception {
-		long siteGroupId = _layout.getGroupId();
-		String portletId = TestGroupLayoutPortlet.PORTLET_NAME;
-		boolean modeEditGuest = false;
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"com.liferay.portlet.preferences-company-wide",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-owned-by-group",
+						"true");
+					put(
+						"com.liferay.portlet.preferences-unique-per-layout",
+						"true");
+					put("javax.portlet.name", _TEST_GROUP_LAYOUT_PORTLET_NAME);
+				}
+			});
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-				modeEditGuest);
+				_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+				_TEST_GROUP_LAYOUT_PORTLET_NAME, false);
 
 		Assert.assertEquals(
 			"The owner type should be of type layout",
@@ -142,14 +193,27 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByUser() throws Exception {
-		long siteGroupId = _layout.getGroupId();
-		String portletId = TestUserPortlet.PORTLET_NAME;
-		boolean modeEditGuest = false;
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"com.liferay.portlet.preferences-company-wide",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-owned-by-group",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-unique-per-layout",
+						"false");
+					put("javax.portlet.name", _TEST_USER_PORTLET_NAME);
+				}
+			});
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-				modeEditGuest);
+				_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+				_TEST_USER_PORTLET_NAME, false);
 
 		Assert.assertEquals(
 			"The owner type should be of type user",
@@ -165,14 +229,27 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByUserLayout() throws Exception {
-		long siteGroupId = _layout.getGroupId();
-		String portletId = TestUserLayoutPortlet.PORTLET_NAME;
-		boolean modeEditGuest = false;
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"com.liferay.portlet.preferences-company-wide",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-owned-by-group",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-unique-per-layout",
+						"true");
+					put("javax.portlet.name", _TEST_USER_LAYOUT_PORTLET_NAME);
+				}
+			});
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-				modeEditGuest);
+				_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+				_TEST_USER_LAYOUT_PORTLET_NAME, false);
 
 		Assert.assertEquals(
 			"The owner type should be of type user",
@@ -190,21 +267,48 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 	public void testPreferencesWithModeEditGuestInPublicLayoutWithPermission()
 		throws Exception {
 
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put("com.liferay.portlet.preferences-company-wide", "true");
+					put("javax.portlet.name", _TEST_COMPANY_PORTLET_NAME);
+				}
+			});
+
 		_layout = LayoutTestUtil.addLayout(_group, false);
 
-		long siteGroupId = _layout.getGroupId();
-
-		String portletId = TestGroupPortlet.PORTLET_NAME;
-		boolean modeEditGuest = true;
-
 		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-			siteGroupId, TestPropsValues.getUserId(), _layout, portletId,
-			modeEditGuest);
+			_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+			_TEST_GROUP_PORTLET_NAME, true);
 	}
+
+	private static final String _TEST_COMPANY_PORTLET_NAME =
+		"com_liferay_portlet_PortletPreferencesFactoryImplGet" +
+			"PreferencesIdsTest_TestCompanyPortlet";
+
+	private static final String _TEST_GROUP_LAYOUT_PORTLET_NAME =
+		"com_liferay_portlet_PortletPreferencesFactoryImplGet" +
+			"PreferencesIdsTest_TestGroupLayoutPortlet";
+
+	private static final String _TEST_GROUP_PORTLET_NAME =
+		"com_liferay_portlet_PortletPreferencesFactoryImplGet" +
+			"PreferencesIdsTest_TestGroupPortlet";
+
+	private static final String _TEST_USER_LAYOUT_PORTLET_NAME =
+		"com_liferay_portlet_PortletPreferencesFactoryImplGet" +
+			"PreferencesIdsTest_TestUserLayoutPortlet";
+
+	private static final String _TEST_USER_PORTLET_NAME =
+		"com_liferay_portlet_PortletPreferencesFactoryImplGet" +
+			"PreferencesIdsTest_TestUserPortlet";
+
+	private static BundleContext _bundleContext;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Layout _layout;
+	private ServiceRegistration<Portlet> _serviceRegistration;
 
 }

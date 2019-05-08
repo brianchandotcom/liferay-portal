@@ -83,6 +83,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Mika Koivisto
@@ -539,6 +540,7 @@ public class MetadataManagerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
+		scope = ReferenceScope.PROTOTYPE_REQUIRED,
 		unbind = "unsetMetadataResolver"
 	)
 	public void setMetadataResolver(MetadataResolver metadataResolver) {

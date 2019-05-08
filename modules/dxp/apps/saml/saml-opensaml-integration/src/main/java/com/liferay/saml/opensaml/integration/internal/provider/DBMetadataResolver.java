@@ -47,11 +47,12 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = MetadataResolver.class)
+@Component(scope = ServiceScope.PROTOTYPE, service = MetadataResolver.class)
 public class DBMetadataResolver extends AbstractMetadataResolver {
 
 	@Nonnull

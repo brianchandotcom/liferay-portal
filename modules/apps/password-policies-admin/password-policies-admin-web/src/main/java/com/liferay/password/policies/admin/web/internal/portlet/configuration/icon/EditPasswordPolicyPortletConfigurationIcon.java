@@ -94,10 +94,10 @@ public class EditPasswordPolicyPortletConfigurationIcon
 	}
 
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
-		return ParamUtil.getLong(request, "passwordPolicyId");
+		return ParamUtil.getLong(httpServletRequest, "passwordPolicyId");
 	}
 
 	@Reference

@@ -47,12 +47,13 @@ public class JournalFormNavigatorContextProvider
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		HttpServletRequest request = themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-		String toLanguageId = ParamUtil.getString(request, "toLanguageId");
+		String toLanguageId = ParamUtil.getString(
+			httpServletRequest, "toLanguageId");
 
 		long classNameId = BeanParamUtil.getLong(
-			article, request, "classNameId");
+			article, httpServletRequest, "classNameId");
 
 		if (Validator.isNotNull(toLanguageId)) {
 			return "translate";

@@ -187,12 +187,13 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 	@Override
 	public String getProfileImageURL(PortletRequest portletRequest) {
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
-		request = _portal.getOriginalServletRequest(request);
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		String facebookId = (String)session.getAttribute(
 			FacebookConnectWebKeys.FACEBOOK_USER_ID);
@@ -201,7 +202,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 			return null;
 		}
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		String token = (String)session.getAttribute(
 			FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN);

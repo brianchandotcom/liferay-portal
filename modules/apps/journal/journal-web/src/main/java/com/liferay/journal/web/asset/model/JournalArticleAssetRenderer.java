@@ -315,10 +315,10 @@ public class JournalArticleAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			liferayPortletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
-		return getURLEdit(request);
+		return getURLEdit(httpServletRequest);
 	}
 
 	@Override

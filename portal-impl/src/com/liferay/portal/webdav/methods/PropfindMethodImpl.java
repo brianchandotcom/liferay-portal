@@ -89,10 +89,11 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 		try {
 			Set<QName> props = new HashSet<>();
 
-			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				webDAVRequest.getHttpServletRequest();
 
 			String xml = new String(
-				FileUtil.getBytes(request.getInputStream()));
+				FileUtil.getBytes(httpServletRequest.getInputStream()));
 
 			if (Validator.isNull(xml)) {
 

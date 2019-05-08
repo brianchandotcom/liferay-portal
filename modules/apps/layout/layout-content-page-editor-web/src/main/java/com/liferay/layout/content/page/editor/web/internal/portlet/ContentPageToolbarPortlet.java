@@ -63,20 +63,21 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
-			(ContentPageEditorDisplayContext)request.getAttribute(
+			(ContentPageEditorDisplayContext)httpServletRequest.getAttribute(
 				ContentPageEditorWebKeys.
 					LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 
 		if (contentPageEditorDisplayContext == null) {
 			contentPageEditorDisplayContext =
 				_contentPageEditorDisplayContextProvider.
-					getContentPageEditorDisplayContext(request, renderResponse);
+					getContentPageEditorDisplayContext(
+						httpServletRequest, renderResponse);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.
 					LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT,
 				contentPageEditorDisplayContext);

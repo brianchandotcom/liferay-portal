@@ -1137,10 +1137,10 @@ public class PortalImpl implements Portal {
 		String actualURL = null;
 
 		if (friendlyURL != null) {
-			HttpServletRequest request = (HttpServletRequest)requestContext.get(
-				"request");
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)requestContext.get("request");
 
-			long companyId = PortalInstances.getCompanyId(request);
+			long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 			for (String urlSeparator :
 					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
@@ -2981,10 +2981,10 @@ public class PortalImpl implements Portal {
 			layoutFriendlyURLSeparatorComposite = null;
 
 		if (friendlyURL != null) {
-			HttpServletRequest request = (HttpServletRequest)requestContext.get(
-				"request");
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)requestContext.get("request");
 
-			long companyId = PortalInstances.getCompanyId(request);
+			long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 			for (String urlSeparator :
 					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
@@ -4651,10 +4651,11 @@ public class PortalImpl implements Portal {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(portletRequest), portletId);
 
-			HttpServletRequest request = getHttpServletRequest(portletRequest);
+			HttpServletRequest httpServletRequest = getHttpServletRequest(
+				portletRequest);
 
 			ServletContext servletContext =
-				(ServletContext)request.getAttribute(WebKeys.CTX);
+				(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 			portletTitle = getPortletTitle(portlet, servletContext, locale);
 		}
@@ -6414,9 +6415,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isMethodGet(PortletRequest portletRequest) {
-		HttpServletRequest request = getHttpServletRequest(portletRequest);
+		HttpServletRequest httpServletRequest = getHttpServletRequest(
+			portletRequest);
 
-		String method = GetterUtil.getString(request.getMethod());
+		String method = GetterUtil.getString(httpServletRequest.getMethod());
 
 		if (StringUtil.equalsIgnoreCase(method, HttpMethods.GET)) {
 			return true;
@@ -6427,9 +6429,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isMethodPost(PortletRequest portletRequest) {
-		HttpServletRequest request = getHttpServletRequest(portletRequest);
+		HttpServletRequest httpServletRequest = getHttpServletRequest(
+			portletRequest);
 
-		String method = GetterUtil.getString(request.getMethod());
+		String method = GetterUtil.getString(httpServletRequest.getMethod());
 
 		if (StringUtil.equalsIgnoreCase(method, HttpMethods.POST)) {
 			return true;
@@ -6866,10 +6869,11 @@ public class PortalImpl implements Portal {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, ServletException {
 
-		HttpServletRequest request = getHttpServletRequest(portletRequest);
+		HttpServletRequest httpServletRequest = getHttpServletRequest(
+			portletRequest);
 		HttpServletResponse response = getHttpServletResponse(portletResponse);
 
-		sendRSSFeedsDisabledError(request, response);
+		sendRSSFeedsDisabledError(httpServletRequest, response);
 	}
 
 	@Override

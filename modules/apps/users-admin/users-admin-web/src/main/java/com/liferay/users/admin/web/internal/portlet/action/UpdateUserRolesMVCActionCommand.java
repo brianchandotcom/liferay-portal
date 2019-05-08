@@ -169,21 +169,22 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				permissionChecker, portletName,
 				ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
-			return _portal.getHomeURL(request);
+			return _portal.getHomeURL(httpServletRequest);
 		}
 
 		if (portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS)) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
 			String backURL = null;
 			long organizationId = 0;
 			String portletNameSpace = _portal.getPortletNamespace(
 				UsersAdminPortletKeys.MY_ORGANIZATIONS);
-			String redirect = ParamUtil.getString(request, "redirect");
+			String redirect = ParamUtil.getString(
+				httpServletRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				Map<String, String[]> parameterMap = _http.getParameterMap(
@@ -205,7 +206,8 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 					permissionChecker, organizationId, ActionKeys.VIEW)) {
 
 				PortletURL portletURL = _portal.getControlPanelPortletURL(
-					request, portletName, PortletRequest.RENDER_PHASE);
+					httpServletRequest, portletName,
+					PortletRequest.RENDER_PHASE);
 
 				return portletURL.toString();
 			}

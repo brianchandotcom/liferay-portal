@@ -60,8 +60,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
 		InfoDisplayContributor infoDisplayContributor =
 			_getInfoDisplayContributor(friendlyURL);
@@ -70,7 +70,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			_getInfoDisplayObjectProvider(
 				infoDisplayContributor, groupId, friendlyURL);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
 			infoDisplayObjectProvider);
 
@@ -80,29 +80,30 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					portal.getClassName(
 						infoDisplayObjectProvider.getClassNameId()));
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER,
 				infoEditURLProvider);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
 			infoDisplayContributor);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.VERSION_CLASS_PK,
 			_getVersionClassPK(friendlyURL));
 
-		Locale locale = portal.getLocale(request);
+		Locale locale = portal.getLocale(httpServletRequest);
 
 		portal.setPageDescription(
-			infoDisplayObjectProvider.getDescription(locale), request);
+			infoDisplayObjectProvider.getDescription(locale),
+			httpServletRequest);
 		portal.setPageKeywords(
-			infoDisplayObjectProvider.getKeywords(locale), request);
+			infoDisplayObjectProvider.getKeywords(locale), httpServletRequest);
 		portal.setPageTitle(
-			infoDisplayObjectProvider.getTitle(locale), request);
+			infoDisplayObjectProvider.getTitle(locale), httpServletRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY,
 			infoDisplayObjectProvider.getDisplayObject());
 

@@ -86,10 +86,10 @@ public class ActionUtil {
 	public static List<FileEntry> getFileEntries(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFileEntries(request);
+		return getFileEntries(httpServletRequest);
 	}
 
 	public static FileEntry getFileEntry(HttpServletRequest httpServletRequest)
@@ -116,10 +116,10 @@ public class ActionUtil {
 	public static FileEntry getFileEntry(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFileEntry(request);
+		return getFileEntry(httpServletRequest);
 	}
 
 	public static FileShortcut getFileShortcut(
@@ -139,10 +139,10 @@ public class ActionUtil {
 	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFileShortcut(request);
+		return getFileShortcut(httpServletRequest);
 	}
 
 	public static List<FileShortcut> getFileShortcuts(
@@ -173,10 +173,10 @@ public class ActionUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFileShortcuts(request);
+		return getFileShortcuts(httpServletRequest);
 	}
 
 	public static FileVersion getFileVersion(
@@ -209,10 +209,10 @@ public class ActionUtil {
 			PortletRequest portletRequest, FileEntry fileEntry)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFileVersion(request, fileEntry);
+		return getFileVersion(httpServletRequest, fileEntry);
 	}
 
 	public static Folder getFolder(HttpServletRequest httpServletRequest)
@@ -274,10 +274,10 @@ public class ActionUtil {
 	public static Folder getFolder(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFolder(request);
+		return getFolder(httpServletRequest);
 	}
 
 	public static List<Folder> getFolders(HttpServletRequest httpServletRequest)
@@ -307,10 +307,10 @@ public class ActionUtil {
 	public static List<Folder> getFolders(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFolders(request);
+		return getFolders(httpServletRequest);
 	}
 
 	public static Repository getRepository(
@@ -338,10 +338,10 @@ public class ActionUtil {
 	public static Repository getRepository(PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getRepository(request);
+		return getRepository(httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);

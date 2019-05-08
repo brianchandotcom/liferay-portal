@@ -301,13 +301,14 @@ public class LiferayActivityService implements ActivityService {
 				String.valueOf(socialActivity.getClassPK()),
 				String.valueOf(socialActivity.getUserId()));
 
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				HttpServletRequestThreadLocal.getHttpServletRequest();
 
-			request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				request);
+				httpServletRequest);
 
 			serviceContext.setCompanyId(themeDisplay.getCompanyId());
 			serviceContext.setUserId(themeDisplay.getUserId());

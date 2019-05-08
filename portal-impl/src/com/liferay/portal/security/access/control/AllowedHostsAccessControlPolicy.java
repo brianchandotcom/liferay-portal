@@ -63,7 +63,8 @@ public class AllowedHostsAccessControlPolicy extends BaseAccessControlPolicy {
 			return;
 		}
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
 		String hostsAllowedString = MapUtil.getString(
 			accessControlContext.getSettings(), "hosts.allowed");
@@ -72,9 +73,11 @@ public class AllowedHostsAccessControlPolicy extends BaseAccessControlPolicy {
 
 		Set<String> hostsAllowedSet = SetUtil.fromArray(hostsAllowed);
 
-		if (!AccessControlUtil.isAccessAllowed(request, hostsAllowedSet)) {
+		if (!AccessControlUtil.isAccessAllowed(
+				httpServletRequest, hostsAllowedSet)) {
+
 			throw new SecurityException(
-				"Access denied for " + request.getRemoteAddr());
+				"Access denied for " + httpServletRequest.getRemoteAddr());
 		}
 	}
 

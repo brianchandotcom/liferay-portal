@@ -61,10 +61,10 @@ public class ActionUtil {
 	public static List<BookmarksEntry> getEntries(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getEntries(request);
+		return getEntries(httpServletRequest);
 	}
 
 	public static BookmarksEntry getEntry(HttpServletRequest httpServletRequest)
@@ -88,10 +88,10 @@ public class ActionUtil {
 	public static BookmarksEntry getEntry(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getEntry(request);
+		return getEntry(httpServletRequest);
 	}
 
 	public static BookmarksFolder getFolder(
@@ -127,10 +127,10 @@ public class ActionUtil {
 	public static BookmarksFolder getFolder(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFolder(request);
+		return getFolder(httpServletRequest);
 	}
 
 	public static List<BookmarksFolder> getFolders(
@@ -161,10 +161,10 @@ public class ActionUtil {
 			PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getFolders(request);
+		return getFolders(httpServletRequest);
 	}
 
 }

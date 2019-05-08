@@ -154,7 +154,7 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	protected void callSetAttributes() {
-		HttpServletRequest request = getOriginalServletRequest();
+		HttpServletRequest httpServletRequest = getOriginalServletRequest();
 
 		if (isCleanUpSetAttributes()) {
 			if (_setAttributeNames == null) {
@@ -165,20 +165,21 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			_trackedRequest = new TrackedServletRequest(
-				request, _setAttributeNames);
+				httpServletRequest, _setAttributeNames);
 
-			request = _trackedRequest;
+			httpServletRequest = _trackedRequest;
 		}
 
 		Class<? extends IncludeTag> clazz = getClass();
 
-		request.setAttribute(clazz.getName(), this);
+		httpServletRequest.setAttribute(clazz.getName(), this);
 
-		setNamespacedAttribute(request, "bodyContent", getBodyContentWrapper());
 		setNamespacedAttribute(
-			request, "dynamicAttributes", getDynamicAttributes());
+			httpServletRequest, "bodyContent", getBodyContentWrapper());
+		setNamespacedAttribute(
+			httpServletRequest, "dynamicAttributes", getDynamicAttributes());
 
-		setAttributes(request);
+		setAttributes(httpServletRequest);
 	}
 
 	protected void cleanUp() {

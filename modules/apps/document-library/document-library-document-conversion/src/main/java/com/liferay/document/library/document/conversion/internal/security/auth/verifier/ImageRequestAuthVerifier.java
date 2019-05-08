@@ -47,10 +47,12 @@ public class ImageRequestAuthVerifier implements AuthVerifier {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
 		try {
-			String token = ParamUtil.getString(request, "auth_token");
+			String token = ParamUtil.getString(
+				httpServletRequest, "auth_token");
 
 			if (Validator.isBlank(token)) {
 				return authVerifierResult;

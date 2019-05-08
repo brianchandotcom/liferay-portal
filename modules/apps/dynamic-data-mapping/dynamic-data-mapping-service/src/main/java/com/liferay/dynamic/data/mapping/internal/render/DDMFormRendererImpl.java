@@ -68,7 +68,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected void clearDDMFieldsCounter(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 
 		String fieldsCounterKey =
@@ -76,7 +76,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 				ddmFormFieldRenderingContext.getNamespace() + "fieldsCount";
 
 		DDMFieldsCounter ddmFieldsCounter =
-			(DDMFieldsCounter)request.getAttribute(fieldsCounterKey);
+			(DDMFieldsCounter)httpServletRequest.getAttribute(fieldsCounterKey);
 
 		if (ddmFieldsCounter != null) {
 			ddmFieldsCounter.clear();

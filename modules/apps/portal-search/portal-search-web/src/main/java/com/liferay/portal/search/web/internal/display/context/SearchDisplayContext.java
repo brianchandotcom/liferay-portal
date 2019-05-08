@@ -110,17 +110,19 @@ public class SearchDisplayContext {
 
 		_keywords = new Keywords(keywords);
 
-		HttpServletRequest request = portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			_renderRequest);
 
 		String emptyResultMessage = language.format(
-			request, "no-results-were-found-that-matched-the-keywords-x",
+			httpServletRequest,
+			"no-results-were-found-that-matched-the-keywords-x",
 			"<strong>" + html.escape(keywords) + "</strong>", false);
 
 		SearchContainer<Document> searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultMessage);
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		_resetScope(searchContext);
 

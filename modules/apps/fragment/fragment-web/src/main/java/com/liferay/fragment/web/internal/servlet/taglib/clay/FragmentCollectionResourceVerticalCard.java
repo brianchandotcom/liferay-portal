@@ -109,15 +109,17 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		Date modifiedDate = _fileEntry.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-		return LanguageUtil.format(request, "x-ago", modifiedDateDescription);
+		return LanguageUtil.format(
+			httpServletRequest, "x-ago", modifiedDateDescription);
 	}
 
 	@Override

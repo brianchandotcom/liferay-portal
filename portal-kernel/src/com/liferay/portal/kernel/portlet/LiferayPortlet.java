@@ -379,10 +379,10 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected String getJSONContentType(PortletRequest portletRequest) {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		if (BrowserSnifferUtil.isIe(request)) {
+		if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 			return ContentTypes.TEXT_HTML;
 		}
 

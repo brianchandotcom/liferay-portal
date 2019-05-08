@@ -243,7 +243,8 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _ddmDataProviderRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_ddmDataProviderRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -252,7 +253,8 @@ public class DDMDataProviderDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -260,7 +262,7 @@ public class DDMDataProviderDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -524,21 +526,23 @@ public class DDMDataProviderDisplayContext {
 	protected UnsafeConsumer<DropdownItem, Exception>
 		getCreationMenuDropdownItem(String ddmDataProviderType) {
 
-		HttpServletRequest request = _ddmDataProviderRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_ddmDataProviderRequestHelper.getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcPath",
 				"/edit_data_provider.jsp", "redirect",
-				PortalUtil.getCurrentURL(request), "groupId",
+				PortalUtil.getCurrentURL(httpServletRequest), "groupId",
 				String.valueOf(themeDisplay.getScopeGroupId()), "type",
 				ddmDataProviderType);
 
 			dropdownItem.setLabel(
-				LanguageUtil.get(request, ddmDataProviderType));
+				LanguageUtil.get(httpServletRequest, ddmDataProviderType));
 		};
 	}
 

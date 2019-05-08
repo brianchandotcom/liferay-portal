@@ -49,7 +49,7 @@ public class DDMFormBuilderContextFactoryImpl
 			Optional.ofNullable(
 				ddmFormBuilderContextRequest.getProperty(
 					"ddmStructureVersion"));
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			ddmFormBuilderContextRequest.getHttpServletRequest();
 		HttpServletResponse response =
 			ddmFormBuilderContextRequest.getHttpServletResponse();
@@ -60,8 +60,8 @@ public class DDMFormBuilderContextFactoryImpl
 			new DDMFormBuilderContextFactoryHelper(
 				ddmStructureOptional, ddmStructureVersionOptional,
 				_ddmFormFieldTypeServicesTracker,
-				_ddmFormTemplateContextFactory, request, response, _jsonFactory,
-				locale, readOnly);
+				_ddmFormTemplateContextFactory, httpServletRequest, response,
+				_jsonFactory, locale, readOnly);
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			new DDMFormBuilderContextResponse();

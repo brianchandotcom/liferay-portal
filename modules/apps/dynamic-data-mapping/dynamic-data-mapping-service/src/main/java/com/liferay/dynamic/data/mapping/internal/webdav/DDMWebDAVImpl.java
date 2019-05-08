@@ -71,9 +71,11 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 		String type = pathArray[2];
 
 		if (type.equals(TYPE_STRUCTURES)) {
-			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				webDAVRequest.getHttpServletRequest();
 
-			String definition = StringUtil.read(request.getInputStream());
+			String definition = StringUtil.read(
+				httpServletRequest.getInputStream());
 
 			DDMForm ddmForm = getDDMForm(definition);
 
@@ -238,10 +240,11 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 			if (model instanceof DDMStructure) {
 				DDMStructure structure = (DDMStructure)model;
 
-				HttpServletRequest request =
+				HttpServletRequest httpServletRequest =
 					webDAVRequest.getHttpServletRequest();
 
-				String definition = StringUtil.read(request.getInputStream());
+				String definition = StringUtil.read(
+					httpServletRequest.getInputStream());
 
 				DDMForm ddmForm = getDDMForm(definition);
 
@@ -259,10 +262,11 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 			else if (model instanceof DDMTemplate) {
 				DDMTemplate template = (DDMTemplate)model;
 
-				HttpServletRequest request =
+				HttpServletRequest httpServletRequest =
 					webDAVRequest.getHttpServletRequest();
 
-				String script = StringUtil.read(request.getInputStream());
+				String script = StringUtil.read(
+					httpServletRequest.getInputStream());
 
 				_ddmTemplateService.updateTemplate(
 					template.getTemplateId(), template.getClassPK(),

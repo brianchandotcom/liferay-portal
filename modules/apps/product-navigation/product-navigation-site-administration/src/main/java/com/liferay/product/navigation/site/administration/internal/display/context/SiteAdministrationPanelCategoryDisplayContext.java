@@ -391,11 +391,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	public boolean isShowSiteSelector() throws PortalException {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_portletRequest);
 
 		List<Group> mySites = getMySites();
-		List<Group> recentSites = _recentGroupManager.getRecentGroups(request);
+		List<Group> recentSites = _recentGroupManager.getRecentGroups(
+			httpServletRequest);
 
 		if (mySites.isEmpty() && recentSites.isEmpty()) {
 			return false;
@@ -480,12 +481,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_portletRequest);
 
-		_recentGroupManager.addRecentGroup(request, groupId);
+		_recentGroupManager.addRecentGroup(httpServletRequest, groupId);
 
-		_groupProvider.setGroup(request, _group);
+		_groupProvider.setGroup(httpServletRequest, _group);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -87,10 +87,10 @@ public class ActionUtil {
 	public static MBCategory getCategory(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getCategory(request);
+		return getCategory(httpServletRequest);
 	}
 
 	public static MBMessage getMessage(HttpServletRequest httpServletRequest)
@@ -114,10 +114,10 @@ public class ActionUtil {
 	public static MBMessage getMessage(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getMessage(request);
+		return getMessage(httpServletRequest);
 	}
 
 	public static MBMessageDisplay getMessageDisplay(
@@ -160,10 +160,10 @@ public class ActionUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getMessageDisplay(request);
+		return getMessageDisplay(httpServletRequest);
 	}
 
 	public static MBMessage getThreadMessage(
@@ -191,10 +191,10 @@ public class ActionUtil {
 	public static MBMessage getThreadMessage(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getThreadMessage(request);
+		return getThreadMessage(httpServletRequest);
 	}
 
 }

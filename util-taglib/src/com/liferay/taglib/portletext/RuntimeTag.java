@@ -343,10 +343,11 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+			Layout layout = (Layout)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT);
 
 			if (layout == null) {
 				return EVAL_PAGE;
@@ -361,13 +362,14 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				doTag(
 					_portletProviderClassName, _portletProviderAction,
 					_instanceId, _queryString, _defaultPreferences,
-					_persistSettings, pageContext, request, response);
+					_persistSettings, pageContext, httpServletRequest,
+					response);
 			}
 			else {
 				doTag(
 					_portletName, _instanceId, _queryString, _settingsScope,
-					_defaultPreferences, _persistSettings, pageContext, request,
-					response);
+					_defaultPreferences, _persistSettings, pageContext,
+					httpServletRequest, response);
 			}
 
 			return EVAL_PAGE;

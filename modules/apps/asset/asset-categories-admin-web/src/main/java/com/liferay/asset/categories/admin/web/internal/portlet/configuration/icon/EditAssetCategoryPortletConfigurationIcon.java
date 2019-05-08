@@ -98,11 +98,11 @@ public class EditAssetCategoryPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
 		AssetCategoriesDisplayContext assetCategoriesDisplayContext =
-			new AssetCategoriesDisplayContext(null, null, request);
+			new AssetCategoriesDisplayContext(null, null, httpServletRequest);
 
 		AssetCategory category = assetCategoriesDisplayContext.getCategory();
 

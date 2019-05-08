@@ -317,19 +317,20 @@ public class PortletRenderer {
 
 		@Override
 		public StringBundler doCall() throws Exception {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				PortletContainerUtil.setupOptionalRenderParameters(
 					_request, null, _columnId, _columnPos, _columnCount);
 
-			_copyHeaderRequestAttributes(_headerRequestAttributes, request);
+			_copyHeaderRequestAttributes(
+				_headerRequestAttributes, httpServletRequest);
 
 			_restrictPortletServletRequest =
-				(RestrictPortletServletRequest)request;
+				(RestrictPortletServletRequest)httpServletRequest;
 
 			try {
 				_split(_request, _restrictPortletServletRequest);
 
-				return _render(request, _response);
+				return _render(httpServletRequest, _response);
 			}
 			catch (Exception e) {
 

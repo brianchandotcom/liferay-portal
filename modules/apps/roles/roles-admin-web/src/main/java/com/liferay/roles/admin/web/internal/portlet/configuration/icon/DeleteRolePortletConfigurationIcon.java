@@ -120,10 +120,10 @@ public class DeleteRolePortletConfigurationIcon
 	}
 
 	private long _getRoleId(PortletRequest portletRequest) {
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
-		return ParamUtil.getLong(request, "roleId");
+		return ParamUtil.getLong(httpServletRequest, "roleId");
 	}
 
 	@Reference

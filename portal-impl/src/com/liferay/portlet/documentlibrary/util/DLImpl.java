@@ -1233,10 +1233,10 @@ public class DLImpl implements DL {
 			return entryURL;
 		}
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if ((request == null) || (themeDisplay == null)) {
+		if ((httpServletRequest == null) || (themeDisplay == null)) {
 			return StringPool.BLANK;
 		}
 
@@ -1266,11 +1266,12 @@ public class DLImpl implements DL {
 			(plid == LayoutConstants.DEFAULT_PLID)) {
 
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				request, portletId, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, plid, PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, plid,
+				PortletRequest.RENDER_PHASE);
 		}
 
 		portletURL.setParameter(

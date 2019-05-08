@@ -40,9 +40,10 @@ public class WikiNodeInfoPanelRequestHelper extends BaseRequestHelper {
 			return _node;
 		}
 
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		_node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+		_node = (WikiNode)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_NODE);
 
 		return _node;
 	}
@@ -52,9 +53,10 @@ public class WikiNodeInfoPanelRequestHelper extends BaseRequestHelper {
 			return _nodes;
 		}
 
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		_nodes = (List<WikiNode>)request.getAttribute(WikiWebKeys.WIKI_NODES);
+		_nodes = (List<WikiNode>)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_NODES);
 
 		if (_nodes == null) {
 			_nodes = Collections.emptyList();

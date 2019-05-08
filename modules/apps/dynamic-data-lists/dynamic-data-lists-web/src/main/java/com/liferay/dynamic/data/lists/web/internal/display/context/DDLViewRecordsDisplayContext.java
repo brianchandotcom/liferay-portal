@@ -242,7 +242,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _ddlRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest = _ddlRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -251,7 +251,8 @@ public class DDLViewRecordsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -259,7 +260,7 @@ public class DDLViewRecordsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};

@@ -47,11 +47,11 @@ public class MessageTag extends TagSupport implements DirectTag {
 		String value = StringPool.BLANK;
 
 		if (!unicode) {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
 			unicode = GetterUtil.getBoolean(
-				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
+				httpServletRequest.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 		}
 
 		if (arguments == null) {

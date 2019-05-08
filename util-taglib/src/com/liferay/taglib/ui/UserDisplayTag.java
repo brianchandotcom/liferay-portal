@@ -34,10 +34,10 @@ public class UserDisplayTag extends TagSupport {
 		try {
 			PortalIncludeUtil.include(pageContext, getEndPage());
 
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			request.removeAttribute("liferay-ui:user-display:url");
+			httpServletRequest.removeAttribute("liferay-ui:user-display:url");
 
 			return EVAL_PAGE;
 		}
@@ -49,12 +49,12 @@ public class UserDisplayTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:author", String.valueOf(_author));
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:displayStyle",
 				String.valueOf(_displayStyle));
 
@@ -62,15 +62,15 @@ public class UserDisplayTag extends TagSupport {
 				_imageCssClass = "img-circle";
 			}
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:imageCssClass", _imageCssClass);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:showLink", String.valueOf(_showLink));
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:showUserDetails",
 				String.valueOf(_showUserDetails));
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:showUserName",
 				String.valueOf(_showUserName));
 
@@ -78,13 +78,14 @@ public class UserDisplayTag extends TagSupport {
 				_userIconCssClass = "user-icon";
 			}
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:userIconCssClass",
 				String.valueOf(_userIconCssClass));
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:user-display:userId", String.valueOf(_userId));
-			request.setAttribute("liferay-ui:user-display:userName", _userName);
+			httpServletRequest.setAttribute(
+				"liferay-ui:user-display:userName", _userName);
 
 			User user = UserLocalServiceUtil.fetchUserById(_userId);
 
@@ -93,17 +94,20 @@ public class UserDisplayTag extends TagSupport {
 					user = null;
 				}
 
-				request.setAttribute("liferay-ui:user-display:user", user);
+				httpServletRequest.setAttribute(
+					"liferay-ui:user-display:user", user);
 
 				pageContext.setAttribute("userDisplay", user);
 			}
 			else {
-				request.removeAttribute("liferay-ui:user-display:user");
+				httpServletRequest.removeAttribute(
+					"liferay-ui:user-display:user");
 
 				pageContext.removeAttribute("userDisplay");
 			}
 
-			request.setAttribute("liferay-ui:user-display:url", _url);
+			httpServletRequest.setAttribute(
+				"liferay-ui:user-display:url", _url);
 
 			PortalIncludeUtil.include(pageContext, getStartPage());
 

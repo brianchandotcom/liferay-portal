@@ -80,11 +80,11 @@ public class PanelAppContentHelper {
 		if (Validator.isNotNull(velocityTemplateId) &&
 			Validator.isNotNull(content)) {
 
-			HttpServletRequest request = getOriginalHttpServletRequest(
-				_httpServletRequest);
+			HttpServletRequest httpServletRequest =
+				getOriginalHttpServletRequest(_httpServletRequest);
 
 			StringBundler sb = RuntimePageUtil.getProcessedTemplate(
-				request, _httpServletResponse, getPortletId(),
+				httpServletRequest, _httpServletResponse, getPortletId(),
 				new StringTemplateResource(velocityTemplateId, content));
 
 			if (sb != null) {

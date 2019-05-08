@@ -99,10 +99,10 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 				params, requestContext);
 		}
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
@@ -176,12 +176,13 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 				AssetPublisherPortletKeys.ASSET_PUBLISHER);
 		}
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
 		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
 			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-				request, layout.getPlid(), defaultAssetPublisherPortletId);
+				httpServletRequest, layout.getPlid(),
+				defaultAssetPublisherPortletId);
 
 			actualParams.put(
 				"p_p_auth", new String[] {actualPortletAuthenticationToken});
@@ -213,7 +214,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		actualParams.put(
 			namespace + "type", new String[] {assetRendererFactory.getType()});
 
-		Locale locale = _portal.getLocale(request);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		AssetEntry assetEntry = Optional.ofNullable(
 			_assetEntryLocalService.fetchEntry(
@@ -261,9 +262,10 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 				layoutActualURL + StringPool.QUESTION + queryString;
 		}
 
-		_portal.addPageSubtitle(journalArticle.getTitle(locale), request);
+		_portal.addPageSubtitle(
+			journalArticle.getTitle(locale), httpServletRequest);
 		_portal.addPageDescription(
-			journalArticle.getDescription(locale), request);
+			journalArticle.getDescription(locale), httpServletRequest);
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			_getInfoDisplayObjectProvider(journalArticle);
@@ -271,7 +273,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		String keywords = infoDisplayObjectProvider.getKeywords(locale);
 
 		if (Validator.isNotNull(keywords)) {
-			_portal.addPageKeywords(keywords, request);
+			_portal.addPageKeywords(keywords, httpServletRequest);
 		}
 
 		return layoutActualURL;

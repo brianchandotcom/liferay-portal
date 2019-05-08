@@ -37,11 +37,13 @@ public class DynamicServletRequestTest {
 		String queryString = PortletParameterUtil.addNamespace(
 			"15", StringPool.BLANK);
 
-		HttpServletRequest request = DynamicServletRequest.addQueryString(
-			new MockHttpServletRequest(),
-			Collections.<String, String[]>emptyMap(), queryString, false);
+		HttpServletRequest httpServletRequest =
+			DynamicServletRequest.addQueryString(
+				new MockHttpServletRequest(),
+				Collections.<String, String[]>emptyMap(), queryString, false);
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		Assert.assertEquals(parameterMap.toString(), 1, parameterMap.size());
 		Assert.assertArrayEquals(
@@ -53,11 +55,13 @@ public class DynamicServletRequestTest {
 		String queryString = PortletParameterUtil.addNamespace(
 			"15", "param1=value1&param2=value2&param3=value3");
 
-		HttpServletRequest request = DynamicServletRequest.addQueryString(
-			new MockHttpServletRequest(),
-			Collections.<String, String[]>emptyMap(), queryString, false);
+		HttpServletRequest httpServletRequest =
+			DynamicServletRequest.addQueryString(
+				new MockHttpServletRequest(),
+				Collections.<String, String[]>emptyMap(), queryString, false);
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		Assert.assertEquals(parameterMap.toString(), 4, parameterMap.size());
 		Assert.assertArrayEquals(

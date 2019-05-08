@@ -54,9 +54,10 @@ public class XSLContentDisplayContext {
 			return _content;
 		}
 
-		HttpServletRequest request = (HttpServletRequest)servletRequest;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
-		String contextPath = request.getContextPath();
+		String contextPath = httpServletRequest.getContextPath();
 
 		String xmlUrl = XSLContentUtil.replaceUrlTokens(
 			_themeDisplay, contextPath,

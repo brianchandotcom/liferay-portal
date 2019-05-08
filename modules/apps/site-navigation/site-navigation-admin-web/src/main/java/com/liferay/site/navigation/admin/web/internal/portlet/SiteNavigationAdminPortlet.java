@@ -75,13 +75,13 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 			_portal.getLiferayPortletRequest(renderRequest);
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(renderResponse);
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
 		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext =
 			new SiteNavigationAdminDisplayContext(
-				liferayPortletRequest, liferayPortletResponse, request,
-				_siteNavigationMenuItemTypeRegistry,
+				liferayPortletRequest, liferayPortletResponse,
+				httpServletRequest, _siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService, _siteNavigationMenuService);
 
 		renderRequest.setAttribute(

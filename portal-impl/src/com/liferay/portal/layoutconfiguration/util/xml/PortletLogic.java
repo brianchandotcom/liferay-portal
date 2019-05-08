@@ -98,16 +98,18 @@ public class PortletLogic extends RuntimeLogic {
 				parameterMap, key -> !key.startsWith("p_p_"));
 		}
 
-		HttpServletRequest request = DynamicServletRequest.addQueryString(
-			_httpServletRequest, parameterMap, queryString, false);
+		HttpServletRequest httpServletRequest =
+			DynamicServletRequest.addQueryString(
+				_httpServletRequest, parameterMap, queryString, false);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Portlet portlet = getPortlet(themeDisplay, portletId);
 
 		PortletContainerUtil.render(
-			request, bufferCacheServletResponse, portlet);
+			httpServletRequest, bufferCacheServletResponse, portlet);
 
 		return bufferCacheServletResponse.getString();
 	}

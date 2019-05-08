@@ -62,11 +62,12 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 
 	@Override
 	public StringBundler modify(StringBundler sb, PageContext pageContext) {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SharingConfiguration sharingConfiguration =
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
@@ -78,7 +79,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntryConstants.getClassName());
-		FileEntry fileEntry = (FileEntry)request.getAttribute(
+		FileEntry fileEntry = (FileEntry)httpServletRequest.getAttribute(
 			"info_panel.jsp-fileEntry");
 
 		int sharingEntriesCount =
@@ -89,7 +90,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			return sb;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"info_panel_file_entry.jsp-sharingEntriesCount",
 			sharingEntriesCount);
 
@@ -109,7 +110,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			Collectors.toList()
 		);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"info_panel_file_entry.jsp-sharingEntryToUsers",
 			sharingEntryToUsers);
 
@@ -125,7 +126,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			_log.error(pe, pe);
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"info_panel_file_entry.jsp-showManageCollaborators",
 			showManageCollaborators);
 

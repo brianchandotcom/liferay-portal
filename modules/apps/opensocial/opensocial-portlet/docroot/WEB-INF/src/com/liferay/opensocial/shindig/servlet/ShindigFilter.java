@@ -65,10 +65,11 @@ public class ShindigFilter extends InjectedFilter {
 			FilterChain filterChain)
 		throws IOException, ServletException {
 
-		HttpServletRequest request = (HttpServletRequest)servletRequest;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		if (injector == null) {
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			_init(session.getServletContext());
 		}
@@ -92,7 +93,7 @@ public class ShindigFilter extends InjectedFilter {
 
 		ShindigUtil.setHost(host);
 
-		HttpServletRequestThreadLocal.setHttpServletRequest(request);
+		HttpServletRequestThreadLocal.setHttpServletRequest(httpServletRequest);
 
 		try {
 			filterChain.doFilter(servletRequest, servletResponse);

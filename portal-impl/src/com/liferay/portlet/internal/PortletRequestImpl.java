@@ -1184,10 +1184,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			String mappingValue = GetterUtil.getString(
 				preferences.getValue(mappingKey, null));
 
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)dynamicRequest.getRequest();
 
-			String[] newValues = request.getParameterValues(mappingValue);
+			String[] newValues = httpServletRequest.getParameterValues(
+				mappingValue);
 
 			if ((newValues != null) && (newValues.length != 0)) {
 				newValues = ArrayUtil.remove(newValues, StringPool.NULL);

@@ -522,9 +522,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		throws WebDAVException {
 
 		try {
-			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				webDAVRequest.getHttpServletRequest();
 
-			if (request.getContentLength() > 0) {
+			if (httpServletRequest.getContentLength() > 0) {
 				return new Status(
 					HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
 			}
@@ -761,7 +762,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		File file = null;
 
 		try {
-			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				webDAVRequest.getHttpServletRequest();
 
 			String[] pathArray = webDAVRequest.getPathArray();
 
@@ -774,9 +776,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			file = FileUtil.createTempFile(FileUtil.getExtension(title));
 
-			FileUtil.write(file, request.getInputStream());
+			FileUtil.write(file, httpServletRequest.getInputStream());
 
-			String contentType = getContentType(request, file, title);
+			String contentType = getContentType(
+				httpServletRequest, file, title);
 
 			try {
 				FileEntry fileEntry = _dlAppService.getFileEntry(

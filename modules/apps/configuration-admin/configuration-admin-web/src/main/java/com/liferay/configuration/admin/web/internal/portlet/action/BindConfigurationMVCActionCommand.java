@@ -367,10 +367,11 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		ConfigurationFormRenderer configurationFormRenderer =
 			_configurationFormRendererRetriever.getConfigurationFormRenderer(
 				pid);
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		return configurationFormRenderer.getRequestParameters(request);
+		return configurationFormRenderer.getRequestParameters(
+			httpServletRequest);
 	}
 
 	protected Dictionary<String, Object> toDictionary(

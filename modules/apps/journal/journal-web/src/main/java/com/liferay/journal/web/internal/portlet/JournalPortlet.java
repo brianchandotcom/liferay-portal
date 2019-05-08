@@ -533,7 +533,7 @@ public class JournalPortlet extends MVCPortlet {
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(
@@ -569,7 +569,7 @@ public class JournalPortlet extends MVCPortlet {
 			}
 			catch (Exception e) {
 				try {
-					_portal.sendError(e, request, response);
+					_portal.sendError(e, httpServletRequest, response);
 				}
 				catch (ServletException se) {
 				}

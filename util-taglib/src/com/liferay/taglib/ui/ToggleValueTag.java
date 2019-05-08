@@ -32,10 +32,11 @@ public class ToggleValueTag extends TagSupport {
 			String id, String defaultValue, PageContext pageContext)
 		throws Exception {
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		String value = SessionClicks.get(request, id, StringPool.BLANK);
+		String value = SessionClicks.get(
+			httpServletRequest, id, StringPool.BLANK);
 
 		if (value.equals(StringPool.BLANK)) {
 			value = defaultValue;

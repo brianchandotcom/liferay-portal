@@ -89,14 +89,16 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getOriginalServletRequest(
-			_portal.getHttpServletRequest(resourceRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(resourceRequest));
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		String className = ParamUtil.getString(request, "className");
-		long[] ids = StringUtil.split(ParamUtil.getString(request, "ids"), 0L);
-		int status = ParamUtil.getInteger(request, "status");
+		String className = ParamUtil.getString(httpServletRequest, "className");
+		long[] ids = StringUtil.split(
+			ParamUtil.getString(httpServletRequest, "ids"), 0L);
+		int status = ParamUtil.getInteger(httpServletRequest, "status");
 
 		int count = 0;
 

@@ -117,18 +117,19 @@ public class CalendarDisplayContext {
 
 		return new CreationMenu() {
 			{
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					_renderRequest);
+				HttpServletRequest httpServletRequest =
+					PortalUtil.getHttpServletRequest(_renderRequest);
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_calendar_resource.jsp", "redirect",
-							PortalUtil.getCurrentURL(request));
+							PortalUtil.getCurrentURL(httpServletRequest));
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "add-calendar-resource"));
+							LanguageUtil.get(
+								httpServletRequest, "add-calendar-resource"));
 					});
 			}
 		};
@@ -199,7 +200,7 @@ public class CalendarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest = _themeDisplay.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -208,7 +209,7 @@ public class CalendarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterActiveDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "active"));
+							LanguageUtil.get(httpServletRequest, "active"));
 					});
 
 				addGroup(
@@ -216,7 +217,7 @@ public class CalendarDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getScopeDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "scope"));
+							LanguageUtil.get(httpServletRequest, "scope"));
 					});
 			}
 		};
@@ -240,10 +241,11 @@ public class CalendarDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
-		String tabs1 = ParamUtil.getString(request, "tabs1", "calendar");
+		String tabs1 = ParamUtil.getString(
+			httpServletRequest, "tabs1", "calendar");
 
 		String scope = ParamUtil.getString(
 			_renderRequest, "scope",
@@ -258,7 +260,8 @@ public class CalendarDisplayContext {
 				navigationItem.setActive(tabs1.equals("calendar"));
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "tabs1", "calendar");
-				navigationItem.setLabel(LanguageUtil.get(request, "calendar"));
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "calendar"));
 
 				return navigationItem;
 			},
@@ -269,7 +272,8 @@ public class CalendarDisplayContext {
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "tabs1", "resources",
 					"scope", scope, "active", active);
-				navigationItem.setLabel(LanguageUtil.get(request, "resources"));
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "resources"));
 
 				return navigationItem;
 			});

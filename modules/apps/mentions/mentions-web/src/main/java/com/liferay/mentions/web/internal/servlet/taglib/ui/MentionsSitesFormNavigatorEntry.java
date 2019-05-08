@@ -92,13 +92,14 @@ public class MentionsSitesFormNavigatorEntry
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		HttpServletRequest request = themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
 
 		return PrefsParamUtil.getBoolean(
-			companyPortletPreferences, request, "mentionsEnabled", true);
+			companyPortletPreferences, httpServletRequest, "mentionsEnabled",
+			true);
 	}
 
 	@Override

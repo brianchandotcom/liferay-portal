@@ -210,12 +210,13 @@ public class AssetPublisherConfigurationAction
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				HttpServletRequest request = portal.getHttpServletRequest(
-					actionRequest);
+				HttpServletRequest httpServletRequest =
+					portal.getHttpServletRequest(actionRequest);
 
 				AssetPublisherPortletInstanceConfiguration
 					assetPublisherPortletInstanceConfiguration =
-						_getAssetPublisherPortletInstanceConfiguration(request);
+						_getAssetPublisherPortletInstanceConfiguration(
+							httpServletRequest);
 
 				boolean emailAssetEntryAddedEnabled = GetterUtil.getBoolean(
 					getParameter(actionRequest, "emailAssetEntryAddedEnabled"),
@@ -670,8 +671,8 @@ public class AssetPublisherConfigurationAction
 		}
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
-			HttpServletRequest request = portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				portal.getHttpServletRequest(actionRequest);
 
 			LayoutSetBranch layoutSetBranch =
 				LayoutStagingUtil.getLayoutSetBranch(layout.getLayoutSet());
@@ -679,7 +680,7 @@ public class AssetPublisherConfigurationAction
 			long layoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
 
 			long layoutRevisionId = staging.getRecentLayoutRevisionId(
-				request, layoutSetBranchId, layout.getPlid());
+				httpServletRequest, layoutSetBranchId, layout.getPlid());
 
 			LayoutRevision layoutRevision =
 				layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);

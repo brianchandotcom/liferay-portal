@@ -204,11 +204,11 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 			jspWriter.write("<div class=\"");
 
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
 			String productMenuState = SessionClicks.get(
-				request,
+				httpServletRequest,
 				ProductNavigationProductMenuWebKeys.
 					PRODUCT_NAVIGATION_PRODUCT_MENU_STATE,
 				"closed");

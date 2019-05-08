@@ -76,8 +76,8 @@ public class MailPortlet extends MVCPortlet {
 		String mvcPath = resourceRequest.getParameter("mvcPath");
 
 		if (mvcPath.equals("/attachment.jsp")) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				resourceRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(resourceRequest);
 
 			long attachmentId = ParamUtil.getLong(
 				resourceRequest, "attachmentId");
@@ -85,7 +85,8 @@ public class MailPortlet extends MVCPortlet {
 			AttachmentHandler attachmentHandler = null;
 
 			try {
-				MailManager mailManager = MailManager.getInstance(request);
+				MailManager mailManager = MailManager.getInstance(
+					httpServletRequest);
 
 				Attachment attachment = _attachmentLocalService.getAttachment(
 					attachmentId);

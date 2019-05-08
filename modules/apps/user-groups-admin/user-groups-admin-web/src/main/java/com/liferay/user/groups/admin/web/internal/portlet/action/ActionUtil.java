@@ -45,10 +45,10 @@ public class ActionUtil {
 	public static UserGroup getUserGroup(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getUserGroup(request);
+		return getUserGroup(httpServletRequest);
 	}
 
 }

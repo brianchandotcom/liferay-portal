@@ -64,10 +64,10 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			return;
 		}
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
-		ScriptData scriptData = (ScriptData)request.getAttribute(
+		ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
 			WebKeys.AUI_SCRIPT_DATA);
 
 		if (scriptData == null) {
@@ -87,10 +87,10 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 
 		filterChain.doFilter(resourceRequest, resourceResponse);
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(resourceRequest);
 
-		ScriptData scriptData = (ScriptData)request.getAttribute(
+		ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
 			WebKeys.AUI_SCRIPT_DATA);
 
 		if (scriptData == null) {

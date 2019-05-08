@@ -98,11 +98,11 @@ public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		// Determine lifecycle from request method
 
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
 
 		friendlyURLPath =
-			request.getMethod() +
+			httpServletRequest.getMethod() +
 				friendlyURLPath.substring(getMapping().length() + 1);
 
 		if (friendlyURLPath.endsWith(StringPool.SLASH)) {
@@ -131,7 +131,8 @@ public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		addParameter(namespace, parameterMap, "p_p_id", portletId);
 
-		addParameter(parameterMap, "p_p_lifecycle", getLifecycle(request));
+		addParameter(
+			parameterMap, "p_p_lifecycle", getLifecycle(httpServletRequest));
 
 		String format = routeParameters.get("format");
 

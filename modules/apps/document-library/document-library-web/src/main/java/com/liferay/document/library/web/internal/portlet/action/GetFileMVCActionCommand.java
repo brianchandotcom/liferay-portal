@@ -51,12 +51,12 @@ public class GetFileMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			actionResponse);
 
-		_getFileActionHelper.processRequest(request, response);
+		_getFileActionHelper.processRequest(httpServletRequest, response);
 
 		actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 	}

@@ -69,7 +69,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 
 		if (ddmFormFieldRenderingContext.isReadOnly() &&
@@ -83,7 +83,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 				parameters.put("fileEntryTitle", getFileEntryTitle(fileEntry));
 				parameters.put(
-					"fileEntryURL", getFileEntryURL(request, fileEntry));
+					"fileEntryURL",
+					getFileEntryURL(httpServletRequest, fileEntry));
 			}
 		}
 
@@ -91,8 +92,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId"));
 
 		parameters.put(
-			"itemSelectorAuthToken", getItemSelectorAuthToken(request));
-		parameters.put("lexiconIconsPath", getLexiconIconsPath(request));
+			"itemSelectorAuthToken",
+			getItemSelectorAuthToken(httpServletRequest));
+		parameters.put(
+			"lexiconIconsPath", getLexiconIconsPath(httpServletRequest));
 
 		Map<String, String> stringsMap = new HashMap<>();
 

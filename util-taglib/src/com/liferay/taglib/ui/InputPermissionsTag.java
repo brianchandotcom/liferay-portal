@@ -41,24 +41,26 @@ public class InputPermissionsTag extends IncludeTag {
 			PageContext pageContext)
 		throws Exception {
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		request.setAttribute("liferay-ui:input-permissions:formName", formName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-permissions:formName", formName);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-permissions:groupDefaultActions",
 			ResourceActionsUtil.getModelResourceGroupDefaultActions(modelName));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-permissions:guestDefaultActions",
 			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-permissions:guestUnsupportedActions",
 			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
 				modelName));
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-permissions:modelName", modelName);
-		request.setAttribute("liferay-ui:input-permissions:reverse", reverse);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-ui:input-permissions:reverse", reverse);
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-permissions:supportedActions",
 			ResourceActionsUtil.getModelResourceActions(modelName));
 

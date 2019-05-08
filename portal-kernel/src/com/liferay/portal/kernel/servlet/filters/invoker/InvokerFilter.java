@@ -65,31 +65,32 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			FilterChain filterChain)
 		throws IOException, ServletException {
 
-		HttpServletRequest request = (HttpServletRequest)servletRequest;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		String originalURI = getOriginalRequestURI(request);
+		String originalURI = getOriginalRequestURI(httpServletRequest);
 
-		if (!handleLongRequestURL(request, response, originalURI)) {
+		if (!handleLongRequestURL(httpServletRequest, response, originalURI)) {
 			return;
 		}
 
-		request = handleNonSerializableRequest(request);
+		httpServletRequest = handleNonSerializableRequest(httpServletRequest);
 
 		response =
 			HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
 				response);
 
-		response = secureResponseHeaders(request, response);
+		response = secureResponseHeaders(httpServletRequest, response);
 
 		String uri = getURI(originalURI);
 
-		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
+		httpServletRequest.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
 		try {
 			InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
-				request, uri, filterChain);
+				httpServletRequest, uri, filterChain);
 
 			Thread currentThread = Thread.currentThread();
 
@@ -98,10 +99,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-			invokerFilterChain.doFilter(request, response);
+			invokerFilterChain.doFilter(httpServletRequest, response);
 		}
 		finally {
-			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);
+			httpServletRequest.removeAttribute(WebKeys.INVOKER_FILTER_URI);
 		}
 	}
 

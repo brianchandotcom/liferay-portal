@@ -52,7 +52,7 @@ public class SelectLayoutSetBranchMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -69,7 +69,7 @@ public class SelectLayoutSetBranchMVCActionCommand
 			_layoutSetBranchLocalService.getLayoutSetBranch(layoutSetBranchId);
 
 		staging.setRecentLayoutSetBranchId(
-			request, layoutSet.getLayoutSetId(),
+			httpServletRequest, layoutSet.getLayoutSetId(),
 			layoutSetBranch.getLayoutSetBranchId());
 
 		hideDefaultSuccessMessage(actionRequest);

@@ -437,8 +437,8 @@ public class ServiceContextFactory {
 
 		// Portlet preferences ids
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
@@ -448,9 +448,9 @@ public class ServiceContextFactory {
 
 		// Request
 
-		serviceContext.setRemoteAddr(request.getRemoteAddr());
-		serviceContext.setRemoteHost(request.getRemoteHost());
-		serviceContext.setRequest(request);
+		serviceContext.setRemoteAddr(httpServletRequest.getRemoteAddr());
+		serviceContext.setRemoteHost(httpServletRequest.getRemoteHost());
+		serviceContext.setRequest(httpServletRequest);
 
 		// Asset
 
@@ -490,7 +490,7 @@ public class ServiceContextFactory {
 		serviceContext.setAssetEntryVisible(
 			ParamUtil.getBoolean(portletRequest, "assetEntryVisible", true));
 
-		String assetLinkEntryIdsString = request.getParameter(
+		String assetLinkEntryIdsString = httpServletRequest.getParameter(
 			"assetLinksSearchContainerPrimaryKeys");
 
 		if (assetLinkEntryIdsString != null) {
@@ -499,10 +499,10 @@ public class ServiceContextFactory {
 		}
 
 		serviceContext.setAssetPriority(
-			ParamUtil.getDouble(request, "assetPriority"));
+			ParamUtil.getDouble(httpServletRequest, "assetPriority"));
 
 		String[] assetTagNames = ParamUtil.getStringValues(
-			request, "assetTagNames");
+			httpServletRequest, "assetTagNames");
 
 		serviceContext.setAssetTagNames(assetTagNames);
 

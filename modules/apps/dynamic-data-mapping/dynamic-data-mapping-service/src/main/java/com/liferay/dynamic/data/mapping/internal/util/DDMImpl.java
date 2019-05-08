@@ -1077,11 +1077,12 @@ public class DDMImpl implements DDM {
 			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
 					 Validator.isNull(fieldValue)) {
 
-				HttpServletRequest request = serviceContext.getRequest();
+				HttpServletRequest httpServletRequest =
+					serviceContext.getRequest();
 
-				if (request instanceof UploadRequest) {
+				if (httpServletRequest instanceof UploadRequest) {
 					String imageFieldValue = getImageFieldValue(
-						(UploadRequest)request, fieldNameValue);
+						(UploadRequest)httpServletRequest, fieldNameValue);
 
 					if (Validator.isNotNull(imageFieldValue)) {
 						fieldValue = imageFieldValue;

@@ -79,16 +79,17 @@ public class PollsDisplayContext {
 
 		return new CreationMenu() {
 			{
-				HttpServletRequest request = _pollsRequestHelper.getRequest();
+				HttpServletRequest httpServletRequest =
+					_pollsRequestHelper.getRequest();
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/polls/edit_question.jsp", "redirect",
-							PortalUtil.getCurrentURL(request));
+							PortalUtil.getCurrentURL(httpServletRequest));
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "add-poll"));
+							LanguageUtil.get(httpServletRequest, "add-poll"));
 					});
 			}
 		};
@@ -99,7 +100,8 @@ public class PollsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _pollsRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_pollsRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -108,7 +110,8 @@ public class PollsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -116,7 +119,7 @@ public class PollsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};

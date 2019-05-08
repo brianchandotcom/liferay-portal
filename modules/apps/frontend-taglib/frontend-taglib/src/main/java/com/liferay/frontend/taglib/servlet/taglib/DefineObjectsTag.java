@@ -42,18 +42,19 @@ public class DefineObjectsTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest != null) {
 			LiferayPortletRequest liferayPortletRequest =
 				PortalUtil.getLiferayPortletRequest(portletRequest);
 
 			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
+				(PortletResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 			if (portletResponse != null) {
@@ -72,7 +73,8 @@ public class DefineObjectsTag extends TagSupport {
 				"windowState", liferayPortletRequest.getWindowState());
 		}
 
-		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(request);
+		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
+			httpServletRequest);
 
 		if (Validator.isNotNull(npmResolvedPackageName)) {
 			pageContext.setAttribute(
@@ -83,11 +85,12 @@ public class DefineObjectsTag extends TagSupport {
 			pageContext.setAttribute("resourceBundle", _overrideResourceBundle);
 		}
 		else {
-			Locale locale = PortalUtil.getLocale(request);
+			Locale locale = PortalUtil.getLocale(httpServletRequest);
 
 			pageContext.setAttribute(
 				"resourceBundle",
-				TagResourceBundleUtil.getResourceBundle(request, locale));
+				TagResourceBundleUtil.getResourceBundle(
+					httpServletRequest, locale));
 		}
 
 		return SKIP_BODY;
@@ -125,11 +128,12 @@ public class DefineObjectsTag extends TagSupport {
 	 */
 	@Deprecated
 	protected LiferayPortletRequest getLiferayPortletRequest() {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest == null) {
 			return null;
@@ -143,11 +147,12 @@ public class DefineObjectsTag extends TagSupport {
 	 */
 	@Deprecated
 	protected LiferayPortletResponse getLiferayPortletResponse() {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse == null) {
 			return null;
@@ -165,12 +170,13 @@ public class DefineObjectsTag extends TagSupport {
 			return _overrideResourceBundle;
 		}
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		Locale locale = PortalUtil.getLocale(request);
+		Locale locale = PortalUtil.getLocale(httpServletRequest);
 
-		return TagResourceBundleUtil.getResourceBundle(request, locale);
+		return TagResourceBundleUtil.getResourceBundle(
+			httpServletRequest, locale);
 	}
 
 	/**

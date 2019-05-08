@@ -263,11 +263,12 @@ public class ActionUtil {
 	public static WikiNode getNode(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
 		String nodeName = ParamUtil.getString(portletRequest, "nodeName");
@@ -317,12 +318,12 @@ public class ActionUtil {
 	public static WikiPage getPage(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		long nodeId = ParamUtil.getLong(request, "nodeId");
-		String title = ParamUtil.getString(request, "title");
-		double version = ParamUtil.getDouble(request, "version");
+		long nodeId = ParamUtil.getLong(httpServletRequest, "nodeId");
+		String title = ParamUtil.getString(httpServletRequest, "title");
+		double version = ParamUtil.getDouble(httpServletRequest, "version");
 
 		WikiNode node = null;
 
@@ -335,7 +336,8 @@ public class ActionUtil {
 		}
 
 		if (node == null) {
-			node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+			node = (WikiNode)httpServletRequest.getAttribute(
+				WikiWebKeys.WIKI_NODE);
 
 			if (node != null) {
 				nodeId = node.getNodeId();

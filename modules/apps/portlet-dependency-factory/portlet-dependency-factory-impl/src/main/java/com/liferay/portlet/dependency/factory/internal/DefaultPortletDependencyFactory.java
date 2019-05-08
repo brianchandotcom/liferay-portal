@@ -50,12 +50,12 @@ public class DefaultPortletDependencyFactory
 		String name, String scope, String version, String markup,
 		PortletRequest portletRequest) {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				request);
+				httpServletRequest);
 
 		return new PortletDependencyImpl(
 			name, scope, version, markup, absolutePortalURLBuilder);

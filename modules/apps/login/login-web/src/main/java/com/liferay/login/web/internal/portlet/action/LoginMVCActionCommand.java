@@ -185,8 +185,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getOriginalServletRequest(
-			_portal.getHttpServletRequest(actionRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(actionRequest));
 
 		if (!themeDisplay.isSignedIn()) {
 			HttpServletResponse response = _portal.getHttpServletResponse(
@@ -206,7 +207,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			String authType = portletPreferences.getValue("authType", null);
 
 			_authenticatedSessionManager.login(
-				request, response, login, password, rememberMe, authType);
+				httpServletRequest, response, login, password, rememberMe,
+				authType);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -236,7 +238,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(redirect) &&
 				!redirect.startsWith(Http.HTTP)) {
 
-				redirect = getCompleteRedirectURL(request, redirect);
+				redirect = getCompleteRedirectURL(httpServletRequest, redirect);
 			}
 		}
 

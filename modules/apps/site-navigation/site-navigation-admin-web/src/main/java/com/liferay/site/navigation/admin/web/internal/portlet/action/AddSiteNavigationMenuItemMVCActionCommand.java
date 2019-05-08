@@ -89,13 +89,14 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 		catch (SiteNavigationMenuItemNameException snmine) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.format(
-					request, "please-enter-a-name-with-fewer-than-x-characters",
+					httpServletRequest,
+					"please-enter-a-name-with-fewer-than-x-characters",
 					ModelHintsUtil.getMaxLength(
 						SiteNavigationMenuItem.class.getName(), "name")));
 		}

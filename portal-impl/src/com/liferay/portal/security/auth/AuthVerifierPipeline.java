@@ -92,9 +92,10 @@ public class AuthVerifierPipeline {
 
 		authVerifierResult.setState(AuthVerifierResult.State.UNSUCCESSFUL);
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
@@ -106,14 +107,15 @@ public class AuthVerifierPipeline {
 	private List<AuthVerifierConfiguration> _getAuthVerifierConfigurations(
 		AccessControlContext accessControlContext) {
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
 		List<AuthVerifierConfiguration> authVerifierConfigurations =
 			new ArrayList<>();
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
-		String contextPath = request.getContextPath();
+		String contextPath = httpServletRequest.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());
 

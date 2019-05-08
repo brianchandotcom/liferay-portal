@@ -88,14 +88,15 @@ public class AutocompletePageTitleMVCResourceCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
 
 		searchContext.setEnd(20);
 
-		String query = ParamUtil.getString(request, "query");
+		String query = ParamUtil.getString(httpServletRequest, "query");
 
 		searchContext.setKeywords(StringUtil.toLowerCase(query));
 

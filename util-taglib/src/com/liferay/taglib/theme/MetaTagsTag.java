@@ -67,11 +67,12 @@ public class MetaTagsTag extends IncludeTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay == null) {
 			return EVAL_PAGE;
@@ -83,7 +84,8 @@ public class MetaTagsTag extends IncludeTag {
 			return EVAL_PAGE;
 		}
 
-		String currentLanguageId = LanguageUtil.getLanguageId(request);
+		String currentLanguageId = LanguageUtil.getLanguageId(
+			httpServletRequest);
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
@@ -116,7 +118,7 @@ public class MetaTagsTag extends IncludeTag {
 		}
 
 		ListMergeable<String> pageDescriptionListMergeable =
-			(ListMergeable<String>)request.getAttribute(
+			(ListMergeable<String>)httpServletRequest.getAttribute(
 				WebKeys.PAGE_DESCRIPTION);
 
 		if (pageDescriptionListMergeable != null) {
@@ -154,7 +156,8 @@ public class MetaTagsTag extends IncludeTag {
 		}
 
 		ListMergeable<String> pageKeywordsListMergeable =
-			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_KEYWORDS);
+			(ListMergeable<String>)httpServletRequest.getAttribute(
+				WebKeys.PAGE_KEYWORDS);
 
 		if (pageKeywordsListMergeable != null) {
 			if (Validator.isNotNull(metaKeywords)) {

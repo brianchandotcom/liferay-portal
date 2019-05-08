@@ -93,14 +93,14 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
 		PortletPreferences portletSetup = getLayoutPortletSetup(
 			renderRequest, portlet);
 
 		portletSetup = getPortletSetup(
-			request, renderRequest.getPreferences(), portletSetup);
+			httpServletRequest, renderRequest.getPreferences(), portletSetup);
 
 		String title = PortletConfigurationUtil.getPortletTitle(
 			portletSetup, themeDisplay.getLanguageId());
@@ -117,16 +117,17 @@ public class ActionUtil {
 			RenderRequest renderRequest, PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
 		portletPreferences = getPortletPreferences(
-			request, renderRequest.getPreferences(), portletPreferences);
+			httpServletRequest, renderRequest.getPreferences(),
+			portletPreferences);
 
 		renderRequest = new ConfigurationRenderRequest(
 			renderRequest, portletPreferences);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, renderRequest);
 
 		return renderRequest;

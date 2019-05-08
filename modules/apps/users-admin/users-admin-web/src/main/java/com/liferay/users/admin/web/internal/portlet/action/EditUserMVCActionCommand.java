@@ -519,18 +519,19 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			// Reset the locale
 
-			HttpServletRequest request = portal.getOriginalServletRequest(
-				portal.getHttpServletRequest(actionRequest));
+			HttpServletRequest httpServletRequest =
+				portal.getOriginalServletRequest(
+					portal.getHttpServletRequest(actionRequest));
 			HttpServletResponse response = portal.getHttpServletResponse(
 				actionResponse);
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.removeAttribute(WebKeys.LOCALE);
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			LanguageUtil.updateCookie(request, response, locale);
+			LanguageUtil.updateCookie(httpServletRequest, response, locale);
 
 			// Clear cached portlet responses
 

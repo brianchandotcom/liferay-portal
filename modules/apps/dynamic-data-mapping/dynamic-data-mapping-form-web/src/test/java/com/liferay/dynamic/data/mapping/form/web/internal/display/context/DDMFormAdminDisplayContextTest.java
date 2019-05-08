@@ -249,15 +249,15 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	protected HttpServletRequest mockHttpServletRequest() {
 		ThemeDisplay themeDisplay = mockThemeDisplay();
 
-		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 
 		when(
-			request.getAttribute(WebKeys.THEME_DISPLAY)
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
 
-		return request;
+		return httpServletRequest;
 	}
 
 	protected ThemeDisplay mockThemeDisplay() {
@@ -324,12 +324,12 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 
 		Portal portal = mock(Portal.class);
 
-		HttpServletRequest request = mockHttpServletRequest();
+		HttpServletRequest httpServletRequest = mockHttpServletRequest();
 
 		when(
 			portal.getHttpServletRequest(Matchers.any(PortletRequest.class))
 		).thenReturn(
-			request
+			httpServletRequest
 		);
 
 		portalUtil.setPortal(portal);

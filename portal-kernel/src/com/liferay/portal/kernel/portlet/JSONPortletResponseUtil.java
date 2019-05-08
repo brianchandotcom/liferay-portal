@@ -63,10 +63,10 @@ public class JSONPortletResponseUtil {
 	private static String _getContentType(PortletRequest portletRequest) {
 		String contentType = ContentTypes.APPLICATION_JSON;
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		if (BrowserSnifferUtil.isIe(request)) {
+		if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 			contentType = ContentTypes.TEXT_PLAIN;
 		}
 

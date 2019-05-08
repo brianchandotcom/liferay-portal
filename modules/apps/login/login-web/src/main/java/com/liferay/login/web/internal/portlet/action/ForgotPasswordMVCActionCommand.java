@@ -300,10 +300,10 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, emailFromName, emailFromAddress, emailToAddress,
 			subject, body);
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		SessionMessages.add(request, "forgotPasswordSent");
+		SessionMessages.add(httpServletRequest, "forgotPasswordSent");
 
 		sendRedirect(actionRequest, actionResponse, null);
 	}

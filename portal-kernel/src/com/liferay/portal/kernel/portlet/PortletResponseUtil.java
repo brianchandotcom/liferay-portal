@@ -298,10 +298,10 @@ public class PortletResponseUtil {
 			if (!ascii) {
 				String encodedFileName = URLCodec.encodeURL(fileName, true);
 
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					portletRequest);
+				HttpServletRequest httpServletRequest =
+					PortalUtil.getHttpServletRequest(portletRequest);
 
-				if (BrowserSnifferUtil.isIe(request)) {
+				if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 					contentDispositionFileName =
 						"filename=\"" + encodedFileName + "\"";
 				}

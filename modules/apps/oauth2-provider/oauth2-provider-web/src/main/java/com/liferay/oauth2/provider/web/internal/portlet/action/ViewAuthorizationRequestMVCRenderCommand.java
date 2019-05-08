@@ -85,10 +85,12 @@ public class ViewAuthorizationRequestMVCRenderCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest request = _portal.getOriginalServletRequest(
-			_portal.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
 
-		Map<String, String> oAuth2Parameters = getOAuth2Parameters(request);
+		Map<String, String> oAuth2Parameters = getOAuth2Parameters(
+			httpServletRequest);
 
 		String error = oAuth2Parameters.get("error");
 

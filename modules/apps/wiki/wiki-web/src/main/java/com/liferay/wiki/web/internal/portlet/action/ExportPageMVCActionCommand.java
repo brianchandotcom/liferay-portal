@@ -112,14 +112,14 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			editPageURL.setPortletMode(PortletMode.VIEW);
 			editPageURL.setWindowState(WindowState.MAXIMIZED);
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 			HttpServletResponse response = _portal.getHttpServletResponse(
 				actionResponse);
 
 			getFile(
 				nodeId, title, version, targetExtension, viewPageURL,
-				editPageURL, themeDisplay, request, response);
+				editPageURL, themeDisplay, httpServletRequest, response);
 
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}

@@ -130,14 +130,14 @@ public class PortletLayoutFinderTest {
 	public void testSetTargetGroupWithDifferentGroup() throws Exception {
 		addLayouts(true, true);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		ReflectionTestUtil.invoke(
 			FindStrutsAction.class, "_setTargetLayout",
 			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
-			request, _blogsEntryGroupId, _blogLayout.getPlid());
+			httpServletRequest, _blogsEntryGroupId, _blogLayout.getPlid());
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		Assert.assertTrue(layout instanceof VirtualLayout);
 		Assert.assertNotEquals(_group.getGroupId(), layout.getGroupId());
@@ -147,14 +147,14 @@ public class PortletLayoutFinderTest {
 	public void testSetTargetGroupWithSameGroup() throws Exception {
 		addLayouts(true, false);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		ReflectionTestUtil.invoke(
 			FindStrutsAction.class, "_setTargetLayout",
 			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
-			request, _blogsEntryGroupId, _blogLayout.getPlid());
+			httpServletRequest, _blogsEntryGroupId, _blogLayout.getPlid());
 
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
 		Assert.assertNull(layout);
 	}
@@ -196,13 +196,13 @@ public class PortletLayoutFinderTest {
 	}
 
 	protected HttpServletRequest getHttpServletRequest() throws Exception {
-		HttpServletRequest request = new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return request;
+		return httpServletRequest;
 	}
 
 	protected ThemeDisplay getThemeDisplay() throws Exception {

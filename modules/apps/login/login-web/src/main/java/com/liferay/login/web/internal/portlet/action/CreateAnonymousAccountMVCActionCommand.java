@@ -83,7 +83,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -140,9 +140,11 @@ public class CreateAnonymousAccountMVCActionCommand
 
 		// Session messages
 
-		SessionMessages.add(request, "userAdded", user.getEmailAddress());
 		SessionMessages.add(
-			request, "userAddedPassword", user.getPasswordUnencrypted());
+			httpServletRequest, "userAdded", user.getEmailAddress());
+		SessionMessages.add(
+			httpServletRequest, "userAddedPassword",
+			user.getPasswordUnencrypted());
 	}
 
 	@Override

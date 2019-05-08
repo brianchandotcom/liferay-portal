@@ -155,12 +155,13 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 				"siteNavigationMenuItemId", layoutSiteNavigationMenuItemMap);
 		}
 		catch (SiteNavigationMenuItemNameException snmine) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
 			jsonObject.put(
 				"errorMessage",
-				LanguageUtil.get(request, "an-unexpected-error-occurred"));
+				LanguageUtil.get(
+					httpServletRequest, "an-unexpected-error-occurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

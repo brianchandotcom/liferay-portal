@@ -28,10 +28,10 @@ public class DefineObjectsTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		TrashHelper trashHelper = (TrashHelper)request.getAttribute(
+		TrashHelper trashHelper = (TrashHelper)httpServletRequest.getAttribute(
 			TrashWebKeys.TRASH_HELPER);
 
 		if (trashHelper != null) {

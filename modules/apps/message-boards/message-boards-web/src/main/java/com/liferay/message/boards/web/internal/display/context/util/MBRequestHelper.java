@@ -33,9 +33,9 @@ public class MBRequestHelper extends BaseRequestHelper {
 
 	public MBCategory getCategory() {
 		if (_category == null) {
-			HttpServletRequest request = getRequest();
+			HttpServletRequest httpServletRequest = getRequest();
 
-			_category = (MBCategory)request.getAttribute(
+			_category = (MBCategory)httpServletRequest.getAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY);
 		}
 

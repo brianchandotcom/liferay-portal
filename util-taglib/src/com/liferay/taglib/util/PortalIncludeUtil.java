@@ -37,29 +37,29 @@ public class PortalIncludeUtil {
 			PageContext pageContext, HTMLRenderer htmlRenderer)
 		throws IOException, ServletException {
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
 		htmlRenderer.renderHTML(
-			request,
+			httpServletRequest,
 			PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 
 	public static void include(PageContext pageContext, String path)
 		throws IOException, ServletException {
 
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, path);
 
 		requestDispatcher.include(
-			request,
+			httpServletRequest,
 			PipingServletResponse.createPipingServletResponse(pageContext));
 	}
 

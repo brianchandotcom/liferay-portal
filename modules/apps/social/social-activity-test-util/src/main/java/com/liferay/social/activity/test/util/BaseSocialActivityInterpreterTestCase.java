@@ -79,19 +79,20 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 		trashHelper = _serviceTracker.getService();
 
-		HttpServletRequest request = new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:80/web/guest/home");
-		request.setAttribute(WebKeys.USER, TestPropsValues.getUser());
+		httpServletRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
 
 		ServicePreAction servicePreAction = new ServicePreAction();
 
-		servicePreAction.run(request, new MockHttpServletResponse());
+		servicePreAction.run(httpServletRequest, new MockHttpServletResponse());
 
-		serviceContext = ServiceContextFactory.getInstance(request);
+		serviceContext = ServiceContextFactory.getInstance(httpServletRequest);
 	}
 
 	@Test

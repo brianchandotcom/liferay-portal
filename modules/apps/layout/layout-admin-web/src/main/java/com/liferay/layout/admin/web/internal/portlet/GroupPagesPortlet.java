@@ -119,10 +119,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		Group group = _groupProvider.getGroup(request);
+		Group group = _groupProvider.getGroup(httpServletRequest);
 
 		renderRequest.setAttribute(WebKeys.GROUP, group);
 

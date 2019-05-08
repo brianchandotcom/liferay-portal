@@ -230,11 +230,11 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		serviceContext.setAttribute("redirectURL", portletURL.toString());
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
 		String createAccountURL = _portal.getCreateAccountURL(
-			request, themeDisplay);
+			httpServletRequest, themeDisplay);
 
 		serviceContext.setAttribute("createAccountURL", createAccountURL);
 

@@ -1348,13 +1348,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String attachmentURLPrefix, ServiceContext serviceContext)
 		throws PortalException {
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		boolean workflowAssetPreview = false;
 
-		if (request != null) {
+		if (httpServletRequest != null) {
 			workflowAssetPreview = GetterUtil.getBoolean(
-				request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+				httpServletRequest.getAttribute(
+					WebKeys.WORKFLOW_ASSET_PREVIEW));
 		}
 
 		if (!workflowAssetPreview && page.isApproved()) {
@@ -2444,9 +2445,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		if (request == null) {
+		if (httpServletRequest == null) {
 			return StringPool.BLANK;
 		}
 
@@ -2456,12 +2457,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				request, WikiPortletKeys.WIKI_ADMIN,
+				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
 				PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(
-				request, WikiPortletKeys.WIKI, plid,
+				httpServletRequest, WikiPortletKeys.WIKI, plid,
 				PortletRequest.RENDER_PHASE);
 		}
 
@@ -2481,9 +2482,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected String getPageURL(WikiPage page, ServiceContext serviceContext)
 		throws PortalException {
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		if (request == null) {
+		if (httpServletRequest == null) {
 			return StringPool.BLANK;
 		}
 
@@ -2498,7 +2499,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, WikiPortletKeys.WIKI_ADMIN, PortletRequest.RENDER_PHASE);
+			httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/wiki/view_page_activities");

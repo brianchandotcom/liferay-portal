@@ -47,9 +47,9 @@ public class ServletUtil {
 	}
 
 	public static HttpSession getSession() {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		return request.getSession();
+		return httpServletRequest.getSession();
 	}
 
 }

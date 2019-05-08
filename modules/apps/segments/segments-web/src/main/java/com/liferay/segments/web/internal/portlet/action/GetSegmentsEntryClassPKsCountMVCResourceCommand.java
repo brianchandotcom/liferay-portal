@@ -116,10 +116,11 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 	protected String getText(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		HttpServletRequest request = _portal.getOriginalServletRequest(
-			_portal.getHttpServletRequest(resourceRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(resourceRequest));
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		String type = ParamUtil.getString(resourceRequest, "type");
 

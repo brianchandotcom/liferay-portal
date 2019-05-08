@@ -93,11 +93,12 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 	}
 
 	public String getLayoutBreadcrumb(Layout layout) throws Exception {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_liferayPortletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -106,10 +107,10 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
 
 		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(request, "private-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "private-pages"));
 		}
 		else {
-			sb.append(LanguageUtil.get(request, "public-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "public-pages"));
 		}
 
 		sb.append(StringPool.SPACE);

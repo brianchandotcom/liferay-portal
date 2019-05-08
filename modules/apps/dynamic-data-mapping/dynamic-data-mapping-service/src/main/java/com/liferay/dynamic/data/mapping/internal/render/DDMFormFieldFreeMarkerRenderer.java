@@ -99,7 +99,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		throws PortalException {
 
 		try {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				ddmFormFieldRenderingContext.getHttpServletRequest();
 			HttpServletResponse response =
 				ddmFormFieldRenderingContext.getHttpServletResponse();
@@ -114,8 +114,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			Locale locale = ddmFormFieldRenderingContext.getLocale();
 
 			return getFieldHTML(
-				request, response, ddmFormField, fields, null, portletNamespace,
-				namespace, mode, readOnly, showEmptyFieldLabel, locale);
+				httpServletRequest, response, ddmFormField, fields, null,
+				portletNamespace, namespace, mode, readOnly,
+				showEmptyFieldLabel, locale);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);

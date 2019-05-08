@@ -114,19 +114,21 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
-		String uri = (String)request.getAttribute(WebKeys.INVOKER_FILTER_URI);
+		String uri = (String)httpServletRequest.getAttribute(
+			WebKeys.INVOKER_FILTER_URI);
 
 		if (uri.startsWith("/download/")) {
-			String contextPath = request.getContextPath();
+			String contextPath = httpServletRequest.getContextPath();
 
 			if (!contextPath.equals("/o/sync")) {
 				return authVerifierResult;
 			}
 		}
 
-		String token = request.getHeader(_TOKEN_HEADER);
+		String token = httpServletRequest.getHeader(_TOKEN_HEADER);
 
 		if (Validator.isNotNull(token)) {
 			String userIdString = getUserId(token);
@@ -140,7 +142,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		}
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(request);
+			HttpAuthManagerUtil.parse(httpServletRequest);
 
 		if (httpAuthorizationHeader == null) {
 
@@ -162,7 +164,8 @@ public class SyncAuthVerifier implements AuthVerifier {
 		}
 
 		try {
-			long userId = HttpAuthManagerUtil.getBasicUserId(request);
+			long userId = HttpAuthManagerUtil.getBasicUserId(
+				httpServletRequest);
 
 			if (userId > 0) {
 				token = createToken(userId);
@@ -176,7 +179,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 			}
 			else {
 				userId = _userLocalService.getDefaultUserId(
-					_portal.getCompanyId(request));
+					_portal.getCompanyId(httpServletRequest));
 			}
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);

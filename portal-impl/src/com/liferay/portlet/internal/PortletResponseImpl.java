@@ -593,15 +593,16 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			return;
 		}
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
-		List<String> markupHeadElements = (List<String>)request.getAttribute(
-			MimeResponse.MARKUP_HEAD_ELEMENT);
+		List<String> markupHeadElements =
+			(List<String>)httpServletRequest.getAttribute(
+				MimeResponse.MARKUP_HEAD_ELEMENT);
 
 		if (markupHeadElements == null) {
 			markupHeadElements = new ArrayList<>();
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				MimeResponse.MARKUP_HEAD_ELEMENT, markupHeadElements);
 		}
 

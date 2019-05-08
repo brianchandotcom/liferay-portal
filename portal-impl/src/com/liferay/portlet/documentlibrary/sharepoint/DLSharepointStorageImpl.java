@@ -337,7 +337,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 	public void putDocument(SharepointRequest sharepointRequest)
 		throws Exception {
 
-		HttpServletRequest request = sharepointRequest.getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			sharepointRequest.getHttpServletRequest();
 
 		String documentPath = sharepointRequest.getRootPath();
 
@@ -359,7 +360,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		serviceContext.setAddGuestPermissions(true);
 
 		String contentType = GetterUtil.get(
-			request.getHeader(HttpHeaders.CONTENT_TYPE),
+			httpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE),
 			ContentTypes.APPLICATION_OCTET_STREAM);
 
 		String extension = FileUtil.getExtension(title);

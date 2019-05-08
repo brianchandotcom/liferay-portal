@@ -236,18 +236,19 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			ThemeDisplay themeDisplay, boolean includeAncestorTemplates)
 		throws Exception {
 
-		HttpServletRequest request = themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		long groupId = themeDisplay.getScopeGroupId();
 
 		String refererPortletName = ParamUtil.getString(
-			request, portletDisplay.getNamespace() + "refererPortletName");
+			httpServletRequest,
+			portletDisplay.getNamespace() + "refererPortletName");
 
 		if (Validator.isNotNull(refererPortletName)) {
 			groupId = PortalUtil.getScopeGroupId(
-				request, refererPortletName, true);
+				httpServletRequest, refererPortletName, true);
 		}
 
 		if (includeAncestorTemplates) {

@@ -118,10 +118,11 @@ public class NodeSubscriptionPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 
-		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
+		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(
+			httpServletRequest);
 
 		WikiGroupServiceOverriddenConfiguration
 			wikiGroupServiceOverriddenConfiguration =

@@ -85,10 +85,12 @@ public class ValidatorTagImpl
 
 			sb.append(StringPool.UNDERLINE);
 
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			sb.append(PortalUtil.getUniqueElementId(request, namespace, name));
+			sb.append(
+				PortalUtil.getUniqueElementId(
+					httpServletRequest, namespace, name));
 
 			name = sb.toString();
 		}

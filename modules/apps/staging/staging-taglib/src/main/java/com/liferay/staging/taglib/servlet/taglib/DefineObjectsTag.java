@@ -39,18 +39,19 @@ public class DefineObjectsTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		if (group == null) {
-			group = (Group)request.getAttribute(WebKeys.GROUP);
+			group = (Group)httpServletRequest.getAttribute(WebKeys.GROUP);
 		}
 
 		if (group == null) {
@@ -68,11 +69,12 @@ public class DefineObjectsTag extends IncludeTag {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String privateLayoutString = request.getParameter("privateLayout");
+		String privateLayoutString = httpServletRequest.getParameter(
+			"privateLayout");
 
 		if (Validator.isNull(privateLayoutString)) {
 			privateLayoutString = GetterUtil.getString(
-				request.getAttribute(WebKeys.PRIVATE_LAYOUT), null);
+				httpServletRequest.getAttribute(WebKeys.PRIVATE_LAYOUT), null);
 		}
 
 		boolean privateLayout = GetterUtil.getBoolean(

@@ -43,18 +43,19 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 	@Override
 	public void include(PageContext pageContext) throws JspException {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		String mvcRenderCommandName = request.getParameter(
+		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
 		if ("/login/forgot_password".equals(mvcRenderCommandName)) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Company company = themeDisplay.getCompany();
 

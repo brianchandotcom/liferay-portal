@@ -38,9 +38,10 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 	}
 
 	public WikiNode getCurrentNode() {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+		WikiNode node = (WikiNode)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_NODE);
 
 		if (node == null) {
 			WikiPage page = getPage();
@@ -58,9 +59,10 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 			return _page;
 		}
 
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		_page = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+		_page = (WikiPage)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_PAGE);
 
 		return _page;
 	}
@@ -70,9 +72,10 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 			return _pages;
 		}
 
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		_pages = (List<WikiPage>)request.getAttribute(WikiWebKeys.WIKI_PAGES);
+		_pages = (List<WikiPage>)httpServletRequest.getAttribute(
+			WikiWebKeys.WIKI_PAGES);
 
 		if (_pages == null) {
 			_pages = Collections.emptyList();
@@ -82,13 +85,13 @@ public class WikiPageInfoPanelRequestHelper extends BaseRequestHelper {
 	}
 
 	public boolean isShowSidebarHeader() {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
 		boolean showSidebarHeader = GetterUtil.getBoolean(
-			request.getAttribute(WikiWebKeys.SHOW_SIDEBAR_HEADER));
+			httpServletRequest.getAttribute(WikiWebKeys.SHOW_SIDEBAR_HEADER));
 
 		return ParamUtil.getBoolean(
-			request, "showSidebarHeader", showSidebarHeader);
+			httpServletRequest, "showSidebarHeader", showSidebarHeader);
 	}
 
 	private WikiPage _page;

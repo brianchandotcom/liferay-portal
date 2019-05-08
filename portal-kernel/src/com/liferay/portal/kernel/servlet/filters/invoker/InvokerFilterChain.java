@@ -70,7 +70,8 @@ public class InvokerFilterChain implements FilterChain {
 		throws IOException, ServletException {
 
 		if (_filters != null) {
-			HttpServletRequest request = (HttpServletRequest)servletRequest;
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)servletRequest;
 			HttpServletResponse response = (HttpServletResponse)servletResponse;
 
 			while (_index < _filters.size()) {
@@ -80,7 +81,8 @@ public class InvokerFilterChain implements FilterChain {
 					LiferayFilter liferayFilter = (LiferayFilter)filter;
 
 					if (!liferayFilter.isFilterEnabled() ||
-						!liferayFilter.isFilterEnabled(request, response)) {
+						!liferayFilter.isFilterEnabled(
+							httpServletRequest, response)) {
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(
@@ -93,7 +95,8 @@ public class InvokerFilterChain implements FilterChain {
 
 				if (filter instanceof DirectCallFilter) {
 					try {
-						processDirectCallFilter(filter, request, response);
+						processDirectCallFilter(
+							filter, httpServletRequest, response);
 					}
 					catch (IOException ioe) {
 						throw ioe;
@@ -109,7 +112,7 @@ public class InvokerFilterChain implements FilterChain {
 					}
 				}
 				else {
-					processDoFilter(filter, request, response);
+					processDoFilter(filter, httpServletRequest, response);
 				}
 
 				return;

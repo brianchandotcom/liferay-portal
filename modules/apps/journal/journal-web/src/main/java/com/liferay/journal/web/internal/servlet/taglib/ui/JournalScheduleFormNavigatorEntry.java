@@ -56,10 +56,11 @@ public class JournalScheduleFormNavigatorEntry
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		long classNameId = BeanParamUtil.getLong(
 			article, portletRequest, "classNameId");

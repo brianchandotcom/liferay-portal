@@ -49,7 +49,7 @@ public class SelectLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -62,7 +62,8 @@ public class SelectLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "layoutBranchId");
 
 		_staging.setRecentLayoutBranchId(
-			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
+			httpServletRequest, layoutSetBranchId, themeDisplay.getPlid(),
+			layoutBranchId);
 
 		ActionUtil.addLayoutBranchSessionMessages(
 			actionRequest, actionResponse);

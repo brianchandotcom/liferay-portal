@@ -57,7 +57,7 @@ public class SelectionStyleFormNavigatorEntry
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
@@ -70,7 +70,9 @@ public class SelectionStyleFormNavigatorEntry
 			_assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 				portlet.getRootPortletId());
 
-		if (assetPublisherCustomizer.isSelectionStyleEnabled(request)) {
+		if (assetPublisherCustomizer.isSelectionStyleEnabled(
+				httpServletRequest)) {
+
 			return true;
 		}
 

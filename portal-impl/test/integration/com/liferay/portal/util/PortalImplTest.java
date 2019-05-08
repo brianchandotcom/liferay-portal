@@ -67,22 +67,25 @@ public class PortalImplTest {
 
 	@Test
 	public void testGetOriginalServletRequest() {
-		HttpServletRequest request = new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		Assert.assertSame(
-			request, PortalUtil.getOriginalServletRequest(request));
+			httpServletRequest,
+			PortalUtil.getOriginalServletRequest(httpServletRequest));
 
 		HttpServletRequestWrapper requestWrapper1 =
-			new HttpServletRequestWrapper(request);
+			new HttpServletRequestWrapper(httpServletRequest);
 
 		Assert.assertSame(
-			request, PortalUtil.getOriginalServletRequest(requestWrapper1));
+			httpServletRequest,
+			PortalUtil.getOriginalServletRequest(requestWrapper1));
 
 		HttpServletRequestWrapper requestWrapper2 =
 			new HttpServletRequestWrapper(requestWrapper1);
 
 		Assert.assertSame(
-			request, PortalUtil.getOriginalServletRequest(requestWrapper2));
+			httpServletRequest,
+			PortalUtil.getOriginalServletRequest(requestWrapper2));
 
 		HttpServletRequestWrapper requestWrapper3 =
 			new PersistentHttpServletRequestWrapper1(requestWrapper2);
@@ -94,7 +97,8 @@ public class PortalImplTest {
 			PersistentHttpServletRequestWrapper1.class,
 			originalRequest.getClass());
 		Assert.assertNotSame(requestWrapper3, originalRequest);
-		Assert.assertSame(request, getWrappedRequest(originalRequest));
+		Assert.assertSame(
+			httpServletRequest, getWrappedRequest(originalRequest));
 
 		HttpServletRequestWrapper requestWrapper4 =
 			new PersistentHttpServletRequestWrapper2(requestWrapper3);
@@ -112,7 +116,8 @@ public class PortalImplTest {
 			PersistentHttpServletRequestWrapper1.class,
 			originalRequest.getClass());
 		Assert.assertNotSame(requestWrapper3, originalRequest);
-		Assert.assertSame(request, getWrappedRequest(originalRequest));
+		Assert.assertSame(
+			httpServletRequest, getWrappedRequest(originalRequest));
 	}
 
 	@Test

@@ -64,23 +64,25 @@ public class ToggleAreaTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			request.setAttribute("liferay-ui:toggle-area:align", _align);
-			request.setAttribute(
+			httpServletRequest.setAttribute(
+				"liferay-ui:toggle-area:align", _align);
+			httpServletRequest.setAttribute(
 				"liferay-ui:toggle-area:defaultShowContent",
 				String.valueOf(_defaultShowContent));
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:toggle-area:hideImage", _hideImage);
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:toggle-area:hideMessage", _hideMessage);
-			request.setAttribute("liferay-ui:toggle-area:id", _id);
-			request.setAttribute(
+			httpServletRequest.setAttribute("liferay-ui:toggle-area:id", _id);
+			httpServletRequest.setAttribute(
 				"liferay-ui:toggle-area:showImage", _showImage);
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				"liferay-ui:toggle-area:showMessage", _showMessage);
-			request.setAttribute("liferay-ui:toggle-area:stateVar", _stateVar);
+			httpServletRequest.setAttribute(
+				"liferay-ui:toggle-area:stateVar", _stateVar);
 
 			include(getStartPage(), true);
 

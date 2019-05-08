@@ -43,9 +43,10 @@ public class AuthenticationServletFilter
 		throws IOException, ServletException {
 
 		if (injector == null) {
-			HttpServletRequest request = (HttpServletRequest)servletRequest;
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)servletRequest;
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			_init(session.getServletContext());
 		}

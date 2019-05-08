@@ -1502,9 +1502,10 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		ServiceContext serviceContextThreadLocal =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HttpServletRequest request = serviceContextThreadLocal.getRequest();
+		HttpServletRequest httpServletRequest =
+			serviceContextThreadLocal.getRequest();
 
-		if (request == null) {
+		if (httpServletRequest == null) {
 			return;
 		}
 
@@ -1513,18 +1514,18 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		serviceContext.setCompanyId(companyId);
 
 		serviceContext.setPlid(LayoutConstants.DEFAULT_PLID);
-		serviceContext.setRequest(request);
+		serviceContext.setRequest(httpServletRequest);
 
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 		themeDisplay.setCompany(_companyLocalService.getCompany(companyId));
 		themeDisplay.setPermissionChecker(getPermissionChecker());
 		themeDisplay.setPlid(PortalUtil.getControlPanelPlid(companyId));
-		themeDisplay.setRequest(request);
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(groupId);
 		themeDisplay.setSiteGroupId(groupId);
 
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	protected SyncDLObject toSyncDLObject(FileEntry fileEntry, String event)

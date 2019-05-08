@@ -49,10 +49,10 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
 
 		return super.render(renderRequest, renderResponse);

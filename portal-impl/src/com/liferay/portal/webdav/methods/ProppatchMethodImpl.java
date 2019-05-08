@@ -121,10 +121,11 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 		try {
 			Set<QName> newProps = new HashSet<>();
 
-			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				webDAVRequest.getHttpServletRequest();
 
 			String xml = new String(
-				FileUtil.getBytes(request.getInputStream()));
+				FileUtil.getBytes(httpServletRequest.getInputStream()));
 
 			if (Validator.isNull(xml)) {
 				return newProps;

@@ -71,10 +71,11 @@ public class SitePagesFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		HttpServletRequest request = themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
 		LayoutSetPrototype layoutSetPrototype =
-			(LayoutSetPrototype)request.getAttribute("site.layoutSetPrototype");
+			(LayoutSetPrototype)httpServletRequest.getAttribute(
+				"site.layoutSetPrototype");
 
 		if (layoutSetPrototype != null) {
 			return true;

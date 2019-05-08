@@ -94,7 +94,8 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _formWebRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_formWebRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -103,7 +104,8 @@ public class DDMFormBrowserDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -111,7 +113,7 @@ public class DDMFormBrowserDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -176,7 +178,8 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest request = _formWebRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_formWebRequestHelper.getRequest();
 
 		return new NavigationItemList() {
 			{
@@ -187,7 +190,7 @@ public class DDMFormBrowserDisplayContext {
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/browser/view.jsp");
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "entries"));
+							LanguageUtil.get(httpServletRequest, "entries"));
 					});
 			}
 		};

@@ -50,10 +50,10 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 
 	@Override
 	public void include(PageContext pageContext) throws JspException {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		String mvcRenderCommandName = request.getParameter(
+		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
 		if (Validator.isNull(mvcRenderCommandName) ||
@@ -62,19 +62,22 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String signInURL = themeDisplay.getURLSignIn();
 
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		PortletConfig portletConfig =
+			(PortletConfig)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		String portletName = portletConfig.getPortletName();
 
 		if (portletName.equals(PortletKeys.FAST_LOGIN)) {
 			PortletURL fastLoginURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.FAST_LOGIN, PortletRequest.RENDER_PHASE);
+				httpServletRequest, PortletKeys.FAST_LOGIN,
+				PortletRequest.RENDER_PHASE);
 
 			fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 			fastLoginURL.setParameter("mvcRenderCommandName", "/login/login");

@@ -96,12 +96,13 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			ThemeDisplay themeDisplay, ActionRequest actionRequest)
 		throws PortalException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		request = _portal.getOriginalServletRequest(request);
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		DiscoveryInformation discoveryInformation =
 			(DiscoveryInformation)session.getAttribute(
@@ -111,9 +112,10 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			return null;
 		}
 
-		String receivingURL = ParamUtil.getString(request, "openid.return_to");
+		String receivingURL = ParamUtil.getString(
+			httpServletRequest, "openid.return_to");
 		ParameterList parameterList = new ParameterList(
-			request.getParameterMap());
+			httpServletRequest.getParameterMap());
 
 		AuthSuccess authSuccess = null;
 		String firstName = null;
@@ -249,7 +251,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			if (Validator.isNull(firstName) || Validator.isNull(lastName) ||
 				Validator.isNull(emailAddress)) {
 
-				SessionMessages.add(request, "openIdUserInformationMissing");
+				SessionMessages.add(
+					httpServletRequest, "openIdUserInformationMissing");
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -258,7 +261,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				}
 
 				String createAccountURL = _portal.getCreateAccountURL(
-					request, themeDisplay);
+					httpServletRequest, themeDisplay);
 
 				String portletId = _http.getParameter(
 					createAccountURL, "p_p_id", false);
@@ -324,15 +327,16 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			ActionResponse actionResponse)
 		throws PortalException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		request = _portal.getOriginalServletRequest(request);
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			actionResponse);
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);

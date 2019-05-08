@@ -76,18 +76,18 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
 			HttpServletRequest originalRequest =
-				_portal.getOriginalServletRequest(request);
+				_portal.getOriginalServletRequest(httpServletRequest);
 
 			String excerpt = ParamUtil.getString(originalRequest, "excerpt");
 			String url = ParamUtil.getString(originalRequest, "url");
 			String blogName = ParamUtil.getString(originalRequest, "blog_name");
 			String title = ParamUtil.getString(originalRequest, "title");
 
-			validate(actionRequest, request.getRemoteAddr(), url);
+			validate(actionRequest, httpServletRequest.getRemoteAddr(), url);
 
 			_trackback.addTrackback(
 				entry, themeDisplay, excerpt, url, blogName, title,
@@ -179,7 +179,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 
 		sb.append("</response>");
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			actionResponse);
@@ -187,7 +187,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		String s = sb.toString();
 
 		ServletResponseUtil.sendFile(
-			request, response, null, s.getBytes(StringPool.UTF8),
+			httpServletRequest, response, null, s.getBytes(StringPool.UTF8),
 			ContentTypes.TEXT_XML_UTF8);
 	}
 

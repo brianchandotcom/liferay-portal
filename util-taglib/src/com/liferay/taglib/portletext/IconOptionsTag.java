@@ -142,22 +142,22 @@ public class IconOptionsTag extends IconTag {
 
 	private void _processPortletConfigurationIcons(PageContext pageContext) {
 		try {
-			HttpServletRequest request =
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
 			PortletRequest portletRequest =
-				(PortletRequest)request.getAttribute(
+				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);
 
 			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
+				(PortletResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 			for (PortletConfigurationIcon portletConfigurationIcon :
 					_portletConfigurationIcons) {
 
 				boolean include = portletConfigurationIcon.include(
-					request,
+					httpServletRequest,
 					PipingServletResponse.createPipingServletResponse(
 						pageContext));
 

@@ -138,24 +138,27 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		return new CreationMenu() {
 			{
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					getRenderRequest());
+				HttpServletRequest httpServletRequest =
+					PortalUtil.getHttpServletRequest(getRenderRequest());
 				RenderResponse renderResponse = getRenderResponse();
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "/admin/edit_element_set",
-							"redirect", PortalUtil.getCurrentURL(request),
+							"redirect",
+							PortalUtil.getCurrentURL(httpServletRequest),
 							"groupId",
 							String.valueOf(themeDisplay.getScopeGroupId()));
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "new-element-set"));
+							LanguageUtil.get(
+								httpServletRequest, "new-element-set"));
 					});
 			}
 		};

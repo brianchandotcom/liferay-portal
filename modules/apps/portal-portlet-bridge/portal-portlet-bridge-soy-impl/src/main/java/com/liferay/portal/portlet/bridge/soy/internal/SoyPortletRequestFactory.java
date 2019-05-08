@@ -64,18 +64,18 @@ public class SoyPortletRequestFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(resourceRequest);
 
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			_portlet, servletContext);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				request, _portlet.getPortletId());
+				httpServletRequest, _portlet.getPortletId());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getStrictPreferences(
@@ -87,11 +87,12 @@ public class SoyPortletRequestFactory {
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		LiferayActionRequest liferayActionRequest = ActionRequestFactory.create(
-			request, _portlet, invokerPortlet, portletContext,
+			httpServletRequest, _portlet, invokerPortlet, portletContext,
 			resourceRequest.getWindowState(), resourceRequest.getPortletMode(),
 			portletPreferences, themeDisplay.getPlid());
 
-		liferayActionRequest.setPortletRequestDispatcherRequest(request);
+		liferayActionRequest.setPortletRequestDispatcherRequest(
+			httpServletRequest);
 
 		return liferayActionRequest;
 	}

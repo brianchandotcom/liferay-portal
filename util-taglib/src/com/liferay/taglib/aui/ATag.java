@@ -195,18 +195,21 @@ public class ATag extends BaseATag {
 	}
 
 	private String _getNamespace() {
-		HttpServletRequest request =
+		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse == null) {
 			return StringPool.BLANK;
 		}
 
 		if (GetterUtil.getBoolean(
-				(String)request.getAttribute("aui:form:useNamespace"), true)) {
+				(String)httpServletRequest.getAttribute(
+					"aui:form:useNamespace"),
+				true)) {
 
 			return portletResponse.getNamespace();
 		}

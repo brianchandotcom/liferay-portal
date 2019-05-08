@@ -68,7 +68,7 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 			return;
 		}
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			portletResponse);
@@ -163,7 +163,7 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 		}
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentType);
+			httpServletRequest, response, fileName, is, contentType);
 	}
 
 	@Reference

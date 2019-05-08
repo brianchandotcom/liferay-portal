@@ -218,13 +218,14 @@ public class ActionUtil {
 			portletSetup = renderRequest.getPreferences();
 		}
 		else {
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				renderRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(renderRequest);
 
 			portletSetup = getLayoutPortletSetup(renderRequest, portlet);
 
 			portletSetup = getPortletSetup(
-				request, renderRequest.getPreferences(), portletSetup);
+				httpServletRequest, renderRequest.getPreferences(),
+				portletSetup);
 		}
 
 		String title = PortletConfigurationUtil.getPortletTitle(
@@ -245,11 +246,12 @@ public class ActionUtil {
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(actionRequest);
 
 		portletPreferences = getPortletPreferences(
-			request, actionRequest.getPreferences(), portletPreferences);
+			httpServletRequest, actionRequest.getPreferences(),
+			portletPreferences);
 
 		return new ConfigurationActionRequest(
 			actionRequest, portletPreferences);
@@ -259,16 +261,17 @@ public class ActionUtil {
 			RenderRequest renderRequest, PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
 		portletPreferences = getPortletPreferences(
-			request, renderRequest.getPreferences(), portletPreferences);
+			httpServletRequest, renderRequest.getPreferences(),
+			portletPreferences);
 
 		renderRequest = new ConfigurationRenderRequest(
 			renderRequest, portletPreferences);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, renderRequest);
 
 		return renderRequest;
@@ -279,11 +282,12 @@ public class ActionUtil {
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(resourceRequest);
 
 		portletPreferences = getPortletPreferences(
-			request, resourceRequest.getPreferences(), portletPreferences);
+			httpServletRequest, resourceRequest.getPreferences(),
+			portletPreferences);
 
 		return new ConfigurationResourceRequest(
 			resourceRequest, portletPreferences);

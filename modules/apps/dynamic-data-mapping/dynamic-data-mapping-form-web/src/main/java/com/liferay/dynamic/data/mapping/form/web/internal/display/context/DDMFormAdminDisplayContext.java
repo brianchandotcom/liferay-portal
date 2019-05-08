@@ -229,23 +229,25 @@ public class DDMFormAdminDisplayContext {
 
 		return new CreationMenu() {
 			{
-				HttpServletRequest request =
+				HttpServletRequest httpServletRequest =
 					formAdminRequestHelper.getRequest();
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "/admin/edit_form_instance",
-							"redirect", PortalUtil.getCurrentURL(request),
+							"redirect",
+							PortalUtil.getCurrentURL(httpServletRequest),
 							"groupId",
 							String.valueOf(themeDisplay.getScopeGroupId()));
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "new-form"));
+							LanguageUtil.get(httpServletRequest, "new-form"));
 					});
 			}
 		};
@@ -425,7 +427,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getElementSetBuilderNavigationItems() {
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
 
 		return new NavigationItemList() {
 			{
@@ -434,7 +437,7 @@ public class DDMFormAdminDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "builder"));
+							LanguageUtil.get(httpServletRequest, "builder"));
 					});
 			}
 		};
@@ -455,7 +458,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -464,7 +468,8 @@ public class DDMFormAdminDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -472,14 +477,15 @@ public class DDMFormAdminDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};
 	}
 
 	public List<NavigationItem> getFormBuilderNavigationItems() {
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
 
 		return new NavigationItemList() {
 			{
@@ -489,7 +495,7 @@ public class DDMFormAdminDisplayContext {
 						navigationItem.setActive(true);
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "form"));
+							LanguageUtil.get(httpServletRequest, "form"));
 					});
 
 				add(
@@ -497,7 +503,7 @@ public class DDMFormAdminDisplayContext {
 						navigationItem.putData("action", "showRules");
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "rules"));
+							LanguageUtil.get(httpServletRequest, "rules"));
 					});
 			}
 		};
@@ -667,9 +673,11 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
 
-		String currentTab = ParamUtil.getString(request, "currentTab", "forms");
+		String currentTab = ParamUtil.getString(
+			httpServletRequest, "currentTab", "forms");
 
 		return new NavigationItemList() {
 			{
@@ -680,7 +688,7 @@ public class DDMFormAdminDisplayContext {
 							_renderResponse.createRenderURL(), "currentTab",
 							"forms");
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "forms"));
+							LanguageUtil.get(httpServletRequest, "forms"));
 					});
 
 				add(
@@ -691,7 +699,8 @@ public class DDMFormAdminDisplayContext {
 							_renderResponse.createRenderURL(), "currentTab",
 							"element-set");
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "element-sets"));
+							LanguageUtil.get(
+								httpServletRequest, "element-sets"));
 					});
 
 				add(

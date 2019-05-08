@@ -196,10 +196,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 				controlContext.put("variant", variant);
 
-				HttpServletRequest request = _portal.getHttpServletRequest(
-					renderRequest);
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(renderRequest);
 
-				imageEditorCapability.prepareContext(controlContext, request);
+				imageEditorCapability.prepareContext(
+					controlContext, httpServletRequest);
 
 				controlContexts.add(controlContext);
 

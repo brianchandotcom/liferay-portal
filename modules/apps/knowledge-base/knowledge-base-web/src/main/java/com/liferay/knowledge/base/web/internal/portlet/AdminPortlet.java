@@ -248,17 +248,17 @@ public class AdminPortlet extends BaseKBPortlet {
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
 		if (resourceID.equals("infoPanel")) {
 			try {
-				List<KBArticle> kbArticles = getKBArticles(request);
+				List<KBArticle> kbArticles = getKBArticles(httpServletRequest);
 
 				resourceRequest.setAttribute(
 					KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
 
-				List<KBFolder> kbFolders = getKBFolders(request);
+				List<KBFolder> kbFolders = getKBFolders(httpServletRequest);
 
 				resourceRequest.setAttribute(
 					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);

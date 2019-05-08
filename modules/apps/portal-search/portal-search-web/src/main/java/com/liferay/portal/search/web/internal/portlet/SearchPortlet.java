@@ -97,8 +97,8 @@ public class SearchPortlet extends MVCPortlet {
 			resourceRequest.getResourceID());
 
 		if (resourceID.equals("getOpenSearchXML")) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				resourceRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(resourceRequest);
 
 			HttpServletResponse response = _portal.getHttpServletResponse(
 				resourceResponse);
@@ -107,11 +107,12 @@ public class SearchPortlet extends MVCPortlet {
 				byte[] xml = getXML(resourceRequest, resourceResponse);
 
 				ServletResponseUtil.sendFile(
-					request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
+					httpServletRequest, response, null, xml,
+					ContentTypes.TEXT_XML_UTF8);
 			}
 			catch (Exception e) {
 				try {
-					_portal.sendError(e, request, response);
+					_portal.sendError(e, httpServletRequest, response);
 				}
 				catch (ServletException se) {
 				}
@@ -145,13 +146,13 @@ public class SearchPortlet extends MVCPortlet {
 			openSearchResourceURL.toString(),
 			openSearchDescriptionXMLURL.toString());
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
 		String xml = openSearch.search(
-			request,
+			httpServletRequest,
 			openSearchResourceURL.toString() + StringPool.QUESTION +
-				request.getQueryString());
+				httpServletRequest.getQueryString());
 
 		return xml.getBytes();
 	}

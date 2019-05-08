@@ -71,10 +71,10 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 					ActionKeys.UPDATE);
 			}
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
-			request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
+			httpServletRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 
 			renderRequest.setAttribute(
 				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER,

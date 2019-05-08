@@ -63,13 +63,14 @@ public class LockMethodImpl implements Method {
 			return HttpServletResponse.SC_METHOD_NOT_ALLOWED;
 		}
 
-		HttpServletRequest request = webDAVRequest.getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			webDAVRequest.getHttpServletRequest();
 
 		Lock lock = null;
 		Status status = null;
 
 		String lockUuid = webDAVRequest.getLockUuid();
-		long timeout = WebDAVUtil.getTimeout(request);
+		long timeout = WebDAVUtil.getTimeout(httpServletRequest);
 
 		if (Validator.isNull(lockUuid)) {
 
@@ -77,7 +78,7 @@ public class LockMethodImpl implements Method {
 
 			String owner = null;
 			String xml = new String(
-				FileUtil.getBytes(request.getInputStream()));
+				FileUtil.getBytes(httpServletRequest.getInputStream()));
 
 			if (Validator.isNotNull(xml)) {
 				if (_log.isDebugEnabled()) {
@@ -153,7 +154,7 @@ public class LockMethodImpl implements Method {
 			return status.getCode();
 		}
 
-		long depth = WebDAVUtil.getDepth(request);
+		long depth = WebDAVUtil.getDepth(httpServletRequest);
 
 		String xml = getResponseXML(lock, depth);
 

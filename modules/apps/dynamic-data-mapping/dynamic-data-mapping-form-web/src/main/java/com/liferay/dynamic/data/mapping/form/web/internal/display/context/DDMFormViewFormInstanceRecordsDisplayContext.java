@@ -97,8 +97,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		return new DropdownItemList() {
 			{
@@ -107,7 +107,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						dropdownItem.putData("action", "deleteRecords");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
+							LanguageUtil.get(httpServletRequest, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -179,8 +179,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		return new DropdownItemList() {
 			{
@@ -189,7 +189,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -197,7 +198,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};
@@ -405,8 +406,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		return new DropdownItemList() {
 			{
@@ -417,7 +418,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
 
-						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+						dropdownItem.setLabel(
+							LanguageUtil.get(httpServletRequest, "all"));
 					});
 			}
 		};

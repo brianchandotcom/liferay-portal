@@ -236,21 +236,22 @@ public class JournalTransformer {
 				templateId, tokens, languageId, document, script, langType);
 
 			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
-				HttpServletRequest request = themeDisplay.getRequest();
+				HttpServletRequest httpServletRequest =
+					themeDisplay.getRequest();
 
 				if (portletRequestModel != null) {
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST,
 						portletRequestModel.getPortletRequest());
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE,
 						portletRequestModel.getPortletResponse());
-					request.setAttribute(
+					httpServletRequest.setAttribute(
 						PortletRequest.LIFECYCLE_PHASE,
 						portletRequestModel.getLifecycle());
 				}
 
-				template.prepare(request);
+				template.prepare(httpServletRequest);
 			}
 
 			if (contextObjects != null) {
@@ -326,12 +327,14 @@ public class JournalTransformer {
 					TemplateManager templateManager =
 						TemplateManagerUtil.getTemplateManager(langType);
 
-					HttpServletRequest request = themeDisplay.getRequest();
+					HttpServletRequest httpServletRequest =
+						themeDisplay.getRequest();
 
 					templateManager.addTaglibSupport(
-						template, request, themeDisplay.getResponse());
+						template, httpServletRequest,
+						themeDisplay.getResponse());
 					templateManager.addTaglibTheme(
-						template, "taglibLiferay", request,
+						template, "taglibLiferay", httpServletRequest,
 						new PipingServletResponse(
 							themeDisplay.getResponse(), unsyncStringWriter));
 				}

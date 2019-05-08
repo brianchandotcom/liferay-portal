@@ -152,9 +152,9 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _portletRequest;
 		}
 
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		_portletRequest = (PortletRequest)request.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		return _portletRequest;

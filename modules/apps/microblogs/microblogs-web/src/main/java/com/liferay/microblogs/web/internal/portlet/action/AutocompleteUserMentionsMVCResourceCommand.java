@@ -58,10 +58,11 @@ public class AutocompleteUserMentionsMVCResourceCommand
 		throws PortletException {
 
 		try {
-			HttpServletRequest request = _portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(resourceRequest));
+			HttpServletRequest httpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(resourceRequest));
 
-			long userId = ParamUtil.getLong(request, "userId");
+			long userId = ParamUtil.getLong(httpServletRequest, "userId");
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(

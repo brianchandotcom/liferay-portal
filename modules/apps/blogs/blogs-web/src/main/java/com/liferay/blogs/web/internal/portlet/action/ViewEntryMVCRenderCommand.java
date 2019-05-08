@@ -116,10 +116,10 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				renderRequest);
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
-			request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
+			httpServletRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 
 			if (PropsValues.BLOGS_PINGBACK_ENABLED) {
 				if ((entry != null) && entry.isAllowPingbacks()) {

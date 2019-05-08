@@ -57,10 +57,10 @@ public class ActionUtil {
 	public static void getAddress(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		getAddress(request);
+		getAddress(httpServletRequest);
 	}
 
 	public static void getEmailAddress(HttpServletRequest httpServletRequest)
@@ -82,10 +82,10 @@ public class ActionUtil {
 	public static void getEmailAddress(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		getEmailAddress(request);
+		getEmailAddress(httpServletRequest);
 	}
 
 	public static Organization getOrganization(
@@ -110,10 +110,10 @@ public class ActionUtil {
 	public static Organization getOrganization(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getOrganization(request);
+		return getOrganization(httpServletRequest);
 	}
 
 	public static void getOrgLabor(HttpServletRequest httpServletRequest)
@@ -133,10 +133,10 @@ public class ActionUtil {
 	public static void getOrgLabor(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		getOrgLabor(request);
+		getOrgLabor(httpServletRequest);
 	}
 
 	public static void getPhone(HttpServletRequest httpServletRequest)
@@ -156,10 +156,10 @@ public class ActionUtil {
 	public static void getPhone(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		getPhone(request);
+		getPhone(httpServletRequest);
 	}
 
 	public static void getWebsite(HttpServletRequest httpServletRequest)
@@ -179,10 +179,10 @@ public class ActionUtil {
 	public static void getWebsite(PortletRequest portletRequest)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		getWebsite(request);
+		getWebsite(httpServletRequest);
 	}
 
 }

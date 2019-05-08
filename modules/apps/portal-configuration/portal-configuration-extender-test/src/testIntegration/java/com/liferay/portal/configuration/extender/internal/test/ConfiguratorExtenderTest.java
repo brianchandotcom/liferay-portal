@@ -53,7 +53,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
-public class ConfiguratorExtensionTest {
+public class ConfiguratorExtenderTest {
 
 	@ClassRule
 	@Rule
@@ -62,8 +62,7 @@ public class ConfiguratorExtensionTest {
 
 	@Before
 	public void setUp() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfiguratorExtensionTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(ConfiguratorExtenderTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

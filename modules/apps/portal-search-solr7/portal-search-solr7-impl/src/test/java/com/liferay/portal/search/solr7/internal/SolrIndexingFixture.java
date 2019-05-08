@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
@@ -87,6 +88,11 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	public SolrIndexingFixture() {
 		_properties = createSolrConfigurationProperties();
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _COMPANY_ID;
 	}
 
 	@Override
@@ -346,6 +352,8 @@ public class SolrIndexingFixture implements IndexingFixture {
 			}
 		};
 	}
+
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private IndexSearcher _indexSearcher;

@@ -108,6 +108,40 @@ public class SegmentsEntryProviderTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryClassPKsWithMultipleCriterionNotMatching()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		_user1 = UserTestUtil.addUser();
+
+		_user2 = UserTestUtil.addUser();
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		_userOrganizationSegmentsCriteriaContributor.contribute(
+			criteria, String.format("(name eq '%s')", organization.getName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
+
+		Assert.assertEquals(0, segmentsEntryClassPksCount);
+	}
+
+	@Test
 	public void testGetSegmentsEntryClassPKsWithoutCriteria() throws Exception {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());

@@ -87,7 +87,7 @@ public class BackgroundImageFragmentEntryProcessor
 			}
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
-				Object fieldValue = _fragmentEntryProcessorUtil.getValue(
+				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
 					jsonObject, assetEntriesFieldValues, mode, locale,
 					previewClassPK, previewType);
 

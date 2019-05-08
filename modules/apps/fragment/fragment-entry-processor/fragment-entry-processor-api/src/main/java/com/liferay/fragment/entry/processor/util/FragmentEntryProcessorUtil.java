@@ -28,7 +28,7 @@ public interface FragmentEntryProcessorUtil {
 	public String getEditableValue(
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
 
-	public Object getValue(
+	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
 			Locale locale, long previewClassPK, int previewType)

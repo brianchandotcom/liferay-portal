@@ -24,7 +24,7 @@
 		{/let}
 
 		{call ClayDropdown.render}
-			{param contentRenderer: 'defaultLanguage' /}
+			{param contentRenderer: 'item' /}
 			{param elementClasses: 'd-md-inline' /}
 			{param events: [
 				'itemClicked': $_itemClicked
@@ -80,7 +80,6 @@
 				</span>
 			{/if}
 		{/let}
-
 		{call ClayButton.render}
 			{param ariaLabel: $label /}
 			{param disabled: $disabled /}

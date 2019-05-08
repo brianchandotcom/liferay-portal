@@ -10,8 +10,8 @@ task buildCKEditorWsc(type: Copy)
 
 String ckEditorVersion = "4.11.3"
 
-String ckEditorScaytUrl = "https://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
-String ckEditorWscUrl = "https://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
+String ckEditorScaytUrl = "https://ckeditor.com/cke4/sites/default/files/scayt/releases/scayt_${ckEditorVersion}.zip"
+String ckEditorWscUrl = "https://ckeditor.com/cke4/sites/default/files/wsc/releases/wsc_${ckEditorVersion}.zip"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")

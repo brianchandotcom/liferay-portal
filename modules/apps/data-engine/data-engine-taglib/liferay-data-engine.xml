@@ -20,4 +20,32 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component bodyContent="true" name="LayoutBuilder" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>dataDefinitionInputId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>dataLayoutId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>dataLayoutInputId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>namespace</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+		</attributes>
+	</component>
 </taglibs>

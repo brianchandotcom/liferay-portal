@@ -20,10 +20,6 @@ import aQute.bnd.osgi.Resource;
 
 import aQute.lib.io.IO;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -39,8 +35,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedInFileAndAnnotation() throws Exception {
-		Jar jar = analyze(
-			Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", "bar.foo.Dependency");
+		Jar jar = analyze(_PACKAGE_NAME_BEAN, "1.0.0.1", "bar.foo.Dependency");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -54,7 +49,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInAnnotation() throws Exception {
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", null);
+		Jar jar = analyze(_PACKAGE_NAME_BEAN, "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -70,7 +65,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithFilterString()
 		throws Exception {
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER), "1.0.0.1", null);
+		Jar jar = analyze(_PACKAGE_NAME_FILTER, "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -85,8 +80,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithRequireSchemaRange()
 		throws Exception {
 
-		Jar jar = analyze(
-			Arrays.asList(_PACKAGE_NAME_BEAN), "[1.0.0,1.1.0)", null);
+		Jar jar = analyze(_PACKAGE_NAME_BEAN, "[1.0.0,1.1.0)", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -100,8 +94,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInFile() throws Exception {
-		Jar jar = analyze(
-			Collections.<String>emptyList(), "1.0.0.1", "bar.foo.Dependency");
+		Jar jar = analyze(null, "1.0.0.1", "bar.foo.Dependency");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -113,7 +106,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testEmptyDependencies() throws Exception {
-		Jar jar = analyze(Collections.<String>emptyList(), "1.0.0.1", "");
+		Jar jar = analyze(null, "1.0.0.1", "");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -124,14 +117,14 @@ public class SpringDependencyAnalyzerPluginTest {
 	}
 
 	protected Jar analyze(
-			List<String> packages, String requireSchemaVersion,
+			String packageName, String requireSchemaVersion,
 			String dependenciesContent)
 		throws Exception {
 
 		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
 
-		for (String pkg : packages) {
-			javaArchive.addPackages(true, pkg);
+		if (packageName != null) {
+			javaArchive.addPackages(true, packageName);
 		}
 
 		if (dependenciesContent != null) {

@@ -73,6 +73,10 @@ public class ButtonTag extends BaseClayTag {
 		putValue("style", style);
 	}
 
+	public void setTitle(String title) {
+		putValue("title", title);
+	}
+
 	public void setType(String type) {
 		putValue("type", type);
 	}

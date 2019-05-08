@@ -1,4 +1,5 @@
 import { parse, stringify } from '../../router/queryString';
+import pathToRegexp from 'path-to-regexp';
 
 export function getFiltersParam(queryString) {
 	const queryParams = parse(queryString);
@@ -22,8 +23,11 @@ export function getSelectedItemsQuery(items, key, queryString) {
 export function pushToHistory(filterQuery, routerProps) {
 	const {
 		history,
-		location: { pathname, search }
+		location: { search },
+		match: { params, path }
 	} = routerProps;
+
+	const pathname = pathToRegexp.compile(path)({ ...params, page: 1 });
 
 	if (filterQuery !== search) {
 		history.push({

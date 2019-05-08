@@ -1,4 +1,3 @@
-Bundle-SymbolicName: ${ant.project.name}
 Bundle-Vendor: ${release.info.vendor}
 Git-Descriptor: ${system-allow-fail;git describe --dirty --always}
 Git-SHA: ${system-allow-fail;git rev-list -1 HEAD}

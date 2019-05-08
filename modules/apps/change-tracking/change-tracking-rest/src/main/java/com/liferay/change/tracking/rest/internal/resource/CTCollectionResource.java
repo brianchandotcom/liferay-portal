@@ -121,8 +121,7 @@ public class CTCollectionResource {
 				() -> new CannotCreateCTCollectionException(
 					companyId,
 					LanguageUtil.get(
-						resourceBundle,
-						"cannot-create-change-tracking-collection"))
+						resourceBundle, "unable-to-create-change-list"))
 			);
 		}
 		catch (PortalException pe) {
@@ -130,27 +129,28 @@ public class CTCollectionResource {
 				throw new CannotCreateCTCollectionException(
 					companyId,
 					LanguageUtil.get(
-						resourceBundle, "collection-description-too-long"));
+						resourceBundle,
+						"the-change-list-description-is-too-long"));
 			}
 			else if (pe instanceof CTCollectionNameException) {
 				if (Validator.isNull(pe.getMessage())) {
 					throw new CannotCreateCTCollectionException(
 						companyId,
 						LanguageUtil.get(
-							resourceBundle, "collection-name-cannot-be-null"));
+							resourceBundle,
+							"the-change-list-name-is-too-short"));
 				}
 
 				throw new CannotCreateCTCollectionException(
 					companyId,
 					LanguageUtil.get(
-						resourceBundle, "collection-name-too-long"));
+						resourceBundle, "the-change-list-name-is-too-long"));
 			}
 			else {
 				throw new CannotCreateCTCollectionException(
 					companyId,
 					LanguageUtil.get(
-						resourceBundle,
-						"cannot-create-change-tracking-collection"));
+						resourceBundle, "unable-to-create-change-list"));
 			}
 		}
 	}

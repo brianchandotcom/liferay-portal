@@ -20,13 +20,12 @@ import aQute.bnd.osgi.Resource;
 
 import aQute.lib.io.IO;
 
-import java.net.URL;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -40,12 +39,8 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedInFileAndAnnotation() throws Exception {
-		JarResource jarResource = new JarResource(
-			"dependencies/META-INF/spring/context.dependencies",
-			"META-INF/spring/context.dependencies");
-
 		Jar jar = analyze(
-			Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", jarResource);
+			Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", "bar.foo.Dependency");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -105,12 +100,8 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInFile() throws Exception {
-		JarResource jarResource = new JarResource(
-			"dependencies/META-INF/spring/context.dependencies",
-			"META-INF/spring/context.dependencies");
-
 		Jar jar = analyze(
-			Collections.<String>emptyList(), "1.0.0.1", jarResource);
+			Collections.<String>emptyList(), "1.0.0.1", "bar.foo.Dependency");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -122,12 +113,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testEmptyDependencies() throws Exception {
-		JarResource jarResource = new JarResource(
-			"dependencies/META-INF/spring/empty.dependencies",
-			"META-INF/spring/context.dependencies");
-
-		Jar jar = analyze(
-			Collections.<String>emptyList(), "1.0.0.1", jarResource);
+		Jar jar = analyze(Collections.<String>emptyList(), "1.0.0.1", "");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -139,7 +125,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	protected Jar analyze(
 			List<String> packages, String requireSchemaVersion,
-			JarResource jarResource)
+			String dependenciesContent)
 		throws Exception {
 
 		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
@@ -148,9 +134,10 @@ public class SpringDependencyAnalyzerPluginTest {
 			javaArchive.addPackages(true, pkg);
 		}
 
-		if (jarResource != null) {
+		if (dependenciesContent != null) {
 			javaArchive.addAsResource(
-				jarResource.getURL(), jarResource.getTarget());
+				new StringAsset(dependenciesContent),
+				"META-INF/spring/context.dependencies");
 		}
 
 		Analyzer analyzer = new Analyzer();
@@ -198,27 +185,5 @@ public class SpringDependencyAnalyzerPluginTest {
 				"(&(release.schema.version>=1.0.0)" +
 					"(!(release.schema.version>=1.1.0)))" +
 						"(|(!(release.state=*))(release.state=0)))\n";
-
-	private static final class JarResource {
-
-		public JarResource(String resourceName, String target) {
-			_resourceName = resourceName;
-			_target = target;
-		}
-
-		public String getTarget() {
-			return _target;
-		}
-
-		public URL getURL() {
-			Class<?> clazz = getClass();
-
-			return clazz.getResource(_resourceName);
-		}
-
-		private final String _resourceName;
-		private final String _target;
-
-	}
 
 }

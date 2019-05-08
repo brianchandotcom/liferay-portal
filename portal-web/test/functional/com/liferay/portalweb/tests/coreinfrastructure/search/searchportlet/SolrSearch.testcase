@@ -1242,6 +1242,8 @@ definition {
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "Site Member");
 
+		IFrame.closeFrame();
+
 		SearchPortlets.configureDestination(destinationPage = "Search Page");
 
 		User.logoutPG();
@@ -1318,6 +1320,8 @@ definition {
 		PermissionsInline.viewPermissionsChecked(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "Site Member");
+
+		IFrame.closeFrame();
 
 		User.logoutPG();
 

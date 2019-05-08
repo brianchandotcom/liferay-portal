@@ -17,6 +17,7 @@ package com.liferay.change.tracking.rest.internal.resource;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.rest.internal.model.process.CTProcessModel;
+import com.liferay.change.tracking.rest.internal.model.process.CTProcessUserModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
@@ -58,6 +59,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -81,9 +83,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CTProcessResource {
 
 	@GET
+	@Path("/{ctProcessId}")
+	@Produces
+	public CTProcessModel getCtProcessModel(
+		@PathParam("ctProcessId") long ctProcessId) {
+
+		return Optional.ofNullable(
+			_ctProcessLocalService.fetchCTProcess(ctProcessId)
+		).map(
+			this::_getCTProcessModel
+		).orElse(
+			CTProcessModel.emptyCTProcessModel()
+		);
+	}
+
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CTProcessModel> getCtProcessModels(
 			@QueryParam("companyId") long companyId,
+			@QueryParam("userId") long userId,
 			@QueryParam("keywords") String keywords,
 			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type,
 			@QueryParam("offset") int offset, @QueryParam("limit") int limit,
@@ -92,45 +110,55 @@ public class CTProcessResource {
 
 		CTJaxRsUtil.checkCompany(companyId);
 
-		if (_TYPE_ALL.equals(type)) {
-			List<CTProcess> ctProcesses = null;
+		return _getCTProcessModels(
+			_getCTProcesses(
+				companyId, userId, keywords, type, offset, limit, sort));
+	}
 
-			if (Validator.isNull(keywords)) {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, _getQueryDefinition(offset, limit, sort));
+	@GET
+	@Path("/users")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CTProcessUserModel> getCtProcessUserModels(
+			@QueryParam("companyId") long companyId,
+			@QueryParam("keywords") String keywords,
+			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type,
+			@QueryParam("offset") int offset, @QueryParam("limit") int limit)
+		throws PortalException {
+
+		CTJaxRsUtil.checkCompany(companyId);
+
+		Stream<CTProcess> stream = _getCTProcesses(
+			companyId, 0, keywords, type, offset, limit, null
+		).stream();
+
+		return stream.map(
+			ctProcess -> {
+				CTProcessUserModel.Builder builder =
+					CTProcessUserModel.forCTProcessId(
+						ctProcess.getCtProcessId());
+
+				Optional<User> userOptional = Optional.ofNullable(
+					_userLocalService.fetchUser(ctProcess.getUserId()));
+
+				return builder.setCTCollectionId(
+					ctProcess.getCtCollectionId()
+				).setUserId(
+					userOptional.map(
+						User::getUserId
+					).orElse(
+						0L
+					)
+				).setUserName(
+					userOptional.map(
+						User::getFullName
+					).orElse(
+						StringPool.BLANK
+					)
+				).build();
 			}
-			else {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, keywords,
-					_getQueryDefinition(offset, limit, sort));
-			}
-
-			return _getCTProcessModels(ctProcesses);
-		}
-		else if (_TYPE_PUBLISHED_LATEST.equals(type)) {
-			CTProcessModel ctProcessModel = _getPublishedCTProcessModel(
-				companyId);
-
-			return Collections.singletonList(ctProcessModel);
-		}
-		else {
-			int status = _getStatus(type);
-
-			List<CTProcess> ctProcesses = null;
-
-			if (Validator.isNull(keywords)) {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, status,
-					_getQueryDefinition(offset, limit, sort));
-			}
-			else {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, keywords, status,
-					_getQueryDefinition(offset, limit, sort));
-			}
-
-			return _getCTProcessModels(ctProcesses);
-		}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private Optional<com.liferay.portal.kernel.backgroundtask.BackgroundTask>
@@ -161,6 +189,50 @@ public class CTProcessResource {
 
 		return portalKernelBackgroundTaskOptional.map(
 			backgroundTaskExecutor::getBackgroundTaskDisplay);
+	}
+
+	private List<CTProcess> _getCTProcesses(
+		long companyId, long userId, String keywords, String type, int offset,
+		int limit, String sort) {
+
+		List<CTProcess> ctProcesses = null;
+
+		if (_TYPE_ALL.equals(type)) {
+			if (Validator.isNull(keywords)) {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, _getQueryDefinition(offset, limit, sort));
+			}
+			else {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, keywords,
+					_getQueryDefinition(offset, limit, sort));
+			}
+		}
+		else if (_TYPE_PUBLISHED_LATEST.equals(type)) {
+			ctProcesses = Optional.ofNullable(
+				_ctProcessLocalService.fetchLatestCTProcess(companyId)
+			).map(
+				Collections::singletonList
+			).orElse(
+				Collections.emptyList()
+			);
+		}
+		else {
+			int status = _getStatus(type);
+
+			if (Validator.isNull(keywords)) {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, status,
+					_getQueryDefinition(offset, limit, sort));
+			}
+			else {
+				ctProcesses = _ctProcessLocalService.getCTProcesses(
+					companyId, keywords, status,
+					_getQueryDefinition(offset, limit, sort));
+			}
+		}
+
+		return ctProcesses;
 	}
 
 	private CTProcessModel _getCTProcessModel(CTProcess ctProcess) {
@@ -257,21 +329,6 @@ public class CTProcessResource {
 
 		return UserConstants.getPortraitURL(
 			themeDisplay.getPathImage(), true, 0, StringPool.BLANK);
-	}
-
-	private CTProcessModel _getPublishedCTProcessModel(long companyId)
-		throws PortalException {
-
-		CTJaxRsUtil.checkCompany(companyId);
-
-		CTProcess ctProcess = _ctProcessLocalService.fetchLatestCTProcess(
-			companyId);
-
-		if (ctProcess == null) {
-			return CTProcessModel.emptyCTProcessModel();
-		}
-
-		return _getCTProcessModel(ctProcess);
 	}
 
 	@SuppressWarnings("unchecked")

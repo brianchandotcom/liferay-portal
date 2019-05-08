@@ -101,6 +101,7 @@ public class AuthPipelineTest {
 	@Before
 	public void setUp() {
 		_calledAuthenticator = false;
+		_calledAuthFailure = false;
 	}
 
 	@Test

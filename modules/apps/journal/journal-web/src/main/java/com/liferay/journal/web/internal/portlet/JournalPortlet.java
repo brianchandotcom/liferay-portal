@@ -1345,11 +1345,11 @@ public class JournalPortlet extends MVCPortlet {
 		String referringPortletResource = ParamUtil.getString(
 			actionRequest, "referringPortletResource");
 
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
-
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirect);

@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.js.portlet.extender.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -131,7 +129,17 @@ public class PortletExtenderConfigurationAction
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String key = entry.getKey();
 
-			String name = key.split("_INSTANCE")[0];
+			if (!key.startsWith("ddm$$")) {
+				continue;
+			}
+
+			String[] names = key.split("\\$");
+
+			if (names.length < 3) {
+				continue;
+			}
+
+			String name = names[2];
 
 			if (!_fieldNames.contains(name)) {
 				continue;
@@ -183,9 +191,11 @@ public class PortletExtenderConfigurationAction
 
 		ddmFormRenderingContext.setLocale(locale);
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		ddmFormRenderingContext.setPortletNamespace(
-			PortalUtil.getPortletNamespace(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
+			portletDisplay.getNamespace());
+
 		ddmFormRenderingContext.setReadOnly(false);
 
 		return ddmFormRenderingContext;

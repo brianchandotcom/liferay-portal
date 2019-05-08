@@ -50,11 +50,19 @@ public class DocumentsAssert {
 		String message, com.liferay.portal.kernel.search.Document[] documents,
 		String fieldName, List<String> expectedValues) {
 
+		assertValues(
+			message, documents, fieldName, String.valueOf(expectedValues));
+	}
+
+	public static void assertValues(
+		String message, com.liferay.portal.kernel.search.Document[] documents,
+		String fieldName, String expected) {
+
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
-			message + "->" + actualValues, expectedValues.toString(),
-			actualValues.toString());
+			message + "->" + actualValues, expected,
+			String.valueOf(actualValues));
 	}
 
 	public static void assertValues(
@@ -64,7 +72,8 @@ public class DocumentsAssert {
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
-			message + "->" + actualValues, expected, actualValues.toString());
+			message + "->" + actualValues, expected,
+			String.valueOf(actualValues));
 	}
 
 	public static void assertValuesIgnoreRelevance(

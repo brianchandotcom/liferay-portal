@@ -207,7 +207,7 @@ public class DataLayoutRenderer {
 				fieldName);
 
 			FieldType fieldType = fieldTypeTracker.getFieldType(
-				dataDefinitionField.getName());
+				dataDefinitionField.getFieldType());
 
 			if (fieldType != null) {
 				fieldTypeContexts.add(

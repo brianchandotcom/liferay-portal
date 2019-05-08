@@ -132,7 +132,6 @@
 					<classpath>
 						<pathelement location="classes" />
 					</classpath>
-					<property name="-sourcepath" value="." />
 				</bnd>
 
 				<if>

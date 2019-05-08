@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
-import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
@@ -537,12 +535,6 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected DDLRecordPersistence ddlRecordPersistence;
-
-	@Reference
-	protected DDLRecordFinder ddlRecordFinder;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 /**
  * @author Zoltan Csaszi
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 @ProviderType
 public class CTCollectionNameException extends CTException {
 

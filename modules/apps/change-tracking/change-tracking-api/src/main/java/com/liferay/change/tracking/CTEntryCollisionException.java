@@ -12,36 +12,29 @@
  * details.
  */
 
-package com.liferay.change.tracking.exception;
+package com.liferay.change.tracking;
 
 import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Daniel Kocsis
- * @deprecated As of Mueller (7.2.x)
  */
-@Deprecated
 @ProviderType
-public class CTProcessException extends CTException {
+public class CTEntryCollisionException extends CTException {
 
-	public CTProcessException(long companyId, long ctProcessId, String msg) {
-		super(companyId, msg);
+	public CTEntryCollisionException(long companyId, long ctEntryId) {
+		super(
+			companyId,
+			"Unable to publish change entry " + ctEntryId +
+				" because it is colliding with other changes");
 
-		_ctProcessId = ctProcessId;
+		_ctEntryId = ctEntryId;
 	}
 
-	public CTProcessException(
-		long companyId, long ctProcessId, String msg, Throwable cause) {
-
-		super(companyId, msg, cause);
-
-		_ctProcessId = ctProcessId;
+	public long getCtEntryId() {
+		return _ctEntryId;
 	}
 
-	public long getCtProcessId() {
-		return _ctProcessId;
-	}
-
-	private final long _ctProcessId;
+	private final long _ctEntryId;
 
 }

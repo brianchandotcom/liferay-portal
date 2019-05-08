@@ -15,11 +15,11 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.CTEntryException;
+import com.liferay.change.tracking.CTException;
 import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
-import com.liferay.change.tracking.exception.CTEntryException;
-import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.exception.DuplicateCTEntryException;
 import com.liferay.change.tracking.internal.util.CTEntryCollisionUtil;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;

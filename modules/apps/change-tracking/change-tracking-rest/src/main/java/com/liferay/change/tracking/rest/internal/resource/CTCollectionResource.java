@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
+import com.liferay.change.tracking.CTCollectionDescriptionException;
+import com.liferay.change.tracking.CTCollectionNameException;
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
-import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
 import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionException;

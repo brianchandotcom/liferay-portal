@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Gergely Mathe
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 @ProviderType
 public class CTSystemException extends SystemException {
 

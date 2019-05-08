@@ -15,9 +15,9 @@
 package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.exception.CTEntryCollisionException;
-import com.liferay.change.tracking.exception.CTException;
-import com.liferay.change.tracking.exception.CTProcessException;
+import com.liferay.change.tracking.CTEntryCollisionException;
+import com.liferay.change.tracking.CTException;
+import com.liferay.change.tracking.CTProcessException;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.process.log.CTProcessLog;
 import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;

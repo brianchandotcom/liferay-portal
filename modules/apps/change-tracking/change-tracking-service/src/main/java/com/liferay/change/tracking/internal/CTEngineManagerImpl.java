@@ -14,14 +14,14 @@
 
 package com.liferay.change.tracking.internal;
 
+import com.liferay.change.tracking.CTCollectionDescriptionException;
+import com.liferay.change.tracking.CTCollectionNameException;
 import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.CTException;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
-import com.liferay.change.tracking.exception.CTCollectionNameException;
-import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.exception.CollectionDescriptionException;
 import com.liferay.change.tracking.exception.CollectionNameException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;

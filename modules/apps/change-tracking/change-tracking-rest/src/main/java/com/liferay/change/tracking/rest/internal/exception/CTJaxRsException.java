@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.exception;
 
-import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.CTException;
 
 import javax.ws.rs.core.Response;
 

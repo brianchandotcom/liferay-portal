@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
+import com.liferay.change.tracking.CTCollectionNameException;
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;

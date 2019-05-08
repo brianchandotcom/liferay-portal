@@ -16,40 +16,32 @@ package com.liferay.change.tracking.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Gergely Mathe
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 @ProviderType
-public class CTException extends PortalException {
+public class CTException extends com.liferay.change.tracking.CTException {
 
 	public CTException(long companyId) {
-		_companyId = companyId;
+		super(companyId);
 	}
 
 	public CTException(long companyId, String msg) {
-		super(msg);
-
-		_companyId = companyId;
+		super(companyId, msg);
 	}
 
 	public CTException(long companyId, String msg, Throwable cause) {
-		super(msg, cause);
-
-		_companyId = companyId;
+		super(companyId, msg, cause);
 	}
 
 	public CTException(long companyId, Throwable cause) {
-		super(cause);
-
-		_companyId = companyId;
+		super(companyId, cause);
 	}
 
 	public long getCompanyId() {
-		return _companyId;
+		return super.getCompanyId();
 	}
-
-	private final long _companyId;
 
 }

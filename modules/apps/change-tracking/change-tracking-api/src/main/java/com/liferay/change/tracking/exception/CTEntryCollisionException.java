@@ -18,7 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Daniel Kocsis
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 @ProviderType
 public class CTEntryCollisionException extends CTException {
 

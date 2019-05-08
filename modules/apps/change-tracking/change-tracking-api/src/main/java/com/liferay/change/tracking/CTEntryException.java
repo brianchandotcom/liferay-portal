@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.change.tracking.exception;
+package com.liferay.change.tracking;
 
 import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Gergely Mathe
- * @deprecated As of Mueller (7.2.x)
  */
-@Deprecated
 @ProviderType
 public class CTEntryException extends CTException {
 

@@ -82,8 +82,8 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isMapped(
-					editableValueJSONObject, mode)) {
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode) ||
+				_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 
 				value = _getMappedValue(
 					editableValueJSONObject, assetEntriesFieldValues, mode,

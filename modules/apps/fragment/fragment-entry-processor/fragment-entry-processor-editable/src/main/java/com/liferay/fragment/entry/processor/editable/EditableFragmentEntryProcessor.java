@@ -173,8 +173,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isMapped(
-					editableValueJSONObject, mode)) {
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode) ||
+				_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 
 				JSONObject mappedValueConfigJSONObject =
 					_getMappedValueConfigJSONObject(

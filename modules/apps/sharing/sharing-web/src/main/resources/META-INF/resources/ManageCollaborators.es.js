@@ -7,8 +7,6 @@ import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
-const mapToPair = (map) => Array.from(map, pair => pair.join(','));
-
 /**
  * Handles actions to delete or change permissions of the
  * collaborators for a file entry.
@@ -20,9 +18,9 @@ class ManageCollaborators extends PortletBase {
 	 */
 	attached() {
 		this._deleteSharingEntryIds = [];
-		this._sharingEntryIdsAndPermissions = new Map();
-		this._sharingEntryIdsAndExpirationDate = new Map();
-		this._sharingEntryIdsAndShareables = new Map();
+		this._sharingEntryIdsAndPermissions = {};
+		this._sharingEntryIdsAndExpirationDate = {};
+		this._sharingEntryIdsAndShareables = {};
 
 		let tomorrow = new Date();
 		tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
@@ -53,6 +51,19 @@ class ManageCollaborators extends PortletBase {
 		if (collaboratorsDialog && collaboratorsDialog.hide) {
 			collaboratorsDialog.hide();
 		}
+	}
+
+	_convertToPair(sharingEntryObject) {
+		const keys = Object.keys(sharingEntryObject);
+		let result = [];
+
+		keys.forEach(
+			key => {
+				result.push(key + ',' + sharingEntryObject[key]);
+			}
+		);
+
+		return result;
 	}
 
 	/**
@@ -106,7 +117,7 @@ class ManageCollaborators extends PortletBase {
 		let sharingEntryId = event.target.getAttribute('name');
 		let sharingEntryPermissionKey = event.target.value;
 
-		this._sharingEntryIdsAndPermissions.set(sharingEntryId, sharingEntryPermissionKey);
+		this._sharingEntryIdsAndPermissions[sharingEntryId] = sharingEntryPermissionKey;
 	}
 
 	/**
@@ -128,7 +139,7 @@ class ManageCollaborators extends PortletBase {
 		if (!dateError) {
 			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
 
-			this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
+			this._sharingEntryIdsAndExpirationDate[sharingEntryId] = sharingEntryExpirationDate;
 		}
 
 		this.collaborators = this.collaborators;
@@ -157,7 +168,7 @@ class ManageCollaborators extends PortletBase {
 			this.collaborators = this.collaborators;
 		}
 
-		this._sharingEntryIdsAndShareables.set(sharingEntryId, shareable);
+		this._sharingEntryIdsAndShareables[sharingEntryId] = shareable;
 	}
 
 	/**
@@ -206,7 +217,7 @@ class ManageCollaborators extends PortletBase {
 			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
 			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
 
-			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
+			this._sharingEntryIdsAndExpirationDate[collaborator.sharingEntryId] = sharingEntryExpirationDate;
 
 			this.collaborators = this.collaborators;
 		}
@@ -241,9 +252,9 @@ class ManageCollaborators extends PortletBase {
 			this.actionUrl,
 			{
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
-				sharingEntryIdActionIdPairs: mapToPair(this._sharingEntryIdsAndPermissions),
-				sharingEntryIdExpirationDatePairs: mapToPair(this._sharingEntryIdsAndExpirationDate),
-				sharingEntryIdShareablePairs: mapToPair(this._sharingEntryIdsAndShareables)
+				sharingEntryIdActionIdPairs: this._convertToPair(this._sharingEntryIdsAndPermissions),
+				sharingEntryIdExpirationDatePairs: this._convertToPair(this._sharingEntryIdsAndExpirationDate),
+				sharingEntryIdShareablePairs: this._convertToPair(this._sharingEntryIdsAndShareables)
 			}
 		)
 			.then(

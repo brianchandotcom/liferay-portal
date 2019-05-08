@@ -3,6 +3,8 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 7.0.0//EN" "http://www.liferay.com/dtd/liferay-hook_7_0_0.dtd">
 #elseif (${liferayVersion.startsWith("7.1")})
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 7.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_7_1_0.dtd">
+#elseif (${liferayVersion.startsWith("7.2")})
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 7.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_7_2_0.dtd">
 #end
 
 <hook>

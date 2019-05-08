@@ -474,7 +474,7 @@ class RuleEditor extends Component {
 			list = ['select', 'checkbox_multiple', 'radio'];
 		}
 		else if (fieldType == 'text') {
-			list = ['select', 'checkbox_multiple', 'radio', 'text', 'numeric'];
+			list = ['select', 'checkbox_multiple', 'radio', 'text', 'numeric', 'date'];
 		}
 		else if (fieldType == 'number') {
 			list = ['numeric'];

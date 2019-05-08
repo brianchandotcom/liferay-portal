@@ -157,6 +157,11 @@ public class GitUtil {
 				String gitHubCacheRemoteURL = remoteURL.replace(
 					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
 
+				if (gitHubDevNodeHostname.startsWith("slave-")) {
+					gitHubDevNodeRemoteURL = toSlaveGitHubDevNodeRemoteURL(
+						remoteURL, gitHubDevNodeHostname.substring(6));
+				}
+
 				try {
 					remoteGitRefs = getRemoteGitRefs(
 						remoteGitBranchName, workingDirectory,
@@ -280,6 +285,23 @@ public class GitUtil {
 		return false;
 	}
 
+	public static String toSlaveGitHubDevNodeRemoteURL(
+		String gitHubDevRemoteURL, String slaveGitHubDevNodeHostname) {
+
+		Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
+			gitHubDevRemoteURL);
+
+		if (matcher.find()) {
+			return JenkinsResultsParserUtil.combine(
+				"root@", slaveGitHubDevNodeHostname,
+				":/opt/dev/projects/github/",
+				matcher.group("gitRepositoryName"));
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid github-dev remote url " + gitHubDevRemoteURL);
+	}
+
 	public static class ExecutionResult {
 
 		public int getExitValue() {
@@ -333,9 +355,32 @@ public class GitUtil {
 				JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
 					usedGitHubCacheHostnames);
 
-			for (int i = 0; i < modifiedCommands.length; i++) {
-				modifiedCommands[i] = modifiedCommands[i].replace(
-					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+			usedGitHubCacheHostnames.add(gitHubCacheHostname);
+
+			if (gitHubCacheHostname.startsWith("slave-")) {
+				gitHubCacheHostname = gitHubCacheHostname.substring(6);
+
+				for (int i = 0; i < modifiedCommands.length; i++) {
+					Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
+						modifiedCommands[i]);
+
+					String modifiedCommand = modifiedCommands[i];
+
+					while (matcher.find()) {
+						modifiedCommand = modifiedCommand.replaceFirst(
+							matcher.group(0),
+							toSlaveGitHubDevNodeRemoteURL(
+								matcher.group(0), gitHubCacheHostname));
+					}
+
+					modifiedCommands[i] = modifiedCommand;
+				}
+			}
+			else {
+				for (int i = 0; i < modifiedCommands.length; i++) {
+					modifiedCommands[i] = modifiedCommands[i].replace(
+						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+				}
 			}
 
 			try {
@@ -393,6 +438,11 @@ public class GitUtil {
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
+	private static final Pattern _gitHubDevRemoteURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"git@(?<hostname>github-dev)^[:]:",
+			"(?<username>[^/]+)/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?",
+			"+\\s*"));
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",

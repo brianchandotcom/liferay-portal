@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 /**
@@ -68,6 +70,13 @@ public class GeoLocationPointImpl implements GeoLocationPoint {
 	@Override
 	public Double getLongitude() {
 		return _longitude;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			CharPool.OPEN_PARENTHESIS, _latitude, CharPool.COMMA, _longitude,
+			CharPool.CLOSE_PARENTHESIS);
 	}
 
 	private String _geoHash;

@@ -54,7 +54,20 @@ public class ServiceWrapperRegistryTest {
 
 		ServiceRegistration<ServiceWrapper> serviceRegistration =
 			bundleContext.registerService(
-				ServiceWrapper.class, new TestEmailLocalServiceWrapper(), null);
+				ServiceWrapper.class,
+				new EmailAddressLocalServiceWrapper(null) {
+
+					@Override
+					public EmailAddress getEmailAddress(long emailAddressId) {
+						EmailAddress emailAddress = createEmailAddress(1);
+
+						emailAddress.setAddress("email@liferay.com");
+
+						return emailAddress;
+					}
+
+				},
+				null);
 
 		try {
 			EmailAddress emailAddress =
@@ -69,29 +82,5 @@ public class ServiceWrapperRegistryTest {
 
 	@Inject
 	private EmailAddressLocalService _emailAddressLocalService;
-
-	private static class TestEmailLocalServiceWrapper
-		extends EmailAddressLocalServiceWrapper {
-
-		public TestEmailLocalServiceWrapper() {
-			super(null);
-		}
-
-		public TestEmailLocalServiceWrapper(
-			EmailAddressLocalService emailAddressService) {
-
-			super(emailAddressService);
-		}
-
-		@Override
-		public EmailAddress getEmailAddress(long emailAddressId) {
-			EmailAddress emailAddress = createEmailAddress(1);
-
-			emailAddress.setAddress("email@liferay.com");
-
-			return emailAddress;
-		}
-
-	}
 
 }

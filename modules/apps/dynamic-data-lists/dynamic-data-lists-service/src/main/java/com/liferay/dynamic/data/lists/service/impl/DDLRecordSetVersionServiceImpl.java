@@ -17,13 +17,16 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetVersionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -32,6 +35,13 @@ import java.util.List;
  *
  * @author Leonardo Barros
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddl",
+		"json.web.service.context.path=DDLRecordSetVersion"
+	},
+	service = AopService.class
+)
 public class DDLRecordSetVersionServiceImpl
 	extends DDLRecordSetVersionServiceBaseImpl {
 
@@ -85,10 +95,10 @@ public class DDLRecordSetVersionServiceImpl
 			recordSetId);
 	}
 
-	private static volatile ModelResourcePermission<DDLRecordSet>
-		_ddlRecordSetModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDLRecordSetVersionServiceImpl.class,
-				"_ddlRecordSetModelResourcePermission", DDLRecordSet.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
+	)
+	private ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission;
 
 }

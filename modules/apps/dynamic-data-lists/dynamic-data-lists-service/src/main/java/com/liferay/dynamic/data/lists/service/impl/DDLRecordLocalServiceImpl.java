@@ -38,6 +38,7 @@ import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -65,7 +66,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -77,6 +77,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the local service for accessing, adding, deleting, and updating
  * dynamic data lists (DDL) records.
@@ -84,6 +87,10 @@ import java.util.Objects;
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
+	service = AopService.class
+)
 public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
@@ -1464,22 +1471,22 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = DDM.class)
+	@Reference
 	protected DDM ddm;
 
-	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
+	@Reference
 	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	protected DDMStructureLocalService ddmStructureLocalService;
 
-	@ServiceReference(type = FieldsToDDMFormValuesConverter.class)
+	@Reference
 	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
 
-	@ServiceReference(type = IndexerRegistry.class)
+	@Reference
 	protected IndexerRegistry indexerRegistry;
 
-	@ServiceReference(type = StorageEngine.class)
+	@Reference
 	protected StorageEngine storageEngine;
 
 	private List<Serializable> _getSerializableValues(Serializable value) {

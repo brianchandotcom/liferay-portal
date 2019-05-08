@@ -20,10 +20,10 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -32,6 +32,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
  * dynamic data lists (DDL) records. Its methods include permission checks.
@@ -39,6 +42,13 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddl",
+		"json.web.service.context.path=DDLRecord"
+	},
+	service = AopService.class
+)
 public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 	/**
@@ -350,10 +360,10 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<DDLRecordSet>
-		_ddlRecordSetModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDLRecordServiceImpl.class,
-				"_ddlRecordSetModelResourcePermission", DDLRecordSet.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
+	)
+	private ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission;
 
 }

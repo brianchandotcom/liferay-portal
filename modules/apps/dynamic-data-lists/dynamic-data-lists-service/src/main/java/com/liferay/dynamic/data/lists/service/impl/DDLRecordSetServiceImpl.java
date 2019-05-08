@@ -19,18 +19,20 @@ import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -39,6 +41,13 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddl",
+		"json.web.service.context.path=DDLRecordSet"
+	},
+	service = AopService.class
+)
 public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 
 	/**
@@ -411,15 +420,13 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			minDisplayRows, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<DDLRecordSet>
-		_ddlRecordSetModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDLRecordSetServiceImpl.class,
-				"_ddlRecordSetModelResourcePermission", DDLRecordSet.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				DDLRecordSetServiceImpl.class, "_portletResourcePermission",
-				DDLConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
+	)
+	private ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission;
+
+	@Reference(target = "(resource.name=" + DDLConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordVersionVersionComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -25,12 +26,18 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Provides the local service for accessing dynamic data list (DDL) record
  * versions.
  *
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordVersion",
+	service = AopService.class
+)
 public class DDLRecordVersionLocalServiceImpl
 	extends DDLRecordVersionLocalServiceBaseImpl {
 

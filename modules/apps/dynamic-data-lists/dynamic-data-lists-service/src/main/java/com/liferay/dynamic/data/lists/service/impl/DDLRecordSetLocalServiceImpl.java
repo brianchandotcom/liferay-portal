@@ -42,6 +42,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -55,12 +56,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -69,6 +72,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet",
+	service = AopService.class
+)
 public class DDLRecordSetLocalServiceImpl
 	extends DDLRecordSetLocalServiceBaseImpl {
 
@@ -995,22 +1002,22 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMFormValuesDeserializerTracker.class)
+	@Reference
 	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
 
-	@ServiceReference(type = DDMFormValuesSerializerTracker.class)
+	@Reference
 	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
 
-	@ServiceReference(type = DDMFormValuesValidator.class)
+	@Reference
 	protected DDMFormValuesValidator ddmFormValuesValidator;
 
-	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	@Reference
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	protected DDMStructureLocalService ddmStructureLocalService;
 
-	@ServiceReference(type = DDMStructureVersionLocalService.class)
+	@Reference
 	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
 
 }

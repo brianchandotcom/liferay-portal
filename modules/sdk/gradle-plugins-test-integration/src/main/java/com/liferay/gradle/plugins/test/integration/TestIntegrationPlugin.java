@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
@@ -730,6 +731,21 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		test.jvmArgs(
 			"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 			"-Duser.timezone=GMT");
+
+		Properties systemProperties = System.getProperties();
+
+		for (String propertyName : systemProperties.stringPropertyNames()) {
+			if (propertyName.startsWith("liferay.arquillian.")) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("-D");
+				sb.append(propertyName);
+				sb.append("=");
+				sb.append(systemProperties.get(propertyName));
+
+				test.jvmArgs(sb.toString());
+			}
+		}
 
 		Project project = test.getProject();
 

@@ -336,7 +336,7 @@ public class PortalImplUnitTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				new MockHttpServletRequest();
 
-			mockHttpServletRequest.setParameter("doAsUserId", "0");
+			mockHttpServletRequest.setParameter("doAsUserId", "1");
 
 			_portalImpl.getUserId(mockHttpServletRequest);
 

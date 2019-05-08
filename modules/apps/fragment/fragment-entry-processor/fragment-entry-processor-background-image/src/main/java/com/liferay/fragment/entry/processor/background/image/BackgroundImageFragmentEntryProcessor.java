@@ -82,12 +82,18 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode) ||
-				_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode)) {
+				value = jsonObject.getString("mappedField");
+			}
 
-				value = _getMappedValue(
-					editableValueJSONObject, assetEntriesFieldValues, mode,
-					locale, previewClassPK, previewType);
+			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
+				Object fieldValue = _fragmentEntryProcessorUtil.getValue(
+					jsonObject, assetEntriesFieldValues, mode, locale,
+					previewClassPK, previewType);
+
+				if (fieldValue != null) {
+					value = String.valueOf(fieldValue);
+				}
 			}
 
 			if (Validator.isNull(value)) {
@@ -130,29 +136,6 @@ public class BackgroundImageFragmentEntryProcessor
 		document.outputSettings(outputSettings);
 
 		return document;
-	}
-
-	private String _getMappedValue(
-			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
-		throws PortalException {
-
-		String value = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		Object fieldValue = _fragmentEntryProcessorUtil.getValue(
-			jsonObject, assetEntriesFieldValues, mode, locale, previewClassPK,
-			previewType);
-
-		if (fieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		return String.valueOf(fieldValue);
 	}
 
 	@Reference

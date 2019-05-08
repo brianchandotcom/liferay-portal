@@ -55,7 +55,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_friendlyURLResolver = _getFriendlyURLResolver();
+		_friendlyURLResolver = _createFriendlyURLResolver();
 
 		_serviceRegistration = _bundleContext.registerService(
 			FriendlyURLResolver.class, _friendlyURLResolver,
@@ -88,7 +88,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		FriendlyURLResolver friendlyURLResolver = _getFriendlyURLResolver();
+		FriendlyURLResolver friendlyURLResolver = _createFriendlyURLResolver();
 
 		ServiceRegistration<FriendlyURLResolver> serviceRegistration1 =
 			bundleContext.registerService(
@@ -112,7 +112,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 					_SEPARATOR));
 
 			serviceRegistration2 = bundleContext.registerService(
-				FriendlyURLResolver.class, _getFriendlyURLResolver(),
+				FriendlyURLResolver.class, _createFriendlyURLResolver(),
 				MapUtil.singletonDictionary("service.ranking", 12));
 
 			Assert.assertSame(
@@ -134,7 +134,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 		}
 	}
 
-	private static FriendlyURLResolver _getFriendlyURLResolver() {
+	private static FriendlyURLResolver _createFriendlyURLResolver() {
 		return (FriendlyURLResolver)ProxyUtil.newProxyInstance(
 			FriendlyURLResolver.class.getClassLoader(),
 			new Class<?>[] {FriendlyURLResolver.class},

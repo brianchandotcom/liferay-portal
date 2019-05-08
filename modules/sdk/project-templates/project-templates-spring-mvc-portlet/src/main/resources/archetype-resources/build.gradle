@@ -16,7 +16,10 @@ apply plugin: "war"
 #end
 
 dependencies {
-	compile group: "org.springframework", name: "spring-webmvc-portlet", version: "4.1.9.RELEASE"
+	compile(group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "4.1.9.RELEASE") {
+		transitive = false
+	}
+	compileOnly group: "org.springframework", name: "spring-webmvc-portlet", version: "4.1.9.RELEASE"
 #if (${dependencyManagementEnabled} == "true")
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "javax.portlet", name: "portlet-api"

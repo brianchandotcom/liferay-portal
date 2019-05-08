@@ -6,6 +6,10 @@
 		<display-name>${className}</display-name>
 		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
 		<init-param>
+			<name>contextClass</name>
+			<value>com.liferay.portletmvc4spring.thin.OSGiPortletApplicationContext</value>
+		</init-param>
+		<init-param>
 			<name>contextConfigLocation</name>
 			<value>/WEB-INF/spring-context/portlet/${artifactId}.xml</value>
 		</init-param>

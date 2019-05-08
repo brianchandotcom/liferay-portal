@@ -20,6 +20,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -41,6 +42,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
@@ -49,6 +53,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Juergen Kappler
@@ -207,6 +214,17 @@ public class DisplayPageLayoutTypeController
 	}
 
 	@Override
+	protected void addAttributes(HttpServletRequest httpServletRequest) {
+		for (InfoDisplayRequestAttributesContributor
+				infoDisplayRequestAttributesContributor :
+					_infoDisplayRequestAttributesContributors) {
+
+			infoDisplayRequestAttributesContributor.addAttributes(
+				httpServletRequest);
+		}
+	}
+
+	@Override
 	protected ServletResponse createServletResponse(
 		HttpServletResponse httpServletResponse,
 		UnsyncStringWriter unsyncStringWriter) {
@@ -226,11 +244,32 @@ public class DisplayPageLayoutTypeController
 	}
 
 	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setInfoDisplayRequestAttributesContributor(
+		InfoDisplayRequestAttributesContributor
+			infoDisplayRequestAttributesContributor) {
+
+		_infoDisplayRequestAttributesContributors.add(
+			infoDisplayRequestAttributesContributor);
+	}
+
+	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
+	}
+
+	protected void unsetInfoDisplayRequestAttributesContributor(
+		InfoDisplayRequestAttributesContributor
+			infoDisplayRequestAttributesContributor) {
+
+		_infoDisplayRequestAttributesContributors.remove(
+			infoDisplayRequestAttributesContributor);
 	}
 
 	private LayoutPageTemplateEntry _fetchLayoutPageTemplateEntry(
@@ -275,6 +314,10 @@ public class DisplayPageLayoutTypeController
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	private final Set<InfoDisplayRequestAttributesContributor>
+		_infoDisplayRequestAttributesContributors =
+			new ConcurrentSkipListSet<>();
 
 	@Reference
 	private ItemSelector _itemSelector;

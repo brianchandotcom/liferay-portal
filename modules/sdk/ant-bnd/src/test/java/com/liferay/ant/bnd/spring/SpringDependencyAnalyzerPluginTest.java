@@ -20,6 +20,9 @@ import aQute.bnd.osgi.Resource;
 
 import aQute.lib.io.IO;
 
+import com.liferay.ant.bnd.spring.bean.SampleBean;
+import com.liferay.ant.bnd.spring.filter.FilterSampleBean;
+
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -35,7 +38,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedInFileAndAnnotation() throws Exception {
-		Jar jar = analyze(_PACKAGE_NAME_BEAN, "1.0.0.1", "bar.foo.Dependency");
+		Jar jar = analyze(SampleBean.class, "1.0.0.1", "bar.foo.Dependency");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -49,7 +52,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInAnnotation() throws Exception {
-		Jar jar = analyze(_PACKAGE_NAME_BEAN, "1.0.0.1", null);
+		Jar jar = analyze(SampleBean.class, "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -65,7 +68,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithFilterString()
 		throws Exception {
 
-		Jar jar = analyze(_PACKAGE_NAME_FILTER, "1.0.0.1", null);
+		Jar jar = analyze(FilterSampleBean.class, "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -80,7 +83,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithRequireSchemaRange()
 		throws Exception {
 
-		Jar jar = analyze(_PACKAGE_NAME_BEAN, "[1.0.0,1.1.0)", null);
+		Jar jar = analyze(SampleBean.class, "[1.0.0,1.1.0)", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -117,14 +120,14 @@ public class SpringDependencyAnalyzerPluginTest {
 	}
 
 	protected Jar analyze(
-			String packageName, String requireSchemaVersion,
+			Class<?> clazz, String requireSchemaVersion,
 			String dependenciesContent)
 		throws Exception {
 
 		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
 
-		if (packageName != null) {
-			javaArchive.addPackages(true, packageName);
+		if (clazz != null) {
+			javaArchive.addClass(clazz);
 		}
 
 		if (dependenciesContent != null) {
@@ -165,12 +168,6 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		return value.replace("\r\n", "\n");
 	}
-
-	private static final String _PACKAGE_NAME_BEAN =
-		"com.liferay.ant.bnd.spring.bean";
-
-	private static final String _PACKAGE_NAME_FILTER =
-		"com.liferay.ant.bnd.spring.filter";
 
 	private static final String _RELEASE_INFO =
 		"com.liferay.portal.kernel.model.Release " +

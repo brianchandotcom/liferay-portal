@@ -19,7 +19,7 @@ import com.liferay.ant.bnd.spring.ServiceReference;
 /**
  * @author Miguel Pastor
  */
-public class SampleBean {
+public class FilterSampleBean {
 
 	@ServiceReference(filterString = "(service.ranking=1)", type = String.class)
 	protected String s;

@@ -16,7 +16,7 @@ export const updateRules = (rules, oldFieldProperties, newFieldProperties) => {
 	const {fieldName} = oldFieldProperties;
 	const newFieldName = newFieldProperties.fieldName;
 
-	return updateRulesFieldName(rules, fieldName, newFieldName);
+	return updateRulesFieldName(rules || [], fieldName, newFieldName);
 };
 
 export const updateField = (state, defaultLanguageId, editingLanguageId, fieldName, fieldValue) => {

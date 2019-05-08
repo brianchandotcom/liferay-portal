@@ -86,14 +86,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByCompany() throws Exception {
-		_serviceRegistration = _bundleContext.registerService(
-			Portlet.class, new MVCPortlet(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put("com.liferay.portlet.preferences-company-wide", "true");
-					put("javax.portlet.name", _TEST_COMPANY_PORTLET_NAME);
-				}
-			});
+		_registerCompanyWidePortlet();
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout, _TEST_COMPANY_PORTLET_NAME,
@@ -118,22 +111,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByGroup() throws Exception {
-		_serviceRegistration = _bundleContext.registerService(
-			Portlet.class, new MVCPortlet(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put(
-						"com.liferay.portlet.preferences-company-wide",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-owned-by-group",
-						"true");
-					put(
-						"com.liferay.portlet.preferences-unique-per-layout",
-						"false");
-					put("javax.portlet.name", _TEST_GROUP_PORTLET_NAME);
-				}
-			});
+		_registerPortlet(true, false, _TEST_GROUP_PORTLET_NAME);
 
 		long siteGroupId = _layout.getGroupId();
 
@@ -156,22 +134,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByGroupLayout() throws Exception {
-		_serviceRegistration = _bundleContext.registerService(
-			Portlet.class, new MVCPortlet(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put(
-						"com.liferay.portlet.preferences-company-wide",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-owned-by-group",
-						"true");
-					put(
-						"com.liferay.portlet.preferences-unique-per-layout",
-						"true");
-					put("javax.portlet.name", _TEST_GROUP_LAYOUT_PORTLET_NAME);
-				}
-			});
+		_registerPortlet(true, true, _TEST_GROUP_LAYOUT_PORTLET_NAME);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
@@ -193,22 +156,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByUser() throws Exception {
-		_serviceRegistration = _bundleContext.registerService(
-			Portlet.class, new MVCPortlet(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put(
-						"com.liferay.portlet.preferences-company-wide",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-owned-by-group",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-unique-per-layout",
-						"false");
-					put("javax.portlet.name", _TEST_USER_PORTLET_NAME);
-				}
-			});
+		_registerPortlet(false, false, _TEST_USER_PORTLET_NAME);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
@@ -229,22 +177,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test
 	public void testPreferencesOwnedByUserLayout() throws Exception {
-		_serviceRegistration = _bundleContext.registerService(
-			Portlet.class, new MVCPortlet(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put(
-						"com.liferay.portlet.preferences-company-wide",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-owned-by-group",
-						"false");
-					put(
-						"com.liferay.portlet.preferences-unique-per-layout",
-						"true");
-					put("javax.portlet.name", _TEST_USER_LAYOUT_PORTLET_NAME);
-				}
-			});
+		_registerPortlet(false, true, _TEST_USER_LAYOUT_PORTLET_NAME);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
@@ -267,6 +200,16 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 	public void testPreferencesWithModeEditGuestInPublicLayoutWithPermission()
 		throws Exception {
 
+		_registerCompanyWidePortlet();
+
+		_layout = LayoutTestUtil.addLayout(_group, false);
+
+		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+			_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
+			_TEST_GROUP_PORTLET_NAME, true);
+	}
+
+	private void _registerCompanyWidePortlet() {
 		_serviceRegistration = _bundleContext.registerService(
 			Portlet.class, new MVCPortlet(),
 			new HashMapDictionary<String, Object>() {
@@ -275,12 +218,27 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 					put("javax.portlet.name", _TEST_COMPANY_PORTLET_NAME);
 				}
 			});
+	}
 
-		_layout = LayoutTestUtil.addLayout(_group, false);
+	private void _registerPortlet(
+		boolean owedByGroup, boolean uniquePerLayout, String portletName) {
 
-		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-			_layout.getGroupId(), TestPropsValues.getUserId(), _layout,
-			_TEST_GROUP_PORTLET_NAME, true);
+		_serviceRegistration = _bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put(
+						"com.liferay.portlet.preferences-company-wide",
+						"false");
+					put(
+						"com.liferay.portlet.preferences-owned-by-group",
+						Boolean.valueOf(owedByGroup));
+					put(
+						"com.liferay.portlet.preferences-unique-per-layout",
+						Boolean.valueOf(uniquePerLayout));
+					put("javax.portlet.name", portletName);
+				}
+			});
 	}
 
 	private static final String _TEST_COMPANY_PORTLET_NAME =

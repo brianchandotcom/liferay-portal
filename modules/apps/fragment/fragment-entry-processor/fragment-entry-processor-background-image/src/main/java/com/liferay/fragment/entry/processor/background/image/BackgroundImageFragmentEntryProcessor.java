@@ -103,7 +103,9 @@ public class BackgroundImageFragmentEntryProcessor
 					editableValueJSONObject, locale, segmentsExperienceIds);
 			}
 
-			element.attr("style", "background-image: url(" + value + ")");
+			element.attr(
+				"style",
+				"background-image: url(" + value + "); background-size: cover");
 		}
 
 		if (Objects.equals(

@@ -3,6 +3,20 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 
+function mockItems(count) {
+	const items = [];
+
+	for (let i = 0; i < count; i++) {
+		items.push({
+			active: i % 2 === 0,
+			key: `key-${i}`,
+			name: `Item Name ${i}`
+		});
+	}
+
+	return items;
+}
+
 test('Should active item when checkbox is checked', () => {
 	const items = [
 		{
@@ -45,6 +59,7 @@ test('Should hide dropdown when click outside filter', () => {
 				filterKey="slaStatus"
 				items={items}
 				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
+				match={{ params: { page: 3 }, path: '/instances/:page' }}
 				name="SLA Status"
 			/>
 		</Router>
@@ -92,6 +107,20 @@ test('Should render component', () => {
 	const component = renderer.create(
 		<Router query="?filters.slaStatus%5B0%5D=overdue">
 			<Filter filterKey="slaStatus" name="SLA Status" />
+		</Router>
+	);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should render component with search wrapper', () => {
+	const items = mockItems(15);
+
+	const component = renderer.create(
+		<Router query="?filters.slaStatus%5B0%5D=overdue">
+			<Filter filterKey="slaStatus" items={items} name="SLA Status" />
 		</Router>
 	);
 

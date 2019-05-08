@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditPortletProvider.class
 )
-public class WikiPortletProvider
+public class WikiEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override

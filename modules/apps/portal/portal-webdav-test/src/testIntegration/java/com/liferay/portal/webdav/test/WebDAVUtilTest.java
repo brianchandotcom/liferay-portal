@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -78,12 +77,11 @@ public class WebDAVUtilTest {
 
 	@Test
 	public void testGetStorageTokens() {
-		List<String> storageTokens = new ArrayList(
-			WebDAVUtil.getStorageTokens());
+		Collection<String> storageTokens = WebDAVUtil.getStorageTokens();
 
 		Assert.assertTrue(
 			_TOKEN + " not found in " + storageTokens,
-			storageTokens.removeIf(storageToken -> _TOKEN == storageToken));
+			storageTokens.contains(_TOKEN));
 	}
 
 	private static final String _TOKEN = "TOKEN";

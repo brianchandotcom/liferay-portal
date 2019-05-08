@@ -18,21 +18,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch6.internal.index.LiferayTypeMappingsConstants;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Arrays;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingAction;
@@ -63,58 +59,41 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		assertGeoLocationPointField(_CUSTOM_FIELD.concat("_geolocation"));
 	}
 
-	protected void assertGeoLocationPointField(final String fieldName)
-		throws Exception {
+	protected void assertGeoLocationPointField(String fieldName) {
+		double latitude = 33.99772698059678;
+		double longitude = -117.814457193017;
 
-		final double latitude = randomLatitude();
-		final double longitude = randomLongitude();
+		String expected = "(33.99772698059678,-117.814457193017)";
 
 		addDocument(
 			DocumentCreationHelpers.singleGeoLocation(
 				fieldName, latitude, longitude));
 
-		Document document = IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			new Callable<Document>() {
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.search();
 
-				@Override
-				public Document call() throws Exception {
-					return searchOneDocument();
-				}
-
+				indexingTestHelper.verifyResponse(
+					searchResponse -> {
+						DocumentsAssert.assertValues(
+							searchResponse.getRequestString(),
+							searchResponse.getDocumentsStream(), fieldName,
+							"[" + expected + "]");
+					});
 			});
-
-		Field field = document.getField(fieldName);
-
-		GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();
-
-		Assert.assertEquals(latitude, geoLocationPoint.getLatitude(), 0);
-		Assert.assertEquals(longitude, geoLocationPoint.getLongitude(), 0);
 	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return new ElasticsearchIndexingFixture() {
-			{
-				ElasticsearchFixture elasticsearchFixture =
-					new ElasticsearchFixture(getClass());
+		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
+			LiferayElasticsearchIndexingFixtureFactory.builder(
+			).build();
 
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(elasticsearchFixture);
-				setIndexCreationHelper(
-					new CustomFieldLiferayIndexCreationHelper(
-						elasticsearchFixture));
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
-	}
+		elasticsearchIndexingFixture.setIndexCreationHelper(
+			new CustomFieldLiferayIndexCreationHelper(
+				elasticsearchIndexingFixture.getElasticsearchFixture()));
 
-	protected int randomLatitude() {
-		return RandomTestUtil.randomInt(90, 180) - 90;
-	}
-
-	protected int randomLongitude() {
-		return RandomTestUtil.randomInt(180, 360) - 180;
+		return elasticsearchIndexingFixture;
 	}
 
 	protected Document searchOneDocument() throws Exception {

@@ -20,9 +20,9 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -242,8 +242,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 				attributeNames, resourceBundleLoader, locale);
 
 			document.addKeyword(
-				FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_NAME +
-					fieldNameSuffix,
+				FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_NAME + fieldNameSuffix,
 				nameValues.toArray(new String[nameValues.size()]));
 		}
 
@@ -369,10 +368,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			return resourceBundle;
 		}
 
-		ResourceBundle defaultResourceBundle =
-			resourceBundleLoader.loadResourceBundle(LocaleUtil.getDefault());
-
-		return defaultResourceBundle;
+		return resourceBundleLoader.loadResourceBundle(LocaleUtil.getDefault());
 	}
 
 	@Reference

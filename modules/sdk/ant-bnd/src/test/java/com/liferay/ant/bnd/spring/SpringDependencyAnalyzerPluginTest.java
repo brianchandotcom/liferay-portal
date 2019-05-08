@@ -59,7 +59,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInAnnotation() throws Exception {
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1");
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -75,7 +75,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithFilterString()
 		throws Exception {
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER), "1.0.0.1");
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER), "1.0.0.1", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -90,7 +90,8 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithRequireSchemaRange()
 		throws Exception {
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "[1.0.0,1.1.0)");
+		Jar jar = analyze(
+			Arrays.asList(_PACKAGE_NAME_BEAN), "[1.0.0,1.1.0)", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -138,7 +139,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	protected Jar analyze(
 			List<String> packages, String requireSchemaVersion,
-			JarResource... jarResources)
+			JarResource jarResource)
 		throws Exception {
 
 		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
@@ -147,7 +148,7 @@ public class SpringDependencyAnalyzerPluginTest {
 			javaArchive.addPackages(true, pkg);
 		}
 
-		for (JarResource jarResource : jarResources) {
+		if (jarResource != null) {
 			javaArchive.addAsResource(
 				jarResource.getURL(), jarResource.getTarget());
 		}

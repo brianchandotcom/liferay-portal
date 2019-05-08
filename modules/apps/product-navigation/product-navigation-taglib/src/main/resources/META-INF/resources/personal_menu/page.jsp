@@ -34,7 +34,6 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 
 	div.personal-menu-dropdown .btn {
 		border-radius: 5000px;
-		border-width: medium;
 	}
 
 	div.personal-menu-dropdown .dropdown-item {

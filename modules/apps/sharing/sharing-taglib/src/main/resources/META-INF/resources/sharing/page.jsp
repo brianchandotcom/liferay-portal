@@ -22,12 +22,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_sharing_b
 String buttonComponentId = randomNamespace + "shareButton";
 %>
 
-<clay:button
-	id="<%= buttonComponentId %>"
-	label='<%= LanguageUtil.get(request, "share") %>'
-	size="sm"
-	style="secondary"
-/>
+<button class="btn btn-secondary btn-sm" id="<%= buttonComponentId %>" title="<%= LanguageUtil.get(request, "share") %>" type="button">
+	<liferay-ui:message key="share" />
+</button>
 
 <aui:script>
 	var button = document.getElementById('<%= buttonComponentId %>');

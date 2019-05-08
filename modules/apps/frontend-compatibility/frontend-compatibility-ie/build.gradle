@@ -14,6 +14,7 @@ configurations {
 	objectValues
 	promise
 	stringEndsWith
+	stringIncludes
 	urlSearchParams
 }
 
@@ -30,6 +31,7 @@ task buildObjectEntries(type: Copy)
 task buildObjectValues(type: Copy)
 task buildPromise(type: Copy)
 task buildStringEndsWith(type: Copy)
+task buildStringIncludes(type: Copy)
 task buildUrlSearchParams(type: Copy)
 
 buildArrayFill {
@@ -236,6 +238,22 @@ buildStringEndsWith{
 	}
 }
 
+buildStringIncludes {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.stringIncludes.singleFile)
+	}
+
+	include "META-INF/resources/webjars/string.prototype.includes/1.0.0/includes.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "includes", "string.includes"
+	}
+}
+
 buildUrlSearchParams {
 	eachFile new StripPathSegmentsAction(6)
 
@@ -266,6 +284,7 @@ classes {
 	dependsOn buildObjectValues
 	dependsOn buildPromise
 	dependsOn buildStringEndsWith
+	dependsOn buildStringIncludes
 	dependsOn buildUrlSearchParams
 }
 
@@ -302,6 +321,8 @@ dependencies {
 	promise group: "org.webjars.npm", name: "promise-polyfill", transitive: false, version: "8.1.0"
 
 	stringEndsWith group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
+
+	stringIncludes group: "org.webjars.npm", name: "string.prototype.includes", transitive: false, version: "1.0.0"
 
 	urlSearchParams group: "org.webjars.npm", name: "url-search-params", transitive: false, version: "0.10.0"
 }

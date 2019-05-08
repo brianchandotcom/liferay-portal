@@ -392,10 +392,7 @@ Provide-Capability:\
 	@../../../lib/portal/xstream.jar,\
 	@../../../portal-impl/portal-impl.jar,\
 	@../../../portal-kernel/portal-kernel.jar,\
-	@lib/biz.aQute.bndlib.jar!/aQute/bnd/annotation/metatype/*,\
-	@lib/biz.aQute.bndlib.jar!/aQute/bnd/header/*,\
-	@lib/biz.aQute.bndlib.jar!/aQute/bnd/osgi/*,\
-	@lib/biz.aQute.bndlib.jar!/aQute/bnd/version/*,\
+	@lib/biz.aQute.bnd.annotation.jar!/aQute/bnd/annotation/metatype/*,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.content.jar,\

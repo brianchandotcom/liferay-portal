@@ -1614,7 +1614,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void writeResponse(Object content, String contentType)
 		throws Exception {
 
-		HttpServletResponse httpServletResponse = this.response;
+		HttpServletResponse httpServletResponse = response;
 
 		if (!(httpServletResponse instanceof
 				AlloyMockUtil.MockHttpServletResponse)) {

@@ -30,7 +30,14 @@ public class LiferayElasticsearchIndexingFixtureFactory {
 		return _elasticsearchIndexingFixture;
 	}
 
+	private static ElasticsearchIndexingFixture _buildInstance() {
+		ElasticsearchIndexingFixtureBuilder
+			elasticsearchIndexingFixtureBuilder = builder();
+
+		return elasticsearchIndexingFixtureBuilder.build();
+	}
+
 	private static final ElasticsearchIndexingFixture
-		_elasticsearchIndexingFixture = builder().build();
+		_elasticsearchIndexingFixture = _buildInstance();
 
 }

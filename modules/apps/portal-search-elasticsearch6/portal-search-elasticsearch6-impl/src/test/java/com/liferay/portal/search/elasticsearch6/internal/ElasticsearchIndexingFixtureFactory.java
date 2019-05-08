@@ -27,9 +27,14 @@ public class ElasticsearchIndexingFixtureFactory {
 		return _elasticsearchIndexingFixture;
 	}
 
-	private static final ElasticsearchIndexingFixture
-		ElasticsearchIndexingFixtureBuilder builder = builder();
+	private static ElasticsearchIndexingFixture _buildInstance() {
+		ElasticsearchIndexingFixtureBuilder
+			elasticsearchIndexingFixtureBuilder = builder();
 
-		_elasticsearchIndexingFixture = builder.build();
+		return elasticsearchIndexingFixtureBuilder.build();
+	}
+
+	private static final ElasticsearchIndexingFixture
+		_elasticsearchIndexingFixture = _buildInstance();
 
 }

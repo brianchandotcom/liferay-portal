@@ -23,25 +23,21 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
-import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderParameters;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-
-import javax.xml.namespace.QName;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -59,7 +55,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockActionRequest;
 import org.springframework.mock.web.portlet.MockActionResponse;
-import org.springframework.mock.web.portlet.MockPortletConfig;
 
 /**
  * @author Manuel de la Peña
@@ -231,46 +226,6 @@ public class MVCActionCommandTest {
 	private static ServiceRegistration<javax.portlet.Portlet>
 		_portletServiceRegistration;
 
-	private static class MockLiferayPortletConfig
-		extends MockPortletConfig implements LiferayPortletConfig {
-
-		@Override
-		public Portlet getPortlet() {
-			return null;
-		}
-
-		@Override
-		public String getPortletId() {
-			return "testPortlet";
-		}
-
-		@Override
-		public Enumeration<PortletMode> getPortletModes(String mimeType) {
-			return null;
-		}
-
-		@Override
-		public Map<String, QName> getPublicRenderParameterDefinitions() {
-			return null;
-		}
-
-		@Override
-		public Enumeration<WindowState> getWindowStates(String mimeType) {
-			return null;
-		}
-
-		@Override
-		public boolean isCopyRequestParameters() {
-			return false;
-		}
-
-		@Override
-		public boolean isWARFile() {
-			return false;
-		}
-
-	}
-
 	private static class MockLiferayPortletRequest
 		extends MockActionRequest implements LiferayPortletRequest {
 
@@ -303,7 +258,16 @@ public class MVCActionCommandTest {
 		@Override
 		public Object getAttribute(String name) {
 			if (name.equals(JavaConstants.JAVAX_PORTLET_CONFIG)) {
-				return new MockLiferayPortletConfig();
+				return ProxyUtil.newProxyInstance(
+					LiferayPortletConfig.class.getClassLoader(),
+					new Class<?>[] {LiferayPortletConfig.class},
+					(proxy, method, args) -> {
+						if ("getPortletId".equals(method.getName())) {
+							return "testPortlet";
+						}
+
+						return null;
+					});
 			}
 
 			return super.getAttribute(name);

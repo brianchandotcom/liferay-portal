@@ -22,11 +22,16 @@ import aQute.lib.io.IO;
 
 import com.liferay.ant.bnd.spring.bean.SampleBean;
 import com.liferay.ant.bnd.spring.filter.FilterSampleBean;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import java.io.InputStream;
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -124,43 +129,63 @@ public class SpringDependencyAnalyzerPluginTest {
 			String dependenciesContent)
 		throws Exception {
 
-		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
+		try (UnsyncByteArrayOutputStream ubaos =
+				new UnsyncByteArrayOutputStream()) {
 
-		if (clazz != null) {
-			javaArchive.addClass(clazz);
+			try (ZipOutputStream zos = new ZipOutputStream(ubaos)) {
+				if (clazz != null) {
+					String name = clazz.getName();
+
+					name = name.replace(CharPool.PERIOD, CharPool.SLASH);
+
+					name = name.concat(".class");
+
+					zos.putNextEntry(new ZipEntry(name));
+
+					try (InputStream in = clazz.getResourceAsStream(
+							"/" + name)) {
+
+						StreamUtil.transfer(in, zos, false);
+					}
+
+					zos.closeEntry();
+				}
+
+				if (dependenciesContent != null) {
+					zos.putNextEntry(
+						new ZipEntry("META-INF/spring/context.dependencies"));
+
+					zos.write(dependenciesContent.getBytes(StringPool.UTF8));
+
+					zos.closeEntry();
+				}
+			}
+
+			Analyzer analyzer = new Analyzer();
+
+			analyzer.setBundleSymbolicName("test.bundle");
+			analyzer.setBundleVersion("1.0.0");
+			analyzer.setProperty(
+				"Liferay-Require-SchemaVersion", requireSchemaVersion);
+			analyzer.setProperty(
+				"-liferay-spring-dependency", ServiceReference.class.getName());
+
+			Jar jar = new Jar(
+				"Spring Context Dependency Test",
+				new UnsyncByteArrayInputStream(
+					ubaos.unsafeGetByteArray(), 0, ubaos.size()));
+
+			analyzer.setJar(jar);
+
+			analyzer.analyze();
+
+			SpringDependencyAnalyzerPlugin springDependencyAnalyzerPlugin =
+				new SpringDependencyAnalyzerPlugin();
+
+			springDependencyAnalyzerPlugin.analyzeJar(analyzer);
+
+			return jar;
 		}
-
-		if (dependenciesContent != null) {
-			javaArchive.addAsResource(
-				new StringAsset(dependenciesContent),
-				"META-INF/spring/context.dependencies");
-		}
-
-		Analyzer analyzer = new Analyzer();
-
-		analyzer.setBundleSymbolicName("test.bundle");
-		analyzer.setBundleVersion("1.0.0");
-		analyzer.setProperty(
-			"Liferay-Require-SchemaVersion", requireSchemaVersion);
-		analyzer.setProperty(
-			"-liferay-spring-dependency", ServiceReference.class.getName());
-
-		ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
-
-		Jar jar = new Jar(
-			"Spring Context Dependency Test",
-			zipExporter.exportAsInputStream());
-
-		analyzer.setJar(jar);
-
-		analyzer.analyze();
-
-		SpringDependencyAnalyzerPlugin springDependencyAnalyzerPlugin =
-			new SpringDependencyAnalyzerPlugin();
-
-		springDependencyAnalyzerPlugin.analyzeJar(analyzer);
-
-		return jar;
 	}
 
 	protected String read(Resource resource) throws Exception {

@@ -218,7 +218,7 @@ openapi: 3.0.1
 paths:
     "/keywords/{keywordId}":
         delete:
-            description: Deletes the keyword. Returns a 204 if the operation was successful.
+            description: Deletes the keyword and returns a 204 if the operation succeeds.
             operationId: deleteKeyword
             parameters:
                 - in: path
@@ -285,7 +285,7 @@ paths:
             tags: ["Keyword"]
     "/sites/{siteId}/keywords":
         get:
-            description: Retrieves the keywords inside a site. Can be paginated, filtered, searched and sorted.
+            description: Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteKeywordsPage
             parameters:
                 - in: path
@@ -330,7 +330,7 @@ paths:
                     description: ""
             tags: ["Keyword"]
         post:
-            description: Inserts a new keyword inside a site.
+            description: Inserts a new keyword in a Site.
             operationId: postSiteKeyword
             parameters:
                 - in: path
@@ -360,7 +360,7 @@ paths:
             tags: ["Keyword"]
     "/sites/{siteId}/taxonomy-vocabularies":
         get:
-            description: Retrieves the taxonomy vocabularies inside a site. Can be paginated, filtered, searched and sorted.
+            description: Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteTaxonomyVocabulariesPage
             parameters:
                 - in: path
@@ -405,7 +405,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         post:
-            description: Inserts a new taxonomy vocabulary inside a site.
+            description: Inserts a new taxonomy vocabulary in a Site.
             operationId: postSiteTaxonomyVocabulary
             parameters:
                 - in: path
@@ -435,7 +435,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
-            description: Retrieves the child taxonomy categories inside a taxonomy category. Can be paginated, filtered, searched and sorted.
+            description: Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
                 - in: path
@@ -510,7 +510,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{taxonomyCategoryId}":
         delete:
-            description: Deletes the taxonomy category. Returns a 204 if the operation was successful.
+            description: Deletes the taxonomy category and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyCategory
             parameters:
                 - in: path
@@ -547,7 +547,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body. Other fields are left untouched.
             operationId: patchTaxonomyCategory
             parameters:
                 - in: path
@@ -576,7 +576,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         put:
-            description: Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyCategory
             parameters:
                 - in: path
@@ -606,7 +606,7 @@ paths:
             tags: ["TaxonomyCategory"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
-            description: Deletes the taxonomy vocabulary. Returns a 204 if the operation was successful.
+            description: Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyVocabulary
             parameters:
                 - in: path
@@ -643,7 +643,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body. Any other fields are left untouched.
             operationId: patchTaxonomyVocabulary
             parameters:
                 - in: path
@@ -672,7 +672,7 @@ paths:
                     description: ""
             tags: ["TaxonomyVocabulary"]
         put:
-            description: Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required.
             operationId: putTaxonomyVocabulary
             parameters:
                 - in: path
@@ -702,7 +702,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
         get:
-            description: Retrieves the taxonomy categories inside a vocabulary. Can be paginated, filtered, searched and sorted.
+            description: Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyVocabularyTaxonomyCategoriesPage
             parameters:
                 - in: path
@@ -747,7 +747,7 @@ paths:
                     description: ""
             tags: ["TaxonomyCategory"]
         post:
-            description: Inserts a new taxonomy category inside a taxonomy vocabulary.
+            description: Inserts a new taxonomy category in a taxonomy vocabulary.
             operationId: postTaxonomyVocabularyTaxonomyCategory
             parameters:
                 - in: path

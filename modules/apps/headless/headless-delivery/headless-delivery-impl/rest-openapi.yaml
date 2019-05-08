@@ -1319,7 +1319,7 @@ openapi: 3.0.1
 paths:
     "/blog-posting-images/{blogPostingImageId}":
         delete:
-            description: Deletes the image associated with a blog post.
+            description: Deletes the blog post's image.
             operationId: deleteBlogPostingImage
             parameters:
                 - in: path
@@ -1335,7 +1335,7 @@ paths:
                     description: ""
             tags: ["BlogPostingImage"]
         get:
-            description: Retrieves the image associated with a blog post. The binary image is returned as a relative URL to the image itself.
+            description: Retrieves the blog post's image. The binary image is returned as a relative URL to the image itself.
             operationId: getBlogPostingImage
             parameters:
                 - in: path
@@ -1357,7 +1357,7 @@ paths:
             tags: ["BlogPostingImage"]
     "/blog-postings/{blogPostingId}":
         delete:
-            description: Deletes a blog post. Returns a 204 if the operation was successful.
+            description: Deletes the blog post and returns a 204 if the operation succeeds.
             operationId: deleteBlogPosting
             parameters:
                 - in: path
@@ -1373,7 +1373,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         get:
-            description: Retrieves a blog post by the internal entry id.
+            description: Retrieves the blog post.
             operationId: getBlogPosting
             parameters:
                 - in: path
@@ -1394,7 +1394,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         patch:
-            description: Updates a blog post by only the fields received in the request body, any other fields are left untouched. Returns the updated blog post.
+            description: Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post.
             operationId: patchBlogPosting
             parameters:
                 - in: path
@@ -1423,7 +1423,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         put:
-            description: Replaces the blog post with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the blog post with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putBlogPosting
             parameters:
                 - in: path
@@ -1453,7 +1453,7 @@ paths:
             tags: ["BlogPosting"]
     "/blog-postings/{blogPostingId}/comments":
         get:
-            description: Retrieves the list of comments associated with a blog post. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the blog post's comments in a list. Results can be paginated, filtered, searched, and sorted.
             operationId: getBlogPostingCommentsPage
             parameters:
                 - in: path
@@ -1498,7 +1498,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
-            description: Inserts a new comment associated to a blog post.
+            description: Creates a new comment on the blog post.
             operationId: postBlogPostingComment
             parameters:
                 - in: path
@@ -1528,7 +1528,7 @@ paths:
             tags: ["Comment"]
     "/blog-postings/{blogPostingId}/my-rating":
         delete:
-            description: Deletes the rating associated with a blog post done by the user autenticating the request.
+            description: Deletes the blog post rating of the user who authenticated the request.
             operationId: deleteBlogPostingMyRating
             parameters:
                 - in: path
@@ -1544,7 +1544,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         get:
-            description: Retrieves the rating associated with a blog post done by the user autenticating the request.
+            description: Retrieves the blog post rating of the user who authenticated the request.
             operationId: getBlogPostingMyRating
             parameters:
                 - in: path
@@ -1565,7 +1565,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         post:
-            description: Inserts a new rating, associated with a blog post, and authored by the user autenticating the request.
+            description: Creates a new blog post rating by the user who authenticated the request.
             operationId: postBlogPostingMyRating
             parameters:
                 - in: path
@@ -1594,7 +1594,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         put:
-            description: Replaces an existing rating, associated with a blog post, and authored by the user autenticating the request.
+            description: Replaces an existing blog post rating by the user who authenticated the request.
             operationId: putBlogPostingMyRating
             parameters:
                 - in: path
@@ -1624,7 +1624,7 @@ paths:
             tags: ["BlogPosting"]
     "/comments/{commentId}":
         delete:
-            description: Deletes a comment. Returns a 204 if the operation was successful.
+            description: Deletes the comment and returns a 204 if the operation succeeded.
             operationId: deleteComment
             parameters:
                 - in: path
@@ -1640,7 +1640,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         get:
-            description: Retrieves a comment.
+            description: Retrieves the comment.
             operationId: getComment
             parameters:
                 - in: path
@@ -1661,7 +1661,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         put:
-            description: Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putComment
             parameters:
                 - in: path
@@ -1691,7 +1691,7 @@ paths:
             tags: ["Comment"]
     "/comments/{parentCommentId}/comments":
         get:
-            description: Retrieves the child comments that depend on the parentCommentId. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the parent comment's child comments. Results can be paginated, filtered, searched, and sorted.
             operationId: getCommentCommentsPage
             parameters:
                 - in: path
@@ -1736,7 +1736,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
-            description: Inserts a new comment as a child of a existing comment.
+            description: Creates a new child comment of the existing comment.
             operationId: postCommentComment
             parameters:
                 - in: path
@@ -1766,7 +1766,7 @@ paths:
             tags: ["Comment"]
     "/content-sets/{contentSetId}/content-set-elements":
         get:
-            description: Retrieves the content set elements (structured contents, blogs...) from a content set. Can be paginated.
+            description: Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated.
             operationId: getContentSetContentSetElementsPage
             parameters:
                 - in: path
@@ -1800,7 +1800,7 @@ paths:
             tags: ["ContentSetElement"]
     "/content-structures/{contentStructureId}":
         get:
-            description: Retrieves a content structure by id.
+            description: Retrieves the content structure.
             operationId: getContentStructure
             parameters:
                 - in: path
@@ -1822,7 +1822,7 @@ paths:
             tags: ["ContentStructure"]
     "/content-structures/{contentStructureId}/structured-contents":
         get:
-            description: Retrieves the list of structured contents associated with a content structure. Can be paginated, filtered, searched and sorted.
+            description: Retrieves a list of the content structure's structured content. Results can be paginated, filtered, searched, and sorted.
             operationId: getContentStructureStructuredContentsPage
             parameters:
                 - in: header
@@ -1872,7 +1872,7 @@ paths:
             tags: ["StructuredContent"]
     "/document-folders/{documentFolderId}":
         delete:
-            description: Deletes a document folder. Returns a 204 if the operation was successful.
+            description: Deletes the document folder and returns a 204 if the operation succeeds.
             operationId: deleteDocumentFolder
             parameters:
                 - in: path
@@ -1888,7 +1888,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         get:
-            description: Retrieves a document folder by id.
+            description: Retrieves the document folder.
             operationId: getDocumentFolder
             parameters:
                 - in: path
@@ -1909,7 +1909,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body. Any other fields are left untouched.
             operationId: patchDocumentFolder
             parameters:
                 - in: path
@@ -1938,7 +1938,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         put:
-            description: Replaces the document folder with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the document folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putDocumentFolder
             parameters:
                 - in: path
@@ -1968,7 +1968,7 @@ paths:
             tags: ["DocumentFolder"]
     "/document-folders/{documentFolderId}/documents":
         get:
-            description: Retrieves the documents that depend on a specific folder. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the folder's documents. Results can be paginated, filtered, searched, and sorted.
             operationId: getDocumentFolderDocumentsPage
             parameters:
                 - in: path
@@ -2013,8 +2013,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
-            description: "Inserts a new document inside of the folder identified by documentFolderId.
-                Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, document with the metadata."
+            description: Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: postDocumentFolderDocument
             parameters:
                 - in: path
@@ -2047,7 +2046,7 @@ paths:
             tags: ["Document"]
     "/document-folders/{parentDocumentFolderId}/document-folders":
         get:
-            description: Retrieves a child document folder. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the folder's subfolders. Results can be paginated, filtered, searched, and sorted.
             operationId: getDocumentFolderDocumentFoldersPage
             parameters:
                 - in: path
@@ -2092,7 +2091,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         post:
-            description: Inserts a new folder inside another folder identified by parentDocumentFolderId.
+            description: Creates a new folder in a folder identified by `parentDocumentFolderId`.
             operationId: postDocumentFolderDocumentFolder
             parameters:
                 - in: path
@@ -2122,7 +2121,7 @@ paths:
             tags: ["DocumentFolder"]
     "/documents/{documentId}":
         delete:
-            description: Deletes a document. Returns a 204 if the operation was successful.
+            description: Deletes the document and returns a 204 if the operation succeeds.
             operationId: deleteDocument
             parameters:
                 - in: path
@@ -2138,7 +2137,7 @@ paths:
                     description: ""
             tags: ["Document"]
         get:
-            description: Retrieves a document.
+            description: Retrieves the document.
             operationId: getDocument
             parameters:
                 - in: path
@@ -2159,8 +2158,7 @@ paths:
                     description: ""
             tags: ["Document"]
         patch:
-            description: "Updates only the fields received in the request body, any other fields are left untouched.
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, document with the metadata."
+            description: Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: patchDocument
             parameters:
                 - in: path
@@ -2192,8 +2190,7 @@ paths:
                     description: ""
             tags: ["Document"]
         put:
-            description: "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless required.
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, document with the metadata."
+            description: Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: putDocument
             parameters:
                 - in: path
@@ -2226,7 +2223,7 @@ paths:
             tags: ["Document"]
     "/documents/{documentId}/comments":
         get:
-            description: Retrieves the comments associated with a document. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the document's comments. Results can be paginated, filtered, searched, and sorted.
             operationId: getDocumentCommentsPage
             parameters:
                 - in: path
@@ -2271,7 +2268,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
-            description: Inserts a new comment associated with a document.
+            description: Creates a new comment on the document.
             operationId: postDocumentComment
             parameters:
                 - in: path
@@ -2301,7 +2298,7 @@ paths:
             tags: ["Comment"]
     "/documents/{documentId}/my-rating":
         delete:
-            description: Deletes the rating linked to the current document. Returns a 204 if the operation was successful.
+            description: Deletes the document's rating and returns a 204 if the operation succeeded.
             operationId: deleteDocumentMyRating
             parameters:
                 - in: path
@@ -2317,7 +2314,7 @@ paths:
                     description: ""
             tags: ["Document"]
         get:
-            description: Retrieves the rating associated with a document.
+            description: Retrieves the document's rating.
             operationId: getDocumentMyRating
             parameters:
                 - in: path
@@ -2338,7 +2335,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
-            description: Retrieves the rating associated with a document.
+            description: Creates a new rating for the document, by the user who authenticated the request.
             operationId: postDocumentMyRating
             parameters:
                 - in: path
@@ -2367,7 +2364,7 @@ paths:
                     description: ""
             tags: ["Document"]
         put:
-            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putDocumentMyRating
             parameters:
                 - in: path
@@ -2397,7 +2394,7 @@ paths:
             tags: ["Document"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
-            description: Deletes the knowledge base article. Returns a 204 if the operation was successful.
+            description: Deletes the knowledge base article and returns a 204 if the operation succeeds.
             operationId: deleteKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -2434,7 +2431,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -2463,7 +2460,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         put:
-            description: Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -2493,7 +2490,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments":
         get:
-            description: Retrieves the attachments associated with a knowledge base article.
+            description: Retrieves the knowledge base article's attachments.
             operationId: getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage
             parameters:
                 - in: path
@@ -2518,8 +2515,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
         post:
-            description: "Inserts a new attachment to an existing knowledge base article.
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, knowledgeBaseAttachment with the metadata."
+            description: Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts: a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
             operationId: postKnowledgeBaseArticleKnowledgeBaseAttachment
             parameters:
                 - in: path
@@ -2552,7 +2548,7 @@ paths:
             tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating":
         delete:
-            description: Deletes the rating associated with knowledge base article. Returns a 204 if the operation was successful.
+            description: Deletes the knowledge base article's rating and returns a 204 if the operation succeeds.
             operationId: deleteKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
@@ -2568,7 +2564,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         get:
-            description: Retrieves the rating associated with a knowledge base article.
+            description: Retrieves the knowledge base article's rating.
             operationId: getKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
@@ -2589,7 +2585,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
-            description: Inserts a rating associated with a knowledge base article.
+            description: Creates a rating for the knowledge base article.
             operationId: postKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
@@ -2618,7 +2614,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         put:
-            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putKnowledgeBaseArticleMyRating
             parameters:
                 - in: path
@@ -2648,7 +2644,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
         get:
-            description: Retrieves the child knowledge base articles that depend on a parent knowledge base article. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted.
             operationId: getKnowledgeBaseArticleKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -2693,7 +2689,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
-            description: Inserts a knowledge base article as a child article of another knowledge base article identified by parentKnowledgeBaseArticleId.
+            description: Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`.
             operationId: postKnowledgeBaseArticleKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -2723,7 +2719,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-attachments/{knowledgeBaseAttachmentId}":
         delete:
-            description: Deletes a file attachment. Returns a 204 if the operation was successful.
+            description: Deletes the knowledge base file attachment and returns a 204 if the operation succeeds.
             operationId: deleteKnowledgeBaseAttachment
             parameters:
                 - in: path
@@ -2739,7 +2735,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
         get:
-            description: Retrieves the attachment.
+            description: Retrieves the knowledge base attachment.
             operationId: getKnowledgeBaseAttachment
             parameters:
                 - in: path
@@ -2761,7 +2757,7 @@ paths:
             tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}":
         delete:
-            description: Deletes the knowledge base folder. Returns a 204 if the operation was successful.
+            description: Deletes the knowledge base folder and returns a 204 if the operation succeeds.
             operationId: deleteKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -2798,7 +2794,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -2827,7 +2823,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         put:
-            description: Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -2857,7 +2853,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles":
         get:
-            description: Retrieves the child knowledge base articles associated with a folder. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the folder's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getKnowledgeBaseFolderKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -2906,7 +2902,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
-            description: Inserts a new knowledge base article inside a folder.
+            description: Creates a new knowledge base article in the folder.
             operationId: postKnowledgeBaseFolderKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -2936,7 +2932,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders":
         get:
-            description: Retrieves a child knowledge base folder inside another folder.
+            description: Retrieves the knowledge base folder's subfolders.
             operationId: getKnowledgeBaseFolderKnowledgeBaseFoldersPage
             parameters:
                 - in: path
@@ -2969,7 +2965,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
-            description: Inserts a knowledge base folder inside a parent folder.
+            description: Creates a knowledge base folder inside the parent folder.
             operationId: postKnowledgeBaseFolderKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -2999,7 +2995,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/message-board-attachments/{messageBoardAttachmentId}":
         delete:
-            description: Deletes an attachment associated with a message board. Returns a 204 if the operation was successful.
+            description: Deletes the message board attachment and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardAttachment
             parameters:
                 - in: path
@@ -3015,7 +3011,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         get:
-            description: Retrieves an attachment associated with a message board.
+            description: Retrieves the message board attachment.
             operationId: getMessageBoardAttachment
             parameters:
                 - in: path
@@ -3037,7 +3033,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-messages/{messageBoardMessageId}":
         delete:
-            description: Deletes the message board message. Returns a 204 if the operation was successful.
+            description: Deletes the message board message and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardMessage
             parameters:
                 - in: path
@@ -3074,7 +3070,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchMessageBoardMessage
             parameters:
                 - in: path
@@ -3103,7 +3099,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         put:
-            description: Replaces the message board message with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the message board message with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putMessageBoardMessage
             parameters:
                 - in: path
@@ -3133,7 +3129,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/message-board-attachments":
         get:
-            description: Retrieves the message board attachments associated with a message board message.
+            description: Retrieves the message board message's attachments.
             operationId: getMessageBoardMessageMessageBoardAttachmentsPage
             parameters:
                 - in: path
@@ -3158,8 +3154,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
-            description: "Inserts an attachment associated with a message board message
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, MessageBoardAttachment with the metadata."
+            description: Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata.
             operationId: postMessageBoardMessageMessageBoardAttachment
             parameters:
                 - in: path
@@ -3192,7 +3187,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-messages/{messageBoardMessageId}/my-rating":
         delete:
-            description: Deletes the rating associated with message board message. Returns a 204 if the operation was successful.
+            description: Deletes the message board message's rating and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardMessageMyRating
             parameters:
                 - in: path
@@ -3208,7 +3203,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         get:
-            description: Retrieves the rating associated with a message board message.
+            description: Retrieves the message board message's rating.
             operationId: getMessageBoardMessageMyRating
             parameters:
                 - in: path
@@ -3229,7 +3224,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
-            description: Inserts a rating associated with a message board message.
+            description: Creates a rating for the message board message.
             operationId: postMessageBoardMessageMyRating
             parameters:
                 - in: path
@@ -3258,7 +3253,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         put:
-            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putMessageBoardMessageMyRating
             parameters:
                 - in: path
@@ -3288,7 +3283,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
         get:
-            description: Retrieves the child message board messages associated with a parent message. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted.
             operationId: getMessageBoardMessageMessageBoardMessagesPage
             parameters:
                 - in: path
@@ -3333,7 +3328,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
-            description: Inserts a message board message inside another message.
+            description: Creates a child message board message of the parent message.
             operationId: postMessageBoardMessageMessageBoardMessage
             parameters:
                 - in: path
@@ -3363,7 +3358,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-sections/{messageBoardSectionId}":
         delete:
-            description: Deletes the message board section. Returns a 204 if the operation was successful.
+            description: Deletes the message board section and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardSection
             parameters:
                 - in: path
@@ -3400,7 +3395,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchMessageBoardSection
             parameters:
                 - in: path
@@ -3429,7 +3424,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         put:
-            description: Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putMessageBoardSection
             parameters:
                 - in: path
@@ -3459,7 +3454,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/message-board-sections/{messageBoardSectionId}/message-board-threads":
         get:
-            description: Retrieves the message board threads inside a section. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted.
             operationId: getMessageBoardSectionMessageBoardThreadsPage
             parameters:
                 - in: path
@@ -3504,7 +3499,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         post:
-            description: Inserts a new message board thread inside a section.
+            description: Creates a new message board thread inside a section.
             operationId: postMessageBoardSectionMessageBoardThread
             parameters:
                 - in: path
@@ -3534,7 +3529,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
         get:
-            description: Retrieves the message board sections inside a parent section. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted.
             operationId: getMessageBoardSectionMessageBoardSectionsPage
             parameters:
                 - in: path
@@ -3579,7 +3574,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         post:
-            description: Inserts a new message board section inside another section.
+            description: Creates a new message board section in the parent section.
             operationId: postMessageBoardSectionMessageBoardSection
             parameters:
                 - in: path
@@ -3609,7 +3604,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/message-board-threads/{messageBoardThreadId}":
         delete:
-            description: Deletes the message board thread. Returns a 204 if the operation was successful.
+            description: Deletes the message board thread and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardThread
             parameters:
                 - in: path
@@ -3646,7 +3641,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchMessageBoardThread
             parameters:
                 - in: path
@@ -3675,7 +3670,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         put:
-            description: Replaces the message board thread with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the message board thread with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putMessageBoardThread
             parameters:
                 - in: path
@@ -3705,7 +3700,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/message-board-threads/{messageBoardThreadId}/message-board-attachments":
         get:
-            description: Retrieves the attachments associated with a message board thread.
+            description: Retrieves the message board thread's attachments.
             operationId: getMessageBoardThreadMessageBoardAttachmentsPage
             parameters:
                 - in: path
@@ -3730,8 +3725,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
-            description: "Inserts a new attachment associated with a message board thread
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, knowledgeBaseAttachment with the metadata."
+            description: Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
             operationId: postMessageBoardThreadMessageBoardAttachment
             parameters:
                 - in: path
@@ -3764,7 +3758,7 @@ paths:
             tags: ["MessageBoardAttachment"]
     "/message-board-threads/{messageBoardThreadId}/message-board-messages":
         get:
-            description: Retrieves the message board messages associated with a message board thread. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the message board thread's messages. Results can be paginated, filtered, searched, and sorted.
             operationId: getMessageBoardThreadMessageBoardMessagesPage
             parameters:
                 - in: path
@@ -3809,7 +3803,7 @@ paths:
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
-            description: Inserts a new message inside a message board thread.
+            description: Creates a new message in the message board thread.
             operationId: postMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
@@ -3839,7 +3833,7 @@ paths:
             tags: ["MessageBoardMessage"]
     "/message-board-threads/{messageBoardThreadId}/my-rating":
         delete:
-            description: Deletes the rating associated with a message board thread. Returns a 204 if the operation was successful.
+            description: Deletes the message board thread's rating and returns a 204 if the operation succeeds.
             operationId: deleteMessageBoardThreadMyRating
             parameters:
                 - in: path
@@ -3855,7 +3849,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         get:
-            description: Retrieves the rating associated with a message board thread.
+            description: Retrieves the message board thread's rating.
             operationId: getMessageBoardThreadMyRating
             parameters:
                 - in: path
@@ -3876,7 +3870,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         post:
-            description: Inserts the rating associated with a message board thread.
+            description: Creates the message board thread's rating.
             operationId: postMessageBoardThreadMyRating
             parameters:
                 - in: path
@@ -3905,7 +3899,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         put:
-            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putMessageBoardThreadMyRating
             parameters:
                 - in: path
@@ -3935,7 +3929,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/sites/{siteId}/blog-posting-images":
         get:
-            description: Retrieves the images associated with a blog post. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the Site's blog post images. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteBlogPostingImagesPage
             parameters:
                 - in: path
@@ -3980,8 +3974,7 @@ paths:
                     description: ""
             tags: ["BlogPostingImage"]
         post:
-            description: "Inserts the image associated with a blog post
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, blogPostingImage with the metadata."
+            description: Creates a blog post image. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
             operationId: postSiteBlogPostingImage
             parameters:
                 - in: path
@@ -4014,7 +4007,7 @@ paths:
             tags: ["BlogPostingImage"]
     "/sites/{siteId}/blog-postings":
         get:
-            description: Retrieves the blog postings inside a site. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the Site's blog postings. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteBlogPostingsPage
             parameters:
                 - in: path
@@ -4059,7 +4052,7 @@ paths:
                     description: ""
             tags: ["BlogPosting"]
         post:
-            description: Inserts a new blog post.
+            description: Creates a new blog post.
             operationId: postSiteBlogPosting
             parameters:
                 - in: path
@@ -4089,7 +4082,7 @@ paths:
             tags: ["BlogPosting"]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
-            description: Retrieves the content set elements by key. Can be paginated.
+            description: Retrieves the content set elements by key. Results can be paginated.
             operationId: getSiteContentSetByKeyContentSetElementsPage
             parameters:
                 - in: path
@@ -4128,7 +4121,7 @@ paths:
             tags: ["ContentSetElement"]
     "/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements":
         get:
-            description: Retrieves the content set elements by uuid. Can be paginated.
+            description: Retrieves the content set elements by UUID. Results can be paginated.
             operationId: getSiteContentSetByUuidContentSetElementsPage
             parameters:
                 - in: path
@@ -4167,7 +4160,7 @@ paths:
             tags: ["ContentSetElement"]
     "/sites/{siteId}/content-structures":
         get:
-            description: Retrieves the content structures defined inside a site. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the Site's content structures. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteContentStructuresPage
             parameters:
                 - in: path
@@ -4213,7 +4206,7 @@ paths:
             tags: ["ContentStructure"]
     "/sites/{siteId}/document-folders":
         get:
-            description: Retrieves the document folders that depend directly on a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the Site's document folders. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteDocumentFoldersPage
             parameters:
                 - in: path
@@ -4262,7 +4255,7 @@ paths:
                     description: ""
             tags: ["DocumentFolder"]
         post:
-            description: Inserts a new document folder.
+            description: Creates a new document folder.
             operationId: postSiteDocumentFolder
             parameters:
                 - in: path
@@ -4292,7 +4285,7 @@ paths:
             tags: ["DocumentFolder"]
     "/sites/{siteId}/documents":
         get:
-            description: Retrieves the documents that are located in the root folder of a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the documents in the Site's root folder. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteDocumentsPage
             parameters:
                 - in: path
@@ -4341,8 +4334,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
-            description: "Inserts a new document
-                          Request body should be multipart/form-data, with two parts, a file part with the bytes of the file and an optional json string, document with the metadata."
+            description: Creates a new document. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: postSiteDocument
             parameters:
                 - in: path
@@ -4375,7 +4367,7 @@ paths:
             tags: ["Document"]
     "/sites/{siteId}/knowledge-base-articles":
         get:
-            description: Retrieves the kwnoledge base articles inside a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the Site's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteKnowledgeBaseArticlesPage
             parameters:
                 - in: path
@@ -4424,7 +4416,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
-            description: Inserts a new knowledge base article.
+            description: Creates a new knowledge base article.
             operationId: postSiteKnowledgeBaseArticle
             parameters:
                 - in: path
@@ -4454,7 +4446,7 @@ paths:
             tags: ["KnowledgeBaseArticle"]
     "/sites/{siteId}/knowledge-base-folders":
         get:
-            description: Retrieves the knowledge base folders inside a site. Can be paginated.
+            description: Retrieves the Site's knowledge base folders. Results can be paginated.
             operationId: getSiteKnowledgeBaseFoldersPage
             parameters:
                 - in: path
@@ -4487,7 +4479,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
-            description: Inserts a new knowledge base folder.
+            description: Creates a new knowledge base folder.
             operationId: postSiteKnowledgeBaseFolder
             parameters:
                 - in: path
@@ -4517,7 +4509,7 @@ paths:
             tags: ["KnowledgeBaseFolder"]
     "/sites/{siteId}/message-board-sections":
         get:
-            description: Retrieves the message board sections inside a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the Site's message board sections. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteMessageBoardSectionsPage
             parameters:
                 - in: path
@@ -4566,7 +4558,7 @@ paths:
                     description: ""
             tags: ["MessageBoardSection"]
         post:
-            description: Inserts a new message board section.
+            description: Creates a new message board section.
             operationId: postSiteMessageBoardSection
             parameters:
                 - in: path
@@ -4596,7 +4588,7 @@ paths:
             tags: ["MessageBoardSection"]
     "/sites/{siteId}/message-board-threads":
         get:
-            description: Retrieves the message board threads inside a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child sections) and sorted.
+            description: Retrieves the Site's message board threads. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteMessageBoardThreadsPage
             parameters:
                 - in: path
@@ -4645,7 +4637,7 @@ paths:
                     description: ""
             tags: ["MessageBoardThread"]
         post:
-            description: Inserts a new message board thread.
+            description: Creates a new message board thread.
             operationId: postSiteMessageBoardThread
             parameters:
                 - in: path
@@ -4675,7 +4667,7 @@ paths:
             tags: ["MessageBoardThread"]
     "/sites/{siteId}/structured-content-folders":
         get:
-            description: Retrieves the structured content folders inside a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the Site's structured content folders. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteStructuredContentFoldersPage
             parameters:
                 - in: path
@@ -4724,7 +4716,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
-            description: Inserts a new structured content folder.
+            description: Creates a new structured content folder.
             operationId: postSiteStructuredContentFolder
             parameters:
                 - in: path
@@ -4754,7 +4746,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/sites/{siteId}/structured-contents":
         get:
-            description: Retrieves the structured contents that directly depend on a site. Can be paginated, filtered, searched, flattened (return all elements, including those inside child folders) and sorted.
+            description: Retrieves the Site's structured content. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteStructuredContentsPage
             parameters:
                 - in: header
@@ -4807,7 +4799,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
-            description: Inserts a new structured content.
+            description: Creates a new structured content.
             operationId: postSiteStructuredContent
             parameters:
                 - in: header
@@ -4841,7 +4833,7 @@ paths:
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/by-key/{key}":
         get:
-            description: Retrieves a structured content by their key (articleKey).
+            description: Retrieves a structured content by its key (`articleKey`).
             operationId: getSiteStructuredContentByKey
             parameters:
                 - in: header
@@ -4872,7 +4864,7 @@ paths:
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/by-uuid/{uuid}":
         get:
-            description: Retrieves a structured content by their internal uuid.
+            description: Retrieves a structured content by its UUID.
             operationId: getSiteStructuredContentByUuid
             parameters:
                 - in: header
@@ -4903,7 +4895,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders":
         get:
-            description: Retrieves the child structured content folders inside another parent folder. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered, searched, and sorted.
             operationId: getStructuredContentFolderStructuredContentFoldersPage
             parameters:
                 - in: path
@@ -4948,7 +4940,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
-            description: Inserts a new structured content folder inside another folder.
+            description: Creates a new structured content folder in an existing folder.
             operationId: postStructuredContentFolderStructuredContentFolder
             parameters:
                 - in: path
@@ -4978,7 +4970,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/structured-content-folders/{structuredContentFolderId}":
         delete:
-            description: Deletes the structured content folder. Returns a 204 if the operation was successful.
+            description: Deletes the structured content folder and returns a 204 if the operation succeeds.
             operationId: deleteStructuredContentFolder
             parameters:
                 - in: path
@@ -4994,7 +4986,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         get:
-            description: Retrieves the image associated with a blog post
+            description: Retrieves the structured content folder.
             operationId: getStructuredContentFolder
             parameters:
                 - in: path
@@ -5015,7 +5007,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchStructuredContentFolder
             parameters:
                 - in: path
@@ -5044,7 +5036,7 @@ paths:
                     description: ""
             tags: ["StructuredContentFolder"]
         put:
-            description: Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putStructuredContentFolder
             parameters:
                 - in: path
@@ -5074,7 +5066,7 @@ paths:
             tags: ["StructuredContentFolder"]
     "/structured-content-folders/{structuredContentFolderId}/structured-contents":
         get:
-            description: Retrieves the structured contents inside a folder. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the folder's structured content. Results can be paginated, filtered, searched, and sorted.
             operationId: getStructuredContentFolderStructuredContentsPage
             parameters:
                 - in: header
@@ -5123,7 +5115,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
-            description: Inserts a new structured content inside a folder.
+            description: Creates a new structured content in the folder.
             operationId: postStructuredContentFolderStructuredContent
             parameters:
                 - in: header
@@ -5157,7 +5149,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}":
         delete:
-            description: Deletes the structured content. Returns a 204 if the operation was successful.
+            description: Deletes the structured content and returns a 204 if the operation succeeds.
             operationId: deleteStructuredContent
             parameters:
                 - in: path
@@ -5173,7 +5165,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         get:
-            description: Retrieves the structured content by internal id.
+            description: Retrieves the structured content via its ID.
             operationId: getStructuredContent
             parameters:
                 - in: header
@@ -5198,7 +5190,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         patch:
-            description: Updates only the fields received in the request body, any other fields are left untouched.
+            description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchStructuredContent
             parameters:
                 - in: header
@@ -5231,7 +5223,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         put:
-            description: Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putStructuredContent
             parameters:
                 - in: header
@@ -5265,7 +5257,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/comments":
         get:
-            description: Retrieves the comments of a structured content. Can be paginated, filtered, searched and sorted.
+            description: Retrieves the structured content's comments. Results can be paginated, filtered, searched, and sorted.
             operationId: getStructuredContentCommentsPage
             parameters:
                 - in: path
@@ -5310,7 +5302,7 @@ paths:
                     description: ""
             tags: ["Comment"]
         post:
-            description: Inserts a new comment inside a structured content.
+            description: Creates a new comment on the structured content.
             operationId: postStructuredContentComment
             parameters:
                 - in: path
@@ -5340,7 +5332,7 @@ paths:
             tags: ["Comment"]
     "/structured-contents/{structuredContentId}/my-rating":
         delete:
-            description: Deletes the rating associated with a structured content. Returns a 204 if the operation was successful.
+            description: Deletes the structured content's rating and returns a 204 if the operation succeeds.
             operationId: deleteStructuredContentMyRating
             parameters:
                 - in: path
@@ -5356,7 +5348,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         get:
-            description: Retrieves the rating associated with a structured content.
+            description: Retrieves the structured content's rating.
             operationId: getStructuredContentMyRating
             parameters:
                 - in: path
@@ -5377,7 +5369,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         post:
-            description: Retrieves the rating associated with a structured content.
+            description: Create a rating for the structured content.
             operationId: postStructuredContentMyRating
             parameters:
                 - in: path
@@ -5406,7 +5398,7 @@ paths:
                     description: ""
             tags: ["StructuredContent"]
         put:
-            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless required.
+            description: Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putStructuredContentMyRating
             parameters:
                 - in: path
@@ -5436,7 +5428,7 @@ paths:
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
-            description: Retrieves the rendered template (the result of applying the values of a structure to a template) of a structured content.
+            description: Retrieves the structured content's rendered template (the result of applying the structure's values to a template).
             operationId: getStructuredContentRenderedContentTemplate
             parameters:
                 - in: path

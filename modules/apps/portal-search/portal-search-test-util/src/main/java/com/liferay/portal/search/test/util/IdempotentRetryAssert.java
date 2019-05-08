@@ -52,4 +52,17 @@ public class IdempotentRetryAssert {
 		}
 	}
 
+	public static <T> T retryAssert(
+			long timeout, TimeUnit timeoutTimeUnit, Runnable runnable)
+		throws Exception {
+
+		return retryAssert(
+			timeout, timeoutTimeUnit, 0, TimeUnit.SECONDS,
+			() -> {
+				runnable.run();
+
+				return null;
+			});
+	}
+
 }

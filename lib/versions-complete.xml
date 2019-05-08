@@ -4886,17 +4886,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/com.liferay.ant.bnd.jar</file-name>
-				<version>2.0.52</version>
-				<project-name>Liferay Ant BND</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/com.liferay.jenkins.results.parser.jar</file-name>
 				<version>1.0.238</version>
 				<project-name>Liferay Jenkins Results Parser</project-name>

@@ -231,7 +231,7 @@ public abstract class BaseDateRangeFilterTestCase extends BaseIndexingTestCase {
 
 				indexingTestHelper.verify(
 					hits -> DocumentsAssert.assertValues(
-						indexingTestHelper.getQueryString(), hits.getDocs(),
+						indexingTestHelper.getRequestString(), hits.getDocs(),
 						FIELD, expectedValues));
 			});
 	}

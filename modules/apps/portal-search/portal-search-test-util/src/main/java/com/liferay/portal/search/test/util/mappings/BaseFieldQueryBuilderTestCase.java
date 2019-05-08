@@ -21,15 +21,12 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 
@@ -48,139 +45,118 @@ public abstract class BaseFieldQueryBuilderTestCase
 
 		addDocument(DocumentCreationHelpers.singleText(getField(), values));
 
-		final String[] expectedValues = values;
+		String[] values2 = values;
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		assertSearch(
+			indexingTestHelper -> {
+				String keywords = values2[0];
 
-				@Override
-				public Void call() throws Exception {
-					_assertDocument(expectedValues);
+				prepareSearch(indexingTestHelper, keywords);
 
-					return null;
-				}
+				indexingTestHelper.search();
 
+				indexingTestHelper.verify(
+					hits -> {
+						Document[] documents = hits.getDocs();
+
+						String field = getField();
+
+						List<String> expectedValues = Arrays.asList(values2);
+
+						List<String> actualValues = new ArrayList<>();
+
+						for (Document document : documents) {
+							List<String> documentValues = Arrays.asList(
+								document.getValues(field));
+
+							if (documentValues.equals(expectedValues)) {
+								return;
+							}
+
+							actualValues.addAll(documentValues);
+						}
+
+						Assert.assertEquals(
+							keywords + "->" + actualValues,
+							expectedValues.toString(), actualValues.toString());
+					});
 			});
 	}
 
 	protected void assertSearch(final String keywords, final int size)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					_assertCount(keywords, size);
-
-					return null;
-				}
-
-			});
+		_assertCount(keywords, size);
 	}
 
-	protected void assertSearch(
-			final String keywords, final List<String> values)
+	protected void assertSearch(String keywords, List<String> values)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		assertSearch(
+			indexingTestHelper -> {
+				prepareSearch(indexingTestHelper, keywords);
 
-				@Override
-				public Void call() throws Exception {
-					_assertValues(keywords, values);
+				indexingTestHelper.search();
 
-					return null;
-				}
-
+				indexingTestHelper.verify(
+					hits -> {
+						DocumentsAssert.assertValues(
+							keywords, hits.getDocs(), getField(), values);
+					});
 			});
 	}
 
-	protected void assertSearchNoHits(final String keywords) throws Exception {
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					_assertNoHits(keywords);
-
-					return null;
-				}
-
-			});
+	protected void assertSearchNoHits(String keywords) throws Exception {
+		_assertCount(keywords, 0);
 	}
 
-	protected abstract FieldQueryBuilder createFieldQueryBuilder();
-
-	protected Hits doSearch(final String keywords) throws Exception {
+	protected Query buildQuery(final String keywords) {
 		FieldQueryBuilder fieldQueryBuilder = createFieldQueryBuilder();
 
 		Query query = fieldQueryBuilder.build(getField(), keywords);
 
 		setPreBooleanFilter(
-			new TermFilter(Field.COMPANY_ID, String.valueOf(COMPANY_ID)),
+			new TermFilter(Field.COMPANY_ID, String.valueOf(getCompanyId())),
 			query);
+
+		return query;
+	}
+
+	protected abstract FieldQueryBuilder createFieldQueryBuilder();
+
+	protected Hits doSearch(final String keywords) throws Exception {
+		Query query = buildQuery(keywords);
 
 		return search(createSearchContext(), query);
 	}
 
 	protected abstract String getField();
 
+	protected void prepareSearch(
+		IndexingTestHelper indexingTestHelper, String keywords) {
+
+		Query query = buildQuery(keywords);
+
+		indexingTestHelper.setQuery(query);
+	}
+
 	protected String[] transformFieldValues(String... values) {
 		return null;
 	}
 
-	private void _assertCount(String keywords, int count) throws Exception {
-		Hits hits = doSearch(keywords);
+	private void _assertCount(String keywords, int size) throws Exception {
+		assertSearch(
+			indexingTestHelper -> {
+				prepareSearch(indexingTestHelper, keywords);
 
-		DocumentsAssert.assertCount(
-			keywords, hits.getDocs(), getField(), count);
-	}
+				indexingTestHelper.search();
 
-	private void _assertDocument(String... values) throws Exception {
-		String keywords = values[0];
-
-		Hits hits = doSearch(keywords);
-
-		Document[] documents = hits.getDocs();
-
-		String field = getField();
-
-		List<String> expectedValues = Arrays.asList(values);
-
-		List<String> actualValues = new ArrayList<>();
-
-		for (Document document : documents) {
-			List<String> documentValues = Arrays.asList(
-				document.getValues(field));
-
-			if (documentValues.equals(expectedValues)) {
-				return;
-			}
-
-			actualValues.addAll(documentValues);
-		}
-
-		Assert.assertEquals(
-			keywords + "->" + actualValues, expectedValues.toString(),
-			actualValues.toString());
-	}
-
-	private void _assertNoHits(String keywords) throws Exception {
-		_assertCount(keywords, 0);
-	}
-
-	private void _assertValues(String keywords, List<String> expectedValues)
-		throws Exception {
-
-		Hits hits = doSearch(keywords);
-
-		DocumentsAssert.assertValues(
-			keywords, hits.getDocs(), getField(), expectedValues);
+				indexingTestHelper.verify(
+					hits -> {
+						DocumentsAssert.assertCount(
+							keywords, hits.getDocs(), getField(), size);
+					});
+			});
 	}
 
 }

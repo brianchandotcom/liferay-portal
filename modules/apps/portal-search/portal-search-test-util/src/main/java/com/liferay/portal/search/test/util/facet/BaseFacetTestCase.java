@@ -101,10 +101,6 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 			_indexingTestHelper.assertValues(fieldName, expectedValues);
 		}
 
-		public String getQueryString() {
-			return _indexingTestHelper.getQueryString();
-		}
-
 		public SearchContext getSearchContext() {
 			return _indexingTestHelper.getSearchContext();
 		}

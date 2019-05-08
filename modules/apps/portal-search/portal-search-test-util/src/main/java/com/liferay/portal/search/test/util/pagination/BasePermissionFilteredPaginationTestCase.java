@@ -487,7 +487,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 		Mockito.when(
 			permissionChecker.getCompanyId()
 		).thenReturn(
-			COMPANY_ID
+			getCompanyId()
 		);
 
 		Mockito.when(

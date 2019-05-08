@@ -267,6 +267,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public DDMTemplate getDDMTemplate() {
+		if (_ddmTemplate != null) {
+			return _ddmTemplate;
+		}
+
 		long ddmTemplateId = ParamUtil.getLong(
 			_httpServletRequest, "ddmTemplateId");
 
@@ -486,6 +490,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getSmallImageSource() {
+		if (Validator.isNotNull(_smallImageSource)) {
+			return _smallImageSource;
+		}
+
 		if (_article == null) {
 			_smallImageSource = "none";
 

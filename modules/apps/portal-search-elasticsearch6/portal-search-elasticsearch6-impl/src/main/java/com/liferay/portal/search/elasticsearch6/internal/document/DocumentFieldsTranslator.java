@@ -22,6 +22,7 @@ import com.liferay.portal.search.geolocation.GeoBuilders;
 import java.util.Map;
 
 import org.elasticsearch.common.document.DocumentField;
+import org.elasticsearch.common.geo.GeoPoint;
 
 /**
  * @author Bryan Engler
@@ -66,22 +67,50 @@ public class DocumentFieldsTranslator {
 		}
 
 		documentFieldsMap.forEach(
-			(name, documentField) -> translate(documentField, documentBuilder));
+			(name, documentField) -> translate(
+				documentField, documentBuilder, documentFieldsMap));
 	}
 
 	protected void translate(
-		DocumentField documentField, DocumentBuilder documentBuilder) {
+		DocumentField documentField, DocumentBuilder documentBuilder,
+		Map<String, DocumentField> documentFieldsMap) {
 
-		String fieldName = documentField.getName();
+		if (translateGeoLocationPoint(
+				documentField, documentBuilder, documentFieldsMap)) {
 
-		if (fieldName.endsWith(_GEOPOINT_SUFFIX)) {
-			documentBuilder.setGeoLocationPoint(
-				fieldName,
-				_geoBuilders.geoLocationPoint(documentField.getValue()));
+			return;
 		}
-		else {
-			documentBuilder.setValues(fieldName, documentField.getValues());
+
+		documentBuilder.setValues(
+			documentField.getName(), documentField.getValues());
+	}
+
+	protected boolean translateGeoLocationPoint(
+		DocumentField documentField1, DocumentBuilder documentBuilder,
+		Map<String, DocumentField> documentFieldsMap) {
+
+		String fieldName1 = documentField1.getName();
+
+		if (fieldName1.endsWith(_GEOPOINT_SUFFIX)) {
+			return true;
 		}
+
+		String fieldName2 = fieldName1.concat(_GEOPOINT_SUFFIX);
+
+		DocumentField documentField2 = documentFieldsMap.get(fieldName2);
+
+		if (documentField2 == null) {
+			return false;
+		}
+
+		GeoPoint geoPoint = GeoPoint.fromGeohash(documentField2.getValue());
+
+		documentBuilder.setGeoLocationPoint(
+			fieldName1,
+			_geoBuilders.geoLocationPoint(
+				geoPoint.getLat(), geoPoint.getLon()));
+
+		return true;
 	}
 
 	private static final String _GEOPOINT_SUFFIX = ".geopoint";

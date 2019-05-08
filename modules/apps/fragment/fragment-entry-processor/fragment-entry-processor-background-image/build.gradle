@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:fragment:fragment-api")
+	compileOnly project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":core:petra:petra-string")
 }

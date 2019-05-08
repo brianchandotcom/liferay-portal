@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<li
+  className="tbar-item"
+>
+  <div
+    className="tbar-section"
+  >
+    <span
+      className="component-label label label-dismissible tbar-label"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        <div
+          className="label-section"
+        >
+          <span
+            className="font-weight-normal"
+          >
+            SLA Status: 
+          </span>
+          <strong>
+            Overdue
+          </strong>
+        </div>
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="close"
+          className="btn close"
+          onClick={[Function]}
+          type="button"
+        >
+          <svg
+            className="lexicon-icon lexicon-icon-times"
+            focusable="false"
+            role="presentation"
+          >
+            <use
+              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+            />
+          </svg>
+        </button>
+      </span>
+    </span>
+  </div>
+</li>
+`;

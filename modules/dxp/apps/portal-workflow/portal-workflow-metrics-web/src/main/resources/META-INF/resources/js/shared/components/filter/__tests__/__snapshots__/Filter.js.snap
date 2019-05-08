@@ -36,3 +36,469 @@ exports[`Should render component 1`] = `
   </div>
 </li>
 `;
+
+exports[`Should render component with search wrapper 1`] = `
+<li
+  className="dropdown nav-item"
+>
+  <button
+    aria-expanded={false}
+    aria-haspopup="true"
+    className="dropdown-toggle nav-link"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      className="mr-2 navbar-text-truncate"
+    >
+      SLA Status
+    </span>
+    <svg
+      className="lexicon-icon lexicon-icon-caret-bottom"
+      focusable="false"
+      role="presentation"
+    >
+      <use
+        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+      />
+    </svg>
+  </button>
+  <div
+    className=" dropdown-menu"
+    role="menu"
+  >
+    <form>
+      <div
+        className="dropdown-section"
+      >
+        <div
+          className="input-group input-group-sm"
+        >
+          <div
+            className="input-group-item"
+          >
+            <input
+              className="form-control input-group-inset input-group-inset-after"
+              onChange={[Function]}
+              placeholder="Search for..."
+              type="text"
+            />
+            <span
+              className="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                className="btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-search"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
+                  />
+                </svg>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <ul
+      className="list-unstyled"
+    >
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-0"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 0
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-1"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 1
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-2"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 2
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-3"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 3
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-4"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 4
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-5"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 5
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-6"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 6
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-7"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 7
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-8"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 8
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-9"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 9
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-10"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 10
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-11"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 11
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-12"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 12
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className=" dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={false}
+              className="custom-control-input"
+              name="key-13"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 13
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+      <li
+        className="active dropdown-item"
+      >
+        <div
+          className="custom-checkbox custom-control"
+        >
+          <label>
+            <input
+              checked={true}
+              className="custom-control-input"
+              name="key-14"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="custom-control-label"
+            >
+              <span
+                className="custom-control-label-text"
+              >
+                Item Name 14
+              </span>
+            </span>
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</li>
+`;

@@ -53,7 +53,8 @@ public class ServiceWrapperRegistryTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		EmailAddress emailAddress =
-			_emailAddressLocalService.createEmailAddress(1);
+			_emailAddressLocalService.createEmailAddress(
+				_TEST_EMAIL_ADDRESS_ID);
 
 		ServiceRegistration<ServiceWrapper> serviceRegistration =
 			bundleContext.registerService(
@@ -70,12 +71,16 @@ public class ServiceWrapperRegistryTest {
 
 		try {
 			Assert.assertSame(
-				emailAddress, _emailAddressLocalService.getEmailAddress(1));
+				emailAddress,
+				_emailAddressLocalService.getEmailAddress(
+					_TEST_EMAIL_ADDRESS_ID));
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
 	}
+
+	private static final long _TEST_EMAIL_ADDRESS_ID = 1;
 
 	@Inject
 	private EmailAddressLocalService _emailAddressLocalService;

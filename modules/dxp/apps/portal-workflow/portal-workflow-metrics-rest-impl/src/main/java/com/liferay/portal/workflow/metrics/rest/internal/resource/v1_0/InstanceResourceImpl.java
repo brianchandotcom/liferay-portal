@@ -82,14 +82,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			String[] taskKeys, Pagination pagination)
 		throws Exception {
 
-		int instanceCount = _getInstanceCount(
+		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
 			processId, slaStatuses, statuses, taskKeys);
+
+		int instanceCount = _getInstanceCount(searchSearchResponse);
 
 		if (instanceCount > 0) {
 			return Page.of(
 				_getInstances(
-					instanceCount, pagination, processId, slaStatuses, statuses,
-					taskKeys),
+					searchSearchResponse.getCount(), pagination, processId,
+					slaStatuses, statuses, taskKeys),
 				pagination, instanceCount);
 		}
 
@@ -240,25 +242,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private int _getInstanceCount(
-		long processId, String[] slaStatuses, String[] statuses,
-		String[] taskKeys) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.addAggregation(
-			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
-				ListUtil.toList(taskKeys)));
-		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
-		searchSearchRequest.setQuery(
-			_createBooleanQuery(processId, statuses, taskKeys));
-
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
+	private int _getInstanceCount(SearchSearchResponse searchSearchResponse) {
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
 
@@ -271,7 +255,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<Instance> _getInstances(
-		int instanceCount, Pagination pagination, long processId,
+		long instanceCount, Pagination pagination, long processId,
 		String[] slaStatuses, String[] statuses, String[] taskKeys) {
 
 		List<Instance> instances = new LinkedList<>();
@@ -309,7 +293,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_createBucketSelectorPipelineAggregation(),
 			_createBucketSortPipelineAggregation(pagination));
 
-		termsAggregation.setSize(instanceCount);
+		termsAggregation.setSize(GetterUtil.getInteger(instanceCount));
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
@@ -366,6 +350,25 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private String _getLocalizedName(String name) {
 		return Field.getLocalizedName(
 			contextAcceptLanguage.getPreferredLocale(), name);
+	}
+
+	private SearchSearchResponse _getSearchSearchResponse(
+		long processId, String[] slaStatuses, String[] statuses,
+		String[] taskKeys) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.addAggregation(
+			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
+				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
+				ListUtil.toList(taskKeys)));
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-instances",
+			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
+		searchSearchRequest.setQuery(
+			_createBooleanQuery(processId, statuses, taskKeys));
+
+		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
 
 	private Status _getStatus(Boolean completed) {

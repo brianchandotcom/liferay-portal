@@ -102,7 +102,6 @@ class LayoutBuilder extends Component {
 	}
 
 	_serializeDataLayout(pages) {
-		const dataLayoutColumns = [];
 		const pagesVisitor = new PagesVisitor(pages);
 
 		const newPages = pagesVisitor.mapFields(

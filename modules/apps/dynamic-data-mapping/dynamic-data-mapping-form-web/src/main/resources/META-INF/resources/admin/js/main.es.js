@@ -492,9 +492,12 @@ class Form extends Component {
 							fieldTypes={fieldTypes}
 							functionsMetadata={this.props.functionsMetadata}
 							functionsURL={this.props.functionsURL}
+							groupId={groupId}
+							namespace={this.props.namespace}
 							pages={context.pages}
 							rolesURL={this.props.rolesURL}
 							rules={this.props.rules}
+							ref="builder"
 							spritemap={spritemap}
 							visible={this.isShowRuleBuilder()}
 						/>

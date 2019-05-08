@@ -73,14 +73,6 @@ const withEditablePageHeader = ChildComponent => {
 			paginationMode: Config.string().required(),
 
 			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			rules: Config.arrayOf(ruleStructure).required(),
-
-			/**
 			 * @default undefined
 			 * @instance
 			 * @memberof FormRenderer

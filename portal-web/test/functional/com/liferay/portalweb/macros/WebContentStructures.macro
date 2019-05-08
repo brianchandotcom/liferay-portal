@@ -93,7 +93,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "The structure cannot be deleted because it is required by one or more templates.");
+				value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 		}
 		else {
 			Alert.viewSuccessMessage();

@@ -92,10 +92,9 @@ public class WorkflowHandlerRegistryUtilTest {
 
 	@Test
 	public void testGetWorkflowHandler() {
-		WorkflowHandler<Object> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(_CLASS_NAME);
-
-		Assert.assertSame(_workflowHandler, workflowHandler);
+		Assert.assertSame(
+			_workflowHandler,
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(_CLASS_NAME));
 	}
 
 	@Test

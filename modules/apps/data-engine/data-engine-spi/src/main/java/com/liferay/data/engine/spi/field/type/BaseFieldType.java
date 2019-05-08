@@ -51,13 +51,12 @@ public abstract class BaseFieldType implements FieldType {
 		SPIDataDefinitionField spiDataDefinitionField =
 			new SPIDataDefinitionField();
 
-		Map<String, Object> customProperties = new HashMap() {
-			{
-				put("showLabel", jsonObject.getBoolean("showLabel"));
-			}
-		};
-
-		spiDataDefinitionField.setCustomProperties(customProperties);
+		spiDataDefinitionField.setCustomProperties(
+			new HashMap<String, Object>() {
+				{
+					put("showLabel", jsonObject.getBoolean("showLabel"));
+				}
+			});
 
 		spiDataDefinitionField.setFieldType(jsonObject.getString("type"));
 		spiDataDefinitionField.setIndexable(

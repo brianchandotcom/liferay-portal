@@ -15,6 +15,7 @@
 package com.liferay.portal.notification.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
@@ -75,9 +76,7 @@ public class UserNotificationManagerUtilTest {
 				UserNotificationEvent userNotificationEvent,
 				ServiceContext serviceContext) {
 
-				return new UserNotificationFeedEntry(
-					false, "body", _LINK,
-					isApplicable(userNotificationEvent, serviceContext));
+				return _userNotificationFeedEntry;
 			}
 
 			@Override
@@ -140,11 +139,10 @@ public class UserNotificationManagerUtilTest {
 
 			};
 
-		UserNotificationFeedEntry userNotificationFeedEntry =
+		Assert.assertSame(
+			_userNotificationFeedEntry,
 			UserNotificationManagerUtil.interpret(
-				_SELECTOR, userNotificationEvent, null);
-
-		Assert.assertEquals(_LINK, userNotificationFeedEntry.getLink());
+				_SELECTOR, userNotificationEvent, null));
 	}
 
 	@Test
@@ -158,14 +156,15 @@ public class UserNotificationManagerUtilTest {
 				0, _SELECTOR, _PORTLET_ID, 1, 1, 1, null));
 	}
 
-	private static final String _LINK = "http://www.liferay.com";
-
 	private static final String _PORTLET_ID = "PORTLET_ID";
 
 	private static final String _SELECTOR = "SELECTOR";
 
 	private static ServiceRegistration<UserNotificationHandler>
 		_serviceRegistration;
+	private static final UserNotificationFeedEntry _userNotificationFeedEntry =
+		new UserNotificationFeedEntry(
+			false, StringPool.BLANK, StringPool.BLANK, false);
 	private static UserNotificationHandler _userNotificationHandler;
 
 }

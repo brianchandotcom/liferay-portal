@@ -17,12 +17,12 @@ package com.liferay.portal.notification.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Map;
@@ -131,9 +131,14 @@ public class UserNotificationManagerUtilTest {
 	@Test
 	public void testInterpret() throws PortalException {
 		UserNotificationEvent userNotificationEvent =
-			new UserNotificationEventImpl();
+			new UserNotificationEventWrapper(null) {
 
-		userNotificationEvent.setType(_PORTLET_ID);
+				@Override
+				public String getType() {
+					return _PORTLET_ID;
+				}
+
+			};
 
 		UserNotificationFeedEntry userNotificationFeedEntry =
 			UserNotificationManagerUtil.interpret(

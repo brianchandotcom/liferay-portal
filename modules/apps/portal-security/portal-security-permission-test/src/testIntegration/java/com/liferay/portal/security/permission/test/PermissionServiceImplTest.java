@@ -71,21 +71,19 @@ public class PermissionServiceImplTest {
 					}),
 				new HashMapDictionary<String, Object>() {
 					{
-						put("model.class.name", "PermissionServiceImplTest");
+						put("model.class.name", _CLASS_NAME);
 						put("service.ranking", Integer.MAX_VALUE);
 					}
 				});
 
 		try {
-			_permissionService.checkPermission(
-				0, "PermissionServiceImplTest", 0);
+			_permissionService.checkPermission(0, _CLASS_NAME, 0);
 
 			Assert.assertTrue(calledCheckBaseModel[0]);
 
 			calledCheckBaseModel[0] = false;
 
-			_permissionService.checkPermission(
-				0, "PermissionServiceImplTest", null);
+			_permissionService.checkPermission(0, _CLASS_NAME, null);
 
 			Assert.assertTrue(calledCheckBaseModel[0]);
 		}
@@ -93,6 +91,8 @@ public class PermissionServiceImplTest {
 			serviceRegistration.unregister();
 		}
 	}
+
+	private static final String _CLASS_NAME = "PermissionServiceImplTest";
 
 	@Inject
 	private PermissionService _permissionService;

@@ -661,6 +661,8 @@ definition {
 
 		NavItem.gotoStructures();
 
+		ProductMenuHelper.closeProductMenu();
+
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");

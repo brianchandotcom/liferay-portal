@@ -14,8 +14,6 @@
 
 package com.liferay.portal.bootstrap;
 
-import aQute.bnd.header.OSGiHeader;
-import aQute.bnd.header.Parameters;
 import aQute.bnd.version.Version;
 
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -154,17 +152,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			Attributes attributes = manifest.getMainAttributes();
 
-			String bundleSymbolicNameAttributeValue = attributes.getValue(
-				Constants.BUNDLE_SYMBOLICNAME);
-
-			Parameters parameters = OSGiHeader.parseHeader(
-				bundleSymbolicNameAttributeValue);
-
-			Set<String> set = parameters.keySet();
-
-			Iterator<String> iterator = set.iterator();
-
-			String bundleSymbolicName = iterator.next();
+			String bundleSymbolicName = _parseBundleSymbolicName(attributes);
 
 			String bundleVersionAttributeValue = attributes.getValue(
 				Constants.BUNDLE_VERSION);
@@ -1057,17 +1045,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			Attributes attributes = manifest.getMainAttributes();
 
-			String bundleSymbolicNameAttributeValue = attributes.getValue(
-				Constants.BUNDLE_SYMBOLICNAME);
-
-			Parameters parameters = OSGiHeader.parseHeader(
-				bundleSymbolicNameAttributeValue);
-
-			Set<String> set = parameters.keySet();
-
-			Iterator<String> iterator = set.iterator();
-
-			String bundleSymbolicName = iterator.next();
+			String bundleSymbolicName = _parseBundleSymbolicName(attributes);
 
 			String bundleVersionAttributeValue = attributes.getValue(
 				Constants.BUNDLE_VERSION);
@@ -1210,6 +1188,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return true;
+	}
+
+	private String _parseBundleSymbolicName(Attributes attributes) {
+		String bundleSymbolicName = attributes.getValue(
+			Constants.BUNDLE_SYMBOLICNAME);
+
+		int index = bundleSymbolicName.indexOf(CharPool.SEMICOLON);
+
+		if (index != -1) {
+			bundleSymbolicName = bundleSymbolicName.substring(0, index);
+		}
+
+		return bundleSymbolicName;
 	}
 
 	private void _refreshBundles(List<Bundle> refreshBundles) {

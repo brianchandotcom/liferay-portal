@@ -1062,14 +1062,6 @@ definition {
 				searchAssetType = "Blogs Entry",
 				searchTerm = "${searchTerm}");
 		}
-
-		for (var searchTerm : list "Blogs1,Entry1,Content1,Blogs1 Entry1 Content1") {
-			Navigator.gotoPage(pageName = "Search Page");
-
-			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
-
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "${searchTerm}");
-		}
 	}
 
 	@priority = "4"
@@ -1104,6 +1096,14 @@ definition {
 				searchAssetTitle = "Blogs Entry Title",
 				searchAssetType = "Blogs Entry",
 				searchTerm = "${searchTerm}");
+		}
+
+		for (var searchTerm : list ""Blogs1","Entry1","Content1","Blogs1 Entry1 Content1"") {
+			Navigator.gotoPage(pageName = "Search Page");
+
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "${searchTerm}");
 		}
 	}
 

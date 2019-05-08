@@ -50,6 +50,18 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
+int cur1 = ParamUtil.getInteger(request, "cur1");
+
+if (cur1 > 0) {
+	portletURL.setParameter("cur1", String.valueOf(cur1));
+}
+
+int cur2 = ParamUtil.getInteger(request, "cur2");
+
+if (cur2 > 0) {
+	portletURL.setParameter("cur2", String.valueOf(cur2));
+}
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 
 boolean orderByAsc = false;

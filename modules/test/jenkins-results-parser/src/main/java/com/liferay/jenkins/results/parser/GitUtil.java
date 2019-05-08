@@ -145,17 +145,17 @@ public class GitUtil {
 		List<RemoteGitRef> remoteGitRefs = null;
 
 		if (remoteURL.contains(_HOSTNAME_GITHUB_CACHE_PROXY)) {
-			List<String> usedGitHubCacheHostnames = new ArrayList<>(3);
+			List<String> usedGitHubDevNodeHostnames = new ArrayList<>(3);
 
-			while ((usedGitHubCacheHostnames.size() < 3) &&
+			while ((usedGitHubDevNodeHostnames.size() < 3) &&
 				   ((remoteGitRefs == null) || remoteGitRefs.isEmpty())) {
 
-				String gitHubCacheHostname =
-					JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
-						usedGitHubCacheHostnames);
+				String gitHubDevNodeHostname =
+					JenkinsResultsParserUtil.getRandomGitHubDevNodeHostname(
+						usedGitHubDevNodeHostnames);
 
-				String gitHubCacheRemoteURL = remoteURL.replace(
-					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+				String gitHubDevNodeRemoteURL = remoteURL.replace(
+					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);
 
 				if (gitHubDevNodeHostname.startsWith("slave-")) {
 					gitHubDevNodeRemoteURL = JenkinsResultsParserUtil.combine(
@@ -166,13 +166,13 @@ public class GitUtil {
 				try {
 					remoteGitRefs = getRemoteGitRefs(
 						remoteGitBranchName, workingDirectory,
-						gitHubCacheRemoteURL);
+						gitHubDevNodeRemoteURL);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
 				}
 
-				usedGitHubCacheHostnames.add(gitHubCacheHostname);
+				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
 			}
 		}
 		else {
@@ -329,20 +329,20 @@ public class GitUtil {
 		Process process = null;
 
 		int retries = 0;
-		List<String> usedGitHubCacheHostnames = new ArrayList<>(maxRetries);
+		List<String> usedGitHubDevNodeHostnames = new ArrayList<>(maxRetries);
 
 		while (retries < maxRetries) {
 			String[] modifiedCommands = Arrays.copyOf(
 				commands, commands.length);
 
-			String gitHubCacheHostname =
-				JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
-					usedGitHubCacheHostnames);
+			String gitHubDevNodeHostname =
+				JenkinsResultsParserUtil.getRandomGitHubDevNodeHostname(
+					usedGitHubDevNodeHostnames);
 
-			usedGitHubCacheHostnames.add(gitHubCacheHostname);
+			usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
 
-			if (gitHubCacheHostname.startsWith("slave-")) {
-				gitHubCacheHostname = gitHubCacheHostname.substring(6);
+			if (gitHubDevNodeHostname.startsWith("slave-")) {
+				gitHubDevNodeHostname = gitHubDevNodeHostname.substring(6);
 
 				for (int i = 0; i < modifiedCommands.length; i++) {
 					Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
@@ -354,7 +354,7 @@ public class GitUtil {
 						modifiedCommand = modifiedCommand.replaceFirst(
 							matcher.group(0),
 							JenkinsResultsParserUtil.combine(
-								"root@", gitHubCacheHostname,
+								"root@", gitHubDevNodeHostname,
 								":/opt/dev/projects/github",
 								matcher.group("repositoryName")));
 					}
@@ -365,7 +365,7 @@ public class GitUtil {
 			else {
 				for (int i = 0; i < modifiedCommands.length; i++) {
 					modifiedCommands[i] = modifiedCommands[i].replace(
-						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);
 				}
 			}
 
@@ -385,7 +385,7 @@ public class GitUtil {
 						e);
 				}
 
-				usedGitHubCacheHostnames.add(gitHubCacheHostname);
+				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
 
 				System.out.println(
 					"Unable to execute bash commands retrying... ");

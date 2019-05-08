@@ -1311,11 +1311,11 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
-	public static String getRandomGitHubCacheHostname() {
-		return getRandomGitHubCacheHostname(null);
+	public static String getRandomGitHubDevNodeHostname() {
+		return getRandomGitHubDevNodeHostname(null);
 	}
 
-	public static String getRandomGitHubCacheHostname(
+	public static String getRandomGitHubDevNodeHostname(
 		List<String> excludedHostnames) {
 
 		try {
@@ -1324,16 +1324,16 @@ public class JenkinsResultsParserUtil {
 			String gitCacheHostnames = buildProperties.getProperty(
 				"github.cache.hostnames");
 
-			List<String> gitHubCacheHostnames = Lists.newArrayList(
+			List<String> gitHubDevNodeHostnames = Lists.newArrayList(
 				gitCacheHostnames.split(","));
 
 			if (excludedHostnames != null) {
 				for (String excludedHostname : excludedHostnames) {
-					gitHubCacheHostnames.remove(excludedHostname);
+					gitHubDevNodeHostnames.remove(excludedHostname);
 				}
 			}
 
-			return getRandomString(gitHubCacheHostnames);
+			return getRandomString(gitHubDevNodeHostnames);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

@@ -96,12 +96,12 @@ public class GitRepositoryFactory {
 		}
 
 		if (hostname.contains("github-dev")) {
-			List<String> gitHubCacheHostnames =
-				GitHubDevSyncUtil.getGitHubCacheHostnames();
+			List<String> gitHubDevNodeHostnames =
+				GitHubDevSyncUtil.getGitHubDevNodeHostnames();
 
-			hostname = gitHubCacheHostnames.get(
+			hostname = gitHubDevNodeHostnames.get(
 				JenkinsResultsParserUtil.getRandomValue(
-					0, gitHubCacheHostnames.size() - 1));
+					0, gitHubDevNodeHostnames.size() - 1));
 
 			if (hostname.startsWith("slave-")) {
 				hostname = hostname.substring(6);

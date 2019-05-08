@@ -109,7 +109,7 @@ definition {
 	macro deleteCP {
 		var key_ddlTemplateName = "${templateName}";
 
-		Click(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS");
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 

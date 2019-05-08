@@ -101,29 +101,8 @@ public class RatingsDataTransformerUtilTest {
 		oldPortletPreferences.setValue(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.setProperty(
-			"com.liferay.blogs.model.BlogsEntry_RatingsType", "stars");
-		unicodeProperties.setProperty(
-			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
-		unicodeProperties.setProperty(
-			"com.liferay.document.library.kernel.model.DLFileEntry_RatingsType",
-			"stars");
-		unicodeProperties.setProperty(
-			"com.liferay.journal.model.JournalArticle_RatingsType", "stars");
-		unicodeProperties.setProperty(
-			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
-		unicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
-			"stars");
-		unicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBMessage_RatingsType", "stars");
-		unicodeProperties.setProperty(
-			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
-
 		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			1, oldPortletPreferences, unicodeProperties);
+			1, oldPortletPreferences, _createUnicodeProperties("stars"));
 
 		Assert.assertTrue(_calledTransformRatingsData);
 	}
@@ -132,52 +111,35 @@ public class RatingsDataTransformerUtilTest {
 	public void testTransformGroupRatingsData() throws Exception {
 		_calledTransformRatingsData = false;
 
-		UnicodeProperties oldUnicodeProperties = new UnicodeProperties();
+		RatingsDataTransformerUtil.transformGroupRatingsData(
+			1, _createUnicodeProperties("like"),
+			_createUnicodeProperties("stars"));
 
-		oldUnicodeProperties.setProperty(
-			"com.liferay.blogs.model.BlogsEntry_RatingsType", "like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.document.library.kernel.model.DLFileEntry_RatingsType",
-			"like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.journal.model.JournalArticle_RatingsType", "like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
-			"like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBMessage_RatingsType", "like");
-		oldUnicodeProperties.setProperty(
-			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+		Assert.assertTrue(_calledTransformRatingsData);
+	}
 
+	private UnicodeProperties _createUnicodeProperties(String value) {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.setProperty(
-			"com.liferay.blogs.model.BlogsEntry_RatingsType", "stars");
+			"com.liferay.blogs.model.BlogsEntry_RatingsType", value);
 		unicodeProperties.setProperty(
-			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
+			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", value);
 		unicodeProperties.setProperty(
 			"com.liferay.document.library.kernel.model.DLFileEntry_RatingsType",
-			"stars");
+			value);
 		unicodeProperties.setProperty(
-			"com.liferay.journal.model.JournalArticle_RatingsType", "stars");
+			"com.liferay.journal.model.JournalArticle_RatingsType", value);
 		unicodeProperties.setProperty(
-			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
+			"com.liferay.knowledge.base.model.KBArticle_RatingsType", value);
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
-			"stars");
+			"com.liferay.message.boards.model.MBDiscussion_RatingsType", value);
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.model.MBMessage_RatingsType", "stars");
+			"com.liferay.message.boards.model.MBMessage_RatingsType", value);
 		unicodeProperties.setProperty(
-			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
+			"com.liferay.wiki.model.WikiPage_RatingsType", value);
 
-		RatingsDataTransformerUtil.transformGroupRatingsData(
-			1, oldUnicodeProperties, unicodeProperties);
-
-		Assert.assertTrue(_calledTransformRatingsData);
+		return unicodeProperties;
 	}
 
 	private static boolean _calledTransformRatingsData;

@@ -157,6 +157,12 @@ public class GitUtil {
 				String gitHubCacheRemoteURL = remoteURL.replace(
 					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
 
+				if (gitHubDevNodeHostname.startsWith("slave-")) {
+					gitHubDevNodeRemoteURL = JenkinsResultsParserUtil.combine(
+						"root@", gitHubDevNodeHostname.substring(6),
+						":/opt/dev/projects/github");
+				}
+
 				try {
 					remoteGitRefs = getRemoteGitRefs(
 						remoteGitBranchName, workingDirectory,
@@ -333,9 +339,34 @@ public class GitUtil {
 				JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
 					usedGitHubCacheHostnames);
 
-			for (int i = 0; i < modifiedCommands.length; i++) {
-				modifiedCommands[i] = modifiedCommands[i].replace(
-					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+			usedGitHubCacheHostnames.add(gitHubCacheHostname);
+
+			if (gitHubCacheHostname.startsWith("slave-")) {
+				gitHubCacheHostname = gitHubCacheHostname.substring(6);
+
+				for (int i = 0; i < modifiedCommands.length; i++) {
+					Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
+						modifiedCommands[i]);
+
+					String modifiedCommand = modifiedCommands[i];
+
+					while (matcher.find()) {
+						modifiedCommand = modifiedCommand.replaceFirst(
+							matcher.group(0),
+							JenkinsResultsParserUtil.combine(
+								"root@", gitHubCacheHostname,
+								":/opt/dev/projects/github",
+								matcher.group("repositoryName")));
+					}
+
+					modifiedCommands[i] = modifiedCommand;
+				}
+			}
+			else {
+				for (int i = 0; i < modifiedCommands.length; i++) {
+					modifiedCommands[i] = modifiedCommands[i].replace(
+						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubCacheHostname);
+				}
 			}
 
 			try {
@@ -393,6 +424,11 @@ public class GitUtil {
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
+	private static final Pattern _gitHubDevRemoteURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"git@(?<hostname>github-dev|github-dev\\.lax\\.liferay\\.com):",
+			"(?<username>[^/]+)/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?",
+			"+\\s*"));
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",

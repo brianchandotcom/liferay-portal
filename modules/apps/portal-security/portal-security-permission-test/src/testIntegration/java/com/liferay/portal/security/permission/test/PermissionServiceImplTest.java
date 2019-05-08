@@ -16,10 +16,11 @@ package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -59,9 +60,15 @@ public class PermissionServiceImplTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
-			BaseModelPermissionChecker.class,
-			(permissionChecker, groupId, primaryKey, actionId) ->
-				_calledCheckBaseModel = true,
+			ModelResourcePermission.class,
+			(ModelResourcePermission)ProxyUtil.newProxyInstance(
+				ModelResourcePermission.class.getClassLoader(),
+				new Class<?>[] {ModelResourcePermission.class},
+				(proxy, method, args) -> {
+					_calledCheckBaseModel = true;
+
+					return null;
+				}),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("model.class.name", "PermissionServiceImplTest");
@@ -96,7 +103,7 @@ public class PermissionServiceImplTest {
 	}
 
 	private static boolean _calledCheckBaseModel;
-	private static ServiceRegistration<BaseModelPermissionChecker>
+	private static ServiceRegistration<ModelResourcePermission>
 		_serviceRegistration;
 
 	@Inject

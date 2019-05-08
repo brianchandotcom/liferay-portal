@@ -1072,7 +1072,7 @@
 							</label>
 						</div>
 						{let $index: index($input) /}
-						<div class="col-md-9 container-input-field container-input-field-{$index}">
+						<div class="col-md-9 container-input-field container-input-field-{$index}" container-input-field-index="{$index}">
 							{delcall PageRenderer.RegisterFieldType variant="'select'"}
 								{param events: [
 									'fieldEdited': $_handleDataProviderInputEdited

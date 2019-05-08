@@ -1967,7 +1967,7 @@ definition {
 			value1 = "test1");
 
 		AssertValue(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "test1@liferay.com");
 
 		AssertValue(

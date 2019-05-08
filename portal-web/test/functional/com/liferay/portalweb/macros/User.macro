@@ -214,7 +214,7 @@ definition {
 			value1 = "${userScreenName}");
 
 		Type(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "${userEmailAddress}");
 
 		Type(
@@ -273,7 +273,7 @@ definition {
 				value1 = "${userScreenName}");
 
 			AssertTextEquals(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${userEmailAddress}");
 
 			AssertTextEquals(
@@ -350,7 +350,7 @@ definition {
 			value1 = "${userScreenName}");
 
 		Type(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "${userEmailAddress}");
 
 		Type(
@@ -374,7 +374,7 @@ definition {
 			value1 = "${userScreenName}");
 
 		Type(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "${userEmailAddress}");
 
 		Type(
@@ -400,7 +400,7 @@ definition {
 			value1 = "${siteID}");
 
 		Type(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "${userEmailAddress}");
 
 		Type(
@@ -443,12 +443,12 @@ definition {
 		}
 		else if ("${searchField}" == "Email Address") {
 			Type(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${searchTerm}");
 		}
 
 		KeyPress(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "\RETURN");
 
 		if ("${searchNoResults}" == "true") {
@@ -506,12 +506,12 @@ definition {
 		}
 		else if ("${searchField}" == "Email Address") {
 			Type(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${searchTerm}");
 		}
 
 		KeyPress(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "\RETURN");
 
 		if ("${searchNoResults}" == "true") {
@@ -569,12 +569,12 @@ definition {
 		}
 		else if ("${searchField}" == "Email Address") {
 			Type(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${searchTerm}");
 		}
 
 		KeyPress(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "\RETURN");
 
 		if ("${searchNoResults}" == "true") {
@@ -632,12 +632,12 @@ definition {
 		}
 		else if ("${searchField}" == "Email Address") {
 			Type(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${searchTerm}");
 		}
 
 		KeyPress(
-			locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "\RETURN");
 
 		if ("${searchNoResults}" == "true") {
@@ -2290,7 +2290,7 @@ definition {
 				value1 = "${userScreenName}");
 
 			AssertTextEquals(
-				locator1 = "AdvancedSearch#EMAIL_ADDRESS_FIELD",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${userEmailAddress}");
 
 			AssertTextEquals(

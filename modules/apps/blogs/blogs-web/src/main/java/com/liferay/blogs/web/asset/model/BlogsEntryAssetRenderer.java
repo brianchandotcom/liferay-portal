@@ -346,7 +346,7 @@ public class BlogsEntryAssetRenderer
 			PortletLayoutFinder.Result result = portletLayoutFinder.find(
 				themeDisplay, groupId);
 
-			if (result == null) {
+			if ((result == null) || Validator.isNull(result.getPortletId())) {
 				return false;
 			}
 

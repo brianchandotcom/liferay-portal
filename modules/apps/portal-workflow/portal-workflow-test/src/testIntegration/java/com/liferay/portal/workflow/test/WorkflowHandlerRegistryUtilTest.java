@@ -26,8 +26,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,8 +56,11 @@ public class WorkflowHandlerRegistryUtilTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			WorkflowHandlerRegistryUtilTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
+	}
 
+	@Before
+	public void setUp() {
 		_workflowHandler = (WorkflowHandler)ProxyUtil.newProxyInstance(
 			WorkflowHandler.class.getClassLoader(),
 			new Class<?>[] {WorkflowHandler.class},
@@ -76,13 +80,13 @@ public class WorkflowHandlerRegistryUtilTest {
 				return null;
 			});
 
-		_serviceRegistration = bundleContext.registerService(
+		_serviceRegistration = _bundleContext.registerService(
 			WorkflowHandler.class, _workflowHandler,
 			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
+	@After
+	public void tearDown() {
 		_serviceRegistration.unregister();
 	}
 
@@ -128,8 +132,10 @@ public class WorkflowHandlerRegistryUtilTest {
 
 	private static final String _CLASS_NAME = "TestWorkflowHandler";
 
+	private static BundleContext _bundleContext;
 	private static boolean _calledWorkflowHandler;
-	private static ServiceRegistration<WorkflowHandler> _serviceRegistration;
 	private static WorkflowHandler<?> _workflowHandler;
+
+	private ServiceRegistration<WorkflowHandler> _serviceRegistration;
 
 }

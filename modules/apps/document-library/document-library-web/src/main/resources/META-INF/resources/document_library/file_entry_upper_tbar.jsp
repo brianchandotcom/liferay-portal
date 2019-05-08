@@ -41,11 +41,15 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 					</div>
 				</li>
 				<li class="tbar-item">
-					<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm btn-unstyled" id="<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>" title="<%= LanguageUtil.get(resourceBundle, "info") %>" type="button">
-						<clay:icon
-							symbol="info-circle-open"
-						/>
-					</button>
+					<clay:button
+						elementClasses="btn-outline-borderless btn-outline-secondary"
+						icon="info-circle-open"
+						id='<%= liferayPortletResponse.getNamespace() + "OpenContextualSidebar" %>'
+						monospaced="true"
+						size="sm"
+						style="<%= false %>"
+						title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+					/>
 				</li>
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">

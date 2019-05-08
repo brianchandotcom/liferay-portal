@@ -62,6 +62,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -812,8 +813,16 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				int sortType = _fieldNameSortTypes.getOrDefault(
 					fieldName, Sort.STRING_TYPE);
 
-				return new Sort(
-					fieldName, sortType, !orderByComparator.isAscending());
+				boolean ascending = orderByComparator.isAscending();
+
+				if (Objects.equals(
+						orderByFieldName,
+						KaleoTaskInstanceTokenField.COMPLETED)) {
+
+					ascending = true;
+				}
+
+				return new Sort(fieldName, sortType, !ascending);
 			}
 		).toArray(
 			Sort[]::new

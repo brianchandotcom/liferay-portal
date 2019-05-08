@@ -52,6 +52,9 @@ public class ServiceWrapperRegistryTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		EmailAddress emailAddress =
+			_emailAddressLocalService.createEmailAddress(1);
+
 		ServiceRegistration<ServiceWrapper> serviceRegistration =
 			bundleContext.registerService(
 				ServiceWrapper.class,
@@ -59,10 +62,6 @@ public class ServiceWrapperRegistryTest {
 
 					@Override
 					public EmailAddress getEmailAddress(long emailAddressId) {
-						EmailAddress emailAddress = createEmailAddress(1);
-
-						emailAddress.setAddress("email@liferay.com");
-
 						return emailAddress;
 					}
 
@@ -70,10 +69,8 @@ public class ServiceWrapperRegistryTest {
 				null);
 
 		try {
-			EmailAddress emailAddress =
-				_emailAddressLocalService.getEmailAddress(1);
-
-			Assert.assertEquals("email@liferay.com", emailAddress.getAddress());
+			Assert.assertSame(
+				emailAddress, _emailAddressLocalService.getEmailAddress(1));
 		}
 		finally {
 			serviceRegistration.unregister();

@@ -14,10 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket;
 
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.bucket.BaseDateHistogramAggregationTestCase;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
@@ -28,13 +26,7 @@ public class DateHistogramAggregationTest
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 }

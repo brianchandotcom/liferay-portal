@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
-
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
-import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.query.BasePrefixQueryTestCase;
+package com.liferay.portal.search.elasticsearch6.internal;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public class PrefixQueryTest extends BasePrefixQueryTestCase {
+public class ElasticsearchIndexingFixtureFactory {
 
-	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
-		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
+	public static ElasticsearchIndexingFixtureBuilder builder() {
+		return new ElasticsearchIndexingFixtureBuilder();
 	}
+
+	public static ElasticsearchIndexingFixture getInstance() {
+		return _elasticsearchIndexingFixture;
+	}
+
+	private static final ElasticsearchIndexingFixture
+		_elasticsearchIndexingFixture = builder().build();
 
 }

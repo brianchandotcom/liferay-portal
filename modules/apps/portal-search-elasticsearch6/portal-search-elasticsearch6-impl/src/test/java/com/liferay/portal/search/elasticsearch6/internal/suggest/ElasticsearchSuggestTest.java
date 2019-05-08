@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.suggest;
 
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.suggest.BaseSuggestTestCase;
 
@@ -64,13 +62,7 @@ public class ElasticsearchSuggestTest extends BaseSuggestTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 }

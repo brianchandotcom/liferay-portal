@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.BulkDocumentRequestExecutorImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -359,13 +359,10 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(createElasticsearchFixture());
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
+		return LiferayElasticsearchIndexingFixtureFactory.builder(
+		).elasticsearchFixture(
+			createElasticsearchFixture()
+		).build();
 	}
 
 }

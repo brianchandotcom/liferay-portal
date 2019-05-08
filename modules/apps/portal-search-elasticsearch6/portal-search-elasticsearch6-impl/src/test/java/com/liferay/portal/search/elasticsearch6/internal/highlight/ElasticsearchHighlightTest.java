@@ -17,10 +17,8 @@ package com.liferay.portal.search.elasticsearch6.internal.highlight;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.StringQuery;
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.highlight.BaseHighlightTestCase;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
@@ -61,12 +59,7 @@ public class ElasticsearchHighlightTest extends BaseHighlightTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
-			}
-		};
+		return ElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 }

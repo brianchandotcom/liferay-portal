@@ -14,11 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.facet;
 
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.internal.facet.ModifiedFacetImpl;
 import com.liferay.portal.search.test.util.facet.BaseAggregationFilteringTestCase;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Collections;
@@ -43,14 +41,10 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
-				setFacetProcessor(createFacetProcessor());
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
+		return LiferayElasticsearchIndexingFixtureFactory.builder(
+		).facetProcessor(
+			createFacetProcessor()
+		).build();
 	}
 
 }

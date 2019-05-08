@@ -59,10 +59,10 @@ public abstract class BaseRemoteGitRepository
 
 	@Override
 	public String getRemoteURL() {
-		List<String> gitHubCacheHostnames =
-			GitHubDevSyncUtil.getGitHubCacheHostnames();
+		List<String> gitHubDevNodeHostnames =
+			GitHubDevSyncUtil.getGitHubDevNodeHostnames();
 
-		if (gitHubCacheHostnames.contains("slave-" + getHostname())) {
+		if (gitHubDevNodeHostnames.contains("slave-" + getHostname())) {
 			return JenkinsResultsParserUtil.combine(
 				"root@", getHostname(), ":/opt/dev/projects/github/",
 				getName());

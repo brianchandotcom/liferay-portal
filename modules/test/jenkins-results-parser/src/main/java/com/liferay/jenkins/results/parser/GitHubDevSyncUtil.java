@@ -791,9 +791,9 @@ public class GitHubDevSyncUtil {
 		return cachedRemoteGitBranches;
 	}
 
-	protected static List<String> getGitHubCacheHostnames() {
-		if (gitHubCacheHostnames != null) {
-			return new ArrayList<>(gitHubCacheHostnames);
+	protected static List<String> getGitHubDevNodeHostnames() {
+		if (gitHubDevNodeHostnames != null) {
+			return new ArrayList<>(gitHubDevNodeHostnames);
 		}
 
 		Properties buildProperties;
@@ -810,9 +810,9 @@ public class GitHubDevSyncUtil {
 
 		String[] gitCacheHostnames = gitCacheHostnamesPropertyValue.split(",");
 
-		gitHubCacheHostnames = Arrays.asList(gitCacheHostnames);
+		gitHubDevNodeHostnames = Arrays.asList(gitCacheHostnames);
 
-		return gitHubCacheHostnames;
+		return gitHubDevNodeHostnames;
 	}
 
 	protected static List<String> getGitHubDevRemoteURLs(
@@ -820,11 +820,11 @@ public class GitHubDevSyncUtil {
 
 		List<String> gitHubDevRemoteURLs = new ArrayList<>();
 
-		for (String gitHubCacheHostname : getGitHubCacheHostnames()) {
-			if (gitHubCacheHostname.startsWith("slave-")) {
+		for (String gitHubDevNodeHostname : getGitHubDevNodeHostnames()) {
+			if (gitHubDevNodeHostname.startsWith("slave-")) {
 				gitHubDevRemoteURLs.add(
 					JenkinsResultsParserUtil.combine(
-						"root@", gitHubCacheHostname.substring(6),
+						"root@", gitHubDevNodeHostname.substring(6),
 						":/opt/dev/projects/github/",
 						gitWorkingDirectory.getGitRepositoryName()));
 
@@ -833,7 +833,7 @@ public class GitHubDevSyncUtil {
 
 			gitHubDevRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
-					"git@", gitHubCacheHostname, ":",
+					"git@", gitHubDevNodeHostname, ":",
 					gitWorkingDirectory.getGitRepositoryUsername(), "/",
 					gitWorkingDirectory.getGitRepositoryName(), ".git"));
 		}
@@ -1344,7 +1344,7 @@ public class GitHubDevSyncUtil {
 		return validatedGitHubDevRemoteURLs;
 	}
 
-	protected static List<String> gitHubCacheHostnames;
+	protected static List<String> gitHubDevNodeHostnames;
 
 	private static LocalGitBranch _createCachedLocalGitBranch(
 		LocalGitRepository localGitRepository, String receiverUsername,

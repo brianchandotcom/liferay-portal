@@ -28,9 +28,13 @@ AUI.add(
 				Liferay.after(
 					'initStagingBar',
 					function(event) {
-						var stagingLevel3 = A.one('.staging-bar-level-3-message');
+						var body = A.getBody();
 
-						A.getBody().addClass(stagingLevel3 === null ? 'staging-ready' : 'staging-ready-level-3');
+						if (body.hasClass('has-staging-bar')) {
+							var stagingLevel3 = A.one('.staging-bar-level-3-message');
+
+							body.addClass(stagingLevel3 === null ? 'staging-ready' : 'staging-ready-level-3');
+						}
 					}
 				);
 

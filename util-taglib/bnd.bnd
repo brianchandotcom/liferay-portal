@@ -79,3 +79,4 @@ Provide-Capability:\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/util";\
 		version:Version="${Bundle-Version}"
+-include ../common.bnd

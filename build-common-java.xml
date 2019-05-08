@@ -119,16 +119,7 @@
 
 				<manifest-helper />
 
-				<bndexpand propertyfile="${project.dir}/common.bnd" />
-
-				<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
-					<bndfiles>
-						<fileset
-							dir="."
-						>
-							<include name="bnd.bnd" />
-						</fileset>
-					</bndfiles>
+				<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar" files="bnd.bnd">
 					<classpath>
 						<pathelement location="classes" />
 					</classpath>

@@ -70,3 +70,4 @@ Include-Resource:\
 Liferay-Service: true
 Private-Package: com.liferay.*.dependencies
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)
+-include ../common.bnd

@@ -35,3 +35,4 @@ Include-Resource:\
 	@${project.dir}/../lib/portal/httpmime.jar,\
 	@${project.dir}/../lib/portal/juniversalchardet.jar,\
 	@${project.dir}/../lib/portal/poi.jar
+-include ../common.bnd

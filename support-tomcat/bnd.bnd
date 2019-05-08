@@ -14,3 +14,4 @@ Import-Package:\
 	\
 	*;resolution:=optional
 Include-Resource: classes
+-include ../common.bnd

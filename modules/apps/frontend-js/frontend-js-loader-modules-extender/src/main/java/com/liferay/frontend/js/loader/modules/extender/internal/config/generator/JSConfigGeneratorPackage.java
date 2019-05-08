@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.config.generator;
 
-import aQute.bnd.osgi.Constants;
-
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,6 +40,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWire;

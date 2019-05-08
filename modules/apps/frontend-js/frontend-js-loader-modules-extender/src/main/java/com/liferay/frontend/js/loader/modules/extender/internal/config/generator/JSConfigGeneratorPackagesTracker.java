@@ -14,10 +14,9 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.config.generator;
 
-import aQute.lib.converter.Converter;
-
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.net.URL;
 
@@ -58,7 +57,8 @@ public class JSConfigGeneratorPackagesTracker
 			_serviceTracker.close();
 		}
 
-		setDetails(Converter.cnv(Details.class, properties));
+		setDetails(
+			ConfigurableUtil.createConfigurable(Details.class, properties));
 
 		_jsConfigGeneratorPackages.clear();
 

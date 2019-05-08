@@ -28,6 +28,7 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -92,6 +93,8 @@ public class InvokerFilterContainerImplTest {
 		_portlet.setPortletApp(portletAppImpl);
 		_portlet.setPortletClass(MVCPortlet.class.getName());
 		_portlet.setPortletId("InvokerFilterContainerImplTest");
+		_portlet.setInitParams(
+			Collections.singletonMap("template-path", "/META-INF/resources/"));
 
 		_invokerFilterContainer =
 			(InvokerFilterContainer)_portletInstanceFactory.create(

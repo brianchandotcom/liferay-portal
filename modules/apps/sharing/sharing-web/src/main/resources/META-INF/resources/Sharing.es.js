@@ -293,7 +293,6 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
-	_inputValue: Config.string().internal(),
 	emailAddressErrorMessage: Config.string().value(''),
 	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
@@ -301,7 +300,8 @@ Sharing.STATE = {
 	sharingUserAutocompleteURL: Config.string().required(),
 	sharingVerifyEmailAddressURL: Config.string().required(),
 	spritemap: Config.string().required(),
-	submitting: Config.bool().value(false)
+	submitting: Config.bool().value(false),
+	_inputValue: Config.string().internal()
 };
 
 Soy.register(Sharing, templates);

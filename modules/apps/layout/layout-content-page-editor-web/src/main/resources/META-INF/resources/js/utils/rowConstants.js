@@ -3,13 +3,13 @@
  */
 export const CONTAINER_TYPES = [
 	{
-		containerTypeId: 'fluid',
-		label: Liferay.Language.get('fluid')
+		containerTypeId: 'fixed',
+		label: Liferay.Language.get('fixed-width')
 	},
 
 	{
-		containerTypeId: 'fixed',
-		label: Liferay.Language.get('fixed-width')
+		containerTypeId: 'fluid',
+		label: Liferay.Language.get('fluid')
 	}
 ];
 

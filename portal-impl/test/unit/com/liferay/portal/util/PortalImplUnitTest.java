@@ -18,16 +18,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -316,71 +315,41 @@ public class PortalImplUnitTest {
 		ServiceRegistration<AlwaysAllowDoAsUser> serviceRegistration =
 			registry.registerService(
 				AlwaysAllowDoAsUser.class,
-				new AlwaysAllowDoAsUser() {
-
-					@Override
-					public Collection<String> getActionNames() {
+				(AlwaysAllowDoAsUser)ProxyUtil.newProxyInstance(
+					AlwaysAllowDoAsUser.class.getClassLoader(),
+					new Class<?>[] {AlwaysAllowDoAsUser.class},
+					(proxy, method, args) -> {
 						calledAlwaysAllowDoAsUser[0] = true;
 
-						return Collections.singletonList(_ACTION_NAME);
-					}
+						if ("equals".equals(method.getName())) {
+							return true;
+						}
 
-					@Override
-					public Collection<String> getMVCRenderCommandNames() {
-						calledAlwaysAllowDoAsUser[0] = true;
+						if ("hashcode".equals(method.getName())) {
+							return 0;
+						}
 
-						return Collections.singletonList(
-							_MVC_RENDER_COMMMAND_NAME);
-					}
-
-					@Override
-					public Collection<String> getPaths() {
-						calledAlwaysAllowDoAsUser[0] = true;
-
-						return Collections.singletonList(_PATH);
-					}
-
-					@Override
-					public Collection<String> getStrutsActions() {
-						calledAlwaysAllowDoAsUser[0] = true;
-
-						return Collections.singletonList(_STRUTS_ACTION);
-					}
-
-				});
+						return Collections.emptyList();
+					}));
 
 		try {
-			MockHttpServletRequest mockHttpServletRequest1 =
+			MockHttpServletRequest mockHttpServletRequest =
 				new MockHttpServletRequest();
 
-			mockHttpServletRequest1.setParameter(
-				"_TestAlwaysAllowDoAsUser_actionName", _ACTION_NAME);
-			mockHttpServletRequest1.setParameter(
-				"_TestAlwaysAllowDoAsUser_struts_action", _STRUTS_ACTION);
-			mockHttpServletRequest1.setParameter("doAsUserId", "0");
-			mockHttpServletRequest1.setParameter(
-				"p_p_id", "TestAlwaysAllowDoAsUser");
+			mockHttpServletRequest.setParameter("doAsUserId", "0");
 
-			Assert.assertEquals(
-				0, _portalImpl.getUserId(mockHttpServletRequest1));
+			_portalImpl.getUserId(mockHttpServletRequest);
 
 			Assert.assertTrue(
 				"AlwaysAllowDoAsUser not called", calledAlwaysAllowDoAsUser[0]);
 
 			calledAlwaysAllowDoAsUser[0] = false;
 
-			MockHttpServletRequest mockHttpServletRequest2 =
-				new MockHttpServletRequest();
+			_portalImpl.getUserId(new MockHttpServletRequest());
 
-			mockHttpServletRequest2.setParameter("doAsUserId", "0");
-			mockHttpServletRequest2.setPathInfo(
-				_PATH + RandomTestUtil.randomString());
-
-			Assert.assertEquals(
-				0, _portalImpl.getUserId(mockHttpServletRequest2));
-
-			Assert.assertTrue(
-				"AlwaysAllowDoAsUser not called", calledAlwaysAllowDoAsUser[0]);
+			Assert.assertFalse(
+				"AlwaysAllowDoAsUser should not be called",
+				calledAlwaysAllowDoAsUser[0]);
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -653,17 +622,6 @@ public class PortalImplUnitTest {
 
 		ReflectionTestUtil.setFieldValue(PropsValues.class, fieldName, value);
 	}
-
-	private static final String _ACTION_NAME =
-		"/TestAlwaysAllowDoAsUser/action/name";
-
-	private static final String _MVC_RENDER_COMMMAND_NAME =
-		"/TestAlwaysAllowDoAsUser/mvc/render/command/name";
-
-	private static final String _PATH = "/TestAlwaysAllowDoAsUser/";
-
-	private static final String _STRUTS_ACTION =
-		"/TestAlwaysAllowDoAsUser/struts/action";
 
 	private final PortalImpl _portalImpl = new PortalImpl();
 

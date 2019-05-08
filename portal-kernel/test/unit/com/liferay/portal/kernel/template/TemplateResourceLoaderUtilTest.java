@@ -103,6 +103,9 @@ public class TemplateResourceLoaderUtilTest {
 	@Test
 	public void testHasTemplateResource() throws TemplateException {
 		Assert.assertTrue(
+			_TEST_TEMPLATE_RESOURCE_TEMPLATE_ID +
+				" not loaded by template resource loader " +
+					_TEST_TEMPLATE_RESOURCE_LOADER_NAME,
 			TemplateResourceLoaderUtil.hasTemplateResource(
 				_TEST_TEMPLATE_RESOURCE_LOADER_NAME,
 				_TEST_TEMPLATE_RESOURCE_TEMPLATE_ID));
@@ -111,6 +114,7 @@ public class TemplateResourceLoaderUtilTest {
 	@Test
 	public void testHasTemplateResourceLoader() {
 		Assert.assertTrue(
+			_TEST_TEMPLATE_RESOURCE_LOADER_NAME + " not found",
 			TemplateResourceLoaderUtil.hasTemplateResourceLoader(
 				_TEST_TEMPLATE_RESOURCE_LOADER_NAME));
 	}

@@ -43,8 +43,10 @@ public class AuthPublicPathRegistryTest {
 
 		try {
 			Assert.assertTrue(
+				_TEST_AUTH_PUBLIC_PATH + " not found",
 				AuthPublicPathRegistry.contains(_TEST_AUTH_PUBLIC_PATH));
 			Assert.assertFalse(
+				"/unregistered/unknown/path should not be found",
 				AuthPublicPathRegistry.contains("/unregistered/unknown/path"));
 		}
 		finally {

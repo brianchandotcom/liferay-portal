@@ -108,6 +108,7 @@ public class TemplateManagerUtilTest {
 	@Test
 	public void testHasTemplateManager() {
 		Assert.assertTrue(
+			_TEST_TEMPLATE_MANAGER_NAME + " not found",
 			TemplateManagerUtil.hasTemplateManager(
 				_TEST_TEMPLATE_MANAGER_NAME));
 	}

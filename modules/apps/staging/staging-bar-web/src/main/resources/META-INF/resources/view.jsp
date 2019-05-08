@@ -175,7 +175,7 @@ if (liveLayout != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<c:if test="<%= !liveLayout.isSystem() || liveLayout.isTypeControlPanel() || !Objects.equals(liveLayout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) %>">
+			<c:if test="<%= !layout.isSystem() || layout.isTypeControlPanel() || !Objects.equals(layout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) %>">
 				<li class="control-menu-nav-item staging-bar">
 					<div class="control-menu-level-2">
 						<div class="container-fluid container-fluid-max-xl">

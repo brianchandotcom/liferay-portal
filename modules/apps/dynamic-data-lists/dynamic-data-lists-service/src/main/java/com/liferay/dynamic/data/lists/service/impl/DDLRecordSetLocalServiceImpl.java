@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
@@ -265,11 +267,11 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Records
 
-		ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
+		_ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
 
 		// Record set versions
 
-		ddlRecordSetVersionLocalService.deleteByRecordSetId(
+		_ddlRecordSetVersionLocalService.deleteByRecordSetId(
 			recordSet.getRecordSetId());
 
 		// Dynamic data mapping structure link
@@ -810,7 +812,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setDDMStructureId(ddmStructureId);
 
 		DDLRecordSetVersion latestRecordSetVersion =
-			ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
+			_ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
 				recordSet.getRecordSetId());
 
 		int status = GetterUtil.getInteger(
@@ -863,7 +865,7 @@ public class DDLRecordSetLocalServiceImpl
 
 			// Records
 
-			ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
+			_ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
 
 			// Dynamic data mapping structure link
 
@@ -937,7 +939,7 @@ public class DDLRecordSetLocalServiceImpl
 		throws PortalException {
 
 		DDLRecordSetVersion recordSetVersion =
-			ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
+			_ddlRecordSetVersionLocalService.getLatestRecordSetVersion(
 				recordSet.getRecordSetId());
 
 		recordSetVersion.setUserId(recordSet.getUserId());
@@ -1019,5 +1021,11 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Reference
 	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
+
+	@Reference
+	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
+	private DDLRecordSetVersionLocalService _ddlRecordSetVersionLocalService;
 
 }

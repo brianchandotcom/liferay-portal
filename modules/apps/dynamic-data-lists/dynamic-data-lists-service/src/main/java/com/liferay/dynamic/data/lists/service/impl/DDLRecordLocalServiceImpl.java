@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
@@ -518,7 +519,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException {
 
-		return ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
+		return _ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
 	}
 
 	@Override
@@ -649,7 +650,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
+	 *             DDLRecordVersionLocalService#getRecordVersion(
 	 *             long)}
 	 */
 	@Deprecated
@@ -663,7 +664,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
+	 *             DDLRecordVersionLocalService#getRecordVersion(
 	 *             long, String)}
 	 */
 	@Deprecated
@@ -677,7 +678,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersions(
+	 *             DDLRecordVersionLocalService#getRecordVersions(
 	 *             long, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -693,7 +694,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
+	 *             DDLRecordVersionLocalService#getRecordVersionsCount(
 	 *             long)}
 	 */
 	@Deprecated
@@ -720,7 +721,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordVersion recordVersion =
-			ddlRecordVersionLocalService.getRecordVersion(recordId, version);
+			_ddlRecordVersionLocalService.getRecordVersion(recordId, version);
 
 		if (!recordVersion.isApproved()) {
 			return;
@@ -1566,5 +1567,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordLocalServiceImpl.class);
+
+	@Reference
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 
 }

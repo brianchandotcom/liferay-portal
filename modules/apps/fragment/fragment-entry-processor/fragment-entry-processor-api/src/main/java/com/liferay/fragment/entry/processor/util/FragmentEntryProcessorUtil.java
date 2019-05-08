@@ -34,6 +34,8 @@ public interface FragmentEntryProcessorUtil {
 			Locale locale, long previewClassPK, int previewType)
 		throws PortalException;
 
-	public boolean isMapped(JSONObject jsonObject, String mode);
+	public boolean isAssetDisplayPage(String mode);
+
+	public boolean isMapped(JSONObject jsonObject);
 
 }

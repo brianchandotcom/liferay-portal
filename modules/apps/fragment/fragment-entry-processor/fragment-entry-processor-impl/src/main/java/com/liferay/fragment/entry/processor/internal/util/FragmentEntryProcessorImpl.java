@@ -66,7 +66,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			Locale locale, long previewClassPK, int previewType)
 		throws PortalException {
 
-		if (!isMapped(jsonObject, mode)) {
+		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
@@ -117,7 +117,18 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 	}
 
 	@Override
-	public boolean isMapped(JSONObject jsonObject, String mode) {
+	public boolean isAssetDisplayPage(String mode) {
+		if (Objects.equals(
+				mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isMapped(JSONObject jsonObject) {
 		long classNameId = jsonObject.getLong("classNameId");
 		long classPK = jsonObject.getLong("classPK");
 		String fieldId = jsonObject.getString("fieldId");
@@ -128,8 +139,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			return true;
 		}
 
-		return Objects.equals(
-			mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE);
+		return false;
 	}
 
 	private String _getEditableValueByLocale(

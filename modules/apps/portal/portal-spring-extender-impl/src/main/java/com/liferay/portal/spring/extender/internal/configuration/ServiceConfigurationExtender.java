@@ -14,17 +14,15 @@
 
 package com.liferay.portal.spring.extender.internal.configuration;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Dictionary;
 
@@ -34,6 +32,8 @@ import org.apache.felix.dm.ServiceDependency;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.Version;
+import org.osgi.framework.VersionRange;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -134,18 +134,29 @@ public class ServiceConfigurationExtender
 
 			// See LPS-76926
 
-			if (Version.isVersion(requireSchemaVersion)) {
-				Version version = Version.parseVersion(requireSchemaVersion);
+			try {
+				Version version = new Version(requireSchemaVersion);
 
 				versionRangeFilter = _getVersionRangerFilter(version);
 			}
-			else if (VersionRange.isVersionRange(requireSchemaVersion)) {
-				VersionRange versionRange = VersionRange.parseVersionRange(
-					requireSchemaVersion);
+			catch (IllegalArgumentException iae) {
+				try {
+					VersionRange versionRange = new VersionRange(
+						requireSchemaVersion);
 
-				versionRangeFilter = StringUtil.replace(
-					versionRange.toFilter(), "version",
-					"release.schema.version");
+					versionRangeFilter = versionRange.toFilterString(
+						"release.schema.version");
+				}
+				catch (IllegalArgumentException iae2) {
+					iae.addSuppressed(iae2);
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid \"Liferay-Require-SchemaVersion\" " +
+								"header for bundle: " + bundle.getBundleId(),
+							iae);
+					}
+				}
 			}
 
 			if (versionRangeFilter == null) {
@@ -200,6 +211,9 @@ public class ServiceConfigurationExtender
 	protected void deactivate() {
 		_bundleTracker.close();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceConfigurationExtender.class);
 
 	private BundleTracker<?> _bundleTracker;
 

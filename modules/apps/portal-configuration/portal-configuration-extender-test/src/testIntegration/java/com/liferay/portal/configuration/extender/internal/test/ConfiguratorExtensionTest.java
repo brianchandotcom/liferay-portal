@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.extender.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.IOException;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -91,7 +91,7 @@ public class ConfiguratorExtensionTest {
 
 	@Test
 	public void testExceptionInSupplierDoesNotStopExtension() throws Exception {
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid",
@@ -110,7 +110,7 @@ public class ConfiguratorExtensionTest {
 
 	@Test
 	public void testFactoryConfiguration() throws Exception {
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
@@ -131,7 +131,7 @@ public class ConfiguratorExtensionTest {
 
 		configuration.update(new TestProperties<>("key", "value"));
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
@@ -154,7 +154,7 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfigurationWithClashingFactoryPid()
 		throws Exception {
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
@@ -174,7 +174,7 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfigurationWithClashingMultipleContents()
 		throws Exception {
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
@@ -199,13 +199,13 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfigurationWithClashingMultipleContentsAndDifferentNamespaces()
 		throws Exception {
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")));
 
-		_startExtension(
+		_processConfigurations(
 			"otherBundle",
 			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
@@ -220,7 +220,7 @@ public class ConfiguratorExtensionTest {
 
 	@Test
 	public void testSingleConfiguration() throws Exception {
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")));
@@ -241,7 +241,7 @@ public class ConfiguratorExtensionTest {
 
 		configuration.update(new TestProperties<>("key", "value"));
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value2")));
@@ -262,7 +262,7 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithClashingMultipleContents()
 		throws Exception {
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")),
@@ -285,12 +285,12 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithClashingMultipleContentsAndDifferentNamespaces()
 		throws Exception {
 
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
-		_startExtension(
+		_processConfigurations(
 			"otherBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value2")));
@@ -309,7 +309,7 @@ public class ConfiguratorExtensionTest {
 
 	@Test
 	public void testSingleConfigurationWithMultipleContents() throws Exception {
-		_startExtension(
+		_processConfigurations(
 			"aBundle",
 			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")),
@@ -355,29 +355,26 @@ public class ConfiguratorExtensionTest {
 		}
 	}
 
-	private void _startExtension(
+	private void _processConfigurations(
 			String namespace, Object... namedConfigurationContents)
 		throws Exception {
 
 		String name =
 			"com.liferay.portal.configuration.extender.internal." +
-				"ConfiguratorExtension";
+				"ConfiguratorExtender";
 
 		Class<?> clazz = _bundle.loadClass(name);
-
-		Constructor<?> constructor = clazz.getConstructor(
-			ConfigurationAdmin.class, String.class, Collection.class);
-
-		Object configuratorExtension = constructor.newInstance(
-			_configurationAdmin, namespace,
-			Arrays.asList(namedConfigurationContents));
-
-		Method method = clazz.getMethod("start");
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(name, Level.ERROR)) {
 
-			method.invoke(configuratorExtension);
+			ReflectionTestUtil.invoke(
+				clazz, "_process",
+				new Class<?>[] {
+					ConfigurationAdmin.class, String.class, Collection.class
+				},
+				_configurationAdmin, namespace,
+				Arrays.asList(namedConfigurationContents));
 		}
 	}
 

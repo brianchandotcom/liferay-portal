@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
@@ -81,18 +82,9 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 			return null;
 		}
 
-		String symbolicName = bundle.getSymbolicName();
-
-		for (NamedConfigurationContent namedConfigurationContent :
-				namedConfigurationContents) {
-
-			try {
-				_process(namedConfigurationContent, symbolicName);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		_process(
+			_configurationAdmin, bundle.getSymbolicName(),
+			namedConfigurationContents);
 
 		return bundle;
 	}
@@ -118,6 +110,84 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
+	}
+
+	private static void _process(
+		ConfigurationAdmin configurationAdmin, String symbolicName,
+		Collection<NamedConfigurationContent> namedConfigurationContents) {
+
+		for (NamedConfigurationContent namedConfigurationContent :
+				namedConfigurationContents) {
+
+			try {
+				_process(
+					configurationAdmin, symbolicName,
+					namedConfigurationContent);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
+
+	private static void _process(
+			ConfigurationAdmin configurationAdmin, String symbolicName,
+			NamedConfigurationContent namedConfigurationContent)
+		throws InvalidSyntaxException, IOException {
+
+		Configuration configuration = null;
+		String configuratorURL = null;
+
+		if (namedConfigurationContent.getFactoryPid() == null) {
+			String pid = namedConfigurationContent.getPid();
+
+			if (ArrayUtil.isNotEmpty(
+					configurationAdmin.listConfigurations(
+						"(service.pid=" + pid + ")"))) {
+
+				return;
+			}
+
+			configuration = configurationAdmin.getConfiguration(
+				pid, StringPool.QUESTION);
+		}
+		else {
+			configuratorURL =
+				symbolicName + "#" + namedConfigurationContent.getPid();
+
+			if (ArrayUtil.isNotEmpty(
+					configurationAdmin.listConfigurations(
+						"(configurator.url=" + configuratorURL + ")"))) {
+
+				return;
+			}
+
+			configuration = configurationAdmin.createFactoryConfiguration(
+				namedConfigurationContent.getFactoryPid(), StringPool.QUESTION);
+		}
+
+		Dictionary<String, Object> properties = null;
+
+		try {
+			properties = namedConfigurationContent.getProperties();
+		}
+		catch (Throwable t) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Supplier from description ", namedConfigurationContent,
+						" threw an exception: "),
+					t);
+			}
+
+			return;
+		}
+
+		if (configuratorURL != null) {
+			properties.put("configurator.url", configuratorURL);
+		}
+
+		configuration.update(properties);
 	}
 
 	private void _addNamedConfigurations(
@@ -169,66 +239,6 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 						}
 					}));
 		}
-	}
-
-	private void _process(
-			NamedConfigurationContent namedConfigurationContent,
-			String symbolicName)
-		throws InvalidSyntaxException, IOException {
-
-		Configuration configuration = null;
-		String configuratorURL = null;
-
-		if (namedConfigurationContent.getFactoryPid() == null) {
-			String pid = namedConfigurationContent.getPid();
-
-			if (ArrayUtil.isNotEmpty(
-					_configurationAdmin.listConfigurations(
-						"(service.pid=" + pid + ")"))) {
-
-				return;
-			}
-
-			configuration = _configurationAdmin.getConfiguration(
-				pid, StringPool.QUESTION);
-		}
-		else {
-			configuratorURL =
-				symbolicName + "#" + namedConfigurationContent.getPid();
-
-			if (ArrayUtil.isNotEmpty(
-					_configurationAdmin.listConfigurations(
-						"(configurator.url=" + configuratorURL + ")"))) {
-
-				return;
-			}
-
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				namedConfigurationContent.getFactoryPid(), StringPool.QUESTION);
-		}
-
-		Dictionary<String, Object> properties = null;
-
-		try {
-			properties = namedConfigurationContent.getProperties();
-		}
-		catch (Throwable t) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Supplier from description ", namedConfigurationContent,
-						" threw an exception: "),
-					t);
-			}
-
-			return;
-		}
-
-		if (configuratorURL != null) {
-			properties.put("configurator.url", configuratorURL);
-		}
-
-		configuration.update(properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

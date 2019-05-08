@@ -1,5 +1,6 @@
 import {AOP} from 'metal-aop';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import {FRAGMENTS_EDITOR_DRAGGING_CLASS} from './constants';
 import {Position} from 'metal-position';
 
 let _getRegionInterceptor = null;
@@ -61,7 +62,17 @@ function _interceptGetRegion() {
  * @review
  */
 function initializeDragDrop(dragDropOptions) {
-	const dragDrop = new DragDrop(dragDropOptions);
+	const dragDrop = new DragDrop(
+		Object.assign(
+			{
+				autoScroll: true,
+				draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				scrollContainers: '.fragment-entry-link-list-wrapper'
+			},
+			dragDropOptions
+		)
+	);
 
 	dragDrop.on('dispose', _stopInterceptGetRegion);
 	dragDrop.on(Drag.Events.START, _interceptGetRegion);

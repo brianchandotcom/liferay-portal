@@ -183,7 +183,16 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 						searchContext.setStart(4);
 					});
 
-				indexingTestHelper.search();
+				try {
+					indexingTestHelper.search();
+				}
+				catch (RuntimeException re) {
+					if (_shouldIgnoreSearchEngineGlitchAndRetry(re)) {
+						Assert.fail(re.getMessage());
+					}
+
+					throw re;
+				}
 
 				indexingTestHelper.verify(
 					hits -> assertGroups(
@@ -232,7 +241,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		Hits hits2 = hitsMap.get(key);
 
 		Assert.assertEquals(
-			indexingTestHelper.getQueryString(), sort(fieldNames),
+			indexingTestHelper.getRequestString(), sort(fieldNames),
 			sort(getFieldNames(hits2)));
 	}
 
@@ -252,7 +261,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		);
 
 		AssertUtils.assertEquals(
-			indexingTestHelper.getQueryString(), expectedCountsMap,
+			indexingTestHelper.getRequestString(), expectedCountsMap,
 			actualCountsMap);
 	}
 
@@ -297,5 +306,24 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	}
 
 	protected static final String GROUP_FIELD = Field.USER_NAME;
+
+	private boolean _shouldIgnoreSearchEngineGlitchAndRetry(
+		RuntimeException re) {
+
+		Throwable t1 = re.getCause();
+
+		Throwable t2 = t1.getCause();
+
+		String message = t2.getMessage();
+
+		if (message.equals(
+				"numHits must be > 0; please use TotalHitCountCollector if " +
+					"you just need the total hit count")) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 }

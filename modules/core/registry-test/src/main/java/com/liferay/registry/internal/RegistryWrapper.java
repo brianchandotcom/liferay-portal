@@ -52,6 +52,14 @@ public class RegistryWrapper implements Registry {
 	}
 
 	@Override
+	public <T> ServiceReference<T>[] getAllServiceReferences(
+			String className, String filterString)
+		throws Exception {
+
+		return _registry.getAllServiceReferences(className, filterString);
+	}
+
+	@Override
 	public Filter getFilter(String filterString) throws RuntimeException {
 		return _registry.getFilter(filterString);
 	}

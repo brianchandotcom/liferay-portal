@@ -16,8 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.logging;
 
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexSearcher;
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -81,13 +80,7 @@ public class ElasticsearchIndexSearcherLoggingTest
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture() {
-			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
-				setLiferayMappingsAddedToIndex(true);
-			}
-		};
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
 }

@@ -14,8 +14,26 @@
 
 package com.liferay.fragment.entry.processor.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface FragmentEntryProcessorUtil {
+
+	public String getEditableValue(
+		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
+
+	public Object getValue(
+			JSONObject jsonObject,
+			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
+			Locale locale, long previewClassPK, int previewType)
+		throws PortalException;
+
+	public boolean isMapped(JSONObject jsonObject, String mode);
+
 }

@@ -110,8 +110,6 @@ public class WorkflowHandlerRegistryUtilTest {
 
 	@Test
 	public void testStartWorkflowInstance() throws PortalException {
-		_calledWorkflowHandler = false;
-
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			1, 1, 1, _CLASS_NAME, 1, null, new ServiceContext(),
 			new HashMap<>());

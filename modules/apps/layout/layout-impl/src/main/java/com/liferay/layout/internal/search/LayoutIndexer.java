@@ -163,14 +163,14 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 		}
 
 		HttpServletRequest httpServletRequest = null;
-		HttpServletResponse response = null;
+		HttpServletResponse httpServletResponse = null;
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext != null) {
 			httpServletRequest = serviceContext.getRequest();
-			response = serviceContext.getResponse();
+			httpServletResponse = serviceContext.getResponse();
 		}
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
@@ -178,7 +178,7 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 
 			String content =
 				LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-					null, httpServletRequest, response,
+					null, httpServletRequest, httpServletResponse,
 					layoutPageTemplateStructure,
 					FragmentEntryLinkConstants.VIEW, new HashMap<>(), locale,
 					new long[0]);

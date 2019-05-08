@@ -550,7 +550,7 @@ public class InvokerPortletImpl
 
 			HttpServletRequest httpServletRequest =
 				portletRequest.getHttpServletRequest();
-			HttpServletResponse response =
+			HttpServletResponse httpServletResponse =
 				portletResponse.getHttpServletResponse();
 
 			httpServletRequest.setAttribute(
@@ -566,10 +566,12 @@ public class InvokerPortletImpl
 				// allow you to specify the content type or headers
 
 				if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-					requestDispatcher.forward(httpServletRequest, response);
+					requestDispatcher.forward(
+						httpServletRequest, httpServletResponse);
 				}
 				else {
-					requestDispatcher.include(httpServletRequest, response);
+					requestDispatcher.include(
+						httpServletRequest, httpServletResponse);
 				}
 			}
 			catch (ServletException se) {

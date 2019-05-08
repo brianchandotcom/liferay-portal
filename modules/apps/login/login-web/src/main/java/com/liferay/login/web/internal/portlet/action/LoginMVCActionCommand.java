@@ -190,8 +190,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getHttpServletRequest(actionRequest));
 
 		if (!themeDisplay.isSignedIn()) {
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				actionResponse);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
 
 			String login = ParamUtil.getString(actionRequest, "login");
 			String password = actionRequest.getParameter("password");
@@ -207,8 +207,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			String authType = portletPreferences.getValue("authType", null);
 
 			_authenticatedSessionManager.login(
-				httpServletRequest, response, login, password, rememberMe,
-				authType);
+				httpServletRequest, httpServletResponse, login, password,
+				rememberMe, authType);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

@@ -333,8 +333,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			actionResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
 
 		HttpSession session = httpServletRequest.getSession();
 
@@ -367,7 +367,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			if (_userLocalService.fetchUserByOpenId(
 					themeDisplay.getCompanyId(), openId) != null) {
 
-				response.sendRedirect(authRequest.getDestinationUrl(true));
+				httpServletResponse.sendRedirect(
+					authRequest.getDestinationUrl(true));
 
 				return;
 			}
@@ -380,7 +381,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			if (user != null) {
 				_userLocalService.updateOpenId(user.getUserId(), openId);
 
-				response.sendRedirect(authRequest.getDestinationUrl(true));
+				httpServletResponse.sendRedirect(
+					authRequest.getDestinationUrl(true));
 
 				return;
 			}
@@ -407,7 +409,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 			authRequest.addExtension(sRegRequest);
 
-			response.sendRedirect(authRequest.getDestinationUrl(true));
+			httpServletResponse.sendRedirect(
+				authRequest.getDestinationUrl(true));
 		}
 		catch (ConsumerException ce) {
 			throw new OpenIdServiceException.ConsumerException(

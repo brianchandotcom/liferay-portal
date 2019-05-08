@@ -236,12 +236,13 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	protected void doIncludeTheme(String page) throws Exception {
-		HttpServletResponse response =
+		HttpServletResponse httpServletResponse =
 			(HttpServletResponse)pageContext.getResponse();
 
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
-		ThemeUtil.include(servletContext, request, response, page, theme);
+		ThemeUtil.include(
+			servletContext, request, httpServletResponse, page, theme);
 	}
 
 	protected Object getBodyContentWrapper() {

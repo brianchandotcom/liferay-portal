@@ -536,8 +536,8 @@ public class JournalPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			resourceResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
 		if (resourceID.equals("compareVersions")) {
 			ThemeDisplay themeDisplay =
@@ -569,7 +569,8 @@ public class JournalPortlet extends MVCPortlet {
 			}
 			catch (Exception e) {
 				try {
-					_portal.sendError(e, httpServletRequest, response);
+					_portal.sendError(
+						e, httpServletRequest, httpServletResponse);
 				}
 				catch (ServletException se) {
 				}

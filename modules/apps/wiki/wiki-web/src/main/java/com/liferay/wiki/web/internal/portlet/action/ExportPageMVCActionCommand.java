@@ -114,12 +114,13 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				actionResponse);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
 
 			getFile(
 				nodeId, title, version, targetExtension, viewPageURL,
-				editPageURL, themeDisplay, httpServletRequest, response);
+				editPageURL, themeDisplay, httpServletRequest,
+				httpServletResponse);
 
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}

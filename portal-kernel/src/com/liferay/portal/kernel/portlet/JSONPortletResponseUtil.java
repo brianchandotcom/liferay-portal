@@ -50,14 +50,14 @@ public class JSONPortletResponseUtil {
 			Object jsonObj)
 		throws IOException {
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
 
-		response.setContentType(_getContentType(portletRequest));
+		httpServletResponse.setContentType(_getContentType(portletRequest));
 
-		ServletResponseUtil.write(response, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
 
-		response.flushBuffer();
+		httpServletResponse.flushBuffer();
 	}
 
 	private static String _getContentType(PortletRequest portletRequest) {

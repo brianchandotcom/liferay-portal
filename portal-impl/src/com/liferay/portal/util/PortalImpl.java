@@ -6871,9 +6871,10 @@ public class PortalImpl implements Portal {
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest(
 			portletRequest);
-		HttpServletResponse response = getHttpServletResponse(portletResponse);
+		HttpServletResponse httpServletResponse = getHttpServletResponse(
+			portletResponse);
 
-		sendRSSFeedsDisabledError(httpServletRequest, response);
+		sendRSSFeedsDisabledError(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

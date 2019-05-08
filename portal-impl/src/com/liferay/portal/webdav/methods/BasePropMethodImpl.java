@@ -389,16 +389,16 @@ public abstract class BasePropMethodImpl implements Method {
 
 			int status = WebDAVUtil.SC_MULTI_STATUS;
 
-			HttpServletResponse response =
+			HttpServletResponse httpServletResponse =
 				webDAVRequest.getHttpServletResponse();
 
-			response.setContentType(ContentTypes.TEXT_XML_UTF8);
-			response.setStatus(status);
+			httpServletResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
+			httpServletResponse.setStatus(status);
 
 			try {
-				ServletResponseUtil.write(response, xml);
+				ServletResponseUtil.write(httpServletResponse, xml);
 
-				response.flushBuffer();
+				httpServletResponse.flushBuffer();
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

@@ -70,8 +70,8 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			portletRequest);
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			portletResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(portletResponse);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -163,7 +163,7 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 		}
 
 		ServletResponseUtil.sendFile(
-			httpServletRequest, response, fileName, is, contentType);
+			httpServletRequest, httpServletResponse, fileName, is, contentType);
 	}
 
 	@Reference

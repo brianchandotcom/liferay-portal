@@ -1614,15 +1614,18 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void writeResponse(Object content, String contentType)
 		throws Exception {
 
-		HttpServletResponse response = this.response;
+		HttpServletResponse httpServletResponse = this.response;
 
-		if (!(response instanceof AlloyMockUtil.MockHttpServletResponse)) {
-			response = PortalUtil.getHttpServletResponse(portletResponse);
+		if (!(httpServletResponse instanceof
+				AlloyMockUtil.MockHttpServletResponse)) {
+
+			httpServletResponse = PortalUtil.getHttpServletResponse(
+				portletResponse);
 		}
 
-		response.setContentType(contentType);
+		httpServletResponse.setContentType(contentType);
 
-		ServletResponseUtil.write(response, content.toString());
+		ServletResponseUtil.write(httpServletResponse, content.toString());
 	}
 
 	protected static final String CALLED_PROCESS_ACTION =

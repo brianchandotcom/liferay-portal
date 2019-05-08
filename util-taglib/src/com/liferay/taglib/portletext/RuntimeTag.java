@@ -353,7 +353,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				return EVAL_PAGE;
 			}
 
-			HttpServletResponse response =
+			HttpServletResponse httpServletResponse =
 				(HttpServletResponse)pageContext.getResponse();
 
 			if (Validator.isNotNull(_portletProviderClassName) &&
@@ -363,13 +363,13 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					_portletProviderClassName, _portletProviderAction,
 					_instanceId, _queryString, _defaultPreferences,
 					_persistSettings, pageContext, httpServletRequest,
-					response);
+					httpServletResponse);
 			}
 			else {
 				doTag(
 					_portletName, _instanceId, _queryString, _settingsScope,
 					_defaultPreferences, _persistSettings, pageContext,
-					httpServletRequest, response);
+					httpServletRequest, httpServletResponse);
 			}
 
 			return EVAL_PAGE;

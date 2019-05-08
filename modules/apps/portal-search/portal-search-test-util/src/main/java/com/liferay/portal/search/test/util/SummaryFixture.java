@@ -115,10 +115,10 @@ public class SummaryFixture<T> {
 		HttpServletRequest httpServletRequest = createHttpServletRequest(
 			mockRenderRequest, locale);
 
-		HttpServletResponse response = createHttpServletResponse();
+		HttpServletResponse httpServletResponse = createHttpServletResponse();
 
 		ThemeDisplay themeDisplay = createThemeDisplay(
-			httpServletRequest, response, locale);
+			httpServletRequest, httpServletResponse, locale);
 
 		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

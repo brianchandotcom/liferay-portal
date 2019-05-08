@@ -40,10 +40,10 @@ public class HeadMethodImpl implements Method {
 			}
 
 			if (!resource.isCollection()) {
-				HttpServletResponse response =
+				HttpServletResponse httpServletResponse =
 					webDAVRequest.getHttpServletResponse();
 
-				response.setContentLength((int)resource.getSize());
+				httpServletResponse.setContentLength((int)resource.getSize());
 			}
 
 			return HttpServletResponse.SC_OK;

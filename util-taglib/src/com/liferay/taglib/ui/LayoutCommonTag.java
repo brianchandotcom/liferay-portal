@@ -71,14 +71,15 @@ public class LayoutCommonTag extends IncludeTag {
 
 		if (_includeStaticPortlets) {
 			Company company = themeDisplay.getCompany();
-			HttpServletResponse response =
+			HttpServletResponse httpServletResponse =
 				(HttpServletResponse)pageContext.getResponse();
 
 			for (String portletId : _LAYOUT_STATIC_PORTLETS_ALL) {
 				if (PortletLocalServiceUtil.hasPortlet(
 						company.getCompanyId(), portletId)) {
 
-					RuntimeTag.doTag(portletId, pageContext, request, response);
+					RuntimeTag.doTag(
+						portletId, pageContext, request, httpServletResponse);
 				}
 			}
 		}

@@ -261,10 +261,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   SourceFileNameException e) {
 
 			if (e instanceof DuplicateFileEntryException) {
-				HttpServletResponse response = _portal.getHttpServletResponse(
-					actionResponse);
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(actionResponse);
 
-				response.setStatus(
+				httpServletResponse.setStatus(
 					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
 			}
 

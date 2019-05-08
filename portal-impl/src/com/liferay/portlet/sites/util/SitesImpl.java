@@ -629,10 +629,10 @@ public class SitesImpl implements Sites {
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
 
-		return deleteLayout(httpServletRequest, response);
+		return deleteLayout(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -642,10 +642,10 @@ public class SitesImpl implements Sites {
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(renderRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			renderResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(renderResponse);
 
-		deleteLayout(httpServletRequest, response);
+		deleteLayout(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

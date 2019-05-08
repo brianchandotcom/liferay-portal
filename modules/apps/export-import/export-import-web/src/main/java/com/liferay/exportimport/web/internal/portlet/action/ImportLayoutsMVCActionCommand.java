@@ -271,11 +271,11 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			String folderName, Exception e)
 		throws Exception {
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			actionResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
 
-		response.setContentType(ContentTypes.TEXT_HTML);
-		response.setStatus(HttpServletResponse.SC_OK);
+		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

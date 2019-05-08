@@ -308,11 +308,11 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof FileSizeException ||
 				e instanceof UploadRequestSizeException) {
 
-				HttpServletResponse response = _portal.getHttpServletResponse(
-					actionResponse);
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(actionResponse);
 
-				response.setContentType(ContentTypes.TEXT_HTML);
-				response.setStatus(HttpServletResponse.SC_OK);
+				httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
+				httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 				String errorMessage = StringPool.BLANK;
 				int errorType = 0;

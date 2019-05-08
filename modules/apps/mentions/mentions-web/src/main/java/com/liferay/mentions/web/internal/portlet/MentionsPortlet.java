@@ -92,12 +92,13 @@ public class MentionsPortlet extends MVCPortlet {
 
 			JSONArray jsonArray = _getJSONArray(httpServletRequest);
 
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				resourceResponse);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(resourceResponse);
 
-			response.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-			ServletResponseUtil.write(response, jsonArray.toString());
+			ServletResponseUtil.write(
+				httpServletResponse, jsonArray.toString());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

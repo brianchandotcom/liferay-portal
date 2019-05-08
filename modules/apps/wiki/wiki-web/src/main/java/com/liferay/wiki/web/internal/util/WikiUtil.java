@@ -253,13 +253,13 @@ public class WikiUtil {
 			throw new WikiFormatException();
 		}
 
-		HttpServletResponse response =
+		HttpServletResponse httpServletResponse =
 			(HttpServletResponse)pageContext.getResponse();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
+			httpServletResponse, unsyncStringWriter);
 
 		wikiEngine.renderEditPage(
 			pageContext.getRequest(), pipingServletResponse, node, page);

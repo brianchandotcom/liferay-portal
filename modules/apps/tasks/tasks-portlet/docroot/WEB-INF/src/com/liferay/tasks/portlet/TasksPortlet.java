@@ -73,10 +73,11 @@ public class TasksPortlet extends MVCPortlet {
 		else {
 			JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(actionResponse);
 
-			ServletResponseUtil.write(response, jsonObject.toString());
+			ServletResponseUtil.write(
+				httpServletResponse, jsonObject.toString());
 		}
 	}
 

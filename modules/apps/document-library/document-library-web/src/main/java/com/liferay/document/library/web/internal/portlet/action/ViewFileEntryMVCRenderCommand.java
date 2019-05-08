@@ -96,10 +96,10 @@ public class ViewFileEntryMVCRenderCommand
 					themeDisplay);
 
 			if (assetDisplayPageFriendlyURL != null) {
-				HttpServletResponse response = _portal.getHttpServletResponse(
-					renderResponse);
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(renderResponse);
 
-				response.sendRedirect(assetDisplayPageFriendlyURL);
+				httpServletResponse.sendRedirect(assetDisplayPageFriendlyURL);
 
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}

@@ -70,10 +70,10 @@ public abstract class BaseAlloyControllerInvokerImpl
 
 		HttpServletRequest httpServletRequest = createRequest(
 			lifecycle, parameters);
-		HttpServletResponse response = createResponse();
+		HttpServletResponse httpServletResponse = createResponse();
 
 		PageContext pageContext = createPageContext(
-			httpServletRequest, response);
+			httpServletRequest, httpServletResponse);
 
 		alloyController.setPageContext(pageContext);
 

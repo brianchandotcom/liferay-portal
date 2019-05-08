@@ -71,11 +71,11 @@ public class GetMethodImpl implements Method {
 				try {
 					HttpServletRequest httpServletRequest =
 						webDAVRequest.getHttpServletRequest();
-					HttpServletResponse response =
+					HttpServletResponse httpServletResponse =
 						webDAVRequest.getHttpServletResponse();
 
 					ServletResponseUtil.sendFileWithRangeHeader(
-						httpServletRequest, response, fileName, is,
+						httpServletRequest, httpServletResponse, fileName, is,
 						resource.getSize(), resource.getContentType());
 				}
 				catch (Exception e) {

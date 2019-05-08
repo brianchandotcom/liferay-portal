@@ -100,13 +100,13 @@ public abstract class BaseWikiEngine implements WikiEngine {
 			return StringPool.BLANK;
 		}
 
-		HttpServletResponse response =
+		HttpServletResponse httpServletResponse =
 			(HttpServletResponse)pageContext.getResponse();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
+			httpServletResponse, unsyncStringWriter);
 
 		ServletContext servletContext = getHelpPageServletContext();
 

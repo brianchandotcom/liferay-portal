@@ -126,10 +126,10 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (Throwable t) {
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				actionResponse);
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(actionResponse);
 
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
 			String errorMessage =
 				"an-unexpected-error-occurred-while-sharing-the-item";

@@ -123,10 +123,10 @@ public class PollsUtil {
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
 
-		saveVote(httpServletRequest, response, questionId);
+		saveVote(httpServletRequest, httpServletResponse, questionId);
 	}
 
 	private static String _getCookieName(long questionId) {

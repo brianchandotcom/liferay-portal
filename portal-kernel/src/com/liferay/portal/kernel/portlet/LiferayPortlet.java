@@ -650,14 +650,15 @@ public class LiferayPortlet extends GenericPortlet {
 			Object jsonObj)
 		throws IOException {
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(actionResponse);
 
-		response.setContentType(getJSONContentType(portletRequest));
+		httpServletResponse.setContentType(getJSONContentType(portletRequest));
 
-		ServletResponseUtil.write(response, _toXSSSafeJSON(jsonObj.toString()));
+		ServletResponseUtil.write(
+			httpServletResponse, _toXSSSafeJSON(jsonObj.toString()));
 
-		response.flushBuffer();
+		httpServletResponse.flushBuffer();
 	}
 
 	protected void writeJSON(

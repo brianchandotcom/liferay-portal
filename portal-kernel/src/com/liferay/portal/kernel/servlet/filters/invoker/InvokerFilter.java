@@ -68,21 +68,25 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
-		HttpServletResponse response = (HttpServletResponse)servletResponse;
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)servletResponse;
 
 		String originalURI = getOriginalRequestURI(httpServletRequest);
 
-		if (!handleLongRequestURL(httpServletRequest, response, originalURI)) {
+		if (!handleLongRequestURL(
+				httpServletRequest, httpServletResponse, originalURI)) {
+
 			return;
 		}
 
 		httpServletRequest = handleNonSerializableRequest(httpServletRequest);
 
-		response =
+		httpServletResponse =
 			HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
-				response);
+				httpServletResponse);
 
-		response = secureResponseHeaders(httpServletRequest, response);
+		httpServletResponse = secureResponseHeaders(
+			httpServletRequest, httpServletResponse);
 
 		String uri = getURI(originalURI);
 
@@ -99,7 +103,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-			invokerFilterChain.doFilter(httpServletRequest, response);
+			invokerFilterChain.doFilter(
+				httpServletRequest, httpServletResponse);
 		}
 		finally {
 			httpServletRequest.removeAttribute(WebKeys.INVOKER_FILTER_URI);

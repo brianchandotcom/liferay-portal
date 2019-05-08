@@ -522,8 +522,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			HttpServletRequest httpServletRequest =
 				portal.getOriginalServletRequest(
 					portal.getHttpServletRequest(actionRequest));
-			HttpServletResponse response = portal.getHttpServletResponse(
-				actionResponse);
+			HttpServletResponse httpServletResponse =
+				portal.getHttpServletResponse(actionResponse);
 
 			HttpSession session = httpServletRequest.getSession();
 
@@ -531,7 +531,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			LanguageUtil.updateCookie(httpServletRequest, response, locale);
+			LanguageUtil.updateCookie(
+				httpServletRequest, httpServletResponse, locale);
 
 			// Clear cached portlet responses
 

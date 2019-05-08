@@ -70,10 +70,11 @@ public class TunnelAuthVerifier implements AuthVerifier {
 				_log.debug(ae, ae);
 			}
 
-			HttpServletResponse response = accessControlContext.getResponse();
+			HttpServletResponse httpServletResponse =
+				accessControlContext.getResponse();
 
 			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					response.getOutputStream())) {
+					httpServletResponse.getOutputStream())) {
 
 				objectOutputStream.writeObject(ae);
 

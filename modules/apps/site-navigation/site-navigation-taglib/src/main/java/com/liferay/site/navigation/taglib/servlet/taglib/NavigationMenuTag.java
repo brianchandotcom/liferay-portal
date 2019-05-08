@@ -129,7 +129,7 @@ public class NavigationMenuTag extends IncludeTag {
 			_log.error(e, e);
 		}
 
-		HttpServletResponse response =
+		HttpServletResponse httpServletResponse =
 			(HttpServletResponse)pageContext.getResponse();
 
 		Map<String, Object> contextObjects = new HashMap<>();
@@ -142,7 +142,7 @@ public class NavigationMenuTag extends IncludeTag {
 		contextObjects.put("rootLayoutType", _rootItemType);
 
 		String result = portletDisplayTemplate.renderDDMTemplate(
-			request, response, portletDisplayDDMTemplate, navItems,
+			request, httpServletResponse, portletDisplayDDMTemplate, navItems,
 			contextObjects);
 
 		JspWriter jspWriter = pageContext.getOut();

@@ -171,10 +171,10 @@ public class SyncAuthVerifier implements AuthVerifier {
 				token = createToken(userId);
 
 				if (token != null) {
-					HttpServletResponse response =
+					HttpServletResponse httpServletResponse =
 						accessControlContext.getResponse();
 
-					response.addHeader(_TOKEN_HEADER, token);
+					httpServletResponse.addHeader(_TOKEN_HEADER, token);
 				}
 			}
 			else {

@@ -51,7 +51,7 @@ public class DDMFormBuilderContextFactoryImpl
 					"ddmStructureVersion"));
 		HttpServletRequest httpServletRequest =
 			ddmFormBuilderContextRequest.getHttpServletRequest();
-		HttpServletResponse response =
+		HttpServletResponse httpServletResponse =
 			ddmFormBuilderContextRequest.getHttpServletResponse();
 		Locale locale = ddmFormBuilderContextRequest.getLocale();
 		boolean readOnly = ddmFormBuilderContextRequest.getReadOnly();
@@ -60,8 +60,8 @@ public class DDMFormBuilderContextFactoryImpl
 			new DDMFormBuilderContextFactoryHelper(
 				ddmStructureOptional, ddmStructureVersionOptional,
 				_ddmFormFieldTypeServicesTracker,
-				_ddmFormTemplateContextFactory, httpServletRequest, response,
-				_jsonFactory, locale, readOnly);
+				_ddmFormTemplateContextFactory, httpServletRequest,
+				httpServletResponse, _jsonFactory, locale, readOnly);
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			new DDMFormBuilderContextResponse();

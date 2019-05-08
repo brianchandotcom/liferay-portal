@@ -46,10 +46,10 @@ public class MkcolMethodImpl implements Method {
 			if (Validator.isNotNull(status.getObject())) {
 				HttpServletRequest httpServletRequest =
 					webDAVRequest.getHttpServletRequest();
-				HttpServletResponse response =
+				HttpServletResponse httpServletResponse =
 					webDAVRequest.getHttpServletResponse();
 
-				response.setHeader(
+				httpServletResponse.setHeader(
 					HttpHeaders.LOCATION,
 					StringBundler.concat(
 						PortalUtil.getPortalURL(httpServletRequest),

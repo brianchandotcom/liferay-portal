@@ -67,10 +67,10 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			resourceResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		if (Validator.isNull(keywords)) {
 			jsonObject.put(
@@ -79,7 +79,8 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 				"totalCount", 0
 			);
 
-			ServletResponseUtil.write(response, jsonObject.toString());
+			ServletResponseUtil.write(
+				httpServletResponse, jsonObject.toString());
 
 			return;
 		}
@@ -140,7 +141,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		jsonObject.put("totalCount", totalCount);
 
-		ServletResponseUtil.write(response, jsonObject.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 	}
 
 	@Reference

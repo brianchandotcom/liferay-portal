@@ -75,10 +75,10 @@ public class SharingVerifyEmailAddressMVCResourceCommand
 		User user = _userLocalService.fetchUserByEmailAddress(
 			themeDisplay.getCompanyId(), emailAddress);
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			resourceResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		JSONObject jsonObject = JSONUtil.put("userExists", user != null);
 

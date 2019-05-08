@@ -83,10 +83,10 @@ public class SharingUserAutocompleteMVCResourceCommand
 
 		JSONArray usersJSONArray = _getUsersJSONArray(httpServletRequest);
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			resourceResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, usersJSONArray);

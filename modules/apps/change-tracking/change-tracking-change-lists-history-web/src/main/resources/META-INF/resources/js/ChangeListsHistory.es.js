@@ -74,6 +74,60 @@ class ChangeListsHistory extends PortletBase {
 					);
 				}
 			);
+
+		let urlProcessUsers = this.urlProcessUsers + '&type=' + this.filterStatus + '&offset=0&limit=5';
+
+		fetch(urlProcessUsers, init)
+			.then(r => r.json())
+			.then(response => this._populateProcessUsers(response))
+			.catch(
+				error => {
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), this.urlProcessUsers);
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
+				}
+			);
+	}
+
+	_populateProcessUsers(processUsers) {
+		AUI().use(
+			'liferay-portlet-url',
+			A => {
+				let managementToolbar = Liferay.component('changeListHistoryManagementToolbar');
+
+				let filterByUserIndex = managementToolbar.filterItems.findIndex(e => e.label === 'Filter by User');
+
+				let filterByUserItems = managementToolbar.filterItems[filterByUserIndex].items;
+
+				processUsers.forEach(
+					processUser => {
+						const userFilterUrl = Liferay.PortletURL.createURL(this.baseURL);
+
+						userFilterUrl.setParameter('displayStyle', 'list');
+						userFilterUrl.setParameter('orderByCol', this.orderByCol);
+						userFilterUrl.setParameter('orderByType', this.orderByType);
+						userFilterUrl.setParameter('user', processUser.userId);
+
+						if (filterByUserItems.findIndex(e => e.label === processUser.userName) < 0) {
+							filterByUserItems.push({
+								'active': false,
+								'href': userFilterUrl.toString(),
+								'label': processUser.userName,
+								'type': 'item'
+							});
+						}
+					}
+				);
+			}
+		);
 	}
 
 	_populateProcessEntries(processEntries) {
@@ -147,6 +201,8 @@ ChangeListsHistory.STATE = {
 	orderByType: Config.string(),
 
 	urlProcesses: Config.string(),
+
+	urlProcessUsers: Config.string(),
 
 	processEntries: Config.arrayOf(
 		Config.shapeOf(

@@ -96,6 +96,11 @@ public class ChangeListsHistoryDisplayContext {
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking/processes?companyId=" +
 					_themeDisplay.getCompanyId()
+		).put(
+			"urlProcessUsers",
+			_themeDisplay.getPortalURL() +
+				"/o/change-tracking/processes/users?companyId=" +
+					_themeDisplay.getCompanyId()
 		);
 
 		return soyContext;

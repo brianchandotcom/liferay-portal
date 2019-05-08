@@ -70,7 +70,7 @@ public class RadioFieldType extends BaseFieldType {
 				jsonObject.getJSONObject("options")));
 		customProperties.put(
 			"predefinedValue",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return spiDataDefinitionField;

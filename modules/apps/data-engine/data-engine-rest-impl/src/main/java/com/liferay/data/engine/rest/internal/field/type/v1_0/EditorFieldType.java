@@ -56,7 +56,7 @@ public class EditorFieldType extends BaseFieldType {
 
 		customProperties.put(
 			"placeholder",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("placeholder")));
 
 		return spiDataDefinitionField;

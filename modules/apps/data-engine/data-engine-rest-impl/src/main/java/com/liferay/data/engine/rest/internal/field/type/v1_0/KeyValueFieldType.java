@@ -58,11 +58,11 @@ public class KeyValueFieldType extends BaseFieldType {
 		customProperties.put("autoFocus", jsonObject.getBoolean("autoFocus"));
 		customProperties.put(
 			"placeholder",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("placeholder")));
 		customProperties.put(
 			"tooltip",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("tooltip")));
 
 		return spiDataDefinitionField;

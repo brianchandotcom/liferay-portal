@@ -16,9 +16,13 @@ package com.liferay.data.engine.spi.field.type.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -26,10 +30,20 @@ import java.util.Map;
  */
 public class LocalizedValueUtil {
 
+	public static Object getLocalizedValue(
+		Locale locale, Map<String, Object> localizedValues) {
+
+		if (MapUtil.isEmpty(localizedValues)) {
+			return null;
+		}
+
+		return localizedValues.get(LocaleUtil.toLanguageId(locale));
+	}
+
 	public static <V> JSONObject toJSONObject(Map<String, V> map) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (map == null) {
+		if (MapUtil.isEmpty(map)) {
 			return jsonObject;
 		}
 
@@ -40,18 +54,49 @@ public class LocalizedValueUtil {
 		return jsonObject;
 	}
 
-	public static <V> Map<String, V> toLocalizationMap(JSONObject jsonObject) {
-		Map<String, V> localizationMap = new HashMap<>();
+	public static Map<Locale, String> toLocaleStringMap(
+		Map<String, Object> localizedValues) {
+
+		if (MapUtil.isEmpty(localizedValues)) {
+			return Collections.emptyMap();
+		}
+
+		Map<Locale, String> localeStringMap = new HashMap<>();
+
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+			localeStringMap.put(
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				(String)entry.getValue());
+		}
+
+		return localeStringMap;
+	}
+
+	public static <V> Map<String, V> toLocalizedValues(JSONObject jsonObject) {
+		Map<String, V> localizedValues = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			localizationMap.put(key, (V)jsonObject.get(key));
+			localizedValues.put(key, (V)jsonObject.get(key));
 		}
 
-		return localizationMap;
+		return localizedValues;
+	}
+
+	public static Map<String, Object> toStringObjectMap(
+		Map<Locale, String> localizedValues) {
+
+		Map<String, Object> stringObjectMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : localizedValues.entrySet()) {
+			stringObjectMap.put(
+				String.valueOf(entry.getKey()), entry.getValue());
+		}
+
+		return stringObjectMap;
 	}
 
 }

@@ -63,7 +63,7 @@ public class CheckboxFieldType extends BaseFieldType {
 			"showAsSwitcher", jsonObject.getBoolean("showAsSwitcher"));
 
 		spiDataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return spiDataDefinitionField;

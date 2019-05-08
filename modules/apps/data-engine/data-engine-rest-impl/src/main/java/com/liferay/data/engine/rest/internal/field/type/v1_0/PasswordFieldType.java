@@ -56,11 +56,11 @@ public class PasswordFieldType extends BaseFieldType {
 
 		customProperties.put(
 			"placeholder",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("placeholder")));
 		customProperties.put(
 			"tooltip",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("tooltip")));
 
 		return spiDataDefinitionField;

@@ -62,7 +62,7 @@ public abstract class BaseFieldType implements FieldType {
 		spiDataDefinitionField.setIndexable(
 			jsonObject.getBoolean("indexable", true));
 		spiDataDefinitionField.setLabel(
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				Optional.ofNullable(
 					jsonObject.getJSONObject("label")
 				).orElse(
@@ -74,7 +74,7 @@ public abstract class BaseFieldType implements FieldType {
 		spiDataDefinitionField.setRepeatable(
 			jsonObject.getBoolean("repeatable", false));
 		spiDataDefinitionField.setTip(
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				Optional.ofNullable(
 					jsonObject.getJSONObject("tip")
 				).orElse(

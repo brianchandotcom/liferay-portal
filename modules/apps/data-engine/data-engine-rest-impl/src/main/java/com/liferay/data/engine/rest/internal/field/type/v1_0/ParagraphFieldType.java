@@ -59,7 +59,7 @@ public class ParagraphFieldType extends BaseFieldType {
 
 		customProperties.put(
 			"text",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("text")));
 
 		return spiDataDefinitionField;

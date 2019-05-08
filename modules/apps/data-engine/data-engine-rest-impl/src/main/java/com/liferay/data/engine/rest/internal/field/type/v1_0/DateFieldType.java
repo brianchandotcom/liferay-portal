@@ -56,7 +56,7 @@ public class DateFieldType extends BaseFieldType {
 			jsonObject);
 
 		spiDataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return spiDataDefinitionField;

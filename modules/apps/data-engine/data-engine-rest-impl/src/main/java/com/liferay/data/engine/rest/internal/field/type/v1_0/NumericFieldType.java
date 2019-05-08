@@ -69,15 +69,15 @@ public class NumericFieldType extends BaseFieldType {
 		customProperties.put("dataType", jsonObject.getString("dataType"));
 		customProperties.put(
 			"placeholder",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("placeholder")));
 		customProperties.put(
 			"predefinedValue",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("predefinedValue")));
 		customProperties.put(
 			"tooltip",
-			LocalizedValueUtil.toLocalizationMap(
+			LocalizedValueUtil.toLocalizedValues(
 				jsonObject.getJSONObject("tooltip")));
 
 		return spiDataDefinitionField;

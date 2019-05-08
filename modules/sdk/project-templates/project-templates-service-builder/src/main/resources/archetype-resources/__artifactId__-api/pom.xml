@@ -14,7 +14,7 @@
 		<version>${version}</version>
 	</parent>
 	<dependencies>
-#if (${liferayVersion.startsWith("7.0")} | ${liferayVersion.startsWith("7.1")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.bnd.annotation</artifactId>

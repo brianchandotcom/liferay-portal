@@ -2,10 +2,9 @@
 #end
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
-#if (${liferayVersion.startsWith("7.0")} | ${liferayVersion.startsWith("7.1")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation"
 #end
-	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.util"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
@@ -18,10 +17,9 @@ dependencies {
 #end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 #else
-#if (${liferayVersion.startsWith("7.0")} | ${liferayVersion.startsWith("7.1")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "@biz.aQute.bnd.version@"
 #end
-	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"

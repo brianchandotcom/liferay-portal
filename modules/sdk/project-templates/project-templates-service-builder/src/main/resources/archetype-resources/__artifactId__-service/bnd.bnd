@@ -10,5 +10,5 @@ Liferay-Service: true
 -includeresource: META-INF/service.xml=service.xml
 -liferay-service-xml: META-INF/service.xml
 -plugin.service: com.liferay.ant.bnd.service.ServiceAnalyzerPlugin
-#if (${liferayVersion.startsWith("7.0")} | ${liferayVersion.startsWith("7.1")})
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 -plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin#end#end

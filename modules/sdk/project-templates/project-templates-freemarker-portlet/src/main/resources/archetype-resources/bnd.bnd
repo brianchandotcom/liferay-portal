@@ -7,7 +7,7 @@ Export-Package: ${package}.constants
 	@com.liferay.util.bridges-[0-9]*.jar!/com/liferay/util/bridges/freemarker/FreeMarkerPortlet.class,\
 	@com.liferay.util.taglib-[0-9]*.jar!/META-INF/*.tld#if (${buildType} != "gradle")
 
-#if (${liferayVersion.startsWith("7.1")} | ${liferayVersion.startsWith("7.2")})-contract: JavaPortlet,JavaServlet
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})-contract: JavaPortlet,JavaServlet
 #end
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR</td>
+	<td>//div[contains(@class,'alert-error') or contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LAYOUT_2_COLUMNS</td>
 	<td>//input[contains(@id,'layoutTemplateId_1')]</td>
 	<td></td>

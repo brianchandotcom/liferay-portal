@@ -185,27 +185,6 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			PortletURL lookAndFeelURL = PortalUtil.getControlPanelPortletURL(
-				request, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE);
-
-			lookAndFeelURL.setParameter(
-				"mvcRenderCommandName", "/layout/edit_layout");
-
-			Layout layout = themeDisplay.getLayout();
-
-			lookAndFeelURL.setParameter(
-				"redirect", themeDisplay.getURLCurrent());
-			lookAndFeelURL.setParameter(
-				"backURL", themeDisplay.getURLCurrent());
-
-			lookAndFeelURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			lookAndFeelURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-			lookAndFeelURL.setParameter(
-				"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
 			soyContext.put(
 				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 			).put(
@@ -213,7 +192,7 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/discard_draft_layout")
 			).put(
-				"lookAndFeelURL", lookAndFeelURL.toString()
+				"lookAndFeelURL", _getLookAndFeelURL()
 			);
 		}
 
@@ -942,6 +921,29 @@ public class ContentPageEditorDisplayContext {
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 
 		return _layoutData;
+	}
+
+	private String _getLookAndFeelURL() {
+		PortletURL lookAndFeelURL = PortalUtil.getControlPanelPortletURL(
+			request, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		lookAndFeelURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout");
+
+		lookAndFeelURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		lookAndFeelURL.setParameter("backURL", themeDisplay.getURLCurrent());
+
+		Layout layout = themeDisplay.getLayout();
+
+		lookAndFeelURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		lookAndFeelURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		lookAndFeelURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		return lookAndFeelURL.toString();
 	}
 
 	private Set<SoyContext> _getMappedAssetEntriesSoyContexts()

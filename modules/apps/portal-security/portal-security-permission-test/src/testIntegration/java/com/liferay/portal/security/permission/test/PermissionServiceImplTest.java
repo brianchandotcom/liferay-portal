@@ -25,10 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,59 +49,50 @@ public class PermissionServiceImplTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Test
+	public void testCheckPermission() throws PortalException {
 		Bundle bundle = FrameworkUtil.getBundle(
 			PermissionServiceImplTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
-			(ModelResourcePermission)ProxyUtil.newProxyInstance(
-				ModelResourcePermission.class.getClassLoader(),
-				new Class<?>[] {ModelResourcePermission.class},
-				(proxy, method, args) -> {
-					_calledCheckBaseModel = true;
+		boolean[] calledCheckBaseModel = {false};
 
-					return null;
-				}),
-			new HashMapDictionary<String, Object>() {
-				{
-					put("model.class.name", "PermissionServiceImplTest");
-					put("service.ranking", Integer.MAX_VALUE);
-				}
-			});
+		ServiceRegistration<ModelResourcePermission> serviceRegistration =
+			bundleContext.registerService(
+				ModelResourcePermission.class,
+				(ModelResourcePermission)ProxyUtil.newProxyInstance(
+					ModelResourcePermission.class.getClassLoader(),
+					new Class<?>[] {ModelResourcePermission.class},
+					(proxy, method, args) -> {
+						calledCheckBaseModel[0] = true;
+
+						return null;
+					}),
+				new HashMapDictionary<String, Object>() {
+					{
+						put("model.class.name", "PermissionServiceImplTest");
+						put("service.ranking", Integer.MAX_VALUE);
+					}
+				});
+
+		try {
+			_permissionService.checkPermission(
+				0, "PermissionServiceImplTest", 0);
+
+			Assert.assertTrue(calledCheckBaseModel[0]);
+
+			calledCheckBaseModel[0] = false;
+
+			_permissionService.checkPermission(
+				0, "PermissionServiceImplTest", null);
+
+			Assert.assertTrue(calledCheckBaseModel[0]);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceRegistration.unregister();
-	}
-
-	@Before
-	public void setUp() {
-		_calledCheckBaseModel = false;
-	}
-
-	@Test
-	public void testCheckPermission1() throws PortalException {
-		_permissionService.checkPermission(0, "PermissionServiceImplTest", 0);
-
-		Assert.assertTrue(_calledCheckBaseModel);
-	}
-
-	@Test
-	public void testCheckPermission2() throws PortalException {
-		_permissionService.checkPermission(
-			0, "PermissionServiceImplTest", null);
-
-		Assert.assertTrue(_calledCheckBaseModel);
-	}
-
-	private static boolean _calledCheckBaseModel;
-	private static ServiceRegistration<ModelResourcePermission>
-		_serviceRegistration;
 
 	@Inject
 	private PermissionService _permissionService;

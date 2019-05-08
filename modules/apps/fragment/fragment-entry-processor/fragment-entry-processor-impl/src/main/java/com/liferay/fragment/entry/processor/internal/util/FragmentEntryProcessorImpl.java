@@ -60,7 +60,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 	}
 
 	@Override
-	public Object getValue(
+	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
 			Locale locale, long previewClassPK, int previewType)

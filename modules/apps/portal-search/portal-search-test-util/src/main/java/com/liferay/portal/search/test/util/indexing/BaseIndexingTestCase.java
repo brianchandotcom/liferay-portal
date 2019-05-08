@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
@@ -71,30 +72,45 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
 public abstract class BaseIndexingTestCase {
 
-	public BaseIndexingTestCase() {
-		Class<?> clazz = getClass();
+	@BeforeClass
+	public static void setUpClassBaseIndexingTestCase() {
+		_indexingFixture = null;
 
-		_entryClassName = StringUtil.toLowerCase(clazz.getSimpleName());
+		_documentFixture.setUp();
+	}
+
+	@AfterClass
+	public static void tearDownClassBaseIndexingTestCase() throws Exception {
+		_documentFixture.tearDown();
+
+		if (_indexingFixture.isSearchEngineAvailable()) {
+			_indexingFixture.tearDown();
+		}
+
+		_indexingFixture = null;
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		_documentFixture.setUp();
+		setUpIndexingFixture();
 
-		_indexingFixture = createIndexingFixture();
+		Class<?> clazz = getClass();
 
-		Assume.assumeTrue(_indexingFixture.isSearchEngineAvailable());
-
-		_indexingFixture.setUp();
+		_entryClassName = StringUtil.toLowerCase(
+			clazz.getSimpleName() + CharPool.PERIOD + testName.getMethodName());
 
 		_indexSearcher = _indexingFixture.getIndexSearcher();
 		_indexWriter = _indexingFixture.getIndexWriter();
@@ -108,28 +124,10 @@ public abstract class BaseIndexingTestCase {
 
 		_indexWriter.deleteEntityDocuments(
 			createSearchContext(), _entryClassName);
-
-		_documentFixture.tearDown();
-
-		_indexingFixture.tearDown();
 	}
 
-	protected static SearchContext createSearchContext() {
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(COMPANY_ID);
-		searchContext.setGroupIds(new long[] {GROUP_ID});
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setHitsProcessingEnabled(true);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setStart(QueryUtil.ALL_POS);
-
-		return searchContext;
-	}
+	@Rule
+	public TestName testName = new TestName();
 
 	protected static <K, V> Map<K, V> toMap(K key, V value) {
 		return Collections.singletonMap(key, value);
@@ -137,7 +135,7 @@ public abstract class BaseIndexingTestCase {
 
 	protected void addDocument(DocumentCreationHelper documentCreationHelper) {
 		Document document = DocumentFixture.newDocument(
-			COMPANY_ID, GROUP_ID, _entryClassName);
+			getCompanyId(), GROUP_ID, _entryClassName);
 
 		documentCreationHelper.populate(document);
 
@@ -175,11 +173,8 @@ public abstract class BaseIndexingTestCase {
 		try {
 			IdempotentRetryAssert.retryAssert(
 				10, TimeUnit.SECONDS,
-				() -> {
-					indexingTestHelperConsumer.accept(new IndexingTestHelper());
-
-					return null;
-				});
+				() -> indexingTestHelperConsumer.accept(
+					new IndexingTestHelper()));
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -191,9 +186,30 @@ public abstract class BaseIndexingTestCase {
 
 	protected abstract IndexingFixture createIndexingFixture() throws Exception;
 
+	protected SearchContext createSearchContext() {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(getCompanyId());
+		searchContext.setGroupIds(new long[] {GROUP_ID});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setHitsProcessingEnabled(true);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setStart(QueryUtil.ALL_POS);
+
+		return searchContext;
+	}
+
+	protected long getCompanyId() {
+		return _indexingFixture.getCompanyId();
+	}
+
 	protected Query getDefaultQuery() {
 		Map<String, String> map = SearchMapUtil.join(
-			toMap(Field.COMPANY_ID, String.valueOf(COMPANY_ID)),
+			toMap(Field.COMPANY_ID, String.valueOf(getCompanyId())),
 			toMap(Field.ENTRY_CLASS_NAME, _entryClassName));
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
@@ -255,7 +271,19 @@ public abstract class BaseIndexingTestCase {
 		query.setPreBooleanFilter(booleanFilter);
 	}
 
-	protected static final long COMPANY_ID = RandomTestUtil.randomLong();
+	protected void setUpIndexingFixture() throws Exception {
+		if (_indexingFixture != null) {
+			Assume.assumeTrue(_indexingFixture.isSearchEngineAvailable());
+
+			return;
+		}
+
+		_indexingFixture = createIndexingFixture();
+
+		Assume.assumeTrue(_indexingFixture.isSearchEngineAvailable());
+
+		_indexingFixture.setUp();
+	}
 
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
@@ -328,7 +356,7 @@ public abstract class BaseIndexingTestCase {
 				aggregation.getName());
 		}
 
-		public String getQueryString() {
+		public String getRequestString() {
 			return (String)_searchContext.getAttribute("queryString");
 		}
 
@@ -450,9 +478,11 @@ public abstract class BaseIndexingTestCase {
 		}
 	}
 
-	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private final String _entryClassName;
-	private IndexingFixture _indexingFixture;
+	private static final DocumentFixture _documentFixture =
+		new DocumentFixture();
+	private static IndexingFixture _indexingFixture;
+
+	private String _entryClassName;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 

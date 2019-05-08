@@ -24,6 +24,8 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
  */
 public interface IndexingFixture {
 
+	public long getCompanyId();
+
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();

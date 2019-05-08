@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.service.base;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddl record set version remote service.
@@ -43,105 +44,23 @@ import javax.sql.DataSource;
  */
 public abstract class DDLRecordSetVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDLRecordSetVersionService, IdentifiableOSGiService {
+	implements DDLRecordSetVersionService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>DDLRecordSetVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.lists.service.DDLRecordSetVersionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the ddl record set version local service.
-	 *
-	 * @return the ddl record set version local service
-	 */
-	public
-		com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService
-			getDDLRecordSetVersionLocalService() {
-
-		return ddlRecordSetVersionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDLRecordSetVersionService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the ddl record set version local service.
-	 *
-	 * @param ddlRecordSetVersionLocalService the ddl record set version local service
-	 */
-	public void setDDLRecordSetVersionLocalService(
-		com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService
-			ddlRecordSetVersionLocalService) {
-
-		this.ddlRecordSetVersionLocalService = ddlRecordSetVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddl record set version remote service.
-	 *
-	 * @return the ddl record set version remote service
-	 */
-	public DDLRecordSetVersionService getDDLRecordSetVersionService() {
-		return ddlRecordSetVersionService;
-	}
-
-	/**
-	 * Sets the ddl record set version remote service.
-	 *
-	 * @param ddlRecordSetVersionService the ddl record set version remote service
-	 */
-	public void setDDLRecordSetVersionService(
-		DDLRecordSetVersionService ddlRecordSetVersionService) {
-
-		this.ddlRecordSetVersionService = ddlRecordSetVersionService;
-	}
-
-	/**
-	 * Returns the ddl record set version persistence.
-	 *
-	 * @return the ddl record set version persistence
-	 */
-	public DDLRecordSetVersionPersistence getDDLRecordSetVersionPersistence() {
-		return ddlRecordSetVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddl record set version persistence.
-	 *
-	 * @param ddlRecordSetVersionPersistence the ddl record set version persistence
-	 */
-	public void setDDLRecordSetVersionPersistence(
-		DDLRecordSetVersionPersistence ddlRecordSetVersionPersistence) {
-
-		this.ddlRecordSetVersionPersistence = ddlRecordSetVersionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddlRecordSetVersionService = (DDLRecordSetVersionService)aopProxy;
 	}
 
 	/**
@@ -187,22 +106,17 @@ public abstract class DDLRecordSetVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService
 			ddlRecordSetVersionLocalService;
 
-	@BeanReference(type = DDLRecordSetVersionService.class)
 	protected DDLRecordSetVersionService ddlRecordSetVersionService;
 
-	@BeanReference(type = DDLRecordSetVersionPersistence.class)
+	@Reference
 	protected DDLRecordSetVersionPersistence ddlRecordSetVersionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
+public abstract class DDLRecordFinderBaseImpl
+	extends BasePersistenceImpl<DDLRecord> {
 
 	public DDLRecordFinderBaseImpl() {
 		setModelClass(DDLRecord.class);
@@ -43,30 +50,37 @@ public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getDDLRecordPersistence().getBadColumnNames();
+		return ddlRecordPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the ddl record persistence.
-	 *
-	 * @return the ddl record persistence
-	 */
-	public DDLRecordPersistence getDDLRecordPersistence() {
-		return ddlRecordPersistence;
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ddl record persistence.
-	 *
-	 * @param ddlRecordPersistence the ddl record persistence
-	 */
-	public void setDDLRecordPersistence(
-		DDLRecordPersistence ddlRecordPersistence) {
-
-		this.ddlRecordPersistence = ddlRecordPersistence;
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = DDLRecordPersistence.class)
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected DDLRecordPersistence ddlRecordPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

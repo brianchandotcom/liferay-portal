@@ -21,7 +21,9 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
+import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -39,13 +42,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -60,6 +63,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the ddl record set service.
  *
@@ -70,6 +80,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = DDLRecordSetPersistence.class)
 @ProviderType
 public class DDLRecordSetPersistenceImpl
 	extends BasePersistenceImpl<DDLRecordSet>
@@ -3078,7 +3089,6 @@ public class DDLRecordSetPersistenceImpl
 
 		setModelImplClass(DDLRecordSetImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3096,7 +3106,7 @@ public class DDLRecordSetPersistenceImpl
 	@Override
 	public void cacheResult(DDLRecordSet ddlRecordSet) {
 		entityCache.putResult(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, DDLRecordSetImpl.class,
 			ddlRecordSet.getPrimaryKey(), ddlRecordSet);
 
 		finderCache.putResult(
@@ -3123,9 +3133,8 @@ public class DDLRecordSetPersistenceImpl
 	public void cacheResult(List<DDLRecordSet> ddlRecordSets) {
 		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
 			if (entityCache.getResult(
-					DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey()) ==
-						null) {
+					entityCacheEnabled, DDLRecordSetImpl.class,
+					ddlRecordSet.getPrimaryKey()) == null) {
 
 				cacheResult(ddlRecordSet);
 			}
@@ -3161,7 +3170,7 @@ public class DDLRecordSetPersistenceImpl
 	@Override
 	public void clearCache(DDLRecordSet ddlRecordSet) {
 		entityCache.removeResult(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, DDLRecordSetImpl.class,
 			ddlRecordSet.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3177,8 +3186,8 @@ public class DDLRecordSetPersistenceImpl
 
 		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
 			entityCache.removeResult(
-				DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-				DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey());
+				entityCacheEnabled, DDLRecordSetImpl.class,
+				ddlRecordSet.getPrimaryKey());
 
 			clearUniqueFindersCache((DDLRecordSetModelImpl)ddlRecordSet, true);
 		}
@@ -3439,7 +3448,7 @@ public class DDLRecordSetPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!DDLRecordSetModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -3532,7 +3541,7 @@ public class DDLRecordSetPersistenceImpl
 		}
 
 		entityCache.putResult(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, DDLRecordSetImpl.class,
 			ddlRecordSet.getPrimaryKey(), ddlRecordSet, false);
 
 		clearUniqueFindersCache(ddlRecordSetModelImpl, false);
@@ -3815,27 +3824,27 @@ public class DDLRecordSetPersistenceImpl
 	/**
 	 * Initializes the ddl record set persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		DDLRecordSetModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		DDLRecordSetModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -3843,35 +3852,30 @@ public class DDLRecordSetPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			DDLRecordSetModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			DDLRecordSetModelImpl.UUID_COLUMN_BITMASK |
 			DDLRecordSetModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3880,22 +3884,19 @@ public class DDLRecordSetPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			DDLRecordSetModelImpl.UUID_COLUMN_BITMASK |
 			DDLRecordSetModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3903,53 +3904,83 @@ public class DDLRecordSetPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
 			DDLRecordSetModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationCountByGroupId = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByG_R = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, DDLRecordSetImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			DDLRecordSetModelImpl.GROUPID_COLUMN_BITMASK |
 			DDLRecordSetModelImpl.RECORDSETKEY_COLUMN_BITMASK);
 
 		_finderPathCountByG_R = new FinderPath(
-			DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-			DDLRecordSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(DDLRecordSetImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.lists.model.DDLRecordSet"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_DDLRECORDSET =

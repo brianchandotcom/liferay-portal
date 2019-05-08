@@ -1,0 +1,94 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.asset.info.display.internal.contributor;
+
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.display.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Pavel Savinov
+ */
+@Component(
+	immediate = true, service = InfoDisplayRequestAttributesContributor.class
+)
+public class AssetInfoDisplayRequestAttributesContributor
+	implements InfoDisplayRequestAttributesContributor {
+
+	@Override
+	public void addAttributes(HttpServletRequest httpServletRequest) {
+		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (assetEntry == null) {
+			long assetEntryId = ParamUtil.getLong(
+				httpServletRequest, "assetEntryId");
+
+			assetEntry = _assetEntryLocalService.fetchEntry(assetEntryId);
+
+			if (assetEntry == null) {
+				return;
+			}
+
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					assetEntry.getClassName());
+
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
+				infoDisplayContributor);
+
+			try {
+				InfoDisplayObjectProvider infoDisplayObjectProvider =
+					infoDisplayContributor.getInfoDisplayObjectProvider(
+						assetEntry.getClassPK());
+
+				httpServletRequest.setAttribute(
+					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+					infoDisplayObjectProvider);
+			}
+			catch (Exception e) {
+				_log.error("Unable to get info display object provider", e);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetInfoDisplayRequestAttributesContributor.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+}

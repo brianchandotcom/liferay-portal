@@ -136,9 +136,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			<div class="row">
 				<div class="col-lg-12">
 					<aui:button-row>
-						<aui:button cssClass="btn-lg" type="submit" />
+						<aui:button type="submit" />
 
-						<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
+						<aui:button href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 					</aui:button-row>
 				</div>
 			</div>

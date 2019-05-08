@@ -1,6 +1,6 @@
 @import "mixins";
 
-$toolbarDesktopHeight: 62px;
+$toolbarDesktopHeight: 64px;
 $toolbarHeight: 110px;
 $toolbarZIndex: 971;
 
@@ -133,7 +133,7 @@ $productMenuWidth: 320px;
 			}
 
 			@media (min-width: 768px) {
-				min-height: $controlMenuDesktopHeight;
+				min-height: $toolbarDesktopHeight;
 				top: $controlMenuDesktopHeight;
 
 				> .container-fluid > .tbar-nav {

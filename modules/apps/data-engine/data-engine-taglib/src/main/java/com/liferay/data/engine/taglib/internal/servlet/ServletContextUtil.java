@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.taglib.internal.servlet;
+import com.liferay.data.engine.taglib.internal.servlet;
 
 import com.liferay.portal.kernel.util.Validator;
 

@@ -16,6 +16,8 @@
 @generated
 --%>
 
+<%@ page import="com.liferay.alloy.util.MarkupUtil"%>
+<%@ page import="com.liferay.alloy.util.MessageUtil"%>
 <%@ page import="com.liferay.portal.json.JSONFactoryImpl"%>
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.aui.ScriptData"%>
 <%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %>

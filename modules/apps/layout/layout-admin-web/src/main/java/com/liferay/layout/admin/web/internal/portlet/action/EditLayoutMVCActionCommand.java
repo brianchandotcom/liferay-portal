@@ -147,7 +147,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getClassNameId(Layout.class), layout.getPlid());
 
 		if (draftLayout != null) {
-			layout = _layoutService.updateLayout(
+			_layoutService.updateLayout(
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				draftLayout.getParentLayoutId(), nameMap, titleMap,
 				descriptionMap, keywordsMap, robotsMap, type,

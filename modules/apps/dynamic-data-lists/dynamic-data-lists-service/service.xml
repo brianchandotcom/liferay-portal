@@ -102,7 +102,6 @@
 
 		<!-- References -->
 
-		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
 		<reference entity="DDLRecordSetVersion" package-path="com.liferay.dynamic.data.lists" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />

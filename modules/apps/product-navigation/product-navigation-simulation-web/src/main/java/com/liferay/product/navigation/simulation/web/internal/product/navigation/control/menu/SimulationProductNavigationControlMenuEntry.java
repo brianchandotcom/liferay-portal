@@ -229,7 +229,8 @@ public class SimulationProductNavigationControlMenuEntry
 
 			messageTag.setKey("simulation-panel");
 
-			values.put("simulationPanel", messageTag.doTagAsString(pageContext));
+			values.put(
+				"simulationPanel", messageTag.doTagAsString(pageContext));
 
 			IconTag iconTag = new IconTag();
 

@@ -89,27 +89,33 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 			kaleoTaskInstanceToken.getClassName());
 		document.addKeyword(
 			Field.CLASS_PK, kaleoTaskInstanceToken.getClassPK());
-		document.addKeyword(
+		document.addKeywordSortable(
 			KaleoTaskInstanceTokenField.COMPLETED,
 			kaleoTaskInstanceToken.isCompleted());
-		document.addDate(
+		document.addDateSortable(
 			KaleoTaskInstanceTokenField.COMPLETION_DATE,
 			kaleoTaskInstanceToken.getCompletionDate());
-		document.addDate(
+		document.addDateSortable(
+			Field.CREATE_DATE, kaleoTaskInstanceToken.getCreateDate());
+		document.addDateSortable(
 			KaleoTaskInstanceTokenField.DUE_DATE,
 			kaleoTaskInstanceToken.getDueDate());
 		document.addKeyword(
 			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID,
 			kaleoTaskInstanceToken.getKaleoInstanceId());
-		document.addKeyword(
+		document.addNumberSortable(
 			KaleoTaskInstanceTokenField.KALEO_TASK_ID,
 			kaleoTaskInstanceToken.getKaleoTaskId());
-		document.addKeyword(
+		document.addNumberSortable(
 			KaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
 			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
-		document.addKeyword(
+		document.addDateSortable(
+			Field.MODIFIED_DATE, kaleoTaskInstanceToken.getModifiedDate());
+		document.addKeywordSortable(
 			KaleoTaskInstanceTokenField.TASK_NAME,
 			kaleoTaskInstanceToken.getKaleoTaskName());
+		document.addNumberSortable(
+			Field.USER_ID, kaleoTaskInstanceToken.getUserId());
 
 		AssetEntry assetEntry = getAssetEntry(kaleoTaskInstanceToken);
 

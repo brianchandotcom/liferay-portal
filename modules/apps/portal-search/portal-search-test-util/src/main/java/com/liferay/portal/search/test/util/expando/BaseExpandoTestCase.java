@@ -62,7 +62,7 @@ import org.mockito.Mockito;
 public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClassBaseExpandoTestCase() {
 		Registry registry = new BasicRegistryImpl();
 
 		registry.registerService(
@@ -73,7 +73,7 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClassBaseExpandoTestCase() {
 		RegistryUtil.setRegistry(null);
 	}
 

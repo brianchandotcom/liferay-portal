@@ -59,6 +59,7 @@ class EditTags extends Component {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		const request = {
 			body,

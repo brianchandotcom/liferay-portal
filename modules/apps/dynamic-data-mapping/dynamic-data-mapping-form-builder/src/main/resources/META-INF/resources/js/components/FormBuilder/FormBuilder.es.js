@@ -490,9 +490,17 @@ class FormBuilderBase extends Component {
 	}
 
 	_pageHasFields(pages, pageIndex) {
-
 		let hasFields = false;
 
+		if (pages.length > 0) {
+			const visitor = new PagesVisitor([pages[pageIndex]]);
+
+			visitor.mapFields(
+				() => {
+					hasFields = true;
+				}
+			);
+		}
 
 		return hasFields;
 	}

@@ -109,7 +109,7 @@ public class WorkflowHandlerRegistryUtilTest {
 	}
 
 	@Test
-	public void testStartWorkflowInstance1() throws PortalException {
+	public void testStartWorkflowInstance() throws PortalException {
 		_calledWorkflowHandler = false;
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -117,10 +117,7 @@ public class WorkflowHandlerRegistryUtilTest {
 			new HashMap<>());
 
 		Assert.assertTrue(_calledWorkflowHandler);
-	}
 
-	@Test
-	public void testStartWorkflowInstance2() throws PortalException {
 		_calledWorkflowHandler = false;
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(

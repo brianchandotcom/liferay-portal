@@ -168,27 +168,39 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject editableValueJSONObject =
 				editableValuesJSONObject.getJSONObject(id);
 
-			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
-				"config");
-
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode) ||
-				_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
+			JSONObject mappedValueConfigJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-				JSONObject mappedValueConfigJSONObject =
-					_getMappedValueConfigJSONObject(
-						editableElementParser, editableValueJSONObject,
-						assetEntriesFieldValues, mode, locale, previewClassPK,
-						previewType);
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode)) {
+				value = jsonObject.getString("mappedField");
 
-				configJSONObject = JSONUtil.merge(
-					configJSONObject, mappedValueConfigJSONObject);
+				if (Validator.isNotNull(value)) {
+					mappedValueConfigJSONObject =
+						editableElementParser.getFieldTemplateConfigJSONObject(
+							value, locale, null);
 
-				value = _getMappedValue(
-					editableElementParser, editableValueJSONObject,
-					assetEntriesFieldValues, mode, locale, previewClassPK,
-					previewType);
+					value = StringUtil.replace(
+						editableElementParser.getFieldTemplate(), "field_name",
+						value);
+				}
+			}
+
+			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
+				Object fieldValue = _fragmentEntryProcessorUtil.getValue(
+					jsonObject, assetEntriesFieldValues, mode, locale,
+					previewClassPK, previewType);
+
+				if (fieldValue != null) {
+					String fieldId = jsonObject.getString("fieldId");
+
+					mappedValueConfigJSONObject =
+						editableElementParser.getFieldTemplateConfigJSONObject(
+							fieldId, locale, fieldValue);
+
+					value = editableElementParser.parseFieldValue(fieldValue);
+				}
 			}
 
 			if (Validator.isNull(value)) {
@@ -200,6 +212,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.replace(element, value);
 			}
 			else {
+				JSONObject configJSONObject = JSONUtil.merge(
+					editableValueJSONObject.getJSONObject("config"),
+					mappedValueConfigJSONObject);
+
 				editableElementParser.replace(element, value, configJSONObject);
 			}
 		}
@@ -269,57 +285,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
-	}
-
-	private String _getMappedValue(
-			EditableElementParser editableElementParser, JSONObject jsonObject,
-			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
-		throws PortalException {
-
-		String value = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(value)) {
-			return StringUtil.replace(
-				editableElementParser.getFieldTemplate(), "field_name", value);
-		}
-
-		Object fieldValue = _fragmentEntryProcessorUtil.getValue(
-			jsonObject, assetEntriesFieldValues, mode, locale, previewClassPK,
-			previewType);
-
-		if (fieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		return editableElementParser.parseFieldValue(fieldValue);
-	}
-
-	private JSONObject _getMappedValueConfigJSONObject(
-			EditableElementParser editableElementParser, JSONObject jsonObject,
-			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
-			Locale locale, long previewClassPK, int previewType)
-		throws PortalException {
-
-		String value = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(value)) {
-			return editableElementParser.getFieldTemplateConfigJSONObject(
-				value, locale, null);
-		}
-
-		Object fieldValue = _fragmentEntryProcessorUtil.getValue(
-			jsonObject, assetEntriesFieldValues, mode, locale, previewClassPK,
-			previewType);
-
-		if (fieldValue == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		String fieldId = jsonObject.getString("fieldId");
-
-		return editableElementParser.getFieldTemplateConfigJSONObject(
-			fieldId, locale, fieldValue);
 	}
 
 	private void _validateAttribute(Element element, String attributeName)

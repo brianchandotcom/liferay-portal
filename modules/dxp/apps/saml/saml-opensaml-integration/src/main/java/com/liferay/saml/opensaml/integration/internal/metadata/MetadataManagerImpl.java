@@ -566,11 +566,6 @@ public class MetadataManagerImpl
 		_samlProviderConfigurationHelper = samlProviderConfigurationHelper;
 	}
 
-	@Deactivate
-	public void shutdown() {
-		_cachingChainingMetadataResolver.destroy();
-	}
-
 	public void unsetMetadataResolver(MetadataResolver metadataResolver) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Removing metadata resolver " + metadataResolver);

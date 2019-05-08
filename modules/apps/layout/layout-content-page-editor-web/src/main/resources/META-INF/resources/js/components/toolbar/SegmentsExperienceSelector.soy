@@ -262,9 +262,9 @@
 		{let $errorCreationCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.edition) ? true : false /}
 
 		{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal.render }
-			{param visibile:  $creationModalCondition /}
+			{param visible:  $creationModalCondition /}
 			{param error: [
-				'visibile': $errorCreationCondition,
+				'visible': $errorCreationCondition,
 				'message': $errorCreatingMessage,
 				'onDismiss': $_dismissCreationError
 			] /}
@@ -304,9 +304,9 @@
 		{let $errorEditionCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.edition) ? true : false /}
 
 		{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal.render }
-			{param visibile:  $editionModalCondition /}
+			{param visible:  $editionModalCondition /}
 			{param error: [
-				'visibile': $errorEditionCondition,
+				'visible': $errorEditionCondition,
 				'message': $errorEditionMessage,
 				'onDismiss': $_dismissEditionError
 			] /}

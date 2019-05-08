@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsImpl;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.ResourceRequest;

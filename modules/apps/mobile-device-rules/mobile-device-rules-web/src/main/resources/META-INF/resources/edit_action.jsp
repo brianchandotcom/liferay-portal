@@ -102,7 +102,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 		var actionGroupId = Liferay.Util.getFormElement(form, 'groupId');
 		var actionPlid = Liferay.Util.getFormElement(form, 'actionPlid');
 
- 		if (actionGroupId && actionPlid) {
+		if (actionGroupId && actionPlid) {
 			formData.append('<portlet:namespace />actionGroupId', actionGroupId.value);
 			formData.append('<portlet:namespace />actionPlid', actionPlid.value);
 		}
@@ -140,7 +140,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 		var type = Liferay.Util.getFormElement(form, 'type');
 
- 		if (type) {
+		if (type) {
 			formData.append('<portlet:namespace />type', type.value);
 		}
 

@@ -112,7 +112,7 @@
 		%>
 
 		<div id="<portlet:namespace />CoordinatesContainer">
-			<div class="glyphicon glyphicon-map-marker" id="<portlet:namespace /><%= name %>Location>
+			<div class="glyphicon glyphicon-map-marker" id="<portlet:namespace /><%= name %>Location">
 			</div>
 
 			<%

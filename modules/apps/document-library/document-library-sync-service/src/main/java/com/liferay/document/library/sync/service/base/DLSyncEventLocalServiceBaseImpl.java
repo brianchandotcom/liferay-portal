@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -37,17 +37,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the dl sync event local service.
@@ -63,7 +64,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLSyncEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLSyncEventLocalService, IdentifiableOSGiService {
+	implements DLSyncEventLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -326,78 +327,17 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		return dlSyncEventPersistence.update(dlSyncEvent);
 	}
 
-	/**
-	 * Returns the dl sync event local service.
-	 *
-	 * @return the dl sync event local service
-	 */
-	public DLSyncEventLocalService getDLSyncEventLocalService() {
-		return dlSyncEventLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DLSyncEventLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the dl sync event local service.
-	 *
-	 * @param dlSyncEventLocalService the dl sync event local service
-	 */
-	public void setDLSyncEventLocalService(
-		DLSyncEventLocalService dlSyncEventLocalService) {
-
-		this.dlSyncEventLocalService = dlSyncEventLocalService;
-	}
-
-	/**
-	 * Returns the dl sync event persistence.
-	 *
-	 * @return the dl sync event persistence
-	 */
-	public DLSyncEventPersistence getDLSyncEventPersistence() {
-		return dlSyncEventPersistence;
-	}
-
-	/**
-	 * Sets the dl sync event persistence.
-	 *
-	 * @param dlSyncEventPersistence the dl sync event persistence
-	 */
-	public void setDLSyncEventPersistence(
-		DLSyncEventPersistence dlSyncEventPersistence) {
-
-		this.dlSyncEventPersistence = dlSyncEventPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.sync.model.DLSyncEvent",
-			dlSyncEventLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.document.library.sync.model.DLSyncEvent");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		dlSyncEventLocalService = (DLSyncEventLocalService)aopProxy;
 	}
 
 	/**
@@ -442,20 +382,13 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLSyncEventLocalService.class)
 	protected DLSyncEventLocalService dlSyncEventLocalService;
 
-	@BeanReference(type = DLSyncEventPersistence.class)
+	@Reference
 	protected DLSyncEventPersistence dlSyncEventPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

@@ -21,7 +21,9 @@ import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.model.impl.DLSyncEventImpl;
 import com.liferay.document.library.sync.model.impl.DLSyncEventModelImpl;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
+import com.liferay.document.library.sync.service.persistence.impl.constants.DLSyncPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,15 +31,16 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -49,6 +52,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the dl sync event service.
  *
@@ -59,6 +69,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = DLSyncEventPersistence.class)
 @ProviderType
 public class DLSyncEventPersistenceImpl
 	extends BasePersistenceImpl<DLSyncEvent> implements DLSyncEventPersistence {
@@ -772,7 +783,6 @@ public class DLSyncEventPersistenceImpl
 
 		setModelImplClass(DLSyncEventImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -789,7 +799,7 @@ public class DLSyncEventPersistenceImpl
 	@Override
 	public void cacheResult(DLSyncEvent dlSyncEvent) {
 		entityCache.putResult(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, DLSyncEventImpl.class,
 			dlSyncEvent.getPrimaryKey(), dlSyncEvent);
 
 		finderCache.putResult(
@@ -808,9 +818,8 @@ public class DLSyncEventPersistenceImpl
 	public void cacheResult(List<DLSyncEvent> dlSyncEvents) {
 		for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
 			if (entityCache.getResult(
-					DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-					DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey()) ==
-						null) {
+					entityCacheEnabled, DLSyncEventImpl.class,
+					dlSyncEvent.getPrimaryKey()) == null) {
 
 				cacheResult(dlSyncEvent);
 			}
@@ -846,7 +855,7 @@ public class DLSyncEventPersistenceImpl
 	@Override
 	public void clearCache(DLSyncEvent dlSyncEvent) {
 		entityCache.removeResult(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, DLSyncEventImpl.class,
 			dlSyncEvent.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -862,8 +871,8 @@ public class DLSyncEventPersistenceImpl
 
 		for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
 			entityCache.removeResult(
-				DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-				DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey());
+				entityCacheEnabled, DLSyncEventImpl.class,
+				dlSyncEvent.getPrimaryKey());
 
 			clearUniqueFindersCache((DLSyncEventModelImpl)dlSyncEvent, true);
 		}
@@ -1049,7 +1058,7 @@ public class DLSyncEventPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!DLSyncEventModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1059,7 +1068,7 @@ public class DLSyncEventPersistenceImpl
 		}
 
 		entityCache.putResult(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, DLSyncEventImpl.class,
 			dlSyncEvent.getPrimaryKey(), dlSyncEvent, false);
 
 		clearUniqueFindersCache(dlSyncEventModelImpl, false);
@@ -1342,27 +1351,27 @@ public class DLSyncEventPersistenceImpl
 	/**
 	 * Initializes the dl sync event persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		DLSyncEventModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		DLSyncEventModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLSyncEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLSyncEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByModifiedTime = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLSyncEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedTime",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1370,39 +1379,71 @@ public class DLSyncEventPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByModifiedTime = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByModifiedTime",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByTypePK = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, DLSyncEventImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLSyncEventImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
 			new String[] {Long.class.getName()},
 			DLSyncEventModelImpl.TYPEPK_COLUMN_BITMASK);
 
 		_finderPathCountByTypePK = new FinderPath(
-			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTypePK",
 			new String[] {Long.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(DLSyncEventImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = DLSyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.document.library.sync.model.DLSyncEvent"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = DLSyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = DLSyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_DLSYNCEVENT =

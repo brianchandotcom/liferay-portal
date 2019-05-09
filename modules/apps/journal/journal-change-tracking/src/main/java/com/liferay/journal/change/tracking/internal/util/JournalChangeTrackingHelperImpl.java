@@ -44,7 +44,8 @@ public class JournalChangeTrackingHelperImpl
 			JournalArticle.class.getName());
 
 		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getModelChangeCTEntryOptional(userId, classNameId, id);
+			_ctManager.getActiveCTCollectionCTEntryOptional(
+				userId, classNameId, id);
 
 		Stream<CTCollection> stream = ctEntryOptional.map(
 			CTEntry::getCtEntryId

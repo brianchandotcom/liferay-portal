@@ -67,7 +67,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -504,12 +503,6 @@ public class ProjectTemplatesTest {
 			"liferay-portlet-app_7_2_0.dtd");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateContentTargetingReport72() throws Exception {
-		_buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferayVersion", "7.2");
-	}
-
 	@Test
 	public void testBuildTemplateContentTargetingReport70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -549,6 +542,12 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateContentTargetingReport72() throws Exception {
+		_buildTemplateWithGradle(
+			"content-targeting-report", "foo-bar", "--liferayVersion", "7.2");
+	}
+
 	@Test
 	public void testBuildTemplateContentTargetingReportInWorkspace()
 		throws Exception {
@@ -571,12 +570,6 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateContentTargetingRule72() throws Exception {
-		_buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferayVersion", "7.2");
 	}
 
 	@Test
@@ -614,6 +607,12 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateContentTargetingRule72() throws Exception {
+		_buildTemplateWithGradle(
+			"content-targeting-rule", "foo-bar", "--liferayVersion", "7.2");
+	}
+
 	@Test
 	public void testBuildTemplateContentTargetingRuleInWorkspace()
 		throws Exception {
@@ -636,15 +635,6 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateContentTargetingTrackingAction72()
-		throws Exception {
-
-		_buildTemplateWithGradle(
-			"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
-			"7.2");
 	}
 
 	@Test
@@ -686,6 +676,15 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateContentTargetingTrackingAction72()
+		throws Exception {
+
+		_buildTemplateWithGradle(
+			"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
+			"7.2");
 	}
 
 	@Test
@@ -861,6 +860,7 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateFormField71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -927,6 +927,7 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -1680,26 +1681,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplatePanelApp72() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferayVersion", "7.2");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"panel-app", "gradle.test", "com.test", "-DclassName=Foo",
-			"-Dpackage=gradle.test", "-DliferayVersion=7.2");
-
-		_testContains(
-			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
 	public void testBuildTemplatePanelApp71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
@@ -1712,6 +1693,26 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"panel-app", "gradle.test", "com.test", "-DclassName=Foo",
 			"-Dpackage=gradle.test", "-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplatePanelApp72() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"panel-app", "gradle.test", "--class-name", "Foo",
+			"--liferayVersion", "7.2");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"panel-app", "gradle.test", "com.test", "-DclassName=Foo",
+			"-Dpackage=gradle.test", "-DliferayVersion=7.2");
 
 		_testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3003,6 +3004,7 @@ public class ProjectTemplatesTest {
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
 			"--liferayVersion", "7.0");
 	}
+
 	@Test
 	public void testBuildTemplateSocialBookmark71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -3429,6 +3431,39 @@ public class ProjectTemplatesTest {
 			"theme-contributor", "my-contributor-custom", "com.test",
 			"-DcontributorType=foo-bar", "-Dpackage=my.contributor.custom",
 			"-DliferayVersion=7.1");
+
+		_testContains(
+			mavenProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplateThemeContributorCustom72() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme-contributor", "my-contributor-custom", "--contributor-type",
+			"foo-bar", "--liferayVersion", "7.2");
+
+		_testContains(
+			gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: foo-bar",
+			"Web-ContextPath: /foo-bar-theme-contributor");
+		_testNotContains(
+			gradleProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/foo-bar.scss");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/js/foo-bar.js");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"theme-contributor", "my-contributor-custom", "com.test",
+			"-DcontributorType=foo-bar", "-Dpackage=my.contributor.custom",
+			"-DliferayVersion=7.2");
 
 		_testContains(
 			mavenProjectDir, "bnd.bnd",
@@ -4904,14 +4939,6 @@ public class ProjectTemplatesTest {
 		return _testContains(dir, fileName, false, strings);
 	}
 
-	private static void _testContainsJarEntry(File file, String name)
-		throws IOException {
-
-		try (JarFile jarFile = new JarFile(file)) {
-			Assert.assertNotNull(jarFile.getJarEntry(name));
-		}
-	}
-
 	private static File _testContainsOrNot(
 			File dir, String fileName, boolean regex, boolean contains,
 			String... strings)
@@ -5013,18 +5040,6 @@ public class ProjectTemplatesTest {
 			"Expected key " + key + " to exist in properties " +
 				file.getAbsolutePath(),
 			property);
-	}
-
-	private static void _testSoyOutputFiles(
-			File gradleProjectDir, File mavenProjectDir)
-		throws Exception {
-
-		File gradleJarFile = new File(
-			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
-		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
-
-		_testContainsJarEntry(gradleJarFile, "package.json");
-		_testContainsJarEntry(mavenJarFile, "package.json");
 	}
 
 	private static void _testSpringMVCOutputs(File gradleProjectDir)
@@ -6010,65 +6025,6 @@ public class ProjectTemplatesTest {
 
 			_testExists(workspaceProjectDir, jarFilePath);
 		}
-	}
-
-	private void _testPomXmlContainsDependency(
-			Path pomXmlPath, String groupId, String artifactId, String version)
-		throws Exception {
-
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
-		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
-
-		Document document = documentBuilder.parse(pomXmlPath.toFile());
-
-		Element projectElement = document.getDocumentElement();
-
-		Element dependenciesElement = XMLTestUtil.getChildElement(
-			projectElement, "dependencies");
-
-		List<Element> dependencyElements;
-
-		if (dependenciesElement != null) {
-			dependencyElements = XMLTestUtil.getChildElements(
-				dependenciesElement);
-		}
-		else {
-			dependencyElements = Collections.emptyList();
-		}
-
-		boolean foundDependency = false;
-
-		for (Element dependencyElement : dependencyElements) {
-			String dependencyElementString = XMLTestUtil.toString(
-				dependencyElement);
-
-			String artifactIdString = String.format(
-				"<artifactId>%s</artifactId>", artifactId);
-			String groupIdString = String.format(
-				"<groupId>%s</groupId>", groupId);
-			String versionString = String.format(
-				"<version>%s</version>", version);
-
-			if (dependencyElementString.contains(artifactIdString) &&
-				dependencyElementString.contains(groupIdString) &&
-				dependencyElementString.contains(versionString)) {
-
-				foundDependency = true;
-
-				break;
-			}
-		}
-
-		String missingDependencyString = String.format(
-			"Missing dependency %s:%s:%s in %s", groupId, artifactId, version,
-			pomXmlPath);
-
-		Assert.assertTrue(missingDependencyString, foundDependency);
 	}
 
 	private static final String _BUILD_PROJECTS = System.getProperty(

@@ -78,24 +78,26 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
 
-		HttpServletRequest namespacedRequest = new NamespaceServletRequest(
-			httpServletRequest, StringPool.BLANK, namespace);
+		HttpServletRequest namespacedHttpServletRequest =
+			new NamespaceServletRequest(
+				httpServletRequest, StringPool.BLANK, namespace);
 
-		String cmd = ParamUtil.getString(namespacedRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(
+			namespacedHttpServletRequest, Constants.CMD);
 
 		try {
 			String redirect = _portal.escapeRedirect(
-				ParamUtil.getString(namespacedRequest, "redirect"));
+				ParamUtil.getString(namespacedHttpServletRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long commentId = updateComment(namespacedRequest);
+				long commentId = updateComment(namespacedHttpServletRequest);
 
 				boolean ajax = ParamUtil.getBoolean(
-					namespacedRequest, "ajax", true);
+					namespacedHttpServletRequest, "ajax", true);
 
 				if (ajax) {
 					String randomNamespace = ParamUtil.getString(
-						namespacedRequest, "randomNamespace");
+						namespacedHttpServletRequest, "randomNamespace");
 
 					JSONObject jsonObject = JSONUtil.put(
 						"commentId", commentId
@@ -104,19 +106,20 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 					);
 
 					writeJSON(
-						namespacedRequest, httpServletResponse, jsonObject);
+						namespacedHttpServletRequest, httpServletResponse,
+						jsonObject);
 
 					return null;
 				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteComment(namespacedRequest);
+				deleteComment(namespacedHttpServletRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
-				subscribeToComments(namespacedRequest, true);
+				subscribeToComments(namespacedHttpServletRequest, true);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
-				subscribeToComments(namespacedRequest, false);
+				subscribeToComments(namespacedHttpServletRequest, false);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -131,7 +134,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 			jsonObject.putException(e);
 
-			writeJSON(namespacedRequest, httpServletResponse, jsonObject);
+			writeJSON(
+				namespacedHttpServletRequest, httpServletResponse, jsonObject);
 		}
 
 		return null;

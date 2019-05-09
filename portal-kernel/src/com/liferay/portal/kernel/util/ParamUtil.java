@@ -2128,10 +2128,11 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, String[] defaultValue,
 		boolean split) {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getParameterValues(request, param, defaultValue, split);
+		return getParameterValues(
+			httpServletRequest, param, defaultValue, split);
 	}
 
 	/**

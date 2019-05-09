@@ -58,22 +58,25 @@ public class NestedPortletsDisplayContext {
 	 * @see com.liferay.portal.util.PortalImpl#getOriginalServletRequest
 	 */
 	public HttpServletRequest getLastForwardRequest() {
-		HttpServletRequest currentRequest = _httpServletRequest;
+		HttpServletRequest currentHttpServletRequest = _httpServletRequest;
 		HttpServletRequestWrapper currentRequestWrapper = null;
-		HttpServletRequest originalRequest = null;
-		HttpServletRequest nextRequest = null;
+		HttpServletRequest originalHttpServletRequest = null;
+		HttpServletRequest nextHttpServletRequest = null;
 
-		while (currentRequest instanceof HttpServletRequestWrapper) {
-			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
+		while (currentHttpServletRequest instanceof HttpServletRequestWrapper) {
+			if (currentHttpServletRequest instanceof
+					PersistentHttpServletRequestWrapper) {
+
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)currentRequest;
+						(PersistentHttpServletRequestWrapper)
+							currentHttpServletRequest;
 
 				persistentHttpServletRequestWrapper =
 					persistentHttpServletRequestWrapper.clone();
 
-				if (originalRequest == null) {
-					originalRequest =
+				if (originalHttpServletRequest == null) {
+					originalHttpServletRequest =
 						persistentHttpServletRequestWrapper.clone();
 				}
 
@@ -86,32 +89,33 @@ public class NestedPortletsDisplayContext {
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)currentRequest;
+				(HttpServletRequestWrapper)currentHttpServletRequest;
 
-			nextRequest =
+			nextHttpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 
-			if ((currentRequest.getDispatcherType() ==
+			if ((currentHttpServletRequest.getDispatcherType() ==
 					DispatcherType.FORWARD) &&
-				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
+				(nextHttpServletRequest.getDispatcherType() ==
+					DispatcherType.REQUEST)) {
 
 				break;
 			}
 
-			currentRequest = nextRequest;
+			currentHttpServletRequest = nextHttpServletRequest;
 		}
 
 		if ((currentRequestWrapper != null) &&
-			!_isVirtualHostRequest(nextRequest)) {
+			!_isVirtualHostRequest(nextHttpServletRequest)) {
 
-			currentRequestWrapper.setRequest(currentRequest);
+			currentRequestWrapper.setRequest(currentHttpServletRequest);
 		}
 
-		if (originalRequest != null) {
-			return originalRequest;
+		if (originalHttpServletRequest != null) {
+			return originalHttpServletRequest;
 		}
 
-		return currentRequest;
+		return currentHttpServletRequest;
 	}
 
 	public String getLayoutTemplateId() {

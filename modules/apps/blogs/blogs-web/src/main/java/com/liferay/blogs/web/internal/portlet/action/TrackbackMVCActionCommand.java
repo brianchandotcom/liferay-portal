@@ -79,13 +79,16 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);
 
-			HttpServletRequest originalRequest =
+			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(httpServletRequest);
 
-			String excerpt = ParamUtil.getString(originalRequest, "excerpt");
-			String url = ParamUtil.getString(originalRequest, "url");
-			String blogName = ParamUtil.getString(originalRequest, "blog_name");
-			String title = ParamUtil.getString(originalRequest, "title");
+			String excerpt = ParamUtil.getString(
+				originalHttpServletRequest, "excerpt");
+			String url = ParamUtil.getString(originalHttpServletRequest, "url");
+			String blogName = ParamUtil.getString(
+				originalHttpServletRequest, "blog_name");
+			String title = ParamUtil.getString(
+				originalHttpServletRequest, "title");
 
 			validate(actionRequest, httpServletRequest.getRemoteAddr(), url);
 

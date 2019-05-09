@@ -90,34 +90,36 @@ public class PortalImplTest {
 		HttpServletRequestWrapper requestWrapper3 =
 			new PersistentHttpServletRequestWrapper1(requestWrapper2);
 
-		HttpServletRequest originalRequest =
+		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(requestWrapper3);
 
 		Assert.assertSame(
 			PersistentHttpServletRequestWrapper1.class,
-			originalRequest.getClass());
-		Assert.assertNotSame(requestWrapper3, originalRequest);
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalHttpServletRequest);
 		Assert.assertSame(
-			httpServletRequest, getWrappedRequest(originalRequest));
+			httpServletRequest, getWrappedRequest(originalHttpServletRequest));
 
 		HttpServletRequestWrapper requestWrapper4 =
 			new PersistentHttpServletRequestWrapper2(requestWrapper3);
 
-		originalRequest = PortalUtil.getOriginalServletRequest(requestWrapper4);
+		originalHttpServletRequest = PortalUtil.getOriginalServletRequest(
+			requestWrapper4);
 
 		Assert.assertSame(
 			PersistentHttpServletRequestWrapper2.class,
-			originalRequest.getClass());
-		Assert.assertNotSame(requestWrapper4, originalRequest);
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper4, originalHttpServletRequest);
 
-		originalRequest = getWrappedRequest(originalRequest);
+		originalHttpServletRequest = getWrappedRequest(
+			originalHttpServletRequest);
 
 		Assert.assertSame(
 			PersistentHttpServletRequestWrapper1.class,
-			originalRequest.getClass());
-		Assert.assertNotSame(requestWrapper3, originalRequest);
+			originalHttpServletRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalHttpServletRequest);
 		Assert.assertSame(
-			httpServletRequest, getWrappedRequest(originalRequest));
+			httpServletRequest, getWrappedRequest(originalHttpServletRequest));
 	}
 
 	@Test

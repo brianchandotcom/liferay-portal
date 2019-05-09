@@ -314,7 +314,7 @@ public class PortletRequestDispatcherImpl
 			boolean include)
 		throws IOException, ServletException {
 
-		HttpServletRequest oldPortletRequestDispatcherRequest = null;
+		HttpServletRequest oldPortletRequestDispatcherHttpServletRequest = null;
 
 		LiferayPortletRequest liferayPortletRequest = null;
 
@@ -326,7 +326,7 @@ public class PortletRequestDispatcherImpl
 			liferayPortletRequest = LiferayPortletUtil.getLiferayPortletRequest(
 				portletRequest);
 
-			oldPortletRequestDispatcherRequest =
+			oldPortletRequestDispatcherHttpServletRequest =
 				liferayPortletRequest.getPortletRequestDispatcherRequest();
 
 			PortletServletRequest portletServletRequest =
@@ -375,7 +375,7 @@ public class PortletRequestDispatcherImpl
 		finally {
 			if (liferayPortletRequest != null) {
 				liferayPortletRequest.setPortletRequestDispatcherRequest(
-					oldPortletRequestDispatcherRequest);
+					oldPortletRequestDispatcherHttpServletRequest);
 			}
 		}
 	}

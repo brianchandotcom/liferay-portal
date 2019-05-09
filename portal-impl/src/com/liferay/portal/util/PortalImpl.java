@@ -3668,11 +3668,11 @@ public class PortalImpl implements Portal {
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		HttpServletRequest originalRequest = getOriginalServletRequest(
-			httpServletRequest);
+		HttpServletRequest originalHttpServletRequest =
+			getOriginalServletRequest(httpServletRequest);
 
-		if (originalRequest.getPathInfo() == null) {
-			requestURI = originalRequest.getRequestURI();
+		if (originalHttpServletRequest.getPathInfo() == null) {
+			requestURI = originalHttpServletRequest.getRequestURI();
 		}
 
 		String contextPath = getPathContext();
@@ -3822,21 +3822,25 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest httpServletRequest) {
 
-		HttpServletRequest currentRequest = httpServletRequest;
+		HttpServletRequest currentHttpServletRequest = httpServletRequest;
 		HttpServletRequestWrapper currentRequestWrapper = null;
-		HttpServletRequest originalRequest = null;
+		HttpServletRequest originalHttpServletRequest = null;
 
-		while (currentRequest instanceof HttpServletRequestWrapper) {
-			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
+		while (currentHttpServletRequest instanceof HttpServletRequestWrapper) {
+			if (currentHttpServletRequest instanceof
+					PersistentHttpServletRequestWrapper) {
+
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)currentRequest;
+						(PersistentHttpServletRequestWrapper)
+							currentHttpServletRequest;
 
 				persistentHttpServletRequestWrapper =
 					persistentHttpServletRequestWrapper.clone();
 
-				if (originalRequest == null) {
-					originalRequest = persistentHttpServletRequestWrapper;
+				if (originalHttpServletRequest == null) {
+					originalHttpServletRequest =
+						persistentHttpServletRequestWrapper;
 				}
 
 				if (currentRequestWrapper != null) {
@@ -3851,21 +3855,21 @@ public class PortalImpl implements Portal {
 			// properly
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)currentRequest;
+				(HttpServletRequestWrapper)currentHttpServletRequest;
 
-			currentRequest =
+			currentHttpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
 		if (currentRequestWrapper != null) {
-			currentRequestWrapper.setRequest(currentRequest);
+			currentRequestWrapper.setRequest(currentHttpServletRequest);
 		}
 
-		if (originalRequest != null) {
-			return originalRequest;
+		if (originalHttpServletRequest != null) {
+			return originalHttpServletRequest;
 		}
 
-		return currentRequest;
+		return currentHttpServletRequest;
 	}
 
 	@Override
@@ -4854,10 +4858,11 @@ public class PortalImpl implements Portal {
 				httpServletRequest, "doAsGroupId");
 
 			if (doAsGroupId <= 0) {
-				HttpServletRequest originalRequest = getOriginalServletRequest(
-					httpServletRequest);
+				HttpServletRequest originalHttpServletRequest =
+					getOriginalServletRequest(httpServletRequest);
 
-				doAsGroupId = ParamUtil.getLong(originalRequest, "doAsGroupId");
+				doAsGroupId = ParamUtil.getLong(
+					originalHttpServletRequest, "doAsGroupId");
 			}
 
 			Group doAsGroup = null;
@@ -5568,14 +5573,14 @@ public class PortalImpl implements Portal {
 		List<PersistentHttpServletRequestWrapper>
 			persistentHttpServletRequestWrappers = new ArrayList<>();
 
-		HttpServletRequest currentRequest = httpServletRequest;
+		HttpServletRequest currentHttpServletRequest = httpServletRequest;
 
-		while (currentRequest instanceof HttpServletRequestWrapper) {
-			if (currentRequest instanceof UploadServletRequest) {
-				return (UploadServletRequest)currentRequest;
+		while (currentHttpServletRequest instanceof HttpServletRequestWrapper) {
+			if (currentHttpServletRequest instanceof UploadServletRequest) {
+				return (UploadServletRequest)currentHttpServletRequest;
 			}
 
-			Class<?> currentRequestClass = currentRequest.getClass();
+			Class<?> currentRequestClass = currentHttpServletRequest.getClass();
 
 			String currentRequestClassName = currentRequestClass.getName();
 
@@ -5583,25 +5588,28 @@ public class PortalImpl implements Portal {
 				break;
 			}
 
-			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
+			if (currentHttpServletRequest instanceof
+					PersistentHttpServletRequestWrapper) {
+
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)currentRequest;
+						(PersistentHttpServletRequestWrapper)
+							currentHttpServletRequest;
 
 				persistentHttpServletRequestWrappers.add(
 					persistentHttpServletRequestWrapper.clone());
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)currentRequest;
+				(HttpServletRequestWrapper)currentHttpServletRequest;
 
-			currentRequest =
+			currentHttpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
 		if (ServerDetector.isWebLogic()) {
-			currentRequest = new NonSerializableObjectRequestWrapper(
-				currentRequest);
+			currentHttpServletRequest = new NonSerializableObjectRequestWrapper(
+				currentHttpServletRequest);
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
@@ -5610,14 +5618,14 @@ public class PortalImpl implements Portal {
 			HttpServletRequestWrapper httpServletRequestWrapper =
 				persistentHttpServletRequestWrappers.get(i);
 
-			httpServletRequestWrapper.setRequest(currentRequest);
+			httpServletRequestWrapper.setRequest(currentHttpServletRequest);
 
-			currentRequest = httpServletRequestWrapper;
+			currentHttpServletRequest = httpServletRequestWrapper;
 		}
 
 		return new UploadServletRequestImpl(
-			currentRequest, fileSizeThreshold, location, maxRequestSize,
-			maxFileSize);
+			currentHttpServletRequest, fileSizeThreshold, location,
+			maxRequestSize, maxFileSize);
 	}
 
 	@Override

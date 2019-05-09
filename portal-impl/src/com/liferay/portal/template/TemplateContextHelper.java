@@ -295,14 +295,14 @@ public class TemplateContextHelper {
 			Layout layout = themeDisplay.getLayout();
 			List<Layout> layouts = themeDisplay.getLayouts();
 
-			HttpServletRequest originalRequest =
+			HttpServletRequest originalHttpServletRequest =
 				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			String namespace = PortalUtil.getPortletNamespace(
 				ParamUtil.getString(httpServletRequest, "p_p_id"));
 
 			String bodyCssClass = ParamUtil.getString(
-				originalRequest, namespace + "bodyCssClass");
+				originalHttpServletRequest, namespace + "bodyCssClass");
 
 			contextObjects.put("bodyCssClass", bodyCssClass);
 

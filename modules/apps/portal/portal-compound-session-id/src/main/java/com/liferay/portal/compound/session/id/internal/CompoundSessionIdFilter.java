@@ -48,17 +48,19 @@ public class CompoundSessionIdFilter
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		HttpServletRequest wrappedRequest = httpServletRequest;
+		HttpServletRequest wrappedHttpServletRequest = httpServletRequest;
 
-		while (wrappedRequest instanceof HttpServletRequestWrapper) {
-			if (wrappedRequest instanceof CompoundSessionIdServletRequest) {
+		while (wrappedHttpServletRequest instanceof HttpServletRequestWrapper) {
+			if (wrappedHttpServletRequest instanceof
+					CompoundSessionIdServletRequest) {
+
 				return httpServletRequest;
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)wrappedRequest;
+				(HttpServletRequestWrapper)wrappedHttpServletRequest;
 
-			wrappedRequest =
+			wrappedHttpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 

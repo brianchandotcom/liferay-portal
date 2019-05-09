@@ -182,11 +182,11 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 		}
 
-		HttpServletRequest originalRequest =
+		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
-			new RestrictPortletServletRequest(originalRequest);
+			new RestrictPortletServletRequest(originalHttpServletRequest);
 
 		Map<String, String[]> parameterMap = new HashMap<>(
 			httpServletRequest.getParameterMap());
@@ -212,7 +212,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 		parameterMap.putAll(
 			MapUtil.filterByKeys(
-				originalRequest.getParameterMap(),
+				originalHttpServletRequest.getParameterMap(),
 				key -> key.startsWith(portletNamespace)));
 
 		queryString = PortletParameterUtil.addNamespace(

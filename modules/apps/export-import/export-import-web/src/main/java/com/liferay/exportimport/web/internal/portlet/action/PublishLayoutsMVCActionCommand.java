@@ -158,7 +158,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void setLayoutIdMap(ActionRequest actionRequest) {
-		HttpServletRequest portletRequest = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -168,7 +168,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String treeId = ParamUtil.getString(actionRequest, "treeId");
 
 		String openNodes = SessionTreeJSClicks.getOpenNodes(
-			portletRequest, treeId + "SelectedNode");
+			httpServletRequest, treeId + "SelectedNode");
 
 		String selectedLayoutsJSON = _exportImportHelper.getSelectedLayoutsJSON(
 			groupId, privateLayout, openNodes);

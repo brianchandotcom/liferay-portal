@@ -431,10 +431,10 @@ public class SessionErrors {
 	private static HttpSession _getPortalSession(
 		HttpServletRequest httpServletRequest) {
 
-		HttpServletRequest originalRequest =
+		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		return originalRequest.getSession();
+		return originalHttpServletRequest.getSession();
 	}
 
 	private static HttpSession _getPortalSession(

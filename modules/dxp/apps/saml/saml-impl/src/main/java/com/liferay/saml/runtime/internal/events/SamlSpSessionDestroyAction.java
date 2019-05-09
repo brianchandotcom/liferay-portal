@@ -88,9 +88,8 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"HTTP session " + session.getId() +
-						" expiring SAML SP session " +
-							samlSpSession.getSamlSpSessionKey());
+					"HTTP session expiring SAML SP session " +
+						samlSpSession.getSamlSpSessionKey());
 			}
 
 			_samlSpSessionLocalService.deleteSamlSpSession(

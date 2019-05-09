@@ -445,13 +445,8 @@ information.
 						/>
 					</copy>
 
-					<path id="test.compile.classpath">
-						<pathelement path="${project.dir}/lib/development/biz.aQute.bnd.jar" />
-						<path refid="test.classpath" />
-					</path>
-
 					<javac
-						classpathref="test.compile.classpath"
+						classpathref="test.classpath"
 						compiler="${javac.compiler}"
 						debug="${javac.debug}"
 						deprecation="${javac.deprecation}"

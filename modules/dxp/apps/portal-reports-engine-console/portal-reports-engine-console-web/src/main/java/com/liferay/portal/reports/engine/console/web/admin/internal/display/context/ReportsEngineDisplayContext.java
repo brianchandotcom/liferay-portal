@@ -322,6 +322,7 @@ public class ReportsEngineDisplayContext {
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
@@ -329,6 +330,5 @@ public class ReportsEngineDisplayContext {
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final ReportsEngineRequestHelper _reportsEngineRequestHelper;
-	private final HttpServletRequest _httpServletRequest;
 
 }

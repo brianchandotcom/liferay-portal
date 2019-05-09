@@ -1017,8 +1017,6 @@ definition {
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1038,8 +1036,6 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1055,8 +1051,6 @@ definition {
 			webContentContentEdit = "Web Content Content Edit 1",
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit 1");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1074,8 +1068,6 @@ definition {
 			webContentTitle = "Web Content Title Edit 1",
 			webContentTitleEdit = "Web Content Title Edit 2");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1092,8 +1084,6 @@ definition {
 			webContentTitle = "Web Content Title Edit 2",
 			webContentTitleEdit = "Web Content Title Edit 3");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1106,8 +1096,6 @@ definition {
 		WebContent.expireSpecificVersionCP(
 			webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
 			webContentTitle = "Web Content Title Edit 3");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1126,8 +1114,6 @@ definition {
 			webContentTitle = "Web Content Title Edit 3",
 			webContentTitleEdit = "Web Content Title Edit Draft");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1136,8 +1122,6 @@ definition {
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -1148,8 +1132,6 @@ definition {
 			assetName = "WC Folder Name",
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Folder");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

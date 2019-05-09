@@ -88,7 +88,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -130,7 +130,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -427,12 +427,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -456,13 +456,13 @@ exports[`Should display error when submitting the form with empty name 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -503,7 +503,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -819,7 +819,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -861,7 +861,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -1158,12 +1158,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -1187,13 +1187,13 @@ exports[`Should display error when the server returns a failure 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -1234,7 +1234,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -1541,7 +1541,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -1583,7 +1583,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -1880,12 +1880,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -1909,13 +1909,13 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -1956,7 +1956,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -2263,7 +2263,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -2305,7 +2305,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -2602,12 +2602,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -2631,13 +2631,13 @@ exports[`Should display errors when input blur with invalid values 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -2678,7 +2678,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -2985,7 +2985,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -3027,7 +3027,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -3324,12 +3324,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -3353,13 +3353,13 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -3400,7 +3400,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -3707,7 +3707,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -3749,7 +3749,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -4046,12 +4046,12 @@ exports[`Should edit the SLA with valid values 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -4075,13 +4075,13 @@ exports[`Should edit the SLA with valid values 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -4122,7 +4122,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -4407,7 +4407,7 @@ exports[`Should redirect to SLA list 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -4449,7 +4449,7 @@ exports[`Should redirect to SLA list 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -4746,12 +4746,12 @@ exports[`Should redirect to SLA list 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -4775,13 +4775,13 @@ exports[`Should redirect to SLA list 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -4822,7 +4822,7 @@ exports[`Should redirect to SLA list 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -5065,7 +5065,7 @@ exports[`Should render component 1`] = `
         className="row"
       >
         <div
-          className="form-group col col-sm-5 "
+          className="col col-sm-5 form-group "
         >
           <label
             htmlFor="sla_name"
@@ -5097,7 +5097,7 @@ exports[`Should render component 1`] = `
           />
         </div>
         <div
-          className="form-group col col-sm-7"
+          className="col col-sm-7 form-group"
         >
           <label
             htmlFor="sla_description"
@@ -5326,7 +5326,7 @@ exports[`Should render component 1`] = `
         <label
           htmlFor="sla_description"
         >
-          DURATION TIME 
+          DURATION 
           <span
             className="reference-mark"
           >
@@ -5345,13 +5345,13 @@ exports[`Should render component 1`] = `
       <div
         className="sheet-text"
       >
-        Define a duration time to be met. Enter at least one of the following fields.
+        Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
       </div>
       <div
         className="row"
       >
         <div
-          className="form-group col col-sm-5 "
+          className="col col-sm-3 form-group "
         >
           <label
             htmlFor="sla_duration_days"
@@ -5376,7 +5376,7 @@ exports[`Should render component 1`] = `
           </div>
         </div>
         <div
-          className="form-group col col-sm-3 "
+          className="col col-sm-3 form-group "
         >
           <label
             htmlFor="sla_duration_hours"
@@ -5538,7 +5538,7 @@ exports[`Should render component in edit mode 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-5 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -5580,7 +5580,7 @@ exports[`Should render component in edit mode 1`] = `
                   />
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -5877,12 +5877,12 @@ exports[`Should render component in edit mode 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -5906,13 +5906,13 @@ exports[`Should render component in edit mode 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -5953,7 +5953,7 @@ exports[`Should render component in edit mode 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"
@@ -6260,7 +6260,7 @@ exports[`Should update state after input changes 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 has-error"
+                  className="col col-sm-5 form-group has-error"
                 >
                   <FieldLabel
                     fieldId="sla_name"
@@ -6332,7 +6332,7 @@ exports[`Should update state after input changes 1`] = `
                   </FieldError>
                 </div>
                 <div
-                  className="form-group col col-sm-7"
+                  className="col col-sm-7 form-group"
                 >
                   <FieldLabel
                     fieldId="sla_description"
@@ -6629,12 +6629,12 @@ exports[`Should update state after input changes 1`] = `
                 <FieldLabel
                   fieldId="sla_description"
                   required={true}
-                  text="DURATION TIME"
+                  text="DURATION"
                 >
                   <label
                     htmlFor="sla_description"
                   >
-                    DURATION TIME 
+                    DURATION 
                     <span
                       className="reference-mark"
                     >
@@ -6658,13 +6658,13 @@ exports[`Should update state after input changes 1`] = `
               <div
                 className="sheet-text"
               >
-                Define a duration time to be met. Enter at least one of the following fields.
+                Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.
               </div>
               <div
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-5 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_days"
@@ -6705,7 +6705,7 @@ exports[`Should update state after input changes 1`] = `
                   </div>
                 </div>
                 <div
-                  className="form-group col col-sm-3 "
+                  className="col col-sm-3 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_duration_hours"

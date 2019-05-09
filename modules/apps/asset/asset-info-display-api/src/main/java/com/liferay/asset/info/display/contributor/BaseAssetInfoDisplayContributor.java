@@ -107,8 +107,16 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		Map<String, Object> infoDisplayFieldsValues =
 			getInfoDisplayFieldsValues(assetEntry, locale);
 
-		return infoDisplayFieldsValues.getOrDefault(
+		Object fieldValue = infoDisplayFieldsValues.getOrDefault(
 			fieldName, StringPool.BLANK);
+
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+			fieldValue = contentAccessor.getContent();
+		}
+
+		return fieldValue;
 	}
 
 	@Override
@@ -277,12 +285,6 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 
 			Object fieldValue = _getInfoDisplayFieldValue(
 				assetObject, assetEntry, infoDisplayContributorField, locale);
-
-			if (fieldValue instanceof ContentAccessor) {
-				ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-				fieldValue = contentAccessor.getContent();
-			}
 
 			parameterMap.putIfAbsent(
 				infoDisplayContributorField.getKey(), fieldValue);

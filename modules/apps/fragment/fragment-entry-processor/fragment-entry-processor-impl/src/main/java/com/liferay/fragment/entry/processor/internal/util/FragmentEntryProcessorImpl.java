@@ -113,7 +113,8 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 
 		assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
 
-		return fieldsValues.get(fieldId);
+		return infoDisplayContributor.getInfoDisplayFieldValue(
+			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 	}
 
 	@Override

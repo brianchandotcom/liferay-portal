@@ -1025,7 +1025,7 @@ public class HttpClientSPIAgentTest {
 			mockHttpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_ORIGINAL_RESPONSE));
 		Assert.assertEquals(8, mockHttpServletResponse.getContentLength());
-		Assert.assertNull(recordSPIAgentResponse._request);
+		Assert.assertNull(recordSPIAgentResponse._httpServletRequest);
 		Assert.assertNull(recordSPIAgentResponse._bufferCacheServletResponse);
 		Assert.assertSame(
 			mockRegistrationReference,
@@ -1076,7 +1076,7 @@ public class HttpClientSPIAgentTest {
 				WebKeys.SPI_AGENT_ORIGINAL_RESPONSE));
 		Assert.assertEquals(8, mockHttpServletResponse.getContentLength());
 		Assert.assertSame(
-			mockHttpServletRequest, recordSPIAgentResponse._request);
+			mockHttpServletRequest, recordSPIAgentResponse._httpServletRequest);
 		Assert.assertSame(
 			bufferCacheServletResponse,
 			recordSPIAgentResponse._bufferCacheServletResponse);
@@ -1189,7 +1189,7 @@ public class HttpClientSPIAgentTest {
 			HttpServletRequest httpServletRequest,
 			BufferCacheServletResponse bufferCacheServletResponse) {
 
-			_request = httpServletRequest;
+			_httpServletRequest = httpServletRequest;
 			_bufferCacheServletResponse = bufferCacheServletResponse;
 		}
 
@@ -1205,7 +1205,7 @@ public class HttpClientSPIAgentTest {
 		private BufferCacheServletResponse _bufferCacheServletResponse;
 		private OutputStream _outputStream;
 		private RegistrationReference _registrationReference;
-		private HttpServletRequest _request;
+		private HttpServletRequest _httpServletRequest;
 
 	}
 

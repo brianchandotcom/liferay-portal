@@ -310,7 +310,7 @@ public class PortletRenderer {
 				ParallelRenderThreadLocalBinderUtil.getThreadLocalBinder(),
 				false, true);
 
-			_request = httpServletRequest;
+			_httpServletRequest = httpServletRequest;
 			_response = httpServletResponse;
 			_headerRequestAttributes = headerRequestAttributes;
 		}
@@ -319,7 +319,8 @@ public class PortletRenderer {
 		public StringBundler doCall() throws Exception {
 			HttpServletRequest httpServletRequest =
 				PortletContainerUtil.setupOptionalRenderParameters(
-					_request, null, _columnId, _columnPos, _columnCount);
+					_httpServletRequest, null, _columnId, _columnPos,
+					_columnCount);
 
 			_copyHeaderRequestAttributes(
 				_headerRequestAttributes, httpServletRequest);
@@ -328,7 +329,7 @@ public class PortletRenderer {
 				(RestrictPortletServletRequest)httpServletRequest;
 
 			try {
-				_split(_request, _restrictPortletServletRequest);
+				_split(_httpServletRequest, _restrictPortletServletRequest);
 
 				return _render(httpServletRequest, _response);
 			}
@@ -376,7 +377,7 @@ public class PortletRenderer {
 		}
 
 		private final Map<String, Object> _headerRequestAttributes;
-		private final HttpServletRequest _request;
+		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _response;
 
 	}

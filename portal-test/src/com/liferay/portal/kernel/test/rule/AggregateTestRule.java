@@ -70,7 +70,6 @@ public class AggregateTestRule implements TestRule {
 		"com.liferay.portal.test.rule.SynchronousMailTestRule",
 		"com.liferay.document.library.webdav.test." +
 			"WebDAVEnvironmentConfigClassTestRule",
-		"com.liferay.portal.test.rule.SyntheticBundleClassTestRule",
 		"com.liferay.portal.test.rule.PermissionCheckerMethodTestRule"
 	};
 

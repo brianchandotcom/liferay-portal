@@ -43,7 +43,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 				"columnId", String.valueOf(i)
 			).put(
 				"fragmentEntryLinkIds",
-				JSONUtil.put(fragmentEntryLink.getFragmentEntryLinkId())
+				JSONUtil.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()))
 			).put(
 				"size", StringPool.BLANK
 			);

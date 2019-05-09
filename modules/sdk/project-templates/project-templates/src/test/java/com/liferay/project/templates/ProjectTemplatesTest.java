@@ -3370,6 +3370,7 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Ignore
 	@Test
 	public void testBuildTemplateTheme72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

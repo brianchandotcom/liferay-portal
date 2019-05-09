@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -316,8 +316,7 @@ public class DisplayPageLayoutTypeController
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	private final Set<InfoDisplayRequestAttributesContributor>
-		_infoDisplayRequestAttributesContributors =
-			new ConcurrentSkipListSet<>();
+		_infoDisplayRequestAttributesContributors = new CopyOnWriteArraySet<>();
 
 	@Reference
 	private ItemSelector _itemSelector;

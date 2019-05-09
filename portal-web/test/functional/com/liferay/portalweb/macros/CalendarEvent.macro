@@ -1381,7 +1381,7 @@ definition {
 		if (isSet(relatedAssetTitle)) {
 			AssertTextEquals(
 				locator1 = "AssetRelatedAssets#HEADER",
-				value1 = "Related Assets:");
+				value1 = "Related Assets");
 
 			AssertTextEquals(
 				locator1 = "AssetRelatedAssets#ASSET_TITLE",

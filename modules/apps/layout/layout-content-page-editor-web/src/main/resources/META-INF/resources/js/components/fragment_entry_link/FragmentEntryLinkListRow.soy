@@ -149,10 +149,10 @@
 		</nav>
 
 		{let $wrapperClasses kind="text"}
-			{if $row and $row.config and $row.config.containerType == 'fixed'}
-				{sp}container
-			{else}
+			{if $row and $row.config and $row.config.containerType == 'fluid'}
 				{sp}container-fluid
+			{else}
+				{sp}container
 			{/if}
 		{/let}
 
@@ -168,7 +168,7 @@
 		{if $_resizing}
 			{call com.liferay.layout.content.page.editor.web.ColumnOverlayGrid.render}
 				{param columnSpacing: ($row and $row.config and $row.config.columnSpacing) ?: true /}
-				{param containerType: ($row and $row.config and $row.config.containerType) ?: 'fluid' /}
+				{param containerType: ($row and $row.config and $row.config.containerType) ?: 'fixed' /}
 				{param padding: ($row and $row.config and $row.config.paddingHorizontal) ?: '3' /}
 				{param highlightedColumn: $_resizeHighlightedColumn /}
 				{param ref: 'columnOverlayGrid' /}

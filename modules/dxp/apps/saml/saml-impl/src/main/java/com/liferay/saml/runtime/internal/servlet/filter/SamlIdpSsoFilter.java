@@ -61,7 +61,8 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			!_samlProviderConfigurationHelper.isRoleIdp()) {
@@ -97,8 +98,8 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	protected void doProcessFilter(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		String requestPath = _samlHttpRequestUtil.getRequestPath(
@@ -110,14 +111,14 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 			if (Validator.isNotNull(samlSsoSessionId)) {
 				_singleLogoutProfile.processIdpLogout(
-					httpServletRequest, response);
+					httpServletRequest, httpServletResponse);
 			}
 			else {
-				filterChain.doFilter(httpServletRequest, response);
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
 			}
 		}
 		else {
-			filterChain.doFilter(httpServletRequest, response);
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
 	}
 

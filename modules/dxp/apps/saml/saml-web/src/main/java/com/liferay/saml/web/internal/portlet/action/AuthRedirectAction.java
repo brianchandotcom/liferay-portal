@@ -58,7 +58,8 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
@@ -70,7 +71,7 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 		}
 
 		try {
-			response.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(redirect);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

@@ -174,11 +174,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	public void processAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		try {
-			doProcessAuthnRequest(httpServletRequest, response);
+			doProcessAuthnRequest(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			ExceptionHandlerUtil.handleException(e);
@@ -187,11 +188,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	public void processResponse(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		try {
-			doProcessResponse(httpServletRequest, response);
+			doProcessResponse(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			ExceptionHandlerUtil.handleException(e);
@@ -200,12 +202,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	public void sendAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String relayState)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String relayState)
 		throws PortalException {
 
 		try {
-			doSendAuthnRequest(httpServletRequest, response, relayState);
+			doSendAuthnRequest(
+				httpServletRequest, httpServletResponse, relayState);
 		}
 		catch (Exception e) {
 			ExceptionHandlerUtil.handleException(e);
@@ -214,7 +217,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	public void updateSamlSpSession(
-		HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 
@@ -251,7 +255,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void addSamlSsoSession(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			SamlSsoRequestContext samlSsoRequestContext, NameID nameID)
 		throws Exception {
 
@@ -274,12 +279,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			nameID.getValue(), serviceContext);
 
 		addCookie(
-			httpServletRequest, response, SamlWebKeys.SAML_SSO_SESSION_ID,
+			httpServletRequest, httpServletResponse,
+			SamlWebKeys.SAML_SSO_SESSION_ID,
 			samlSsoRequestContext.getSamlSsoSessionId(), -1);
 	}
 
 	protected SamlSsoRequestContext decodeAuthnConversationAfterLogin(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		HttpSession session = httpServletRequest.getSession();
@@ -292,7 +299,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			session.removeAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 			MessageContext<?> messageContext = getMessageContext(
-				httpServletRequest, response,
+				httpServletRequest, httpServletResponse,
 				samlSsoRequestContext.getPeerEntityId());
 
 			samlSsoRequestContext.setSAMLMessageContext(messageContext);
@@ -354,7 +361,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected SamlSsoRequestContext decodeAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String samlMessageId = ParamUtil.getString(
@@ -362,7 +370,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (!Validator.isBlank(samlMessageId)) {
 			SamlSsoRequestContext samlSsoRequestContext =
-				decodeAuthnConversationAfterLogin(httpServletRequest, response);
+				decodeAuthnConversationAfterLogin(
+					httpServletRequest, httpServletResponse);
 
 			if (samlSsoRequestContext != null) {
 				MessageContext messageContext =
@@ -399,7 +408,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (idpInitiatedSSO) {
 			SamlSsoRequestContext samlSsoRequestContext =
-				decodeAuthnConversationAfterLogin(httpServletRequest, response);
+				decodeAuthnConversationAfterLogin(
+					httpServletRequest, httpServletResponse);
 
 			if (samlSsoRequestContext != null) {
 				MessageContext<?> messageContext =
@@ -434,7 +444,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (idpInitiatedSSO) {
 			messageContext = getMessageContext(
-				httpServletRequest, response, entityId);
+				httpServletRequest, httpServletResponse, entityId);
 
 			SAMLBindingContext samlBindingContext =
 				messageContext.getSubcontext(SAMLBindingContext.class);
@@ -459,7 +469,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
 			messageContext = decodeSamlMessage(
-				httpServletRequest, response, samlBinding,
+				httpServletRequest, httpServletResponse, samlBinding,
 				samlProviderConfiguration.authnRequestSignatureRequired());
 
 			InOutOperationContext inOutOperationContext =
@@ -510,11 +520,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void doProcessAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		SamlSsoRequestContext samlSsoRequestContext = decodeAuthnRequest(
-			httpServletRequest, response);
+			httpServletRequest, httpServletResponse);
 
 		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
@@ -535,7 +546,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				(user == null)) {
 
 				sendFailureResponse(
-					samlSsoRequestContext, StatusCode.NO_PASSIVE, response);
+					samlSsoRequestContext, StatusCode.NO_PASSIVE,
+					httpServletResponse);
 
 				return;
 			}
@@ -562,7 +574,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			if (sessionExpired || Validator.isNull(samlSsoSessionId)) {
 				addCookie(
-					httpServletRequest, response,
+					httpServletRequest, httpServletResponse,
 					SamlWebKeys.SAML_SSO_SESSION_ID, StringPool.BLANK, 0);
 
 				samlSsoRequestContext.setNewSession(true);
@@ -586,12 +598,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			redirectToLogin(
-				httpServletRequest, response, samlSsoRequestContext,
+				httpServletRequest, httpServletResponse, samlSsoRequestContext,
 				forceAuthn);
 		}
 		else {
 			sendSuccessResponse(
-				httpServletRequest, response, samlSsoRequestContext);
+				httpServletRequest, httpServletResponse, samlSsoRequestContext);
 
 			HttpSession session = httpServletRequest.getSession(false);
 
@@ -602,11 +614,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void doProcessResponse(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		MessageContext messageContext = decodeSamlMessage(
-			httpServletRequest, response,
+			httpServletRequest, httpServletResponse,
 			getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
 
 		InOutOperationContext inOutOperationContext =
@@ -790,7 +803,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSpSession.getSamlSpSessionKey());
 
 		addCookie(
-			httpServletRequest, response, SamlWebKeys.SAML_SP_SESSION_KEY,
+			httpServletRequest, httpServletResponse,
+			SamlWebKeys.SAML_SP_SESSION_KEY,
 			samlSpSession.getSamlSpSessionKey(), -1);
 
 		StringBundler sb = new StringBundler(3);
@@ -815,12 +829,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append(URLCodec.encodeURL(relayState));
 
-		response.sendRedirect(sb.toString());
+		httpServletResponse.sendRedirect(sb.toString());
 	}
 
 	protected void doSendAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String relayState)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String relayState)
 		throws Exception {
 
 		SamlSpIdpConnection samlSpIdpConnection =
@@ -834,7 +848,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		String entityId = samlSpIdpConnection.getSamlIdpEntityId();
 
 		MessageContext<?> messageContext = getMessageContext(
-			httpServletRequest, response, entityId);
+			httpServletRequest, httpServletResponse, entityId);
 
 		InOutOperationContext inOutOperationContext = new InOutOperationContext(
 			new MessageContext(), new MessageContext());
@@ -921,7 +935,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlPeerEntityContext.getEntityId(), authnRequest.getID(),
 			serviceContext);
 
-		sendSamlMessage(messageContext, response);
+		sendSamlMessage(messageContext, httpServletResponse);
 	}
 
 	protected Assertion getSuccessAssertion(
@@ -1240,13 +1254,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void redirectToLogin(
-		HttpServletRequest httpServletRequest, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		SamlSsoRequestContext samlSsoRequestContext, boolean forceAuthn) {
 
 		HttpSession session = httpServletRequest.getSession();
 
 		if (forceAuthn) {
-			logout(httpServletRequest, response);
+			logout(httpServletRequest, httpServletResponse);
 
 			session = httpServletRequest.getSession(true);
 
@@ -1262,10 +1277,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		session.setAttribute(
 			SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContext);
 
-		response.addHeader(
+		httpServletResponse.addHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-		response.addHeader(
+		httpServletResponse.addHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
 		StringBundler sb = new StringBundler(3);
@@ -1317,7 +1332,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		String redirect = sb.toString();
 
 		try {
-			response.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(redirect);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -1398,7 +1413,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void sendSuccessResponse(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			SamlSsoRequestContext samlSsoRequestContext)
 		throws Exception {
 
@@ -1522,14 +1538,15 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (samlSsoRequestContext.isNewSession()) {
 			addSamlSsoSession(
-				httpServletRequest, response, samlSsoRequestContext, nameID);
+				httpServletRequest, httpServletResponse, samlSsoRequestContext,
+				nameID);
 		}
 		else {
 			updateSamlSsoSession(
 				httpServletRequest, samlSsoRequestContext, nameID);
 		}
 
-		sendSamlMessage(messageContext, response);
+		sendSamlMessage(messageContext, httpServletResponse);
 	}
 
 	@Reference(unbind = "-")

@@ -57,11 +57,12 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		if (!isSignedIn()) {
-			return redirectToLogin(httpServletRequest, response);
+			return redirectToLogin(httpServletRequest, httpServletResponse);
 		}
 
 		ThemeDisplay themeDisplay =
@@ -89,7 +90,7 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 
 		String redirect = portletURL.toString();
 
-		response.sendRedirect(redirect);
+		httpServletResponse.sendRedirect(redirect);
 
 		return null;
 	}
@@ -119,7 +120,8 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 	}
 
 	protected String redirectToLogin(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		ThemeDisplay themeDisplay =
@@ -138,7 +140,7 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 			sb.append(_http.encodeURL(StringPool.QUESTION.concat(queryString)));
 		}
 
-		response.sendRedirect(sb.toString());
+		httpServletResponse.sendRedirect(sb.toString());
 
 		return null;
 	}

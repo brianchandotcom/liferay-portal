@@ -47,8 +47,8 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		String keepAliveURL = null;
@@ -64,7 +64,7 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 			SamlWebKeys.SAML_KEEP_ALIVE_URL, keepAliveURL);
 
 		includeJSP(
-			httpServletRequest, response,
+			httpServletRequest, httpServletResponse,
 			"/com.liferay.saml.web/keep_alive.jsp");
 	}
 
@@ -122,15 +122,15 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 	}
 
 	protected void includeJSP(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String jspPath)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String jspPath)
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
-			requestDispatcher.include(httpServletRequest, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException se) {
 			throw new IOException("Unable to include JSP " + jspPath, se);

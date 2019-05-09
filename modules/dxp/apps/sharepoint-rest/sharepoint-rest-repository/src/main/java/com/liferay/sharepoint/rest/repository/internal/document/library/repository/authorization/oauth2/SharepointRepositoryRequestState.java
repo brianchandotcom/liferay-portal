@@ -64,7 +64,8 @@ public final class SharepointRepositoryRequestState implements Serializable {
 	}
 
 	public void restore(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		HttpSession session = httpServletRequest.getSession();
@@ -72,7 +73,7 @@ public final class SharepointRepositoryRequestState implements Serializable {
 		session.removeAttribute(
 			SharepointRepositoryRequestState.class.getName());
 
-		response.sendRedirect(_url);
+		httpServletResponse.sendRedirect(_url);
 	}
 
 	public void validate(String state) throws AuthorizationException {

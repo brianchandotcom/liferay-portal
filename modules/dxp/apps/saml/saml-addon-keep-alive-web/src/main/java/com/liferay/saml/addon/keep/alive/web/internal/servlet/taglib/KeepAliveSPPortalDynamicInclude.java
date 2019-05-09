@@ -57,8 +57,8 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		ThemeDisplay themeDisplay =
@@ -82,7 +82,7 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			keepAliveURL, "entityId", samlProviderConfiguration.entityId());
 
 		try {
-			PrintWriter printWriter = response.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write("<script src=\"");
 			printWriter.write(HtmlUtil.escapeHREF(keepAliveURL));

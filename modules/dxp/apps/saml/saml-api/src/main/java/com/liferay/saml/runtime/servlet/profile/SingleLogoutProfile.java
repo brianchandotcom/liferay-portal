@@ -32,24 +32,30 @@ public interface SingleLogoutProfile {
 		HttpServletRequest httpServletRequest);
 
 	public void logout(
-		HttpServletRequest httpServletRequest, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void processIdpLogout(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void processSingleLogout(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void processSpLogout(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void terminateSpSession(
-		HttpServletRequest httpServletRequest, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void terminateSsoSession(
-		HttpServletRequest httpServletRequest, HttpServletResponse response);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

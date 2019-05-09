@@ -53,10 +53,12 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		_webSsoProfile.processAuthnRequest(httpServletRequest, response);
+		_webSsoProfile.processAuthnRequest(
+			httpServletRequest, httpServletResponse);
 
 		return null;
 	}

@@ -60,7 +60,8 @@ public class KeepAliveAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		if (!_samlProviderConfigurationHelper.isEnabled()) {
@@ -68,29 +69,30 @@ public class KeepAliveAction extends BaseStrutsAction {
 		}
 
 		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			executeIdpKeepAlive(httpServletRequest, response);
+			executeIdpKeepAlive(httpServletRequest, httpServletResponse);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			executeSpKeepAlive(httpServletRequest, response);
+			executeSpKeepAlive(httpServletRequest, httpServletResponse);
 		}
 
 		return null;
 	}
 
 	protected void executeIdpKeepAlive(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		response.addHeader(
+		httpServletResponse.addHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-		response.addHeader(
+		httpServletResponse.addHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 		String randomString = StringUtil.randomString();
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		List<String> keepAliveURLs = getSPsKeepAliveURLs(httpServletRequest);
 
@@ -105,18 +107,19 @@ public class KeepAliveAction extends BaseStrutsAction {
 	}
 
 	protected void executeSpKeepAlive(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		response.setHeader(
+		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-		response.setHeader(
+		httpServletResponse.setHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-		response.setContentType(ContentTypes.IMAGE_GIF);
+		httpServletResponse.setContentType(ContentTypes.IMAGE_GIF);
 
-		OutputStream outputStream = response.getOutputStream();
+		OutputStream outputStream = httpServletResponse.getOutputStream();
 
 		outputStream.write(Base64.decode(_BASE64_1X1_GIF));
 	}

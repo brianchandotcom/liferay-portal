@@ -49,7 +49,8 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		try {
@@ -80,9 +81,9 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 			OAuthUtil.generateAccessToken(
 				oAuthAccessor, userId, serviceContext);
 
-			response.setContentType(ContentTypes.TEXT_PLAIN);
+			httpServletResponse.setContentType(ContentTypes.TEXT_PLAIN);
 
-			OutputStream outputStream = response.getOutputStream();
+			OutputStream outputStream = httpServletResponse.getOutputStream();
 
 			OAuthUtil.formEncode(
 				oAuthAccessor.getAccessToken(), oAuthAccessor.getTokenSecret(),
@@ -91,7 +92,8 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 			outputStream.close();
 		}
 		catch (Exception e) {
-			OAuthUtil.handleException(httpServletRequest, response, e, false);
+			OAuthUtil.handleException(
+				httpServletRequest, httpServletResponse, e, false);
 		}
 
 		return null;

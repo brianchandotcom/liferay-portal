@@ -29,16 +29,18 @@ public interface WebSsoProfile {
 		HttpServletRequest httpServletRequest);
 
 	public void processAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void processResponse(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public void sendAuthnRequest(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String relayState)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String relayState)
 		throws PortalException;
 
 	public void updateSamlSpSession(

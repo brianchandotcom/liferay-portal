@@ -149,12 +149,13 @@ public class OAuthUtil {
 	}
 
 	public static void handleException(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			Exception exception, boolean sendBody)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception exception,
+			boolean sendBody)
 		throws OAuthException {
 
 		getOAuth().handleException(
-			httpServletRequest, response, exception, sendBody);
+			httpServletRequest, httpServletResponse, exception, sendBody);
 	}
 
 	public static String randomizeToken(String token) {

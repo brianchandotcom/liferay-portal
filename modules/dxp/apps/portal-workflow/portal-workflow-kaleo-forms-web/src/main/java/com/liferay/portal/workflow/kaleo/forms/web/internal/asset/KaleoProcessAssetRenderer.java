@@ -181,8 +181,8 @@ public class KaleoProcessAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String template)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
 		httpServletRequest.setAttribute(
@@ -198,7 +198,7 @@ public class KaleoProcessAssetRenderer
 		httpServletRequest.setAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS_LINK, kaleoProcessLink);
 
-		return super.include(httpServletRequest, response, template);
+		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
 	protected KaleoProcessLink fetchKaleoProcessLink(

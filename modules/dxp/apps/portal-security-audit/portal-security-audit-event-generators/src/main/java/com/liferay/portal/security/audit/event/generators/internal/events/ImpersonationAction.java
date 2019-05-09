@@ -47,11 +47,12 @@ public class ImpersonationAction extends Action {
 
 	@Override
 	public void run(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			doRun(httpServletRequest, response);
+			doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -59,7 +60,8 @@ public class ImpersonationAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");

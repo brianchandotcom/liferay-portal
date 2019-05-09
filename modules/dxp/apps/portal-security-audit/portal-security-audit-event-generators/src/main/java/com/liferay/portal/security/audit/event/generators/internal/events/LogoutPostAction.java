@@ -42,11 +42,12 @@ public class LogoutPostAction extends Action {
 
 	@Override
 	public void run(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
 		try {
-			doRun(httpServletRequest, response);
+			doRun(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -54,7 +55,8 @@ public class LogoutPostAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		User user = _portal.getUser(httpServletRequest);

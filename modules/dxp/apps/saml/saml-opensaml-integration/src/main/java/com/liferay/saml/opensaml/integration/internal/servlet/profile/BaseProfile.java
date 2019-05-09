@@ -79,12 +79,13 @@ import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
 public abstract class BaseProfile {
 
 	public MessageContext decodeSamlMessage(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			SamlBinding samlBinding, boolean requireSignature)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, SamlBinding samlBinding,
+			boolean requireSignature)
 		throws Exception {
 
 		MessageContext<SAMLObject> messageContext = getMessageContext(
-			httpServletRequest, response);
+			httpServletRequest, httpServletResponse);
 
 		Supplier<HttpServletRequestMessageDecoder> messageDecoderSupplier =
 			samlBinding.getHttpServletRequestMessageDecoderSupplier();
@@ -222,7 +223,8 @@ public abstract class BaseProfile {
 	}
 
 	public MessageContext<SAMLObject> getMessageContext(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		MessageContext<SAMLObject> messageContext = new MessageContext<>();
@@ -276,12 +278,12 @@ public abstract class BaseProfile {
 	}
 
 	public MessageContext<?> getMessageContext(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			String peerEntityId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String peerEntityId)
 		throws Exception {
 
 		MessageContext<?> messageContext = getMessageContext(
-			httpServletRequest, response);
+			httpServletRequest, httpServletResponse);
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class, true);
@@ -376,7 +378,8 @@ public abstract class BaseProfile {
 	}
 
 	public void logout(
-		HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
@@ -422,7 +425,8 @@ public abstract class BaseProfile {
 			loginCookie.setMaxAge(0);
 			loginCookie.setPath(StringPool.SLASH);
 
-			CookieKeys.addCookie(httpServletRequest, response, loginCookie);
+			CookieKeys.addCookie(
+				httpServletRequest, httpServletResponse, loginCookie);
 		}
 
 		Cookie rememberMeCookie = new Cookie(
@@ -435,10 +439,13 @@ public abstract class BaseProfile {
 		rememberMeCookie.setMaxAge(0);
 		rememberMeCookie.setPath(StringPool.SLASH);
 
-		CookieKeys.addCookie(httpServletRequest, response, companyIdCookie);
-		CookieKeys.addCookie(httpServletRequest, response, idCookie);
-		CookieKeys.addCookie(httpServletRequest, response, passwordCookie);
-		CookieKeys.addCookie(httpServletRequest, response, rememberMeCookie);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, companyIdCookie);
+		CookieKeys.addCookie(httpServletRequest, httpServletResponse, idCookie);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, passwordCookie);
+		CookieKeys.addCookie(
+			httpServletRequest, httpServletResponse, rememberMeCookie);
 
 		HttpSession session = httpServletRequest.getSession();
 
@@ -450,7 +457,8 @@ public abstract class BaseProfile {
 	}
 
 	public void sendSamlMessage(
-			MessageContext<?> messageContext, HttpServletResponse response)
+			MessageContext<?> messageContext,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		InOutOperationContext inOutOperationContext =
@@ -499,7 +507,8 @@ public abstract class BaseProfile {
 			samlOutboundProtocolMessageSigningHandler.invoke(
 				outboundMessageContext);
 
-			httpServletResponseMessageEncoder.setHttpServletResponse(response);
+			httpServletResponseMessageEncoder.setHttpServletResponse(
+				httpServletResponse);
 			httpServletResponseMessageEncoder.setMessageContext(
 				outboundMessageContext);
 
@@ -516,8 +525,9 @@ public abstract class BaseProfile {
 	}
 
 	protected void addCookie(
-		HttpServletRequest httpServletRequest, HttpServletResponse response,
-		String cookieName, String cookieValue, int maxAge) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String cookieName,
+		String cookieValue, int maxAge) {
 
 		Cookie cookie = new Cookie(cookieName, cookieValue);
 
@@ -532,7 +542,7 @@ public abstract class BaseProfile {
 
 		cookie.setSecure(httpServletRequest.isSecure());
 
-		response.addCookie(cookie);
+		httpServletResponse.addCookie(cookie);
 	}
 
 	protected void addSamlBinding(SamlBinding samlBinding) {

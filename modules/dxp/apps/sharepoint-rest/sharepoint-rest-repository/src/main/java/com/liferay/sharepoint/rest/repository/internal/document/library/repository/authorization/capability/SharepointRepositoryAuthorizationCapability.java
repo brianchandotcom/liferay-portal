@@ -57,11 +57,13 @@ public class SharepointRepositoryAuthorizationCapability
 
 	@Override
 	public void authorize(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException {
 
 		_authorize(
-			PortalUtil.getOriginalServletRequest(httpServletRequest), response);
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
+			httpServletResponse);
 	}
 
 	@Override
@@ -106,13 +108,14 @@ public class SharepointRepositoryAuthorizationCapability
 	}
 
 	private void _authorize(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException {
 
 		_validateRequest(httpServletRequest);
 
 		if (_hasAuthorizationGrant(httpServletRequest)) {
-			_requestAccessToken(httpServletRequest, response);
+			_requestAccessToken(httpServletRequest, httpServletResponse);
 		}
 		else {
 			Token token = _tokenStore.get(
@@ -120,14 +123,16 @@ public class SharepointRepositoryAuthorizationCapability
 				PortalUtil.getUserId(httpServletRequest));
 
 			if (token == null) {
-				_requestAuthorizationGrant(httpServletRequest, response);
+				_requestAuthorizationGrant(
+					httpServletRequest, httpServletResponse);
 			}
 			else if (token.isExpired()) {
 				if (Validator.isNotNull(token.getRefreshToken())) {
 					_refreshAccessToken(token, httpServletRequest);
 				}
 				else {
-					_requestAccessToken(httpServletRequest, response);
+					_requestAccessToken(
+						httpServletRequest, httpServletResponse);
 				}
 			}
 		}
@@ -195,7 +200,8 @@ public class SharepointRepositoryAuthorizationCapability
 	}
 
 	private void _requestAccessToken(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException {
 
 		SharepointRepositoryRequestState sharepointRepositoryRequestState =
@@ -216,18 +222,21 @@ public class SharepointRepositoryAuthorizationCapability
 			_sharepointRepositoryOAuth2Configuration.name(), userId,
 			accessToken);
 
-		sharepointRepositoryRequestState.restore(httpServletRequest, response);
+		sharepointRepositoryRequestState.restore(
+			httpServletRequest, httpServletResponse);
 	}
 
 	private void _requestAuthorizationGrant(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		String state = StringUtil.randomString(5);
 
 		SharepointRepositoryRequestState.save(httpServletRequest, state);
 
-		response.sendRedirect(_getGrantURL(httpServletRequest, state));
+		httpServletResponse.sendRedirect(
+			_getGrantURL(httpServletRequest, state));
 	}
 
 	private void _validateRequest(HttpServletRequest httpServletRequest)

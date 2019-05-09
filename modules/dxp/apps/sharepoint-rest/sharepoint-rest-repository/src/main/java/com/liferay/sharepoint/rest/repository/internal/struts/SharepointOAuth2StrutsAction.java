@@ -41,7 +41,8 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		Repository repository = _getRepository(httpServletRequest);
@@ -50,7 +51,8 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 			AuthorizationCapability authorizationCapability =
 				repository.getCapability(AuthorizationCapability.class);
 
-			authorizationCapability.authorize(httpServletRequest, response);
+			authorizationCapability.authorize(
+				httpServletRequest, httpServletResponse);
 		}
 
 		return null;

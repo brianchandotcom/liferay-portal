@@ -83,7 +83,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			!_samlProviderConfigurationHelper.isRoleSp()) {
@@ -121,8 +122,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	protected void doProcessFilter(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			FilterChain filterChain)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		String requestPath = _samlHttpRequestUtil.getRequestPath(
@@ -133,26 +134,27 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
 			_singleLogoutProfile.terminateSpSession(
-				httpServletRequest, response);
+				httpServletRequest, httpServletResponse);
 
-			_singleLogoutProfile.logout(httpServletRequest, response);
+			_singleLogoutProfile.logout(
+				httpServletRequest, httpServletResponse);
 
-			response.sendRedirect(
+			httpServletResponse.sendRedirect(
 				_portal.getCurrentCompleteURL(httpServletRequest));
 		}
 		else if (requestPath.equals("/c/portal/login")) {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/c/portal/saml/login");
 
-			response.setContentType("text/html");
+			httpServletResponse.setContentType("text/html");
 
-			requestDispatcher.include(httpServletRequest, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 
 			if (httpServletRequest.getAttribute(
 					SamlWebKeys.SAML_SP_IDP_CONNECTION) != null) {
 
 				try {
-					login(httpServletRequest, response);
+					login(httpServletRequest, httpServletResponse);
 				}
 				catch (PortalException pe) {
 					if (_log.isInfoEnabled()) {
@@ -170,7 +172,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 						SamlWebKeys.SAML_SSO_LOGIN_CONTEXT) == null) &&
 					samlProviderConfiguration.allowShowingTheLoginPortlet()) {
 
-					filterChain.doFilter(httpServletRequest, response);
+					filterChain.doFilter(
+						httpServletRequest, httpServletResponse);
 				}
 			}
 		}
@@ -179,16 +182,17 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 					httpServletRequest)) {
 
 				_singleLogoutProfile.processSpLogout(
-					httpServletRequest, response);
+					httpServletRequest, httpServletResponse);
 			}
 			else {
-				filterChain.doFilter(httpServletRequest, response);
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
 			}
 		}
 		else {
-			_webSsoProfile.updateSamlSpSession(httpServletRequest, response);
+			_webSsoProfile.updateSamlSpSession(
+				httpServletRequest, httpServletResponse);
 
-			filterChain.doFilter(httpServletRequest, response);
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -198,7 +202,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 	}
 
 	protected void login(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		String relayState = ParamUtil.getString(httpServletRequest, "redirect");
@@ -229,7 +234,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 		}
 
 		_webSsoProfile.sendAuthnRequest(
-			httpServletRequest, response, relayState);
+			httpServletRequest, httpServletResponse, relayState);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

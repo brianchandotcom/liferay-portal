@@ -274,8 +274,9 @@ public class V10aOAuth implements OAuth {
 
 	@Override
 	public void handleException(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			Exception exception, boolean sendBody)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception exception,
+			boolean sendBody)
 		throws OAuthException {
 
 		if (exception.getCause() != null) {
@@ -284,8 +285,8 @@ public class V10aOAuth implements OAuth {
 
 		try {
 			OAuthServlet.handleException(
-				response, exception, OAuthConfigurationValues.OAUTH_REALM,
-				sendBody);
+				httpServletResponse, exception,
+				OAuthConfigurationValues.OAUTH_REALM, sendBody);
 		}
 		catch (Exception e) {
 			throw new OAuthException(e);

@@ -72,7 +72,8 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest httpServletRequest, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		String entityId = ParamUtil.getString(
@@ -124,7 +125,8 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			toJSONObject(samlSpIdpConnections));
 
 		JspUtil.dispatch(
-			httpServletRequest, response, "/portal/saml/select_idp.jsp",
+			httpServletRequest, httpServletResponse,
+			"/portal/saml/select_idp.jsp",
 			"please-select-your-identity-provider", false);
 
 		return null;

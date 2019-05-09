@@ -67,8 +67,9 @@ public interface OAuth {
 		PortletRequest portletRequest, String url);
 
 	public void handleException(
-			HttpServletRequest httpServletRequest, HttpServletResponse response,
-			Exception exception, boolean sendBody)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Exception exception,
+			boolean sendBody)
 		throws OAuthException;
 
 	public String randomizeToken(String token);

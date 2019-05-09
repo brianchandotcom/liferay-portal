@@ -26,6 +26,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.ServerSocketChannel;
 
 import org.osgi.framework.BundleContext;
@@ -73,6 +74,8 @@ public class ArquillianConnectorRunnable implements Runnable {
 				catch (EOFException eofe) {
 				}
 			}
+		}
+		catch (ClosedByInterruptException cbie) {
 		}
 		catch (Exception e) {
 			_log.fatal(

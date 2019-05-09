@@ -43,7 +43,13 @@ public class FrameworkState {
 	}
 
 	public void connect() throws IOException {
-		_socket = new Socket(_inetAddress, _PORT);
+		Integer port = Integer.getInteger("liferay.arquillian.port");
+
+		if (port == null) {
+			port = _PORT;
+		}
+
+		_socket = new Socket(_inetAddress, port);
 
 		_objectOutputStream = new ObjectOutputStream(_socket.getOutputStream());
 

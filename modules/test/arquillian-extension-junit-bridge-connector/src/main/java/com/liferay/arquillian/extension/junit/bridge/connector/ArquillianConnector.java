@@ -15,6 +15,8 @@
 package com.liferay.arquillian.extension.junit.bridge.connector;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Map;
 
@@ -42,6 +44,10 @@ public class ArquillianConnector {
 
 		int port = arquillianConnectorConfiguration.port();
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Listening on port " + port);
+		}
+
 		_thread = new Thread(
 			new ArquillianConnectorRunnable(bundleContext, port),
 			"Arquillian-Connector-Thread");
@@ -55,6 +61,9 @@ public class ArquillianConnector {
 	public void deacticate() {
 		_thread.interrupt();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ArquillianConnector.class);
 
 	private Thread _thread;
 

@@ -23,45 +23,6 @@ exports[`Should render component with 1 instance count 1`] = `
   <td>
     1
   </td>
-  <td>
-    <div
-      className="dropdown dropdown-action"
-    >
-      <a
-        aria-expanded="false"
-        aria-haspopup="true"
-        className="component-action dropdown-toggle"
-        data-toggle="dropdown"
-        href="#1"
-        id="dropdownAction1"
-        role="button"
-      >
-        <svg
-          className="lexicon-icon lexicon-icon-ellipsis-v"
-          focusable="false"
-          role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-          />
-        </svg>
-      </a>
-      <ul
-        aria-labelledby=""
-        className="dropdown-menu dropdown-menu-right"
-      >
-        <li>
-          <a
-            className="dropdown-item"
-            href="/slas/36401/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-            onClick={[Function]}
-          >
-            Set Up SLAs
-          </a>
-        </li>
-      </ul>
-    </div>
-  </td>
 </tr>
 `;
 
@@ -87,45 +48,6 @@ exports[`Should render component with one list item 1`] = `
   </td>
   <td>
     10
-  </td>
-  <td>
-    <div
-      className="dropdown dropdown-action"
-    >
-      <a
-        aria-expanded="false"
-        aria-haspopup="true"
-        className="component-action dropdown-toggle"
-        data-toggle="dropdown"
-        href="#1"
-        id="dropdownAction1"
-        role="button"
-      >
-        <svg
-          className="lexicon-icon lexicon-icon-ellipsis-v"
-          focusable="false"
-          role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-          />
-        </svg>
-      </a>
-      <ul
-        aria-labelledby=""
-        className="dropdown-menu dropdown-menu-right"
-      >
-        <li>
-          <a
-            className="dropdown-item"
-            href="/slas/36401/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-            onClick={[Function]}
-          >
-            Set Up SLAs
-          </a>
-        </li>
-      </ul>
-    </div>
   </td>
 </tr>
 `;

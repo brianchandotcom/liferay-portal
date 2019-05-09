@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -136,6 +139,14 @@ public class SearchPermissionDocumentContributorImpl
 		}
 
 		try {
+			ClassName resourceClassName = _classNameLocalService.fetchClassName(
+				GetterUtil.getLong(document.get("resourceClassNameId")));
+
+			if (resourceClassName != null) {
+				className = _resourceActions.getCompositeModelName(
+					className, resourceClassName.getClassName());
+			}
+
 			List<Role> roles = _resourcePermissionLocalService.getRoles(
 				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(classPK), viewActionId);
@@ -183,10 +194,16 @@ public class SearchPermissionDocumentContributorImpl
 		SearchPermissionDocumentContributorImpl.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -94,7 +94,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
-	<td>//div[contains(@class,'asset-abstract')][contains(.,'${key_assetTitle}')]/div[contains(@class,'asset-content')]</td>
+	<td>//section[@class='portlet']//h4/*[contains(@class,'asset-title')][contains(.,'${key_assetTitle}')]/../../../div[contains(@class,'asset-content')]</td>
 	<td></td>
 </tr>
 <tr>

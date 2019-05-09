@@ -84,6 +84,7 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 
 		String capabilities = StringUtil.trim(matcher.group(1));
 
+		capabilities = _sortFilters(capabilities);
 		capabilities = _sortResourceBundleAggregate(capabilities);
 
 		String singleLineCapabilities = StringUtil.replace(
@@ -153,6 +154,53 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 		return capabilitiesList;
 	}
 
+	private String _sortFilterConditions(String filter, String... operators) {
+		for (String operator : operators) {
+			Pattern pattern = Pattern.compile(
+				"\\(\\" + operator + "((\\([^()\n]+\\)){2,})\\)");
+
+			Matcher matcher = pattern.matcher(filter);
+
+			while (matcher.find()) {
+				String conditions = matcher.group(1);
+
+				List<String> conditionsList = ListUtil.toList(
+					StringUtil.split(
+						conditions.substring(1, conditions.length() - 1),
+						")("));
+
+				Collections.sort(conditionsList);
+
+				String sortedConditions = StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS,
+					ListUtil.toString(conditionsList, StringPool.BLANK, ")("),
+					StringPool.CLOSE_PARENTHESIS);
+
+				filter = StringUtil.replaceFirst(
+					filter, conditions, sortedConditions, matcher.start());
+			}
+		}
+
+		return filter;
+	}
+
+	private String _sortFilters(String capabilities) {
+		Matcher matcher = _filterPattern.matcher(capabilities);
+
+		while (matcher.find()) {
+			String filter = matcher.group(1);
+
+			String sortedFilter = _sortFilterConditions(filter, "&", "|");
+
+			if (!filter.equals(sortedFilter)) {
+				return StringUtil.replaceFirst(
+					capabilities, filter, sortedFilter, matcher.start());
+			}
+		}
+
+		return capabilities;
+	}
+
 	private String _sortResourceBundleAggregate(String capabilities) {
 		Matcher matcher = _resourceBundleAggregatePattern.matcher(capabilities);
 
@@ -175,10 +223,12 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 			sortedResourceBundleAggregates, matcher.start());
 	}
 
+	private static final Pattern _filterPattern = Pattern.compile(
+		"\tfilter:=\"(.*?)\"");
 	private static final Pattern _resourceBundleAggregatePattern =
 		Pattern.compile(
-			"resource\\.bundle\\.aggregate:String=\"((\\([\\w.=]+\\),?){2,})" +
-				"\"");
+			"\tresource\\.bundle\\.aggregate:String=\"((\\([\\w.=]+\\),?)" +
+				"{2,})\"");
 
 	private class Capability implements Comparable<Capability> {
 

@@ -76,19 +76,19 @@ public class DataDefinitionRule {
 	protected String[] dataDefinitionFieldNames;
 
 	@Schema
-	public DataDefinitionRuleParameter[] getDataDefinitionRuleParameters() {
+	public Map<String, Object> getDataDefinitionRuleParameters() {
 		return dataDefinitionRuleParameters;
 	}
 
 	public void setDataDefinitionRuleParameters(
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters) {
+		Map<String, Object> dataDefinitionRuleParameters) {
 
 		this.dataDefinitionRuleParameters = dataDefinitionRuleParameters;
 	}
 
 	@JsonIgnore
 	public void setDataDefinitionRuleParameters(
-		UnsafeSupplier<DataDefinitionRuleParameter[], Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			dataDefinitionRuleParametersUnsafeSupplier) {
 
 		try {
@@ -105,7 +105,7 @@ public class DataDefinitionRule {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DataDefinitionRuleParameter[] dataDefinitionRuleParameters;
+	protected Map<String, Object> dataDefinitionRuleParameters;
 
 	@Schema
 	public String getName() {
@@ -219,17 +219,7 @@ public class DataDefinitionRule {
 
 			sb.append("\"dataDefinitionRuleParameters\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinitionRuleParameters.length; i++) {
-				sb.append(String.valueOf(dataDefinitionRuleParameters[i]));
-
-				if ((i + 1) < dataDefinitionRuleParameters.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataDefinitionRuleParameters));
 		}
 
 		if (name != null) {

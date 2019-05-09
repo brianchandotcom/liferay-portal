@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
@@ -82,6 +83,8 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 		String match = StringUtil.trim(matcher.group());
 
 		String capabilities = StringUtil.trim(matcher.group(1));
+
+		capabilities = _sortResourceBundleAggregate(capabilities);
 
 		String singleLineCapabilities = StringUtil.replace(
 			capabilities,
@@ -149,6 +152,33 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 
 		return capabilitiesList;
 	}
+
+	private String _sortResourceBundleAggregate(String capabilities) {
+		Matcher matcher = _resourceBundleAggregatePattern.matcher(capabilities);
+
+		if (!matcher.find()) {
+			return capabilities;
+		}
+
+		String resourceBundleAggregates = matcher.group(1);
+
+		List<String> resourceBundleAggregatesList = ListUtil.toList(
+			StringUtil.split(resourceBundleAggregates));
+
+		Collections.sort(resourceBundleAggregatesList);
+
+		String sortedResourceBundleAggregates = ListUtil.toString(
+			resourceBundleAggregatesList, StringPool.BLANK, StringPool.COMMA);
+
+		return StringUtil.replaceFirst(
+			capabilities, resourceBundleAggregates,
+			sortedResourceBundleAggregates, matcher.start());
+	}
+
+	private static final Pattern _resourceBundleAggregatePattern =
+		Pattern.compile(
+			"resource\\.bundle\\.aggregate:String=\"((\\([\\w.=]+\\),?){2,})" +
+				"\"");
 
 	private class Capability implements Comparable<Capability> {
 

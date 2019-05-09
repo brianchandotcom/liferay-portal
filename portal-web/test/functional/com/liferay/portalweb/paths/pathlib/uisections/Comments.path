@@ -9,8 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>PANEL_TOGGLE</td>
-	<td>//div[contains(.,'Comments')]//div[@class='panel-heading']</td>
+	<td>PANEL_HEADING</td>
+	<td>//fieldset[contains(@class,'add-comment')]//strong[contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>

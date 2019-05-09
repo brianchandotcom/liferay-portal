@@ -1192,7 +1192,7 @@ definition {
 			locator1 = "Link#PRINT",
 			value1 = "Print");
 
-		AssertElementPresent(locator1 = "Comments#PANEL_TOGGLE");
+		AssertElementPresent(locator1 = "Comments#PANEL_HEADING");
 
 		AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 

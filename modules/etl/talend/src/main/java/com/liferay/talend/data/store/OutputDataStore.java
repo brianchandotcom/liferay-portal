@@ -16,6 +16,8 @@ package com.liferay.talend.data.store;
 
 import com.liferay.talend.configuration.OperationAction;
 
+import java.io.Serializable;
+
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
@@ -26,18 +28,24 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  */
 @DataStore("OutputDataStore")
 @GridLayout(
-	{
-		@GridLayout.Row("_operationAction"),
-		@GridLayout.Row("_authenticationMethod"),
-		@GridLayout.Row("_openAPISpecURL"),
-		@GridLayout.Row("_basicAuthDataStore"),
-		@GridLayout.Row("_oAuth2DataStore")
-	}
+	{@GridLayout.Row("_operationAction"), @GridLayout.Row("_genericDataStore")}
 )
-public class OutputDataStore extends GenericDataStore {
+public class OutputDataStore implements Serializable {
+
+	public GenericDataStore getGenericDataStore() {
+		return _genericDataStore;
+	}
 
 	public OperationAction getOperationAction() {
 		return _operationAction;
+	}
+
+	public OutputDataStore setGenericDataStore(
+		GenericDataStore genericDataStore) {
+
+		_genericDataStore = genericDataStore;
+
+		return this;
 	}
 
 	public OutputDataStore setOperationAction(OperationAction operationAction) {
@@ -45,6 +53,9 @@ public class OutputDataStore extends GenericDataStore {
 
 		return this;
 	}
+
+	@Option
+	private GenericDataStore _genericDataStore;
 
 	@DefaultValue("INSERT")
 	@Option

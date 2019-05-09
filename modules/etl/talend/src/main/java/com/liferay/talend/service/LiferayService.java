@@ -155,7 +155,7 @@ public class LiferayService {
 		OutputDataStore outputDataStore = outputDataSet.getOutputDataStore();
 
 		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
-			outputDataStore);
+			outputDataStore.getGenericDataStore());
 
 		if (openAPISpecJsonObject == null) {
 			return Collections.emptyList();

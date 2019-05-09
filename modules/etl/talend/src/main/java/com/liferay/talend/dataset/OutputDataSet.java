@@ -18,12 +18,16 @@ import com.liferay.talend.data.store.OutputDataStore;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
+import org.talend.sdk.component.api.configuration.ui.widget.Structure;
 
 /**
  * @author Zoltán Takács
@@ -34,7 +38,12 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 @GridLayout(
 	{
 		@GridLayout.Row("_outputDataStore"), @GridLayout.Row("endpoint"),
-		@GridLayout.Row({"firstPathParam", "secondPathParam", "thirdPathParam"})
+		@GridLayout.Row(
+			{"firstPathParam", "secondPathParam", "thirdPathParam"}
+		),
+		@GridLayout.Row("_inputRecordSchemaFieldNames"),
+		@GridLayout.Row("_mainFlowEmitterSchemaFieldNames"),
+		@GridLayout.Row("_rejectFlowEmitterSchemaFieldNames")
 	}
 )
 public class OutputDataSet implements Serializable {
@@ -113,6 +122,20 @@ public class OutputDataSet implements Serializable {
 	protected String thirdPathParam;
 
 	@Option
+	@Structure(type = Structure.Type.IN)
+	private final List<String> _inputRecordSchemaFieldNames = new ArrayList<>();
+
+	@Option
+	@Structure(type = Structure.Type.OUT)
+	private final List<String> _mainFlowEmitterSchemaFieldNames =
+		new ArrayList<>();
+
+	@Option
 	private OutputDataStore _outputDataStore;
+
+	@Option
+	@Structure(type = Structure.Type.OUT, value = "REJECT")
+	private final List<String> _rejectFlowEmitterSchemaFieldNames =
+		new ArrayList<>();
 
 }

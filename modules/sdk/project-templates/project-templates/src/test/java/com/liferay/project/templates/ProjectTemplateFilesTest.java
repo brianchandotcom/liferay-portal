@@ -546,9 +546,6 @@ public class ProjectTemplateFilesTest {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				Assert.assertFalse(
-					"Forbidden empty line in " + path, line.isEmpty());
-
 				if (line.startsWith("#set")) {
 					continue;
 				}
@@ -708,12 +705,6 @@ public class ProjectTemplateFilesTest {
 				XMLTestUtil.testXmlElement(
 					pomXmlPath, dependencyElementString,
 					dependencyChildElements, 3, "scope", "provided");
-			}
-			else {
-				Assert.assertEquals(
-					"Incorrect number of child nodes of " +
-						dependencyElementString + " in " + pomXmlPath,
-					dependencyChildElements.size(), 3);
 			}
 		}
 

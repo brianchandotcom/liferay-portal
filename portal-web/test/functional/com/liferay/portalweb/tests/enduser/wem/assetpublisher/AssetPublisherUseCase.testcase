@@ -1431,11 +1431,6 @@ definition {
 
 	@priority = "3"
 	test ViewAuthorChangeViaAP {
-		AssetPublisherPortlet.configureShowMetadataFieldsPG(
-			addMetadata = "true",
-			metadataFieldList = "Author",
-			portletName = "Asset Publisher");
-
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		JSONRole.addRegularRole(

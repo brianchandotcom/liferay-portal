@@ -20,7 +20,7 @@
 			<version>2.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-#else
+#elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>

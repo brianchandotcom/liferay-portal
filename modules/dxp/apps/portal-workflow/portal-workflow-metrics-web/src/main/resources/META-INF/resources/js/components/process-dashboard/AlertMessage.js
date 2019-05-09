@@ -6,7 +6,7 @@ export default class AlertMessage extends React.Component {
 		const { children, iconName, type = 'danger' } = this.props;
 		let typeText = Liferay.Language.get('warning');
 
-		if (type !== 'danger') {
+		if (type === 'danger') {
 			typeText = Liferay.Language.get('error');
 		}
 

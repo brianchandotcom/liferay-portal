@@ -76,11 +76,12 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 		removePortletModelViewPermission();
 
-		int count = _roleService.searchCount(
-			group.getCompanyId(), StringPool.BLANK,
-			new Integer[] {RoleConstants.TYPE_REGULAR}, new LinkedHashMap<>());
-
-		Assert.assertEquals(initialCount - 1, count);
+		Assert.assertEquals(
+			initialCount - 1,
+			_roleService.searchCount(
+				group.getCompanyId(), StringPool.BLANK,
+				new Integer[] {RoleConstants.TYPE_REGULAR},
+				new LinkedHashMap<>()));
 	}
 
 	@Override

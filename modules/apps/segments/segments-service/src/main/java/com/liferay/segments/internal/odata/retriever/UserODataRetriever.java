@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
-import com.liferay.segments.internal.odata.search.ODataSearchHelper;
 import com.liferay.segments.odata.retriever.ODataRetriever;
+import com.liferay.segments.odata.search.ODataSearchHelper;
 
 import java.util.ArrayList;
 import java.util.List;

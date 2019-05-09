@@ -77,16 +77,20 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		String bomArtifactId = null;
 		String bomCompileOnlyArtifactId = null;
+		String bomThirdPartyArtifactId = null;
 
 		if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
+			bomThirdPartyArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY;
 		}
 		else {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY;
+			bomThirdPartyArtifactId =
+				_ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY;
 		}
 
 		GradleUtil.addDependency(
@@ -97,6 +101,11 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
 			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
+			targetPlatformVersion);
+		GradleUtil.addDependency(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
 			targetPlatformVersion);
 	}
 
@@ -193,6 +202,9 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY =
 		"release.dxp.bom.compile.only";
 
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY =
+		"release.dxp.bom.third.party";
+
 	private static final String _ARTIFACT_ID_RELEASE_DXP_DISTRO =
 		"release.dxp.distro";
 
@@ -201,6 +213,9 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY =
 		"release.portal.bom.compile.only";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY =
+		"release.portal.bom.third.party";
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
 		"release.portal.distro";

@@ -54,6 +54,16 @@ public class FrameworkState {
 		_objectOutputStream = new ObjectOutputStream(_socket.getOutputStream());
 
 		_objectInputStream = new ObjectInputStream(_socket.getInputStream());
+
+		String passcode = System.getProperty("liferay.arquillian.passcode");
+
+		if (passcode == null) {
+			passcode = "";
+		}
+
+		_objectOutputStream.writeUTF(passcode);
+
+		_objectOutputStream.flush();
 	}
 
 	public long installBundle(String location, byte[] bytes)

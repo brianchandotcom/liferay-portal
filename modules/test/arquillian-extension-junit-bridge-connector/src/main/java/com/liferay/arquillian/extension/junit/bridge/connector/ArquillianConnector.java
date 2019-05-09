@@ -49,7 +49,9 @@ public class ArquillianConnector {
 		}
 
 		_thread = new Thread(
-			new ArquillianConnectorRunnable(bundleContext, port),
+			new ArquillianConnectorRunnable(
+				bundleContext, port,
+				arquillianConnectorConfiguration.passcode()),
 			"Arquillian-Connector-Thread");
 
 		_thread.setDaemon(true);

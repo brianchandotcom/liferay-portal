@@ -36,9 +36,12 @@ import org.osgi.framework.BundleContext;
  */
 public class ArquillianConnectorRunnable implements Runnable {
 
-	public ArquillianConnectorRunnable(BundleContext bundleContext, int port) {
+	public ArquillianConnectorRunnable(
+		BundleContext bundleContext, int port, String passcode) {
+
 		_bundleContext = bundleContext;
 		_port = port;
+		_passcode = passcode;
 	}
 
 	@Override
@@ -57,6 +60,18 @@ public class ArquillianConnectorRunnable implements Runnable {
 						new ObjectOutputStream(socket.getOutputStream());
 					ObjectInputStream objectInputStream = new ObjectInputStream(
 						socket.getInputStream())) {
+
+					String passcode = objectInputStream.readUTF();
+
+					if ((_passcode != null) && !_passcode.equals(passcode)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Pass code mismatch, dropped connection from " +
+									socket.getRemoteSocketAddress());
+						}
+
+						continue;
+					}
 
 					while (true) {
 						FrameworkCommand frameworkCommand =
@@ -95,6 +110,7 @@ public class ArquillianConnectorRunnable implements Runnable {
 		InetAddress.getLoopbackAddress();
 
 	private final BundleContext _bundleContext;
+	private final String _passcode;
 	private final int _port;
 
 }

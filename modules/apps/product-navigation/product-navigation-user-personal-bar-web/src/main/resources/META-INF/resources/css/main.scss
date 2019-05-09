@@ -1,3 +1,19 @@
-.portlet-user-personal-bar div.personal-menu-dropdown .btn {
-	border-width: medium;
+.portlet-user-personal-bar {
+	.personal-menu-dropdown {
+		.btn {
+			border-width: medium;
+
+			.sticker .inline-item {
+				font-size: unset;
+			}
+		}
+
+		.sticker-lg .lexicon-icon {
+			margin-top: -.25rem;
+		}
+
+		.sticker-sm .lexicon-icon {
+			margin-top: -.125rem;
+		}
+	}
 }

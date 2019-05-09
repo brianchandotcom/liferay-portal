@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -195,6 +196,21 @@ public class CTManagerImpl implements CTManager {
 		}
 
 		return _ctEngineManager.getCTCollectionOptional(recentCTCollectionId);
+	}
+
+	@Override
+	public List<CTEntry> getCTCollectionCTEntries(
+		long companyId, long ctCollectionId, long classNameId) {
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				companyId, classNameId)) {
+
+			return Collections.emptyList();
+		}
+
+		return _ctEntryLocalService.fetchCTEntriesByClassNameId(
+			ctCollectionId, classNameId, new QueryDefinition<>());
 	}
 
 	@Override

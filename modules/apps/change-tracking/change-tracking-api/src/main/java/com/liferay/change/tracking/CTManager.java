@@ -118,6 +118,19 @@ public interface CTManager {
 	public Optional<CTCollection> getActiveCTCollectionOptional(long userId);
 
 	/**
+	 * Returns the list change entries associated with the given change
+	 * collections and class name id.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param ctCollectionId the primary key of the selected change collection
+	 * @param classNameId the class name primary key
+	 * @return the list change entries associated with the given change
+	 * collections and class name id.
+	 */
+	public List<CTEntry> getCTCollectionCTEntries(
+		long companyId, long ctCollectionId, long classNameId);
+
+	/**
 	 * Returns change tracking collections associated with the given company,
 	 * optionally including production or active change lists.
 	 *
@@ -157,8 +170,8 @@ public interface CTManager {
 		long userId, long modelResourcePrimKey);
 
 	/**
-	 * Returns all model changes for the current user's active change
-	 * collection.
+	 * Returns all model changes for a given resource model for the current
+	 * user's active change collection.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  modelResourcePrimKey the primary key of the changed resource
@@ -170,8 +183,8 @@ public interface CTManager {
 		long userId, long modelResourcePrimKey);
 
 	/**
-	 * Returns a paginated and ordered list of all model changes in the context
-	 * of the current user's active change collection.
+	 * Returns all model changes for a given resource model for the current
+	 * user's active change collection.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  modelResourcePrimKey the primary key of the changed resource
@@ -214,7 +227,7 @@ public interface CTManager {
 		long userId, long modelClassNameId, long modelClassPK);
 
 	/**
-	 * Retrurns a model change from the production change collection.
+	 * Returns a model change from the production change collection.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  modelClassNameId the primary key of the changed version model's

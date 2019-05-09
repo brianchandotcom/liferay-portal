@@ -16,15 +16,19 @@ package com.liferay.sharing.document.library.internal.security.permission.resour
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -36,9 +40,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -269,6 +275,33 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 	}
 
 	@Test
+	public void testUserWithViewSharingEntryActionCannotViewPendingFileEntry()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		FileEntry fileEntry = _addPendingFileEntry(serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			_user.getUserId(), _groupUser.getUserId(), _classNameId,
+			fileEntry.getFileEntryId(), fileEntry.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_groupUser);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
+
+			Assert.assertFalse(
+				_fileEntryModelResourcePermission.contains(
+					permissionChecker, fileEntry, ActionKeys.VIEW));
+		}
+	}
+
+	@Test
 	public void testUserWithViewSharingEntryActionCanViewPrivateFileEntry()
 		throws Exception {
 
@@ -291,6 +324,42 @@ public class SharingEntryDLFileEntryModelResourcePermissionRegistrarTest {
 				_fileEntryModelResourcePermission.contains(
 					permissionChecker, _fileEntry, ActionKeys.VIEW));
 		}
+	}
+
+	private FileEntry _addPendingFileEntry(ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder folder = _dlAppLocalService.addFolder(
+			_user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		serviceContext.setAttribute(
+			"restrictionType", DLFolderConstants.RESTRICTION_TYPE_WORKFLOW);
+		serviceContext.setAttribute(
+			"workflowDefinition" +
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL,
+			"Single Approver@1");
+
+		_dlAppLocalService.updateFolder(
+			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
+			folder.getDescription(), serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			_user.getUserId(), _group.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), "text",
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.SPACE.getBytes(), serviceContext);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
+
+		return fileEntry;
 	}
 
 	@Inject(

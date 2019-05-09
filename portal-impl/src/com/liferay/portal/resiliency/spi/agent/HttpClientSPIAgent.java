@@ -249,16 +249,17 @@ public class HttpClientSPIAgent implements SPIAgent {
 				httpServletRequest, bufferCacheServletResponse);
 		}
 
-		HttpServletResponse originalResponse =
+		HttpServletResponse originalHttpServletResponse =
 			(HttpServletResponse)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_ORIGINAL_RESPONSE);
 
 		httpServletRequest.removeAttribute(WebKeys.SPI_AGENT_ORIGINAL_RESPONSE);
 
-		originalResponse.setContentLength(8);
+		originalHttpServletResponse.setContentLength(8);
 
 		spiAgentResponse.writeTo(
-			registrationReference, originalResponse.getOutputStream());
+			registrationReference,
+			originalHttpServletResponse.getOutputStream());
 	}
 
 	protected Socket borrowSocket() throws IOException {

@@ -33,6 +33,7 @@ import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationRe
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -45,11 +46,15 @@ import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SLAStatus;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.Status;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.text.DateFormat;
 
@@ -75,6 +80,106 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = InstanceResource.class
 )
 public class InstanceResourceImpl extends BaseInstanceResourceImpl {
+
+	@Override
+	public Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"instanceId", "instanceId");
+
+		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
+			"onTime", _resourceHelper.createMustNotBooleanQuery());
+
+		onTimeFilterAggregation.addChildAggregation(
+			_resourceHelper.createOnTimeScriptedMetricAggregation());
+
+		FilterAggregation overdueFilterAggregation = _aggregations.filter(
+			"overdue", _resourceHelper.createMustNotBooleanQuery());
+
+		overdueFilterAggregation.addChildAggregation(
+			_resourceHelper.createOverdueScriptedMetricAggregation());
+
+		TermsAggregation slaDefinitionIdTermsAggregation = _aggregations.terms(
+			"slaDefinitionId", "slaDefinitionId");
+
+		slaDefinitionIdTermsAggregation.addChildAggregation(
+			_aggregations.topHits("topHits"));
+		slaDefinitionIdTermsAggregation.setSize(10000);
+
+		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
+			"taskName", "taskName");
+
+		taskNameTermsAggregation.setSize(10000);
+
+		termsAggregation.addChildrenAggregations(
+			onTimeFilterAggregation, overdueFilterAggregation,
+			slaDefinitionIdTermsAggregation, taskNameTermsAggregation);
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-instances",
+			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", contextCompany.getCompanyId()),
+				_queries.term("deleted", false),
+				_queries.term("instanceId", instanceId),
+				_queries.term("processId", processId)));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		return Stream.of(
+			searchSearchResponse.getSearchHits()
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).filter(
+			document -> document.getString(
+				"uid"
+			).startsWith(
+				"WorkflowMetricsInstance"
+			)
+		).findFirst(
+		).map(
+			this::_createInstance
+		).map(
+			instance -> {
+				Stream.of(
+					searchSearchResponse.getAggregationResultsMap()
+				).map(
+					aggregationResultsMap ->
+						(TermsAggregationResult)aggregationResultsMap.get(
+							"instanceId")
+				).map(
+					TermsAggregationResult::getBuckets
+				).flatMap(
+					Collection::stream
+				).findFirst(
+				).ifPresent(
+					bucket -> {
+						_setSLAResults(bucket, instance);
+						_setSLAStatus(bucket, instance);
+						_setTaskNames(instance, _getTaskNames(bucket));
+					}
+				);
+
+				return instance;
+			}
+		).orElse(
+			new Instance()
+		);
+	}
 
 	@Override
 	public Page<Instance> getProcessInstancesPage(
@@ -169,6 +274,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return termsQuery;
 	}
 
+	private Instance _createInstance(Document document) {
+		return new Instance() {
+			{
+				assetTitle = document.getString(
+					_getLocalizedName("assetTitle"));
+				assetType = document.getString(_getLocalizedName("assetType"));
+				dateCreated = _toDate(document.getDate("createDate"));
+				id = document.getLong("instanceId");
+				processId = document.getLong("processId");
+				status = _getStatus(
+					GetterUtil.getBoolean(document.getString("completed")));
+				userName = document.getString("userName");
+			}
+		};
+	}
+
 	private Instance _createInstance(Map<String, Object> sourcesMap) {
 		return new Instance() {
 			{
@@ -179,6 +300,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				dateCreated = _toDate(
 					GetterUtil.getString(sourcesMap.get("createDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
+				processId = GetterUtil.getLong(sourcesMap.get("processId"));
 				status = _getStatus(
 					GetterUtil.getBoolean(sourcesMap.get("completed")));
 				userName = GetterUtil.getString(sourcesMap.get("userName"));
@@ -214,6 +336,23 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", false),
 			_queries.term("processId", processId));
+	}
+
+	private SLAResult _createSLAResult(Map<String, Object> sourcesMap) {
+		return new SLAResult() {
+			{
+				dateOverdue = _toDate(
+					GetterUtil.getString(sourcesMap.get("overdueDate")));
+				id = GetterUtil.getLong(sourcesMap.get("slaDefinitionId"));
+				name = _getSLAName(id);
+
+				onTime = GetterUtil.getBoolean(sourcesMap.get("onTime"));
+				remainingTime = GetterUtil.getLong(
+					sourcesMap.get("remainingTime"));
+				status = _getSLAResultStatus(
+					GetterUtil.getString(sourcesMap.get("status")));
+			}
+		};
 	}
 
 	private TermsQuery _createTaskNameTermsQuery(String[] taskNames) {
@@ -257,8 +396,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private List<Instance> _getInstances(
 		long instanceCount, Pagination pagination, long processId,
 		String[] slaStatuses, String[] statuses, String[] taskKeys) {
-
-		List<Instance> instances = new LinkedList<>();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -304,17 +441,19 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(processId, statuses, taskKeys));
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
-
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)aggregationResultsMap.get("instanceId");
-
-		for (Bucket bucket : termsAggregationResult.getBuckets()) {
-			Instance instance = Stream.of(
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).map(
+			bucket -> Stream.of(
 				(TopHitsAggregationResult)bucket.getChildAggregationResult(
 					"topHits")
 			).map(
@@ -331,20 +470,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				).startsWith(
 					"WorkflowMetricsInstance"
 				)
+			).findFirst(
 			).map(
 				this::_createInstance
-			).findFirst(
+			).map(
+				instance -> {
+					_setSLAStatus(bucket, instance);
+					_setTaskNames(instance, _getTaskNames(bucket));
+
+					return instance;
+				}
 			).orElse(
 				new Instance()
-			);
-
-			_setSlaStatus(bucket, instance);
-			_setTaskNames(instance, _getTaskNames(bucket));
-
-			instances.add(instance);
-		}
-
-		return instances;
+			)
+		).collect(
+			Collectors.toCollection(LinkedList::new)
+		);
 	}
 
 	private String _getLocalizedName(String name) {
@@ -369,6 +510,38 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_createBooleanQuery(processId, statuses, taskKeys));
 
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+	}
+
+	private String _getSLAName(long slaDefinitionId) {
+		try {
+			WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+				_workflowMetricsSLADefinitionLocalService.
+					getWorkflowMetricsSLADefinition(slaDefinitionId);
+
+			return workflowMetricsSLADefinition.getName();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			return null;
+		}
+	}
+
+	private SLAResult.Status _getSLAResultStatus(String status) {
+		if (Objects.equals(status, WorkfowMetricsSLAStatus.COMPLETED.name()) ||
+			Objects.equals(status, WorkfowMetricsSLAStatus.STOPPED.name())) {
+
+			return SLAResult.Status.STOPPED;
+		}
+		else if (Objects.equals(
+					status, WorkfowMetricsSLAStatus.PAUSED.name())) {
+
+			return SLAResult.Status.PAUSED;
+		}
+
+		return SLAResult.Status.RUNNING;
 	}
 
 	private Status _getStatus(Boolean completed) {
@@ -413,11 +586,39 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return false;
 	}
 
-	private void _setSlaStatus(Bucket bucket, Instance instance) {
-		if (bucket == null) {
-			return;
-		}
+	private void _setSLAResults(Bucket bucket, Instance instance) {
+		instance.setSlaResults(
+			Stream.of(
+				(TermsAggregationResult)bucket.getChildAggregationResult(
+					"slaDefinitionId")
+			).map(
+				TermsAggregationResult::getBuckets
+			).flatMap(
+				Collection::stream
+			).map(
+				childBucket -> Stream.of(
+					(TopHitsAggregationResult)
+						childBucket.getChildAggregationResult("topHits")
+				).map(
+					TopHitsAggregationResult::getSearchHits
+				).map(
+					SearchHits::getSearchHits
+				).flatMap(
+					List::stream
+				).findFirst(
+				).map(
+					SearchHit::getSourcesMap
+				).map(
+					this::_createSLAResult
+				).orElse(
+					new SLAResult()
+				)
+			).toArray(
+				SLAResult[]::new
+			));
+	}
 
+	private void _setSLAStatus(Bucket bucket, Instance instance) {
 		if (_isOverdue(bucket)) {
 			instance.setSLAStatus(SLAStatus.OVERDUE);
 		}
@@ -476,5 +677,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private WorkflowMetricsSLADefinitionLocalService
+		_workflowMetricsSLADefinitionLocalService;
 
 }

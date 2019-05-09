@@ -5,7 +5,7 @@ Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Provide-Capability:\
 	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.sharing.service),(bundle.symbolic.name=com.liferay.sharing.lang)";\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.sharing.lang),(bundle.symbolic.name=com.liferay.sharing.service)";\
 		resource.bundle.base.name="content.Language";\
 		service.ranking=1
 Require-Capability:\

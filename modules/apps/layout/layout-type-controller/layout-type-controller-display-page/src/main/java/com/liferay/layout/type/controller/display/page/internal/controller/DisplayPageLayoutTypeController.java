@@ -42,8 +42,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -53,9 +52,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Juergen Kappler
@@ -244,32 +240,11 @@ public class DisplayPageLayoutTypeController
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setInfoDisplayRequestAttributesContributor(
-		InfoDisplayRequestAttributesContributor
-			infoDisplayRequestAttributesContributor) {
-
-		_infoDisplayRequestAttributesContributors.add(
-			infoDisplayRequestAttributesContributor);
-	}
-
-	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
-	}
-
-	protected void unsetInfoDisplayRequestAttributesContributor(
-		InfoDisplayRequestAttributesContributor
-			infoDisplayRequestAttributesContributor) {
-
-		_infoDisplayRequestAttributesContributors.remove(
-			infoDisplayRequestAttributesContributor);
 	}
 
 	private LayoutPageTemplateEntry _fetchLayoutPageTemplateEntry(
@@ -315,8 +290,9 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
-	private final Set<InfoDisplayRequestAttributesContributor>
-		_infoDisplayRequestAttributesContributors = new CopyOnWriteArraySet<>();
+	@Reference
+	private volatile List<InfoDisplayRequestAttributesContributor>
+		_infoDisplayRequestAttributesContributors;
 
 	@Reference
 	private ItemSelector _itemSelector;

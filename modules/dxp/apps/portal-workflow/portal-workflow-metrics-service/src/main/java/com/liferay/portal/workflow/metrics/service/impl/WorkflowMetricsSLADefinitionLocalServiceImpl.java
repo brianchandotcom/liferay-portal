@@ -66,8 +66,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
-			String name, String description, long duration, long processId,
-			String[] pauseNodeKeys, String[] startNodeKeys,
+			String name, String description, long duration, String calendarKey,
+			long processId, String[] pauseNodeKeys, String[] startNodeKeys,
 			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -100,6 +100,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
+		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
 		workflowMetricsSLADefinition.setProcessId(processId);
 		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
@@ -206,9 +207,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitionId, String name,
-			String description, long duration, String[] pauseNodeKeys,
-			String[] startNodeKeys, String[] stopNodeKeys, int status,
-			ServiceContext serviceContext)
+			String description, long duration, String calendarKey,
+			String[] pauseNodeKeys, String[] startNodeKeys,
+			String[] stopNodeKeys, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
@@ -229,6 +230,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
+		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
 		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(pauseNodeKeys));

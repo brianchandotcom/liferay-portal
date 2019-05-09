@@ -1436,6 +1436,7 @@ definition {
 			entryComment = "Guest Blogs Entry Comment",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
+			noAddPermissions = "true",
 			userFullName = "Guestfn Guestln");
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");

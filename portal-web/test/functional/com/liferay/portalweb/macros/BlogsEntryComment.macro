@@ -119,9 +119,17 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Comments#ENTRY_COUNT_PANEL",
-			value1 = "${commentCount} COMMENT");
+		if (isSet(noAddPermissions)) {
+			AssertTextNotPresent(
+				locator1 = "Comments#ENTRY_COUNT_PANEL",
+				value1 = "${commentCount} COMMENT");
+		}
+
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Comments#ENTRY_COUNT_PANEL",
+				value1 = "${commentCount} COMMENT");
+		}
 
 		var key_userFullName = "${userFullName}";
 

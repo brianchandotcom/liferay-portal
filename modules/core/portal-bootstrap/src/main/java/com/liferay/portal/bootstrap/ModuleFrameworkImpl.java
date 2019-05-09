@@ -765,14 +765,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String provideCapability = attributes.getValue(
 			Constants.PROVIDE_CAPABILITY);
 
-		Parameters provideCapabilityParameters = new Parameters(
-			provideCapability);
-
 		if (!extraCapabilitiesParameters.isEmpty()) {
-			extraCapabilitiesParameters.putAll(provideCapabilityParameters);
-		}
-		else {
-			extraCapabilitiesParameters = provideCapabilityParameters;
+			extraCapabilitiesParameters.putAll(
+				new Parameters(provideCapability));
+
+			provideCapability = extraCapabilitiesParameters.toString();
 		}
 
 		extraProperties.setProperty(

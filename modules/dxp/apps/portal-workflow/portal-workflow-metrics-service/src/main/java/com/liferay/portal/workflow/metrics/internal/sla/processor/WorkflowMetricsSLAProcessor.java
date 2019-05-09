@@ -40,12 +40,13 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -107,6 +108,10 @@ public class WorkflowMetricsSLAProcessor {
 				startNodeId, workflowMetricsSLADefinition,
 				workfowMetricsSLAStatus);
 
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			_workflowMetricsSLACalendarTracker.getWorkflowMetricsSLACalendar(
+				workflowMetricsSLADefinition.getCalendarKey());
+
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
 			List<TaskInterval> taskIntervals = _toTaskIntervals(
 				documents, lastCheckLocalDateTime, nowLocalDateTime);
@@ -115,7 +120,7 @@ public class WorkflowMetricsSLAProcessor {
 				elapsedTime += _computeElapsedTime(
 					taskInterval.getEndLocalDateTime(),
 					taskInterval.getStartLocalDateTime(),
-					workflowMetricsSLAStopwatch);
+					workflowMetricsSLACalendar, workflowMetricsSLAStopwatch);
 			}
 
 			workfowMetricsSLAStatus =
@@ -124,7 +129,8 @@ public class WorkflowMetricsSLAProcessor {
 
 		return _createOptionalWorkflowMetricsSLAProcessResult(
 			companyId, elapsedTime, instanceId, nowLocalDateTime,
-			workflowMetricsSLADefinition, workfowMetricsSLAStatus);
+			workflowMetricsSLACalendar, workflowMetricsSLADefinition,
+			workfowMetricsSLAStatus);
 	}
 
 	protected WorkflowMetricsSLAProcessResult
@@ -280,6 +286,7 @@ public class WorkflowMetricsSLAProcessor {
 
 	private long _computeElapsedTime(
 		LocalDateTime endLocalDateTime, LocalDateTime starLocalDateTime,
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch) {
 
 		long elapsedTime = 0;
@@ -293,9 +300,11 @@ public class WorkflowMetricsSLAProcessor {
 				continue;
 			}
 
-			Duration duration = Duration.between(
-				_getMaxLocalDateTime(starLocalDateTime, taskInterval),
-				_getMinLocalDateTime(endLocalDateTime, taskInterval));
+			Duration duration = workflowMetricsSLACalendar.getDuration(
+				_getMaxLocalDateTime(
+					starLocalDateTime, taskInterval._startLocalDateTime),
+				_getMinLocalDateTime(
+					endLocalDateTime, taskInterval._endLocalDateTime));
 
 			elapsedTime += duration.toMillis();
 		}
@@ -320,6 +329,7 @@ public class WorkflowMetricsSLAProcessor {
 		_createOptionalWorkflowMetricsSLAProcessResult(
 			long companyId, long elapsedTime, long instanceId,
 			LocalDateTime nowLocalDateTime,
+			WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
 			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
 			WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
 
@@ -339,8 +349,9 @@ public class WorkflowMetricsSLAProcessor {
 							elapsedTime;
 
 					setOverdueLocalDateTime(
-						nowLocalDateTime.plus(
-							remainingTime, ChronoUnit.MILLIS));
+						workflowMetricsSLACalendar.getOverdueLocalDateTime(
+							nowLocalDateTime,
+							Duration.ofMillis(remainingTime)));
 
 					setProcessId(workflowMetricsSLADefinition.getProcessId());
 					setRemainingTime(remainingTime);
@@ -435,23 +446,23 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private LocalDateTime _getMaxLocalDateTime(
-		LocalDateTime localDateTime, TaskInterval taskInterval) {
+		LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 
-		if (localDateTime.isAfter(taskInterval._startLocalDateTime)) {
-			return localDateTime;
+		if (localDateTime1.isAfter(localDateTime2)) {
+			return localDateTime1;
 		}
 
-		return taskInterval._startLocalDateTime;
+		return localDateTime2;
 	}
 
 	private LocalDateTime _getMinLocalDateTime(
-		LocalDateTime localDateTime, TaskInterval taskInterval) {
+		LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 
-		if (localDateTime.isBefore(taskInterval._endLocalDateTime)) {
-			return localDateTime;
+		if (localDateTime1.isBefore(localDateTime2)) {
+			return localDateTime1;
 		}
 
-		return taskInterval._endLocalDateTime;
+		return localDateTime2;
 	}
 
 	private Map<Long, String> _getTimeMarkers(List<String> nodeKeys) {
@@ -553,5 +564,9 @@ public class WorkflowMetricsSLAProcessor {
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private WorkflowMetricsSLACalendarTracker
+		_workflowMetricsSLACalendarTracker;
 
 }

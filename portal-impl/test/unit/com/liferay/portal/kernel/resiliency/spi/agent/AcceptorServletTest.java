@@ -157,7 +157,8 @@ public class AcceptorServletTest {
 			mockHttpServletRequest,
 			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
-			mockHttpServletResponse, _recordSPIAgent._originalResponse);
+			mockHttpServletResponse,
+			_recordSPIAgent._originalHttpServletResponse);
 		Assert.assertNull(_recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
@@ -176,7 +177,8 @@ public class AcceptorServletTest {
 			mockHttpServletRequest,
 			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
-			mockHttpServletResponse, _recordSPIAgent._originalResponse);
+			mockHttpServletResponse,
+			_recordSPIAgent._originalHttpServletResponse);
 		Assert.assertNull(_recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
@@ -257,7 +259,8 @@ public class AcceptorServletTest {
 			mockHttpServletRequest,
 			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
-			mockHttpServletResponse, _recordSPIAgent._originalResponse);
+			mockHttpServletResponse,
+			_recordSPIAgent._originalHttpServletResponse);
 		Assert.assertSame(ioException, _recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 	}
@@ -301,7 +304,7 @@ public class AcceptorServletTest {
 			HttpServletResponse httpServletResponse) {
 
 			_originalHttpServletRequest2 = httpServletRequest;
-			_originalResponse = httpServletResponse;
+			_originalHttpServletResponse = httpServletResponse;
 
 			_preparedResponse = new MockHttpServletResponse();
 
@@ -336,7 +339,7 @@ public class AcceptorServletTest {
 		private boolean _ioExceptionOnPrepareRequest;
 		private HttpServletRequest _originalHttpServletRequest1;
 		private HttpServletRequest _originalHttpServletRequest2;
-		private HttpServletResponse _originalResponse;
+		private HttpServletResponse _originalHttpServletResponse;
 		private MockHttpServletRequest _preparedRequest;
 		private MockHttpServletResponse _preparedResponse;
 		private boolean _runtimeExceptionOnPrepareRequest;

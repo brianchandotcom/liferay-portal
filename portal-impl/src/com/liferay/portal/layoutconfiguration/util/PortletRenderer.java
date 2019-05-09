@@ -311,7 +311,7 @@ public class PortletRenderer {
 				false, true);
 
 			_httpServletRequest = httpServletRequest;
-			_response = httpServletResponse;
+			_httpServletResponse = httpServletResponse;
 			_headerRequestAttributes = headerRequestAttributes;
 		}
 
@@ -331,7 +331,7 @@ public class PortletRenderer {
 			try {
 				_split(_httpServletRequest, _restrictPortletServletRequest);
 
-				return _render(httpServletRequest, _response);
+				return _render(httpServletRequest, _httpServletResponse);
 			}
 			catch (Exception e) {
 
@@ -378,7 +378,7 @@ public class PortletRenderer {
 
 		private final Map<String, Object> _headerRequestAttributes;
 		private final HttpServletRequest _httpServletRequest;
-		private final HttpServletResponse _response;
+		private final HttpServletResponse _httpServletResponse;
 
 	}
 

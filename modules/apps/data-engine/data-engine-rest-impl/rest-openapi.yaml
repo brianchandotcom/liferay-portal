@@ -94,20 +94,13 @@ components:
                         type: string
                     type: array
                 dataDefinitionRuleParameters:
-                    items:
-                        $ref: '#/components/schemas/DataDefinitionRuleParameter'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 name:
                     type: string
                 ruleType:
                     type: string
-            type: object
-        DataDefinitionRuleParameter:
-            properties:
-                key:
-                    type: string
-                value:
-                    type: object
             type: object
         DataLayout:
             properties:

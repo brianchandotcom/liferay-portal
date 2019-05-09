@@ -31,6 +31,13 @@ components:
                 id:
                     format: int64
                     type: integer
+                processId:
+                    format: int64
+                    type: integer
+                slaResults:
+                    items:
+                        $ref: "#/components/schemas/SLAResult"
+                    type: array
                 slaStatus:
                     enum: [OnTime, Overdue, Untracked]
                     type: string
@@ -138,6 +145,26 @@ components:
                         status:
                             type: integer
                     type: object
+            type: object
+        SLAResult:
+            description: https://www.schema.org/SLA
+            properties:
+                dateOverdue:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                onTime:
+                    type: boolean
+                remainingTime:
+                    format: int64
+                    type: integer
+                status:
+                    enum: [Paused, Running, Stopped]
+                    type: string
             type: object
         Task:
             description: https://www.schema.org/Task
@@ -291,6 +318,33 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Instance"
                                 type: array
+                    description: ""
+            tags: ["Instance"]
+    "/processes/{processId}/instances/{instanceId}":
+        get:
+            operationId: getProcessInstance
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: instanceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Instance"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Instance"
                     description: ""
             tags: ["Instance"]
     "/processes/{processId}/nodes":

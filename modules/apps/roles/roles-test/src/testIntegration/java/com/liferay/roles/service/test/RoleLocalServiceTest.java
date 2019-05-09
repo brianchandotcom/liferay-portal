@@ -363,14 +363,32 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithOtherGroupId() throws Exception {
-		Object[] organizationAndTeam1 = getOrganizationAndTeam();
-		Object[] organizationAndTeam2 = getOrganizationAndTeam();
+		Object[] organizationAndTeam = getOrganizationAndTeam();
 
-		Organization organization = (Organization)organizationAndTeam1[0];
+		Organization organization1 = (Organization)organizationAndTeam[0];
 
-		assertGetTeamRoleMap(
-			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
-			(Team)organizationAndTeam2[1], false);
+		User user = TestPropsValues.getUser();
+
+		Organization organization2 = null;
+
+		try {
+			organization2 = _organizationLocalService.addOrganization(
+				user.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(), false);
+
+			assertGetTeamRoleMap(
+				_roleLocalService.getTeamRoleMap(organization1.getGroupId()),
+				_teamLocalService.addTeam(
+					user.getUserId(), organization2.getGroupId(),
+					RandomTestUtil.randomString(), null, new ServiceContext()),
+				false);
+		}
+		finally {
+			if (organization2 != null) {
+				_organizationLocalService.deleteOrganization(organization2);
+			}
+		}
 	}
 
 	@Test

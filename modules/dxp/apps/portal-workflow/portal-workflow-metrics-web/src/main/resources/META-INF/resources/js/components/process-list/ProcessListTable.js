@@ -49,8 +49,6 @@ export default class ProcessListTable extends React.Component {
 							>
 								<ListHeadItem name="instanceCount" title={totalPendingTitle} />
 							</th>
-
-							<th />
 						</tr>
 					</thead>
 

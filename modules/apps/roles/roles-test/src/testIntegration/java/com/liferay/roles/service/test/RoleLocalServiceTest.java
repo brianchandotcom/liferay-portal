@@ -315,11 +315,11 @@ public class RoleLocalServiceTest {
 				companyId, RoleConstants.GUEST, excludedRoleNames, roleTypes, 0,
 				groupId));
 
-		List<Role> roles = _roleLocalService.getGroupRolesAndTeamRoles(
+		List<Role> roles1 = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, RoleConstants.GUEST, excludedRoleNames, roleTypes, 0,
 			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(roles.toString(), roles.isEmpty());
+		Assert.assertTrue(roles1.toString(), roles1.isEmpty());
 
 		Assert.assertEquals(
 			1,
@@ -327,11 +327,11 @@ public class RoleLocalServiceTest {
 				companyId, team.getName(), excludedRoleNames, roleTypes, 0,
 				groupId));
 
-		roles = _roleLocalService.getGroupRolesAndTeamRoles(
+		List<Role> roles2 = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, team.getName(), excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		_role = roles.get(0);
+		_role = roles2.get(0);
 
 		Assert.assertEquals(team.getTeamId(), _role.getClassPK());
 	}

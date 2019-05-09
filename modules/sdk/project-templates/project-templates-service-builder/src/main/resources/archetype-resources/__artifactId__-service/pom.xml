@@ -85,7 +85,7 @@
 			<version>4.4.0</version>
 			<scope>provided</scope>
 		</dependency>
-#end#end
+#end
 		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>${artifactId}-api</artifactId>

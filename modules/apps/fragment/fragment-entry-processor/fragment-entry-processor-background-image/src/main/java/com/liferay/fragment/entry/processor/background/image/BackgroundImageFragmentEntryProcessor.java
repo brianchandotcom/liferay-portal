@@ -83,13 +83,13 @@ public class BackgroundImageFragmentEntryProcessor
 			String value = StringPool.BLANK;
 
 			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode)) {
-				value = jsonObject.getString("mappedField");
+				value = editableValueJSONObject.getString("mappedField");
 			}
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					jsonObject, assetEntriesFieldValues, mode, locale,
-					previewClassPK, previewType);
+					editableValueJSONObject, assetEntriesFieldValues, mode,
+					locale, previewClassPK, previewType);
 
 				if (fieldValue != null) {
 					value = String.valueOf(fieldValue);

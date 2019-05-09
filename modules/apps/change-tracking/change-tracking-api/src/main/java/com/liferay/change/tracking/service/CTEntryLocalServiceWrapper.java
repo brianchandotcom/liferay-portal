@@ -375,6 +375,17 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry>
+		fetchCTEntriesByClassNameId(
+			long ctCollectionId, long modelClassNameId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return _ctEntryLocalService.fetchCTEntriesByClassNameId(
+			ctCollectionId, modelClassNameId, queryDefinition);
+	}
+
+	@Override
 	public com.liferay.change.tracking.model.CTEntry fetchCTEntry(
 		long ctEntryId) {
 

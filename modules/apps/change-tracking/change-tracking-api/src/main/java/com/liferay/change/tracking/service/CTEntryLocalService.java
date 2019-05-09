@@ -244,6 +244,11 @@ public interface CTEntryLocalService
 	public List<CTEntry> fetchCTEntries(String modelClassName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> fetchCTEntriesByClassNameId(
+		long ctCollectionId, long modelClassNameId,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTEntry fetchCTEntry(long ctEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

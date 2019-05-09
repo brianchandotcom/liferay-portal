@@ -344,6 +344,16 @@ public class CTEntryLocalServiceUtil {
 		return getService().fetchCTEntries(modelClassName);
 	}
 
+	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
+		fetchCTEntriesByClassNameId(
+			long ctCollectionId, long modelClassNameId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return getService().fetchCTEntriesByClassNameId(
+			ctCollectionId, modelClassNameId, queryDefinition);
+	}
+
 	public static com.liferay.change.tracking.model.CTEntry fetchCTEntry(
 		long ctEntryId) {
 

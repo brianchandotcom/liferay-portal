@@ -23,6 +23,11 @@ dependencies {
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "3.0.4"
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "3.0.1"
+#elseif (${liferayVersion.startsWith("7.2")})
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "4.0.2"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "4.0.1"
+
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "4.0.0"
 #end
 
 	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "@com.liferay.portal.tools.theme.builder.version@"

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface SamlSpIdpConnectionsProfile {
 
 	public boolean isEnabled(
-		SamlSpIdpConnection samlSpIdpConnection, HttpServletRequest request);
+		SamlSpIdpConnection samlSpIdpConnection,
+		HttpServletRequest httpServletRequest);
 
 }

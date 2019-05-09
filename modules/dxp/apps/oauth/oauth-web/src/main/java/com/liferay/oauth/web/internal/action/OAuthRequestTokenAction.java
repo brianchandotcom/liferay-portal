@@ -45,13 +45,14 @@ public class OAuthRequestTokenAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		try {
 			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
-				request,
-				WebServerUtil.getWebServerURL(request.getRequestURL()));
+				httpServletRequest,
+				WebServerUtil.getWebServerURL(
+					httpServletRequest.getRequestURL()));
 
 			OAuthConsumer oAuthConsumer = OAuthUtil.getOAuthConsumer(
 				oAuthMessage);
@@ -83,7 +84,7 @@ public class OAuthRequestTokenAction extends BaseStrutsAction {
 			outputStream.close();
 		}
 		catch (Exception e) {
-			OAuthUtil.handleException(request, response, e, true);
+			OAuthUtil.handleException(httpServletRequest, response, e, true);
 		}
 
 		return null;

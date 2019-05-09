@@ -58,15 +58,15 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(request, "redirect");
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		redirect = _portal.escapeRedirect(redirect);
 
 		if (Validator.isNull(redirect)) {
-			redirect = _portal.getHomeURL(request);
+			redirect = _portal.getHomeURL(httpServletRequest);
 		}
 
 		try {

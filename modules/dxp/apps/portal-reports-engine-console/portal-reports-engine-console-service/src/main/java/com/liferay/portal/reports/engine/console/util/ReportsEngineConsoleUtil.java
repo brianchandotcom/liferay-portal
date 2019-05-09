@@ -98,7 +98,7 @@ public class ReportsEngineConsoleUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
-		HttpServletRequest request, String parameter) {
+		HttpServletRequest httpServletRequest, String parameter) {
 
 		Map<Locale, String> map = new HashMap<>();
 
@@ -108,7 +108,9 @@ public class ReportsEngineConsoleUtil {
 			String localeParameter =
 				parameter + StringPool.UNDERLINE + languageId;
 
-			map.put(locale, ParamUtil.getString(request, localeParameter));
+			map.put(
+				locale,
+				ParamUtil.getString(httpServletRequest, localeParameter));
 		}
 
 		return map;

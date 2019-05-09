@@ -306,7 +306,7 @@ public class KaleoDesignerDisplayContext {
 
 	public Object[] getMessageArguments(
 			List<WorkflowDefinitionLink> workflowDefinitionLinks,
-			HttpServletRequest request)
+			HttpServletRequest httpServletRequest)
 		throws PortletException {
 
 		if (workflowDefinitionLinks.isEmpty()) {
@@ -320,7 +320,7 @@ public class KaleoDesignerDisplayContext {
 			return new Object[] {
 				getLocalizedAssetName(
 					firstWorkflowDefinitionLink.getClassName()),
-				getConfigureAssignementLink(request)
+				getConfigureAssignementLink(httpServletRequest)
 			};
 		}
 
@@ -333,7 +333,7 @@ public class KaleoDesignerDisplayContext {
 					firstWorkflowDefinitionLink.getClassName()),
 				getLocalizedAssetName(
 					secondWorkflowDefinitionLink.getClassName()),
-				getConfigureAssignementLink(request)
+				getConfigureAssignementLink(httpServletRequest)
 			};
 		}
 
@@ -342,7 +342,7 @@ public class KaleoDesignerDisplayContext {
 		return new Object[] {
 			getLocalizedAssetName(firstWorkflowDefinitionLink.getClassName()),
 			getLocalizedAssetName(secondWorkflowDefinitionLink.getClassName()),
-			moreAssetsCount, getConfigureAssignementLink(request)
+			moreAssetsCount, getConfigureAssignementLink(httpServletRequest)
 		};
 	}
 
@@ -626,10 +626,12 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
-	protected String getConfigureAssignementLink(HttpServletRequest request)
+	protected String getConfigureAssignementLink(
+			HttpServletRequest httpServletRequest)
 		throws PortletException {
 
-		PortletURL portletURL = getWorkflowDefinitionLinkPortletURL(request);
+		PortletURL portletURL = getWorkflowDefinitionLinkPortletURL(
+			httpServletRequest);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
@@ -714,10 +716,10 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
+			httpServletRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");

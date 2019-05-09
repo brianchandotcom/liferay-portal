@@ -90,7 +90,9 @@ public class KaleoProcessAssetRenderer
 	}
 
 	@Override
-	public String getJspPath(HttpServletRequest request, String template) {
+	public String getJspPath(
+		HttpServletRequest httpServletRequest, String template) {
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
@@ -179,29 +181,33 @@ public class KaleoProcessAssetRenderer
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _ddlRecord);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _ddlRecord);
+		httpServletRequest.setAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _ddlRecordVersion);
-		request.setAttribute(KaleoFormsWebKeys.KALEO_PROCESS, _kaleoProcess);
+		httpServletRequest.setAttribute(
+			KaleoFormsWebKeys.KALEO_PROCESS, _kaleoProcess);
 
-		KaleoProcessLink kaleoProcessLink = fetchKaleoProcessLink(request);
+		KaleoProcessLink kaleoProcessLink = fetchKaleoProcessLink(
+			httpServletRequest);
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS_LINK, kaleoProcessLink);
 
-		return super.include(request, response, template);
+		return super.include(httpServletRequest, response, template);
 	}
 
-	protected KaleoProcessLink fetchKaleoProcessLink(HttpServletRequest request)
+	protected KaleoProcessLink fetchKaleoProcessLink(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		KaleoProcessLink kaleoProcessLink = null;
 
-		WorkflowTask workflowTask = getWorkflowTask(request);
+		WorkflowTask workflowTask = getWorkflowTask(httpServletRequest);
 
 		if (workflowTask != null) {
 			kaleoProcessLink =
@@ -212,16 +218,19 @@ public class KaleoProcessAssetRenderer
 		return kaleoProcessLink;
 	}
 
-	protected WorkflowTask getWorkflowTask(HttpServletRequest request)
+	protected WorkflowTask getWorkflowTask(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		WorkflowTask workflowTask = null;
 
-		long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
+		long workflowTaskId = ParamUtil.getLong(
+			httpServletRequest, "workflowTaskId");
 
 		if (workflowTaskId > 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
 				themeDisplay.getCompanyId(), workflowTaskId);

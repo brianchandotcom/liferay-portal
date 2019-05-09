@@ -48,18 +48,19 @@ public class SingleLogoutAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		String requestURI = request.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		if (samlProviderConfigurationHelper.isRoleIdp() &&
 			requestURI.endsWith("/slo_logout")) {
 
-			_singleLogoutProfile.processIdpLogout(request, response);
+			_singleLogoutProfile.processIdpLogout(httpServletRequest, response);
 		}
 		else {
-			_singleLogoutProfile.processSingleLogout(request, response);
+			_singleLogoutProfile.processSingleLogout(
+				httpServletRequest, response);
 		}
 
 		return null;

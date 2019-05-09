@@ -56,9 +56,10 @@ public interface OAuth {
 	public OAuthConsumer getOAuthConsumer(OAuthMessage oAuthMessage)
 		throws PortalException;
 
-	public OAuthMessage getOAuthMessage(HttpServletRequest request);
+	public OAuthMessage getOAuthMessage(HttpServletRequest httpServletRequest);
 
-	public OAuthMessage getOAuthMessage(HttpServletRequest request, String url);
+	public OAuthMessage getOAuthMessage(
+		HttpServletRequest httpServletRequest, String url);
 
 	public OAuthMessage getOAuthMessage(PortletRequest portletRequest);
 
@@ -66,7 +67,7 @@ public interface OAuth {
 		PortletRequest portletRequest, String url);
 
 	public void handleException(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			Exception exception, boolean sendBody)
 		throws OAuthException;
 

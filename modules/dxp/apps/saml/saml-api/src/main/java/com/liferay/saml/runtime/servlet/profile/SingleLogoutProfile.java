@@ -25,29 +25,31 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface SingleLogoutProfile {
 
-	public SamlSpSession getSamlSpSession(HttpServletRequest request);
+	public SamlSpSession getSamlSpSession(
+		HttpServletRequest httpServletRequest);
 
-	public boolean isSingleLogoutSupported(HttpServletRequest request);
+	public boolean isSingleLogoutSupported(
+		HttpServletRequest httpServletRequest);
 
 	public void logout(
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest, HttpServletResponse response);
 
 	public void processIdpLogout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException;
 
 	public void processSingleLogout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException;
 
 	public void processSpLogout(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException;
 
 	public void terminateSpSession(
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest, HttpServletResponse response);
 
 	public void terminateSsoSession(
-		HttpServletRequest request, HttpServletResponse response);
+		HttpServletRequest httpServletRequest, HttpServletResponse response);
 
 }

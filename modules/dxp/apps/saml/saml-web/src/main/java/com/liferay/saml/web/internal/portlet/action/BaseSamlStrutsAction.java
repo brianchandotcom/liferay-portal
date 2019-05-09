@@ -32,7 +32,7 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		if (!isEnabled()) {
@@ -48,7 +48,7 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 
 			currentThread.setContextClassLoader(clazz.getClassLoader());
 
-			return doExecute(request, response);
+			return doExecute(httpServletRequest, response);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -60,17 +60,19 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 
 			Class<?> clazz = e.getClass();
 
-			SessionErrors.add(request, clazz.getName());
+			SessionErrors.add(httpServletRequest, clazz.getName());
 
 			if (e instanceof StatusException) {
 				StatusException statusException = (StatusException)e;
 
 				SessionErrors.add(
-					request, "statusCodeURI", statusException.getMessage());
+					httpServletRequest, "statusCodeURI",
+					statusException.getMessage());
 			}
 
 			JspUtil.dispatch(
-				request, response, JspUtil.PATH_PORTAL_SAML_ERROR, "status");
+				httpServletRequest, response, JspUtil.PATH_PORTAL_SAML_ERROR,
+				"status");
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -90,7 +92,7 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 	}
 
 	protected abstract String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception;
 
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;

@@ -41,26 +41,26 @@ public class SharepointOAuth2StrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		Repository repository = _getRepository(request);
+		Repository repository = _getRepository(httpServletRequest);
 
 		if (repository.isCapabilityProvided(AuthorizationCapability.class)) {
 			AuthorizationCapability authorizationCapability =
 				repository.getCapability(AuthorizationCapability.class);
 
-			authorizationCapability.authorize(request, response);
+			authorizationCapability.authorize(httpServletRequest, response);
 		}
 
 		return null;
 	}
 
-	private Repository _getRepository(HttpServletRequest request)
+	private Repository _getRepository(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		SharepointRepositoryRequestState sharepointRepositoryRequestState =
-			SharepointRepositoryRequestState.get(request);
+			SharepointRepositoryRequestState.get(httpServletRequest);
 
 		Folder folder = _dlAppLocalService.getFolder(
 			sharepointRepositoryRequestState.getFolderId());

@@ -61,7 +61,7 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest, HttpServletResponse response) {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			!_samlProviderConfigurationHelper.isRoleIdp()) {
@@ -70,7 +70,7 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 		}
 
 		try {
-			User user = _portal.getUser(request);
+			User user = _portal.getUser(httpServletRequest);
 
 			if (user != null) {
 				return true;
@@ -85,7 +85,8 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 			}
 		}
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
+		String requestPath = _samlHttpRequestUtil.getRequestPath(
+			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/logout")) {
 			return true;
@@ -96,25 +97,27 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	protected void doProcessFilter(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
+		String requestPath = _samlHttpRequestUtil.getRequestPath(
+			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/logout")) {
 			String samlSsoSessionId = CookieKeys.getCookie(
-				request, SamlWebKeys.SAML_SSO_SESSION_ID);
+				httpServletRequest, SamlWebKeys.SAML_SSO_SESSION_ID);
 
 			if (Validator.isNotNull(samlSsoSessionId)) {
-				_singleLogoutProfile.processIdpLogout(request, response);
+				_singleLogoutProfile.processIdpLogout(
+					httpServletRequest, response);
 			}
 			else {
-				filterChain.doFilter(request, response);
+				filterChain.doFilter(httpServletRequest, response);
 			}
 		}
 		else {
-			filterChain.doFilter(request, response);
+			filterChain.doFilter(httpServletRequest, response);
 		}
 	}
 

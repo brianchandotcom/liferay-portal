@@ -60,7 +60,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		if (!_samlProviderConfigurationHelper.isEnabled()) {
@@ -68,17 +68,17 @@ public class KeepAliveAction extends BaseStrutsAction {
 		}
 
 		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			executeIdpKeepAlive(request, response);
+			executeIdpKeepAlive(httpServletRequest, response);
 		}
 		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			executeSpKeepAlive(request, response);
+			executeSpKeepAlive(httpServletRequest, response);
 		}
 
 		return null;
 	}
 
 	protected void executeIdpKeepAlive(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		response.addHeader(
@@ -92,7 +92,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 		String randomString = StringUtil.randomString();
 		PrintWriter printWriter = response.getWriter();
 
-		List<String> keepAliveURLs = getSPsKeepAliveURLs(request);
+		List<String> keepAliveURLs = getSPsKeepAliveURLs(httpServletRequest);
 
 		for (String keepAliveURL : keepAliveURLs) {
 			keepAliveURL = _http.addParameter(keepAliveURL, "r", randomString);
@@ -105,7 +105,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 	}
 
 	protected void executeSpKeepAlive(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		response.setHeader(
@@ -121,11 +121,12 @@ public class KeepAliveAction extends BaseStrutsAction {
 		outputStream.write(Base64.decode(_BASE64_1X1_GIF));
 	}
 
-	protected List<String> getSPsKeepAliveURLs(HttpServletRequest request)
+	protected List<String> getSPsKeepAliveURLs(
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		String samlSsoSessionId = CookieKeys.getCookie(
-			request, SamlWebKeys.SAML_SSO_SESSION_ID);
+			httpServletRequest, SamlWebKeys.SAML_SSO_SESSION_ID);
 
 		SamlIdpSsoSession samlIdpSsoSession =
 			_samlIdpSsoSessionLocalService.fetchSamlIdpSso(samlSsoSessionId);
@@ -136,7 +137,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 
 		List<String> keepAliveURLs = new ArrayList<>();
 
-		String entityId = ParamUtil.getString(request, "entityId");
+		String entityId = ParamUtil.getString(httpServletRequest, "entityId");
 
 		List<SamlIdpSpSession> samlIdpSpSessions =
 			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(

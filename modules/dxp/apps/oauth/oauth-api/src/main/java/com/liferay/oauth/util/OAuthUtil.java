@@ -118,14 +118,16 @@ public class OAuthUtil {
 		return getOAuth().getOAuthConsumer(oAuthMessage);
 	}
 
-	public static OAuthMessage getOAuthMessage(HttpServletRequest request) {
-		return getOAuth().getOAuthMessage(request);
+	public static OAuthMessage getOAuthMessage(
+		HttpServletRequest httpServletRequest) {
+
+		return getOAuth().getOAuthMessage(httpServletRequest);
 	}
 
 	public static OAuthMessage getOAuthMessage(
-		HttpServletRequest request, String url) {
+		HttpServletRequest httpServletRequest, String url) {
 
-		return getOAuth().getOAuthMessage(request, url);
+		return getOAuth().getOAuthMessage(httpServletRequest, url);
 	}
 
 	public static OAuthMessage getOAuthMessage(PortletRequest portletRequest) {
@@ -147,11 +149,12 @@ public class OAuthUtil {
 	}
 
 	public static void handleException(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			Exception exception, boolean sendBody)
 		throws OAuthException {
 
-		getOAuth().handleException(request, response, exception, sendBody);
+		getOAuth().handleException(
+			httpServletRequest, response, exception, sendBody);
 	}
 
 	public static String randomizeToken(String token) {

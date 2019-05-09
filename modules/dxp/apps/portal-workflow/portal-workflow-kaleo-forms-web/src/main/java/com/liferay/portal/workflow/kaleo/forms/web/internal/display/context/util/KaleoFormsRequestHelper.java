@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class KaleoFormsRequestHelper extends BaseRequestHelper {
 
-	public KaleoFormsRequestHelper(HttpServletRequest request) {
-		super(request);
+	public KaleoFormsRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 
-		_renderRequest = (RenderRequest)request.getAttribute(
+		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 

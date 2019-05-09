@@ -46,11 +46,12 @@ import org.osgi.service.component.annotations.Reference;
 public class ImpersonationAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws ActionException {
 
 		try {
-			doRun(request, response);
+			doRun(httpServletRequest, response);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -58,23 +59,24 @@ public class ImpersonationAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		long plid = ParamUtil.getLong(request, "p_l_id");
+		long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
 		if (plid <= 0) {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 		User realUser = themeDisplay.getRealUser();
 		String doAsUserId = themeDisplay.getDoAsUserId();
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		Boolean impersonatingUser = (Boolean)session.getAttribute(
 			_IMPERSONATING_USER);

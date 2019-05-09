@@ -23,9 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SamlHttpRequestUtil {
 
-	public String getEntityDescriptorString(HttpServletRequest request)
+	public String getEntityDescriptorString(
+			HttpServletRequest httpServletRequest)
 		throws SamlException;
 
-	public String getRequestPath(HttpServletRequest request);
+	public String getRequestPath(HttpServletRequest httpServletRequest);
 
 }

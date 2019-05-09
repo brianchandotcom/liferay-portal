@@ -83,7 +83,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest httpServletRequest, HttpServletResponse response) {
 
 		if (!_samlProviderConfigurationHelper.isEnabled() ||
 			!_samlProviderConfigurationHelper.isRoleSp()) {
@@ -92,7 +92,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 		}
 
 		try {
-			User user = _portal.getUser(request);
+			User user = _portal.getUser(httpServletRequest);
 
 			if (user != null) {
 				return true;
@@ -107,7 +107,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 			}
 		}
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
+		String requestPath = _samlHttpRequestUtil.getRequestPath(
+			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/login") ||
 			requestPath.equals("/c/portal/logout")) {
@@ -120,21 +121,24 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	protected void doProcessFilter(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
+		String requestPath = _samlHttpRequestUtil.getRequestPath(
+			httpServletRequest);
 
 		SamlSpSession samlSpSession = _singleLogoutProfile.getSamlSpSession(
-			request);
+			httpServletRequest);
 
 		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
-			_singleLogoutProfile.terminateSpSession(request, response);
+			_singleLogoutProfile.terminateSpSession(
+				httpServletRequest, response);
 
-			_singleLogoutProfile.logout(request, response);
+			_singleLogoutProfile.logout(httpServletRequest, response);
 
-			response.sendRedirect(_portal.getCurrentCompleteURL(request));
+			response.sendRedirect(
+				_portal.getCurrentCompleteURL(httpServletRequest));
 		}
 		else if (requestPath.equals("/c/portal/login")) {
 			RequestDispatcher requestDispatcher =
@@ -142,13 +146,13 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			response.setContentType("text/html");
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, response);
 
-			if (request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION) !=
-					null) {
+			if (httpServletRequest.getAttribute(
+					SamlWebKeys.SAML_SP_IDP_CONNECTION) != null) {
 
 				try {
-					login(request, response);
+					login(httpServletRequest, response);
 				}
 				catch (PortalException pe) {
 					if (_log.isInfoEnabled()) {
@@ -162,26 +166,29 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 					_samlProviderConfigurationHelper.
 						getSamlProviderConfiguration();
 
-				if ((request.getAttribute(SamlWebKeys.SAML_SSO_LOGIN_CONTEXT) ==
-						null) &&
+				if ((httpServletRequest.getAttribute(
+						SamlWebKeys.SAML_SSO_LOGIN_CONTEXT) == null) &&
 					samlProviderConfiguration.allowShowingTheLoginPortlet()) {
 
-					filterChain.doFilter(request, response);
+					filterChain.doFilter(httpServletRequest, response);
 				}
 			}
 		}
 		else if (requestPath.equals("/c/portal/logout")) {
-			if (_singleLogoutProfile.isSingleLogoutSupported(request)) {
-				_singleLogoutProfile.processSpLogout(request, response);
+			if (_singleLogoutProfile.isSingleLogoutSupported(
+					httpServletRequest)) {
+
+				_singleLogoutProfile.processSpLogout(
+					httpServletRequest, response);
 			}
 			else {
-				filterChain.doFilter(request, response);
+				filterChain.doFilter(httpServletRequest, response);
 			}
 		}
 		else {
-			_webSsoProfile.updateSamlSpSession(request, response);
+			_webSsoProfile.updateSamlSpSession(httpServletRequest, response);
 
-			filterChain.doFilter(request, response);
+			filterChain.doFilter(httpServletRequest, response);
 		}
 	}
 
@@ -191,16 +198,16 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 	}
 
 	protected void login(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException {
 
-		String relayState = ParamUtil.getString(request, "redirect");
+		String relayState = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(relayState)) {
 			relayState = _portal.escapeRedirect(relayState);
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		LastPath lastPath = (LastPath)session.getAttribute(WebKeys.LAST_PATH);
 
@@ -210,7 +217,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(_portal.getPortalURL(request));
+			sb.append(_portal.getPortalURL(httpServletRequest));
 			sb.append(lastPath.getContextPath());
 			sb.append(lastPath.getPath());
 			sb.append(lastPath.getParameters());
@@ -218,10 +225,11 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 			relayState = sb.toString();
 		}
 		else if (Validator.isNull(relayState)) {
-			relayState = _portal.getHomeURL(request);
+			relayState = _portal.getHomeURL(httpServletRequest);
 		}
 
-		_webSsoProfile.sendAuthnRequest(request, response, relayState);
+		_webSsoProfile.sendAuthnRequest(
+			httpServletRequest, response, relayState);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

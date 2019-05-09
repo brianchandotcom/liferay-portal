@@ -49,13 +49,14 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		try {
 			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
-				request,
-				WebServerUtil.getWebServerURL(request.getRequestURL()));
+				httpServletRequest,
+				WebServerUtil.getWebServerURL(
+					httpServletRequest.getRequestURL()));
 
 			OAuthAccessor oAuthAccessor = OAuthUtil.getOAuthAccessor(
 				oAuthMessage);
@@ -74,7 +75,7 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 				OAuthAccessorConstants.USER_ID);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				request);
+				httpServletRequest);
 
 			OAuthUtil.generateAccessToken(
 				oAuthAccessor, userId, serviceContext);
@@ -90,7 +91,7 @@ public class OAuthAccessTokenAction extends BaseStrutsAction {
 			outputStream.close();
 		}
 		catch (Exception e) {
-			OAuthUtil.handleException(request, response, e, false);
+			OAuthUtil.handleException(httpServletRequest, response, e, false);
 		}
 
 		return null;

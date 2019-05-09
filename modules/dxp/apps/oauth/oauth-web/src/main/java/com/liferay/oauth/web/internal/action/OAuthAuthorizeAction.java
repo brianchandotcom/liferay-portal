@@ -57,32 +57,35 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		if (!isSignedIn()) {
-			return redirectToLogin(request, response);
+			return redirectToLogin(httpServletRequest, response);
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, OAuthPortletKeys.OAUTH_AUTHORIZE, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			httpServletRequest, OAuthPortletKeys.OAUTH_AUTHORIZE,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", "0");
 
-		String oauthCallback = request.getParameter(OAuth.OAUTH_CALLBACK);
+		String oauthCallback = httpServletRequest.getParameter(
+			OAuth.OAUTH_CALLBACK);
 
 		if (Validator.isNotNull(oauthCallback)) {
 			portletURL.setParameter(OAuth.OAUTH_CALLBACK, oauthCallback);
 		}
 
 		portletURL.setParameter(
-			OAuth.OAUTH_TOKEN, request.getParameter(OAuth.OAUTH_TOKEN));
+			OAuth.OAUTH_TOKEN,
+			httpServletRequest.getParameter(OAuth.OAUTH_TOKEN));
 		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(getWindowState(request));
+		portletURL.setWindowState(getWindowState(httpServletRequest));
 
 		String redirect = portletURL.toString();
 
@@ -91,8 +94,11 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 		return null;
 	}
 
-	protected WindowState getWindowState(HttpServletRequest request) {
-		String windowStateString = ParamUtil.getString(request, "windowState");
+	protected WindowState getWindowState(
+		HttpServletRequest httpServletRequest) {
+
+		String windowStateString = ParamUtil.getString(
+			httpServletRequest, "windowState");
 
 		if (Validator.isNotNull(windowStateString)) {
 			return WindowStateFactory.getWindowState(windowStateString);
@@ -113,19 +119,20 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 	}
 
 	protected String redirectToLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/portal/login?redirect=");
-		sb.append(_http.encodeURL(request.getRequestURI()));
+		sb.append(_http.encodeURL(httpServletRequest.getRequestURI()));
 
-		String queryString = request.getQueryString();
+		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
 			sb.append(_http.encodeURL(StringPool.QUESTION.concat(queryString)));

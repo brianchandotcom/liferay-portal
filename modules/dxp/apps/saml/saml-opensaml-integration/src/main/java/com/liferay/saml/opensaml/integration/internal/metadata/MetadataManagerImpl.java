@@ -219,7 +219,8 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
+	public EntityDescriptor getEntityDescriptor(
+			HttpServletRequest httpServletRequest)
 		throws SamlException {
 
 		Credential encryptionCredential = null;
@@ -236,7 +237,8 @@ public class MetadataManagerImpl
 		}
 
 		try {
-			String portalURL = _portal.getPortalURL(request, isSSLRequired());
+			String portalURL = _portal.getPortalURL(
+				httpServletRequest, isSSLRequired());
 			String localEntityId = _localEntityManager.getLocalEntityId();
 
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
@@ -260,11 +262,13 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getEntityDescriptorString(HttpServletRequest request)
+	public String getEntityDescriptorString(
+			HttpServletRequest httpServletRequest)
 		throws SamlException {
 
 		try {
-			EntityDescriptor entityDescriptor = getEntityDescriptor(request);
+			EntityDescriptor entityDescriptor = getEntityDescriptor(
+				httpServletRequest);
 
 			return OpenSamlUtil.marshall(entityDescriptor);
 		}
@@ -346,10 +350,10 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getRequestPath(HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
+	public String getRequestPath(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
 
-		String contextPath = request.getContextPath();
+		String contextPath = httpServletRequest.getContextPath();
 
 		if (Validator.isNotNull(contextPath) &&
 			!contextPath.equals(StringPool.SLASH)) {
@@ -362,7 +366,7 @@ public class MetadataManagerImpl
 
 	@Override
 	public MessageHandler<?> getSecurityMessageHandler(
-		HttpServletRequest request, String communicationProfileId,
+		HttpServletRequest httpServletRequest, String communicationProfileId,
 		boolean requireSignature) {
 
 		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
@@ -379,7 +383,7 @@ public class MetadataManagerImpl
 						new SAML2HTTPRedirectDeflateSignatureSecurityHandler();
 
 				saml2HTTPRedirectDeflateSignatureSecurityHandler.
-					setHttpServletRequest(request);
+					setHttpServletRequest(httpServletRequest);
 
 				messageHandlers.add(
 					saml2HTTPRedirectDeflateSignatureSecurityHandler);
@@ -428,7 +432,7 @@ public class MetadataManagerImpl
 		HTTPRequestValidationHandler httpRequestValidationHandler =
 			new HTTPRequestValidationHandler();
 
-		httpRequestValidationHandler.setHttpServletRequest(request);
+		httpRequestValidationHandler.setHttpServletRequest(httpServletRequest);
 		httpRequestValidationHandler.setRequireSecured(isSSLRequired());
 
 		messageHandlers.add(httpRequestValidationHandler);

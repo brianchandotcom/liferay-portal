@@ -38,7 +38,8 @@ public interface MetadataManager {
 
 	public Credential getEncryptionCredential() throws SamlException;
 
-	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
+	public EntityDescriptor getEntityDescriptor(
+			HttpServletRequest httpServletRequest)
 		throws SamlException;
 
 	public MetadataCredentialResolver getMetadataCredentialResolver();
@@ -50,8 +51,8 @@ public interface MetadataManager {
 	public String getNameIdFormat(String entityId);
 
 	public MessageHandler<?> getSecurityMessageHandler(
-			HttpServletRequest request, String communicationProfileId,
-			boolean requireSignature)
+			HttpServletRequest httpServletRequest,
+			String communicationProfileId, boolean requireSignature)
 		throws SamlException;
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;

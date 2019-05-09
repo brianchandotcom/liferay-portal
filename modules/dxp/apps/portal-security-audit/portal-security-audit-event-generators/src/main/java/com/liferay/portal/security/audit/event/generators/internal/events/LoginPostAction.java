@@ -41,11 +41,12 @@ import org.osgi.service.component.annotations.Reference;
 public class LoginPostAction extends Action {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void run(
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws ActionException {
 
 		try {
-			doRun(request, response);
+			doRun(httpServletRequest, response);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
@@ -53,10 +54,10 @@ public class LoginPostAction extends Action {
 	}
 
 	protected void doRun(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		User user = _portal.getUser(request);
+		User user = _portal.getUser(httpServletRequest);
 
 		AuditMessage auditMessage = new AuditMessage(
 			EventTypes.LOGIN, user.getCompanyId(), user.getUserId(),

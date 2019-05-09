@@ -245,15 +245,16 @@ public class V10aOAuth implements OAuth {
 	}
 
 	@Override
-	public OAuthMessage getOAuthMessage(HttpServletRequest request) {
-		return getOAuthMessage(request, null);
+	public OAuthMessage getOAuthMessage(HttpServletRequest httpServletRequest) {
+		return getOAuthMessage(httpServletRequest, null);
 	}
 
 	@Override
 	public OAuthMessage getOAuthMessage(
-		HttpServletRequest request, String url) {
+		HttpServletRequest httpServletRequest, String url) {
 
-		return new DefaultOAuthMessage(OAuthServlet.getMessage(request, url));
+		return new DefaultOAuthMessage(
+			OAuthServlet.getMessage(httpServletRequest, url));
 	}
 
 	@Override
@@ -273,7 +274,7 @@ public class V10aOAuth implements OAuth {
 
 	@Override
 	public void handleException(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			Exception exception, boolean sendBody)
 		throws OAuthException {
 

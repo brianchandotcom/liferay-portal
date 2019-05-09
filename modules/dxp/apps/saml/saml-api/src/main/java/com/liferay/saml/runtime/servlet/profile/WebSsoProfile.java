@@ -25,22 +25,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WebSsoProfile {
 
-	public SamlSpSession getSamlSpSession(HttpServletRequest request);
+	public SamlSpSession getSamlSpSession(
+		HttpServletRequest httpServletRequest);
 
 	public void processAuthnRequest(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException;
 
 	public void processResponse(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws PortalException;
 
 	public void sendAuthnRequest(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			String relayState)
 		throws PortalException;
 
 	public void updateSamlSpSession(
-		HttpServletRequest request, HttpServletResponse httpServletResponse);
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

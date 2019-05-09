@@ -179,15 +179,16 @@ public class OAuthVerifier implements AuthVerifier {
 		return oAuthUser;
 	}
 
-	protected boolean isUsingOAuth(HttpServletRequest request) {
-		String oAuthToken = ParamUtil.getString(request, OAuth.OAUTH_TOKEN);
+	protected boolean isUsingOAuth(HttpServletRequest httpServletRequest) {
+		String oAuthToken = ParamUtil.getString(
+			httpServletRequest, OAuth.OAUTH_TOKEN);
 
 		if (Validator.isNotNull(oAuthToken)) {
 			return true;
 		}
 
 		String authorization = GetterUtil.getString(
-			request.getHeader(HttpHeaders.AUTHORIZATION));
+			httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
 
 		if (Validator.isNotNull(authorization)) {
 			String authScheme = authorization.substring(0, 5);

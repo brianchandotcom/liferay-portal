@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class ProxyPathRequestWrapper extends HttpServletRequestWrapper {
 
-	public ProxyPathRequestWrapper(HttpServletRequest request) {
-		super(request);
+	public ProxyPathRequestWrapper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 	}
 
 	@Override

@@ -53,10 +53,10 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		_webSsoProfile.processResponse(request, response);
+		_webSsoProfile.processResponse(httpServletRequest, response);
 
 		return null;
 	}

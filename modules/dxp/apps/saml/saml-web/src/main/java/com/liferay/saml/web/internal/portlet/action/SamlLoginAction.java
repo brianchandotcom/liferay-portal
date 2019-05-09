@@ -72,19 +72,20 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
-		String entityId = ParamUtil.getString(request, "idpEntityId");
+		String entityId = ParamUtil.getString(
+			httpServletRequest, "idpEntityId");
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (Validator.isNotNull(entityId)) {
 			SamlSpIdpConnection samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					companyId, entityId);
 
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 			return null;
@@ -96,7 +97,8 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		Stream<SamlSpIdpConnection> stream = samlSpIdpConnections.stream();
 
 		samlSpIdpConnections = stream.filter(
-			samlSpIdpConnection -> isEnabled(samlSpIdpConnection, request)
+			samlSpIdpConnection -> isEnabled(
+				samlSpIdpConnection, httpServletRequest)
 		).collect(
 			Collectors.toList()
 		);
@@ -110,30 +112,31 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			}
 		}
 		else if (samlSpIdpConnections.size() == 1) {
-			request.setAttribute(
+			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_SP_IDP_CONNECTION,
 				samlSpIdpConnections.get(0));
 
 			return null;
 		}
 
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SSO_LOGIN_CONTEXT,
 			toJSONObject(samlSpIdpConnections));
 
 		JspUtil.dispatch(
-			request, response, "/portal/saml/select_idp.jsp",
+			httpServletRequest, response, "/portal/saml/select_idp.jsp",
 			"please-select-your-identity-provider", false);
 
 		return null;
 	}
 
 	protected boolean isEnabled(
-		SamlSpIdpConnection samlSpIdpConnection, HttpServletRequest request) {
+		SamlSpIdpConnection samlSpIdpConnection,
+		HttpServletRequest httpServletRequest) {
 
 		if (_samlSpIdpConnectionsProfile != null) {
 			return _samlSpIdpConnectionsProfile.isEnabled(
-				samlSpIdpConnection, request);
+				samlSpIdpConnection, httpServletRequest);
 		}
 
 		return samlSpIdpConnection.isEnabled();

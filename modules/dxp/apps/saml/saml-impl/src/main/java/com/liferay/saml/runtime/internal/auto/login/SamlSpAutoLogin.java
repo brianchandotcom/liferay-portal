@@ -39,7 +39,7 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws AutoLoginException {
 
 		try {
@@ -50,7 +50,7 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 			}
 
 			SamlSpSession samlSpSession = _webSsoProfile.getSamlSpSession(
-				request);
+				httpServletRequest);
 
 			if (samlSpSession == null) {
 				return null;

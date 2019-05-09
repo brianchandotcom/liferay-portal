@@ -37,10 +37,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ReportsEngineRequestHelper extends BaseRequestHelper {
 
-	public ReportsEngineRequestHelper(HttpServletRequest request) {
-		super(request);
+	public ReportsEngineRequestHelper(HttpServletRequest httpServletRequest) {
+		super(httpServletRequest);
 
-		_renderRequest = (RenderRequest)request.getAttribute(
+		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		_portletPreferences = _renderRequest.getPreferences();

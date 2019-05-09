@@ -47,7 +47,7 @@ public class MetadataAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest, HttpServletResponse response)
 		throws Exception {
 
 		response.setContentType(ContentTypes.TEXT_XML);
@@ -55,7 +55,7 @@ public class MetadataAction extends BaseSamlStrutsAction {
 		PrintWriter printWriter = response.getWriter();
 
 		String metadata = _samlHttpRequestUtil.getEntityDescriptorString(
-			request);
+			httpServletRequest);
 
 		printWriter.print(metadata);
 

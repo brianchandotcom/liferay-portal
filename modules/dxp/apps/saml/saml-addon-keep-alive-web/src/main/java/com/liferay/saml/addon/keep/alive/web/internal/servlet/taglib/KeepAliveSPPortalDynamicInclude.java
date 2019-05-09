@@ -57,18 +57,19 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
+			HttpServletRequest httpServletRequest, HttpServletResponse response,
 			String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!isEnabled(themeDisplay)) {
 			return;
 		}
 
-		String keepAliveURL = getConfiguredKeepAliveURL(request);
+		String keepAliveURL = getConfiguredKeepAliveURL(httpServletRequest);
 
 		if (Validator.isBlank(keepAliveURL)) {
 			return;
@@ -97,19 +98,22 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	protected String getConfiguredKeepAliveURL(HttpServletRequest request) {
+	protected String getConfiguredKeepAliveURL(
+		HttpServletRequest httpServletRequest) {
+
 		String keepAliveURL = null;
 
 		try {
 			SamlSpSession samlSpSession = getSamlSpSession(
-				request, _samlSpSessionLocalService);
+				httpServletRequest, _samlSpSessionLocalService);
 
 			if (samlSpSession == null) {
 				return StringPool.BLANK;
 			}
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			SamlSpIdpConnection samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
@@ -146,10 +150,10 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 	}
 
 	protected SamlSpSession getSamlSpSession(
-		HttpServletRequest request,
+		HttpServletRequest httpServletRequest,
 		SamlSpSessionLocalService samlSpSessionLocalService) {
 
-		String samlSpSessionKey = getSamlSpSessionKey(request);
+		String samlSpSessionKey = getSamlSpSessionKey(httpServletRequest);
 
 		if (Validator.isNotNull(samlSpSessionKey)) {
 			SamlSpSession samlSpSession =
@@ -161,21 +165,23 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession session = httpServletRequest.getSession();
 
 		return samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
 			session.getId());
 	}
 
-	protected String getSamlSpSessionKey(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	protected String getSamlSpSessionKey(
+		HttpServletRequest httpServletRequest) {
+
+		HttpSession session = httpServletRequest.getSession();
 
 		String samlSpSessionKey = (String)session.getAttribute(
 			SamlWebKeys.SAML_SP_SESSION_KEY);
 
 		if (Validator.isNull(samlSpSessionKey)) {
 			samlSpSessionKey = CookieKeys.getCookie(
-				request, SamlWebKeys.SAML_SP_SESSION_KEY);
+				httpServletRequest, SamlWebKeys.SAML_SP_SESSION_KEY);
 		}
 
 		return samlSpSessionKey;

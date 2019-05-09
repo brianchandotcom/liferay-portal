@@ -1,11 +1,7 @@
 .portlet-user-personal-bar {
 	.personal-menu-dropdown {
-		.btn {
-			border-width: medium;
-
-			.sticker .inline-item {
-				font-size: unset;
-			}
+		.btn .sticker .inline-item {
+			font-size: unset;
 		}
 
 		.sticker-lg .lexicon-icon {

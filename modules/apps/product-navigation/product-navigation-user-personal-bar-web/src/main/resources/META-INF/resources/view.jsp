@@ -22,7 +22,7 @@
 			<liferay-util:buffer
 				var="userAvatar"
 			>
-				<span class="sticker">
+				<span class="sticker sticker-lg">
 					<span class="inline-item">
 						<liferay-ui:user-portrait
 							cssClass="sticker-lg"

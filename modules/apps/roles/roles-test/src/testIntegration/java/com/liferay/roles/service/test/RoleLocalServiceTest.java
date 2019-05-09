@@ -368,7 +368,7 @@ public class RoleLocalServiceTest {
 
 		Organization organization = (Organization)organizationAndTeam1[0];
 
-		testGetTeamRoleMap(
+		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
 			(Team)organizationAndTeam2[1], false);
 	}
@@ -379,7 +379,7 @@ public class RoleLocalServiceTest {
 
 		Organization organization = (Organization)organizationAndTeam[0];
 
-		testGetTeamRoleMap(
+		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
 			(Team)organizationAndTeam[1], true);
 	}
@@ -394,7 +394,7 @@ public class RoleLocalServiceTest {
 			TestPropsValues.getUserId(), organization.getGroupId(),
 			LayoutTestUtil.addLayout(organization.getGroupId()));
 
-		testGetTeamRoleMap(
+		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(group.getGroupId()),
 			(Team)organizationAndTeam[1], true);
 	}
@@ -450,22 +450,7 @@ public class RoleLocalServiceTest {
 		Assert.assertEquals(teamRole, roles.get(0));
 	}
 
-	protected Object[] getOrganizationAndTeam() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		_organization = _organizationLocalService.addOrganization(
-			user.getUserId(),
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			RandomTestUtil.randomString(), false);
-
-		Team team = _teamLocalService.addTeam(
-			user.getUserId(), _organization.getGroupId(),
-			RandomTestUtil.randomString(), null, new ServiceContext());
-
-		return new Object[] {_organization, team};
-	}
-
-	protected void testGetTeamRoleMap(
+	protected void assertGetTeamRoleMap(
 		Map<Team, Role> teamRoleMap, Team team, boolean hasTeam) {
 
 		Assert.assertNotNull(teamRoleMap);
@@ -481,6 +466,21 @@ public class RoleLocalServiceTest {
 		else {
 			Assert.assertFalse(teamRoleMap.containsKey(team));
 		}
+	}
+
+	protected Object[] getOrganizationAndTeam() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		_organization = _organizationLocalService.addOrganization(
+			user.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		Team team = _teamLocalService.addTeam(
+			user.getUserId(), _organization.getGroupId(),
+			RandomTestUtil.randomString(), null, new ServiceContext());
+
+		return new Object[] {_organization, team};
 	}
 
 	private static Indexer<Organization> _indexer;

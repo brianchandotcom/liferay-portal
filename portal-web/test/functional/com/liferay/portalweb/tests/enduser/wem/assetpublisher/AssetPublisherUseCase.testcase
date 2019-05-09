@@ -1707,6 +1707,8 @@ definition {
 
 	@priority = "3"
 	test ViewRelatedAssetsViaRelatedAssetsPortlet {
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
+
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Portlet.addPG(portletName = "Related Assets");

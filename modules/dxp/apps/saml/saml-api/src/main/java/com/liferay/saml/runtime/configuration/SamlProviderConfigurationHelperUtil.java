@@ -16,6 +16,7 @@ package com.liferay.saml.runtime.configuration;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -67,6 +68,8 @@ public class SamlProviderConfigurationHelperUtil {
 	private static final ServiceTracker
 		<SamlProviderConfigurationHelper, SamlProviderConfigurationHelper>
 			_serviceTracker = ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(
+					SamlProviderConfigurationHelperUtil.class),
 				SamlProviderConfigurationHelper.class);
 
 }

@@ -17,6 +17,7 @@ package com.liferay.saml.web.internal.util;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.saml.util.NameIdTypeValues;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -29,6 +30,8 @@ public class NameIdTypeValuesUtilHelper {
 	}
 
 	private static final ServiceTracker<NameIdTypeValues, NameIdTypeValues>
-		_serviceTracker = ServiceTrackerFactory.open(NameIdTypeValues.class);
+		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(NameIdTypeValuesUtilHelper.class),
+			NameIdTypeValues.class);
 
 }

@@ -29,18 +29,18 @@ import org.junit.Test;
 public class LiferayServiceTest {
 
 	@Test
-	public void testGetPageableEndpoints() {
+	public void testGetReadableEndpoints() {
 		LiferayService liferayService = new LiferayService();
 
-		List<String> pageableEndpoints = liferayService.getPageableEndpoints(
+		List<String> readableEndpoints = liferayService.getReadableEndpoints(
 			_getOpenAPIJsonObject());
 
 		Assert.assertFalse(
-			"Pageable endpoints are empty", pageableEndpoints.isEmpty());
+			"Pageable endpoints are empty", readableEndpoints.isEmpty());
 
 		Assert.assertEquals(
 			"Pageable endpoints contain path", "/test/path",
-			pageableEndpoints.get(0));
+			readableEndpoints.get(0));
 	}
 
 	@Test

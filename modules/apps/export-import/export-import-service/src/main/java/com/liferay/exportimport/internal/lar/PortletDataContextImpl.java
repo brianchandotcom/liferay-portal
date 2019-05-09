@@ -1935,8 +1935,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void removePrimaryKey(String path) {
-		String primaryKeyString = getPrimaryKeyString(
-			String.class, (Serializable)path);
+		String primaryKeyString = getPrimaryKeyString(String.class, path);
 
 		_primaryKeys.remove(primaryKeyString);
 		_scopedPrimaryKeys.remove(primaryKeyString);

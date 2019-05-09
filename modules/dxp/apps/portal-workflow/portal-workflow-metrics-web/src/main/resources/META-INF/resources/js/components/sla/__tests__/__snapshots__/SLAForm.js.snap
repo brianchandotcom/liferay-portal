@@ -4189,7 +4189,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
                 <div
@@ -6020,7 +6020,7 @@ exports[`Should render component in edit mode 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
                 <div

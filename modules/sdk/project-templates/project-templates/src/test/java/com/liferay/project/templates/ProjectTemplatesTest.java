@@ -5272,7 +5272,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "package.json",
 			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"^2.0.0", "\"main\": \"lib/index.es.js\"");
+			"liferay-npm-bundler\": \"2.7.0", "\"main\": \"lib/index.es.js\"");
 
 		_testNotContains(
 			gradleProjectDir, "package.json",
@@ -5315,7 +5315,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "package.json",
 			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"^2.0.0", "\"main\": \"lib/index.es.js\"");
+			"liferay-npm-bundler\": \"2.7.0", "\"main\": \"lib/index.es.js\"");
 
 		_testNotContains(
 			gradleProjectDir, "package.json",

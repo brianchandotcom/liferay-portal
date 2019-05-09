@@ -92,9 +92,9 @@ definition {
 
 	@summary = "Give the roles '${roles}' permissions to view the template '${templateName}'"
 	macro addRoleViewPermissions {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Permissions",
-			rowEntry = "${templateName}");
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Permissions",
+			templateName = "${templateName}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -195,9 +195,9 @@ definition {
 
 	@summary = "Modify template"
 	macro modifyTemplate {
-		LexiconCard.clickEllipsisItem(
-			card = "${templatePreviousName}",
-			item = "Edit");
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Edit",
+			templateName = "${templatePreviousName}");
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			imageSourceURL = "${imageSourceURL}",

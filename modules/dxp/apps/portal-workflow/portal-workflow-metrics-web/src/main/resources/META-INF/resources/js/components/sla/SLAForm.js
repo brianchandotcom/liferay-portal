@@ -247,10 +247,10 @@ class SLAForm extends React.Component {
 	render() {
 		const {
 			errors,
-			id,
 			loading = false,
 			redirectToSLAList = false
 		} = this.state;
+		const { id } = this.props;
 
 		if (loading) {
 			return <LoadingState />;

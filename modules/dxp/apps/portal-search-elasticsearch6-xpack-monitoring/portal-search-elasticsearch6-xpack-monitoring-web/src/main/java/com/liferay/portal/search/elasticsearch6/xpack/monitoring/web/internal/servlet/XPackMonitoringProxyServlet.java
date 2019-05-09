@@ -140,9 +140,9 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 
 	@Override
 	protected void copyRequestHeaders(
-		HttpServletRequest servletRequest, HttpRequest proxyRequest) {
+		HttpServletRequest httpServletRequest, HttpRequest proxyRequest) {
 
-		super.copyRequestHeaders(servletRequest, proxyRequest);
+		super.copyRequestHeaders(httpServletRequest, proxyRequest);
 
 		proxyRequest.addHeader(
 			HttpHeaders.AUTHORIZATION, getShieldAuthorization());

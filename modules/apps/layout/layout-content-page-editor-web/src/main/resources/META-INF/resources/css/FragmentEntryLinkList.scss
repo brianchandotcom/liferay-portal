@@ -22,7 +22,7 @@
 		will-change: background-color;
 	}
 
-	&__container--empty &__row {
+	&__container--empty &__col {
 		min-height: $rowMinimumHeight;
 	}
 

@@ -183,11 +183,9 @@ public class RoleLocalServiceTest {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Test
 	public void testGetGroupRelatedRoles() throws Exception {
-		Object[] objects = getOrganizationAndTeam();
+		getOrganizationAndTeam();
 
-		Organization organization = (Organization)objects[0];
-
-		long groupId = organization.getGroupId();
+		long groupId = _organization.getGroupId();
 
 		Group group = _groupLocalService.getGroup(groupId);
 
@@ -197,7 +195,7 @@ public class RoleLocalServiceTest {
 		List<Role> expectedRoles = new ArrayList<>();
 
 		for (Role role :
-				_roleLocalService.getRoles(organization.getCompanyId())) {
+				_roleLocalService.getRoles(_organization.getCompanyId())) {
 
 			int type = role.getType();
 
@@ -229,12 +227,10 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetGroupRolesAndTeamRoles() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
+		getOrganizationAndTeam();
 
-		Organization organization = (Organization)organizationAndTeam[0];
-
-		long companyId = organization.getCompanyId();
-		long groupId = organization.getGroupId();
+		long companyId = _organization.getCompanyId();
+		long groupId = _organization.getGroupId();
 
 		int[] roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
 
@@ -295,13 +291,10 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetGroupRolesAndTeamRolesWithKeyword() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
+		getOrganizationAndTeam();
 
-		Organization organization = (Organization)organizationAndTeam[0];
-		Team team = (Team)organizationAndTeam[1];
-
-		long companyId = organization.getCompanyId();
-		long groupId = organization.getGroupId();
+		long companyId = _organization.getCompanyId();
+		long groupId = _organization.getGroupId();
 
 		int[] roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
 
@@ -324,33 +317,31 @@ public class RoleLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
-				companyId, team.getName(), excludedRoleNames, roleTypes, 0,
+				companyId, _team.getName(), excludedRoleNames, roleTypes, 0,
 				groupId));
 
 		List<Role> roles2 = _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, team.getName(), excludedRoleNames, roleTypes, 0, groupId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, _team.getName(), excludedRoleNames, roleTypes, 0,
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_role = roles2.get(0);
 
-		Assert.assertEquals(team.getTeamId(), _role.getClassPK());
+		Assert.assertEquals(_team.getTeamId(), _role.getClassPK());
 	}
 
 	@Test
 	public void testGetTeamRoleMapWithExclusion() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
-
-		Organization organization = (Organization)organizationAndTeam[0];
+		getOrganizationAndTeam();
 
 		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
-			organization.getGroupId());
+			_organization.getGroupId());
 
-		Role role = teamRoleMap.get(organizationAndTeam[1]);
+		Role role = teamRoleMap.get(_team);
 
 		Assert.assertNotNull(role);
 
 		List<Role> roles = _roleLocalService.getTeamRoles(
-			organization.getGroupId(), new long[] {role.getRoleId()});
+			_organization.getGroupId(), new long[] {role.getRoleId()});
 
 		Assert.assertNotNull(roles);
 		Assert.assertTrue(roles.toString(), roles.isEmpty());
@@ -363,58 +354,51 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithOtherGroupId() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
-
-		Organization organization1 = (Organization)organizationAndTeam[0];
+		getOrganizationAndTeam();
 
 		User user = TestPropsValues.getUser();
 
-		Organization organization2 = null;
+		Organization organization = null;
 
 		try {
-			organization2 = _organizationLocalService.addOrganization(
+			organization = _organizationLocalService.addOrganization(
 				user.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 				RandomTestUtil.randomString(), false);
 
 			assertGetTeamRoleMap(
-				_roleLocalService.getTeamRoleMap(organization1.getGroupId()),
+				_roleLocalService.getTeamRoleMap(_organization.getGroupId()),
 				_teamLocalService.addTeam(
-					user.getUserId(), organization2.getGroupId(),
+					user.getUserId(), organization.getGroupId(),
 					RandomTestUtil.randomString(), null, new ServiceContext()),
 				false);
 		}
 		finally {
-			if (organization2 != null) {
-				_organizationLocalService.deleteOrganization(organization2);
+			if (organization != null) {
+				_organizationLocalService.deleteOrganization(organization);
 			}
 		}
 	}
 
 	@Test
 	public void testGetTeamRoleMapWithOwnGroupId() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
-
-		Organization organization = (Organization)organizationAndTeam[0];
+		getOrganizationAndTeam();
 
 		assertGetTeamRoleMap(
-			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
-			(Team)organizationAndTeam[1], true);
+			_roleLocalService.getTeamRoleMap(_organization.getGroupId()), _team,
+			true);
 	}
 
 	@Test
 	public void testGetTeamRoleMapWithParentGroupId() throws Exception {
-		Object[] organizationAndTeam = getOrganizationAndTeam();
-
-		Organization organization = (Organization)organizationAndTeam[0];
+		getOrganizationAndTeam();
 
 		Group group = GroupTestUtil.addGroup(
-			TestPropsValues.getUserId(), organization.getGroupId(),
-			LayoutTestUtil.addLayout(organization.getGroupId()));
+			TestPropsValues.getUserId(), _organization.getGroupId(),
+			LayoutTestUtil.addLayout(_organization.getGroupId()));
 
 		assertGetTeamRoleMap(
-			_roleLocalService.getTeamRoleMap(group.getGroupId()),
-			(Team)organizationAndTeam[1], true);
+			_roleLocalService.getTeamRoleMap(group.getGroupId()), _team, true);
 	}
 
 	@Test
@@ -486,7 +470,7 @@ public class RoleLocalServiceTest {
 		}
 	}
 
-	protected Object[] getOrganizationAndTeam() throws Exception {
+	protected void getOrganizationAndTeam() throws Exception {
 		User user = TestPropsValues.getUser();
 
 		_organization = _organizationLocalService.addOrganization(
@@ -494,11 +478,9 @@ public class RoleLocalServiceTest {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
 
-		Team team = _teamLocalService.addTeam(
+		_team = _teamLocalService.addTeam(
 			user.getUserId(), _organization.getGroupId(),
 			RandomTestUtil.randomString(), null, new ServiceContext());
-
-		return new Object[] {_organization, team};
 	}
 
 	private static Indexer<Organization> _indexer;
@@ -523,6 +505,8 @@ public class RoleLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private Team _team;
 
 	@Inject
 	private TeamLocalService _teamLocalService;

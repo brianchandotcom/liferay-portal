@@ -85,7 +85,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		sb.append(description);
 		sb.append(", duration=");
 		sb.append(duration);
+		sb.append(", calendarKey=");
+		sb.append(calendarKey);
 		sb.append(", processId=");
 		sb.append(processId);
 		sb.append(", processVersion=");
@@ -186,6 +188,14 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		}
 
 		workflowMetricsSLADefinitionImpl.setDuration(duration);
+
+		if (calendarKey == null) {
+			workflowMetricsSLADefinitionImpl.setCalendarKey("");
+		}
+		else {
+			workflowMetricsSLADefinitionImpl.setCalendarKey(calendarKey);
+		}
+
 		workflowMetricsSLADefinitionImpl.setProcessId(processId);
 
 		if (processVersion == null) {
@@ -242,6 +252,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		description = objectInput.readUTF();
 
 		duration = objectInput.readLong();
+		calendarKey = objectInput.readUTF();
 
 		processId = objectInput.readLong();
 		processVersion = objectInput.readUTF();
@@ -297,6 +308,13 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 		objectOutput.writeLong(duration);
 
+		if (calendarKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(calendarKey);
+		}
+
 		objectOutput.writeLong(processId);
 
 		if (processVersion == null) {
@@ -342,6 +360,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	public String name;
 	public String description;
 	public long duration;
+	public String calendarKey;
 	public long processId;
 	public String processVersion;
 	public String pauseNodeKeys;

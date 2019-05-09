@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
-import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLACalendarPersistence;
-import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLAConditionPersistence;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
 
 import java.io.Serializable;
@@ -512,106 +510,6 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the workflow metrics sla calendar local service.
-	 *
-	 * @return the workflow metrics sla calendar local service
-	 */
-	public com.liferay.portal.workflow.metrics.service.
-		WorkflowMetricsSLACalendarLocalService
-			getWorkflowMetricsSLACalendarLocalService() {
-
-		return workflowMetricsSLACalendarLocalService;
-	}
-
-	/**
-	 * Sets the workflow metrics sla calendar local service.
-	 *
-	 * @param workflowMetricsSLACalendarLocalService the workflow metrics sla calendar local service
-	 */
-	public void setWorkflowMetricsSLACalendarLocalService(
-		com.liferay.portal.workflow.metrics.service.
-			WorkflowMetricsSLACalendarLocalService
-				workflowMetricsSLACalendarLocalService) {
-
-		this.workflowMetricsSLACalendarLocalService =
-			workflowMetricsSLACalendarLocalService;
-	}
-
-	/**
-	 * Returns the workflow metrics sla calendar persistence.
-	 *
-	 * @return the workflow metrics sla calendar persistence
-	 */
-	public WorkflowMetricsSLACalendarPersistence
-		getWorkflowMetricsSLACalendarPersistence() {
-
-		return workflowMetricsSLACalendarPersistence;
-	}
-
-	/**
-	 * Sets the workflow metrics sla calendar persistence.
-	 *
-	 * @param workflowMetricsSLACalendarPersistence the workflow metrics sla calendar persistence
-	 */
-	public void setWorkflowMetricsSLACalendarPersistence(
-		WorkflowMetricsSLACalendarPersistence
-			workflowMetricsSLACalendarPersistence) {
-
-		this.workflowMetricsSLACalendarPersistence =
-			workflowMetricsSLACalendarPersistence;
-	}
-
-	/**
-	 * Returns the workflow metrics sla condition local service.
-	 *
-	 * @return the workflow metrics sla condition local service
-	 */
-	public com.liferay.portal.workflow.metrics.service.
-		WorkflowMetricsSLAConditionLocalService
-			getWorkflowMetricsSLAConditionLocalService() {
-
-		return workflowMetricsSLAConditionLocalService;
-	}
-
-	/**
-	 * Sets the workflow metrics sla condition local service.
-	 *
-	 * @param workflowMetricsSLAConditionLocalService the workflow metrics sla condition local service
-	 */
-	public void setWorkflowMetricsSLAConditionLocalService(
-		com.liferay.portal.workflow.metrics.service.
-			WorkflowMetricsSLAConditionLocalService
-				workflowMetricsSLAConditionLocalService) {
-
-		this.workflowMetricsSLAConditionLocalService =
-			workflowMetricsSLAConditionLocalService;
-	}
-
-	/**
-	 * Returns the workflow metrics sla condition persistence.
-	 *
-	 * @return the workflow metrics sla condition persistence
-	 */
-	public WorkflowMetricsSLAConditionPersistence
-		getWorkflowMetricsSLAConditionPersistence() {
-
-		return workflowMetricsSLAConditionPersistence;
-	}
-
-	/**
-	 * Sets the workflow metrics sla condition persistence.
-	 *
-	 * @param workflowMetricsSLAConditionPersistence the workflow metrics sla condition persistence
-	 */
-	public void setWorkflowMetricsSLAConditionPersistence(
-		WorkflowMetricsSLAConditionPersistence
-			workflowMetricsSLAConditionPersistence) {
-
-		this.workflowMetricsSLAConditionPersistence =
-			workflowMetricsSLAConditionPersistence;
-	}
-
-	/**
 	 * Returns the workflow metrics sla definition local service.
 	 *
 	 * @return the workflow metrics sla definition local service
@@ -841,28 +739,6 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 			throw new SystemException(e);
 		}
 	}
-
-	@BeanReference(
-		type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService.class
-	)
-	protected com.liferay.portal.workflow.metrics.service.
-		WorkflowMetricsSLACalendarLocalService
-			workflowMetricsSLACalendarLocalService;
-
-	@BeanReference(type = WorkflowMetricsSLACalendarPersistence.class)
-	protected WorkflowMetricsSLACalendarPersistence
-		workflowMetricsSLACalendarPersistence;
-
-	@BeanReference(
-		type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLAConditionLocalService.class
-	)
-	protected com.liferay.portal.workflow.metrics.service.
-		WorkflowMetricsSLAConditionLocalService
-			workflowMetricsSLAConditionLocalService;
-
-	@BeanReference(type = WorkflowMetricsSLAConditionPersistence.class)
-	protected WorkflowMetricsSLAConditionPersistence
-		workflowMetricsSLAConditionPersistence;
 
 	@BeanReference(type = WorkflowMetricsSLADefinitionLocalService.class)
 	protected WorkflowMetricsSLADefinitionLocalService

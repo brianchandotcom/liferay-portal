@@ -77,10 +77,10 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.CLOB},
-		{"duration", Types.BIGINT}, {"processId", Types.BIGINT},
-		{"processVersion", Types.VARCHAR}, {"pauseNodeKeys", Types.VARCHAR},
-		{"startNodeKeys", Types.VARCHAR}, {"stopNodeKeys", Types.VARCHAR},
-		{"status", Types.INTEGER}
+		{"duration", Types.BIGINT}, {"calendarKey", Types.VARCHAR},
+		{"processId", Types.BIGINT}, {"processVersion", Types.VARCHAR},
+		{"pauseNodeKeys", Types.VARCHAR}, {"startNodeKeys", Types.VARCHAR},
+		{"stopNodeKeys", Types.VARCHAR}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,6 +99,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("calendarKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("processId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("processVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pauseNodeKeys", Types.VARCHAR);
@@ -108,7 +109,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,processVersion VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,status INTEGER)";
+		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,calendarKey VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowMetricsSLADefinition";
@@ -341,6 +342,12 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			"duration",
 			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
 				WorkflowMetricsSLADefinition::setDuration);
+		attributeGetterFunctions.put(
+			"calendarKey", WorkflowMetricsSLADefinition::getCalendarKey);
+		attributeSetterBiConsumers.put(
+			"calendarKey",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setCalendarKey);
 		attributeGetterFunctions.put(
 			"processId", WorkflowMetricsSLADefinition::getProcessId);
 		attributeSetterBiConsumers.put(
@@ -595,6 +602,21 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	@Override
+	public String getCalendarKey() {
+		if (_calendarKey == null) {
+			return "";
+		}
+		else {
+			return _calendarKey;
+		}
+	}
+
+	@Override
+	public void setCalendarKey(String calendarKey) {
+		_calendarKey = calendarKey;
+	}
+
+	@Override
 	public long getProcessId() {
 		return _processId;
 	}
@@ -763,6 +785,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionImpl.setName(getName());
 		workflowMetricsSLADefinitionImpl.setDescription(getDescription());
 		workflowMetricsSLADefinitionImpl.setDuration(getDuration());
+		workflowMetricsSLADefinitionImpl.setCalendarKey(getCalendarKey());
 		workflowMetricsSLADefinitionImpl.setProcessId(getProcessId());
 		workflowMetricsSLADefinitionImpl.setProcessVersion(getProcessVersion());
 		workflowMetricsSLADefinitionImpl.setPauseNodeKeys(getPauseNodeKeys());
@@ -942,6 +965,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 		workflowMetricsSLADefinitionCacheModel.duration = getDuration();
 
+		workflowMetricsSLADefinitionCacheModel.calendarKey = getCalendarKey();
+
+		String calendarKey = workflowMetricsSLADefinitionCacheModel.calendarKey;
+
+		if ((calendarKey != null) && (calendarKey.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.calendarKey = null;
+		}
+
 		workflowMetricsSLADefinitionCacheModel.processId = getProcessId();
 
 		workflowMetricsSLADefinitionCacheModel.processVersion =
@@ -1080,6 +1111,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private String _originalName;
 	private String _description;
 	private long _duration;
+	private String _calendarKey;
 	private long _processId;
 	private long _originalProcessId;
 	private boolean _setOriginalProcessId;

@@ -157,6 +157,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
+		newWorkflowMetricsSLADefinition.setCalendarKey(
+			RandomTestUtil.randomString());
+
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
 		newWorkflowMetricsSLADefinition.setProcessVersion(
@@ -222,6 +225,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getDuration(),
 			newWorkflowMetricsSLADefinition.getDuration());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getCalendarKey(),
+			newWorkflowMetricsSLADefinition.getCalendarKey());
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
@@ -342,8 +348,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "duration", true,
-			"processId", true, "processVersion", true, "pauseNodeKeys", true,
-			"startNodeKeys", true, "stopNodeKeys", true, "status", true);
+			"calendarKey", true, "processId", true, "processVersion", true,
+			"pauseNodeKeys", true, "startNodeKeys", true, "stopNodeKeys", true,
+			"status", true);
 	}
 
 	@Test
@@ -664,6 +671,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
+
+		workflowMetricsSLADefinition.setCalendarKey(
+			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 

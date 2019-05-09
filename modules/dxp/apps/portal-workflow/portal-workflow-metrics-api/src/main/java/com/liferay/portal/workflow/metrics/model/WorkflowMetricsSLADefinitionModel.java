@@ -267,6 +267,21 @@ public interface WorkflowMetricsSLADefinitionModel
 	public void setDuration(long duration);
 
 	/**
+	 * Returns the calendar key of this workflow metrics sla definition.
+	 *
+	 * @return the calendar key of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getCalendarKey();
+
+	/**
+	 * Sets the calendar key of this workflow metrics sla definition.
+	 *
+	 * @param calendarKey the calendar key of this workflow metrics sla definition
+	 */
+	public void setCalendarKey(String calendarKey);
+
+	/**
 	 * Returns the process ID of this workflow metrics sla definition.
 	 *
 	 * @return the process ID of this workflow metrics sla definition

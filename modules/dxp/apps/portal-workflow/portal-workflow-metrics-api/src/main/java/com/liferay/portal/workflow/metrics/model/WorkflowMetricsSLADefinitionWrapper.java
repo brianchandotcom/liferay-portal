@@ -63,6 +63,7 @@ public class WorkflowMetricsSLADefinitionWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
+		attributes.put("calendarKey", getCalendarKey());
 		attributes.put("processId", getProcessId());
 		attributes.put("processVersion", getProcessVersion());
 		attributes.put("pauseNodeKeys", getPauseNodeKeys());
@@ -148,6 +149,12 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setDuration(duration);
 		}
 
+		String calendarKey = (String)attributes.get("calendarKey");
+
+		if (calendarKey != null) {
+			setCalendarKey(calendarKey);
+		}
+
 		Long processId = (Long)attributes.get("processId");
 
 		if (processId != null) {
@@ -183,6 +190,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	/**
+	 * Returns the calendar key of this workflow metrics sla definition.
+	 *
+	 * @return the calendar key of this workflow metrics sla definition
+	 */
+	@Override
+	public String getCalendarKey() {
+		return model.getCalendarKey();
 	}
 
 	/**
@@ -388,6 +405,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the calendar key of this workflow metrics sla definition.
+	 *
+	 * @param calendarKey the calendar key of this workflow metrics sla definition
+	 */
+	@Override
+	public void setCalendarKey(String calendarKey) {
+		model.setCalendarKey(calendarKey);
 	}
 
 	/**

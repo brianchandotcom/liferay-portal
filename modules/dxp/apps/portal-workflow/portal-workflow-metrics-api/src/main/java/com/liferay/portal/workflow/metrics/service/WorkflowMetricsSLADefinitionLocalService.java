@@ -64,8 +64,8 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionLocalServiceUtil} to access the workflow metrics sla definition local service. Add custom service methods to <code>com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
-			String name, String description, long duration, long processId,
-			String[] pauseNodeKeys, String[] startNodeKeys,
+			String name, String description, long duration, String calendarKey,
+			long processId, String[] pauseNodeKeys, String[] startNodeKeys,
 			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -330,9 +330,9 @@ public interface WorkflowMetricsSLADefinitionLocalService
 
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitionId, String name,
-			String description, long duration, String[] pauseNodeKeys,
-			String[] startNodeKeys, String[] stopNodeKeys, int status,
-			ServiceContext serviceContext)
+			String description, long duration, String calendarKey,
+			String[] pauseNodeKeys, String[] startNodeKeys,
+			String[] stopNodeKeys, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

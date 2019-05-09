@@ -50,6 +50,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDuration(model.getDuration());
+		soapModel.setCalendarKey(model.getCalendarKey());
 		soapModel.setProcessId(model.getProcessId());
 		soapModel.setProcessVersion(model.getProcessVersion());
 		soapModel.setPauseNodeKeys(model.getPauseNodeKeys());
@@ -216,6 +217,14 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		_duration = duration;
 	}
 
+	public String getCalendarKey() {
+		return _calendarKey;
+	}
+
+	public void setCalendarKey(String calendarKey) {
+		_calendarKey = calendarKey;
+	}
+
 	public long getProcessId() {
 		return _processId;
 	}
@@ -276,6 +285,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private long _duration;
+	private String _calendarKey;
 	private long _processId;
 	private String _processVersion;
 	private String _pauseNodeKeys;

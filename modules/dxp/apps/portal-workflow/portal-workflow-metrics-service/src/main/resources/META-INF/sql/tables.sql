@@ -36,6 +36,7 @@ create table WorkflowMetricsSLADefinition (
 	name STRING null,
 	description TEXT null,
 	duration LONG,
+	calendarKey VARCHAR(75) null,
 	processId LONG,
 	processVersion VARCHAR(75) null,
 	pauseNodeKeys VARCHAR(75) null,

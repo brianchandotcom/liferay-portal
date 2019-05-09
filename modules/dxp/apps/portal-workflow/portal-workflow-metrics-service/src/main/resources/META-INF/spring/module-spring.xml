@@ -7,10 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-	<bean class="com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLACalendarLocalServiceImpl" id="com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService" />
-	<bean class="com.liferay.portal.workflow.metrics.service.persistence.impl.WorkflowMetricsSLACalendarPersistenceImpl" id="com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLACalendarPersistence" />
-	<bean class="com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLAConditionLocalServiceImpl" id="com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLAConditionLocalService" />
-	<bean class="com.liferay.portal.workflow.metrics.service.persistence.impl.WorkflowMetricsSLAConditionPersistenceImpl" id="com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLAConditionPersistence" />
 	<bean class="com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionLocalServiceImpl" id="com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService" />
 	<bean class="com.liferay.portal.workflow.metrics.service.persistence.impl.WorkflowMetricsSLADefinitionPersistenceImpl" id="com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence" />
 </beans>

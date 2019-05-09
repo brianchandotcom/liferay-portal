@@ -88,6 +88,8 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
+		ProductMenu.gotoSite(site = "Global");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",

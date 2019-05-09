@@ -23,10 +23,7 @@ String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventNa
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-long organizationId = 0;
 long uniqueOrganizationId = 0;
-
-Organization selectedOrganization = null;
 
 List<Organization> organizations = null;
 
@@ -46,17 +43,20 @@ if (step == 1) {
 	}
 }
 
-if (step == 2) {
-	organizationId = ParamUtil.getLong(request, "organizationId", uniqueOrganizationId);
-
-	selectedOrganization = OrganizationServiceUtil.getOrganization(organizationId);
-}
-
 SelectRoleManagementToolbarDisplayContext SelectRoleManagementToolbarDisplayContext = new SelectRoleManagementToolbarDisplayContext(request, renderRequest, renderResponse, eventName);
 
 PortletURL portletURL = SelectRoleManagementToolbarDisplayContext.getPortletURL();
 
 SearchContainer roleSearchContainer = null;
+
+long organizationId = 0;
+Organization selectedOrganization = null;
+
+if (step == 2) {
+	organizationId = ParamUtil.getLong(request, "organizationId", uniqueOrganizationId);
+
+	selectedOrganization = OrganizationServiceUtil.getOrganization(organizationId);
+}
 
 if (selectedOrganization == null) {
 	roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles);

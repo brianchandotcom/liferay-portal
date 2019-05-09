@@ -27,7 +27,6 @@ import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -71,23 +70,23 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 			GradleUtil.getExtension(
 				project, DependencyManagementExtension.class);
 
+		Configuration targetPlatformIDEConfiguration =
+			_addConfigurationTargetPlatformIDE(
+				project, dependencyManagementExtension);
+
 		TargetPlatformIDEExtension targetPlatformIDEExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, TargetPlatformIDEExtension.class);
 
-		Configuration targetPlatformIDEConfiguration =
-			_addConfigurationTargetPlatformIDE(
-				project, dependencyManagementExtension,
-				targetPlatformIDEExtension);
-
-		_configureEclipseModel(project, targetPlatformIDEConfiguration);
-		_configureIdeaModel(project, targetPlatformIDEConfiguration);
+		if (targetPlatformIDEExtension.isIndexSources()) {
+			_configureEclipseModel(project, targetPlatformIDEConfiguration);
+			_configureIdeaModel(project, targetPlatformIDEConfiguration);
+		}
 	}
 
 	private Configuration _addConfigurationTargetPlatformIDE(
 		final Project project,
-		final DependencyManagementExtension dependencyManagementExtension,
-		final TargetPlatformIDEExtension targetPlatformIDEExtension) {
+		final DependencyManagementExtension dependencyManagementExtension) {
 
 		final Configuration configuration = GradleUtil.addConfiguration(
 			project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME);
@@ -102,8 +101,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				@Override
 				public void execute(DependencySet dependencySet) {
 					_addDependenciesTargetPlatformIDE(
-						project, dependencyManagementExtension,
-						targetPlatformIDEExtension, configuration,
+						project, dependencyManagementExtension, configuration,
 						bomConfiguration);
 				}
 
@@ -117,10 +115,10 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	@SuppressWarnings("serial")
 	private void _addDependenciesTargetPlatformIDE(
 		Project project,
 		DependencyManagementExtension dependencyManagementExtension,
-		TargetPlatformIDEExtension targetPlatformIDEExtension,
 		Configuration configuration, final Configuration bomConfiguration) {
 
 		GroovyObjectSupport groovyObjectSupport =
@@ -164,22 +162,10 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Set<String> includeGroups = new HashSet<>();
-
-		for (Object object : targetPlatformIDEExtension.getIncludeGroups()) {
-			includeGroups.add(GradleUtil.toString(object));
-		}
-
 		Set<String> dependencyNotations = new LinkedHashSet<>();
 
 		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-			String key = entry.getKey();
-
-			String group = key.substring(0, key.indexOf(':'));
-
-			if (includeGroups.contains(group)) {
-				dependencyNotations.add(key + ":" + entry.getValue());
-			}
+			dependencyNotations.add(entry.getKey() + ":" + entry.getValue());
 		}
 
 		for (String dependencyNotation : dependencyNotations) {

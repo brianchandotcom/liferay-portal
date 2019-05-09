@@ -18,7 +18,6 @@ import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.target.platform.TargetPlatformIDEPlugin;
 import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
-import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformIDEExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -58,7 +57,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		_configureConfigurationBundles(project);
 		_configureTargetPlatform(project);
-		_configureTargetPlatformIDE(project);
 
 		String normalizedTargetPlatformVersion =
 			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
@@ -186,14 +184,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureTargetPlatformIDE(Project project) {
-		TargetPlatformIDEExtension targetPlatformIDEExtension =
-			GradleUtil.getExtension(project, TargetPlatformIDEExtension.class);
-
-		targetPlatformIDEExtension.includeGroups(
-			"com.liferay", "com.liferay.portal");
 	}
 
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =

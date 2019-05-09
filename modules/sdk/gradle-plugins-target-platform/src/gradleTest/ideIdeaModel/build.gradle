@@ -24,11 +24,6 @@ runGradleTest {
 
 		Set<Dependency> ideaDependencies = idea.module.resolveDependencies()
 
-		assert ideaDependencies.size() == 653
+		assert ideaDependencies.size() == 898
 	}
-}
-
-targetPlatformIDE {
-	includeGroups "com.liferay"
-	includeGroups "com.liferay.portal"
 }

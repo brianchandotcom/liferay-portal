@@ -14,12 +14,11 @@
 
 package com.liferay.gradle.plugins.target.platform.extensions;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
+
+import java.util.Map;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Gregory Amerson
@@ -27,32 +26,23 @@ import org.gradle.util.GUtil;
 public class TargetPlatformIDEExtension {
 
 	public TargetPlatformIDEExtension(Project project) {
+		Map<String, ?> properties = project.getProperties();
+
+		Object indexSources = properties.get("target.platform.index.sources");
+
+		if (indexSources != null) {
+			setIndexSources(indexSources);
+		}
 	}
 
-	public Set<?> getIncludeGroups() {
-		return _includeGroups;
+	public boolean isIndexSources() {
+		return GradleUtil.toBoolean(_indexSources);
 	}
 
-	public TargetPlatformIDEExtension includeGroups(Iterable<?> includeGroups) {
-		GUtil.addToCollection(_includeGroups, includeGroups);
-
-		return this;
+	public void setIndexSources(Object indexSources) {
+		_indexSources = indexSources;
 	}
 
-	public TargetPlatformIDEExtension includeGroups(Object... includeGroups) {
-		return includeGroups(Arrays.asList(includeGroups));
-	}
-
-	public void setIncludeGroups(Iterable<?> includeGroups) {
-		_includeGroups.clear();
-
-		includeGroups(includeGroups);
-	}
-
-	public void setIncludeGroups(Object... includeGroups) {
-		setIncludeGroups(Arrays.asList(includeGroups));
-	}
-
-	private final Set<Object> _includeGroups = new LinkedHashSet<>();
+	private Object _indexSources;
 
 }

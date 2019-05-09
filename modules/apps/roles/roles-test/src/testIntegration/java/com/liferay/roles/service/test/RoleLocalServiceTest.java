@@ -183,7 +183,7 @@ public class RoleLocalServiceTest {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Test
 	public void testGetGroupRelatedRoles() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		long groupId = _organization.getGroupId();
 
@@ -227,7 +227,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetGroupRolesAndTeamRoles() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		long companyId = _organization.getCompanyId();
 		long groupId = _organization.getGroupId();
@@ -291,7 +291,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetGroupRolesAndTeamRolesWithKeyword() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		long companyId = _organization.getCompanyId();
 		long groupId = _organization.getGroupId();
@@ -331,7 +331,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithExclusion() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
 			_organization.getGroupId());
@@ -354,7 +354,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithOtherGroupId() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		User user = TestPropsValues.getUser();
 
@@ -382,7 +382,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithOwnGroupId() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(_organization.getGroupId()), _team,
@@ -391,7 +391,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testGetTeamRoleMapWithParentGroupId() throws Exception {
-		getOrganizationAndTeam();
+		createOrganizationAndTeam();
 
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), _organization.getGroupId(),
@@ -470,7 +470,7 @@ public class RoleLocalServiceTest {
 		}
 	}
 
-	protected void getOrganizationAndTeam() throws Exception {
+	protected void createOrganizationAndTeam() throws Exception {
 		User user = TestPropsValues.getUser();
 
 		_organization = _organizationLocalService.addOrganization(

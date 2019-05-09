@@ -28,6 +28,10 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
@@ -40,6 +44,8 @@ import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
+
+import org.osgi.framework.Constants;
 
 /**
  * @author Shuyang Zhou
@@ -70,6 +76,22 @@ public class BndBundleUtil {
 						_versionPattern.split(
 							attributes.getValue("Import-Package"))),
 					","));
+
+			if (Boolean.valueOf(
+					System.getProperty("liferay.arquillian.copy.jar"))) {
+
+				String symbolicName = attributes.getValue(
+					Constants.BUNDLE_SYMBOLICNAME);
+
+				Path path = Paths.get(
+					buildDir.toString(), symbolicName.concat(".jar"));
+
+				Files.deleteIfExists(path);
+
+				Files.createFile(path);
+
+				jar.write(path.toFile());
+			}
 
 			byte[] bytes = null;
 

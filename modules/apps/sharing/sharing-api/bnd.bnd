@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.sharing.model,\
 	com.liferay.sharing.renderer,\
 	com.liferay.sharing.security.permission,\
+	com.liferay.sharing.security.permission.resource,\
 	com.liferay.sharing.service,\
 	com.liferay.sharing.service.persistence,\
 	com.liferay.sharing.servlet.taglib.ui,\

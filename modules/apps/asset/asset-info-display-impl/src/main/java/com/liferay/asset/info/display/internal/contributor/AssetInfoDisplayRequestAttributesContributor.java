@@ -46,39 +46,40 @@ public class AssetInfoDisplayRequestAttributesContributor
 		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
 
+		if (assetEntry != null) {
+			return;
+		}
+
+		long assetEntryId = ParamUtil.getLong(
+			httpServletRequest, "assetEntryId");
+
+		assetEntry = _assetEntryLocalService.fetchEntry(assetEntryId);
+
 		if (assetEntry == null) {
-			long assetEntryId = ParamUtil.getLong(
-				httpServletRequest, "assetEntryId");
+			return;
+		}
 
-			assetEntry = _assetEntryLocalService.fetchEntry(assetEntryId);
+		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
-			if (assetEntry == null) {
-				return;
-			}
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				assetEntry.getClassName());
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
+			infoDisplayContributor);
+
+		try {
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(
+					assetEntry.getClassPK());
 
 			httpServletRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-
-			InfoDisplayContributor infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					assetEntry.getClassName());
-
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-				infoDisplayContributor);
-
-			try {
-				InfoDisplayObjectProvider infoDisplayObjectProvider =
-					infoDisplayContributor.getInfoDisplayObjectProvider(
-						assetEntry.getClassPK());
-
-				httpServletRequest.setAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-					infoDisplayObjectProvider);
-			}
-			catch (Exception e) {
-				_log.error("Unable to get info display object provider", e);
-			}
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+				infoDisplayObjectProvider);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get info display object provider", e);
 		}
 	}
 

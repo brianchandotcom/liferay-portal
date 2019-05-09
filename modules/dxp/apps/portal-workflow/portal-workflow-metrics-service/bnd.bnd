@@ -3,4 +3,8 @@ Bundle-SymbolicName: com.liferay.portal.workflow.metrics.service
 Bundle-Version: 1.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.metrics.lang)";\
+		resource.bundle.base.name="content.Language"
 -dsannotations-options: inherit

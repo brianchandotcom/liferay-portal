@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -64,6 +65,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board message and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -80,6 +84,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board message.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -98,6 +103,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {
@@ -184,6 +192,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the message board message with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -204,6 +215,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -220,6 +234,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board message's rating.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -238,6 +253,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a rating for the message board message.")
 	@POST
 	@Parameters(
 		value = {
@@ -258,6 +274,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -278,6 +297,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -310,6 +332,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a child message board message of the parent message."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -335,6 +360,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the message board thread's messages. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
@@ -364,6 +392,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a new message in the message board thread."
+	)
 	@POST
 	@Parameters(
 		value = {

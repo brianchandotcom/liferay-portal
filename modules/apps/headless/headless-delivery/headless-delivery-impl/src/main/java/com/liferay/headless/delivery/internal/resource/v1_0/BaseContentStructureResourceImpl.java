@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -58,6 +59,7 @@ public abstract class BaseContentStructureResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the content structure.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "contentStructureId")}
 	)
@@ -74,6 +76,9 @@ public abstract class BaseContentStructureResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's content structures. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

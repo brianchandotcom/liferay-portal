@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -65,6 +66,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves a list of the content structure's structured content. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "contentStructureId"),
@@ -91,6 +95,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's structured content. Results can be paginated, filtered, searched, flattened, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -118,6 +125,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new structured content.")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/structured-contents")
@@ -133,6 +141,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves a structured content by its key (`articleKey`)."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -152,6 +163,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves a structured content by its UUID.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -171,6 +183,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the folder's structured content. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -203,6 +218,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new structured content in the folder.")
 	@POST
 	@Parameters(
 		value = {
@@ -228,6 +244,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the structured content and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
@@ -244,6 +263,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the structured content via its ID.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
@@ -262,6 +282,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {
@@ -359,6 +382,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -379,6 +405,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
@@ -395,6 +424,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the structured content's rating.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
@@ -413,6 +443,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Create a rating for the structured content.")
 	@POST
 	@Parameters(
 		value = {
@@ -433,6 +464,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -453,6 +487,9 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the structured content's rendered template (the result of applying the structure's values to a template)."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),

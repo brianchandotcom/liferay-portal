@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -55,6 +56,9 @@ public abstract class BaseContentSetElementResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "contentSetId"),
@@ -76,6 +80,9 @@ public abstract class BaseContentSetElementResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the content set elements by key. Results can be paginated."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -98,6 +105,9 @@ public abstract class BaseContentSetElementResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the content set elements by UUID. Results can be paginated."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

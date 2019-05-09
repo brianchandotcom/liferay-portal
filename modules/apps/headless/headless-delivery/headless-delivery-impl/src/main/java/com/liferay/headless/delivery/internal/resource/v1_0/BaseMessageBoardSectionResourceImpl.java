@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -63,6 +64,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board section and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -79,6 +83,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board section.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -97,6 +102,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {
@@ -163,6 +171,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -183,6 +194,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -215,6 +229,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a new message board section in the parent section."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -240,6 +257,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's message board sections. Results can be paginated, filtered, searched, flattened, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -267,6 +287,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new message board section.")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/message-board-sections")

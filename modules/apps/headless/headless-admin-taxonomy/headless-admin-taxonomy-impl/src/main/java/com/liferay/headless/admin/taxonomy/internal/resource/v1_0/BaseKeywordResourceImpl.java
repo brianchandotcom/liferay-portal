@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -61,6 +62,9 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the keyword and returns a 204 if the operation succeeds."
+	)
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
 	@Path("/keywords/{keywordId}")
 	@Produces("application/json")
@@ -73,6 +77,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves a keyword.")
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
 	@Path("/keywords/{keywordId}")
 	@Produces({"application/json", "application/xml"})
@@ -87,6 +92,9 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
+	)
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
 	@Path("/keywords/{keywordId}")
@@ -103,6 +111,9 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -128,6 +139,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Inserts a new keyword in a Site.")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/keywords")

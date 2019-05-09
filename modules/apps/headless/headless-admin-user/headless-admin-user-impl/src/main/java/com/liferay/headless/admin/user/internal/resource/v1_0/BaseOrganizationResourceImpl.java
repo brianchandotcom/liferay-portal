@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -58,6 +59,9 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the organizations. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -81,6 +85,7 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the organization.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -97,6 +102,9 @@ public abstract class BaseOrganizationResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentOrganizationId"),

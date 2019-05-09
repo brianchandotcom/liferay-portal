@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -58,6 +59,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the knowledge base article's attachments."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -80,6 +84,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@Consumes("multipart/form-data")
+	@Operation(
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -104,6 +111,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -123,6 +133,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the knowledge base attachment.")
 	@Parameters(
 		value = {
 			@Parameter(

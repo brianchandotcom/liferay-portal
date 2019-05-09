@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -63,6 +64,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's structured content folders. Results can be paginated, filtered, searched, flattened, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -90,6 +94,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new structured content folder.")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/structured-content-folders")
@@ -105,6 +110,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -137,6 +145,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a new structured content folder in an existing folder."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -163,6 +174,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the structured content folder and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -182,6 +196,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the structured content folder.")
 	@Parameters(
 		value = {
 			@Parameter(
@@ -203,6 +218,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {
@@ -274,6 +292,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {

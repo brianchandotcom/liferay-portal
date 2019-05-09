@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -63,6 +64,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(
@@ -92,6 +96,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Inserts a new child taxonomy category.")
 	@POST
 	@Parameters(
 		value = {
@@ -113,6 +118,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the taxonomy category and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
@@ -127,6 +135,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves a taxonomy category.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
@@ -143,6 +152,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body. Other fields are left untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
@@ -201,6 +213,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
@@ -219,6 +234,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId"),
@@ -245,6 +263,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Inserts a new taxonomy category in a taxonomy vocabulary."
+	)
 	@POST
 	@Parameters(
 		value = {

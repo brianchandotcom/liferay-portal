@@ -3,11 +3,13 @@ import {
 	formatHours,
 	getDurationValues
 } from '../../../shared/util/duration';
+import calendarStore from './calendarStore';
 import client from '../../../shared/rest/fetch';
 import nodeStore from './nodeStore';
 
 class SLAStore {
-	constructor(client, nodeStore) {
+	constructor(calendarStore, client, nodeStore) {
+		this.calendarStore = calendarStore;
 		this.client = client;
 		this.nodeStore = nodeStore;
 		this.state = {};
@@ -16,7 +18,7 @@ class SLAStore {
 
 	fetchData(slaId) {
 		return this.client.get(`/slas/${slaId}`).then(({ data }) => {
-			const { description = '', duration, name, status } = data;
+			const { calendarKey, description = '', duration, name, status } = data;
 
 			const { days, hours, minutes } = getDurationValues(duration);
 
@@ -47,6 +49,7 @@ class SLAStore {
 			stopNodeKeys.nodeKeys = stopNodeKeys.nodeKeys || [];
 
 			this.setState({
+				calendarKey,
 				days,
 				description,
 				hours: formattedHours,
@@ -67,6 +70,7 @@ class SLAStore {
 
 	reset() {
 		this.setState({
+			calendarKey: null,
 			days: null,
 			description: '',
 			hours: '',
@@ -90,6 +94,7 @@ class SLAStore {
 
 	saveSLA(processId, slaId) {
 		const {
+			calendarKey = this.calendarStore.defaultCalendar.key,
 			days,
 			description,
 			hours,
@@ -108,6 +113,7 @@ class SLAStore {
 		}
 
 		return submit({
+			calendarKey,
 			description,
 			duration,
 			name,
@@ -142,5 +148,5 @@ class SLAStore {
 	}
 }
 
-export default new SLAStore(client, nodeStore);
+export default new SLAStore(calendarStore, client, nodeStore);
 export { SLAStore };

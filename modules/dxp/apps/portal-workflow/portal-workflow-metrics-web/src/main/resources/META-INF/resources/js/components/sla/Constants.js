@@ -1,4 +1,5 @@
 const ALERT_MESSAGE = 'alertMessage';
+const CALENDAR_KEY = 'calendarKey';
 const DAYS = 'days';
 const DURATION = 'duration';
 const HOURS = 'hours';
@@ -10,6 +11,7 @@ const REQUEST_ORIGIN_TYPE_FETCH = 'REQUEST_ORIGIN_TYPE_FETCH';
 
 export {
 	ALERT_MESSAGE,
+	CALENDAR_KEY,
 	DAYS,
 	DURATION,
 	HOURS,

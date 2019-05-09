@@ -1,5 +1,6 @@
 import {
 	ALERT_MESSAGE,
+	CALENDAR_KEY,
 	DAYS,
 	DURATION,
 	HOURS,
@@ -21,6 +22,7 @@ import {
 	validateNodeKeys
 } from './util/slaFormUtil';
 import autobind from 'autobind-decorator';
+import calendarStore from './store/calendarStore';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import FieldError from './form/fieldError';
 import FieldLabel from './form/fieldLabel';
@@ -168,46 +170,42 @@ class SLAForm extends React.Component {
 
 		slaStore.reset();
 
-		return nodeStore.fetchNodes(processId).then(() => {
-			const callback = () => {
-				const { errors } = this.state;
-				const errorText = Liferay.Language.get(
-					'selected-option-is-no-longer-available'
-				);
-				const {
-					pauseNodeKeys,
-					startNodeKeys,
-					stopNodeKeys
-				} = slaStore.getState();
+		const promises = [
+			calendarStore.fetchCalendars(),
+			nodeStore.fetchNodes(processId)
+		];
 
-				if (startNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
-					errors[START_NODE_KEYS] = errorText;
-				}
+		return Promise.all(promises)
+			.then(() => (id ? slaStore.fetchData(id) : Promise.resolve()))
+			.then(() => this.loadDataCallback(id));
+	}
 
-				if (stopNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
-					errors[STOP_NODE_KEYS] = errorText;
-				}
+	loadDataCallback(id) {
+		const { errors } = this.state;
+		const errorText = Liferay.Language.get(
+			'selected-option-is-no-longer-available'
+		);
+		const { pauseNodeKeys, startNodeKeys, stopNodeKeys } = slaStore.getState();
 
-				this.setState({
-					errors,
-					loading: false
-				});
-				this.context.setTitle(slaStore.getState().name);
-			};
+		if (startNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
+			errors[START_NODE_KEYS] = errorText;
+		}
 
-			if (id) {
-				return slaStore.fetchData(id).then(() => {
-					callback();
+		if (stopNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
+			errors[STOP_NODE_KEYS] = errorText;
+		}
 
-					return true;
-				});
-			}
-
-			this.context.setTitle(Liferay.Language.get('new-sla'));
-			callback();
-
-			return true;
+		this.setState({
+			errors,
+			loading: false
 		});
+
+		if (id) {
+			this.context.setTitle(slaStore.getState().name);
+		}
+		else {
+			this.context.setTitle(Liferay.Language.get('new-sla'));
+		}
 	}
 
 	@autobind
@@ -260,7 +258,12 @@ class SLAForm extends React.Component {
 			return <BackRedirect />;
 		}
 
+		const { calendars } = calendarStore.getState();
+
+		const showCalendarField = calendars.length > 1;
+
 		const {
+			calendarKey = calendarStore.defaultCalendar.key,
 			days,
 			description,
 			hours,
@@ -347,7 +350,7 @@ class SLAForm extends React.Component {
 					<div className="sheet-section">
 						<div className="row">
 							<div
-								className={`form-group col col-sm-5 ${
+								className={`col col-sm-5 form-group ${
 									errors[NAME] ? 'has-error' : ''
 								}`}
 							>
@@ -371,7 +374,7 @@ class SLAForm extends React.Component {
 								{errors[NAME] && <FieldError error={errors[NAME]} />}
 							</div>
 
-							<div className="form-group col col-sm-7">
+							<div className="col col-sm-7 form-group">
 								<FieldLabel
 									fieldId="sla_description"
 									text={Liferay.Language.get('description')}
@@ -484,21 +487,21 @@ class SLAForm extends React.Component {
 							<FieldLabel
 								fieldId="sla_description"
 								required
-								text={Liferay.Language.get('duration-time').toUpperCase()}
+								text={Liferay.Language.get('duration').toUpperCase()}
 							/>
 						</h3>
 
 						<div className="sheet-text">
-							{`${Liferay.Language.get(
-								'define-a-duration-time-to-be-met'
-							)} ${Liferay.Language.get(
-								'enter-at-least-one-of-the-following-fields'
-							)}`}
+							{showCalendarField
+								? Liferay.Language.get(
+									'define-the-sla-duration-and-calendar-format'
+								  )
+								: Liferay.Language.get('define-the-sla-duration')}
 						</div>
 
 						<div className="row">
 							<div
-								className={`form-group col col-sm-5 ${
+								className={`col col-sm-3 form-group ${
 									errors[DURATION] ? 'has-error' : ''
 								}`}
 							>
@@ -526,7 +529,7 @@ class SLAForm extends React.Component {
 							</div>
 
 							<div
-								className={`form-group col col-sm-3 ${
+								className={`col col-sm-3 form-group ${
 									errors[DURATION] || errors[HOURS] ? 'has-error' : ''
 								}`}
 							>
@@ -549,6 +552,32 @@ class SLAForm extends React.Component {
 								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
 								{errors[HOURS] && <FieldError error={errors[HOURS]} />}
 							</div>
+
+							{showCalendarField && (
+								<div className="col col-sm-6 form-group">
+									<FieldLabel
+										fieldId="sla_calendar_key"
+										text={Liferay.Language.get('calendar')}
+									/>
+
+									<select
+										className="form-control"
+										id="sla_calendar_key"
+										name={CALENDAR_KEY}
+										onChange={this.handleChange}
+										value={calendarKey}
+									>
+										{calendars.map((calendar, index) => (
+											<option key={index} value={calendar.key}>
+												{calendar.title}
+
+												{calendar.defaultCalendar &&
+													` (${Liferay.Language.get('system-default')})`}
+											</option>
+										))}
+									</select>
+								</div>
+							)}
 						</div>
 					</div>
 

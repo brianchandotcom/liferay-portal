@@ -1,3 +1,4 @@
+import { CalendarStore } from '../calendarStore';
 import client from '../../../../test/mock/fetch';
 import { NodeStore } from '../nodeStore';
 import { SLAStore } from '../slaStore';
@@ -14,7 +15,11 @@ test('Should test fetch data', () => {
 		stopNodeKeys: { nodeKeys: [] }
 	};
 
-	const slaStore = new SLAStore(client(data), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(data),
+		new NodeStore(client({}))
+	);
 
 	slaStore.fetchData('1').then(() => {
 		expect(slaStore.getState()).toMatchObject(data);
@@ -29,7 +34,11 @@ test('Should test fetch data without some parts', () => {
 		processId: ''
 	};
 
-	const slaStore = new SLAStore(client(data), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(data),
+		new NodeStore(client({}))
+	);
 
 	slaStore.fetchData('1').then(() => {
 		expect(slaStore.getState()).toMatchObject(data);
@@ -37,7 +46,11 @@ test('Should test fetch data without some parts', () => {
 });
 
 test('Should test initial state', () => {
-	const slaStore = new SLAStore(client(), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(),
+		new NodeStore(client({}))
+	);
 
 	const defaultData = {
 		days: null,
@@ -54,7 +67,11 @@ test('Should test initial state', () => {
 });
 
 test('Should test reset', () => {
-	const slaStore = new SLAStore(client(), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(),
+		new NodeStore(client({}))
+	);
 
 	const defaultData = {
 		days: null,
@@ -86,7 +103,11 @@ test('Should test save data', () => {
 		stopNodeKeys: { nodeKeys: [] }
 	};
 
-	const slaStore = new SLAStore(client(data), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(data),
+		new NodeStore(client({}))
+	);
 
 	slaStore.saveSLA('1').then(saved => {
 		expect(saved.data).toMatchObject(data);
@@ -105,7 +126,11 @@ test('Should test update data', () => {
 		stopNodeKeys: { nodeKeys: [] }
 	};
 
-	const slaStore = new SLAStore(client(data), new NodeStore(client({})));
+	const slaStore = new SLAStore(
+		new CalendarStore(client({})),
+		client(data),
+		new NodeStore(client({}))
+	);
 
 	slaStore.saveSLA('1', '1').then(saved => {
 		expect(saved.data).toMatchObject(data);

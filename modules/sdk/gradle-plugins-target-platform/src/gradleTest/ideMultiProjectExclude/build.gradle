@@ -15,8 +15,8 @@ runGradleTest {
 		List eclipseDependencies = eclipse.classpath.resolveDependencies()
 
 		assert eclipseDependencies.size() == 900
-		assert eclipseDependencies[3].path.contains("com.liferay.push.notifications.sender.firebase")
-		assert eclipseDependencies[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
+		assert eclipseDependencies[3].path.contains("com.liferay.portal.security.sso.cas.api")
+		assert eclipseDependencies[4].path.contains("com.liferay.push.notifications.sender.firebase")
 
 		assert eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
 	}

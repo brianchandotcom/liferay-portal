@@ -53,12 +53,14 @@ public class ReportsEngineDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
+			_httpServletRequest);
 
-		_reportsEngineRequestHelper = new ReportsEngineRequestHelper(_request);
+		_reportsEngineRequestHelper = new ReportsEngineRequestHelper(
+			_httpServletRequest);
 	}
 
 	public String getCurrentURL() {
@@ -153,7 +155,7 @@ public class ReportsEngineDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
@@ -161,7 +163,8 @@ public class ReportsEngineDisplayContext {
 				"create-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -178,7 +181,7 @@ public class ReportsEngineDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
@@ -186,7 +189,8 @@ public class ReportsEngineDisplayContext {
 				"asc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				_portalPreferences.setValue(
@@ -223,7 +227,7 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public String getTabs1() {
-		return ParamUtil.getString(_request, "tabs1", "reports");
+		return ParamUtil.getString(_httpServletRequest, "tabs1", "reports");
 	}
 
 	public boolean isAdminPortlet() {
@@ -325,6 +329,6 @@ public class ReportsEngineDisplayContext {
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final ReportsEngineRequestHelper _reportsEngineRequestHelper;
-	private final HttpServletRequest _request;
+	private final HttpServletRequest _httpServletRequest;
 
 }

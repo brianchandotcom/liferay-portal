@@ -674,7 +674,7 @@ public abstract class BaseInstanceResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Instance randomInstance() {
+	protected Instance randomInstance() throws Exception {
 		return new Instance() {
 			{
 				assetTitle = RandomTestUtil.randomString();
@@ -686,13 +686,13 @@ public abstract class BaseInstanceResourceTestCase {
 		};
 	}
 
-	protected Instance randomIrrelevantInstance() {
+	protected Instance randomIrrelevantInstance() throws Exception {
 		Instance randomIrrelevantInstance = randomInstance();
 
 		return randomIrrelevantInstance;
 	}
 
-	protected Instance randomPatchInstance() {
+	protected Instance randomPatchInstance() throws Exception {
 		return randomInstance();
 	}
 

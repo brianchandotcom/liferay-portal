@@ -50,6 +50,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SLA {
 
 	@Schema
+	public String getCalendarKey() {
+		return calendarKey;
+	}
+
+	public void setCalendarKey(String calendarKey) {
+		this.calendarKey = calendarKey;
+	}
+
+	@JsonIgnore
+	public void setCalendarKey(
+		UnsafeSupplier<String, Exception> calendarKeyUnsafeSupplier) {
+
+		try {
+			calendarKey = calendarKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String calendarKey;
+
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -354,6 +382,20 @@ public class SLA {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (calendarKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"calendarKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(calendarKey));
+
+			sb.append("\"");
+		}
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {

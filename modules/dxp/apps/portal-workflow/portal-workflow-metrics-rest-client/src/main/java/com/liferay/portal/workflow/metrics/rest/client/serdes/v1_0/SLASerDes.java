@@ -59,6 +59,20 @@ public class SLASerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (sla.getCalendarKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"calendarKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sla.getCalendarKey()));
+
+			sb.append("\"");
+		}
+
 		if (sla.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -192,6 +206,13 @@ public class SLASerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (sla.getCalendarKey() == null) {
+			map.put("calendarKey", null);
+		}
+		else {
+			map.put("calendarKey", String.valueOf(sla.getCalendarKey()));
+		}
+
 		map.put(
 			"dateModified",
 			liferayToJSONDateFormat.format(sla.getDateModified()));
@@ -313,7 +334,12 @@ public class SLASerDes {
 		protected void setField(
 			SLA sla, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateModified")) {
+			if (Objects.equals(jsonParserFieldName, "calendarKey")) {
+				if (jsonParserFieldValue != null) {
+					sla.setCalendarKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					sla.setDateModified(toDate((String)jsonParserFieldValue));
 				}

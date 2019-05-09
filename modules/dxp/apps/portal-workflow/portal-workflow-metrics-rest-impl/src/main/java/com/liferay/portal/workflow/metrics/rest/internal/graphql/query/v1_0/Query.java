@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
@@ -48,6 +50,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setCalendarResourceComponentServiceObjects(
+		ComponentServiceObjects<CalendarResource>
+			calendarResourceComponentServiceObjects) {
+
+		_calendarResourceComponentServiceObjects =
+			calendarResourceComponentServiceObjects;
+	}
 
 	public static void setInstanceResourceComponentServiceObjects(
 		ComponentServiceObjects<InstanceResource>
@@ -87,6 +97,19 @@ public class Query {
 
 		_taskResourceComponentServiceObjects =
 			taskResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Calendar> getCalendarsPage() throws Exception {
+		return _applyComponentServiceObjects(
+			_calendarResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			calendarResource -> {
+				Page paginationPage = calendarResource.getCalendarsPage();
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -238,6 +261,14 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(CalendarResource calendarResource)
+		throws Exception {
+
+		calendarResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(InstanceResource instanceResource)
 		throws Exception {
 
@@ -278,6 +309,8 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private static ComponentServiceObjects<CalendarResource>
+		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>
 		_instanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NodeResource>

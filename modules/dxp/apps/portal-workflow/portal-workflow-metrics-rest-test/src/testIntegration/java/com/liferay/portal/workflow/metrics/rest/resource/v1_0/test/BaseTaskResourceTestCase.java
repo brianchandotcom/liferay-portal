@@ -659,7 +659,7 @@ public abstract class BaseTaskResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Task randomTask() {
+	protected Task randomTask() throws Exception {
 		return new Task() {
 			{
 				instanceCount = RandomTestUtil.randomLong();
@@ -671,13 +671,13 @@ public abstract class BaseTaskResourceTestCase {
 		};
 	}
 
-	protected Task randomIrrelevantTask() {
+	protected Task randomIrrelevantTask() throws Exception {
 		Task randomIrrelevantTask = randomTask();
 
 		return randomIrrelevantTask;
 	}
 
-	protected Task randomPatchTask() {
+	protected Task randomPatchTask() throws Exception {
 		return randomTask();
 	}
 

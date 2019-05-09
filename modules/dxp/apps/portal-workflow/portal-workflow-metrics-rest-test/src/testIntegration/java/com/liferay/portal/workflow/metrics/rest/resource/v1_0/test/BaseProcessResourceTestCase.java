@@ -748,7 +748,7 @@ public abstract class BaseProcessResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Process randomProcess() {
+	protected Process randomProcess() throws Exception {
 		return new Process() {
 			{
 				id = RandomTestUtil.randomLong();
@@ -761,13 +761,13 @@ public abstract class BaseProcessResourceTestCase {
 		};
 	}
 
-	protected Process randomIrrelevantProcess() {
+	protected Process randomIrrelevantProcess() throws Exception {
 		Process randomIrrelevantProcess = randomProcess();
 
 		return randomIrrelevantProcess;
 	}
 
-	protected Process randomPatchProcess() {
+	protected Process randomPatchProcess() throws Exception {
 		return randomProcess();
 	}
 

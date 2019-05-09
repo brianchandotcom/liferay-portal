@@ -382,6 +382,8 @@ public abstract class BaseSLAResourceTestCase {
 		assertResponseCode(204, invokeDeleteSLAResponse(sla.getId()));
 
 		assertResponseCode(404, invokeGetSLAResponse(sla.getId()));
+
+		assertResponseCode(404, invokeGetSLAResponse(0L));
 	}
 
 	protected SLA testDeleteSLA_addSLA() throws Exception {
@@ -600,6 +602,14 @@ public abstract class BaseSLAResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("calendarKey", additionalAssertFieldName)) {
+				if (sla.getCalendarKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (sla.getDescription() == null) {
 					valid = false;
@@ -700,6 +710,16 @@ public abstract class BaseSLAResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("calendarKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getCalendarKey(), sla2.getCalendarKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -848,6 +868,14 @@ public abstract class BaseSLAResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("calendarKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(sla.getCalendarKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -934,9 +962,10 @@ public abstract class BaseSLAResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected SLA randomSLA() {
+	protected SLA randomSLA() throws Exception {
 		return new SLA() {
 			{
+				calendarKey = RandomTestUtil.randomString();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				duration = RandomTestUtil.randomLong();
@@ -947,13 +976,13 @@ public abstract class BaseSLAResourceTestCase {
 		};
 	}
 
-	protected SLA randomIrrelevantSLA() {
+	protected SLA randomIrrelevantSLA() throws Exception {
 		SLA randomIrrelevantSLA = randomSLA();
 
 		return randomIrrelevantSLA;
 	}
 
-	protected SLA randomPatchSLA() {
+	protected SLA randomPatchSLA() throws Exception {
 		return randomSLA();
 	}
 

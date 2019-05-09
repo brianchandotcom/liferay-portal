@@ -39,10 +39,10 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.NodeSerDes;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CalendarSerDes;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -50,7 +50,6 @@ import java.net.URL;
 
 import java.text.DateFormat;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -81,7 +80,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseNodeResourceTestCase {
+public abstract class BaseCalendarResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -130,13 +129,13 @@ public abstract class BaseNodeResourceTestCase {
 			}
 		};
 
-		Node node1 = randomNode();
+		Calendar calendar1 = randomCalendar();
 
-		String json = objectMapper.writeValueAsString(node1);
+		String json = objectMapper.writeValueAsString(calendar1);
 
-		Node node2 = NodeSerDes.toDTO(json);
+		Calendar calendar2 = CalendarSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(node1, node2));
+		Assert.assertTrue(equals(calendar1, calendar2));
 	}
 
 	@Test
@@ -158,72 +157,24 @@ public abstract class BaseNodeResourceTestCase {
 			}
 		};
 
-		Node node = randomNode();
+		Calendar calendar = randomCalendar();
 
-		String json1 = objectMapper.writeValueAsString(node);
-		String json2 = NodeSerDes.toJSON(node);
+		String json1 = objectMapper.writeValueAsString(calendar);
+		String json2 = CalendarSerDes.toJSON(calendar);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
-	public void testGetProcessNodesPage() throws Exception {
-		Long processId = testGetProcessNodesPage_getProcessId();
-		Long irrelevantProcessId =
-			testGetProcessNodesPage_getIrrelevantProcessId();
-
-		if ((irrelevantProcessId != null)) {
-			Node irrelevantNode = testGetProcessNodesPage_addNode(
-				irrelevantProcessId, randomIrrelevantNode());
-
-			Page<Node> page = invokeGetProcessNodesPage(irrelevantProcessId);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantNode), (List<Node>)page.getItems());
-			assertValid(page);
-		}
-
-		Node node1 = testGetProcessNodesPage_addNode(processId, randomNode());
-
-		Node node2 = testGetProcessNodesPage_addNode(processId, randomNode());
-
-		Page<Node> page = invokeGetProcessNodesPage(processId);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(node1, node2), (List<Node>)page.getItems());
-		assertValid(page);
+	public void testGetCalendarsPage() throws Exception {
+		Assert.assertTrue(true);
 	}
 
-	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProcessNodesPage_getIrrelevantProcessId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Node> invokeGetProcessNodesPage(Long processId)
-		throws Exception {
-
+	protected Page<Calendar> invokeGetCalendarsPage() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL + _toPath("/processes/{processId}/nodes", processId);
+		String location = _resourceURL + "/calendars";
 
 		options.setLocation(location);
 
@@ -233,16 +184,13 @@ public abstract class BaseNodeResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return Page.of(string, NodeSerDes::toDTO);
+		return Page.of(string, CalendarSerDes::toDTO);
 	}
 
-	protected Http.Response invokeGetProcessNodesPageResponse(Long processId)
-		throws Exception {
-
+	protected Http.Response invokeGetCalendarsPageResponse() throws Exception {
 		Http.Options options = _createHttpOptions();
 
-		String location =
-			_resourceURL + _toPath("/processes/{processId}/nodes", processId);
+		String location = _resourceURL + "/calendars";
 
 		options.setLocation(location);
 
@@ -258,78 +206,70 @@ public abstract class BaseNodeResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertEquals(Node node1, Node node2) {
+	protected void assertEquals(Calendar calendar1, Calendar calendar2) {
 		Assert.assertTrue(
-			node1 + " does not equal " + node2, equals(node1, node2));
+			calendar1 + " does not equal " + calendar2,
+			equals(calendar1, calendar2));
 	}
 
-	protected void assertEquals(List<Node> nodes1, List<Node> nodes2) {
-		Assert.assertEquals(nodes1.size(), nodes2.size());
+	protected void assertEquals(
+		List<Calendar> calendars1, List<Calendar> calendars2) {
 
-		for (int i = 0; i < nodes1.size(); i++) {
-			Node node1 = nodes1.get(i);
-			Node node2 = nodes2.get(i);
+		Assert.assertEquals(calendars1.size(), calendars2.size());
 
-			assertEquals(node1, node2);
+		for (int i = 0; i < calendars1.size(); i++) {
+			Calendar calendar1 = calendars1.get(i);
+			Calendar calendar2 = calendars2.get(i);
+
+			assertEquals(calendar1, calendar2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Node> nodes1, List<Node> nodes2) {
+		List<Calendar> calendars1, List<Calendar> calendars2) {
 
-		Assert.assertEquals(nodes1.size(), nodes2.size());
+		Assert.assertEquals(calendars1.size(), calendars2.size());
 
-		for (Node node1 : nodes1) {
+		for (Calendar calendar1 : calendars1) {
 			boolean contains = false;
 
-			for (Node node2 : nodes2) {
-				if (equals(node1, node2)) {
+			for (Calendar calendar2 : calendars2) {
+				if (equals(calendar1, calendar2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(nodes2 + " does not contain " + node1, contains);
+			Assert.assertTrue(
+				calendars2 + " does not contain " + calendar1, contains);
 		}
 	}
 
-	protected void assertValid(Node node) {
+	protected void assertValid(Calendar calendar) {
 		boolean valid = true;
-
-		if (node.getId() == null) {
-			valid = false;
-		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("initial", additionalAssertFieldName)) {
-				if (node.getInitial() == null) {
+			if (Objects.equals("defaultCalendar", additionalAssertFieldName)) {
+				if (calendar.getDefaultCalendar() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (node.getName() == null) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (calendar.getKey() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("terminal", additionalAssertFieldName)) {
-				if (node.getTerminal() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (node.getType() == null) {
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (calendar.getTitle() == null) {
 					valid = false;
 				}
 
@@ -344,12 +284,12 @@ public abstract class BaseNodeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Node> page) {
+	protected void assertValid(Page<Calendar> page) {
 		boolean valid = false;
 
-		Collection<Node> nodes = page.getItems();
+		Collection<Calendar> calendars = page.getItems();
 
-		int size = nodes.size();
+		int size = calendars.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -365,25 +305,18 @@ public abstract class BaseNodeResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Node node1, Node node2) {
-		if (node1 == node2) {
+	protected boolean equals(Calendar calendar1, Calendar calendar2) {
+		if (calendar1 == calendar2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(node1.getId(), node2.getId())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("initial", additionalAssertFieldName)) {
+			if (Objects.equals("defaultCalendar", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						node1.getInitial(), node2.getInitial())) {
+						calendar1.getDefaultCalendar(),
+						calendar2.getDefaultCalendar())) {
 
 					return false;
 				}
@@ -391,17 +324,9 @@ public abstract class BaseNodeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(node1.getName(), node2.getName())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("terminal", additionalAssertFieldName)) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						node1.getTerminal(), node2.getTerminal())) {
+						calendar1.getKey(), calendar2.getKey())) {
 
 					return false;
 				}
@@ -409,8 +334,10 @@ public abstract class BaseNodeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(node1.getType(), node2.getType())) {
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						calendar1.getTitle(), calendar2.getTitle())) {
+
 					return false;
 				}
 
@@ -426,13 +353,13 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_nodeResource instanceof EntityModelResource)) {
+		if (!(_calendarResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_nodeResource;
+			(EntityModelResource)_calendarResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -458,7 +385,7 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Node node) {
+		EntityField entityField, String operator, Calendar calendar) {
 
 		StringBundler sb = new StringBundler();
 
@@ -470,32 +397,22 @@ public abstract class BaseNodeResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("id")) {
+		if (entityFieldName.equals("defaultCalendar")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("initial")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("name")) {
+		if (entityFieldName.equals("key")) {
 			sb.append("'");
-			sb.append(String.valueOf(node.getName()));
+			sb.append(String.valueOf(calendar.getKey()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("terminal")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("type")) {
+		if (entityFieldName.equals("title")) {
 			sb.append("'");
-			sb.append(String.valueOf(node.getType()));
+			sb.append(String.valueOf(calendar.getTitle()));
 			sb.append("'");
 
 			return sb.toString();
@@ -505,26 +422,24 @@ public abstract class BaseNodeResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Node randomNode() throws Exception {
-		return new Node() {
+	protected Calendar randomCalendar() throws Exception {
+		return new Calendar() {
 			{
-				id = RandomTestUtil.randomLong();
-				initial = RandomTestUtil.randomBoolean();
-				name = RandomTestUtil.randomString();
-				terminal = RandomTestUtil.randomBoolean();
-				type = RandomTestUtil.randomString();
+				defaultCalendar = RandomTestUtil.randomBoolean();
+				key = RandomTestUtil.randomString();
+				title = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected Node randomIrrelevantNode() throws Exception {
-		Node randomIrrelevantNode = randomNode();
+	protected Calendar randomIrrelevantCalendar() throws Exception {
+		Calendar randomIrrelevantCalendar = randomCalendar();
 
-		return randomIrrelevantNode;
+		return randomIrrelevantCalendar;
 	}
 
-	protected Node randomPatchNode() throws Exception {
-		return randomNode();
+	protected Calendar randomPatchCalendar() throws Exception {
+		return randomCalendar();
 	}
 
 	protected Group irrelevantGroup;
@@ -600,7 +515,7 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseNodeResourceTestCase.class);
+		BaseCalendarResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -617,7 +532,7 @@ public abstract class BaseNodeResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private NodeResource _nodeResource;
+	private CalendarResource _calendarResource;
 
 	private URL _resourceURL;
 

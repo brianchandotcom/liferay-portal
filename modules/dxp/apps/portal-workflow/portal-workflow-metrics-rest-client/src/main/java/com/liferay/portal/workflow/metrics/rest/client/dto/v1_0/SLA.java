@@ -29,6 +29,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class SLA {
 
+	public String getCalendarKey() {
+		return calendarKey;
+	}
+
+	public void setCalendarKey(String calendarKey) {
+		this.calendarKey = calendarKey;
+	}
+
+	public void setCalendarKey(
+		UnsafeSupplier<String, Exception> calendarKeyUnsafeSupplier) {
+
+		try {
+			calendarKey = calendarKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String calendarKey;
+
 	public Date getDateModified() {
 		return dateModified;
 	}

@@ -186,7 +186,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode())) {
 
-				value = jsonObject.getString("mappedField");
+				value = editableValueJSONObject.getString("mappedField");
 
 				if (Validator.isNotNull(value)) {
 					mappedValueConfigJSONObject =
@@ -205,14 +205,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					jsonObject, assetEntriesFieldValues,
+					editableValueJSONObject, assetEntriesFieldValues,
 					fragmentEntryProcessorContext.getMode(),
 					fragmentEntryProcessorContext.getLocale(),
 					fragmentEntryProcessorContext.getPreviewClassPK(),
 					fragmentEntryProcessorContext.getPreviewType());
 
 				if (fieldValue != null) {
-					String fieldId = jsonObject.getString("fieldId");
+					String fieldId = editableValueJSONObject.getString(
+						"fieldId");
 
 					mappedValueConfigJSONObject =
 						editableElementParser.getFieldTemplateConfigJSONObject(

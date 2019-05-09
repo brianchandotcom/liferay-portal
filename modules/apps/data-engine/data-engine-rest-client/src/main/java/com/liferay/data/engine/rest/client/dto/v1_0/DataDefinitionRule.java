@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataDefinitionRuleSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -51,18 +52,18 @@ public class DataDefinitionRule {
 
 	protected String[] dataDefinitionFieldNames;
 
-	public DataDefinitionRuleParameter[] getDataDefinitionRuleParameters() {
+	public Map<String, Object> getDataDefinitionRuleParameters() {
 		return dataDefinitionRuleParameters;
 	}
 
 	public void setDataDefinitionRuleParameters(
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters) {
+		Map<String, Object> dataDefinitionRuleParameters) {
 
 		this.dataDefinitionRuleParameters = dataDefinitionRuleParameters;
 	}
 
 	public void setDataDefinitionRuleParameters(
-		UnsafeSupplier<DataDefinitionRuleParameter[], Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			dataDefinitionRuleParametersUnsafeSupplier) {
 
 		try {
@@ -74,7 +75,7 @@ public class DataDefinitionRule {
 		}
 	}
 
-	protected DataDefinitionRuleParameter[] dataDefinitionRuleParameters;
+	protected Map<String, Object> dataDefinitionRuleParameters;
 
 	public String getName() {
 		return name;

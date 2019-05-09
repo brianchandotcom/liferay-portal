@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionRule;
-import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionRuleParameter;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -96,27 +94,8 @@ public class DataDefinitionRuleSerDes {
 
 			sb.append("\"dataDefinitionRuleParameters\": ");
 
-			sb.append("[");
-
-			for (int i = 0;
-				 i <
-					 dataDefinitionRule.
-						 getDataDefinitionRuleParameters().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						dataDefinitionRule.getDataDefinitionRuleParameters()
-							[i]));
-
-				if ((i + 1) < dataDefinitionRule.
-						getDataDefinitionRuleParameters().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(
+				_toJSON(dataDefinitionRule.getDataDefinitionRuleParameters()));
 		}
 
 		if (dataDefinitionRule.getName() != null) {
@@ -272,14 +251,8 @@ public class DataDefinitionRuleSerDes {
 
 				if (jsonParserFieldValue != null) {
 					dataDefinitionRule.setDataDefinitionRuleParameters(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataDefinitionRuleParameterSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataDefinitionRuleParameter[size]
-						));
+						DataDefinitionRuleSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

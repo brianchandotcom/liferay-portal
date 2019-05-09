@@ -101,16 +101,14 @@ public class WorkflowMetricsSLAProcessor {
 
 		List<Document> documents = getDocuments(
 			companyId, instanceId, lastCheckLocalDateTime);
-
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			_workflowMetricsSLACalendarTracker.getWorkflowMetricsSLACalendar(
+				workflowMetricsSLADefinition.getCalendarKey());
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			_createWorkflowMetricsSLAStopwatch(
 				documents, createLocalDateTime, lastCheckLocalDateTime,
 				startNodeId, workflowMetricsSLADefinition,
 				workfowMetricsSLAStatus);
-
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
-			_workflowMetricsSLACalendarTracker.getWorkflowMetricsSLACalendar(
-				workflowMetricsSLADefinition.getCalendarKey());
 
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
 			List<TaskInterval> taskIntervals = _toTaskIntervals(

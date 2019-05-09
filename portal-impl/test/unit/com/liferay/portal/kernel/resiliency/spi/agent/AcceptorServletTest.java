@@ -151,9 +151,11 @@ public class AcceptorServletTest {
 
 		Assert.assertEquals("/c/portal/resiliency", forwardPathReference.get());
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest1);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest1);
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest2);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
 			mockHttpServletResponse, _recordSPIAgent._originalResponse);
 		Assert.assertNull(_recordSPIAgent._exception);
@@ -168,9 +170,11 @@ public class AcceptorServletTest {
 
 		Assert.assertEquals("/c/portal/resiliency", forwardPathReference.get());
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest1);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest1);
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest2);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
 			mockHttpServletResponse, _recordSPIAgent._originalResponse);
 		Assert.assertNull(_recordSPIAgent._exception);
@@ -247,9 +251,11 @@ public class AcceptorServletTest {
 
 		Assert.assertEquals("/c/portal/resiliency", forwardPathReference.get());
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest1);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest1);
 		Assert.assertSame(
-			mockHttpServletRequest, _recordSPIAgent._originalRequest2);
+			mockHttpServletRequest,
+			_recordSPIAgent._originalHttpServletRequest2);
 		Assert.assertSame(
 			mockHttpServletResponse, _recordSPIAgent._originalResponse);
 		Assert.assertSame(ioException, _recordSPIAgent._exception);
@@ -280,7 +286,7 @@ public class AcceptorServletTest {
 					"RuntimeException on prepare request");
 			}
 
-			_originalRequest1 = httpServletRequest;
+			_originalHttpServletRequest1 = httpServletRequest;
 
 			_preparedRequest = new MockHttpServletRequest();
 
@@ -294,7 +300,7 @@ public class AcceptorServletTest {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse) {
 
-			_originalRequest2 = httpServletRequest;
+			_originalHttpServletRequest2 = httpServletRequest;
 			_originalResponse = httpServletResponse;
 
 			_preparedResponse = new MockHttpServletResponse();
@@ -328,8 +334,8 @@ public class AcceptorServletTest {
 
 		private Exception _exception;
 		private boolean _ioExceptionOnPrepareRequest;
-		private HttpServletRequest _originalRequest1;
-		private HttpServletRequest _originalRequest2;
+		private HttpServletRequest _originalHttpServletRequest1;
+		private HttpServletRequest _originalHttpServletRequest2;
 		private HttpServletResponse _originalResponse;
 		private MockHttpServletRequest _preparedRequest;
 		private MockHttpServletResponse _preparedResponse;

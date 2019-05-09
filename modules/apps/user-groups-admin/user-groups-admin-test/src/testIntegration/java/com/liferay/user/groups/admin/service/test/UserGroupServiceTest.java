@@ -60,22 +60,22 @@ public class UserGroupServiceTest {
 		long parentUserGroupId = 0;
 		int size = 5;
 
-		List<UserGroup> userGroups = _userGroupService.getGtUserGroups(
+		List<UserGroup> userGroups1 = _userGroupService.getGtUserGroups(
 			0, TestPropsValues.getCompanyId(), parentUserGroupId, size);
 
-		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
+		Assert.assertEquals(userGroups1.toString(), size, userGroups1.size());
 
-		UserGroup lastUserGroup = userGroups.get(userGroups.size() - 1);
+		UserGroup lastUserGroup = userGroups1.get(userGroups1.size() - 1);
 
-		userGroups = _userGroupService.getGtUserGroups(
+		List<UserGroup> userGroups2 = _userGroupService.getGtUserGroups(
 			lastUserGroup.getUserGroupId(), TestPropsValues.getCompanyId(),
 			parentUserGroupId, size);
 
-		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
+		Assert.assertEquals(userGroups2.toString(), size, userGroups2.size());
 
 		long previousUserGroupId = 0;
 
-		for (UserGroup userGroup : userGroups) {
+		for (UserGroup userGroup : userGroups2) {
 			long userGroupId = userGroup.getUserGroupId();
 
 			Assert.assertTrue(userGroupId > lastUserGroup.getUserGroupId());

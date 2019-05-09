@@ -6,9 +6,11 @@ export default class SLAListTable extends React.Component {
 		const { items } = this.props;
 
 		const blockedItems = items.filter(({ status }) => status === 2);
+
+		const showBlockedDivider = !!blockedItems.length;
 		const unblockedItems = items.filter(({ status }) => status !== 2);
 
-		const blockedItemsLength = blockedItems.length;
+		const showRunningDivider = showBlockedDivider && !!unblockedItems.length;
 
 		return (
 			<div className="table-responsive">
@@ -55,7 +57,7 @@ export default class SLAListTable extends React.Component {
 					</thead>
 
 					<tbody>
-						{!!blockedItemsLength && (
+						{showBlockedDivider && (
 							<tr className="table-divider">
 								<td colSpan="9">
 									{Liferay.Language.get('blocked').toUpperCase()}
@@ -67,7 +69,7 @@ export default class SLAListTable extends React.Component {
 							<SLAListItem {...sla} key={`blocked_${index}`} status={2} />
 						))}
 
-						{!!blockedItemsLength && (unblockedItems.length > 0) && (
+						{showRunningDivider && (
 							<tr className="table-divider">
 								<td colSpan="9">
 									{Liferay.Language.get('running').toUpperCase()}

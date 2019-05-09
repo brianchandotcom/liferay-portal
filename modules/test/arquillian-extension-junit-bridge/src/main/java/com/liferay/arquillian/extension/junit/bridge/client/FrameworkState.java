@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.client;
 
 import com.liferay.arquillian.extension.junit.bridge.connector.FrameworkCommand;
+import com.liferay.arquillian.extension.junit.bridge.connector.FrameworkResult;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -66,28 +67,43 @@ public class FrameworkState {
 		_objectOutputStream.flush();
 	}
 
-	public long installBundle(String location, byte[] bytes)
-		throws IOException {
-
+	public long installBundle(String location, byte[] bytes) throws Exception {
 		_objectOutputStream.writeObject(
 			FrameworkCommand.installBundle(location, bytes));
 
 		_objectOutputStream.flush();
 
-		return _objectInputStream.readLong();
+		return _getResult();
 	}
 
-	public void startBundle(long bundleId) throws IOException {
+	public void startBundle(long bundleId) throws Exception {
 		_objectOutputStream.writeObject(FrameworkCommand.startBundle(bundleId));
 
 		_objectOutputStream.flush();
+
+		_getResult();
 	}
 
-	public void uninstallBundle(long bundleId) throws IOException {
+	public void uninstallBundle(long bundleId) throws Exception {
 		_objectOutputStream.writeObject(
 			FrameworkCommand.uninstallBundle(bundleId));
 
 		_objectOutputStream.flush();
+
+		_getResult();
+	}
+
+	private long _getResult() throws Exception {
+		FrameworkResult frameworkResult =
+			(FrameworkResult)_objectInputStream.readObject();
+
+		Exception exception = frameworkResult.getException();
+
+		if (exception != null) {
+			throw exception;
+		}
+
+		return frameworkResult.getBundleId();
 	}
 
 	private static final int _PORT = 32763;

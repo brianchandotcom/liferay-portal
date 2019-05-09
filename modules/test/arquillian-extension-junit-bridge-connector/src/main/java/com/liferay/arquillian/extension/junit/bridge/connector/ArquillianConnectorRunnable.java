@@ -77,13 +77,19 @@ public class ArquillianConnectorRunnable implements Runnable {
 						FrameworkCommand frameworkCommand =
 							(FrameworkCommand)objectInputStream.readObject();
 
-						long result = frameworkCommand.execute(_bundleContext);
+						FrameworkResult frameworkResult = new FrameworkResult();
 
-						if (result > 0) {
-							objectOutputStream.writeLong(result);
-
-							objectOutputStream.flush();
+						try {
+							frameworkResult.setBundleId(
+								frameworkCommand.execute(_bundleContext));
 						}
+						catch (Exception e) {
+							frameworkResult.setException(e);
+						}
+
+						objectOutputStream.writeObject(frameworkResult);
+
+						objectOutputStream.flush();
 					}
 				}
 				catch (EOFException eofe) {

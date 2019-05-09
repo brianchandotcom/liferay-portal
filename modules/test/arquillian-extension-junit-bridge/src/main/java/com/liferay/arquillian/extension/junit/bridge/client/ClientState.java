@@ -100,14 +100,22 @@ public class ClientState {
 				testClasses.remove(testClass);
 
 				if (testClasses.isEmpty()) {
-					_frameworkState.uninstallBundle(_bundleId);
+					try {
+						_frameworkState.uninstallBundle(_bundleId);
+					}
+					catch (Exception e) {
+						throw new IOException(
+							"Unable to uninstall bundle " + _bundleId + ": " +
+								e);
+					}
+					finally {
+						_frameworkState.close();
 
-					_frameworkState.close();
+						_socketState.close();
 
-					_socketState.close();
-
-					_testClasses = null;
-					_bundleId = 0;
+						_testClasses = null;
+						_bundleId = 0;
+					}
 				}
 			}
 

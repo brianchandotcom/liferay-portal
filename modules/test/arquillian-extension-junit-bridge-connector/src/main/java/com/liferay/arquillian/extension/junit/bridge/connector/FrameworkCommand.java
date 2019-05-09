@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
 
 /**
  * @author Matthew Tambara
@@ -39,9 +38,6 @@ public interface FrameworkCommand extends Serializable {
 
 				bundleId = bundle.getBundleId();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
 
 			return bundleId;
 		};
@@ -51,12 +47,7 @@ public interface FrameworkCommand extends Serializable {
 		return bundleContext -> {
 			Bundle bundle = bundleContext.getBundle(bundleId);
 
-			try {
-				bundle.start();
-			}
-			catch (BundleException be) {
-				throw new RuntimeException(be);
-			}
+			bundle.start();
 
 			return 0;
 		};
@@ -66,17 +57,12 @@ public interface FrameworkCommand extends Serializable {
 		return bundleContext -> {
 			Bundle bundle = bundleContext.getBundle(bundleId);
 
-			try {
-				bundle.uninstall();
-			}
-			catch (BundleException be) {
-				throw new RuntimeException(be);
-			}
+			bundle.uninstall();
 
 			return 0;
 		};
 	}
 
-	public long execute(BundleContext bundleContext);
+	public long execute(BundleContext bundleContext) throws Exception;
 
 }

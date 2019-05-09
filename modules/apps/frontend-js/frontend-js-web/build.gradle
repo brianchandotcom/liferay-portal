@@ -4,6 +4,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 task buildClay(type: Copy)
 task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
+task buildSideNav(type: Copy)
 task buildSvg4everybody(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
@@ -41,6 +42,11 @@ buildLiferayAMDLoader {
 	into new File(jsDestinationDir, "loader")
 }
 
+buildSideNav {
+	from "src/main/resources/META-INF/resources/liferay/side_navigation.es.js"
+	into new File(jsDestinationDir, "liferay")
+}
+
 buildSvg4everybody {
 	dependsOn npmInstall
 	eachFile new StripPathSegmentsAction(2)
@@ -60,6 +66,7 @@ buildSvg4everybody {
 classes {
 	dependsOn buildClay
 	dependsOn buildLiferayAMDLoader
+	dependsOn buildSideNav
 	dependsOn buildSvg4everybody
 }
 

@@ -55,19 +55,24 @@ public class SessionLayoutClone implements LayoutClone {
 	protected HttpSession getPortalSession(
 		HttpServletRequest httpServletRequest) {
 
-		HttpServletRequest originalRequest = httpServletRequest;
+		HttpServletRequest originalHttpServletRequest = httpServletRequest;
 
-		while (originalRequest instanceof HttpServletRequestWrapper) {
-			if (originalRequest instanceof SharedSessionServletRequest) {
+		while (originalHttpServletRequest instanceof
+					HttpServletRequestWrapper) {
+
+			if (originalHttpServletRequest instanceof
+					SharedSessionServletRequest) {
+
 				SharedSessionServletRequest sharedSessionServletRequest =
-					(SharedSessionServletRequest)originalRequest;
+					(SharedSessionServletRequest)originalHttpServletRequest;
 
 				return sharedSessionServletRequest.getSharedSession();
 			}
 
-			originalRequest =
+			originalHttpServletRequest =
 				(HttpServletRequest)
-					((HttpServletRequestWrapper)originalRequest).getRequest();
+					((HttpServletRequestWrapper)originalHttpServletRequest).
+						getRequest();
 		}
 
 		return httpServletRequest.getSession();

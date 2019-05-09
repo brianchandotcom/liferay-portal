@@ -139,21 +139,24 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		if ((contentType != null) &&
 			contentType.startsWith(ContentTypes.MULTIPART)) {
 
-			HttpServletRequest currentRequest = httpServletRequest;
+			HttpServletRequest currentHttpServletRequest = httpServletRequest;
 
 			UploadServletRequest uploadServletRequest = null;
 
-			while (currentRequest instanceof HttpServletRequestWrapper) {
-				if (currentRequest instanceof UploadServletRequest) {
-					uploadServletRequest = (UploadServletRequest)currentRequest;
+			while (currentHttpServletRequest instanceof
+						HttpServletRequestWrapper) {
+
+				if (currentHttpServletRequest instanceof UploadServletRequest) {
+					uploadServletRequest =
+						(UploadServletRequest)currentHttpServletRequest;
 
 					break;
 				}
 
 				HttpServletRequestWrapper httpServletRequestWrapper =
-					(HttpServletRequestWrapper)currentRequest;
+					(HttpServletRequestWrapper)currentHttpServletRequest;
 
-				currentRequest =
+				currentHttpServletRequest =
 					(HttpServletRequest)httpServletRequestWrapper.getRequest();
 			}
 
@@ -163,11 +166,13 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				requestBodyFile = FileUtil.createTempFile();
 
 				StreamUtil.transfer(
-					StreamUtil.uncloseable(currentRequest.getInputStream()),
+					StreamUtil.uncloseable(
+						currentHttpServletRequest.getInputStream()),
 					new FileOutputStream(requestBodyFile));
 
 				uploadServletRequest = new UploadServletRequestImpl(
-					new AgentHttpServletRequestWrapper(currentRequest));
+					new AgentHttpServletRequestWrapper(
+						currentHttpServletRequest));
 			}
 
 			Map<String, FileItem[]> multipartParameterMap =

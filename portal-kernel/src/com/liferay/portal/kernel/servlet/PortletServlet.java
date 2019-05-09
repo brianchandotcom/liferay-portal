@@ -130,10 +130,10 @@ public class PortletServlet extends HttpServlet {
 
 		Portlet portlet = liferayPortletRequest.getPortlet();
 
-		HttpServletRequest originalRequest =
+		HttpServletRequest originalHttpServletRequest =
 			liferayPortletRequest.getOriginalHttpServletRequest();
 
-		HttpSession portalSession = originalRequest.getSession();
+		HttpSession portalSession = originalHttpServletRequest.getSession();
 
 		if (!portlet.isPrivateSessionAttributes()) {
 			return portalSession;

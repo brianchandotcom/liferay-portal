@@ -115,13 +115,13 @@ public class PanelAppContentHelper {
 			return liferayPortletRequest.getOriginalHttpServletRequest();
 		}
 
-		HttpServletRequest originalServletRequest =
+		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 		Portlet portlet = getPortlet();
 
 		return DynamicServletRequestUtil.createDynamicServletRequest(
-			originalServletRequest, portlet,
+			originalHttpServletRequest, portlet,
 			httpServletRequest.getParameterMap(), false);
 	}
 

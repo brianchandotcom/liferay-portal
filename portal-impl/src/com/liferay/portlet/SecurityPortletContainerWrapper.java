@@ -88,10 +88,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		throws PortletContainerException {
 
 		try {
-			HttpServletRequest ownerLayoutRequest =
+			HttpServletRequest ownerLayoutHttpServletRequest =
 				getOwnerLayoutRequestWrapper(httpServletRequest, portlet);
 
-			checkAction(ownerLayoutRequest, portlet);
+			checkAction(ownerLayoutHttpServletRequest, portlet);
 
 			return _portletContainer.processAction(
 				httpServletRequest, httpServletResponse, portlet);
@@ -204,10 +204,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		throws PortletContainerException {
 
 		try {
-			HttpServletRequest ownerLayoutRequest =
+			HttpServletRequest ownerLayoutHttpServletRequest =
 				getOwnerLayoutRequestWrapper(httpServletRequest, portlet);
 
-			checkResource(ownerLayoutRequest, portlet);
+			checkResource(ownerLayoutHttpServletRequest, portlet);
 
 			_portletContainer.serveResource(
 				httpServletRequest, httpServletResponse, portlet);
@@ -437,11 +437,12 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		try {
 			if (portletContent != null) {
-				HttpServletRequest originalRequest =
+				HttpServletRequest originalHttpServletRequest =
 					PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 				RequestDispatcher requestDispatcher =
-					originalRequest.getRequestDispatcher(portletContent);
+					originalHttpServletRequest.getRequestDispatcher(
+						portletContent);
 
 				requestDispatcher.include(
 					httpServletRequest, httpServletResponse);

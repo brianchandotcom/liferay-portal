@@ -1084,10 +1084,10 @@ public class LanguageImpl implements Language, Serializable {
 	 */
 	@Override
 	public String getLanguageId(PortletRequest portletRequest) {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getLanguageId(request);
+		return getLanguageId(httpServletRequest);
 	}
 
 	/**

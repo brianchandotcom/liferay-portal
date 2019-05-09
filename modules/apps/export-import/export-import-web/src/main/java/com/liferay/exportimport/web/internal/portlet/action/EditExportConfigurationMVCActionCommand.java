@@ -254,7 +254,7 @@ public class EditExportConfigurationMVCActionCommand
 	}
 
 	protected void setLayoutIdMap(ActionRequest actionRequest) {
-		HttpServletRequest portletRequest = portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			actionRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -264,7 +264,7 @@ public class EditExportConfigurationMVCActionCommand
 		String treeId = ParamUtil.getString(actionRequest, "treeId");
 
 		String openNodes = SessionTreeJSClicks.getOpenNodes(
-			portletRequest, treeId + "SelectedNode");
+			httpServletRequest, treeId + "SelectedNode");
 
 		String selectedLayoutsJSON = exportImportHelper.getSelectedLayoutsJSON(
 			groupId, privateLayout, openNodes);

@@ -803,60 +803,6 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "3"
-	test AddWebContentWithTemplateXSL {
-		property testray.component.names = "Web Content Administration,XSL";
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoTemplates();
-
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Text",
-			templateFile = "xsl_template.xsl",
-			templateLanguage = "xsl",
-			templateName = "WC Template Name");
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
-			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		WebContent.viewWithStructureCP(
-			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.previewviatemplate(
-			fieldName = "Text",
-			webContentText = "WC WebContent Text");
-	}
-
 	@priority = "4"
 	test DeleteTemplateAndStructureWithReferencedWebContent {
 		property testray.component.names = "Web Content Administration";

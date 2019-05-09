@@ -259,7 +259,7 @@ public class WorkflowMetricsSLADefinitionTransformer {
 			}
 		}
 
-		return newNodeKeys.toArray(new String[newNodeKeys.size()]);
+		return newNodeKeys.toArray(new String[0]);
 	}
 
 	@Reference

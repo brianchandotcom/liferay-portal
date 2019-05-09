@@ -204,8 +204,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 
 				_companyLocalService.removePreferences(
 					company.getCompanyId(),
-					migratedPrefsPropsKeys.toArray(
-						new String[migratedPrefsPropsKeys.size()]));
+					migratedPrefsPropsKeys.toArray(new String[0]));
 			}
 
 			migrateSAMLProviderConfigurationSystemPreferences();

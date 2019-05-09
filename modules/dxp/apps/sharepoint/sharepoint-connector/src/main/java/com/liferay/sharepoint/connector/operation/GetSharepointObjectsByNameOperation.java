@@ -61,8 +61,7 @@ public class GetSharepointObjectsByNameOperation extends BaseOperation {
 		return _getSharepointObjectsByQueryOperation.execute(
 			query,
 			new QueryOptionsList(
-				baseQueryOptions.toArray(
-					new BaseQueryOption[baseQueryOptions.size()])));
+				baseQueryOptions.toArray(new BaseQueryOption[0])));
 	}
 
 	private GetSharepointObjectsByQueryOperation

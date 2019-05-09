@@ -64,8 +64,7 @@ public class TomcatSPIProvider extends BaseSPIProvider {
 		}
 
 		ClassLoader classLoader = new URLClassLoader(
-			urls.toArray(new URL[urls.size()]),
-			RemoteSPI.class.getClassLoader());
+			urls.toArray(new URL[0]), RemoteSPI.class.getClassLoader());
 
 		try {
 			Class<? extends RemoteSPI> clazz =

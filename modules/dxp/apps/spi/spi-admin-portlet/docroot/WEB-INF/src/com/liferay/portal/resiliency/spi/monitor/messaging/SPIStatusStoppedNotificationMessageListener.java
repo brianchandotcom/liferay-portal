@@ -140,8 +140,7 @@ public class SPIStatusStoppedNotificationMessageListener
 		}
 
 		mailMessage.setTo(
-			recipientInternetAddresses.toArray(
-				new InternetAddress[recipientInternetAddresses.size()]));
+			recipientInternetAddresses.toArray(new InternetAddress[0]));
 
 		MailServiceUtil.sendEmail(mailMessage);
 	}

@@ -140,8 +140,7 @@ public class TaskResourceImpl
 		if (!taskNames.isEmpty()) {
 			TermsQuery termsQuery = _queries.terms("name");
 
-			termsQuery.addValues(
-				taskNames.toArray(new Object[taskNames.size()]));
+			termsQuery.addValues(taskNames.toArray(new Object[0]));
 
 			booleanQuery.addShouldQueryClauses(termsQuery);
 		}
@@ -185,7 +184,7 @@ public class TaskResourceImpl
 
 		TermsQuery termsQuery = _queries.terms("taskName");
 
-		termsQuery.addValues(taskNames.toArray(new Object[taskNames.size()]));
+		termsQuery.addValues(taskNames.toArray(new Object[0]));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

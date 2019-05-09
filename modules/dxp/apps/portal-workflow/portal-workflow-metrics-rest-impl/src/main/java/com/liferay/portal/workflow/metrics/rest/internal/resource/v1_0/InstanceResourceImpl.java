@@ -434,7 +434,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return;
 		}
 
-		instance.setTaskNames(taskNames.toArray(new String[taskNames.size()]));
+		instance.setTaskNames(taskNames.toArray(new String[0]));
 	}
 
 	private Date _toDate(String dateString) {

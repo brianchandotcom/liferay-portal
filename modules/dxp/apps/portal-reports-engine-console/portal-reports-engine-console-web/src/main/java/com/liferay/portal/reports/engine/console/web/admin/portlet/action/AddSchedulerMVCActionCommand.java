@@ -244,9 +244,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				dayAndPositions.add(new DayAndPosition(Calendar.MONDAY, 0));
 			}
 
-			recurrence.setByDay(
-				dayAndPositions.toArray(
-					new DayAndPosition[dayAndPositions.size()]));
+			recurrence.setByDay(dayAndPositions.toArray(new DayAndPosition[0]));
 		}
 		else if (recurrenceType == Recurrence.MONTHLY) {
 			int monthlyType = ParamUtil.getInteger(

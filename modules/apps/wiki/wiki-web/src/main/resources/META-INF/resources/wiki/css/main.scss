@@ -7,6 +7,8 @@
 
 		overflow: auto;
 
+		word-wrap: break-word;
+
 		@include respond-to(phone, tablet) {
 			@include experimental(overflow-scrolling, touch);
 		}
@@ -20,8 +22,6 @@
 	}
 
 	.wiki-body, .wiki-page-editor {
-		word-wrap: break-word;
-
 		img {
 			max-width: 100%;
 		}

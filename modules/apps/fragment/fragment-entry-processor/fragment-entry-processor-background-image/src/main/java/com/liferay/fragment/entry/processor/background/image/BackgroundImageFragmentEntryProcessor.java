@@ -16,22 +16,30 @@ package com.liferay.fragment.entry.processor.background.image;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,7 +131,34 @@ public class BackgroundImageFragmentEntryProcessor
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html) {
+	public void validateFragmentEntryHTML(String html) throws PortalException {
+		Document document = _getDocument(html);
+
+		Elements elements = document.select("[data-lfr-background-image-id]");
+
+		Stream<Element> uniqueNodesStream = elements.stream();
+
+		Map<String, Long> idsMap = uniqueNodesStream.collect(
+			Collectors.groupingBy(
+				element -> element.attr("data-lfr-background-image-id"),
+				Collectors.counting()));
+
+		Collection<String> ids = idsMap.keySet();
+
+		Stream<String> idsStream = ids.stream();
+
+		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
+
+		if (idsStream.count() > 0) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			throw new FragmentEntryContentException(
+				LanguageUtil.get(
+					resourceBundle,
+					"you-must-define-a-unique-id-for-each-background-image-" +
+						"element"));
+		}
 	}
 
 	private Document _getDocument(String html) {

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -94,11 +95,18 @@ public class GetAssetFieldValueMVCResourceCommand
 			"classPK", classPK
 		).put(
 			"fieldId", fieldId
-		).put(
-			"fieldValue",
-			infoDisplayContributor.getInfoDisplayFieldValue(
-				object, fieldId, themeDisplay.getLocale())
 		);
+
+		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
+			object, fieldId, themeDisplay.getLocale());
+
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+
+			fieldValue = contentAccessor.getContent();
+		}
+
+		jsonObject.put("fieldValue", fieldValue);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

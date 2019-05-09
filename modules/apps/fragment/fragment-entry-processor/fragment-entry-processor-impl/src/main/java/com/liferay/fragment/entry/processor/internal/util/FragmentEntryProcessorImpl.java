@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.internal.util;
 
+import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -89,32 +90,41 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			return null;
 		}
 
-		String fieldId = jsonObject.getString("fieldId");
-
 		Map<String, Object> fieldsValues = assetEntriesFieldValues.get(
 			assetEntry.getEntryId());
 
-		if (MapUtil.isNotEmpty(fieldsValues)) {
-			return fieldsValues.getOrDefault(fieldId, null);
+		if (MapUtil.isEmpty(fieldsValues)) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					assetEntry.getClassName());
+
+			int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+
+			if (previewClassPK == assetEntry.getEntryId()) {
+				versionType = previewType;
+			}
+
+			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
+				new VersionedAssetEntry(assetEntry, versionType), locale);
+
+			assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
 		}
 
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				assetEntry.getClassName());
+		String fieldId = jsonObject.getString("fieldId");
 
-		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+		Object fieldValue = fieldsValues.getOrDefault(fieldId, null);
 
-		if (previewClassPK == assetEntry.getEntryId()) {
-			versionType = previewType;
+		if (fieldValue == null) {
+			return null;
 		}
 
-		fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
-			new VersionedAssetEntry(assetEntry, versionType), locale);
+		if (fieldValue instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
 
-		assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
+			fieldValue = contentAccessor.getContent();
+		}
 
-		return infoDisplayContributor.getInfoDisplayFieldValue(
-			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
+		return fieldValue;
 	}
 
 	@Override

@@ -537,15 +537,17 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext, String actionId)
 		throws Exception {
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+		long kaleoProcessId = ParamUtil.getLong(
+			httpServletRequest, "kaleoProcessId");
 
 		KaleoProcessPermission.check(
 			permissionChecker, kaleoProcessId, actionId);
@@ -1156,13 +1158,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	protected DDLRecord updateDDLRecord(ServiceContext serviceContext)
 		throws Exception {
 
-		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-		long ddlRecordId = ParamUtil.getLong(request, "ddlRecordId");
+		long ddlRecordId = ParamUtil.getLong(httpServletRequest, "ddlRecordId");
 
-		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
+		long ddlRecordSetId = ParamUtil.getLong(
+			httpServletRequest, "ddlRecordSetId");
 
-		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+		long kaleoProcessId = ParamUtil.getLong(
+			httpServletRequest, "kaleoProcessId");
 
 		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
@@ -1185,7 +1189,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			boolean majorVersion = ParamUtil.getBoolean(
 				serviceContext, "majorVersion");
 
-			long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
+			long ddmTemplateId = ParamUtil.getLong(
+				httpServletRequest, "ddmTemplateId");
 
 			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure(
 				ddmTemplateId);

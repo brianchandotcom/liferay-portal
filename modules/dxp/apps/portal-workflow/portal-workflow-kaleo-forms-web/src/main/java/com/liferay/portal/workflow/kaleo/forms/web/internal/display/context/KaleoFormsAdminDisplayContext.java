@@ -119,7 +119,7 @@ public class KaleoFormsAdminDisplayContext {
 
 		return new CreationMenu() {
 			{
-				HttpServletRequest request =
+				HttpServletRequest httpServletRequest =
 					_kaleoFormsAdminRequestHelper.getRequest();
 
 				addPrimaryDropdownItem(
@@ -127,9 +127,10 @@ public class KaleoFormsAdminDisplayContext {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/admin/edit_kaleo_process.jsp", "redirect",
-							PortalUtil.getCurrentURL(request));
+							PortalUtil.getCurrentURL(httpServletRequest));
 
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+						dropdownItem.setLabel(
+							LanguageUtil.get(httpServletRequest, "add"));
 					});
 			}
 		};
@@ -184,7 +185,8 @@ public class KaleoFormsAdminDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _kaleoFormsAdminRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_kaleoFormsAdminRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -193,7 +195,8 @@ public class KaleoFormsAdminDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -201,7 +204,7 @@ public class KaleoFormsAdminDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};

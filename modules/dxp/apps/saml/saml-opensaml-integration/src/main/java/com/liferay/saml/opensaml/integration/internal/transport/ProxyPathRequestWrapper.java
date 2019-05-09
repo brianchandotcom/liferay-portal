@@ -36,12 +36,13 @@ public class ProxyPathRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public String getRemoteAddr() {
-		HttpServletRequest request = (HttpServletRequest)getRequest();
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)getRequest();
 
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_HOST_ENABLED))) {
 
-			String headerString = request.getHeader(
+			String headerString = httpServletRequest.getHeader(
 				HttpHeaders.X_FORWARDED_FOR);
 
 			if (Validator.isNotNull(headerString)) {
@@ -49,7 +50,7 @@ public class ProxyPathRequestWrapper extends HttpServletRequestWrapper {
 			}
 		}
 
-		return request.getRemoteAddr();
+		return httpServletRequest.getRemoteAddr();
 	}
 
 	@Override
@@ -61,12 +62,13 @@ public class ProxyPathRequestWrapper extends HttpServletRequestWrapper {
 	public StringBuffer getRequestURL() {
 		StringBuffer sb = new StringBuffer();
 
-		HttpServletRequest request = (HttpServletRequest)super.getRequest();
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)super.getRequest();
 
-		sb.append(PortalUtil.getPortalURL(request));
+		sb.append(PortalUtil.getPortalURL(httpServletRequest));
 
 		String pathContext = PortalUtil.getPathContext();
-		String uri = request.getRequestURI();
+		String uri = httpServletRequest.getRequestURI();
 
 		if (!uri.startsWith(pathContext)) {
 			sb.append(pathContext);

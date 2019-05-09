@@ -266,10 +266,10 @@ public class V10aOAuth implements OAuth {
 	public OAuthMessage getOAuthMessage(
 		PortletRequest portletRequest, String url) {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		return getOAuthMessage(request, url);
+		return getOAuthMessage(httpServletRequest, url);
 	}
 
 	@Override

@@ -200,7 +200,8 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
-		HttpServletRequest request = _kaleoDesignerRequestHelper.getRequest();
+		HttpServletRequest httpServletRequest =
+			_kaleoDesignerRequestHelper.getRequest();
 
 		return new DropdownItemList() {
 			{
@@ -209,7 +210,8 @@ public class KaleoDesignerDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							LanguageUtil.get(
+								httpServletRequest, "filter-by-navigation"));
 					});
 
 				addGroup(
@@ -217,7 +219,7 @@ public class KaleoDesignerDisplayContext {
 						dropdownGroupItem.setDropdownItems(
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
+							LanguageUtil.get(httpServletRequest, "order-by"));
 					});
 			}
 		};

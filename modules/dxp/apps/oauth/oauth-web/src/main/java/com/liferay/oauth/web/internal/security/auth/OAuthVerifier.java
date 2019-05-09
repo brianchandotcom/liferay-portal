@@ -78,16 +78,18 @@ public class OAuthVerifier implements AuthVerifier {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		HttpServletRequest request = accessControlContext.getRequest();
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
 
-		if (!isUsingOAuth(request)) {
+		if (!isUsingOAuth(httpServletRequest)) {
 			return authVerifierResult;
 		}
 
 		try {
 			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
-				request,
-				WebServerUtil.getWebServerURL(request.getRequestURL()));
+				httpServletRequest,
+				WebServerUtil.getWebServerURL(
+					httpServletRequest.getRequestURL()));
 
 			OAuthUser oAuthUser = getOAuthUser(oAuthMessage);
 
@@ -118,7 +120,8 @@ public class OAuthVerifier implements AuthVerifier {
 					properties.getProperty("send.body"));
 
 				OAuthUtil.handleException(
-					request, accessControlContext.getResponse(), e, sendBody);
+					httpServletRequest, accessControlContext.getResponse(), e,
+					sendBody);
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);

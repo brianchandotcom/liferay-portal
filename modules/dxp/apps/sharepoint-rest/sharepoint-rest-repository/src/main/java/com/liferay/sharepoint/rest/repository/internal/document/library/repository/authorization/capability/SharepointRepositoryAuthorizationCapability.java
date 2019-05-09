@@ -81,10 +81,10 @@ public class SharepointRepositoryAuthorizationCapability
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		if (_hasAuthorizationGrant(request)) {
+		if (_hasAuthorizationGrant(httpServletRequest)) {
 			return true;
 		}
 

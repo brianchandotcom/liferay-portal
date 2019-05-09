@@ -124,9 +124,7 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Object visitMethodExpression(
 		List<Object> expressions, MethodExpression.Type type) {
 
-		throw new UnsupportedOperationException(
-			"Unsupported method visitMethodExpression with method type " +
-				type);
+		return null;
 	}
 
 	@Override

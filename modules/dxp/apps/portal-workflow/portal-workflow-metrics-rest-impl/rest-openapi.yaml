@@ -1,5 +1,15 @@
 components:
     schemas:
+        Calendar:
+            description: https://www.schema.org/Calendar
+            properties:
+                defaultCalendar:
+                    type: boolean
+                key:
+                    type: string
+                title:
+                    type: string
+            type: object
         GenericError:
             description: https://www.schema.org/GenericError
             properties:
@@ -152,6 +162,24 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/calendars":
+        get:
+            operationId: getCalendarsPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Calendar"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Calendar"
+                                type: array
+                    description: ""
+            tags: ["Calendar"]
     "/processes":
         get:
             operationId: getProcessesPage

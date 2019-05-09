@@ -13,6 +13,7 @@ Export-Package:\
 	com.liferay.segments.model,\
 	com.liferay.segments.odata.matcher,\
 	com.liferay.segments.odata.retriever,\
+	com.liferay.segments.odata.search,\
 	com.liferay.segments.provider,\
 	com.liferay.segments.service,\
 	com.liferay.segments.service.persistence,\

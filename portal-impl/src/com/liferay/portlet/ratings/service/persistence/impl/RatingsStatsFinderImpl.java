@@ -62,8 +62,7 @@ public class RatingsStatsFinderImpl
 	@Override
 	public List<RatingsStats> findByC_C(long classNameId, List<Long> classPKs) {
 		Object[] finderArgs = {
-			classNameId,
-			StringUtil.merge(classPKs.toArray(new Long[classPKs.size()]))
+			classNameId, StringUtil.merge(classPKs.toArray(new Long[0]))
 		};
 
 		List<RatingsStats> list = (List<RatingsStats>)FinderCacheUtil.getResult(

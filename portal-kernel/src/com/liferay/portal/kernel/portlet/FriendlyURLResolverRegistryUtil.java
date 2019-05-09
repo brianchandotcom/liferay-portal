@@ -73,7 +73,7 @@ public class FriendlyURLResolverRegistryUtil {
 	public static String[] getURLSeparators() {
 		Set<String> urlSeparators = _serviceTrackerMap.keySet();
 
-		return urlSeparators.toArray(new String[urlSeparators.size()]);
+		return urlSeparators.toArray(new String[0]);
 	}
 
 	public static void register(FriendlyURLResolver friendlyURLResolver) {

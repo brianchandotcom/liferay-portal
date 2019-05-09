@@ -42,8 +42,7 @@ public class MultiMatchQueryTranslatorImpl
 
 		MultiMatchQueryBuilder multiMatchQueryBuilder =
 			QueryBuilders.multiMatchQuery(
-				multiMatchQuery.getValue(),
-				fields.toArray(new String[fields.size()]));
+				multiMatchQuery.getValue(), fields.toArray(new String[0]));
 
 		if (Validator.isNotNull(multiMatchQuery.getAnalyzer())) {
 			multiMatchQueryBuilder.analyzer(multiMatchQuery.getAnalyzer());

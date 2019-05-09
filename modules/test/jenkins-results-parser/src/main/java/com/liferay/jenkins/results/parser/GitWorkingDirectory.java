@@ -249,8 +249,7 @@ public class GitWorkingDirectory {
 		}
 
 		if (!tempBranchNames.isEmpty()) {
-			_deleteLocalGitBranches(
-				tempBranchNames.toArray(new String[tempBranchNames.size()]));
+			_deleteLocalGitBranches(tempBranchNames.toArray(new String[0]));
 		}
 	}
 
@@ -462,8 +461,7 @@ public class GitWorkingDirectory {
 					new ArrayList<>(localGitBranchNames),
 					_BRANCHES_DELETE_BATCH_SIZE)) {
 
-			_deleteLocalGitBranches(
-				branchNames.toArray(new String[branchNames.size()]));
+			_deleteLocalGitBranches(branchNames.toArray(new String[0]));
 		}
 	}
 
@@ -520,8 +518,7 @@ public class GitWorkingDirectory {
 						_BRANCHES_DELETE_BATCH_SIZE)) {
 
 				_deleteRemoteGitBranches(
-					remoteURL,
-					branchNames.toArray(new String[branchNames.size()]));
+					remoteURL, branchNames.toArray(new String[0]));
 			}
 		}
 	}

@@ -3676,7 +3676,7 @@ public class ServiceBuilder {
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
 						entityFinder.isUnique(), entity.getTable(),
-						dbNames.toArray(new String[dbNames.size()]));
+						dbNames.toArray(new String[0]));
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
@@ -4338,7 +4338,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		return javaFields.toArray(new JavaField[javaFields.size()]);
+		return javaFields.toArray(new JavaField[0]);
 	}
 
 	private int[] _getColumnLengths(IndexMetadata indexMetadata) {

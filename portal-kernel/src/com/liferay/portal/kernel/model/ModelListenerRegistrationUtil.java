@@ -81,7 +81,7 @@ public class ModelListenerRegistrationUtil {
 			}
 		}
 
-		return modelListeners.toArray(new ModelListener[modelListeners.size()]);
+		return modelListeners.toArray(new ModelListener[0]);
 	}
 
 	private <T> void _register(

@@ -1138,8 +1138,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 			}
 
-			return super.withClasspath(
-				filesList.toArray(new File[filesList.size()]));
+			return super.withClasspath(filesList.toArray(new File[0]));
 		}
 
 		public JarBuilder withContextClassLoader(
@@ -1173,8 +1172,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 			}
 
-			return super.withResources(
-				filesList.toArray(new File[filesList.size()]));
+			return super.withResources(filesList.toArray(new File[0]));
 		}
 
 		@Override

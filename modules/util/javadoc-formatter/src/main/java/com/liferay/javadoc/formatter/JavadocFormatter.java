@@ -187,8 +187,7 @@ public class JavadocFormatter {
 			}
 
 			List<String> fileNames = JavadocFormatterUtil.scanForFiles(
-				_inputDirName, excludes,
-				includes.toArray(new String[includes.size()]));
+				_inputDirName, excludes, includes.toArray(new String[0]));
 
 			if (fileNames.isEmpty() && Validator.isNotNull(limit) &&
 				!limit.startsWith("$")) {

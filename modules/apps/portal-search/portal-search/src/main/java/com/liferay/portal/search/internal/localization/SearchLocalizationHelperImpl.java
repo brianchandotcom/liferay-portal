@@ -62,7 +62,7 @@ public class SearchLocalizationHelperImpl implements SearchLocalizationHelper {
 			Set<Locale> locales = _language.getCompanyAvailableLocales(
 				searchContext.getCompanyId());
 
-			return locales.toArray(new Locale[locales.size()]);
+			return locales.toArray(new Locale[0]);
 		}
 
 		LongStream stream = Arrays.stream(groupIds);
@@ -96,7 +96,7 @@ public class SearchLocalizationHelperImpl implements SearchLocalizationHelper {
 			}
 		}
 
-		return fieldNames.toArray(new String[fieldNames.size()]);
+		return fieldNames.toArray(new String[0]);
 	}
 
 	@Reference

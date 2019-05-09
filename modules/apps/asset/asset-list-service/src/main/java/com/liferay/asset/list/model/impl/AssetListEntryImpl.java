@@ -288,9 +288,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			assetCategoryIdsList.add(assetCategoryId);
 		}
 
-		return ArrayUtil.toArray(
-			assetCategoryIdsList.toArray(
-				new Long[assetCategoryIdsList.size()]));
+		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
 	}
 
 	private long[] _getClassNameIds(

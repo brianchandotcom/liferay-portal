@@ -55,9 +55,7 @@ public class VerifyUUID extends VerifyProcess {
 		Collection<VerifiableUUIDModel> verifiableUUIDModels =
 			verifiableUUIDModelsMap.values();
 
-		doVerify(
-			verifiableUUIDModels.toArray(
-				new VerifiableUUIDModel[verifiableUUIDModels.size()]));
+		doVerify(verifiableUUIDModels.toArray(new VerifiableUUIDModel[0]));
 	}
 
 	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)

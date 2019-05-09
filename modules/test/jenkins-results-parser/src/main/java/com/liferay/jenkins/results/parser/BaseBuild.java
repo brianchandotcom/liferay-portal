@@ -2065,9 +2065,7 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		addDownstreamBuilds(
-			foundDownstreamBuildURLs.toArray(
-				new String[foundDownstreamBuildURLs.size()]));
+		addDownstreamBuilds(foundDownstreamBuildURLs.toArray(new String[0]));
 	}
 
 	protected List<String> findDownstreamBuildsInConsoleText() {

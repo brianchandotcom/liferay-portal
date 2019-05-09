@@ -131,8 +131,7 @@ public class SPIRegistryImpl implements SPIRegistry {
 				_portletSPIs.put(portletId, spi);
 			}
 
-			_portletIds.put(
-				spi, portletIds.toArray(new String[portletIds.size()]));
+			_portletIds.put(spi, portletIds.toArray(new String[0]));
 
 			for (String servletContextName : servletContextNames) {
 				_servletContextSPIs.put(servletContextName, spi);

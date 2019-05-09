@@ -517,8 +517,7 @@ public class MeetingsPortlet extends MVCPortlet {
 			}
 		}
 
-		return ArrayUtil.toArray(
-			childCalendarIds.toArray(new Long[childCalendarIds.size()]));
+		return ArrayUtil.toArray(childCalendarIds.toArray(new Long[0]));
 	}
 
 	protected void getEmailNotificationPreview(

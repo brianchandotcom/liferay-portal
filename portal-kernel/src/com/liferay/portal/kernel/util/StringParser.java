@@ -354,7 +354,7 @@ public class StringParser {
 				_parts = null;
 			}
 			else {
-				_parts = parts.toArray(new String[parts.size()]);
+				_parts = parts.toArray(new String[0]);
 			}
 		}
 

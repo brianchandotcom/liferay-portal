@@ -313,14 +313,12 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public String[] getOrganizationModelResources() {
-		return _organizationModelResources.toArray(
-			new String[_organizationModelResources.size()]);
+		return _organizationModelResources.toArray(new String[0]);
 	}
 
 	@Override
 	public String[] getPortalModelResources() {
-		return _portalModelResources.toArray(
-			new String[_portalModelResources.size()]);
+		return _portalModelResources.toArray(new String[0]);
 	}
 
 	@Override
@@ -533,8 +531,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public String[] getRootModelResources() {
-		return _rootModelResources.toArray(
-			new String[_rootModelResources.size()]);
+		return _rootModelResources.toArray(new String[0]);
 	}
 
 	@Override

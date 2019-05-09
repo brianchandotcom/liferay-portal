@@ -539,7 +539,7 @@ public class UploadServletRequestImpl
 		List<String> values = _regularParameters.get(name);
 
 		if (values != null) {
-			parameterValues = values.toArray(new String[values.size()]);
+			parameterValues = values.toArray(new String[0]);
 		}
 
 		String[] parentParameterValues = super.getParameterValues(name);

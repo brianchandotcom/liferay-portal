@@ -89,7 +89,7 @@ public class AssetCategoryDocumentContributor implements DocumentContributor {
 
 			List<String> titles = entry.getValue();
 
-			String[] titlesArray = titles.toArray(new String[titles.size()]);
+			String[] titlesArray = titles.toArray(new String[0]);
 
 			document.addText(
 				field.concat(

@@ -49,7 +49,7 @@ public class TermsQueryImpl extends BaseQueryImpl implements TermsQuery {
 	}
 
 	public String[] getValues() {
-		return _values.toArray(new String[_values.size()]);
+		return _values.toArray(new String[0]);
 	}
 
 	public boolean isEmpty() {

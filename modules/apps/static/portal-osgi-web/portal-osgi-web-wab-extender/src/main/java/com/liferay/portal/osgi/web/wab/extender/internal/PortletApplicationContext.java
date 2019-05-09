@@ -98,8 +98,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 		return ArrayUtil.append(
 			configLocations,
-			serviceBuilderPropertiesConfigLocations.toArray(
-				new String[serviceBuilderPropertiesConfigLocations.size()]));
+			serviceBuilderPropertiesConfigLocations.toArray(new String[0]));
 	}
 
 	@Override

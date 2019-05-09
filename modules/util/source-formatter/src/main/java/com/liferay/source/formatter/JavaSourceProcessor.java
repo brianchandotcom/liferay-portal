@@ -106,8 +106,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws CheckstyleException {
-		_processCheckstyle(
-			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+		_processCheckstyle(_ungeneratedFiles.toArray(new File[0]));
 
 		_ungeneratedFiles.clear();
 
@@ -229,8 +228,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_ungeneratedFiles.add(file);
 
 		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
-			_processCheckstyle(
-				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+			_processCheckstyle(_ungeneratedFiles.toArray(new File[0]));
 
 			_ungeneratedFiles.clear();
 		}

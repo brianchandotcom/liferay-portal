@@ -136,7 +136,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 
 		assetTagNames.addAll(MicroblogsWebUtil.getScreenNames(content));
 
-		return assetTagNames.toArray(new String[assetTagNames.size()]);
+		return assetTagNames.toArray(new String[0]);
 	}
 
 	@Reference(unbind = "-")

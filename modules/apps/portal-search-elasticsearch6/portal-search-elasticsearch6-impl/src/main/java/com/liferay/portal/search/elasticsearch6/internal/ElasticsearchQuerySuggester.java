@@ -165,7 +165,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		List<String> keywordQueries = getHighestRankedSuggestResults(
 			suggestSearchResult);
 
-		return keywordQueries.toArray(new String[keywordQueries.size()]);
+		return keywordQueries.toArray(new String[0]);
 	}
 
 	protected PhraseSuggester createQuerySuggester(

@@ -47,8 +47,7 @@ public class QueryConfig implements Serializable {
 
 		_attributes.put(
 			_HIGHLIGHT_FIELD_NAMES,
-			highlightFieldNamesSet.toArray(
-				new String[highlightFieldNamesSet.size()]));
+			highlightFieldNamesSet.toArray(new String[0]));
 	}
 
 	public void addSelectedFieldNames(String... selectedFieldNames) {
@@ -59,8 +58,7 @@ public class QueryConfig implements Serializable {
 
 		_attributes.put(
 			_SELECTED_FIELD_NAMES,
-			selectedFieldNamesSet.toArray(
-				new String[selectedFieldNamesSet.size()]));
+			selectedFieldNamesSet.toArray(new String[0]));
 	}
 
 	public String getAlternateUidFieldName() {

@@ -325,7 +325,7 @@ public class ClassUtil {
 			tokens = _processAnnotationParameters(annotationParameters, tokens);
 		}
 
-		return tokens.toArray(new String[tokens.size()]);
+		return tokens.toArray(new String[0]);
 	}
 
 	private static List<String> _processAnnotationParameters(

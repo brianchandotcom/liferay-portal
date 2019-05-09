@@ -501,7 +501,7 @@ public class DDMExpressionEvaluatorVisitor
 			parameters.add(parameter);
 		}
 
-		return parameters.toArray(new Object[parameters.size()]);
+		return parameters.toArray(new Object[0]);
 	}
 
 	protected <T> T visitChild(

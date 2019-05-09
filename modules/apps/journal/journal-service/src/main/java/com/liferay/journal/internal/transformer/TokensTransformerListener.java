@@ -136,18 +136,16 @@ public class TokensTransformerListener extends BaseTransformerListener {
 		}
 
 		s = StringUtil.replace(
-			s, escapedKeysList.toArray(new String[escapedKeysList.size()]),
-			escapedValuesList.toArray(new String[escapedValuesList.size()]));
+			s, escapedKeysList.toArray(new String[0]),
+			escapedValuesList.toArray(new String[0]));
 
 		s = StringUtil.replace(
-			s, keysList.toArray(new String[keysList.size()]),
-			valuesList.toArray(new String[valuesList.size()]));
+			s, keysList.toArray(new String[0]),
+			valuesList.toArray(new String[0]));
 
 		s = StringUtil.replace(
-			s,
-			tempEscapedKeysList.toArray(new String[tempEscapedKeysList.size()]),
-			tempEscapedValuesList.toArray(
-				new String[tempEscapedValuesList.size()]));
+			s, tempEscapedKeysList.toArray(new String[0]),
+			tempEscapedValuesList.toArray(new String[0]));
 
 		return s;
 	}

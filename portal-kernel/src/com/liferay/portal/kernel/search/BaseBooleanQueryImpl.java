@@ -138,7 +138,7 @@ public abstract class BaseBooleanQueryImpl
 			}
 		}
 
-		return keywords.toArray(new String[keywords.size()]);
+		return keywords.toArray(new String[0]);
 	}
 
 }

@@ -391,8 +391,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		getSubcategoryIds(categoryIds, groupId, categoryId);
 
-		return ArrayUtil.toArray(
-			categoryIds.toArray(new Long[categoryIds.size()]));
+		return ArrayUtil.toArray(categoryIds.toArray(new Long[0]));
 	}
 
 	@Override

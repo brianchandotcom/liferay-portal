@@ -90,7 +90,7 @@ public class FormNavigatorEntryUtil {
 			}
 		}
 
-		return keys.toArray(new String[keys.size()]);
+		return keys.toArray(new String[0]);
 	}
 
 	public static <T> String[] getLabels(
@@ -111,7 +111,7 @@ public class FormNavigatorEntryUtil {
 			}
 		}
 
-		return labels.toArray(new String[labels.size()]);
+		return labels.toArray(new String[0]);
 	}
 
 	protected static <T> List<FormNavigatorEntry<T>>

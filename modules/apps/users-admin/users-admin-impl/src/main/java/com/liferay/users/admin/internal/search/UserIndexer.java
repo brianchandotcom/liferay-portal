@@ -352,7 +352,7 @@ public class UserIndexer extends BaseIndexer<User> {
 	protected long[] getActiveGroupIds(long userId) {
 		List<Long> groupIds = groupLocalService.getActiveGroupIds(userId);
 
-		return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
+		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
 	}
 
 	protected long[] getActiveTransitiveGroupIds(long userId)

@@ -1231,8 +1231,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 		}
 
-		portletPreferences.setValues(
-			key, newValues.toArray(new String[newValues.size()]));
+		portletPreferences.setValues(key, newValues.toArray(new String[0]));
 	}
 
 	@Reference

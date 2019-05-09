@@ -238,7 +238,7 @@ public class JournalContentPortletLayoutListener
 			}
 		}
 
-		return portletIds.toArray(new String[portletIds.size()]);
+		return portletIds.toArray(new String[0]);
 	}
 
 	protected Set<String> getRuntimePortletIds(String content)

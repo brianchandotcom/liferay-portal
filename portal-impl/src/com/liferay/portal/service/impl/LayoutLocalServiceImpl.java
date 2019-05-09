@@ -1700,8 +1700,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		List<LayoutReference> layoutReferences = layoutFinder.findByC_P_P(
 			companyId, portletId, preferencesKey, preferencesValue);
 
-		return layoutReferences.toArray(
-			new LayoutReference[layoutReferences.size()]);
+		return layoutReferences.toArray(new LayoutReference[0]);
 	}
 
 	/**

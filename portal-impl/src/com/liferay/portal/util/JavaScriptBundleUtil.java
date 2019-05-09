@@ -52,7 +52,7 @@ public class JavaScriptBundleUtil {
 				}
 			}
 
-			fileNames = fileNamesList.toArray(new String[fileNamesList.size()]);
+			fileNames = fileNamesList.toArray(new String[0]);
 
 			_portalCache.put(bundleId, fileNames);
 		}

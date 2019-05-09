@@ -75,7 +75,7 @@ public class ContentHits {
 		docs = docs.subList(start, end);
 		scores = scores.subList(start, end);
 
-		hits.setDocs(docs.toArray(new Document[docs.size()]));
+		hits.setDocs(docs.toArray(new Document[0]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 
 		hits.setSearchTime(

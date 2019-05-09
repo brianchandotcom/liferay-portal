@@ -734,8 +734,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					JenkinsResultsParserUtil.getCanonicalPath(
 						_rootWorkingDirectory),
 					File.separator),
-				testClassNamesIncludesRelativeGlobs.toArray(
-					new String[testClassNamesIncludesRelativeGlobs.size()])));
+				testClassNamesIncludesRelativeGlobs.toArray(new String[0])));
 	}
 
 	private static final boolean _ENABLE_INCLUDE_AUTO_BALANCE_TESTS_DEFAULT =

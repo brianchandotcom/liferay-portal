@@ -36,7 +36,7 @@ public class WorkflowHandlerUtil {
 			assetTypes.add(workflowHandler.getClassName());
 		}
 
-		return assetTypes.toArray(new String[assetTypes.size()]);
+		return assetTypes.toArray(new String[0]);
 	}
 
 }

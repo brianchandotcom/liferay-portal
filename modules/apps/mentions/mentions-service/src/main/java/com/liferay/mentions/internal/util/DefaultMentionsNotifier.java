@@ -163,8 +163,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 			}
 		}
 
-		return mentionedUsersScreenNames.toArray(
-			new String[mentionedUsersScreenNames.size()]);
+		return mentionedUsersScreenNames.toArray(new String[0]);
 	}
 
 	@Reference(unbind = "-")

@@ -342,7 +342,7 @@ public class CustomSQL {
 			}
 		}
 
-		return keywordsList.toArray(new String[keywordsList.size()]);
+		return keywordsList.toArray(new String[0]);
 	}
 
 	public String[] keywords(String keywords, WildcardMode wildcardMode) {

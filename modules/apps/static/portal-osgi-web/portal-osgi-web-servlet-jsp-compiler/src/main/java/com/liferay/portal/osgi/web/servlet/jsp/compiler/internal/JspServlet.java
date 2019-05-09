@@ -182,7 +182,7 @@ public class JspServlet extends HttpServlet {
 
 		collectTaglibProviderBundles(bundles);
 
-		_allParticipatingBundles = bundles.toArray(new Bundle[bundles.size()]);
+		_allParticipatingBundles = bundles.toArray(new Bundle[0]);
 
 		_jspBundleClassloader = new JspBundleClassloader(
 			_allParticipatingBundles);
@@ -392,7 +392,7 @@ public class JspServlet extends HttpServlet {
 					"servlet listener interfaces");
 		}
 
-		return classNames.toArray(new String[classNames.size()]);
+		return classNames.toArray(new String[0]);
 	}
 
 	private static final String _DIR_NAME_RESOURCES = "/META-INF/resources";

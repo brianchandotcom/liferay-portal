@@ -219,8 +219,7 @@ public class FabricAgentRegistryTest {
 		}
 
 		public void validate(Object... objects) {
-			Assert.assertArrayEquals(
-				objects, _objects.toArray(new Object[_objects.size()]));
+			Assert.assertArrayEquals(objects, _objects.toArray(new Object[0]));
 
 			_objects.clear();
 		}

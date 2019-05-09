@@ -3895,8 +3895,7 @@ public class ProjectTemplatesTest {
 			completeArgs.add(arg);
 		}
 
-		ProjectTemplates.main(
-			completeArgs.toArray(new String[completeArgs.size()]));
+		ProjectTemplates.main(completeArgs.toArray(new String[0]));
 
 		File projectDir = new File(destinationDir, name);
 

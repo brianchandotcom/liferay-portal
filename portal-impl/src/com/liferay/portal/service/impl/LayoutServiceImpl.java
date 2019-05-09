@@ -637,8 +637,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			}
 		}
 
-		return filteredLayoutReferences.toArray(
-			new LayoutReference[filteredLayoutReferences.size()]);
+		return filteredLayoutReferences.toArray(new LayoutReference[0]);
 	}
 
 	@Override

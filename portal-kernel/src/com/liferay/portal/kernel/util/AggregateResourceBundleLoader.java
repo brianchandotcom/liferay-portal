@@ -74,8 +74,7 @@ public class AggregateResourceBundleLoader implements ResourceBundleLoader {
 		}
 
 		return new AggregateResourceBundle(
-			resourceBundles.toArray(
-				new ResourceBundle[resourceBundles.size()]));
+			resourceBundles.toArray(new ResourceBundle[0]));
 	}
 
 	/**

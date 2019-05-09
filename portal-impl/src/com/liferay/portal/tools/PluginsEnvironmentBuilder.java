@@ -456,8 +456,7 @@ public class PluginsEnvironmentBuilder {
 			return;
 		}
 
-		String[] gitIgnores = importSharedJars.toArray(
-			new String[importSharedJars.size()]);
+		String[] gitIgnores = importSharedJars.toArray(new String[0]);
 
 		for (int i = 0; i < gitIgnores.length; i++) {
 			String gitIgnore = gitIgnores[i];
@@ -516,7 +515,7 @@ public class PluginsEnvironmentBuilder {
 
 		System.out.println("Updating " + gitignoreFile);
 
-		String[] gitIgnores = jars.toArray(new String[jars.size()]);
+		String[] gitIgnores = jars.toArray(new String[0]);
 
 		for (int i = 0; i < gitIgnores.length; i++) {
 			String gitIgnore = gitIgnores[i];

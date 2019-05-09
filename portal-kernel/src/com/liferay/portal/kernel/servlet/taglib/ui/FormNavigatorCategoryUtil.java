@@ -69,7 +69,7 @@ public class FormNavigatorCategoryUtil {
 			}
 		}
 
-		return keys.toArray(new String[keys.size()]);
+		return keys.toArray(new String[0]);
 	}
 
 	public static String[] getLabels(String formNavigatorId, Locale locale) {
@@ -92,7 +92,7 @@ public class FormNavigatorCategoryUtil {
 			}
 		}
 
-		return labels.toArray(new String[labels.size()]);
+		return labels.toArray(new String[0]);
 	}
 
 	private FormNavigatorCategoryUtil() {

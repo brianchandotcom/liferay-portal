@@ -260,8 +260,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 			if (Validator.isNotNull(groupName) && !packageNames.isEmpty()) {
 				standardJavadocDocletOptions.group(
-					groupName,
-					packageNames.toArray(new String[packageNames.size()]));
+					groupName, packageNames.toArray(new String[0]));
 			}
 		}
 	}

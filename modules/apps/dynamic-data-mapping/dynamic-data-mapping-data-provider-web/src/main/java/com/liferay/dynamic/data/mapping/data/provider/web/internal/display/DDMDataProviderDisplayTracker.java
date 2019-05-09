@@ -77,7 +77,7 @@ public class DDMDataProviderDisplayTracker {
 	private String[] _getPortletIds() {
 		Set<String> portletIds = _ddmDataProviderDisplay.keySet();
 
-		return portletIds.toArray(new String[portletIds.size()]);
+		return portletIds.toArray(new String[0]);
 	}
 
 	private final Map<String, DDMDataProviderDisplay> _ddmDataProviderDisplay =

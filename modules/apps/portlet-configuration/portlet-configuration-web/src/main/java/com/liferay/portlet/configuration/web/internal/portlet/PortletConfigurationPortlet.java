@@ -697,7 +697,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		List<String> actionIds = getActionIdsList(
 			actionRequest, roleId, includePreselected);
 
-		return actionIds.toArray(new String[actionIds.size()]);
+		return actionIds.toArray(new String[0]);
 	}
 
 	protected List<String> getActionIdsList(

@@ -463,8 +463,7 @@ public class SitesImpl implements Sites {
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(
 					targetLayout.getCompanyId(), resourceName,
 					ResourceConstants.SCOPE_INDIVIDUAL, targetResourcePrimKey,
-					role.getRoleId(),
-					actions.toArray(new String[actions.size()]));
+					role.getRoleId(), actions.toArray(new String[0]));
 			}
 		}
 	}
@@ -1623,8 +1622,7 @@ public class SitesImpl implements Sites {
 
 		PortletLocalServiceUtil.deletePortlets(
 			targetLayout.getCompanyId(),
-			unreferencedPortletIds.toArray(
-				new String[unreferencedPortletIds.size()]),
+			unreferencedPortletIds.toArray(new String[0]),
 			targetLayout.getPlid());
 	}
 

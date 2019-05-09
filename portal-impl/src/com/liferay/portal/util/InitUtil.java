@@ -230,8 +230,8 @@ public class InitUtil {
 
 			ConfigurableApplicationContext configurableApplicationContext =
 				new ClassPathXmlApplicationContext(
-					configLocations.toArray(new String[configLocations.size()]),
-					false, infrastructureApplicationContext) {
+					configLocations.toArray(new String[0]), false,
+					infrastructureApplicationContext) {
 
 					@Override
 					protected DefaultListableBeanFactory createBeanFactory() {

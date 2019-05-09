@@ -253,7 +253,7 @@ public class DDMFormTemplateContextFactoryImpl
 		collectResourceBundles(getClass(), resourceBundles, locale);
 
 		ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
-			new ResourceBundle[resourceBundles.size()]);
+			new ResourceBundle[0]);
 
 		return new AggregateResourceBundle(resourceBundlesArray);
 	}

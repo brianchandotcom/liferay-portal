@@ -1737,7 +1737,7 @@ public class FileSystemImporter extends BaseImporter {
 			}
 		}
 
-		return filesList.toArray(new File[filesList.size()]);
+		return filesList.toArray(new File[0]);
 	}
 
 	protected String replaceFileEntryURL(String content) throws Exception {

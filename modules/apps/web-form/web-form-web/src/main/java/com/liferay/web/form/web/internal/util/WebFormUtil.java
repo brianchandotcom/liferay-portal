@@ -200,7 +200,7 @@ public class WebFormUtil {
 			}
 		}
 
-		return nodeValues.toArray(new String[nodeValues.size()]);
+		return nodeValues.toArray(new String[0]);
 	}
 
 	public static boolean validate(

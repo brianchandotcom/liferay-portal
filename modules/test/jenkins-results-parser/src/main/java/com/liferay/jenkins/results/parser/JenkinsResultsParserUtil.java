@@ -906,7 +906,7 @@ public class JenkinsResultsParserUtil {
 			globs.add(glob);
 		}
 
-		return globs.toArray(new String[globs.size()]);
+		return globs.toArray(new String[0]);
 	}
 
 	public static String getHostName(String defaultHostName) {
@@ -1729,7 +1729,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String join(String delimiter, List<String> list) {
-		return join(delimiter, list.toArray(new String[list.size()]));
+		return join(delimiter, list.toArray(new String[0]));
 	}
 
 	public static String join(String delimiter, String... strings) {

@@ -229,8 +229,7 @@ public class OpenSSOImpl implements OpenSSO {
 			}
 		}
 
-		cookieNames = cookieNamesList.toArray(
-			new String[cookieNamesList.size()]);
+		cookieNames = cookieNamesList.toArray(new String[0]);
 
 		if (cookieNames.length > 0) {
 			_cookieNamesMap.put(serviceURL, cookieNames);

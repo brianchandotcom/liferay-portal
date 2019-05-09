@@ -82,8 +82,7 @@ public class BatchJspCompiler {
 		Method method = clazz.getMethod("main", String[].class);
 
 		try {
-			method.invoke(
-				null, (Object)arguments.toArray(new String[arguments.size()]));
+			method.invoke(null, (Object)arguments.toArray(new String[0]));
 		}
 		catch (Exception e) {
 			_fileUtil.write(

@@ -237,8 +237,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		_addFields(TikaMimeKeys.class, fields);
 		_addFields(XMPDM.class, fields);
 
-		_fields.put(
-			TIKA_RAW_METADATA, fields.toArray(new Field[fields.size()]));
+		_fields.put(TIKA_RAW_METADATA, fields.toArray(new Field[0]));
 	}
 
 }

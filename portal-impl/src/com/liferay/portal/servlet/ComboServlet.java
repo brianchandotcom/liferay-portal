@@ -166,8 +166,7 @@ public class ComboServlet extends HttpServlet {
 			return;
 		}
 
-		String[] modulePaths = modulePathsSet.toArray(
-			new String[modulePathsSet.size()]);
+		String[] modulePaths = modulePathsSet.toArray(new String[0]);
 
 		String extension = StringPool.BLANK;
 

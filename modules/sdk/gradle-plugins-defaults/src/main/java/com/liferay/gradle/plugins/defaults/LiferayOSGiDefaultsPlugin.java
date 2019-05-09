@@ -3879,7 +3879,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Configuration detachedConfiguration =
 			configurationContainer.detachedConfiguration(
-				dependencies.toArray(new Dependency[dependencies.size()]));
+				dependencies.toArray(new Dependency[0]));
 
 		ResolvedConfiguration resolvedConfiguration =
 			detachedConfiguration.getResolvedConfiguration();

@@ -135,7 +135,7 @@ public abstract class Baseline {
 				bundleInfo.mismatch = true;
 			}
 
-			Info[] infosArray = infos.toArray(new Info[infos.size()]);
+			Info[] infosArray = infos.toArray(new Info[0]);
 
 			Arrays.sort(
 				infosArray,

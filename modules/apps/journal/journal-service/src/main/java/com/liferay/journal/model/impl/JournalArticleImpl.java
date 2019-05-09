@@ -214,8 +214,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			}
 		}
 
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(new String[0]);
 	}
 
 	@Override

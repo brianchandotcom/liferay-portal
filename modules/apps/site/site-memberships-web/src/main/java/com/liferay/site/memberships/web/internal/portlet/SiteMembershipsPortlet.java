@@ -423,8 +423,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			}
 		}
 
-		return ArrayUtil.toArray(
-			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
 
 	private long[] _filterRemoveUserIds(long groupId, long[] userIds) {
@@ -436,8 +435,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			}
 		}
 
-		return ArrayUtil.toArray(
-			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
 
 	private Group _getGroup(

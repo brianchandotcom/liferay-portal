@@ -587,7 +587,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			}
 		}
 
-		return actionIds.toArray(new String[actionIds.size()]);
+		return actionIds.toArray(new String[0]);
 	}
 
 	private AssetCategory _getAssetCategory(

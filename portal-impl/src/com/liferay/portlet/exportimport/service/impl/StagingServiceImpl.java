@@ -164,7 +164,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				code, processFlag, processId,
-				arguments.toArray(new Serializable[arguments.size()]));
+				arguments.toArray(new Serializable[0]));
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

@@ -575,8 +575,7 @@ public class AMImageConfigurationHelperImpl
 			);
 
 			modifiableSettings.setValues(
-				"imageVariants",
-				imageVariants.toArray(new String[imageVariants.size()]));
+				"imageVariants", imageVariants.toArray(new String[0]));
 
 			modifiableSettings.store();
 

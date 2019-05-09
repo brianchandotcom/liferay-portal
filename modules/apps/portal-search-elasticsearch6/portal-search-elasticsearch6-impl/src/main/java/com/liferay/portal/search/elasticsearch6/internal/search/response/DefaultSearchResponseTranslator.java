@@ -215,7 +215,7 @@ public class DefaultSearchResponseTranslator
 			}
 		}
 
-		hits.setDocs(documents.toArray(new Document[documents.size()]));
+		hits.setDocs(documents.toArray(new Document[0]));
 		hits.setLength((int)searchHits.getTotalHits());
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));

@@ -1105,8 +1105,7 @@ public class DDMFormAdminDisplayContext {
 
 			Set<Locale> availableLocales = form.getAvailableLocales();
 
-			return availableLocales.toArray(
-				new Locale[availableLocales.size()]);
+			return availableLocales.toArray(new Locale[0]);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

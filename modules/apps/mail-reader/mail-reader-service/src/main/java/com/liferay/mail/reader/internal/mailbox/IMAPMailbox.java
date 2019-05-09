@@ -450,8 +450,7 @@ public class IMAPMailbox extends BaseMailbox {
 
 		if (!missingRemoteMessageIdsList.isEmpty()) {
 			long[] missingRemoteMessageIds = ArrayUtil.toArray(
-				missingRemoteMessageIdsList.toArray(
-					new Long[missingRemoteMessageIdsList.size()]));
+				missingRemoteMessageIdsList.toArray(new Long[0]));
 
 			_imapAccessor.storeEnvelopes(folderId, missingRemoteMessageIds);
 		}

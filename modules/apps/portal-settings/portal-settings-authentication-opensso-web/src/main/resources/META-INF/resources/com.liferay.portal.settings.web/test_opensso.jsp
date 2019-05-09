@@ -33,7 +33,7 @@ urls.add(openSsoServiceURL);
 %>
 
 <c:choose>
-	<c:when test="<%= !OpenSSOUtil.isValidUrls(urls.toArray(new String[urls.size()])) %>">
+	<c:when test="<%= !OpenSSOUtil.isValidUrls(urls.toArray(new String[0])) %>">
 		<liferay-ui:message key="liferay-has-failed-to-connect-to-the-opensso-server" />
 	</c:when>
 	<c:when test="<%= !OpenSSOUtil.isValidServiceUrl(openSsoServiceURL) %>">

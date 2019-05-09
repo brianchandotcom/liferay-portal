@@ -226,7 +226,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 		filterQueries.add(suggestionFilterQuery);
 
-		return filterQueries.toArray(new String[filterQueries.size()]);
+		return filterQueries.toArray(new String[0]);
 	}
 
 	protected String getFilterQuery(String field, long value) {

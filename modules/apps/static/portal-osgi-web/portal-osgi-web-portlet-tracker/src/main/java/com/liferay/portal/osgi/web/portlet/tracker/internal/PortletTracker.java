@@ -465,7 +465,7 @@ public class PortletTracker
 
 			containerRuntimeOptionsMap.put(
 				containerRuntimeOptionPrefix.concat(name),
-				values.toArray(new String[values.size()]));
+				values.toArray(new String[0]));
 		}
 	}
 

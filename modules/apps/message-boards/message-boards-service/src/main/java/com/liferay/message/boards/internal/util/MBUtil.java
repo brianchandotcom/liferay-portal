@@ -161,8 +161,7 @@ public class MBUtil {
 			role.getRoleId());
 
 		if (defaultRoleActionIds != null) {
-			rolePermissions = defaultRoleActionIds.toArray(
-				new String[defaultRoleActionIds.size()]);
+			rolePermissions = defaultRoleActionIds.toArray(new String[0]);
 		}
 		else {
 			rolePermissions = new String[0];

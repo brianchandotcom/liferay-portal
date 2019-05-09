@@ -89,7 +89,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		return LocaleUtil.toLanguageIds(
-			availableLocales.toArray(new Locale[availableLocales.size()]));
+			availableLocales.toArray(new Locale[0]));
 	}
 
 	@Override

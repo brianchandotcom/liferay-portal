@@ -120,7 +120,7 @@ public class LogUtil {
 		}
 
 		stackTraceElements = stackTraceElementsList.toArray(
-			new StackTraceElement[stackTraceElementsList.size()]);
+			new StackTraceElement[0]);
 
 		causeThrowable.setStackTrace(stackTraceElements);
 

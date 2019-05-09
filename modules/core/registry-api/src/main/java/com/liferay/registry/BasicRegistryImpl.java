@@ -701,7 +701,7 @@ public class BasicRegistryImpl implements Registry {
 		public String[] getPropertyKeys() {
 			Set<String> set = _properties.keySet();
 
-			return set.toArray(new String[set.size()]);
+			return set.toArray(new String[0]);
 		}
 
 		public boolean matches(ServiceReference<?> serviceReference) {

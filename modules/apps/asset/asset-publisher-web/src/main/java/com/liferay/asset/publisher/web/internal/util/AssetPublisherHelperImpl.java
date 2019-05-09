@@ -837,9 +837,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			assetCategoryIdsList.add(assetCategoryId);
 		}
 
-		return ArrayUtil.toArray(
-			assetCategoryIdsList.toArray(
-				new Long[assetCategoryIdsList.size()]));
+		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
 	}
 
 	private List<AssetEntryResult> _getAssetEntryResultsByClassName(
@@ -1076,8 +1074,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		}
 
 		portletPreferences.setValues(
-			"assetEntryXml",
-			assetEntryXmlsList.toArray(new String[assetEntryXmlsList.size()]));
+			"assetEntryXml", assetEntryXmlsList.toArray(new String[0]));
 
 		portletPreferences.store();
 	}

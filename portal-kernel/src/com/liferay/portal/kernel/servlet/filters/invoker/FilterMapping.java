@@ -58,7 +58,7 @@ public class FilterMapping {
 		_filterName = filterName;
 		_filter = filter;
 
-		_urlPatterns = urlPatterns.toArray(new String[urlPatterns.size()]);
+		_urlPatterns = urlPatterns.toArray(new String[0]);
 
 		String urlRegexPattern = filterConfig.getInitParameter(
 			"url-regex-pattern");

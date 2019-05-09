@@ -2733,7 +2733,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
-		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
+		return ListUtil.fromArray(nodes.toArray(new Element[0]));
 	}
 
 	/**

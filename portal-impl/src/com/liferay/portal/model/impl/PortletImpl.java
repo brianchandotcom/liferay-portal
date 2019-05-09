@@ -2932,7 +2932,7 @@ public class PortletImpl extends PortletBaseImpl {
 			}
 		}
 
-		String[] array = linkedRoles.toArray(new String[linkedRoles.size()]);
+		String[] array = linkedRoles.toArray(new String[0]);
 
 		Arrays.sort(array);
 

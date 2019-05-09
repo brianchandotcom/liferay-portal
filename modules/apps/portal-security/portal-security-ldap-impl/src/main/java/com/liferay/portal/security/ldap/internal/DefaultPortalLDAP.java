@@ -288,8 +288,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 		Attributes attributes = _getAttributes(
 			ldapContext, fullDistinguishedName,
-			mappedGroupAttributeIds.toArray(
-				new String[mappedGroupAttributeIds.size()]));
+			mappedGroupAttributeIds.toArray(new String[0]));
 
 		if (_log.isDebugEnabled()) {
 			if ((attributes == null) || (attributes.size() == 0)) {

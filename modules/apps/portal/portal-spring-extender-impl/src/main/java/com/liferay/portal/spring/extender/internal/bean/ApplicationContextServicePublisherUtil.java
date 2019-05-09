@@ -162,7 +162,7 @@ public class ApplicationContextServicePublisherUtil {
 		}
 
 		return bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean, properties);
+			names.toArray(new String[0]), bean, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

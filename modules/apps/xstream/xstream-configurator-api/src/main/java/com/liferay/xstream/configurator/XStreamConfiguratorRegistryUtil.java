@@ -65,8 +65,7 @@ public class XStreamConfiguratorRegistryUtil {
 		}
 
 		return AggregateClassLoader.getAggregateClassLoader(
-			masterClassLoader,
-			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
+			masterClassLoader, classLoaders.toArray(new ClassLoader[0]));
 	}
 
 	public static long getModifiedCount() {

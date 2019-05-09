@@ -237,7 +237,7 @@ public class XugglerAutoInstallHelper {
 		}
 
 		URLClassLoader urlClassLoader = new URLClassLoader(
-			urls.toArray(new URL[urls.size()]), null);
+			urls.toArray(new URL[0]), null);
 
 		currentThread.setContextClassLoader(urlClassLoader);
 

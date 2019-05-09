@@ -62,8 +62,7 @@ public class FacetSelectedFieldNamesQueryConfigContributor
 
 		selectedFieldNameSet.addAll(facets.keySet());
 
-		selectedFieldNames = selectedFieldNameSet.toArray(
-			new String[selectedFieldNameSet.size()]);
+		selectedFieldNames = selectedFieldNameSet.toArray(new String[0]);
 
 		queryConfig.setSelectedFieldNames(selectedFieldNames);
 	}

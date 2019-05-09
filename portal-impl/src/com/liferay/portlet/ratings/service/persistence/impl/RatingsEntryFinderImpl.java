@@ -67,8 +67,7 @@ public class RatingsEntryFinderImpl
 		long userId, long classNameId, List<Long> classPKs) {
 
 		Object[] finderArgs = {
-			userId, classNameId,
-			StringUtil.merge(classPKs.toArray(new Long[classPKs.size()]))
+			userId, classNameId, StringUtil.merge(classPKs.toArray(new Long[0]))
 		};
 
 		List<RatingsEntry> list = (List<RatingsEntry>)FinderCacheUtil.getResult(

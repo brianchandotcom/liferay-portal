@@ -102,8 +102,7 @@ public class AssetAutoTaggerOSGiCommands {
 
 			classNamesSet.remove("*");
 
-			classNames = classNamesSet.toArray(
-				new String[classNamesSet.size()]);
+			classNames = classNamesSet.toArray(new String[0]);
 		}
 
 		_forEachAssetEntry(

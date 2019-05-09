@@ -404,7 +404,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 					urls, ClassPathUtil.getClassPathURLs(_runtimeClassPath));
 
 				builder.setReactClassLoader(
-					new URLClassLoader(urls.toArray(new URL[urls.size()])));
+					new URLClassLoader(urls.toArray(new URL[0])));
 			}
 			catch (MalformedURLException murle) {
 				throw new ProcessException(murle);

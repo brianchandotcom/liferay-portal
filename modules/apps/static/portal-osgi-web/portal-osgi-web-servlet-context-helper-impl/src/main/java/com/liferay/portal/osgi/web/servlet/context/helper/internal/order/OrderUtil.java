@@ -72,7 +72,7 @@ public class OrderUtil {
 
 		Set<String> set = map.keySet();
 
-		String[] orderedNames = set.toArray(new String[set.size()]);
+		String[] orderedNames = set.toArray(new String[0]);
 
 		Arrays.sort(orderedNames);
 
@@ -121,7 +121,7 @@ public class OrderUtil {
 
 		Set<String> set = map.keySet();
 
-		String[] names = set.toArray(new String[set.size()]);
+		String[] names = set.toArray(new String[0]);
 
 		for (String name : names) {
 			if (map.get(name) > 1) {
@@ -166,7 +166,7 @@ public class OrderUtil {
 		webXMLDefinitions = _preSort(webXMLDefinitions);
 
 		WebXMLDefinition[] webXMLDefinitionsArray = webXMLDefinitions.toArray(
-			new WebXMLDefinition[webXMLDefinitions.size()]);
+			new WebXMLDefinition[0]);
 
 		_innerSort(webXMLDefinitionsArray);
 

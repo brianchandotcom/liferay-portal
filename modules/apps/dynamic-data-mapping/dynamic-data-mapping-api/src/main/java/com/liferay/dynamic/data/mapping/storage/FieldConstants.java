@@ -85,7 +85,7 @@ public class FieldConstants {
 				_log.debug("Invalid type " + type);
 			}
 
-			return values.toArray(new String[values.size()]);
+			return values.toArray(new String[0]);
 		}
 
 		if (isNumericType(type)) {
@@ -93,31 +93,31 @@ public class FieldConstants {
 		}
 
 		if (type.equals(FieldConstants.BOOLEAN)) {
-			return values.toArray(new Boolean[values.size()]);
+			return values.toArray(new Boolean[0]);
 		}
 		else if (type.equals(FieldConstants.DATE)) {
-			return values.toArray(new String[values.size()]);
+			return values.toArray(new String[0]);
 		}
 		else if (type.equals(FieldConstants.DOUBLE)) {
-			return values.toArray(new Double[values.size()]);
+			return values.toArray(new Double[0]);
 		}
 		else if (type.equals(FieldConstants.FLOAT)) {
-			return values.toArray(new Float[values.size()]);
+			return values.toArray(new Float[0]);
 		}
 		else if (type.equals(FieldConstants.INTEGER)) {
-			return values.toArray(new Integer[values.size()]);
+			return values.toArray(new Integer[0]);
 		}
 		else if (type.equals(FieldConstants.LONG)) {
-			return values.toArray(new Long[values.size()]);
+			return values.toArray(new Long[0]);
 		}
 		else if (type.equals(FieldConstants.NUMBER)) {
-			return values.toArray(new Number[values.size()]);
+			return values.toArray(new Number[0]);
 		}
 		else if (type.equals(FieldConstants.SHORT)) {
-			return values.toArray(new Short[values.size()]);
+			return values.toArray(new Short[0]);
 		}
 
-		return values.toArray(new String[values.size()]);
+		return values.toArray(new String[0]);
 	}
 
 	public static final Serializable getSerializable(

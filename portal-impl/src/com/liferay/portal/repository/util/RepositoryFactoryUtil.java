@@ -54,7 +54,7 @@ public class RepositoryFactoryUtil {
 	public static String[] getRepositoryClassNames() {
 		Set<String> classNames = _repositoryFactories.keySet();
 
-		return classNames.toArray(new String[classNames.size()]);
+		return classNames.toArray(new String[0]);
 	}
 
 	public static void registerRepositoryFactory(

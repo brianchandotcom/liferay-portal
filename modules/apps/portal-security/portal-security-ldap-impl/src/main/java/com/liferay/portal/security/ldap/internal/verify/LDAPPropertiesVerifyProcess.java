@@ -320,7 +320,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				}
 
 				_companyLocalService.removePreferences(
-					companyId, keys.toArray(new String[keys.size()]));
+					companyId, keys.toArray(new String[0]));
 
 				UnicodeProperties properties = new UnicodeProperties();
 
@@ -481,8 +481,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 		dictionary.put(
 			LDAPConstants.CONNECTION_PROPERTIES,
-			connectionPropertiesList.toArray(
-				new String[connectionPropertiesList.size()]));
+			connectionPropertiesList.toArray(new String[0]));
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_AGE_KEYWORDS,
 			new String[] {

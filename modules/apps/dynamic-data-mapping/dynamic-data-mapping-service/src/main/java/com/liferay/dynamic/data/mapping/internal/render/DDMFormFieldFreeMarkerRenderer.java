@@ -502,8 +502,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			fieldsDisplayValues.add(fieldName);
 		}
 
-		return fieldsDisplayValues.toArray(
-			new String[fieldsDisplayValues.size()]);
+		return fieldsDisplayValues.toArray(new String[0]);
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(

@@ -136,16 +136,14 @@ public class ModelPermissionsFactory {
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
-			modelResourceGroupDefaultActions.toArray(
-				new String[modelResourceGroupDefaultActions.size()]));
+			modelResourceGroupDefaultActions.toArray(new String[0]));
 
 		List<String> modelResourceGuestDefaultActions =
 			ResourceActionsUtil.getModelResourceGuestDefaultActions(className);
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.GUEST,
-			modelResourceGuestDefaultActions.toArray(
-				new String[modelResourceGuestDefaultActions.size()]));
+			modelResourceGuestDefaultActions.toArray(new String[0]));
 
 		return modelPermissions;
 	}

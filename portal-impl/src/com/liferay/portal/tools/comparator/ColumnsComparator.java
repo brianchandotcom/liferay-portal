@@ -23,7 +23,7 @@ import java.util.List;
 public class ColumnsComparator implements Comparator<Object> {
 
 	public ColumnsComparator(List<String> columnNames) {
-		this(columnNames.toArray(new String[columnNames.size()]));
+		this(columnNames.toArray(new String[0]));
 	}
 
 	public ColumnsComparator(String columnName) {

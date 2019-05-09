@@ -72,7 +72,7 @@ public class DDMDisplayRegistry {
 	private String[] _getPortletIds() {
 		Set<String> portletIds = _ddmDisplays.keySet();
 
-		return portletIds.toArray(new String[portletIds.size()]);
+		return portletIds.toArray(new String[0]);
 	}
 
 	private final Map<String, DDMDisplay> _ddmDisplays =

@@ -93,8 +93,7 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 
 		if ((selectedFieldNames != null) && !selectedFieldNames.isEmpty()) {
 			queryConfig.setSelectedFieldNames(
-				selectedFieldNames.toArray(
-					new String[selectedFieldNames.size()]));
+				selectedFieldNames.toArray(new String[0]));
 		}
 	}
 

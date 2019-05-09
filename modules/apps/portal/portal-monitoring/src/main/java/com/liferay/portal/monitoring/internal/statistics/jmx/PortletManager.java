@@ -85,8 +85,7 @@ public class PortletManager
 	public long[] getCompanyIds() {
 		Set<Long> companyIds = _serverStatistics.getCompanyIds();
 
-		return ArrayUtil.toArray(
-			companyIds.toArray(new Long[companyIds.size()]));
+		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
 	}
 
 	@Override
@@ -209,7 +208,7 @@ public class PortletManager
 	public String[] getPortletIds() {
 		Set<String> portletIds = _serverStatistics.getPortletIds();
 
-		return portletIds.toArray(new String[portletIds.size()]);
+		return portletIds.toArray(new String[0]);
 	}
 
 	@Override
@@ -342,7 +341,7 @@ public class PortletManager
 	public String[] getWebIds() {
 		Set<String> webIds = _serverStatistics.getWebIds();
 
-		return webIds.toArray(new String[webIds.size()]);
+		return webIds.toArray(new String[0]);
 	}
 
 	@Override

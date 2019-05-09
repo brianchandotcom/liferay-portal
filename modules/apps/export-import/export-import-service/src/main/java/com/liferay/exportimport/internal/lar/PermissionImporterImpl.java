@@ -284,7 +284,7 @@ public class PermissionImporterImpl implements PermissionImporter {
 			List<String> actions = _getActions(roleElement);
 
 			importedRoleIdsToActionIds.put(
-				role.getRoleId(), actions.toArray(new String[actions.size()]));
+				role.getRoleId(), actions.toArray(new String[0]));
 		}
 
 		Map<Long, String[]> roleIdsToActionIds =

@@ -67,7 +67,7 @@ public class SQLQueryTableNamesUtil {
 			}
 		}
 
-		tableNames = tableNameSet.toArray(new String[tableNameSet.size()]);
+		tableNames = tableNameSet.toArray(new String[0]);
 
 		_portalCache.put(sql, tableNames);
 

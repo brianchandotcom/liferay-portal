@@ -180,7 +180,7 @@ public class PortalClassPathUtil {
 			}
 		}
 
-		File[] files = fileSet.toArray(new File[fileSet.size()]);
+		File[] files = fileSet.toArray(new File[0]);
 
 		Arrays.sort(files);
 

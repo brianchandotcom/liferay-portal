@@ -126,8 +126,7 @@ public abstract class BaseShellDoulosRequestProcessor
 		shellCommandsList.add(1, "-x");
 		shellCommandsList.add(2, "-c");
 
-		String[] shellCommands = shellCommandsList.toArray(
-			new String[shellCommandsList.size()]);
+		String[] shellCommands = shellCommandsList.toArray(new String[0]);
 
 		shellStatus.shellCommands = StringUtils.join(shellCommands, "\n");
 

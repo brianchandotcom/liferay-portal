@@ -95,7 +95,7 @@ public class ServiceDependencyManager {
 			doRegisterDependencies(
 				serviceClasses.toArray(new Class<?>[serviceClasses.size()]));
 
-			doRegisterDependencies(filters.toArray(new Filter[filters.size()]));
+			doRegisterDependencies(filters.toArray(new Filter[0]));
 
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				serviceDependency.open();

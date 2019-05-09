@@ -82,8 +82,7 @@ public class DefineObjectsTag3 extends DefineObjectsTag {
 			List<Locale> locales = Collections.list(
 				portletRequest.getLocales());
 
-			pageContext.setAttribute(
-				"locales", locales.toArray(new Locale[locales.size()]));
+			pageContext.setAttribute("locales", locales.toArray(new Locale[0]));
 
 			pageContext.setAttribute(
 				"portletMode", portletRequest.getPortletMode());

@@ -49,8 +49,7 @@ public abstract class BaseSearchResultPermissionFilter
 				selectedFieldNameSet, _PERMISSION_SELECTED_FIELD_NAMES);
 
 			queryConfig.setSelectedFieldNames(
-				selectedFieldNameSet.toArray(
-					new String[selectedFieldNameSet.size()]));
+				selectedFieldNameSet.toArray(new String[0]));
 		}
 
 		int end = searchContext.getEnd();
@@ -165,7 +164,7 @@ public abstract class BaseSearchResultPermissionFilter
 		documents = documents.subList(start, end);
 		scores = scores.subList(start, end);
 
-		hits.setDocs(documents.toArray(new Document[documents.size()]));
+		hits.setDocs(documents.toArray(new Document[0]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 		hits.setLength(size);
 		hits.setSearchTime(

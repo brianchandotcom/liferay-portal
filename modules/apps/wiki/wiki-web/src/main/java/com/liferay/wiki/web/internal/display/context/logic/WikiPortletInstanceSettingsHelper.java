@@ -205,8 +205,7 @@ public class WikiPortletInstanceSettingsHelper {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);
 		}
 		else {
-			_visibleNodeNames = _allNodeNames.toArray(
-				new String[_allNodeNames.size()]);
+			_visibleNodeNames = _allNodeNames.toArray(new String[0]);
 		}
 	}
 

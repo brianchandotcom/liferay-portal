@@ -119,8 +119,8 @@ public class JavaFieldsParser {
 		}
 
 		return StringUtil.replace(
-			s, replaceFrom.toArray(new String[replaceFrom.size()]),
-			replaceWith.toArray(new String[replaceWith.size()]));
+			s, replaceFrom.toArray(new String[0]),
+			replaceWith.toArray(new String[0]));
 	}
 
 	private static String _getClassName(String javaSnippet) {

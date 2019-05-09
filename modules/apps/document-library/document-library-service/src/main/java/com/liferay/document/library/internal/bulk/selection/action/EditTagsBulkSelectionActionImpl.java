@@ -93,8 +93,7 @@ public class EditTagsBulkSelectionActionImpl
 						currentTagNamesSet.removeIf(
 							tagName -> !AssetUtil.isValidWord(tagName));
 
-						newTagNames = currentTagNamesSet.toArray(
-							new String[currentTagNamesSet.size()]);
+						newTagNames = currentTagNamesSet.toArray(new String[0]);
 					}
 
 					_assetEntryLocalService.updateEntry(

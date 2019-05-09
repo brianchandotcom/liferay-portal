@@ -36,11 +36,11 @@ public class IdsQueryTranslatorImpl implements IdsQueryTranslator {
 
 		Set<String> ids = idsQuery.getIds();
 
-		idsQueryBuilder.addIds(ids.toArray(new String[ids.size()]));
+		idsQueryBuilder.addIds(ids.toArray(new String[0]));
 
 		Set<String> types = idsQuery.getTypes();
 
-		idsQueryBuilder.types(types.toArray(new String[types.size()]));
+		idsQueryBuilder.types(types.toArray(new String[0]));
 
 		return idsQueryBuilder;
 	}

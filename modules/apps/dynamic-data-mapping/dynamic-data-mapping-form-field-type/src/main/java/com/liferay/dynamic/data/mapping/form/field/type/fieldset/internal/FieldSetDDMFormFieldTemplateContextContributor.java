@@ -104,8 +104,7 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			return StringUtil.split(nestedFieldNames);
 		}
 
-		return defaultNestedFieldNames.toArray(
-			new String[defaultNestedFieldNames.size()]);
+		return defaultNestedFieldNames.toArray(new String[0]);
 	}
 
 	protected List<Object> getNestedFields(

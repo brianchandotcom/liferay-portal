@@ -128,8 +128,7 @@ public class InstrumentationAgent {
 					_originalClassDefinitions = null;
 
 					_instrumentation.redefineClasses(
-						classDefinitions.toArray(
-							new ClassDefinition[classDefinitions.size()]));
+						classDefinitions.toArray(new ClassDefinition[0]));
 				}
 				catch (Exception e) {
 					throw new RuntimeException(

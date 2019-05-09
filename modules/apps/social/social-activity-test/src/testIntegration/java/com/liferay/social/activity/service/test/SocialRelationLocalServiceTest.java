@@ -216,8 +216,8 @@ public class SocialRelationLocalServiceTest {
 
 		List<User> users = UserLocalServiceUtil.searchSocial(
 			TestPropsValues.getCompanyId(),
-			ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()])),
-			"dlc", QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			ArrayUtil.toArray(groupIds.toArray(new Long[0])), "dlc",
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		users = ListUtil.remove(users, groupUsers);
 

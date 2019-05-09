@@ -124,7 +124,7 @@ public class MBAdminConfigurationAction
 
 			setPreference(
 				actionRequest, preferenceName,
-				priorities.toArray(new String[priorities.size()]));
+				priorities.toArray(new String[0]));
 		}
 	}
 

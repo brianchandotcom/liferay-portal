@@ -202,28 +202,26 @@ public class PortletJSONUtil {
 		}
 
 		String footerCssPaths = JSONFactoryUtil.serialize(
-			footerCssSet.toArray(new String[footerCssSet.size()]));
+			footerCssSet.toArray(new String[0]));
 
 		jsonObject.put(
 			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssPaths));
 
 		String footerJavaScriptPaths = JSONFactoryUtil.serialize(
-			footerJavaScriptSet.toArray(
-				new String[footerJavaScriptSet.size()]));
+			footerJavaScriptSet.toArray(new String[0]));
 
 		jsonObject.put(
 			"footerJavaScriptPaths",
 			JSONFactoryUtil.createJSONArray(footerJavaScriptPaths));
 
 		String headerCssPaths = JSONFactoryUtil.serialize(
-			headerCssSet.toArray(new String[headerCssSet.size()]));
+			headerCssSet.toArray(new String[0]));
 
 		jsonObject.put(
 			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssPaths));
 
 		String headerJavaScriptPaths = JSONFactoryUtil.serialize(
-			headerJavaScriptSet.toArray(
-				new String[headerJavaScriptSet.size()]));
+			headerJavaScriptSet.toArray(new String[0]));
 
 		jsonObject.put(
 			"headerJavaScriptPaths",

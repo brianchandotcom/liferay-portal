@@ -53,8 +53,7 @@ public class AopCacheManager {
 
 		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
 			target,
-			_chainableMethodAdvices.toArray(
-				new ChainableMethodAdvice[_chainableMethodAdvices.size()]),
+			_chainableMethodAdvices.toArray(new ChainableMethodAdvice[0]),
 			transactionExecutor);
 
 		_aopInvocationHandlers.add(aopInvocationHandler);
@@ -191,8 +190,7 @@ public class AopCacheManager {
 
 		private static void _reset() {
 			ChainableMethodAdvice[] chainableMethodAdvices =
-				_chainableMethodAdvices.toArray(
-					new ChainableMethodAdvice[_chainableMethodAdvices.size()]);
+				_chainableMethodAdvices.toArray(new ChainableMethodAdvice[0]);
 
 			for (AopInvocationHandler aopInvocationHandler :
 					_aopInvocationHandlers) {

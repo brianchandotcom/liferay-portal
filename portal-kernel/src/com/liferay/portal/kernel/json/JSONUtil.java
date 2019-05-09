@@ -286,7 +286,7 @@ public class JSONUtil {
 
 		List<Long> values = toLongList(jsonArray, jsonObjectKey);
 
-		return ArrayUtil.toArray(values.toArray(new Long[values.size()]));
+		return ArrayUtil.toArray(values.toArray(new Long[0]));
 	}
 
 	public static List<Long> toLongList(JSONArray jsonArray) {
@@ -384,7 +384,7 @@ public class JSONUtil {
 
 		List<Object> values = toObjectList(jsonArray, jsonObjectKey);
 
-		return values.toArray(new Object[values.size()]);
+		return values.toArray(new Object[0]);
 	}
 
 	public static List<Object> toObjectList(JSONArray jsonArray) {
@@ -482,7 +482,7 @@ public class JSONUtil {
 
 		List<String> values = toStringList(jsonArray, jsonObjectKey);
 
-		return values.toArray(new String[values.size()]);
+		return values.toArray(new String[0]);
 	}
 
 	public static List<String> toStringList(JSONArray jsonArray) {

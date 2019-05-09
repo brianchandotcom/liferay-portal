@@ -93,8 +93,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(
-				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		jsonObject.put(
 			"filebrowserImageBrowseUrl", itemSelectorURL.toString()

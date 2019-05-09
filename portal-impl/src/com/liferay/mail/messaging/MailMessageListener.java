@@ -145,8 +145,7 @@ public class MailMessageListener extends BaseMessageListener {
 			}
 		}
 
-		return filteredInternetAddresses.toArray(
-			new InternetAddress[filteredInternetAddresses.size()]);
+		return filteredInternetAddresses.toArray(new InternetAddress[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

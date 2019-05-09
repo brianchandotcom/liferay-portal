@@ -737,8 +737,7 @@ public class PortletPreferencesFactoryImpl
 			}
 		}
 
-		return new Preference(
-			name, values.toArray(new String[values.size()]), readOnly);
+		return new Preference(name, values.toArray(new String[0]), readOnly);
 	}
 
 	protected PortletPreferences getPortletSetup(

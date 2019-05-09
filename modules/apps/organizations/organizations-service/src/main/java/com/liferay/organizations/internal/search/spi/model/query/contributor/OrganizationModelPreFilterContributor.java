@@ -71,8 +71,7 @@ public class OrganizationModelPreFilterContributor
 
 			termsFilter.addValues(
 				ArrayUtil.toStringArray(
-					excludedOrganizationIds.toArray(
-						new Long[excludedOrganizationIds.size()])));
+					excludedOrganizationIds.toArray(new Long[0])));
 
 			contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST_NOT);
 		}

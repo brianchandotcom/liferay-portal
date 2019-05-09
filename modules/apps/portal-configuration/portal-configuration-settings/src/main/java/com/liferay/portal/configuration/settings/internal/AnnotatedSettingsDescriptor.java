@@ -73,7 +73,7 @@ public class AnnotatedSettingsDescriptor implements SettingsDescriptor {
 			}
 		}
 
-		return propertyMethods.toArray(new Method[propertyMethods.size()]);
+		return propertyMethods.toArray(new Method[0]);
 	}
 
 	private String _getPropertyName(Method propertyMethod) {

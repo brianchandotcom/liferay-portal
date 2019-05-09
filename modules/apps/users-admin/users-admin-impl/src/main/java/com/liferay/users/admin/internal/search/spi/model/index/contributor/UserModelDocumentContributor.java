@@ -104,7 +104,7 @@ public class UserModelDocumentContributor
 	protected long[] getActiveGroupIds(long userId) {
 		List<Long> groupIds = groupLocalService.getActiveGroupIds(userId);
 
-		return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
+		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
 	}
 
 	protected long[] getActiveTransitiveGroupIds(long userId)
@@ -211,12 +211,11 @@ public class UserModelDocumentContributor
 			zips.add(StringUtil.toLowerCase(address.getZip()));
 		}
 
-		document.addText("city", cities.toArray(new String[cities.size()]));
-		document.addText(
-			"country", countries.toArray(new String[countries.size()]));
-		document.addText("region", regions.toArray(new String[regions.size()]));
-		document.addText("street", streets.toArray(new String[streets.size()]));
-		document.addText("zip", zips.toArray(new String[zips.size()]));
+		document.addText("city", cities.toArray(new String[0]));
+		document.addText("country", countries.toArray(new String[0]));
+		document.addText("region", regions.toArray(new String[0]));
+		document.addText("street", streets.toArray(new String[0]));
+		document.addText("zip", zips.toArray(new String[0]));
 	}
 
 	@Reference

@@ -83,7 +83,7 @@ public class MonitoringConfigurationManager
 	public String[] getNamespaces() {
 		Set<String> namespaces = _monitoringControl.getNamespaces();
 
-		return namespaces.toArray(new String[namespaces.size()]);
+		return namespaces.toArray(new String[0]);
 	}
 
 	@Override

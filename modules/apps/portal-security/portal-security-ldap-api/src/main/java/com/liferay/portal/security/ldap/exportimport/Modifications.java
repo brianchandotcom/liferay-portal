@@ -81,8 +81,7 @@ public class Modifications {
 	}
 
 	public ModificationItem[] getItems() {
-		return _modificationItems.toArray(
-			new ModificationItem[_modificationItems.size()]);
+		return _modificationItems.toArray(new ModificationItem[0]);
 	}
 
 	private Modifications() {

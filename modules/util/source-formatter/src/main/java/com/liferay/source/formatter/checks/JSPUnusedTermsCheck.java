@@ -345,7 +345,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		checkedForIncludesFileNames.add(fileName);
 
 		String[] includeFileNamesArray = includeFileNames.toArray(
-			new String[includeFileNames.size()]);
+			new String[0]);
 
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&

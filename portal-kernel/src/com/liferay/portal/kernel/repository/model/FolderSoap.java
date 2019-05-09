@@ -79,7 +79,7 @@ public class FolderSoap implements Serializable {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new FolderSoap[soapModels.size()]);
+		return soapModels.toArray(new FolderSoap[0]);
 	}
 
 	public FolderSoap() {

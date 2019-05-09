@@ -122,8 +122,7 @@ public abstract class BaseWikiContentAlloyEditorLinkBrowseConfigContributor
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(
-				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
 	}

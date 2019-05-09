@@ -51,8 +51,7 @@ public class SessionTreeJSClicks {
 			}
 
 			closeNodes(
-				httpServletRequest, treeId,
-				layoutIds.toArray(new String[layoutIds.size()]));
+				httpServletRequest, treeId, layoutIds.toArray(new String[0]));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -185,8 +184,7 @@ public class SessionTreeJSClicks {
 			}
 
 			openNodes(
-				httpServletRequest, treeId,
-				layoutIds.toArray(new String[layoutIds.size()]));
+				httpServletRequest, treeId, layoutIds.toArray(new String[0]));
 		}
 		catch (Exception e) {
 			_log.error(e, e);

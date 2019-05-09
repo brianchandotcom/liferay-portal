@@ -110,8 +110,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			}
 		}
 
-		return assetEntryClassNames.toArray(
-			new String[assetEntryClassNames.size()]);
+		return assetEntryClassNames.toArray(new String[0]);
 	}
 
 	@Override

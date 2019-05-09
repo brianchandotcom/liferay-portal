@@ -39,7 +39,7 @@ public long[] _filterCategoryIds(long vocabularyId, long[] categoryIds) {
 		}
 	}
 
-	return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[filteredCategoryIds.size()]));
+	return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
 }
 
 private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames, long vocabularyId, ThemeDisplay themeDisplay) {

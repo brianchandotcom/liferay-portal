@@ -216,8 +216,7 @@ public class BuildTaglibsTask extends JavaExec {
 			relativePaths.add(_getRelativePath(file));
 		}
 
-		return StringUtil.merge(
-			relativePaths.toArray(new String[relativePaths.size()]), ",");
+		return StringUtil.merge(relativePaths.toArray(new String[0]), ",");
 	}
 
 	private final List<Object> _componentsXmlFiles = new ArrayList<>();

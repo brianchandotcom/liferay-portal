@@ -267,7 +267,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		properties.put("bean.id", beanName);
 
 		return bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean, properties);
+			names.toArray(new String[0]), bean, properties);
 	}
 
 	private static final String _PORTAL_CONFIG_LOCATION_PARAM =

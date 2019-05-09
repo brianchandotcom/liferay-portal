@@ -147,7 +147,7 @@ public class ImageMagickImpl implements ImageMagick {
 		List<String> output = arrayListOutputConsumer.getOutput();
 
 		if (output != null) {
-			return output.toArray(new String[output.size()]);
+			return output.toArray(new String[0]);
 		}
 
 		return new String[0];

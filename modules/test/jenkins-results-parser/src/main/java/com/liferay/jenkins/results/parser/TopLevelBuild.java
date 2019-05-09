@@ -736,8 +736,7 @@ public class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		return buildFailureElements.toArray(
-			new Element[buildFailureElements.size()]);
+		return buildFailureElements.toArray(new Element[0]);
 	}
 
 	protected Element getCompanionBranchDetailsElement() {
@@ -988,7 +987,7 @@ public class TopLevelBuild extends BaseBuild {
 				"caption", null, captionText,
 				String.valueOf(getDownstreamBuildCount(result, status))),
 			getJenkinsReportTableColumnHeadersElement(),
-			tableRowElements.toArray(new Element[tableRowElements.size()]));
+			tableRowElements.toArray(new Element[0]));
 	}
 
 	protected Element getJenkinsReportHeadElement() {

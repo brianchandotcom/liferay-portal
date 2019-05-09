@@ -74,7 +74,7 @@ public class Query implements Serializable {
 	}
 
 	public Object[] getArguments() {
-		return _arguments.toArray(new Object[_arguments.size()]);
+		return _arguments.toArray(new Object[0]);
 	}
 
 	public String getIdentifier() {

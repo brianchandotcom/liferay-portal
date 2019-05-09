@@ -192,7 +192,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			authors.add(authorElement.getText());
 		}
 
-		return authors.toArray(new String[authors.size()]);
+		return authors.toArray(new String[0]);
 	}
 
 	protected String getAvailability(Element offerListingElement) {

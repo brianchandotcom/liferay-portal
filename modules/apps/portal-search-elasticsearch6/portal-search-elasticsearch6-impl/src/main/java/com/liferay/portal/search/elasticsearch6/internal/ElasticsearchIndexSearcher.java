@@ -338,7 +338,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		List<String> indexes = searchRequest.getIndexes();
 
 		if (!indexes.isEmpty()) {
-			return indexes.toArray(new String[indexes.size()]);
+			return indexes.toArray(new String[0]);
 		}
 
 		String indexName = _indexNameBuilder.getIndexName(

@@ -40,8 +40,8 @@ public class MoreLikeThisQueryTranslatorImpl
 			luceneMoreLikeThisQuery =
 				new org.apache.lucene.queries.mlt.MoreLikeThisQuery(
 					moreLikeThisQuery.getLikeText(),
-					fields.toArray(new String[fields.size()]),
-					new KeywordAnalyzer(), fields.get(0));
+					fields.toArray(new String[0]), new KeywordAnalyzer(),
+					fields.get(0));
 
 		if (moreLikeThisQuery.getMaxQueryTerms() != null) {
 			luceneMoreLikeThisQuery.setMaxQueryTerms(

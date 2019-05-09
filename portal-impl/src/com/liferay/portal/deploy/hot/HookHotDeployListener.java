@@ -2456,7 +2456,7 @@ public class HookHotDeployListener
 				Collections.addAll(mergedStringSet, entry.getValue());
 			}
 
-			return mergedStringSet.toArray(new String[mergedStringSet.size()]);
+			return mergedStringSet.toArray(new String[0]);
 		}
 
 		@Override

@@ -237,7 +237,7 @@ public class UpgradeTableBuilder {
 			}
 		}
 
-		return addIndexes.toArray(new String[addIndexes.size()]);
+		return addIndexes.toArray(new String[0]);
 	}
 
 	private String _getAuthor(String content) {

@@ -59,7 +59,7 @@ public class LayoutTypeControllerTracker {
 	public static String[] getTypes() {
 		Set<String> types = _layoutTypeControllers.keySet();
 
-		return types.toArray(new String[types.size()]);
+		return types.toArray(new String[0]);
 	}
 
 	private static void _registerDefaults(Registry registry) {

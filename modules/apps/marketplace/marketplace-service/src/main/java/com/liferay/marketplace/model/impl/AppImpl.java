@@ -68,7 +68,7 @@ public class AppImpl extends AppBaseImpl {
 			contextNames.add(module.getContextName());
 		}
 
-		_contextNames = contextNames.toArray(new String[contextNames.size()]);
+		_contextNames = contextNames.toArray(new String[0]);
 
 		return _contextNames;
 	}

@@ -75,8 +75,8 @@ public class ContextReplace implements Cloneable {
 			values.add(entryValue);
 		}
 
-		_keys = keys.toArray(new String[keys.size()]);
-		_values = values.toArray(new String[values.size()]);
+		_keys = keys.toArray(new String[0]);
+		_values = values.toArray(new String[0]);
 	}
 
 	private final Map<String, String> _context = new LinkedHashMap<>();

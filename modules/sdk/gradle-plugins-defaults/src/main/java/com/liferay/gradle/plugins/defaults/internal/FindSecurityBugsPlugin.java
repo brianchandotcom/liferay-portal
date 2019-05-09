@@ -235,8 +235,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					Set<File> files = fileCollection.getFiles();
 
-					return _containsClassOrJar(
-						files.toArray(new File[files.size()]));
+					return _containsClassOrJar(files.toArray(new File[0]));
 				}
 
 				private boolean _containsClassOrJar(File[] files) {

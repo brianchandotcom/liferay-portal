@@ -71,7 +71,7 @@ public class MoreLikeThisQueryTranslatorImpl
 
 		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
 			QueryBuilders.moreLikeThisQuery(
-				likeTexts.toArray(new String[likeTexts.size()]),
+				likeTexts.toArray(new String[0]),
 				likeItems.toArray(
 					new MoreLikeThisQueryBuilder.Item[likeItems.size()]));
 
@@ -122,7 +122,7 @@ public class MoreLikeThisQueryTranslatorImpl
 
 		if (!stopWords.isEmpty()) {
 			moreLikeThisQueryBuilder.stopWords(
-				stopWords.toArray(new String[stopWords.size()]));
+				stopWords.toArray(new String[0]));
 		}
 
 		if (moreLikeThisQuery.getTermBoost() != null) {

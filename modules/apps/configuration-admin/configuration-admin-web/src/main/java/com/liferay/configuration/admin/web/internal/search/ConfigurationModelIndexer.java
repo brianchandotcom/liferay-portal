@@ -235,15 +235,14 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			document.addText(
 				FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_DESCRIPTION +
 					fieldNameSuffix,
-				descriptionValues.toArray(
-					new String[descriptionValues.size()]));
+				descriptionValues.toArray(new String[0]));
 
 			List<String> nameValues = _getLocalizedValues(
 				attributeNames, resourceBundleLoader, locale);
 
 			document.addKeyword(
 				FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_NAME + fieldNameSuffix,
-				nameValues.toArray(new String[nameValues.size()]));
+				nameValues.toArray(new String[0]));
 		}
 
 		List<TranslationHelper> translationHelpers = new ArrayList<>(3);

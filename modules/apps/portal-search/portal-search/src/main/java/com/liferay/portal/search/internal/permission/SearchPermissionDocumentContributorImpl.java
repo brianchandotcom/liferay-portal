@@ -159,11 +159,9 @@ public class SearchPermissionDocumentContributorImpl
 				}
 			}
 
+			document.addKeyword(Field.ROLE_ID, roleIds.toArray(new Long[0]));
 			document.addKeyword(
-				Field.ROLE_ID, roleIds.toArray(new Long[roleIds.size()]));
-			document.addKeyword(
-				Field.GROUP_ROLE_ID,
-				groupRoleIds.toArray(new String[groupRoleIds.size()]));
+				Field.GROUP_ROLE_ID, groupRoleIds.toArray(new String[0]));
 		}
 		catch (NoSuchResourceException nsre) {
 			if (_log.isDebugEnabled()) {

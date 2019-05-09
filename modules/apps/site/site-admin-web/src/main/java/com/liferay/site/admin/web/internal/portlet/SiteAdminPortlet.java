@@ -408,8 +408,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			}
 		}
 
-		return ArrayUtil.toArray(
-			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
 
 	protected String getHistoryKey(

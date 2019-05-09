@@ -125,7 +125,7 @@ public class PluginsGitSvnSyncer {
 			}
 		}
 
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 
 	private void _updateGitIgnores(String srcDirName, String destDirName)
@@ -184,7 +184,7 @@ public class PluginsGitSvnSyncer {
 		}
 
 		if (!ignores.isEmpty()) {
-			String[] ignoresArray = ignores.toArray(new String[ignores.size()]);
+			String[] ignoresArray = ignores.toArray(new String[0]);
 
 			for (int i = 0; i < ignoresArray.length; i++) {
 				String ignore = ignoresArray[i];
@@ -294,7 +294,7 @@ public class PluginsGitSvnSyncer {
 		File tempFile = _fileUtil.createTempFile("svn-ignores-", "tmp");
 
 		try {
-			String[] ignoresArray = ignores.toArray(new String[ignores.size()]);
+			String[] ignoresArray = ignores.toArray(new String[0]);
 
 			_fileUtil.write(tempFile, StringUtil.merge(ignoresArray, "\n"));
 

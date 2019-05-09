@@ -369,8 +369,7 @@ public class ConfigurationModelToDDMFormConverter {
 		}
 		else {
 			value = LanguageUtil.format(
-				_resourceBundle, key,
-				arguments.toArray(new String[arguments.size()]));
+				_resourceBundle, key, arguments.toArray(new String[0]));
 		}
 
 		if (value == null) {

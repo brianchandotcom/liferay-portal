@@ -72,7 +72,7 @@ public class InternetAddressUtil {
 			}
 		}
 
-		return list.toArray(new InternetAddress[list.size()]);
+		return list.toArray(new InternetAddress[0]);
 	}
 
 	public static String toString(Address address) {

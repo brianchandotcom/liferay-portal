@@ -1001,12 +1001,12 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 		Hits hits = new HitsImpl();
 
-		hits.setDocs(documents.toArray(new Document[documents.size()]));
+		hits.setDocs(documents.toArray(new Document[0]));
 		hits.setLength(total);
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 		hits.setSearchTime(searchTime);
-		hits.setSnippets(snippets.toArray(new String[snippets.size()]));
+		hits.setSnippets(snippets.toArray(new String[0]));
 		hits.setStart(startTime);
 
 		return hits;

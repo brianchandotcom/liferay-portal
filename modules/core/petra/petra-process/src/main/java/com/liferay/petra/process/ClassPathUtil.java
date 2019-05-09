@@ -47,7 +47,7 @@ public class ClassPathUtil {
 			urls.add(uri.toURL());
 		}
 
-		return urls.toArray(new URL[urls.size()]);
+		return urls.toArray(new URL[0]);
 	}
 
 	public static String getJVMClassPath(boolean includeBootClassPath) {

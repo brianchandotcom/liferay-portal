@@ -48,7 +48,7 @@ public class FileServerTestUtil {
 	}
 
 	public static void cleanUp() {
-		FileHelperUtil.delete(true, paths.toArray(new Path[paths.size()]));
+		FileHelperUtil.delete(true, paths.toArray(new Path[0]));
 
 		paths.clear();
 	}

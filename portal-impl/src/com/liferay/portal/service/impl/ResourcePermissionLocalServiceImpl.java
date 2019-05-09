@@ -166,8 +166,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			filterOwnerActions(name, ownerActionIds);
 
-			String[] ownerPermissions = ownerActionIds.toArray(
-				new String[ownerActionIds.size()]);
+			String[] ownerPermissions = ownerActionIds.toArray(new String[0]);
 
 			setOwnerResourcePermissions(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
@@ -370,7 +369,7 @@ public class ResourcePermissionLocalServiceImpl
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 					primKey, userId, role.getRoleId(),
-					actionIds.toArray(new String[actionIds.size()]),
+					actionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
 
@@ -398,7 +397,7 @@ public class ResourcePermissionLocalServiceImpl
 				if (_updateResourcePermission(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 						primKey, 0, groupRole.getRoleId(),
-						actions.toArray(new String[actions.size()]),
+						actions.toArray(new String[0]),
 						ResourcePermissionConstants.OPERATOR_SET, true,
 						resourcePermissionsMap)) {
 
@@ -432,7 +431,7 @@ public class ResourcePermissionLocalServiceImpl
 				if (_updateResourcePermission(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 						primKey, 0, guestRole.getRoleId(),
-						actions.toArray(new String[actions.size()]),
+						actions.toArray(new String[0]),
 						ResourcePermissionConstants.OPERATOR_SET, true,
 						resourcePermissionsMap)) {
 
@@ -1334,7 +1333,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		setResourcePermissions(
 			companyId, name, scope, primKey, toRoleId,
-			actionIds.toArray(new String[actionIds.size()]));
+			actionIds.toArray(new String[0]));
 
 		resourcePermissionPersistence.remove(resourcePermissionId);
 
@@ -1618,8 +1617,7 @@ public class ResourcePermissionLocalServiceImpl
 
 			setResourcePermissions(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-				role.getRoleId(),
-				actionIds.toArray(new String[actionIds.size()]));
+				role.getRoleId(), actionIds.toArray(new String[0]));
 		}
 	}
 
@@ -1932,7 +1930,7 @@ public class ResourcePermissionLocalServiceImpl
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
 					0, guestRole.getRoleId(),
-					guestActionIds.toArray(new String[guestActionIds.size()]),
+					guestActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
 
@@ -1942,7 +1940,7 @@ public class ResourcePermissionLocalServiceImpl
 			if (_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
 					0, ownerRole.getRoleId(),
-					ownerActionIds.toArray(new String[ownerActionIds.size()]),
+					ownerActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
 
@@ -1953,7 +1951,7 @@ public class ResourcePermissionLocalServiceImpl
 				_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
 					0, siteMemberRole.getRoleId(),
-					groupActionIds.toArray(new String[groupActionIds.size()]),
+					groupActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
 					resourcePermissionsMap)) {
 

@@ -126,7 +126,7 @@ public class AssetCategoryModelDocumentContributor
 
 			List<String> titles = entry.getValue();
 
-			String[] titlesArray = titles.toArray(new String[titles.size()]);
+			String[] titlesArray = titles.toArray(new String[0]);
 
 			if (locale.equals(defaultLocale)) {
 				document.addText(field, titlesArray);

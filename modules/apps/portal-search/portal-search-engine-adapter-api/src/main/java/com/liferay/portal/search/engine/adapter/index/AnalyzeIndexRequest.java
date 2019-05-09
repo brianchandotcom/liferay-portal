@@ -82,7 +82,7 @@ public class AnalyzeIndexRequest implements IndexRequest<AnalyzeIndexResponse> {
 			return StringPool.EMPTY_ARRAY;
 		}
 
-		return _attributes.toArray(new String[_attributes.size()]);
+		return _attributes.toArray(new String[0]);
 	}
 
 	public Set<String> getCharFilters() {

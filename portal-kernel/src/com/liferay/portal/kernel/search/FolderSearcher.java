@@ -49,8 +49,7 @@ public class FolderSearcher extends BaseSearcher {
 			}
 		}
 
-		_classNames = folderClassNames.toArray(
-			new String[folderClassNames.size()]);
+		_classNames = folderClassNames.toArray(new String[0]);
 	}
 
 	@Override

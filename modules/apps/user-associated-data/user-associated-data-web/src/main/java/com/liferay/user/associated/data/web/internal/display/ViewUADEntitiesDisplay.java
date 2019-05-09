@@ -79,8 +79,7 @@ public class ViewUADEntitiesDisplay {
 		}
 
 		return StringUtil.merge(
-			userOwnedPKs.toArray(new String[userOwnedPKs.size()]),
-			StringPool.COMMA);
+			userOwnedPKs.toArray(new String[0]), StringPool.COMMA);
 	}
 
 	public boolean isHierarchy() {

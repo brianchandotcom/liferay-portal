@@ -1097,7 +1097,7 @@ public class ConcurrentMapperHashMapTest {
 	private void _assertEventQueue(Event... expectedEvents) {
 		Assert.assertArrayEquals(
 			_eventQueue.toString(), expectedEvents,
-			_eventQueue.toArray(new Event[_eventQueue.size()]));
+			_eventQueue.toArray(new Event[0]));
 
 		_eventQueue.clear();
 	}

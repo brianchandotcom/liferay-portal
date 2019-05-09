@@ -33,7 +33,7 @@ if (Validator.isNotNull(script)) {
 
 		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
 
-		availableLocales = ddmFormAvailableLocales.toArray(new Locale[ddmFormAvailableLocales.size()]);
+		availableLocales = ddmFormAvailableLocales.toArray(new Locale[0]);
 	}
 	catch (Exception e) {
 	}

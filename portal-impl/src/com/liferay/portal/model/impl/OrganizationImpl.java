@@ -63,7 +63,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 			}
 		}
 
-		return parentTypes.toArray(new String[parentTypes.size()]);
+		return parentTypes.toArray(new String[0]);
 	}
 
 	public static boolean isParentable(String type) {

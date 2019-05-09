@@ -297,7 +297,7 @@ public class FileSystemStore extends BaseStore {
 				repositoryDir.getPath() + StringPool.SLASH + dirName);
 		}
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -316,7 +316,7 @@ public class FileSystemStore extends BaseStore {
 
 		Collections.sort(fileNames);
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override

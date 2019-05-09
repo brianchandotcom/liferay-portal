@@ -69,7 +69,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(InjectTestRule.INSTANCE);
 
-		return testRules.toArray(new TestRule[testRules.size()]);
+		return testRules.toArray(new TestRule[0]);
 	}
 
 	private static final TestRule _springInitializationClassTestRule =

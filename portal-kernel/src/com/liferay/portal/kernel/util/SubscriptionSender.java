@@ -782,8 +782,7 @@ public class SubscriptionSender implements Serializable {
 
 		if (bulk && (_bulkAddresses != null)) {
 			mailMessage.setBulkAddresses(
-				_bulkAddresses.toArray(
-					new InternetAddress[_bulkAddresses.size()]));
+				_bulkAddresses.toArray(new InternetAddress[0]));
 
 			_bulkAddresses.clear();
 		}

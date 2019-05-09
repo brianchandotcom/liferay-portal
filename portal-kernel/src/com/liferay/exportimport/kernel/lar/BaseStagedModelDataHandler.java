@@ -758,7 +758,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		portletDataContext.addAssetTags(
 			ExportImportClassedModelUtil.getClassName(stagedModel),
 			ExportImportClassedModelUtil.getClassPK(stagedModel),
-			assetTagNames.toArray(new String[assetTagNames.size()]));
+			assetTagNames.toArray(new String[0]));
 	}
 
 	protected void importComments(

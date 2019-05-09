@@ -258,7 +258,7 @@ public class LocalProcessLauncher {
 			urls.add(uri.toURL());
 		}
 
-		return urls.toArray(new URL[urls.size()]);
+		return urls.toArray(new URL[0]);
 	}
 
 	private static class HeartbeatThread extends Thread {

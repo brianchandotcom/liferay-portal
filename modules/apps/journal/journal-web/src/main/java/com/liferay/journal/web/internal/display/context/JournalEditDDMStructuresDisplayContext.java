@@ -79,8 +79,7 @@ public class JournalEditDDMStructuresDisplayContext {
 
 		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
 
-		return ddmFormAvailableLocales.toArray(
-			new Locale[ddmFormAvailableLocales.size()]);
+		return ddmFormAvailableLocales.toArray(new Locale[0]);
 	}
 
 	public String getAvailableLocalesJSONArrayString() {

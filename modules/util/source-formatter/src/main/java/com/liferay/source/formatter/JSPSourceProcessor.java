@@ -224,7 +224,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_sourceFormatterMessages.addAll(
 			processCheckstyle(
 				_checkstyleConfiguration, _checkstyleLogger,
-				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()])));
+				_ungeneratedFiles.toArray(new File[0])));
 
 		for (File ungeneratedFile : _ungeneratedFiles) {
 			Files.deleteIfExists(ungeneratedFile.toPath());

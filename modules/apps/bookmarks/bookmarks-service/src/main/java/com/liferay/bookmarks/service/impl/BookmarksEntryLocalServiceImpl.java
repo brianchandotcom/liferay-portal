@@ -290,8 +290,7 @@ public class BookmarksEntryLocalServiceImpl
 	@Override
 	public int getFoldersEntriesCount(long groupId, List<Long> folderIds) {
 		return bookmarksEntryPersistence.countByG_F_S(
-			groupId,
-			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])),
+			groupId, ArrayUtil.toArray(folderIds.toArray(new Long[0])),
 			WorkflowConstants.STATUS_APPROVED);
 	}
 

@@ -474,7 +474,7 @@ public class AuthenticatedSessionManagerImpl
 				headers.add(value);
 			}
 
-			headerMap.put(name, headers.toArray(new String[headers.size()]));
+			headerMap.put(name, headers.toArray(new String[0]));
 		}
 
 		Map<String, String[]> parameterMap =

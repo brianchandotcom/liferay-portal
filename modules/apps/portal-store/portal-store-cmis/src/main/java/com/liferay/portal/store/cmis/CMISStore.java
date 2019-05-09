@@ -235,7 +235,7 @@ public class CMISStore extends BaseStore {
 
 		doGetFileNames(fileNames, StringPool.BLANK, folder);
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -258,7 +258,7 @@ public class CMISStore extends BaseStore {
 
 		doGetFileNames(fileNames, dirName, directory);
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class ExternalRepositoryFactoryUtil {
 	public static String[] getExternalRepositoryClassNames() {
 		Set<String> classNames = _externalRepositoryFactories.keySet();
 
-		return classNames.toArray(new String[classNames.size()]);
+		return classNames.toArray(new String[0]);
 	}
 
 	public static BaseRepository getInstance(String className)

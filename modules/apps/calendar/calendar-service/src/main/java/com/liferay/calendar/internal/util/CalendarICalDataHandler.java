@@ -409,7 +409,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		}
 
 		long[] childCalendarIdsArray = ArrayUtil.toArray(
-			childCalendarIds.toArray(new Long[childCalendarIds.size()]));
+			childCalendarIds.toArray(new Long[0]));
 
 		// Merge calendar booking
 

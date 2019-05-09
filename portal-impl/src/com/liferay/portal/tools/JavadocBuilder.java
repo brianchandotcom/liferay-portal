@@ -608,7 +608,7 @@ public class JavadocBuilder {
 			includes.add("**\\*.java");
 		}
 
-		ds.setIncludes(includes.toArray(new String[includes.size()]));
+		ds.setIncludes(includes.toArray(new String[0]));
 
 		ds.scan();
 

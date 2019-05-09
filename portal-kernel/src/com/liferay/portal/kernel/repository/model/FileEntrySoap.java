@@ -84,7 +84,7 @@ public class FileEntrySoap implements Serializable {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new FileEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new FileEntrySoap[0]);
 	}
 
 	public FileEntrySoap() {

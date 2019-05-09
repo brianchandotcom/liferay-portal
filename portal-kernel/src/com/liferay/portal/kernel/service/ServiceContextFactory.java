@@ -316,8 +316,7 @@ public class ServiceContextFactory {
 
 		if (updateAssetCategoryIds) {
 			assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(
-					new Long[assetCategoryIdsList.size()]));
+				assetCategoryIdsList.toArray(new Long[0]));
 		}
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
@@ -481,8 +480,7 @@ public class ServiceContextFactory {
 
 		if (updateAssetCategoryIds) {
 			assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(
-					new Long[assetCategoryIdsList.size()]));
+				assetCategoryIdsList.toArray(new Long[0]));
 		}
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);

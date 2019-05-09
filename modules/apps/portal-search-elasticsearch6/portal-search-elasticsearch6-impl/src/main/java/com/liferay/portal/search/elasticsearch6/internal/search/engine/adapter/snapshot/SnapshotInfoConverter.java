@@ -60,8 +60,7 @@ public class SnapshotInfoConverter {
 		List<String> indices = snapshotInfo.indices();
 
 		if (ListUtil.isNotEmpty(indices)) {
-			snapshotDetails.setIndexNames(
-				indices.toArray(new String[indices.size()]));
+			snapshotDetails.setIndexNames(indices.toArray(new String[0]));
 		}
 
 		SnapshotState snapshotState = convert(snapshotInfo.state());

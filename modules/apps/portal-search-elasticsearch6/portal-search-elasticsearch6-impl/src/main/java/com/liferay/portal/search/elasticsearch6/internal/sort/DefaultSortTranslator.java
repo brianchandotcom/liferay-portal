@@ -94,8 +94,7 @@ public class DefaultSortTranslator implements SortTranslator {
 
 				GeoDistanceSortBuilder geoDistanceSortBuilder =
 					SortBuilders.geoDistanceSort(
-						sortFieldName,
-						geoPoints.toArray(new GeoPoint[geoPoints.size()]));
+						sortFieldName, geoPoints.toArray(new GeoPoint[0]));
 
 				geoDistanceSortBuilder.geoDistance(GeoDistance.ARC);
 
@@ -103,7 +102,7 @@ public class DefaultSortTranslator implements SortTranslator {
 
 				if (!geoHashes.isEmpty()) {
 					geoDistanceSort.addGeoHash(
-						geoHashes.toArray(new String[geoHashes.size()]));
+						geoHashes.toArray(new String[0]));
 				}
 
 				sortBuilder = geoDistanceSortBuilder;

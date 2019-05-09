@@ -61,7 +61,7 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 			resources.add(new UrlResource(enumeration.nextElement()));
 		}
 
-		return resources.toArray(new Resource[resources.size()]);
+		return resources.toArray(new Resource[0]);
 	}
 
 	@Override

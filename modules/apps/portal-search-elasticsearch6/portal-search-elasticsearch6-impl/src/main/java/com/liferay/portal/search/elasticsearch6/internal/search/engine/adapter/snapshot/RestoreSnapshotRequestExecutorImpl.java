@@ -52,8 +52,7 @@ public class RestoreSnapshotRequestExecutorImpl
 		List<String> indexNames = restoreInfo.indices();
 
 		return new RestoreSnapshotResponse(
-			restoreInfo.name(),
-			indexNames.toArray(new String[indexNames.size()]),
+			restoreInfo.name(), indexNames.toArray(new String[0]),
 			restoreInfo.totalShards(), restoreInfo.failedShards());
 	}
 

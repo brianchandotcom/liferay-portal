@@ -155,7 +155,7 @@ public class DefaultSearchResultPermissionFilter
 			}
 		}
 
-		hits.setDocs(docs.toArray(new Document[docs.size()]));
+		hits.setDocs(docs.toArray(new Document[0]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - hits.getStart()) /
@@ -194,7 +194,7 @@ public class DefaultSearchResultPermissionFilter
 
 		Collections.addAll(set, _PERMISSION_SELECTED_FIELD_NAMES);
 
-		return set.toArray(new String[set.size()]);
+		return set.toArray(new String[0]);
 	}
 
 	protected boolean isGroupAdmin(SearchContext searchContext) {
@@ -447,7 +447,7 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		protected void updateHits(Hits hits, int size, long startTime) {
-			hits.setDocs(documents.toArray(new Document[documents.size()]));
+			hits.setDocs(documents.toArray(new Document[0]));
 			hits.setScores(ArrayUtil.toFloatArray(scores));
 			hits.setLength(size);
 			hits.setSearchTime(

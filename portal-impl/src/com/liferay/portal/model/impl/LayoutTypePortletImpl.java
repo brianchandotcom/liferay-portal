@@ -1151,8 +1151,7 @@ public class LayoutTypePortletImpl
 		}
 
 		try {
-			onRemoveFromLayout(
-				customPortletIds.toArray(new String[customPortletIds.size()]));
+			onRemoveFromLayout(customPortletIds.toArray(new String[0]));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1946,8 +1945,7 @@ public class LayoutTypePortletImpl
 
 		try {
 			PortletLocalServiceUtil.deletePortlets(
-				getCompanyId(),
-				portletIdList.toArray(new String[portletIdList.size()]),
+				getCompanyId(), portletIdList.toArray(new String[0]),
 				getPlid());
 		}
 		catch (PortalException pe) {

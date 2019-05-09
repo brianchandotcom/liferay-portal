@@ -275,7 +275,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		}
 
 		_bundleBlacklistManager.addToBlacklistAndUninstall(
-			symbolicNames.toArray(new String[symbolicNames.size()]));
+			symbolicNames.toArray(new String[0]));
 	}
 
 	public void updatePluginSetting(

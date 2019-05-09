@@ -101,7 +101,7 @@ public class JobState implements Cloneable, Serializable {
 			return null;
 		}
 
-		return _exceptions.toArray(new ObjectValuePair[_exceptions.size()]);
+		return _exceptions.toArray(new ObjectValuePair[0]);
 	}
 
 	public int getExceptionsMaxSize() {

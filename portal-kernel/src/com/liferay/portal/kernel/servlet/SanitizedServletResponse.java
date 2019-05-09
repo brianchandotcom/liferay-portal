@@ -269,8 +269,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			xFrameOptionKVPs.add(new KeyValuePair(url, value));
 		}
 
-		_xFrameOptionKVPs = xFrameOptionKVPs.toArray(
-			new KeyValuePair[xFrameOptionKVPs.size()]);
+		_xFrameOptionKVPs = xFrameOptionKVPs.toArray(new KeyValuePair[0]);
 
 		if (_xFrameOptionKVPs.length == 0) {
 			_X_FRAME_OPTIONS = false;

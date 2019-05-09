@@ -85,7 +85,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 			return StringPool.EMPTY_ARRAY;
 		}
 
-		return actionIds.toArray(new String[actionIds.size()]);
+		return actionIds.toArray(new String[0]);
 	}
 
 	public List<String> getActionIdsList(String roleName) {

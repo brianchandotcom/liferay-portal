@@ -59,7 +59,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 	public String[] getTypes() {
 		Set<String> types = _siteNavigationMenuItemTypes.keySet();
 
-		return types.toArray(new String[types.size()]);
+		return types.toArray(new String[0]);
 	}
 
 	@Reference(

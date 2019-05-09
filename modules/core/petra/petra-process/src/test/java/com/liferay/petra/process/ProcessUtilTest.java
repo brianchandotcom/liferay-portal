@@ -349,7 +349,7 @@ public class ProcessUtilTest {
 
 		Collections.addAll(argumentsList, arguments);
 
-		return argumentsList.toArray(new String[argumentsList.size()]);
+		return argumentsList.toArray(new String[0]);
 	}
 
 	private static final String _CLASS_PATH;

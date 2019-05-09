@@ -94,9 +94,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 		Collection<VerifiableGroupedModel> verifiableGroupedModels =
 			verifiableGroupedModelsMap.values();
 
-		verify(
-			verifiableGroupedModels.toArray(
-				new VerifiableGroupedModel[verifiableGroupedModels.size()]));
+		verify(verifiableGroupedModels.toArray(new VerifiableGroupedModel[0]));
 	}
 
 	protected long getGroupId(

@@ -115,7 +115,7 @@ public class DeploymentHelper {
 					"/DeploymentHelperContextListener.class"));
 
 		ZipUtil.pack(
-			zipEntrySources.toArray(new ZipEntrySource[zipEntrySources.size()]),
+			zipEntrySources.toArray(new ZipEntrySource[0]),
 			new File(outputFileName));
 	}
 

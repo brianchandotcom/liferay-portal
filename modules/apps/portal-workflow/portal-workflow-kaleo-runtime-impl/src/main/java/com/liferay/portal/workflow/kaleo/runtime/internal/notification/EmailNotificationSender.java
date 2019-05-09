@@ -146,8 +146,7 @@ public class EmailNotificationSender
 		}
 
 		mailMessage.setBulkAddresses(
-			internetAddresses.toArray(
-				new InternetAddress[internetAddresses.size()]));
+			internetAddresses.toArray(new InternetAddress[0]));
 
 		_mailService.sendEmail(mailMessage);
 	}
@@ -169,8 +168,7 @@ public class EmailNotificationSender
 			internetAddresses.add(notificationRecipient.getInternetAddress());
 		}
 
-		return internetAddresses.toArray(
-			new InternetAddress[internetAddresses.size()]);
+		return internetAddresses.toArray(new InternetAddress[0]);
 	}
 
 	private String _fromAddress;

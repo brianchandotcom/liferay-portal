@@ -63,7 +63,7 @@ public class RSSPortletPreferencesTranslator
 			valuesList.add(jsonObject.getString(jsonObjectKey));
 		}
 
-		String[] values = valuesList.toArray(new String[valuesList.size()]);
+		String[] values = valuesList.toArray(new String[0]);
 
 		portletPreferences.setValues(key, values);
 	}

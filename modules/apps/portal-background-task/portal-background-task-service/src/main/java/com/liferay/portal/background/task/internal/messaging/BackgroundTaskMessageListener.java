@@ -317,7 +317,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 
 		return AggregateClassLoader.getAggregateClassLoader(
-			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
+			classLoaders.toArray(new ClassLoader[0]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

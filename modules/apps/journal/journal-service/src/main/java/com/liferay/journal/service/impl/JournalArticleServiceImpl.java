@@ -1353,8 +1353,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Override
 	public int getFoldersAndArticlesCount(long groupId, List<Long> folderIds) {
 		return journalArticlePersistence.filterCountByG_F(
-			groupId,
-			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])));
+			groupId, ArrayUtil.toArray(folderIds.toArray(new Long[0])));
 	}
 
 	/**

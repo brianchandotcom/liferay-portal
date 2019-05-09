@@ -520,7 +520,7 @@ public class JCRStore extends BaseStore {
 			_jcrFactoryWrapper.closeSession(session);
 		}
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -552,7 +552,7 @@ public class JCRStore extends BaseStore {
 			_jcrFactoryWrapper.closeSession(session);
 		}
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override

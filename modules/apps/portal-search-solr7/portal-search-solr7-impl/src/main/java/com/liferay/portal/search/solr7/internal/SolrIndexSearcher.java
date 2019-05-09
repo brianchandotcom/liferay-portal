@@ -385,8 +385,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			selectedFieldNames.add(Field.UID);
 		}
 
-		solrQuery.setFields(
-			selectedFieldNames.toArray(new String[selectedFieldNames.size()]));
+		solrQuery.setFields(selectedFieldNames.toArray(new String[0]));
 	}
 
 	protected void addSnippets(
@@ -538,8 +537,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		_addAll(filterQueries, solrQuery.getFilterQueries());
 
 		if (!filterQueries.isEmpty()) {
-			solrQuery.setFilterQueries(
-				filterQueries.toArray(new String[filterQueries.size()]));
+			solrQuery.setFilterQueries(filterQueries.toArray(new String[0]));
 
 			if (Validator.isBlank(solrQuery.getQuery())) {
 				solrQuery.setQuery("*:*");
@@ -765,7 +763,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		processSolrDocumentList(
 			queryResponse, solrDocumentList, query, hits, documents, scores);
 
-		hits.setDocs(documents.toArray(new Document[documents.size()]));
+		hits.setDocs(documents.toArray(new Document[0]));
 		hits.setQueryTerms(new String[0]);
 		hits.setScores(ArrayUtil.toFloatArray(scores));
 	}
@@ -787,8 +785,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 			Field field = new Field(
 				fieldName,
-				ArrayUtil.toStringArray(
-					fieldValues.toArray(new Object[fieldValues.size()])));
+				ArrayUtil.toStringArray(fieldValues.toArray(new Object[0])));
 
 			document.add(field);
 		}

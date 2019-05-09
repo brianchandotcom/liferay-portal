@@ -208,7 +208,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			kbFolderId = kbFolder.getParentKBFolderId();
 		}
 
-		return kbFolderNames.toArray(new String[kbFolderNames.size()]);
+		return kbFolderNames.toArray(new String[0]);
 	}
 
 	protected void reindexAttachments(KBArticle kbArticle)

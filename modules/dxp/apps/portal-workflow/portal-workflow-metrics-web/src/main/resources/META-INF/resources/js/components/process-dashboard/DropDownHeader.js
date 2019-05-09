@@ -9,12 +9,16 @@ const MenuItem = ({ children }) => {
 };
 
 export default class DropDownHeader extends React.Component {
+	componentWillUnmount() {
+		ReactDOM.unmountComponentAtNode(this.container);
+	}
+
+	get container() {
+		return document.querySelector('.user-control-group div.control-menu-icon');
+	}
+
 	render() {
 		const { children } = this.props;
-
-		const container = document.querySelector(
-			'.user-control-group div.control-menu-icon'
-		);
 
 		return (
 			<React.Fragment>
@@ -41,7 +45,7 @@ export default class DropDownHeader extends React.Component {
 							<ul className="list-unstyled">{children}</ul>
 						</div>
 					</div>,
-					container
+					this.container
 				)}
 			</React.Fragment>
 		);

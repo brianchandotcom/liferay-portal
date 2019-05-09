@@ -121,6 +121,15 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTEntry> fetchCTEntriesByClassNameId(
+		long ctCollectionId, long modelClassNameId,
+		QueryDefinition<CTEntry> queryDefinition) {
+
+		return ctEntryFinder.findByC_C(
+			ctCollectionId, modelClassNameId, queryDefinition);
+	}
+
+	@Override
 	public CTEntry fetchCTEntry(long modelClassNameId, long modelClassPK) {
 		return ctEntryPersistence.fetchByC_C(modelClassNameId, modelClassPK);
 	}

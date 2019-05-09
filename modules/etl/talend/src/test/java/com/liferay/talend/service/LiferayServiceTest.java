@@ -38,9 +38,12 @@ public class LiferayServiceTest {
 		Assert.assertFalse(
 			"Pageable endpoints are empty", readableEndpoints.isEmpty());
 
-		Assert.assertEquals(
-			"Pageable endpoints contain path", "/test/path",
-			readableEndpoints.get(0));
+		Assert.assertTrue(
+			"Pageable endpoints contain path",
+			readableEndpoints.contains("/test/path1"));
+		Assert.assertTrue(
+			"Pageable endpoints contain path",
+			readableEndpoints.contains("/test/path2"));
 	}
 
 	@Test
@@ -97,7 +100,7 @@ public class LiferayServiceTest {
 						"key", "value"
 					)
 				).add(
-					"TestEntity",
+					"TestEntity1",
 					Json.createObjectBuilder(
 					).add(
 						"properties",
@@ -113,6 +116,30 @@ public class LiferayServiceTest {
 							Json.createObjectBuilder(
 							).add(
 								"type", "integer"
+							)
+						)
+					)
+				).add(
+					"TestEntity2",
+					Json.createObjectBuilder(
+					).add(
+						"properties",
+						Json.createObjectBuilder(
+						).add(
+							"name",
+							Json.createObjectBuilder(
+							).add(
+								"type", "string"
+							).add(
+								"format", "date"
+							)
+						).add(
+							"id",
+							Json.createObjectBuilder(
+							).add(
+								"type", "integer"
+							).add(
+								"format", "int64"
 							)
 						)
 					)
@@ -135,7 +162,7 @@ public class LiferayServiceTest {
 					"key", "value"
 				)
 			).add(
-				"/test/path",
+				"/test/path1",
 				Json.createObjectBuilder(
 				).add(
 					"get",
@@ -157,7 +184,38 @@ public class LiferayServiceTest {
 										Json.createObjectBuilder(
 										).add(
 											"$ref",
-											"#/components/schemas/TestEntity"
+											"#/components/schemas/TestEntity1"
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			).add(
+				"/test/path2",
+				Json.createObjectBuilder(
+				).add(
+					"get",
+					Json.createObjectBuilder(
+					).add(
+						"responses",
+						Json.createObjectBuilder(
+						).add(
+							"default",
+							Json.createObjectBuilder(
+							).add(
+								"content",
+								Json.createObjectBuilder(
+								).add(
+									"application/json",
+									Json.createObjectBuilder(
+									).add(
+										"schema",
+										Json.createObjectBuilder(
+										).add(
+											"$ref",
+											"#/components/schemas/TestEntity2"
 										)
 									)
 								)

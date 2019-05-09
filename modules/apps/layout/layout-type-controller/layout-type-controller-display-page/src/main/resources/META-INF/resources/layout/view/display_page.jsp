@@ -66,7 +66,7 @@ JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.get
 				%>
 
 					<div class="container-fluid bg-<%= backgroundColorCssClass %> px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-						<div class="<%= Objects.equals(containerType, "fixed") ? "container" : "container-fluid" %> p-0">
+						<div class="<%= Objects.equals(containerType, "fixed") ? "container" : "container-fluid" %>">
 							<div class="row <%= columnSpacing ? StringPool.BLANK : "no-gutters" %>">
 
 								<%

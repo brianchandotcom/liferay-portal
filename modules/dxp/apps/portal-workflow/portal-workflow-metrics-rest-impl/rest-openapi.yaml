@@ -81,6 +81,8 @@ components:
         SLA:
             description: https://www.schema.org/SLA
             properties:
+                calendarKey:
+                    type: string
                 dateModified:
                     format: date-time
                     type: string

@@ -26,6 +26,7 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
+		<column name="calendarKey" type="String" />
 		<column name="processId" type="long" />
 		<column name="processVersion" type="String" />
 		<column name="pauseNodeKeys" type="String" />

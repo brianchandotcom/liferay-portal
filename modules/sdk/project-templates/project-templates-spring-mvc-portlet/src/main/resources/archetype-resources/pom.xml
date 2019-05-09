@@ -15,9 +15,15 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc-portlet</artifactId>
-			<version>4.1.9.RELEASE</version>
+			<groupId>com.liferay.portletmvc4spring</groupId>
+			<artifactId>com.liferay.portletmvc4spring.thin</artifactId>
+			<version>4.1.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 #if (${liferayVersion.startsWith("7.0")})
 		<dependency>
@@ -65,6 +71,12 @@
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
 			<version>1.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc-portlet</artifactId>
+			<version>4.1.9.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

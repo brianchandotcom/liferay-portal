@@ -69,10 +69,6 @@ public class AssetDisplayPageFormProcessorImpl
 
 			assetDisplayPageId = _getDefaultLayoutPageTemplateEntryId(
 				className, classPK, themeDisplay);
-
-			if (assetDisplayPageId == 0) {
-				displayPageType = AssetDisplayPageConstants.TYPE_NONE;
-			}
 		}
 
 		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {

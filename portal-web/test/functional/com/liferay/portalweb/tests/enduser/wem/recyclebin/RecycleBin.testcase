@@ -62,10 +62,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinBlogs {
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
@@ -114,10 +110,6 @@ definition {
 	@priority = "3"
 	test RecycleBinBookmarks {
 		property portal.release = "false";
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Bookmarks");
 
@@ -217,8 +209,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinMBAttachment {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -279,10 +269,6 @@ definition {
 	test RecycleBinScheduledCleanup {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
@@ -320,10 +306,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
@@ -412,10 +394,6 @@ definition {
 	test RecycleBinSearchDMEntriesInFolder {
 		property custom.properties = "default.layout.template.id=1_column";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
@@ -493,10 +471,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinStaging {
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
@@ -575,8 +549,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinWebContent {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -703,8 +675,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinWiki {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -819,16 +789,12 @@ definition {
 	test RestoreDMDocumentFromFolderCP {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -841,8 +807,6 @@ definition {
 			dmDocumentDescription = "DM Document Description 1",
 			dmDocumentTitle = "DM Document Title 1");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -853,8 +817,6 @@ definition {
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description 2",
 			dmDocumentTitle = "DM Document Title 2");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -867,8 +829,6 @@ definition {
 			dmDocumentDescription = "DM Document Description 3",
 			dmDocumentTitle = "DM Document Title 3");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -877,8 +837,6 @@ definition {
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder Name");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -892,8 +850,6 @@ definition {
 			assetType2 = "Document",
 			documentName = "DM Document Title 2");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -906,8 +862,6 @@ definition {
 
 	@priority = "3"
 	test RestoreMessageboardsThreadViaRBCP {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -983,8 +937,6 @@ definition {
 
 	@priority = "3"
 	test RestoreWebContentFromFolderCP {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1056,8 +1008,6 @@ definition {
 
 	@priority = "3"
 	test RestoreWebContentWithArticleVersions {
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

@@ -23,8 +23,6 @@ import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
 import java.io.File;
 import java.io.InputStream;
 
@@ -36,6 +34,7 @@ import java.nio.file.attribute.PosixFilePermissions;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;

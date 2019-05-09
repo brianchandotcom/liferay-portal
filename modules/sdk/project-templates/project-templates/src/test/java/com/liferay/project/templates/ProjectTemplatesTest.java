@@ -1785,6 +1785,15 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/test/constants/FooPortletKeys.java",
+			"public class FooPortletKeys");
+		_testContains(
+			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
+			"package foo.test.portlet;",
+			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",
@@ -1806,6 +1815,15 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/test/constants/FooPortletKeys.java",
+			"public class FooPortletKeys");
+		_testContains(
+			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
+			"package foo.test.portlet;",
+			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",

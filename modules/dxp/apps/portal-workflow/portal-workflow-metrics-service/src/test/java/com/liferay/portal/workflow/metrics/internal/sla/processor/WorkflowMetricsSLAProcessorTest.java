@@ -19,7 +19,10 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.workflow.metrics.internal.sla.calendar.DefaultWorkflowMetricsSLACalendar;
+import com.liferay.portal.workflow.metrics.internal.sla.calendar.WorkflowMetricsSLACalendarTrackerImpl;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
@@ -53,7 +56,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeInstance() {
+	public void testProcessOnTimeInstance() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -72,7 +75,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeInstanceWithParallelTasks() {
+	public void testProcessOnTimeInstanceWithParallelTasks() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -105,7 +108,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeSLANotStarted() {
+	public void testProcessOnTimeSLANotStarted() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -133,7 +136,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeSLAPaused() {
+	public void testProcessOnTimeSLAPaused() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -187,7 +190,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeSLAStopped() {
+	public void testProcessOnTimeSLAStopped() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -248,7 +251,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOnTimeSLAStoppedWithSameTask() {
+	public void testProcessOnTimeSLAStoppedWithSameTask() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -292,7 +295,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOverdueInstance() {
+	public void testProcessOverdueInstance() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -311,7 +314,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testProcessOverdueInstanceWithParallelTasks() {
+	public void testProcessOverdueInstanceWithParallelTasks() throws Exception {
 		LocalDateTime localDateTime = _createLocalDateTime();
 
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
@@ -340,6 +343,24 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 				}));
 	}
 
+	protected WorkflowMetricsSLACalendarTracker
+			mockWorkflowMetricsSLACalendarTracker()
+		throws Exception {
+
+		WorkflowMetricsSLACalendarTrackerImpl metricsSLACalendarTrackerImpl =
+			new WorkflowMetricsSLACalendarTrackerImpl();
+
+		field(
+			WorkflowMetricsSLACalendarTrackerImpl.class,
+			"_defaultWorkflowMetricsSLACalendar"
+		).set(
+			metricsSLACalendarTrackerImpl,
+			new DefaultWorkflowMetricsSLACalendar()
+		);
+
+		return metricsSLACalendarTrackerImpl;
+	}
+
 	private Document _createDocument(Map<String, Object> values) {
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
@@ -361,10 +382,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	private void _test(
-		LocalDateTime createDateLocalDateTime, long duration, long elapsedTime,
-		LocalDateTime localDateTime, boolean onTime, long remainingTime,
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
-		Document... documents) {
+			LocalDateTime createDateLocalDateTime, long duration,
+			long elapsedTime, LocalDateTime localDateTime, boolean onTime,
+			long remainingTime, WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
+			Document... documents)
+		throws Exception {
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
 			WorkflowMetricsSLADefinition.class);
@@ -388,13 +410,14 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	private void _test(
-		LocalDateTime createDateLocalDateTime, long elapsedTime,
-		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
-		LocalDateTime localDateTime, boolean onTime, long remainingTime,
-		long startNodeId,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
-		WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
-		Document... documents) {
+			LocalDateTime createDateLocalDateTime, long elapsedTime,
+			WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
+			LocalDateTime localDateTime, boolean onTime, long remainingTime,
+			long startNodeId,
+			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+			WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
+			Document... documents)
+		throws Exception {
 
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor() {
@@ -418,6 +441,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 				}
 
 			};
+
+		field(
+			WorkflowMetricsSLAProcessor.class,
+			"_workflowMetricsSLACalendarTracker"
+		).set(
+			workflowMetricsSLAProcessor, mockWorkflowMetricsSLACalendarTracker()
+		);
 
 		Optional<WorkflowMetricsSLAProcessResult> optional =
 			workflowMetricsSLAProcessor.process(

@@ -2013,7 +2013,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
-            description: Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+            description: Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: postDocumentFolderDocument
             parameters:
                 - in: path
@@ -2158,7 +2158,7 @@ paths:
                     description: ""
             tags: ["Document"]
         patch:
-            description: Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+            description: Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: patchDocument
             parameters:
                 - in: path
@@ -2190,7 +2190,7 @@ paths:
                     description: ""
             tags: ["Document"]
         put:
-            description: Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+            description: Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: putDocument
             parameters:
                 - in: path
@@ -2515,7 +2515,7 @@ paths:
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
         post:
-            description: Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts: a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
+            description: Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
             operationId: postKnowledgeBaseArticleKnowledgeBaseAttachment
             parameters:
                 - in: path
@@ -3154,7 +3154,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
-            description: Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata.
+            description: Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata.
             operationId: postMessageBoardMessageMessageBoardAttachment
             parameters:
                 - in: path
@@ -3725,7 +3725,7 @@ paths:
                     description: ""
             tags: ["MessageBoardAttachment"]
         post:
-            description: Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
+            description: Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
             operationId: postMessageBoardThreadMessageBoardAttachment
             parameters:
                 - in: path
@@ -3974,7 +3974,7 @@ paths:
                     description: ""
             tags: ["BlogPostingImage"]
         post:
-            description: Creates a blog post image. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
+            description: Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.
             operationId: postSiteBlogPostingImage
             parameters:
                 - in: path
@@ -4334,7 +4334,7 @@ paths:
                     description: ""
             tags: ["Document"]
         post:
-            description: Creates a new document. The request body must be `multipart/form-data` with two parts: the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
+            description: Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.
             operationId: postSiteDocument
             parameters:
                 - in: path

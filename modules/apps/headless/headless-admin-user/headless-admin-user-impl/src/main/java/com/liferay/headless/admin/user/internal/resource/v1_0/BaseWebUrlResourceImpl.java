@@ -22,6 +22,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -53,6 +54,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the organization's URLs.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -69,6 +71,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the user's URLs.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -85,6 +88,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the web URL.")
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "webUrlId")})
 	@Path("/web-urls/{webUrlId}")
 	@Produces({"application/json", "application/xml"})

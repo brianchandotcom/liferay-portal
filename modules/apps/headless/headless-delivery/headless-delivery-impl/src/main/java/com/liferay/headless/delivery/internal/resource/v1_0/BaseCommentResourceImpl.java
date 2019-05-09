@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -61,6 +62,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the blog post's comments in a list. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "blogPostingId"),
@@ -87,6 +91,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new comment on the blog post.")
 	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
@@ -105,6 +110,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the comment and returns a 204 if the operation succeeded."
+	)
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
 	@Produces("application/json")
@@ -117,6 +125,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the comment.")
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
 	@Produces({"application/json", "application/xml"})
@@ -131,6 +140,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
@@ -147,6 +159,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the parent comment's child comments. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentCommentId"),
@@ -173,6 +188,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a new child comment of the existing comment."
+	)
 	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "parentCommentId")}
@@ -191,6 +209,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the document's comments. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "documentId"),
@@ -217,6 +238,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new comment on the document.")
 	@POST
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
@@ -235,6 +257,9 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the structured content's comments. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
@@ -261,6 +286,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new comment on the structured content.")
 	@POST
 	@Parameters(
 		value = {

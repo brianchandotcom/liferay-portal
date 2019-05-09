@@ -22,6 +22,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -53,6 +54,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the organization's phone numbers.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -69,6 +71,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the phone number.")
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "phoneId")})
 	@Path("/phones/{phoneId}")
 	@Produces({"application/json", "application/xml"})
@@ -83,6 +86,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the user's phone numbers.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)

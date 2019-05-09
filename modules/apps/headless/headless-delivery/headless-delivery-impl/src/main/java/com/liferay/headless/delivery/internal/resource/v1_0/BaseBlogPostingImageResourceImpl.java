@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -62,6 +63,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(description = "Deletes the blog post's image.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
 	)
@@ -76,6 +78,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the blog post's image. The binary image is returned as a relative URL to the image itself."
+	)
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
 	)
@@ -92,6 +97,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's blog post images. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -117,6 +125,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@Consumes("multipart/form-data")
+	@Operation(
+		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
+	)
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-posting-images")

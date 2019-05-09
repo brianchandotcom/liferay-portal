@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -58,6 +59,9 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves information about the user who made the request."
+	)
 	@Path("/my-user-account")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
@@ -67,6 +71,9 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the organization's members (users). Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "organizationId"),
@@ -93,6 +100,9 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the user accounts. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -116,6 +126,7 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the user account.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -132,6 +143,9 @@ public abstract class BaseUserAccountResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site members' user accounts. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "webSiteId"),

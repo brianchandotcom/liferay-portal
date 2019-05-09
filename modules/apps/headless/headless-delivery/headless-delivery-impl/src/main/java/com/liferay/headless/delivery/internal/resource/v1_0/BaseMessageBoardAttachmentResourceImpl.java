@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -58,6 +59,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board attachment and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
@@ -75,6 +79,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board attachment.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
@@ -94,6 +99,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the message board message's attachments."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -115,6 +123,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@Consumes("multipart/form-data")
+	@Operation(
+		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -137,6 +148,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the message board thread's attachments."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -158,6 +172,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@Consumes("multipart/form-data")
+	@Operation(
+		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
 	@POST
 	@Parameters(
 		value = {

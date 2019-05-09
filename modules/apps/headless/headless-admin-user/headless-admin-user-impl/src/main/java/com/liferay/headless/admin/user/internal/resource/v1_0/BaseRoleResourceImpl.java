@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -54,6 +55,9 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the portal instance's roles. Results can be paginated."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -71,6 +75,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the role.")
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "roleId")})
 	@Path("/roles/{roleId}")
 	@Produces({"application/json", "application/xml"})

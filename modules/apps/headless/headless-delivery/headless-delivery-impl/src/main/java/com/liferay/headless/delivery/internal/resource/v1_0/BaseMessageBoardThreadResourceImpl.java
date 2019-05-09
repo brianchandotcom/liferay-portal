@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -64,6 +65,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId"),
@@ -93,6 +97,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Creates a new message board thread inside a section."
+	)
 	@POST
 	@Parameters(
 		value = {
@@ -115,6 +122,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -131,6 +141,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board thread.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -149,6 +160,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	@PATCH
 	@Parameters(
 		value = {
@@ -235,6 +249,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the message board thread with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -255,6 +272,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@DELETE
+	@Operation(
+		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -271,6 +291,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the message board thread's rating.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -289,6 +310,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates the message board thread's rating.")
 	@POST
 	@Parameters(
 		value = {
@@ -309,6 +331,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {
@@ -329,6 +354,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@GET
+	@Operation(
+		description = "Retrieves the Site's message board threads. Results can be paginated, filtered, searched, flattened, and sorted."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -356,6 +384,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new message board thread.")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/message-board-threads")

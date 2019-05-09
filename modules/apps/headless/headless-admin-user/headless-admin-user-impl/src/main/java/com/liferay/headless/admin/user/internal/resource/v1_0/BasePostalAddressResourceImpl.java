@@ -22,6 +22,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -54,6 +55,7 @@ public abstract class BasePostalAddressResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the organization's postal addresses.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -70,6 +72,7 @@ public abstract class BasePostalAddressResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the postal address.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "postalAddressId")}
 	)
@@ -86,6 +89,7 @@ public abstract class BasePostalAddressResourceImpl
 
 	@Override
 	@GET
+	@Operation(description = "Retrieves the user's postal addresses.")
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)

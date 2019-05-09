@@ -1160,9 +1160,9 @@ definition {
 			folderName = "WC Folder Name",
 			webContentTitle = "WC Folder Name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "View History",
-			rowEntry = "Web Content Title Edit Draft");
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Web Content Title Edit Draft",
+			menuItem = "View History");
 
 		WebContent.viewSpecificVersionHistoryCP(
 			webContentStatus = "APPROVED",

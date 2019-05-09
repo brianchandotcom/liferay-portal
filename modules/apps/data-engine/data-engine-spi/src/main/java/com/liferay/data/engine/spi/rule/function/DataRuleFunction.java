@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.rule.function.v1_0;
+package com.liferay.data.engine.spi.rule.function;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+
+import java.util.Map;
 
 /**
  * @author Jeyvison Nascimento
  */
+@ProviderType
 public interface DataRuleFunction {
 
 	public DataRuleFunctionResult validate(
-		DataDefinitionField dataDefinitionField,
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters,
-		Object value);
+		Map<String, Object> dataDefinitionRuleParameters,
+		SPIDataDefinitionField spiDataDefinitionField, Object value);
 
 }

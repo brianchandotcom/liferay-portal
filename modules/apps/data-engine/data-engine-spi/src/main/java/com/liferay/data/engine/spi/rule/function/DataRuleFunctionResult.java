@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.rule.function.v1_0;
+package com.liferay.data.engine.spi.rule.function;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
+import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
 
 /**
  * @author Jeyvison Nascimento
@@ -22,17 +22,17 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 public class DataRuleFunctionResult {
 
 	public static DataRuleFunctionResult of(
-		DataDefinitionField dataDefinitionField, String errorCode) {
+		SPIDataDefinitionField spiDataDefinitionField, String errorCode) {
 
-		return new DataRuleFunctionResult(dataDefinitionField, errorCode);
-	}
-
-	public DataDefinitionField getDataDefinitionField() {
-		return _dataDefinitionField;
+		return new DataRuleFunctionResult(spiDataDefinitionField, errorCode);
 	}
 
 	public String getErrorCode() {
 		return _errorCode;
+	}
+
+	public SPIDataDefinitionField getSPIDataDefinitionField() {
+		return _spiDataDefinitionField;
 	}
 
 	public boolean isValid() {
@@ -48,14 +48,14 @@ public class DataRuleFunctionResult {
 	}
 
 	private DataRuleFunctionResult(
-		DataDefinitionField dataDefinitionField, String errorCode) {
+		SPIDataDefinitionField spiDataDefinitionField, String errorCode) {
 
-		_dataDefinitionField = dataDefinitionField;
+		_spiDataDefinitionField = spiDataDefinitionField;
 		_errorCode = errorCode;
 	}
 
-	private final DataDefinitionField _dataDefinitionField;
 	private String _errorCode;
+	private final SPIDataDefinitionField _spiDataDefinitionField;
 	private boolean _valid;
 
 }

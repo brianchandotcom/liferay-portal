@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.data.engine.spi.field.type,\
 	com.liferay.data.engine.spi.field.type.util,\
 	com.liferay.data.engine.spi.renderer,\
+	com.liferay.data.engine.spi.rule.function,\
 	com.liferay.data.engine.spi.storage

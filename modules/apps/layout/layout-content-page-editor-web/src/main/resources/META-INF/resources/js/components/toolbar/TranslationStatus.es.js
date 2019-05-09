@@ -49,12 +49,12 @@ class TranslationStatus extends Component {
 				...Object.values(
 					fragmentEntryLink.editableValues[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					]
+					] || {}
 				),
 				...Object.values(
 					fragmentEntryLink.editableValues[
 						BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-					]
+					] || {}
 				)
 			]
 		).reduce(

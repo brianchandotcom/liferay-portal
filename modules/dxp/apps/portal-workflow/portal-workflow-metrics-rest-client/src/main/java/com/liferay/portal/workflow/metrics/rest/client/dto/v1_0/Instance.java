@@ -173,6 +173,48 @@ public class Instance {
 
 	protected Long id;
 
+	public Long getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(Long processId) {
+		this.processId = processId;
+	}
+
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
+
+		try {
+			processId = processIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long processId;
+
+	public SLAResult[] getSlaResults() {
+		return slaResults;
+	}
+
+	public void setSlaResults(SLAResult[] slaResults) {
+		this.slaResults = slaResults;
+	}
+
+	public void setSlaResults(
+		UnsafeSupplier<SLAResult[], Exception> slaResultsUnsafeSupplier) {
+
+		try {
+			slaResults = slaResultsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SLAResult[] slaResults;
+
 	public SLAStatus getSLAStatus() {
 		return slaStatus;
 	}

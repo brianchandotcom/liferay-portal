@@ -228,6 +228,62 @@ public class Instance {
 	protected Long id;
 
 	@Schema
+	public Long getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(Long processId) {
+		this.processId = processId;
+	}
+
+	@JsonIgnore
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
+
+		try {
+			processId = processIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long processId;
+
+	@Schema
+	public SLAResult[] getSlaResults() {
+		return slaResults;
+	}
+
+	public void setSlaResults(SLAResult[] slaResults) {
+		this.slaResults = slaResults;
+	}
+
+	@JsonIgnore
+	public void setSlaResults(
+		UnsafeSupplier<SLAResult[], Exception> slaResultsUnsafeSupplier) {
+
+		try {
+			slaResults = slaResultsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SLAResult[] slaResults;
+
+	@Schema
 	public SLAStatus getSLAStatus() {
 		return slaStatus;
 	}
@@ -437,6 +493,36 @@ public class Instance {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (processId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processId\": ");
+
+			sb.append(processId);
+		}
+
+		if (slaResults != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"slaResults\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < slaResults.length; i++) {
+				sb.append(String.valueOf(slaResults[i]));
+
+				if ((i + 1) < slaResults.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (slaStatus != null) {

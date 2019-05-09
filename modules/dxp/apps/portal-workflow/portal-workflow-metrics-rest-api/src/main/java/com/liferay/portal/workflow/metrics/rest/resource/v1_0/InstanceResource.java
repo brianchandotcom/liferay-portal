@@ -37,6 +37,9 @@ public interface InstanceResource {
 			String[] taskKeys, Pagination pagination)
 		throws Exception;
 
+	public Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

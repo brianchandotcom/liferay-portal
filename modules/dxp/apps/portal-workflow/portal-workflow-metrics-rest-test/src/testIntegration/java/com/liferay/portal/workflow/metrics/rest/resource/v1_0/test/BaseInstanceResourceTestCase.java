@@ -317,6 +317,72 @@ public abstract class BaseInstanceResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetProcessInstance() throws Exception {
+		Instance postInstance = testGetProcessInstance_addInstance();
+
+		Instance getInstance = invokeGetProcessInstance(
+			postInstance.getProcessId(), postInstance.getId());
+
+		assertEquals(postInstance, getInstance);
+		assertValid(getInstance);
+	}
+
+	protected Instance testGetProcessInstance_addInstance() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Instance invokeGetProcessInstance(Long processId, Long instanceId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/processes/{processId}/instances/{instanceId}", processId,
+					instanceId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return InstanceSerDes.toDTO(string);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokeGetProcessInstanceResponse(
+			Long processId, Long instanceId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/processes/{processId}/instances/{instanceId}", processId,
+					instanceId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 
@@ -388,6 +454,22 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (instance.getAssetType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (instance.getProcessId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("slaResults", additionalAssertFieldName)) {
+				if (instance.getSlaResults() == null) {
 					valid = false;
 				}
 
@@ -496,6 +578,26 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(instance1.getId(), instance2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getProcessId(), instance2.getProcessId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("slaResults", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getSlaResults(), instance2.getSlaResults())) {
+
 					return false;
 				}
 
@@ -647,6 +749,16 @@ public abstract class BaseInstanceResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("processId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("slaResults")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("slaStatus")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -681,6 +793,7 @@ public abstract class BaseInstanceResourceTestCase {
 				assetType = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				processId = RandomTestUtil.randomLong();
 				userName = RandomTestUtil.randomString();
 			}
 		};

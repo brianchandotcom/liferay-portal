@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -110,6 +112,36 @@ public class InstanceSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(instance.getId());
+		}
+
+		if (instance.getProcessId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processId\": ");
+
+			sb.append(instance.getProcessId());
+		}
+
+		if (instance.getSlaResults() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"slaResults\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < instance.getSlaResults().length; i++) {
+				sb.append(String.valueOf(instance.getSlaResults()[i]));
+
+				if ((i + 1) < instance.getSlaResults().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (instance.getSLAStatus() != null) {
@@ -224,6 +256,20 @@ public class InstanceSerDes {
 			map.put("id", String.valueOf(instance.getId()));
 		}
 
+		if (instance.getProcessId() == null) {
+			map.put("processId", null);
+		}
+		else {
+			map.put("processId", String.valueOf(instance.getProcessId()));
+		}
+
+		if (instance.getSlaResults() == null) {
+			map.put("slaResults", null);
+		}
+		else {
+			map.put("slaResults", String.valueOf(instance.getSlaResults()));
+		}
+
 		if (instance.getSLAStatus() == null) {
 			map.put("slaStatus", null);
 		}
@@ -326,6 +372,24 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					instance.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "processId")) {
+				if (jsonParserFieldValue != null) {
+					instance.setProcessId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "slaResults")) {
+				if (jsonParserFieldValue != null) {
+					instance.setSlaResults(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> SLAResultSerDes.toDTO((String)object)
+						).toArray(
+							size -> new SLAResult[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "slaStatus")) {

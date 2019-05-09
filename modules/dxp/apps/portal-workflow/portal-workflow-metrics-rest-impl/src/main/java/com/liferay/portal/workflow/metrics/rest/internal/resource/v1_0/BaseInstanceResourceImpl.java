@@ -81,6 +81,27 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.PATH, name = "instanceId")
+		}
+	)
+	@Path("/processes/{processId}/instances/{instanceId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Instance")})
+	public Instance getProcessInstance(
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId,
+			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
+				instanceId)
+		throws Exception {
+
+		return new Instance();
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

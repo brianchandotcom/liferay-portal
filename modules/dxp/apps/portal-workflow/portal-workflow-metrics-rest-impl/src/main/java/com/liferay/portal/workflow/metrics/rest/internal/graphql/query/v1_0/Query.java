@@ -137,6 +137,20 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public Instance getProcessInstance(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instanceId") Long instanceId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.getProcessInstance(
+				processId, instanceId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<Node> getProcessNodesPage(
 			@GraphQLName("processId") Long processId)
 		throws Exception {

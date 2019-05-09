@@ -113,6 +113,10 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			});
 
+		for (Project sub : targetPlatformExtension.getSubprojects()) {
+			GradleUtil.applyPlugin(sub, DependencyManagementPlugin.class);
+		}
+
 		Gradle gradle = project.getGradle();
 
 		gradle.afterProject(
@@ -275,8 +279,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			return;
 		}
-
-		GradleUtil.applyPlugin(subproject, DependencyManagementPlugin.class);
 
 		TargetPlatformPluginUtil.configureDependencyManagement(
 			subproject, targetPlatformBomsConfiguration, _configurationNames);

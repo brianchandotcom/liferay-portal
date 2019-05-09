@@ -37,8 +37,10 @@ public class ArrayCheck extends BaseFileCheck {
 			fileName, content, _addAllListUtilFromArrayPattern);
 
 		content = _formatArrayInitializer(content);
+		content = _formatCollectionsToArray(content);
+		content = _formatEmptyArray(content);
 
-		return _formatEmptyArray(content);
+		return content;
 	}
 
 	private void _checkInefficientAddAllCalls(
@@ -126,6 +128,12 @@ public class ArrayCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatCollectionsToArray(String content) {
+		Matcher matcher = _collectionsToArrayPattern.matcher(content);
+
+		return matcher.replaceAll("$1[0])");
+	}
+
 	private String _formatEmptyArray(String content) {
 		Matcher matcher = _emptyArrayPattern.matcher(content);
 
@@ -150,6 +158,8 @@ public class ArrayCheck extends BaseFileCheck {
 		Pattern.compile("\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
 	private static final Pattern _arrayInitializationPattern = Pattern.compile(
 		"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{(\n)?)");
+	private static final Pattern _collectionsToArrayPattern = Pattern.compile(
+		"(\\W(\\w+)\\.toArray\\(\\s*new \\w+)\\[\\2\\.size\\(\\)\\]\\)");
 	private static final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 

@@ -67,7 +67,7 @@ export default class SLAListTable extends React.Component {
 							<SLAListItem {...sla} key={`blocked_${index}`} status={2} />
 						))}
 
-						{!!blockedItemsLength && unblockedItems.length > 0 && (
+						{!!blockedItemsLength && (unblockedItems.length > 0) && (
 							<tr className="table-divider">
 								<td colSpan="9">
 									{Liferay.Language.get('running').toUpperCase()}

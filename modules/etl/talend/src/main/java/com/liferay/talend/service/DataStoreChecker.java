@@ -41,9 +41,8 @@ public class DataStoreChecker {
 		BasicAuthDataStore basicAuthDataStore =
 			genericDataStore.getBasicAuthDataStore();
 
-		if (!basicAuthDataStore.isAnonymous() &&
-			(StringUtils.isNull(basicAuthDataStore.getUser()) ||
-			 StringUtils.isNull(basicAuthDataStore.getPassword()))) {
+		if (StringUtils.isNull(basicAuthDataStore.getUser()) ||
+			StringUtils.isNull(basicAuthDataStore.getPassword())) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,

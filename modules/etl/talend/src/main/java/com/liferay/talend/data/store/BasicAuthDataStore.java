@@ -17,7 +17,6 @@ package com.liferay.talend.data.store;
 import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
-import org.talend.sdk.component.api.configuration.condition.ActiveIf;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
@@ -29,9 +28,7 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 @DataStore("BasicAuthDataStore")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
-	value = {
-		@GridLayout.Row({"user", "password"}), @GridLayout.Row("anonymous")
-	}
+	value = {@GridLayout.Row({"user", "password"})}
 )
 public class BasicAuthDataStore implements Serializable {
 
@@ -41,16 +38,6 @@ public class BasicAuthDataStore implements Serializable {
 
 	public String getUser() {
 		return user;
-	}
-
-	public boolean isAnonymous() {
-		return anonymous;
-	}
-
-	public BasicAuthDataStore setAnonymous(boolean anonymous) {
-		this.anonymous = anonymous;
-
-		return this;
 	}
 
 	public BasicAuthDataStore setPassword(String password) {
@@ -65,17 +52,11 @@ public class BasicAuthDataStore implements Serializable {
 		return this;
 	}
 
-	@DefaultValue("false")
-	@Option
-	protected boolean anonymous;
-
-	@ActiveIf(target = "anonymous", value = "false")
 	@Credential
 	@DefaultValue("\"test\"")
 	@Option
 	protected String password;
 
-	@ActiveIf(target = "anonymous", value = "false")
 	@DefaultValue("\"test@liferay.com\"")
 	@Option
 	protected String user;

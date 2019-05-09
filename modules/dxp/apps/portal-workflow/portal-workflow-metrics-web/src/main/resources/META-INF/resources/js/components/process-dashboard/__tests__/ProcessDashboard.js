@@ -6,6 +6,19 @@ import React from 'react';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
 import WorkloadByStepCard from '../workload-by-step/WorkloadByStepCard';
 
+beforeAll(() => {
+	const vbody = document.createElement('div');
+
+	vbody.innerHTML = `
+		<div id="workflow">
+			<div class="user-control-group">
+				<div class="control-menu-icon"></div>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(vbody);
+});
+
 test('Should render component with completed tab activated', () => {
 	const component = mount(
 		<Router client={fetchFailure()} initialPath="/dashboard/35315">

@@ -8,10 +8,11 @@ import {
 	HashRouter as Router,
 	Switch
 } from 'react-router-dom';
+import AlertMessage from './AlertMessage';
 import { AppContext } from '../AppContext';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
+import DropDownHeader from './DropDownHeader';
 import { getPathname } from '../../shared/components/tabs/TabItem';
-import Icon from '../../shared/components/Icon';
 import React from 'react';
 import { sub } from '../../shared/util/lang';
 import Tabs from '../../shared/components/tabs/Tabs';
@@ -20,28 +21,30 @@ import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 class ProcessDashboard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { blockedSLACount: 0 };
+		this.state = { blockedSLACount: 0, slaCount: null };
 	}
 
 	componentDidMount() {
-		this.loadBlockedSLA();
+		Promise.all([this.loadBlockedSLACount(), this.loadSLACount()]).then(
+			([blockedSLACount, slaCount]) =>
+				this.setState({ blockedSLACount, slaCount })
+		);
 	}
 
-	loadBlockedSLA() {
-		const { processId } = this.props;
-		const { client } = this.context;
+	loadBlockedSLACount() {
+		return this.context.client
+			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=2`)
+			.then(({ data: { totalCount } }) => totalCount);
+	}
 
-		client
-			.get(`/processes/${processId}/slas?page=1&pageSize=1&status=2`)
-			.then(({ data: { totalCount: blockedSLACount } }) => {
-				this.setState({
-					blockedSLACount
-				});
-			});
+	loadSLACount() {
+		return this.context.client
+			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=0`)
+			.then(({ data: { totalCount } }) => totalCount);
 	}
 
 	render() {
-		const { blockedSLACount = 0 } = this.state;
+		const { blockedSLACount = 0, slaCount } = this.state;
 		const { processId, query } = this.props;
 		const { defaultDelta } = this.context;
 
@@ -77,17 +80,22 @@ class ProcessDashboard extends React.Component {
 
 		return (
 			<div className="workflow-process-dashboard">
+				<DropDownHeader>
+					<DropDownHeader.Item>
+						<ChildLink
+							className="dropdown-item"
+							to={`/slas/${processId}/${defaultDelta}/1`}
+						>
+							{Liferay.Language.get('sla-settings')}
+						</ChildLink>
+					</DropDownHeader.Item>
+				</DropDownHeader>
+
 				<Tabs tabs={[pendingTab, completedTab]} />
 
 				{!!blockedSLACount && (
-					<div className="container-fluid-1280" style={{ paddingTop: '24px' }}>
-						<div className="alert alert-danger alert-dismissible" role="alert">
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
-							</span>
-
-							<strong className="lead">{Liferay.Language.get('error')}</strong>
-
+					<AlertMessage iconName="exclamation-full">
+						<React.Fragment>
 							{`${sub(blockedSLAText, [
 								blockedSLACount
 							])} ${Liferay.Language.get(
@@ -97,17 +105,22 @@ class ProcessDashboard extends React.Component {
 							<ChildLink to={`/slas/${processId}/${defaultDelta}/1`}>
 								<strong>{Liferay.Language.get('set-up-slas')}</strong>
 							</ChildLink>
+						</React.Fragment>
+					</AlertMessage>
+				)}
 
-							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
-							>
-								<Icon iconName="times" />
-							</button>
-						</div>
-					</div>
+				{slaCount === 0 && (
+					<AlertMessage iconName="warning-full" type="warning">
+						<React.Fragment>
+							{`${Liferay.Language.get(
+								'no-slas-are-defined-for-this-process'
+							)} `}
+
+							<ChildLink to={`/sla/new/${processId}`}>
+								<strong>{Liferay.Language.get('add-a-new-sla')}</strong>
+							</ChildLink>
+						</React.Fragment>
+					</AlertMessage>
 				)}
 
 				<Router>

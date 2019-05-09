@@ -159,7 +159,7 @@ const withMoveableFields = ChildComponent => {
 
 				source.innerHTML = '';
 
-				const addedToPlaceholder = ![...target.parentElement.parentElement.classList].includes('position-relative');
+				const addedToPlaceholder = !([].concat(target.parentElement.parentElement.classList)).includes('position-relative');
 
 				this._handleFieldMoved(
 					{

@@ -90,8 +90,7 @@ public class SegmentsEntryExportImportContentProcessor
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(
-					segmentsEntry.getType(), Criteria.Type.MODEL);
+				getSegmentsCriteriaContributors(segmentsEntry.getType());
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
@@ -130,8 +129,7 @@ public class SegmentsEntryExportImportContentProcessor
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(
-					segmentsEntry.getType(), Criteria.Type.MODEL);
+				getSegmentsCriteriaContributors(segmentsEntry.getType());
 
 		Criteria importCriteria = new Criteria();
 

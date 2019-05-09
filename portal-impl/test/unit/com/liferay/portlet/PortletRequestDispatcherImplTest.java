@@ -209,7 +209,7 @@ public class PortletRequestDispatcherImplTest {
 			_portlet = portlet;
 
 			ReflectionTestUtil.setFieldValue(
-				this, "_request", new MockHttpServletRequest());
+				this, "_httpServletRequest", new MockHttpServletRequest());
 		}
 
 		private final String _contextPath;

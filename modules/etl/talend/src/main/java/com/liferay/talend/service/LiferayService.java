@@ -333,12 +333,6 @@ public class LiferayService {
 	private static final String _GET_METHOD_RESPONSE_REGEX =
 		"get>responses>default>content>application/json>schema>$ref";
 
-	private static final String _SCHEMA_PROPERTY_ITEMS_TYPE_REGEX =
-		"components>schemas>%s>properties>items>type";
-
-	private static final String _SCHEMA_PROPERTY_PAGE_TYPE_REGEX =
-		"components>schemas>%s>properties>page>type";
-
 	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
 		"(https?://.+(:\\d+)?)(/o/(.+)/)(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
 

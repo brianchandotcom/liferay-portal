@@ -229,7 +229,7 @@ public class LiferayInputEmitter implements Serializable {
 				}
 				else {
 					recordBuilder.withString(
-						schemaEntry, fieldJsonNode.toString());
+						schemaEntry, fieldJsonNode.asText());
 				}
 			});
 

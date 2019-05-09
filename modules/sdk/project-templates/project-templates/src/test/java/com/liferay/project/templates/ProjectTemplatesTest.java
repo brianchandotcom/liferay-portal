@@ -1764,10 +1764,9 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
-			"package foo.test.portlet;", "javax.portlet.display-name=Foo",
+			"package foo.test.portlet;",
 			"javax.portlet.name=\" + FooPortletKeys.Foo",
-			"public class FooPortlet extends GenericPortlet {",
-			"printWriter.print(\"Hello from Foo");
+			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",
@@ -2124,9 +2123,8 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"package portlet.portlet;", "javax.portlet.display-name=Portlet",
-			"public class PortletPortlet extends GenericPortlet {",
-			"printWriter.print(\"Hello from Portlet");
+			"package portlet.portlet;",
+			"public class PortletPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "portlet", "com.test", "-DclassName=Portlet",
@@ -4384,6 +4382,12 @@ public class ProjectTemplatesTest {
 
 		String archetypeArtifactId =
 			"com.liferay.project.templates." + template.replace('-', '.');
+
+		if (archetypeArtifactId.equals(
+				"com.liferay.project.templates.portlet")) {
+
+			archetypeArtifactId = "com.liferay.project.templates.mvc.portlet";
+		}
 
 		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
 

@@ -58,6 +58,7 @@ public class ProjectGenerator {
 
 		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
+
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
 		boolean dependencyManagementEnabled =
@@ -65,6 +66,12 @@ public class ProjectGenerator {
 		String groupId = projectTemplatesArgs.getGroupId();
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
+
+		String template = projectTemplatesArgs.getTemplate();
+
+		if (template.equals("portlet")) {
+			projectTemplatesArgs.setTemplate("mvc-portlet");
+		}
 
 		File templateFile = _getTemplateFile(projectTemplatesArgs);
 
@@ -91,14 +98,20 @@ public class ProjectGenerator {
 			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
-		String template = projectTemplatesArgs.getTemplate();
-
 		ArchetypeGenerationRequest archetypeGenerationRequest =
 			new ArchetypeGenerationRequest();
 
-		archetypeGenerationRequest.setArchetypeArtifactId(
+		String archetypeArtifactId =
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
-				template.replace('-', '.'));
+				template.replace('-', '.');
+
+		if (archetypeArtifactId.equals(
+				"com.liferay.project.templates.portlet")) {
+
+			archetypeArtifactId = "com.liferay.project.templates.mvc.portlet";
+		}
+
+		archetypeGenerationRequest.setArchetypeArtifactId(archetypeArtifactId);
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
 		archetypeGenerationRequest.setArchetypeVersion(
 			FileUtil.getManifestProperty(templateFile, "Bundle-Version"));
@@ -168,6 +181,7 @@ public class ProjectGenerator {
 		throws Exception {
 
 		String template = projectTemplatesArgs.getTemplate();
+
 		String templateVersion = projectTemplatesArgs.getTemplateVersion();
 
 		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
@@ -175,9 +189,11 @@ public class ProjectGenerator {
 				continue;
 			}
 
+			Path archetypesDirPath = archetypesDir.toPath();
+
 			try (DirectoryStream<Path> directoryStream =
 					Files.newDirectoryStream(
-						archetypesDir.toPath(), "*.project.templates.*")) {
+						archetypesDirPath, "*.project.templates.*")) {
 
 				for (Path path : directoryStream) {
 					String fileName = String.valueOf(path.getFileName());

@@ -1,9 +1,0 @@
-Bundle-Description: Creates a Liferay portlet extending the "javax.portlet.GenericPortlet" class as a module project.
-Bundle-Name: Liferay Project Templates Portlet
-Bundle-SymbolicName: com.liferay.project.templates.portlet
-Bundle-Version: 1.0.31
-Liferay-Versions: [7,8)
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

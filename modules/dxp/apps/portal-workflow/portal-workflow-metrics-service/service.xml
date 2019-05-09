@@ -3,53 +3,6 @@
 
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.workflow.metrics">
 	<namespace>WorkflowMetrics</namespace>
-	<entity local-service="true" name="WorkflowMetricsSLACalendar" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="workflowMetricsSLACalendarId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-	</entity>
-	<entity local-service="true" name="WorkflowMetricsSLACondition" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="workflowMetricsSLAConditionId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="workflowMetricsSLADefinitionId" type="long" />
-
-		<!-- Finder methods -->
-
-		<finder name="C_WMSLADI" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="workflowMetricsSLADefinitionId" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="WorkflowMetricsSLADefinition" remote-service="false" uuid="true">
 
 		<!-- PK fields -->

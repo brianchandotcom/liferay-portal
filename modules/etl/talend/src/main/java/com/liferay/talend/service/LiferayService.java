@@ -140,7 +140,7 @@ public class LiferayService {
 			schemaJsonObject, recordBuilderFactory);
 	}
 
-	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {
+	public List<String> getReadableEndpoints(InputDataSet inputDataSet) {
 		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
 			inputDataSet.getGenericDataStore());
 
@@ -148,7 +148,7 @@ public class LiferayService {
 			return Collections.emptyList();
 		}
 
-		return getPageableEndpoints(openAPISpecJsonObject);
+		return getReadableEndpoints(openAPISpecJsonObject);
 	}
 
 	public List<String> getUpdatableEndpoints(OutputDataSet outputDataSet) {
@@ -198,15 +198,14 @@ public class LiferayService {
 		return endpoints;
 	}
 
-	protected List<String> getPageableEndpoints(
+	protected List<String> getReadableEndpoints(
 		JsonObject openAPISpecJsonObject) {
 
 		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
 			_GET_METHOD_RESPONSE_REGEX,
 			openAPISpecJsonObject.getJsonObject("paths"));
 
-		return _filterPageableEndpoints(
-			pathResponseEntities, openAPISpecJsonObject);
+		return _getSortedKeys(pathResponseEntities);
 	}
 
 	/**
@@ -237,38 +236,6 @@ public class LiferayService {
 		JsonString jsonString = (JsonString)jsonValue;
 
 		return jsonString.getString();
-	}
-
-	private List<String> _filterPageableEndpoints(
-		Map<String, String> patternEvaluations,
-		JsonObject openAPISpecJsonObject) {
-
-		List<String> pageableEndpoints = new ArrayList<>();
-
-		patternEvaluations.forEach(
-			(endpoint, entity) -> {
-				String typeValue = _evaluatePattern(
-					String.format(_SCHEMA_PROPERTY_ITEMS_TYPE_REGEX, entity),
-					openAPISpecJsonObject);
-
-				if (!"array".equals(typeValue)) {
-					return;
-				}
-
-				typeValue = _evaluatePattern(
-					String.format(_SCHEMA_PROPERTY_PAGE_TYPE_REGEX, entity),
-					openAPISpecJsonObject);
-
-				if (!"integer".equals(typeValue)) {
-					return;
-				}
-
-				pageableEndpoints.add(endpoint);
-			});
-
-		Collections.sort(pageableEndpoints);
-
-		return pageableEndpoints;
 	}
 
 	/**
@@ -318,6 +285,17 @@ public class LiferayService {
 
 		return _connectionService.getResponseJsonObject(
 			genericDataStore, endpoint);
+	}
+
+	private List<String> _getSortedKeys(
+		Map<String, String> patternEvaluations) {
+
+		List<String> pageableEndpoints = new ArrayList<>(
+			patternEvaluations.keySet());
+
+		Collections.sort(pageableEndpoints);
+
+		return pageableEndpoints;
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class UIActionService {
 		inputDataSet.setGenericDataStore(genericDataStore);
 
 		return _toSuggestionValues(
-			_liferayService.getPageableEndpoints(inputDataSet));
+			_liferayService.getReadableEndpoints(inputDataSet));
 	}
 
 	@Suggestions(family = "Liferay", value = "fetchOutputEndpoints")

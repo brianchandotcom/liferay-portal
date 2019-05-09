@@ -36,6 +36,7 @@ import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.segments.odata.search.ODataSearchHelper;
 
 import java.util.Locale;
 
@@ -46,8 +47,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(immediate = true, service = ODataSearchHelper.class)
-public class ODataSearchHelper {
+public class ODataSearchHelperImpl implements ODataSearchHelper {
 
+	@Override
 	public Hits search(
 			long companyId, String filterString, String className,
 			EntityModel entityModel, FilterParser filterParser, Locale locale,
@@ -87,6 +89,7 @@ public class ODataSearchHelper {
 		}
 	}
 
+	@Override
 	public int searchCount(
 			long companyId, String filterString, String className,
 			EntityModel entityModel, FilterParser filterParser, Locale locale)

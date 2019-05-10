@@ -5885,12 +5885,32 @@ go</echo>
 			<then>
 				<property name="liferay.dependency.jars" value="${liferay.dependency.jars}" />
 
-				<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+				<if>
+					<available file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}" type="dir" />
+					<then>
+						<echo>Archiving ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${project.dir}/tmp/${liferay.dependency.jars}.</echo>
 
-				<copy
-					file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
-					todir="${deploy.dir}"
-				/>
+						<jar
+							basedir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
+							destfile="${project.dir}/tmp/${liferay.dependency.jars}"
+						/>
+
+						<echo>Copying ${project.dir}/tmp/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+
+						<copy
+							file="${project.dir}/tmp/${liferay.dependency.jars}"
+							todir="${deploy.dir}"
+						/>
+					</then>
+					<else>
+						<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+
+						<copy
+							file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
+							todir="${deploy.dir}"
+						/>
+					</else>
+				</if>
 			</then>
 			<else>
 				<echo>The property "liferay.dependency.jars" is not set.</echo>

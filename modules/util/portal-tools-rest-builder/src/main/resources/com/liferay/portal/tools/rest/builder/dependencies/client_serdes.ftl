@@ -1,5 +1,9 @@
 package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
+<#list globalEnumSchemas?keys as globalEnumSchemaName>
+	import ${configYAML.apiPackagePath}.client.constant.${escapedVersion}.${globalEnumSchemaName};
+</#list>
+
 <#list allSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 </#list>

@@ -253,6 +253,21 @@ public class OpenAPIParserUtil {
 			javaDataTypeMap.put(schemaName + "ResourceImpl", sb.toString());
 		}
 
+		Map<String, Schema> globalEnumSchemas =
+			OpenAPIUtil.getGlobalEnumSchemas(openAPIYAML);
+
+		for (String schemaName : globalEnumSchemas.keySet()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(configYAML.getApiPackagePath());
+			sb.append(".constant.");
+			sb.append(OpenAPIUtil.escapeVersion(openAPIYAML));
+			sb.append('.');
+			sb.append(schemaName);
+
+			javaDataTypeMap.put(schemaName, sb.toString());
+		}
+
 		return javaDataTypeMap;
 	}
 

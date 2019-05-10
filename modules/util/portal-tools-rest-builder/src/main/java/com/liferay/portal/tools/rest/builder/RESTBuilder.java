@@ -171,6 +171,11 @@ public class RESTBuilder {
 
 			context.put("allSchemas", allSchemas);
 
+			Map<String, Schema> globalEnumSchemas =
+				OpenAPIUtil.getGlobalEnumSchemas(openAPIYAML);
+
+			context.put("globalEnumSchemas", globalEnumSchemas);
+
 			context.put("openAPIYAML", openAPIYAML);
 
 			String escapedVersion = OpenAPIUtil.escapeVersion(openAPIYAML);
@@ -219,6 +224,14 @@ public class RESTBuilder {
 				}
 			}
 
+			for (Map.Entry<String, Schema> entry :
+					globalEnumSchemas.entrySet()) {
+
+				_putSchema(context, entry.getValue(), entry.getKey());
+
+				_createEnumFile(context, escapedVersion, entry.getKey());
+			}
+
 			Set<Map.Entry<String, Schema>> set = new HashSet<>(
 				allSchemas.entrySet());
 
@@ -235,6 +248,14 @@ public class RESTBuilder {
 					_createClientSerDesFile(
 						context, escapedVersion, schemaName);
 				}
+			}
+
+			for (Map.Entry<String, Schema> entry :
+					globalEnumSchemas.entrySet()) {
+
+				_putSchema(context, entry.getValue(), entry.getKey());
+
+				_createClientEnumFile(context, escapedVersion, entry.getKey());
 			}
 		}
 
@@ -425,6 +446,36 @@ public class RESTBuilder {
 				_copyrightFile, "client_dto", context));
 	}
 
+	private void _createClientEnumFile(
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/client/constant/");
+		sb.append(escapedVersion);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append(".java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "client_enum", context));
+	}
+
 	private void _createClientHttpInvokerFile(Map<String, Object> context)
 		throws Exception {
 
@@ -608,6 +659,35 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(_copyrightFile, "dto", context));
+	}
+
+	private void _createEnumFile(
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getApiDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/constant/");
+		sb.append(escapedVersion);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append(".java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(_copyrightFile, "enum", context));
 	}
 
 	private void _createGraphQLMutationFile(

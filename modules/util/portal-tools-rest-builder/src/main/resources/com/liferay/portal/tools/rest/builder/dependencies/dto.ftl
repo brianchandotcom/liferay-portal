@@ -1,5 +1,9 @@
 package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 
+<#list globalEnumSchemas?keys as globalEnumSchemaName>
+	import ${configYAML.apiPackagePath}.constant.${escapedVersion}.${globalEnumSchemaName};
+</#list>
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

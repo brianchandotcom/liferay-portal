@@ -145,6 +145,48 @@ public class OpenAPIUtil {
 		return allSchemas;
 	}
 
+	public static Map<String, Schema> getGlobalEnumSchemas(
+		OpenAPIYAML openAPIYAML) {
+
+		Map<String, Schema> globalEnumSchemas = new TreeMap<>();
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+			Schema schema = entry.getValue();
+
+			Map<String, Schema> propertySchemas = null;
+
+			Items items = schema.getItems();
+
+			if (items != null) {
+				propertySchemas = items.getPropertySchemas();
+			}
+			else if (schema.getAllOfSchemas() != null) {
+				propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
+					schema);
+			}
+			else {
+				propertySchemas = schema.getPropertySchemas();
+			}
+
+			if ((propertySchemas == null) && (schema.getEnumValues() != null)) {
+				String schemaName = StringUtil.upperCaseFirstLetter(
+					entry.getKey());
+
+				if (items != null) {
+					schemaName = formatSingular(schemaName);
+				}
+
+				globalEnumSchemas.put(schemaName, schema);
+			}
+		}
+
+		return globalEnumSchemas;
+	}
+
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
 		Predicate<Operation> predicate) {

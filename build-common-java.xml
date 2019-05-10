@@ -119,7 +119,7 @@
 
 				<manifest-helper />
 
-				<bnd classpath="classes" eclipse="false" exceptions="true" failok="false" files="bnd.bnd" inherit="true" output="${jar.file}.jar" />
+				<bnd classpath="classes" exceptions="true" files="bnd.bnd" output="${jar.file}.jar" />
 
 				<if>
 					<not>

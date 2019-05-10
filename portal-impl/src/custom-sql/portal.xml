@@ -1443,12 +1443,14 @@
 				[$WHERE$]
 				(Team.groupId = ?) AND
 				(
-					(LOWER(Team.name) LIKE ?) OR
-					(? IS NULL)
-				) AND
-				(
-					(LOWER(Team.description) LIKE ?) OR
-					(? IS NULL)
+					(
+						(LOWER(Team.name) LIKE ?) OR
+						(? IS NULL)
+					) OR
+					(
+						(LOWER(Team.description) LIKE ?) OR
+						(? IS NULL)
+					)
 				)
 		]]>
 	</sql>
@@ -1495,12 +1497,14 @@
 				[$WHERE$]
 				(Team.groupId = ?) AND
 				(
-					(LOWER(Team.name) LIKE ?) OR
-					(? IS NULL)
-				) AND
-				(
-					(LOWER(Team.description) LIKE ?) OR
-					(? IS NULL)
+					(
+						(LOWER(Team.name) LIKE ?) OR
+						(? IS NULL)
+					) OR
+					(
+						(LOWER(Team.description) LIKE ?) OR
+						(? IS NULL)
+					)
 				)
 			ORDER BY
 				Team.name ASC

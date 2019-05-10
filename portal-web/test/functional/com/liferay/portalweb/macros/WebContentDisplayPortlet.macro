@@ -306,6 +306,20 @@ definition {
 	}
 
 	macro viewAllSettingsEnabledPG {
+		Click(locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN_MENU_ITEM");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_TITLE",
+			value1 = "${webContentTitleLocalized}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "${webContentContentLocalized}");
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Icon#PRINT",
 			value1 = "Print");

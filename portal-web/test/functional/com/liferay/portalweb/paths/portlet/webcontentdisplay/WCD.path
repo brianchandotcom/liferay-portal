@@ -41,6 +41,11 @@
 </tr>
 <!--WEB_CONTENT-->
 <tr>
+	<td>WEB_CONTENT_TITLE</td>
+	<td>//section[contains(@id,'journal_content_web')]//h2[contains(@class,'title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_CONTENT</td>
 	<td>//div[contains(@class,'journal-content-article')]</td>
 	<td></td>
@@ -93,6 +98,16 @@
 <tr>
 	<td>WEB_CONTENT_VIDEO</td>
 	<td>//div[contains(@class,'video-content')]/video[@class='video-node']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TRANSLATION_DROPDOWN</td>
+	<td>//button[contains(@class,'dropdown-toggle')][@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TRANSLATION_DROPDOWN_MENU_ITEM</td>
+	<td>//a[contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
 </tbody>

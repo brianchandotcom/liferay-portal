@@ -929,6 +929,12 @@ definition {
 			webContentContent = "Web Content Content 1",
 			webContentTitle = "Web Content Title 1");
 
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.addCP(
+			webContentContent = "Web Contenido Contenido 1",
+			webContentTitle = "Web Contenido Título 1");
+
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title 1");
@@ -977,7 +983,7 @@ definition {
 		WebContentDisplayPortlet.configureSetupPG(
 			enableViewCountIncrement = "true",
 			metadataNameList = "Related Assets,Comment Ratings,Comments,Ratings",
-			userToolNameList = "Print");
+			userToolNameList = "Translations,Print");
 
 		WebContentDisplayPortlet.saveConfiguration();
 
@@ -986,8 +992,11 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.viewAllSettingsEnabledPG(
+			locale = "español-España",
 			relatedAssetTitle = "Web Content Title 2",
-			webContentContent = "Web Content Content 1");
+			webContentContent = "Web Content Content 1",
+			webContentContentLocalized = "Web Contenido Contenido 1",
+			webContentTitleLocalized = "Web Contenido Título 1");
 	}
 
 	@priority = "4"

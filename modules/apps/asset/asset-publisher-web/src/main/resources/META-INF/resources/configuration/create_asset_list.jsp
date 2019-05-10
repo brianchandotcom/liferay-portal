@@ -47,7 +47,7 @@
 		var createAssetListLinkClickHandler = dom.delegate(
 			document.body,
 			'click',
-			'a.create-asset-list-link',
+			'a.create-content-set-link',
 			handleCreateAssetListLinkClick
 		);
 

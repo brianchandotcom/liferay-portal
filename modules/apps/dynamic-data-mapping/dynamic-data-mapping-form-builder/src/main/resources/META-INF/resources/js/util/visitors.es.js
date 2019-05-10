@@ -46,10 +46,11 @@ class PagesVisitor {
 			(fields, ...args) => {
 				return fields.map(
 					(field, fieldIndex) => {
-						const newField = {
-							...field,
-							...mapper(field, fieldIndex, ...args)
-						};
+						let newField = mapper(field, fieldIndex, ...args);
+
+						if (!newField) {
+							newField = field;
+						}
 
 						return newField;
 					}

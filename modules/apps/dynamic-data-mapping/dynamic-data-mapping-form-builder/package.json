@@ -48,14 +48,6 @@
 		"object-hash": "^1.3.0"
 	},
 	"jest": {
-		"automock": false,
-		"coverageDirectory": "build/coverage",
-		"coverageThreshold": {
-			"global": {
-				"functions": 80,
-				"lines": 80
-			}
-		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
 			"fixtures/(.*)": "<rootDir>/test/metal/js/__fixtures__/$1.js",
@@ -68,28 +60,37 @@
 			"/classes/"
 		],
 		"setupFiles": [
-			"<rootDir>/test/metal/setup/setup.js"
+			"<rootDir>/jest-setup.config.js"
 		],
 		"setupFilesAfterEnv": [
-			"<rootDir>/test/metal/setup/setup_framework.js"
+			"<rootDir>jest-setup-after-env.config.js"
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],
-		"testMatch": [
-			"<rootDir>/test/metal/js/**/*.js"
-		],
-		"testResultsProcessor": "liferay-jest-junit-reporter",
-		"testURL": "http://localhost",
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+		"testPathIgnorePatterns": [
+			"fieldEditedHandler",
+			"fieldSetAddedHandler",
+			"focusedField",
+			"Calculator",
+			"Evaluator",
+			"FormBuilder",
+			"FormRenderer",
+			"LayoutProvider",
+			"PageRenderer",
+			"RuleBuilder",
+			"RuleEditor",
+			"RuleList",
+			"Sidebar",
+			"SuccessPage"
 		]
 	},
 	"name": "dynamic-data-mapping-form-builder",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
-		"format": "liferay-npm-scripts format"
+		"format": "liferay-npm-scripts format",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "3.0.0"
 }

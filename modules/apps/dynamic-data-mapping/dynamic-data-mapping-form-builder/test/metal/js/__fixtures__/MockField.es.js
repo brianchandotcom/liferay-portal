@@ -5,15 +5,6 @@ import Soy from 'metal-soy';
 import templates from './MockField.soy.js';
 
 class MockField extends Component {
-	static STATE = {
-		fieldName: Config.string(),
-		label: Config.string(),
-		options: Config.array(),
-		readOnly: Config.bool(),
-		type: Config.string(),
-		value: Config.any()
-	};
-
 	emitFieldEdited(value, fieldName) {
 		this.value = value;
 
@@ -34,6 +25,15 @@ class MockField extends Component {
 		);
 	}
 }
+
+MockField.STATE = {
+	fieldName: Config.string(),
+	label: Config.string(),
+	options: Config.array(),
+	readOnly: Config.bool(),
+	type: Config.string(),
+	value: Config.any()
+};
 
 Soy.register(MockField, templates);
 

@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
+import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 import org.opensaml.saml.saml2.core.Assertion;
@@ -158,7 +159,15 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			Arrays.asList(assertion)
 		);
 
-		messageContext.setMessage(response);
+		MessageContext<Response> inboundMessageContext = new MessageContext<>();
+
+		InOutOperationContext<Response, Object> inOutOperationContext =
+			new InOutOperationContext<>(
+				inboundMessageContext, new MessageContext<>());
+
+		inboundMessageContext.setMessage(response);
+
+		messageContext.addSubcontext(inOutOperationContext);
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class, true);

@@ -161,6 +161,8 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${mbThreadAttachment}");
 
+		AssertElementPresent(locator1 = "MessageBoardsEditMessage#ATTACHMENTS_SAVED_STATUS");
+
 		Button.clickPublish();
 
 		AssertElementPresent(

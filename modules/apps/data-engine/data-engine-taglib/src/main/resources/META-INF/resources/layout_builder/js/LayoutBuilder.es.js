@@ -135,10 +135,10 @@ class LayoutBuilder extends Component {
 	}
 
 	_setContext(context) {
-		const {languageId} = this.props;
+		const {defaultLanguageId} = this.props;
 
 		const emptyLocalizableValue = {
-			[languageId]: ''
+			[defaultLanguageId]: ''
 		};
 
 		const pages = context.pages || [];

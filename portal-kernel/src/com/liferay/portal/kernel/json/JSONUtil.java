@@ -206,7 +206,7 @@ public class JSONUtil {
 
 		List<T> list = toList(jsonArray, unsafeFunction);
 
-		return list.toArray((T[])Array.newInstance(clazz, list.size()));
+		return list.toArray((T[])Array.newInstance(clazz, 0));
 	}
 
 	public static <T> JSONArray toJSONArray(

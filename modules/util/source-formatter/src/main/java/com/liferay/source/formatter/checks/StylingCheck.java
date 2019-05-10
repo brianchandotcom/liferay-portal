@@ -45,6 +45,8 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatStyling(
 			content, "String.valueOf(true)", "Boolean.TRUE.toString()");
 
+		content = _formatObjectsEqualsMethodCall(content);
+
 		content = _formatToStringMethodCall(content, "Double");
 		content = _formatToStringMethodCall(content, "Float");
 		content = _formatToStringMethodCall(content, "Integer");
@@ -163,6 +165,46 @@ public abstract class StylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatObjectsEqualsMethodCall(String content) {
+		Matcher matcher = _objectsEqualsPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.end()) ||
+				!isJavaSource(content, matcher.start())) {
+
+				continue;
+			}
+
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				content.substring(matcher.start() + 1));
+
+			if (parameterList.size() != 2) {
+				continue;
+			}
+
+			String parameterName1 = parameterList.get(0);
+			String parameterName2 = parameterList.get(1);
+
+			if (!_isLiteralString(parameterName1) ||
+				_isLiteralString(parameterName2)) {
+
+				continue;
+			}
+
+			int x = _getMatchingClosingParenthesisPos(
+				content, matcher.start() + 1);
+
+			String methodCall = content.substring(matcher.start() + 1, x + 1);
+
+			String newMethodCall = StringBundler.concat(
+				"Objects.equals(", parameterName2, ", ", parameterName1, ")");
+
+			return StringUtil.replace(content, methodCall, newMethodCall);
+		}
+
+		return content;
+	}
+
 	private String _formatStyling(
 		String content, String incorrectStyling, String correctStyling) {
 
@@ -226,8 +268,38 @@ public abstract class StylingCheck extends BaseFileCheck {
 		}
 	}
 
+	private int _getMatchingClosingParenthesisPos(String content, int start) {
+		int x = start;
+
+		while (true) {
+			x = content.indexOf(CharPool.CLOSE_PARENTHESIS, x + 1);
+
+			if ((getLevel(content.substring(start, x + 1), "(", ")") == 0) &&
+				(getLevel(content.substring(start, x + 1), "{", "}") == 0)) {
+
+				return x;
+			}
+		}
+	}
+
+	private boolean _isLiteralString(String s) {
+		if ((s == null) || (s.length() < 2)) {
+			return false;
+		}
+
+		if ((s.charAt(0) == CharPool.QUOTE) &&
+			(s.charAt(s.length() - 1) == CharPool.QUOTE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Pattern _booleanPattern = Pattern.compile(
 		"\\((\\!)?(\\w+)\\s+(==|!=)\\s+(false|true)\\)");
+	private static final Pattern _objectsEqualsPattern = Pattern.compile(
+		"\\WObjects\\.equals\\(");
 	private static final Pattern _redundantArrayInitializationPattern =
 		Pattern.compile("\\W(\\w+)\\[\\]\\[\\] (\\w+ = )?\\{\n");
 

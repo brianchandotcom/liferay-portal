@@ -715,12 +715,8 @@ public class ConfigurationPersistenceManager
 		_verifyConfigurations(
 			"select configurationId, dictionary from Configuration_ where " +
 				"dictionary like '%felix.fileinstall.filename=%' and " +
-					"dictionary not like '%service.bundleLocation=\"?\"%'",
-			dictionary -> {
-				if (dictionary.get(_SERVICE_BUNDLELOCATION) == null) {
-					dictionary.put(_SERVICE_BUNDLELOCATION, "?");
-				}
-			});
+					"dictionary not like '%service.bundleLocation=\"%'",
+			dictionary -> dictionary.put(_SERVICE_BUNDLELOCATION, "?"));
 	}
 
 	private void _verifyConfigurationsFileName() {

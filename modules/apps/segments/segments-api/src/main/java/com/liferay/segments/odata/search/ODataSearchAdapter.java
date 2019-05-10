@@ -24,7 +24,7 @@ import java.util.Locale;
 /**
  * @author Eduardo García
  */
-public interface ODataSearchHelper {
+public interface ODataSearchAdapter {
 
 	public Hits search(
 			long companyId, String filterString, String className,

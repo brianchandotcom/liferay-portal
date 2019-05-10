@@ -27,7 +27,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.odata.search.ODataSearchHelper;
+import com.liferay.segments.odata.search.ODataSearchAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class UserODataRetriever implements ODataRetriever<User> {
 			int end)
 		throws PortalException {
 
-		Hits hits = _oDataSearchHelper.search(
+		Hits hits = _oDataSearchAdapter.search(
 			companyId, filterString, User.class.getName(), _entityModel,
 			_filterParser, locale, start, end);
 
@@ -66,7 +66,7 @@ public class UserODataRetriever implements ODataRetriever<User> {
 			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
-		return _oDataSearchHelper.searchCount(
+		return _oDataSearchAdapter.searchCount(
 			companyId, filterString, User.class.getName(), _entityModel,
 			_filterParser, locale);
 	}
@@ -140,7 +140,7 @@ public class UserODataRetriever implements ODataRetriever<User> {
 	private FilterParser _filterParser;
 
 	@Reference
-	private ODataSearchHelper _oDataSearchHelper;
+	private ODataSearchAdapter _oDataSearchAdapter;
 
 	@Reference
 	private UserLocalService _userLocalService;

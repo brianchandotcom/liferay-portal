@@ -14,6 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
+import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
+
 import java.util.Objects;
 
 /**

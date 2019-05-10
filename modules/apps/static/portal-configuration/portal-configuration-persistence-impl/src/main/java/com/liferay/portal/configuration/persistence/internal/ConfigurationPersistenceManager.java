@@ -669,7 +669,7 @@ public class ConfigurationPersistenceManager
 	}
 
 	private void _verifyConfigurations(
-		String sql, Consumer<Dictionary<Object, Object>> updateFuncion) {
+		String sql, Consumer<Dictionary<Object, Object>> dictionaryConsumer) {
 
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement selectPS = connection.prepareStatement(
@@ -691,7 +691,7 @@ public class ConfigurationPersistenceManager
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				updateFuncion.accept(dictionary);
+				dictionaryConsumer.accept(dictionary);
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();

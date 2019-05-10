@@ -881,8 +881,6 @@ definition {
 			threadReplyBody = "MB Body Reply",
 			threadSubject = "MB Subject");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -892,8 +890,6 @@ definition {
 			assetType = "Message Boards Category",
 			categoryName = "MB Category Name",
 			siteScopeName = "Site Name");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -909,8 +905,6 @@ definition {
 			assetName = "MB Category Name",
 			assetRestoreLocation = "Home",
 			assetType = "Message Boards Category");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

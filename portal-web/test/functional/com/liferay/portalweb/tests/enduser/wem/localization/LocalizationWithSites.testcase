@@ -440,6 +440,12 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		PortletEntry.inputLocalizedName(
+			language = "es_ES",
+			localizedName = "Nombre del Sitio");
+
+		PortletEntry.save();
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -531,7 +537,7 @@ definition {
 		ProductMenu.gotoLocalizedSite(
 			displayStyle = "tabla",
 			navItem = "Mis Sitios",
-			site = "Site Name");
+			site = "Nombre del Sitio");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuración",

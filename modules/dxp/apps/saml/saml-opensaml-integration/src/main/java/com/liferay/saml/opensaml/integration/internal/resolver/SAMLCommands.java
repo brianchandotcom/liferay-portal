@@ -30,6 +30,8 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.opensaml.messaging.context.InOutOperationContext;
+import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
 import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 import org.opensaml.saml.common.messaging.context.SAMLSubjectNameIdentifierContext;
@@ -54,10 +56,26 @@ public interface SAMLCommands {
 
 		return new UserResolverSAMLCommand<>(
 			messageContext -> {
-				Response response = messageContext.getMessage();
+				InOutOperationContext inOutOperationContext =
+					messageContext.getSubcontext(
+						InOutOperationContext.class, false);
+
+				if (inOutOperationContext == null) {
+					return Collections.emptyMap();
+				}
+
+				MessageContext inboundMessageContext =
+					inOutOperationContext.getInboundMessageContext();
+
+				if (inboundMessageContext == null) {
+					return Collections.emptyMap();
+				}
+
+				Response response =
+					(Response)inboundMessageContext.getMessage();
 
 				if (response == null) {
-					return Collections.<String, List<Serializable>>emptyMap();
+					return Collections.emptyMap();
 				}
 
 				List<Assertion> assertions = response.getAssertions();

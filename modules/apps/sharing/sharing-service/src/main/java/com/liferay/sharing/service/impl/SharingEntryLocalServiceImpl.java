@@ -100,8 +100,8 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), sharingEntryActions, shareable,
-			expirationDate, serviceContext);
+			userId, sharingEntry.getSharingEntryId(), sharingEntryActions,
+			shareable, expirationDate, serviceContext);
 	}
 
 	/**
@@ -647,6 +647,35 @@ public class SharingEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateSharingEntry(
+			serviceContext.getUserId(), sharingEntryId, sharingEntryActions,
+			shareable, expirationDate, serviceContext);
+	}
+
+	/**
+	 * Updates the sharing entry in the database.
+	 *
+	 * @param  userId the primary key of the user updating the sharing entry
+	 * @param  sharingEntryId the primary key of the sharing entry
+	 * @param  sharingEntryActions the sharing entry actions
+	 * @param  shareable whether the user the resource is shared with can also
+	 *         share it
+	 * @param  expirationDate the date when the sharing entry expires
+	 * @param  serviceContext the service context
+	 * @return the sharing entry
+	 * @throws PortalException if the sharing entry does not exist, if the
+	 *         sharing entry actions are invalid (e.g., empty, don't contain
+	 *         {@code SharingEntryAction#VIEW}, or contain a {@code null}
+	 *         value), or if the expiration date is a past value
+	 */
+	@Override
+	public SharingEntry updateSharingEntry(
+			long userId, long sharingEntryId,
+			Collection<SharingEntryAction> sharingEntryActions,
+			boolean shareable, Date expirationDate,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
 			sharingEntryId);
 
@@ -654,7 +683,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateExpirationDate(expirationDate);
 
-		sharingEntry.setUserId(serviceContext.getUserId());
+		sharingEntry.setUserId(userId);
 		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
 

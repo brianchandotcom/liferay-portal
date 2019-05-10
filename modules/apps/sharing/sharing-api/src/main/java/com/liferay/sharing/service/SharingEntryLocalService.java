@@ -631,6 +631,29 @@ public interface SharingEntryLocalService
 		throws PortalException;
 
 	/**
+	 * Updates the sharing entry in the database.
+	 *
+	 * @param userId the primary key of the user updating the sharing entry
+	 * @param sharingEntryId the primary key of the sharing entry
+	 * @param sharingEntryActions the sharing entry actions
+	 * @param shareable whether the user the resource is shared with can also
+	 share it
+	 * @param expirationDate the date when the sharing entry expires
+	 * @param serviceContext the service context
+	 * @return the sharing entry
+	 * @throws PortalException if the sharing entry does not exist, if the
+	 sharing entry actions are invalid (e.g., empty, don't contain
+	 {@code SharingEntryAction#VIEW}, or contain a {@code null}
+	 value), or if the expiration date is a past value
+	 */
+	public SharingEntry updateSharingEntry(
+			long userId, long sharingEntryId,
+			Collection<SharingEntryAction> sharingEntryActions,
+			boolean shareable, Date expirationDate,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
 	 * Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param sharingEntry the sharing entry

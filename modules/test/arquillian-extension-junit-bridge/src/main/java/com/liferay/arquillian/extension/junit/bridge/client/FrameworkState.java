@@ -21,8 +21,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Matthew Tambara
@@ -43,14 +47,41 @@ public class FrameworkState {
 		_socket = null;
 	}
 
-	public void connect() throws IOException {
+	public void connect() throws Exception {
 		Integer port = Integer.getInteger("liferay.arquillian.port");
 
 		if (port == null) {
 			port = _PORT;
 		}
 
-		_socket = new Socket(_inetAddress, port);
+		int retries = 0;
+
+		while (true) {
+			try {
+				_socket = new Socket(_inetAddress, port);
+
+				break;
+			}
+			catch (ConnectException ce) {
+				if (retries++ < _MAX_RETRY_ATTEMPTS) {
+					_logger.log(
+						Level.INFO,
+						"Unable to connect at " +
+							_inetAddress.getHostAddress() + ":" + port +
+								". retrying in " + _RETRY_INTERVAL + "s.");
+
+					Thread.sleep(_RETRY_INTERVAL * 1000);
+				}
+				else {
+					_logger.log(
+						Level.SEVERE,
+						"Unable to connect after " + _MAX_RETRY_ATTEMPTS +
+							" attempts");
+
+					throw ce;
+				}
+			}
+		}
 
 		_objectOutputStream = new ObjectOutputStream(_socket.getOutputStream());
 
@@ -106,7 +137,14 @@ public class FrameworkState {
 		return frameworkResult.getBundleId();
 	}
 
+	private static final int _MAX_RETRY_ATTEMPTS = 5;
+
 	private static final int _PORT = 32763;
+
+	private static final int _RETRY_INTERVAL = 10;
+
+	private static final Logger _logger = Logger.getLogger(
+		FrameworkState.class.getName());
 
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();

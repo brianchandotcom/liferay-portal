@@ -791,7 +791,12 @@ public class SharingEntryLocalServiceWrapper
 	 sharing entry actions are invalid (e.g., empty, don't contain
 	 {@code SharingEntryAction#VIEW}, or contain a {@code null}
 	 value), or if the expiration date is a past value
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 SharingEntryLocalService#
+	 updateSharingEntry(
+	 long, long, Collection, boolean, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.sharing.model.SharingEntry updateSharingEntry(
 			long sharingEntryId,

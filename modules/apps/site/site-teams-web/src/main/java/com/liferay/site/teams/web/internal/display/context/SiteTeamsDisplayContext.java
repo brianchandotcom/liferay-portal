@@ -141,7 +141,7 @@ public class SiteTeamsDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		return _keywords;
 	}

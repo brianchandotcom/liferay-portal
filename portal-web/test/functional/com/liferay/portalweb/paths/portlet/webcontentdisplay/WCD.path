@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS</td>
-	<td>//div[contains(@class,'asset-links')]//a[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

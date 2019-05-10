@@ -314,10 +314,8 @@ definition {
 			locator1 = "Button#SUBSCRIBE",
 			value1 = "Subscribe");
 
-		var key_assetTitle = "${relatedAssetTitle}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WCD#RELATED_ASSETS",
+		AssertTextEquals(
+			locator1 = "AssetRelatedAssets#ASSET_TITLE",
 			value1 = "${relatedAssetTitle}");
 
 		Type.typeEditor(

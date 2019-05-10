@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.permission.test;
+package com.liferay.portal.security.permission.test.util;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;

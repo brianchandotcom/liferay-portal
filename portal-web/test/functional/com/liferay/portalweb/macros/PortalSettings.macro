@@ -1050,13 +1050,15 @@ definition {
 	}
 
 	macro viewCurrentDefaultPortalLanguageCP {
-		var navTab = "Miscellaneous";
+		var configuration = "Localization";
 
-		if (isSet(miscellaneousTranslation)) {
-			var navTab = "${miscellaneousTranslation}";
+		if (isSet(localizationTranslation)) {
+			var configuration = "${localizationTranslation}";
 		}
 
-		Navigator.gotoNavTab(navTab = "${navTab}");
+		Click(
+			key_itemName = "${configuration}",
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertSelectedLabel(
 			locator1 = "Select#DEFAULT_LANGUAGE",

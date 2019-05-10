@@ -526,7 +526,7 @@ definition {
 
 		PortalSettings.viewCurrentDefaultPortalLanguageCP(
 			defaultPortalLanguage = "inglés (Estados Unidos)",
-			miscellaneousTranslation = "Varios");
+			localizationTranslation = "Localización");
 
 		ProductMenu.gotoLocalizedSite(
 			displayStyle = "tabla",

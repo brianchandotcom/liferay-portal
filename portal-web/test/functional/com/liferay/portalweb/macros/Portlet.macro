@@ -489,7 +489,7 @@ definition {
 	macro viewUndeployMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "This portlet has been undeployed.");
+			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
 	}
 
 	macro waitForForm {

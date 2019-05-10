@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -79,11 +79,19 @@ public class BaseMessagingConfiguratorTest {
 		final ClassLoader testClassLoader = new ClassLoader() {
 		};
 
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
 		_baseMessagingConfigurator = new BaseMessagingConfigurator() {
 
 			@Override
 			protected ClassLoader getOperatingClassloader() {
 				return testClassLoader;
+			}
+
+			protected void initialize() {
+				super.initialize();
+
+				countDownLatch.countDown();
 			}
 
 		};
@@ -123,9 +131,7 @@ public class BaseMessagingConfiguratorTest {
 
 		_serviceTracker.open();
 
-		while (ArrayUtil.isEmpty(_serviceTracker.getServices())) {
-			Thread.sleep(1000);
-		}
+		countDownLatch.await();
 
 		Object[] services = _serviceTracker.getServices();
 
@@ -157,7 +163,17 @@ public class BaseMessagingConfiguratorTest {
 	public void testPortalClassLoaderDestinationConfiguration()
 		throws InterruptedException, InvalidSyntaxException {
 
-		_baseMessagingConfigurator = new DefaultMessagingConfigurator();
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		_baseMessagingConfigurator = new DefaultMessagingConfigurator() {
+
+			protected void initialize() {
+				super.initialize();
+
+				countDownLatch.countDown();
+			}
+
+		};
 
 		Set<DestinationConfiguration> destinationConfigurations =
 			new HashSet<>();
@@ -201,9 +217,7 @@ public class BaseMessagingConfiguratorTest {
 
 		_serviceTracker.open();
 
-		while (ArrayUtil.isEmpty(_serviceTracker.getServices())) {
-			Thread.sleep(1000);
-		}
+		countDownLatch.await();
 
 		Object[] services = _serviceTracker.getServices();
 

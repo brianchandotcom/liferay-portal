@@ -1161,12 +1161,12 @@ definition {
 	}
 
 	macro viewMemberOrganizationCP {
-		var key_card = "${orgName}";
+		var key_tableEntry = "${orgName}";
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "LexiconCard#CARD_TITLE",
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 			value1 = "${orgName}");
 
 		if ("${toolTip}" == "true") {

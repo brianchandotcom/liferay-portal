@@ -994,7 +994,6 @@ definition {
 		WebContentDisplayPortlet.viewAllSettingsEnabledPG(
 			locale = "español-España",
 			relatedAssetTitle = "Web Content Title 2",
-			webContentContent = "Web Content Content 1",
 			webContentContentLocalized = "Web Contenido Contenido 1",
 			webContentTitleLocalized = "Web Contenido Título 1");
 	}

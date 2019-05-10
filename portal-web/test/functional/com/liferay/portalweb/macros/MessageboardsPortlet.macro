@@ -295,7 +295,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_FROM_NAME",
-			value1 = "[$MESSAGE_USER_NAME$]");
+			value1 = "Joe Bloggs");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_FROM_ADDRESS",

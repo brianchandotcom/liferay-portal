@@ -262,13 +262,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>type</name>
+			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>title</name>
+			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

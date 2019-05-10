@@ -87,7 +87,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		AssertVisible(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
+		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

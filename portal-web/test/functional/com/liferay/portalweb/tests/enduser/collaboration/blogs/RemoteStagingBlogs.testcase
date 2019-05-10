@@ -136,9 +136,7 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
-
-		Click(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT");
+		Click(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 
 		AssertClick(
 			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",

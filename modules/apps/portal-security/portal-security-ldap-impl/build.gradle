@@ -22,7 +22,6 @@ dependencies {
 	compileInclude group: "org.antlr", name: "antlr", version: "3.0.1"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"

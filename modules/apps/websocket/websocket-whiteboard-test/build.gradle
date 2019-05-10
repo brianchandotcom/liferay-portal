@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel",version: "default"
 	testIntegrationCompile group: "javax.websocket", name: "javax.websocket-api", version: "1.1"
 	testIntegrationCompile group: "junit", name: "junit", version: "4.12"

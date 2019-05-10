@@ -669,7 +669,7 @@ public class ConfigurationPersistenceManager
 	}
 
 	private void _verifyConfigurations(
-		String sql, Consumer<Dictionary> updateFuncion) {
+		String sql, Consumer<Dictionary<Object, Object>> updateFuncion) {
 
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement selectPS = connection.prepareStatement(

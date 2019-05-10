@@ -70,9 +70,7 @@ definition {
 			menuItem = "Editar contenido web",
 			webContentTitle = "WC Titulo");
 
-		PortletEntry.changeLocale(
-			fieldName = "Título",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
 			webContentContent = "WC Contenido",
@@ -96,9 +94,7 @@ definition {
 			menuItem = "Webcontent bearbeiten",
 			webContentTitle = "WC Titel");
 
-		PortletEntry.changeLocale(
-			fieldName = "Titel",
-			locale = "de-DE");
+		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.viewCP(
 			webContentContent = "WC Inhalt",
@@ -122,9 +118,7 @@ definition {
 			menuItem = "Muokkaa web-sisältöä",
 			webContentTitle = "WC Otsikko");
 
-		PortletEntry.changeLocale(
-			fieldName = "Otsikko",
-			locale = "fi-FI");
+		PortletEntry.changeLocale(locale = "fi-FI");
 
 		WebContent.viewCP(
 			webContentContent = "WC Pitoisuus",

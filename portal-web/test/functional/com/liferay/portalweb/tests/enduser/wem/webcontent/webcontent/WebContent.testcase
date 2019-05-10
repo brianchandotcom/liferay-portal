@@ -296,9 +296,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.addCP(
 			webContentContent = "WC Contenido de la web Contenido",
@@ -312,9 +310,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
 			webContentContent = "WC Contenido de la web Contenido",

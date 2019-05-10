@@ -68,9 +68,7 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "ja-JP");
+		PortletEntry.changeLocale(locale = "ja-JP");
 
 		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)");
 
@@ -137,9 +135,7 @@ definition {
 			webContentContent = "WC Content",
 			webContentTitle = "WC Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.addCP(
 			webContentContent = "WC Contenido",
@@ -165,9 +161,7 @@ definition {
 			menuItem = "Editar contenido web",
 			webContentTitle = "WC Titulo");
 
-		PortletEntry.changeLocale(
-			fieldName = "Título",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.viewCP(
 			webContentContent = "WC Contenido",
@@ -253,9 +247,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "fr-FR");
+		PortletEntry.changeLocale(locale = "fr-FR");
 
 		WebContent.addCP(webContentTitle = "WC WebContent Titre");
 
@@ -287,9 +279,7 @@ definition {
 			menuItem = "Modifier le contenu de Web",
 			webContentTitle = "WC WebContent Titre");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "fr-FR");
+		PortletEntry.changeLocale(locale = "fr-FR");
 
 		WebContent.viewCP(
 			webContentText = "WC contenu WebContent",

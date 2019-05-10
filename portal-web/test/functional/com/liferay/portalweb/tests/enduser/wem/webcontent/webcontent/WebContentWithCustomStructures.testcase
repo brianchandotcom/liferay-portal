@@ -335,9 +335,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		WebContent.addCP(webContentTitle = "Title Spanish");
 
@@ -1295,9 +1293,7 @@ definition {
 			fieldName = "image",
 			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		FormFields.editText(
 			fieldName = "title",
@@ -1307,9 +1303,7 @@ definition {
 			fieldName = "image",
 			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "en-US");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
@@ -1319,9 +1313,7 @@ definition {
 			fieldName = "image",
 			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		FormFields.viewTextValue(
 			fieldName = "title",

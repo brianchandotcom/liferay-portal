@@ -673,9 +673,7 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "zh-CN");
+		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addCP(
 			webContentContent = "世界您好 Content",
@@ -1132,9 +1130,7 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "zh-CN");
+		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addCP(
 			webContentContent = "世界您好 Content",

@@ -1840,9 +1840,7 @@ definition {
 			fieldName = "TextBox",
 			fieldValue = "${webContentTextBox}");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "es-ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",

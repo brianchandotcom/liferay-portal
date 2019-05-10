@@ -174,18 +174,14 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "${templateName}");
 
-		PortletEntry.changeLocale(
-			fieldName = "Name",
-			locale = "${locale}");
+		PortletEntry.changeLocale(locale = "${locale}");
 
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
 			value1 = "${localization1Name}");
 
 		if (isSet(locale2)) {
-			PortletEntry.changeLocale(
-				fieldName = "Name",
-				locale = "${locale2}");
+			PortletEntry.changeLocale(locale = "${locale2}");
 
 			Type.clickAtType(
 				locator1 = "TextInput#NAME",

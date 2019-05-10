@@ -26,16 +26,12 @@ definition {
 	}
 
 	macro addLocalization {
-		PortletEntry.changeLocale(
-			fieldName = "Name",
-			locale = "${locale}");
+		PortletEntry.changeLocale(locale = "${locale}");
 
 		WebContentStructures.addName(structureName = "${localization1Name}");
 
 		if (isSet(locale2)) {
-			PortletEntry.changeLocale(
-				fieldName = "Name",
-				locale = "${locale2}");
+			PortletEntry.changeLocale(locale = "${locale2}");
 
 			WebContentStructures.addName(structureName = "${localization2Name}");
 		}

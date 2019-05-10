@@ -363,17 +363,13 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "de-DE");
+		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addCP(
 			webContentContent = "Netz Content1 Inhalt",
 			webContentTitle = "Netz Content1 Titel");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "fr-FR");
+		PortletEntry.changeLocale(locale = "fr-FR");
 
 		WebContent.addCP(
 			webContentContent = "Contenu de Contenu Web1",
@@ -721,9 +717,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "de-DE");
+		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt1 Titel");
 
@@ -763,9 +757,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content2 Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "de-DE");
+		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt2 Titel");
 
@@ -805,9 +797,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content3 Title");
 
-		PortletEntry.changeLocale(
-			fieldName = "Title",
-			locale = "de-DE");
+		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt3 Titel");
 

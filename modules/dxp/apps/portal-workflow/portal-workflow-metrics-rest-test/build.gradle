@@ -1,10 +1,4 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
-	compileOnly project(":private:apps:portal-workflow:portal-workflow-metrics-rest-client")
-
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.8"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.8"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.8"
@@ -20,5 +14,6 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-rest-api")
+	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-rest-client")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

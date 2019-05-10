@@ -46,9 +46,8 @@ public abstract class BasePercentilesAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 100));
 
 		PercentilesAggregation percentilesAggregation =
-			aggregations.percentiles("percentiles", Field.PRIORITY);
-
-		percentilesAggregation.setPercentilesMethod(PercentilesMethod.HDR);
+			aggregationFixture.newPercentilesAggregation(
+				"percentiles", Field.PRIORITY, PercentilesMethod.HDR);
 
 		assertSearch(
 			indexingTestHelper -> {

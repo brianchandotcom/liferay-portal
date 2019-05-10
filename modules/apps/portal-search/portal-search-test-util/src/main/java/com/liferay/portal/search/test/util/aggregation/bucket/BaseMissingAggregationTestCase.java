@@ -61,10 +61,12 @@ public abstract class BaseMissingAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 6));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 7));
 
-		MissingAggregation missingAggregation = aggregations.missing(
-			"missing", Field.USER_NAME);
+		MissingAggregation missingAggregation =
+			aggregationFixture.newMissingAggregation(
+				"missing", Field.USER_NAME);
 
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		missingAggregation.addChildAggregation(sumAggregation);
 

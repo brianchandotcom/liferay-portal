@@ -37,8 +37,9 @@ public abstract class BaseValueCountAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 4));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
-		ValueCountAggregation valueCountAggregation = aggregations.valueCount(
-			"valueCount", Field.PRIORITY);
+		ValueCountAggregation valueCountAggregation =
+			aggregationFixture.newValueCountAggregation(
+				"valueCount", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

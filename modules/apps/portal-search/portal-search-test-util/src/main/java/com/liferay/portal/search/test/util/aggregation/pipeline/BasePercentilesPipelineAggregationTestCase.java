@@ -40,19 +40,19 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation =
-				aggregations.percentilesBucket("percentiles", "histogram>sum");
+				aggregationFixture.newPercentilesBucketPipelineAggregation(
+					"percentiles", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -93,19 +93,19 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setMinDocCount(1L);
-		histogramAggregation.setInterval(5.0);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation =
-				aggregations.percentilesBucket("percentiles", "histogram>sum");
+				aggregationFixture.newPercentilesBucketPipelineAggregation(
+					"percentiles", "histogram>sum");
 
 		percentilesBucketPipelineAggregation.setPercents(25.0, 50.0, 75.0);
 

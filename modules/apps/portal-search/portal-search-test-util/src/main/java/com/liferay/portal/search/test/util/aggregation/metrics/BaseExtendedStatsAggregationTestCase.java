@@ -35,7 +35,8 @@ public abstract class BaseExtendedStatsAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 100));
 
 		ExtendedStatsAggregation extendedStatsAggregation =
-			aggregations.extendedStats("extendedStats", Field.PRIORITY);
+			aggregationFixture.newExtendedStatsAggregation(
+				"extendedStats", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

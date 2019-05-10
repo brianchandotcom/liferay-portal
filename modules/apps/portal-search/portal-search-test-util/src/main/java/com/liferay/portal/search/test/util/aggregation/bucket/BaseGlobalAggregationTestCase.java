@@ -71,9 +71,11 @@ public abstract class BaseGlobalAggregationTestCase
 				document.addNumber(Field.PRIORITY, 7);
 			});
 
-		GlobalAggregation globalAggregation = aggregations.global("global");
+		GlobalAggregation globalAggregation =
+			aggregationFixture.newGlobalAggregation("global");
 
-		AvgAggregation avgAggregation = aggregations.avg("avg", Field.PRIORITY);
+		AvgAggregation avgAggregation = aggregationFixture.newAvgAggregation(
+			"avg", Field.PRIORITY);
 
 		globalAggregation.addChildAggregation(avgAggregation);
 

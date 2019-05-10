@@ -33,7 +33,8 @@ public abstract class BaseAvgAggregationTestCase extends BaseIndexingTestCase {
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 2));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 4));
 
-		AvgAggregation avgAggregation = aggregations.avg("avg", Field.PRIORITY);
+		AvgAggregation avgAggregation = aggregationFixture.newAvgAggregation(
+			"avg", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

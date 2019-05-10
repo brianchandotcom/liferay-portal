@@ -40,10 +40,12 @@ public abstract class BaseFilterAggregationTestCase
 		index("SomeUser2", 6);
 		index("SomeUser2", 7);
 
-		FilterAggregation filterAggregation = aggregations.filter(
-			"filter", queries.term(Field.USER_NAME, "SomeUser1"));
+		FilterAggregation filterAggregation =
+			aggregationFixture.newFilterAggregation(
+				"filter", queries.term(Field.USER_NAME, "SomeUser1"));
 
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		filterAggregation.addChildAggregation(sumAggregation);
 

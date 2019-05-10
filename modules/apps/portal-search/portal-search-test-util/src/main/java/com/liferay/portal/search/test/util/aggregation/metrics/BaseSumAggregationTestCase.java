@@ -33,7 +33,8 @@ public abstract class BaseSumAggregationTestCase extends BaseIndexingTestCase {
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 1));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

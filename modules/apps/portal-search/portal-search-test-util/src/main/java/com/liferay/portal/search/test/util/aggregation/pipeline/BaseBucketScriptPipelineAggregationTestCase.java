@@ -22,9 +22,6 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.pipeline.BucketScriptPipelineAggregationImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -50,12 +47,10 @@ public abstract class BaseBucketScriptPipelineAggregationTestCase
 		}
 
 		HistogramAggregation histogramAggregation =
-			new HistogramAggregationImpl("histogram", Field.PRIORITY);
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = new SumAggregationImpl(
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
 			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
@@ -63,7 +58,8 @@ public abstract class BaseBucketScriptPipelineAggregationTestCase
 		Script script = scripts.script("params.sum * 50");
 
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
-			new BucketScriptPipelineAggregationImpl("bucket_script", script);
+			aggregationFixture.newBucketScriptPipelineAggregation(
+				"bucket_script", script);
 
 		bucketScriptPipelineAggregation.addBucketPath("sum", "sum");
 

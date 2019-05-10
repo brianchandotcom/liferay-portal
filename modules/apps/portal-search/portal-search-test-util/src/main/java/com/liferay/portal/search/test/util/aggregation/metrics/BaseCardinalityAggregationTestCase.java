@@ -41,7 +41,8 @@ public abstract class BaseCardinalityAggregationTestCase
 			DocumentCreationHelpers.singleKeyword(Field.USER_NAME, "b"));
 
 		CardinalityAggregation cardinalityAggregation =
-			aggregations.cardinality("cardinality", Field.USER_NAME);
+			aggregationFixture.newCardinalityAggregation(
+				"cardinality", Field.USER_NAME);
 
 		assertSearch(
 			indexingTestHelper -> {

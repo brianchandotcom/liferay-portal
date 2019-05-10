@@ -45,18 +45,18 @@ public abstract class BaseCumulativeSumPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
 		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation =
-			aggregations.cumulativeSum("cumulative_sum", "sum");
+			aggregationFixture.newCumulativeSumPipelineAggregation(
+				"cumulative_sum", "sum");
 
 		histogramAggregation.addPipelineAggregation(
 			cumulativeSumPipelineAggregation);

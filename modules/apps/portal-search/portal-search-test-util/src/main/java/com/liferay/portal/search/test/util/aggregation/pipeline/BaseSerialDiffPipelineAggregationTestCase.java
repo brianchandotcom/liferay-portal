@@ -45,18 +45,18 @@ public abstract class BaseSerialDiffPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
 		SerialDiffPipelineAggregation serialDiffPipelineAggregation =
-			aggregations.serialDiff("serial_diff", "sum");
+			aggregationFixture.newSerialDiffPipelineAggregation(
+				"serial_diff", "sum");
 
 		serialDiffPipelineAggregation.setLag(2);
 

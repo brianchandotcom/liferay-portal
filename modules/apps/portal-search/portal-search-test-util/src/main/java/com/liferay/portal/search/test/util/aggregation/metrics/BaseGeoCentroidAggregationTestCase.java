@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregation;
 import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.internal.aggregation.metrics.GeoCentroidAggregationImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -53,7 +52,8 @@ public abstract class BaseGeoCentroidAggregationTestCase
 				Field.GEO_LOCATION, 48.860000, 2.327000));
 
 		GeoCentroidAggregation geoBoundsAggregation =
-			new GeoCentroidAggregationImpl("geoCentroid", Field.GEO_LOCATION);
+			aggregationFixture.newGeoCentroidAggregation(
+				"geoCentroid", Field.GEO_LOCATION);
 
 		assertSearch(
 			indexingTestHelper -> {

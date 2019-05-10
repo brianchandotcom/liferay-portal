@@ -38,18 +38,18 @@ public abstract class BaseStatsBucketPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 
 		StatsBucketPipelineAggregation statsBucketPipelineAggregation =
-			aggregations.statsBucket("stats_bucket", "histogram>sum");
+			aggregationFixture.newStatsBucketPipelineAggregation(
+				"stats_bucket", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {

@@ -50,21 +50,20 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		String expectedBuckets = "[0.0=4, 20.0=1, 5.0=5, 10.0=5, 15.0=5]";
 		String expectedBucketValues = "10.0, 20.0, 35.0, 60.0, 85.0";
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			aggregations.bucketSort("bucket_sort");
-
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
+			aggregationFixture.newBucketSortPipelineAggregation(
+				"bucket_sort", fieldSort, null);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -99,22 +98,20 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		String expectedBuckets = "[15.0=5, 10.0=5, 5.0=5]";
 		String expectedBucketValues = "85.0, 60.0, 35.0";
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
+			"sum", Field.PRIORITY);
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			aggregations.bucketSort("bucket_sort");
-
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
-		bucketSortPipelineAggregation.setSize(3);
+			aggregationFixture.newBucketSortPipelineAggregation(
+				"bucket_sort", fieldSort, 3);
 
 		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {

@@ -40,11 +40,9 @@ public abstract class BaseHistogramAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.newHistogramAggregation(
+				"histogram", Field.PRIORITY, 5.0, 1L);
 
 		assertSearch(
 			indexingTestHelper -> {

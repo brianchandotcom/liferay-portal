@@ -39,8 +39,9 @@ public abstract class BaseGeoBoundsAggregationTestCase
 			DocumentCreationHelpers.singleGeoLocation(
 				Field.GEO_LOCATION, 48.860000, 2.327000));
 
-		GeoBoundsAggregation geoBoundsAggregation = aggregations.geoBounds(
-			"geoBounds", Field.GEO_LOCATION);
+		GeoBoundsAggregation geoBoundsAggregation =
+			aggregationFixture.newGeoBoundsAggregation(
+				"geoBounds", Field.GEO_LOCATION);
 
 		geoBoundsAggregation.setWrapLongitude(true);
 

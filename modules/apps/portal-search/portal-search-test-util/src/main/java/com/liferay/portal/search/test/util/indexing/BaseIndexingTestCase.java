@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
-import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.Highlights;
-import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.HighlightsImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
@@ -287,7 +285,8 @@ public abstract class BaseIndexingTestCase {
 
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
-	protected final Aggregations aggregations = new AggregationsImpl();
+	protected final AggregationFixture aggregationFixture =
+		new AggregationFixture();
 	protected final GeoBuilders geoBuilders = new GeoBuildersImpl();
 	protected final Highlights highlights = new HighlightsImpl();
 	protected final Queries queries = new QueriesImpl();
@@ -342,12 +341,14 @@ public abstract class BaseIndexingTestCase {
 			return getAggregationResult(pipelineAggregation.getName());
 		}
 
+		@SuppressWarnings("unchecked")
 		public <AR extends AggregationResult> AR getChildAggregationResult(
 			Bucket bucket, Aggregation aggregation) {
 
 			return (AR)bucket.getChildAggregationResult(aggregation.getName());
 		}
 
+		@SuppressWarnings("unchecked")
 		public <AR extends AggregationResult> AR getChildAggregationResult(
 			HierarchicalAggregationResult aggregationResult,
 			Aggregation aggregation) {
@@ -422,6 +423,7 @@ public abstract class BaseIndexingTestCase {
 			searchResponseConsumer.accept(_searchResponse);
 		}
 
+		@SuppressWarnings("unchecked")
 		protected <AR extends AggregationResult> AR getAggregationResult(
 			String name) {
 

@@ -116,7 +116,7 @@ public class JavaDetector {
 		_javaVmVersion = System.getProperty("java.vm.version");
 
 		_64bit = Objects.equals(
-			"64", System.getProperty("sun.arch.data.model"));
+			System.getProperty("sun.arch.data.model"), "64");
 
 		boolean oracle = false;
 

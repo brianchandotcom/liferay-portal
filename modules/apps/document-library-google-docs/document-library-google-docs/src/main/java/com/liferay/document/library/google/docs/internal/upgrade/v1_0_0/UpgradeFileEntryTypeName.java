@@ -74,7 +74,7 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 					dlFileEntryType.getCompanyId()));
 
 			boolean hasDefaultName = Objects.equals(
-				"Google Docs", dlFileEntryType.getName(locale));
+				dlFileEntryType.getName(locale), "Google Docs");
 
 			if (hasDefaultName) {
 				dlFileEntryType.setName(
@@ -82,7 +82,7 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 			}
 
 			boolean hasDefaultDescription = Objects.equals(
-				"Google Docs", dlFileEntryType.getDescription(locale));
+				dlFileEntryType.getDescription(locale), "Google Docs");
 
 			if (hasDefaultDescription) {
 				dlFileEntryType.setDescription(StringPool.BLANK, locale);

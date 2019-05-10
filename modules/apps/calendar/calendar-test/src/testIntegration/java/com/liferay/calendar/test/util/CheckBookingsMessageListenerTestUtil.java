@@ -62,7 +62,7 @@ public class CheckBookingsMessageListenerTestUtil {
 						throws Throwable {
 
 						if (Objects.equals(
-								"checkCalendarBookings", method.getName())) {
+								method.getName(), "checkCalendarBookings")) {
 
 							return null;
 						}

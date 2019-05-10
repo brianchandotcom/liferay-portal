@@ -52,7 +52,7 @@ public class UpgradeBlogsEntryClassName extends BaseUpgradeClassNames {
 			workflowContext.get("entryClassName"));
 
 		if (Objects.equals(
-				"com.liferay.blogs.kernel.model.BlogsEntry", entryClassName)) {
+				entryClassName, "com.liferay.blogs.kernel.model.BlogsEntry")) {
 
 			workflowContext.put(
 				"entryClassName", "com.liferay.blogs.model.BlogsEntry");

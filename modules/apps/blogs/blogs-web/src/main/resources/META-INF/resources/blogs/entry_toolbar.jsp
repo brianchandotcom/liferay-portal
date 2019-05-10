@@ -48,7 +48,8 @@ boolean showOnlyIcons = ParamUtil.getBoolean(request, "showOnlyIcons");
 			</portlet:renderURL>
 
 			<liferay-util:whitespace-remover>
-				<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>">
+				<a class="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= viewEntryCommentsURL.toString() %>"
+					title='<liferay-ui:message key="comments" />'>
 					<span class="inline-item inline-item-before">
 						<clay:icon
 							symbol="comments"

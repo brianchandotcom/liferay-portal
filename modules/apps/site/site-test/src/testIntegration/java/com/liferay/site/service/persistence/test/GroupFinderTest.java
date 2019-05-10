@@ -16,7 +16,6 @@ package com.liferay.site.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,7 +47,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -89,13 +85,6 @@ public class GroupFinderTest {
 			_arbitraryResourceAction.getBitwiseValue(),
 			_arbitraryResourceAction.getName(),
 			String.valueOf(_group.getGroupId()), ResourceConstants.SCOPE_GROUP);
-
-		_modelResourceAction = getModelResourceAction();
-
-		ResourcePermissionTestUtil.addResourcePermission(
-			_modelResourceAction.getBitwiseValue(),
-			_modelResourceAction.getName(), String.valueOf(_group.getGroupId()),
-			RandomTestUtil.nextLong(), ResourceConstants.SCOPE_GROUP);
 	}
 
 	@AfterClass
@@ -304,22 +293,6 @@ public class GroupFinderTest {
 		Assert.assertEquals(groups.toString(), 2, groups.size());
 	}
 
-	protected static ResourceAction getModelResourceAction()
-		throws PortalException {
-
-		String name = RandomTestUtil.randomString() + "Model";
-
-		List<String> actionIds = new ArrayList<>();
-
-		actionIds.add(ActionKeys.UPDATE);
-		actionIds.add(ActionKeys.VIEW);
-
-		_resourceActionLocalService.checkResourceActions(name, actionIds, true);
-
-		return _resourceActionLocalService.getResourceAction(
-			name, ActionKeys.VIEW);
-	}
-
 	protected void addLayout(long groupId) throws Exception {
 		LayoutTestUtil.addLayout(groupId, false);
 
@@ -359,7 +332,6 @@ public class GroupFinderTest {
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
-	private static ResourceAction _modelResourceAction;
 	private static Organization _organization;
 
 	@Inject

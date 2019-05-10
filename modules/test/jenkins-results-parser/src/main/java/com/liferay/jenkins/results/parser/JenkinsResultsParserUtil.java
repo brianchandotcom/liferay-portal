@@ -1914,8 +1914,28 @@ public class JenkinsResultsParserUtil {
 		return string;
 	}
 
-	public static void regenerateSshIdRsa(String idRsa) {
-		if ((idRsa == null) || idRsa.isEmpty()) {
+	public static void regenerateSshIdRsa(File secretsVolumeDir) {
+		if (!secretsVolumeDir.exists()) {
+			return;
+		}
+
+		File secretsVolumeIdRsaFile = new File(secretsVolumeDir, "id_rsa");
+
+		if (!secretsVolumeIdRsaFile.exists()) {
+			return;
+		}
+
+		String idRsa;
+
+		try {
+			idRsa = read(secretsVolumeIdRsaFile);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to read secrets id_rsa file", ioe);
+		}
+
+		if (idRsa.isEmpty()) {
 			return;
 		}
 

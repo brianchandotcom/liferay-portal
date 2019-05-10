@@ -39,10 +39,11 @@ import java.util.Map;
 public class LiferayCiInitK8sNodeUtil {
 
 	public static void init() {
-		String idRsa = _getEnvironmentVariable("ID_RSA");
+		String secretsVolumeDir = _getEnvironmentVariable("SECRETS_VOLUME_DIR");
 
-		if (idRsa != null) {
-			JenkinsResultsParserUtil.regenerateSshIdRsa(idRsa);
+		if ((secretsVolumeDir != null) && !secretsVolumeDir.isEmpty()) {
+			JenkinsResultsParserUtil.regenerateSshIdRsa(
+				new File(secretsVolumeDir));
 		}
 
 		String knownHosts = _getEnvironmentVariable("KNOWN_HOSTS");

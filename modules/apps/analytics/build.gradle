@@ -7,11 +7,7 @@ buildscript {
 		mavenLocal()
 
 		maven {
-			url file("../../../.m2-tmp")
-		}
-
-		maven {
-			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
 }

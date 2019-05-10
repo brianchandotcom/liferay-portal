@@ -17,7 +17,10 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
@@ -42,6 +45,8 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -209,6 +214,16 @@ public class ResourceHelper {
 		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
 	}
 
+	public ResourceBundle getResourceBundle(Locale locale) {
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			locale, ResourceHelper.class);
+
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
+
+		return new AggregateResourceBundle(
+			moduleResourceBundle, portalResourceBundle);
+	}
+
 	@Activate
 	protected void activate() {
 		_workflowMetricsInstanceCountCombineScript = createScript(
@@ -237,6 +252,9 @@ public class ResourceHelper {
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Queries _queries;

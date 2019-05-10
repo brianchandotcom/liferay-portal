@@ -273,11 +273,11 @@ public class GroupServiceTest {
 		_userLocalService.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {user.getUserId()});
 
-		Role siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			user.getUserId(), organizationSite.getGroupId(),
-			new long[] {siteRole.getRoleId()});
+			new long[] {_role.getRoleId()});
 
 		_groupService.deleteGroup(organizationSite.getGroupId());
 
@@ -389,6 +389,8 @@ public class GroupServiceTest {
 		_group = GroupTestUtil.addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		long roleId = RoleTestUtil.addGroupRole(_group.getGroupId());
+
+		_role = _roleLocalService.fetchRole(roleId);
 
 		String[] groupParams = {
 			"groupsRoles:" + String.valueOf(roleId) + ":long",
@@ -1350,6 +1352,9 @@ public class GroupServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

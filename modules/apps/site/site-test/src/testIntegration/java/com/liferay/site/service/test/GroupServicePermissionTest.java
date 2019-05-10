@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -178,13 +179,13 @@ public class GroupServicePermissionTest {
 	protected void givePermissionToManageSubsites(Group group)
 		throws Exception {
 
-		Role role = RoleTestUtil.addRole(
+		_role = RoleTestUtil.addRole(
 			"Subsites Admin", RoleConstants.TYPE_SITE, Group.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.MANAGE_SUBGROUPS);
 
-		long[] roleIds = {role.getRoleId()};
+		long[] roleIds = {_role.getRoleId()};
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			_user.getUserId(), group.getGroupId(), roleIds);
@@ -356,6 +357,9 @@ public class GroupServicePermissionTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	private User _user;
 

@@ -1298,9 +1298,7 @@ definition {
 	}
 
 	macro viewAvailableLanguagesPGViaWCD {
-		Click(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION");
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
 			key_locale = StringUtil.replace("${locale1}", "-", "_"),

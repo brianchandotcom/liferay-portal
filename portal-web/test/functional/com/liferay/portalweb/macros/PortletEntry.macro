@@ -2,9 +2,14 @@ definition {
 	macro changeLocale {
 		Portlet.waitForForm();
 
-		Click.clickNoMouseOver(
-			key_fieldName = "${fieldName}",
-			locator1 = "Button#LOCALIZATION");
+		if (isSet(fieldName)) {
+			Click.clickNoMouseOver(
+				key_fieldName = "${fieldName}",
+				locator1 = "Button#LOCALIZATION");
+		}
+		else {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+		}
 
 		Click(
 			key_locale = StringUtil.replace("${locale}", "-", "_"),

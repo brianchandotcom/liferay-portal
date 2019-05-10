@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
@@ -52,9 +50,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,37 +69,6 @@ public class GroupFinderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_group = GroupTestUtil.addGroup();
-		_organization = OrganizationTestUtil.addOrganization(true);
-
-		List<ResourceAction> resourceActions =
-			_resourceActionLocalService.getResourceActions(0, 1);
-
-		_arbitraryResourceAction = resourceActions.get(0);
-
-		_resourcePermission = ResourcePermissionTestUtil.addResourcePermission(
-			_arbitraryResourceAction.getBitwiseValue(),
-			_arbitraryResourceAction.getName(),
-			String.valueOf(_group.getGroupId()), ResourceConstants.SCOPE_GROUP);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_groupLocalService.deleteGroup(_group);
-		_groupLocalService.deleteGroup(_userGroupGroup);
-
-		_organizationLocalService.deleteOrganization(_organization);
-
-		_resourcePermissionLocalService.deleteResourcePermission(
-			_resourcePermission);
-
-		_userLocalService.deleteUser(_userGroupUser);
-
-		_userGroupLocalService.deleteUserGroup(_userGroup);
-	}
-
 	@Test
 	public void testFindByActiveGroupIds() throws Exception {
 		List<Long> groups = _groupFinder.findByActiveGroupIds(
@@ -115,6 +80,18 @@ public class GroupFinderTest {
 	@Test
 	public void testFindByC_C_N_DJoinByRoleResourcePermissions()
 		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(0, 1);
+
+		_arbitraryResourceAction = resourceActions.get(0);
+
+		_resourcePermission = ResourcePermissionTestUtil.addResourcePermission(
+			_arbitraryResourceAction.getBitwiseValue(),
+			_arbitraryResourceAction.getName(),
+			String.valueOf(_group.getGroupId()), ResourceConstants.SCOPE_GROUP);
 
 		boolean exists = false;
 
@@ -138,21 +115,23 @@ public class GroupFinderTest {
 
 	@Test
 	public void testFindByC_C_PG_N_D() throws Exception {
-		_userGroup = UserGroupTestUtil.addUserGroup();
-		_userGroupUser = UserTestUtil.addUser();
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+		User userGroupUser = UserTestUtil.addUser();
 
 		_userGroupLocalService.addUserUserGroup(
-			_userGroupUser.getUserId(), _userGroup);
+			userGroupUser.getUserId(), userGroup);
+
+		_organization = OrganizationTestUtil.addOrganization(true);
 
 		Group group = _organization.getGroup();
 
 		_groupLocalService.addUserGroupGroup(
-			_userGroup.getUserGroupId(), group.getGroupId());
+			userGroup.getUserGroupId(), group.getGroupId());
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("inherit", true);
-		params.put("usersGroups", _userGroupUser.getUserId());
+		params.put("usersGroups", userGroupUser.getUserId());
 
 		List<Group> groups = _groupFinder.findByC_C_PG_N_D(
 			_organization.getCompanyId(), null,
@@ -160,6 +139,10 @@ public class GroupFinderTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(groups.toString(), groups.contains(group));
+
+		_userLocalService.deleteUser(userGroupUser);
+
+		_userGroupLocalService.deleteUserGroup(userGroup);
 	}
 
 	@Test
@@ -179,21 +162,21 @@ public class GroupFinderTest {
 
 	@Test
 	public void testFindByCompanyIdByUserGroupGroup() throws Exception {
-		_userGroup = UserGroupTestUtil.addUserGroup();
-		_userGroupGroup = GroupTestUtil.addGroup();
-		_userGroupUser = UserTestUtil.addUser();
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+		Group userGroupGroup = GroupTestUtil.addGroup();
+		User userGroupUser = UserTestUtil.addUser();
 
 		_groupLocalService.addUserGroupGroup(
-			_userGroup.getUserGroupId(), _userGroupGroup.getGroupId());
+			userGroup.getUserGroupId(), userGroupGroup.getGroupId());
 
 		_userGroupLocalService.addUserUserGroup(
-			_userGroupUser.getUserId(), _userGroup);
+			userGroupUser.getUserId(), userGroup);
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("inherit", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
-		groupParams.put("usersGroups", _userGroupUser.getUserId());
+		groupParams.put("usersGroups", userGroupUser.getUserId());
 
 		List<Group> groups = _groupFinder.findByCompanyId(
 			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
@@ -202,7 +185,7 @@ public class GroupFinderTest {
 		boolean exists = false;
 
 		for (Group group : groups) {
-			if (group.getGroupId() == _userGroupGroup.getGroupId()) {
+			if (group.getGroupId() == userGroupGroup.getGroupId()) {
 				exists = true;
 
 				break;
@@ -211,8 +194,14 @@ public class GroupFinderTest {
 
 		Assert.assertTrue(
 			"The method findByCompanyId should have returned the group " +
-				_userGroupGroup.getGroupId(),
+				userGroupGroup.getGroupId(),
 			exists);
+
+		_groupLocalService.deleteGroup(userGroupGroup);
+
+		_userLocalService.deleteUser(userGroupUser);
+
+		_userGroupLocalService.deleteUserGroup(userGroup);
 	}
 
 	@Test
@@ -336,44 +325,36 @@ public class GroupFinderTest {
 			new GroupNameComparator(true));
 	}
 
-	private static ResourceAction _arbitraryResourceAction;
-	private static Group _group;
+	private ResourceAction _arbitraryResourceAction;
 
-	@Inject
-	private static GroupLocalService _groupLocalService;
-
-	private static Organization _organization;
-
-	@Inject
-	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	private static ResourcePermission _resourcePermission;
-
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	private static UserGroup _userGroup;
-	private static Group _userGroupGroup;
-
-	@Inject
-	private static UserGroupLocalService _userGroupLocalService;
-
-	private static User _userGroupUser;
-
-	@Inject
-	private static UserLocalService _userLocalService;
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private GroupFinder _groupFinder;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>();
 
+	@DeleteAfterTestRun
+	private Organization _organization;
+
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@DeleteAfterTestRun
+	private ResourcePermission _resourcePermission;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

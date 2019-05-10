@@ -119,7 +119,7 @@
 
 				<manifest-helper />
 
-				<bnd classpath="classes" exceptions="true" files="bnd.bnd" output="${jar.file}.jar" />
+				<bnd-invoker output="${jar.file}.jar" />
 
 				<if>
 					<not>

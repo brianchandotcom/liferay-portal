@@ -3,6 +3,7 @@ lib/development/com.liferay.ant.build.logger.jar
 lib/development/com.liferay.ant.heap.dump.jar
 lib/development/com.liferay.ant.mirrors.get.jar
 lib/development/com.liferay.ant.sync.dir.jar
+lib/development/com.liferay.bnd.invoker.jar
 lib/development/com.liferay.util.taglib.compat.jar
 lib/portal/portal-client.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar

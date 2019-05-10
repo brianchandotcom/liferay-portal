@@ -1,3 +1,4 @@
+lib/development/com.liferay.bnd.invoker.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar
 tmp/lib-pre/com.liferay.petra.content.jar
 tmp/lib-pre/com.liferay.petra.encryptor.jar

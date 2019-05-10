@@ -155,6 +155,28 @@ public class ArrayCheck extends BaseFileCheck {
 					content, parameter, matcher2.group(1) + "[0]",
 					matcher1.start());
 			}
+
+			int x = parameter.indexOf("Array.newInstance(");
+
+			if ((x == -1) || ToolsUtil.isInsideQuotes(parameter, x)) {
+				continue;
+			}
+
+			parameterList = JavaSourceUtil.getParameterList(
+				parameter.substring(x));
+
+			if (parameterList.size() != 2) {
+				continue;
+			}
+
+			String secondParameter = parameterList.get(1);
+
+			if (secondParameter.equals(variableName + ".size()")) {
+				return StringUtil.replaceFirst(
+					content, parameter,
+					StringUtil.replaceLast(parameter, secondParameter, "0"),
+					matcher1.start());
+			}
 		}
 
 		return content;

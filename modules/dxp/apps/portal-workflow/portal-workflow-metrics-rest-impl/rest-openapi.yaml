@@ -183,6 +183,22 @@ components:
                     format: int64
                     type: integer
             type: object
+        TimeRange:
+            description: https://www.schema.org/TimeRange
+            properties:
+                dateEnd:
+                    format: date-time
+                    type: string
+                dateStart:
+                    format: date-time
+                    type: string
+                defaultTimeRange:
+                    type: boolean
+                id:
+                    type: integer
+                name:
+                    type: string
+            type: object
 info:
     description: ""
     title: ""
@@ -256,6 +272,10 @@ paths:
                   name: completed
                   schema:
                       type: boolean
+                - in: query
+                  name: timeRange
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -305,6 +325,10 @@ paths:
                       items:
                           type: string
                       type: array
+                - in: query
+                  name: timeRange
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:
@@ -575,3 +599,21 @@ paths:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""
             tags: ["SLA"]
+    "/time-ranges":
+        get:
+            operationId: getTimeRangesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TimeRange"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TimeRange"
+                                type: array
+                    description: ""
+            tags: ["TimeRange"]

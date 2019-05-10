@@ -26,8 +26,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,38 +38,18 @@ import java.util.Map;
 public class LiferayCiInitK8sNodeUtil {
 
 	public static void init() {
-		String secretsVolumeDir = _getEnvironmentVariable("SECRETS_VOLUME_DIR");
+		JenkinsResultsParserUtil.regenerateSshIdRsa(
+			new File(_getEnvironmentVariable("SECRETS_VOLUME_DIR")));
 
-		if ((secretsVolumeDir != null) && !secretsVolumeDir.isEmpty()) {
-			JenkinsResultsParserUtil.regenerateSshIdRsa(
-				new File(secretsVolumeDir));
-		}
-
-		String knownHosts = _getEnvironmentVariable("KNOWN_HOSTS");
-
-		if (knownHosts != null) {
-			JenkinsResultsParserUtil.regenerateSshKnownHosts(knownHosts);
-		}
+		JenkinsResultsParserUtil.regenerateSshKnownHosts(
+			_getEnvironmentVariable("KNOWN_HOSTS"));
 
 		String gitRepositoryNamesString = _getEnvironmentVariable(
 			"GIT_REPOSITORY_NAMES");
 
-		List<String> gitRepositoryNames = null;
-
-		if (gitRepositoryNamesString != null) {
-			gitRepositoryNames = new ArrayList<>();
-
-			Collections.addAll(
-				gitRepositoryNames, gitRepositoryNamesString.split(","));
-		}
-
-		String gitArtifactsDirPath = _getEnvironmentVariable(
-			"GIT_ARTIFACTS_DIR");
-
-		if (gitArtifactsDirPath != null) {
-			_createGitArtifacts(
-				new File(gitArtifactsDirPath), gitRepositoryNames);
-		}
+		_createGitArtifacts(
+			new File(_getEnvironmentVariable("GIT_ARTIFACTS_DIR")),
+			Arrays.asList(gitRepositoryNamesString.split(",")));
 	}
 
 	private static void _configureLocalCoreSettings(
@@ -196,11 +175,9 @@ public class LiferayCiInitK8sNodeUtil {
 		if ((environmentVariableValue == null) ||
 			environmentVariableValue.isEmpty()) {
 
-			System.out.println(
+			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Please set \'", environmentVariableName, "\'"));
-
-			return null;
 		}
 
 		return environmentVariableValue;

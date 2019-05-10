@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

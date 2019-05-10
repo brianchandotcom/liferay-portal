@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthUserLocalService;

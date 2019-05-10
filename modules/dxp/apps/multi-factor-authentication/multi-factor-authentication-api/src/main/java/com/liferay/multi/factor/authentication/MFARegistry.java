@@ -14,12 +14,12 @@
 
 package com.liferay.multi.factor.authentication;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.multi.factor.authentication.policy.MFAPolicy;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Tomas Polesovsky

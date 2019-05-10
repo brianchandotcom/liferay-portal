@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;

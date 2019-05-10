@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.oauth.exception.NoSuchApplicationException;
 import com.liferay.oauth.model.OAuthApplication;

@@ -14,7 +14,7 @@
 
 package com.liferay.saml.persistence.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalServiceUtil;

@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;

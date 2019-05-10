@@ -14,12 +14,12 @@
 
 package com.liferay.multi.factor.authentication.checker.headless.visitor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.headless.HeadlessMFAChecker;
 import com.liferay.multi.factor.authentication.checker.visitor.BaseMFACheckerVisitor;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Carlos Sierra Andrés

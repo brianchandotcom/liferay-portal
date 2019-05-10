@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marcellus Tavares

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.resiliency.spi.model;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.Serializable;
 

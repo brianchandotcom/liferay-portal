@@ -14,8 +14,6 @@
 
 package com.liferay.multi.factor.authentication.checker.browser.visitor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.multi.factor.authentication.checker.browser.BrowserMFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.MandatoryCompositeMFAChecker;
@@ -29,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Carlos Sierra Andrés

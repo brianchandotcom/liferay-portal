@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.model;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.Serializable;
 

@@ -14,14 +14,14 @@
 
 package com.liferay.multi.factor.authentication.checker.composite;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Carlos Sierra Andrés

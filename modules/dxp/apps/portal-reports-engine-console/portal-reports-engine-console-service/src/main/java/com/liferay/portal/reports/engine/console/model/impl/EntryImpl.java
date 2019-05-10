@@ -14,8 +14,6 @@
 
 package com.liferay.portal.reports.engine.console.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +22,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

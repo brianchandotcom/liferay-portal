@@ -14,7 +14,7 @@
 
 package com.liferay.portal.resiliency.spi.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;

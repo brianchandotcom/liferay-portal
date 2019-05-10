@@ -14,9 +14,9 @@
 
 package com.liferay.multi.factor.authentication.checker.setup.visitor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.visitor.BaseCollectorMFACheckerVisitor;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Carlos Sierra Andrés

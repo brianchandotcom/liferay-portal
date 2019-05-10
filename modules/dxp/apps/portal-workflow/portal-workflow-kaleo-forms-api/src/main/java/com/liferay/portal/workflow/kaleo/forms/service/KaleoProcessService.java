@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

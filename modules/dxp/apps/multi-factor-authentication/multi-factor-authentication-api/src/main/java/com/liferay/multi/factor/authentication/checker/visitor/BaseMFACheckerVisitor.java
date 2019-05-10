@@ -14,13 +14,13 @@
 
 package com.liferay.multi.factor.authentication.checker.visitor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.multi.factor.authentication.checker.MFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.MandatoryCompositeMFAChecker;
 import com.liferay.multi.factor.authentication.checker.composite.OptionalCompositeMFAChecker;
 
 import java.util.function.Predicate;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Carlos Sierra Andrés

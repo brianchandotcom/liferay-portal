@@ -14,7 +14,7 @@
 
 package com.liferay.portal.resiliency.spi.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;

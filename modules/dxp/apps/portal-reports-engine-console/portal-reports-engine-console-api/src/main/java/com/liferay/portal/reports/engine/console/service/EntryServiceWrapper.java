@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 

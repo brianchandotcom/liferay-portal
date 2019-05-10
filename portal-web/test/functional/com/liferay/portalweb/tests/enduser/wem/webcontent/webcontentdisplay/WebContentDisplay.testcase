@@ -982,7 +982,7 @@ definition {
 
 		WebContentDisplayPortlet.configureSetupPG(
 			enableViewCountIncrement = "true",
-			metadataNameList = "Related Assets,Comment Ratings,Comments,Ratings",
+			metadataNameList = "Related Assets,Ratings,Comments,Comment Ratings",
 			userToolNameList = "Translations,Print");
 
 		WebContentDisplayPortlet.saveConfiguration();

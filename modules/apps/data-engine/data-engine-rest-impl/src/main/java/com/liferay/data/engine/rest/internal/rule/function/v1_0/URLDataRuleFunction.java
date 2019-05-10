@@ -14,9 +14,12 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
+import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
+import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Map;
 
 /**
  * @author Jeyvison Nascimento
@@ -25,12 +28,12 @@ public class URLDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
-		DataDefinitionField dataDefinitionField,
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters,
-		Object value) {
+		SPIDataDefinitionField dataDefinitionField,
+		Map<String, Object> dataDefinitionRuleParameters, Object value) {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			DataRuleFunctionResult.of(dataDefinitionField, "invalid-url");
+			DataRuleFunctionResult.of(
+				dataDefinitionField.getName(), "invalid-url");
 
 		if (value == null) {
 			return dataRuleFunctionResult;

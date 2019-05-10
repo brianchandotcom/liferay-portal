@@ -14,13 +14,14 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionRuleParameterUtil;
+import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
+import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,13 +32,12 @@ public class MatchExpressionDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
-		DataDefinitionField dataDefinitionField,
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters,
-		Object value) {
+		SPIDataDefinitionField dataDefinitionField,
+		Map<String, Object> dataDefinitionRuleParameters, Object value) {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionResult.of(
-				dataDefinitionField, "value-must-match-expression");
+				dataDefinitionField.getName(), "value-must-match-expression");
 
 		if (value == null) {
 			return dataRuleFunctionResult;
@@ -45,10 +45,7 @@ public class MatchExpressionDataRuleFunction implements DataRuleFunction {
 
 		try {
 			Pattern pattern = Pattern.compile(
-				MapUtil.getString(
-					DataDefinitionRuleParameterUtil.toMap(
-						dataDefinitionRuleParameters),
-					"expression"));
+				MapUtil.getString(dataDefinitionRuleParameters, "expression"));
 
 			Matcher matcher = pattern.matcher(value.toString());
 

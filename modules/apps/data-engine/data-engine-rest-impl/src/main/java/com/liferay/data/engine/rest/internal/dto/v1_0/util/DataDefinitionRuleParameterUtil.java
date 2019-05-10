@@ -14,15 +14,12 @@
 
 package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRuleParameter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,66 +27,39 @@ import java.util.Map;
  */
 public class DataDefinitionRuleParameterUtil {
 
-	public static DataDefinitionRuleParameter[] toDataDefinitionRuleParameters(
+	public static Map<String, Object> toDataDefinitionRuleParameters(
 		JSONObject jsonObject) {
 
-		List<DataDefinitionRuleParameter> dataDefinitionRuleParameters =
-			new ArrayList<>();
+		Map<String, Object> dataDefinitionRuleParameters = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();
 
 		while (keys.hasNext()) {
 			String parameterKey = keys.next();
 
-			DataDefinitionRuleParameter dataDefinitionRuleParameter =
-				new DataDefinitionRuleParameter() {
-					{
-						key = parameterKey;
-						value = jsonObject.get(parameterKey);
-					}
-				};
-
-			dataDefinitionRuleParameters.add(dataDefinitionRuleParameter);
+			dataDefinitionRuleParameters.put(
+				parameterKey, jsonObject.get(parameterKey));
 		}
 
-		return dataDefinitionRuleParameters.toArray(
-			new DataDefinitionRuleParameter[0]);
+		return dataDefinitionRuleParameters;
 	}
 
 	public static JSONObject toJSONObject(
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters) {
+		Map<String, Object> dataDefinitionRuleParameters) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (ArrayUtil.isEmpty(dataDefinitionRuleParameters)) {
+		if (MapUtil.isEmpty(dataDefinitionRuleParameters)) {
 			return jsonObject;
 		}
 
-		for (DataDefinitionRuleParameter dataDefinitionRuleParameter :
-				dataDefinitionRuleParameters) {
+		for (Map.Entry<String, Object> entry :
+				dataDefinitionRuleParameters.entrySet()) {
 
-			jsonObject.put(
-				dataDefinitionRuleParameter.getKey(),
-				dataDefinitionRuleParameter.getValue());
+			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
 		return jsonObject;
-	}
-
-	public static Map<String, Object> toMap(
-		DataDefinitionRuleParameter[] dataDefinitionRuleParameters) {
-
-		Map<String, Object> map = new HashMap<>();
-
-		for (DataDefinitionRuleParameter dataDefinitionRuleParameter :
-				dataDefinitionRuleParameters) {
-
-			map.put(
-				dataDefinitionRuleParameter.getKey(),
-				dataDefinitionRuleParameter.getValue());
-		}
-
-		return map;
 	}
 
 }

@@ -160,13 +160,13 @@ public class SelectTeamDisplayContext {
 
 		int teamsCount = TeamLocalServiceUtil.searchCount(
 			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
-			searchTerms.getDescription(), new LinkedHashMap<>());
+			searchTerms.getKeywords(), new LinkedHashMap<>());
 
 		teamSearchContainer.setTotal(teamsCount);
 
 		List<Team> teams = TeamLocalServiceUtil.search(
 			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
-			searchTerms.getDescription(), new LinkedHashMap<>(),
+			searchTerms.getKeywords(), new LinkedHashMap<>(),
 			teamSearchContainer.getStart(), teamSearchContainer.getEnd(),
 			teamSearchContainer.getOrderByComparator());
 

@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pavel Savinov
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *			 com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor}
  */
+@Deprecated
 public interface InfoDisplayRequestAttributesContributor {
 
 	public void addAttributes(HttpServletRequest httpServletRequest);

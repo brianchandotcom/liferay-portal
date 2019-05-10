@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.info.display.internal.contributor;
+package com.liferay.asset.info.display.internal.request.attributes.contributor;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -21,7 +21,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.info.display.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;

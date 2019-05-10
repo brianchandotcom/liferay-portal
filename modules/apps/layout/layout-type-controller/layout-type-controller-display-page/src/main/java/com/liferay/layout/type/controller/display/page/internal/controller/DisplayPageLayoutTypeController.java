@@ -20,7 +20,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;

@@ -18,7 +18,6 @@ import com.liferay.change.tracking.configuration.CTPortalConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -92,24 +91,20 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 				"Unable to check permissions: " + e.getMessage(), e);
 		}
 
-		long ctProcessId = ParamUtil.getLong(
-			renderRequest, CTWebKeys.CT_PROCESS_ID);
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, CTWebKeys.CT_COLLECTION_ID);
 
-		if (ctProcessId > 0) {
-			try {
-				CTProcess ctProcess = _ctProcessLocalService.getCTProcess(
-					ctProcessId);
-
+		try {
+			if (ctCollectionId > 0) {
 				CTCollection ctCollection =
-					_ctCollectionLocalService.getCTCollection(
-						ctProcess.getCtCollectionId());
+					_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 				renderRequest.setAttribute(
 					CTWebKeys.CT_COLLECTION, ctCollection);
 			}
-			catch (PortalException pe) {
-				SessionErrors.add(renderRequest, pe.getClass());
-			}
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
 		super.render(renderRequest, renderResponse);

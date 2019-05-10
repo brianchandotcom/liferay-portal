@@ -19,12 +19,8 @@
 		<@liferay.control_menu />
 
 		<div class="mb-0 pt-0" id="wrapper">
-			<#if show_header>
-				<#include "${full_templates_path}/header.ftl" />
-			</#if>
-
 			<main id="content" role="main">
-				<h1 class="hide-accessible">${the_title}</h1>
+				<h1 class="sr-only">${the_title}</h1>
 
 				<#if selectable>
 					<@liferay_util["include"] page=content_include />
@@ -38,10 +34,6 @@
 					</@>
 				</#if>
 			</main>
-
-			<#if show_footer>
-				<#include "${full_templates_path}/footer.ftl" />
-			</#if>
 		</div>
 
 		<@liferay_util["include"] page=body_bottom_include />

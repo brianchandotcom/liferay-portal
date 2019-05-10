@@ -1,0 +1,18 @@
+.fjord-footer .navbar-brand img {
+	height: 12px;
+}
+
+.fjord-footer .nav-link {
+	color: inherit;
+}
+
+.fjord-footer .nav-link:hover,
+.fjord-footer .nav-link:focus {
+	color: white;
+}
+
+.fjord-footer .list-inline-item {
+	height: 64px;
+	line-height: 64px;
+	width: 64px;
+}

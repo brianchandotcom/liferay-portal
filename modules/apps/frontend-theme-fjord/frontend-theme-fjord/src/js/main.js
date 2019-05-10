@@ -9,13 +9,13 @@ AUI().ready(
 			signIn.plug(Liferay.SignInModal);
 		}
 
-		var fullScreenToggleIcon = A.one('.full-screen-navigation #banner .navbar-toggler');
+		var fullScreenToggleIcon = A.one('.fjord-header-fullscreen .navbar-toggler');
 
 		if (fullScreenToggleIcon) {
 			fullScreenToggleIcon.on(
 				'click',
 				function(event) {
-					BODY.toggleClass('main-nav-opened', event.currentTarget.hasClass('collapsed'));
+					BODY.toggleClass('overflow-hidden', event.currentTarget.hasClass('collapsed'));
 				}
 			);
 		}

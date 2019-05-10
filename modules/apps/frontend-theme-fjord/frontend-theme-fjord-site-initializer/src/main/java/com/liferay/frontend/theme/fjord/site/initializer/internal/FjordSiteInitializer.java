@@ -126,6 +126,14 @@ public class FjordSiteInitializer implements SiteInitializer {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				_addLayoutPageTemplateCollection(serviceContext);
 
+			List<FragmentEntry> footerFragmentEntries = _addFragmentEntries(
+				fragmentCollection.getFragmentCollectionId(),
+				_PATH + "/fragments/common/footer", serviceContext);
+
+			List<FragmentEntry> headerFragmentEntries = _addFragmentEntries(
+				fragmentCollection.getFragmentCollectionId(),
+				_PATH + "/fragments/common/header", serviceContext);
+
 			List<FragmentEntry> homeFragmentEntries = _addFragmentEntries(
 				fragmentCollection.getFragmentCollectionId(),
 				_PATH + "/fragments/home", serviceContext);
@@ -141,6 +149,15 @@ public class FjordSiteInitializer implements SiteInitializer {
 				_PATH + "/fragments/features", serviceContext);
 
 			homeFragmentEntries.addAll(featuresFragmentEntries);
+
+			downloadFragmentEntries.add(0, headerFragmentEntries.get(1));
+			downloadFragmentEntries.addAll(footerFragmentEntries);
+
+			featuresFragmentEntries.add(0, headerFragmentEntries.get(1));
+			featuresFragmentEntries.addAll(footerFragmentEntries);
+
+			homeFragmentEntries.add(0, headerFragmentEntries.get(1));
+			homeFragmentEntries.addAll(footerFragmentEntries);
 
 			_addLayout(
 				layoutPageTemplateCollection.

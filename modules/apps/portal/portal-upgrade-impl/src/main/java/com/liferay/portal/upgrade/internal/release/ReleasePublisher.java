@@ -58,9 +58,13 @@ public final class ReleasePublisher {
 		properties.put("release.state", release.getState());
 
 		try {
-			Version version = new Version(release.getSchemaVersion());
+			String schemaVersion = release.getSchemaVersion();
 
-			properties.put("release.schema.version", version);
+			if (!schemaVersion.isEmpty()) {
+				Version version = new Version(schemaVersion);
+
+				properties.put("release.schema.version", version);
+			}
 		}
 		catch (IllegalArgumentException iae) {
 			if (_log.isWarnEnabled()) {

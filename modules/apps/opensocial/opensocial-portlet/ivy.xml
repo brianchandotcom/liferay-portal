@@ -12,5 +12,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.petra.encryptor" org="com.liferay" rev="1.0.5" />
+		<dependency name="org.osgi.annotation.versioning" org="org.osgi" rev="1.1.0" />
 	</dependencies>
 </ivy-module>

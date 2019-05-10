@@ -15,5 +15,6 @@
 		<dependency name="com.liferay.comment.taglib" org="com.liferay" rev="1.0.7" />
 		<dependency name="com.liferay.portal.dao.orm.custom.sql.api" org="com.liferay" rev="1.0.0-20180412.172333-1" />
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="2.0.0" />
+		<dependency name="org.osgi.annotation.versioning" org="org.osgi" rev="1.1.0" />
 	</dependencies>
 </ivy-module>

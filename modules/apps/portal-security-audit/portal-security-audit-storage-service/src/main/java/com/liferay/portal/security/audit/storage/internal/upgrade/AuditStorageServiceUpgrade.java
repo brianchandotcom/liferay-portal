@@ -32,12 +32,14 @@ public class AuditStorageServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
+		registry.register("1.0.0", "1.0.1", new UpgradeSchema());
+
 		registry.register(
-			"1.0.0", "2.0.0",
+			"1.0.1", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {AuditEventTable.class}));
 
-		registry.register("2.0.0", "2.0.1", new UpgradeSchema());
+		registry.register("2.0.0", "2.0.1", new DummyUpgradeStep());
 	}
 
 }

@@ -18,7 +18,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -129,9 +131,33 @@ public class ArrayCheck extends BaseFileCheck {
 	}
 
 	private String _formatCollectionsToArray(String content) {
-		Matcher matcher = _collectionsToArrayPattern.matcher(content);
+		Matcher matcher1 = _collectionsToArrayPattern.matcher(content);
 
-		return matcher.replaceAll("$1[0])");
+		while (matcher1.find()) {
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				content.substring(matcher1.start()));
+
+			if (parameterList.size() != 1) {
+				continue;
+			}
+
+			String variableName = matcher1.group(1);
+
+			Pattern pattern = Pattern.compile(
+				"^(new \\w+)\\s*\\[" + variableName + "\\.size\\(\\)\\]$");
+
+			String parameter = parameterList.get(0);
+
+			Matcher matcher2 = pattern.matcher(parameter);
+
+			if (matcher2.find()) {
+				return StringUtil.replaceFirst(
+					content, parameter, matcher2.group(1) + "[0]",
+					matcher1.start());
+			}
+		}
+
+		return content;
 	}
 
 	private String _formatEmptyArray(String content) {
@@ -159,7 +185,7 @@ public class ArrayCheck extends BaseFileCheck {
 	private static final Pattern _arrayInitializationPattern = Pattern.compile(
 		"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{(\n)?)");
 	private static final Pattern _collectionsToArrayPattern = Pattern.compile(
-		"(\\W(\\w+)\\.toArray\\(\\s*new \\w+)\\[\\2\\.size\\(\\)\\]\\)");
+		"(\\w+)\\.toArray\\(");
 	private static final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 

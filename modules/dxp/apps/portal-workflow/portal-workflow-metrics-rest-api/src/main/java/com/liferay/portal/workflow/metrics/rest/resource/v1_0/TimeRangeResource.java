@@ -16,8 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 
 import javax.annotation.Generated;
 
@@ -30,15 +29,9 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface InstanceResource {
+public interface TimeRangeResource {
 
-	public Page<Instance> getProcessInstancesPage(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
-		throws Exception;
-
-	public Instance getProcessInstance(Long processId, Long instanceId)
-		throws Exception;
+	public Page<TimeRange> getTimeRangesPage() throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

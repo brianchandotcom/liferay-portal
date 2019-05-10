@@ -184,7 +184,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	@Override
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			String[] taskKeys, Integer timeRange, Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(

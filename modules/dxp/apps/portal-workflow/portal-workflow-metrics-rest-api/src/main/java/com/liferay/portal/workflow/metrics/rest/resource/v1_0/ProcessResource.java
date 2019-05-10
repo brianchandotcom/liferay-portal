@@ -37,7 +37,8 @@ public interface ProcessResource {
 			String title, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Process getProcess(Long processId, Boolean completed)
+	public Process getProcess(
+			Long processId, Boolean completed, Integer timeRange)
 		throws Exception;
 
 	public String getProcessTitle(Long processId) throws Exception;

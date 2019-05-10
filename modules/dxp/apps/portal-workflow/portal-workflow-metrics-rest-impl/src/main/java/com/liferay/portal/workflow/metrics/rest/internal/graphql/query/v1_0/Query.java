@@ -27,12 +27,14 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -99,6 +101,14 @@ public class Query {
 			taskResourceComponentServiceObjects;
 	}
 
+	public static void setTimeRangeResourceComponentServiceObjects(
+		ComponentServiceObjects<TimeRangeResource>
+			timeRangeResourceComponentServiceObjects) {
+
+		_timeRangeResourceComponentServiceObjects =
+			timeRangeResourceComponentServiceObjects;
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Calendar> getCalendarsPage() throws Exception {
@@ -119,6 +129,7 @@ public class Query {
 			@GraphQLName("slaStatuses") String[] slaStatuses,
 			@GraphQLName("statuses") String[] statuses,
 			@GraphQLName("taskKeys") String[] taskKeys,
+			@GraphQLName("timeRange") Integer timeRange,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -128,7 +139,7 @@ public class Query {
 			this::_populateResourceContext,
 			instanceResource -> {
 				Page paginationPage = instanceResource.getProcessInstancesPage(
-					processId, slaStatuses, statuses, taskKeys,
+					processId, slaStatuses, statuses, taskKeys, timeRange,
 					Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -189,14 +200,15 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Process getProcess(
 			@GraphQLName("processId") Long processId,
-			@GraphQLName("completed") Boolean completed)
+			@GraphQLName("completed") Boolean completed,
+			@GraphQLName("timeRange") Integer timeRange)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_processResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			processResource -> processResource.getProcess(
-				processId, completed));
+				processId, completed, timeRange));
 	}
 
 	@GraphQLField
@@ -251,6 +263,19 @@ public class Query {
 			taskResource -> {
 				Page paginationPage = taskResource.getProcessTasksPage(
 					processId, Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<TimeRange> getTimeRangesPage() throws Exception {
+		return _applyComponentServiceObjects(
+			_timeRangeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			timeRangeResource -> {
+				Page paginationPage = timeRangeResource.getTimeRangesPage();
 
 				return paginationPage.getItems();
 			});
@@ -323,6 +348,14 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private void _populateResourceContext(TimeRangeResource timeRangeResource)
+		throws Exception {
+
+		timeRangeResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private static ComponentServiceObjects<CalendarResource>
 		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>
@@ -335,5 +368,7 @@ public class Query {
 		_slaResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaskResource>
 		_taskResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TimeRangeResource>
+		_timeRangeResourceComponentServiceObjects;
 
 }

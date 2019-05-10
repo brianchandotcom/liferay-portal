@@ -358,7 +358,7 @@ public abstract class BaseProcessResourceTestCase {
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
-		Process getProcess = invokeGetProcess(postProcess.getId(), null);
+		Process getProcess = invokeGetProcess(postProcess.getId(), null, null);
 
 		assertEquals(postProcess, getProcess);
 		assertValid(getProcess);
@@ -369,7 +369,8 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Process invokeGetProcess(Long processId, Boolean completed)
+	protected Process invokeGetProcess(
+			Long processId, Boolean completed, Integer timeRange)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -398,7 +399,7 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected Http.Response invokeGetProcessResponse(
-			Long processId, Boolean completed)
+			Long processId, Boolean completed, Integer timeRange)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

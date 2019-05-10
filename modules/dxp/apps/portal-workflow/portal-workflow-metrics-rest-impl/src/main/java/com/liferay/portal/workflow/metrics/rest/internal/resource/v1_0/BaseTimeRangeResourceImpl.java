@@ -15,19 +15,13 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -37,13 +31,9 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -53,72 +43,23 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseProcessResourceImpl implements ProcessResource {
+public abstract class BaseTimeRangeResourceImpl implements TimeRangeResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "title"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/processes")
+	@Path("/time-ranges")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Process")})
-	public Page<Process> getProcessesPage(
-			@Parameter(hidden = true) @QueryParam("title") String title,
-			@Context Pagination pagination, @Context Sort[] sorts)
-		throws Exception {
-
+	@Tags(value = {@Tag(name = "TimeRange")})
+	public Page<TimeRange> getTimeRangesPage() throws Exception {
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.QUERY, name = "completed"),
-			@Parameter(in = ParameterIn.QUERY, name = "timeRange")
-		}
-	)
-	@Path("/processes/{processId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Process")})
-	public Process getProcess(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@Parameter(hidden = true) @QueryParam("completed") Boolean
-				completed,
-			@Parameter(hidden = true) @QueryParam("timeRange") Integer
-				timeRange)
-		throws Exception {
-
-		return new Process();
-	}
-
-	@Override
-	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
-	@Path("/processes/{processId}/title")
-	@Produces("text/plain")
-	@Tags(value = {@Tag(name = "Process")})
-	public String getProcessTitle(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId)
-		throws Exception {
-
-		return StringPool.BLANK;
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Process process, Process existingProcess) {
+	protected void preparePatch(
+		TimeRange timeRange, TimeRange existingTimeRange) {
 	}
 
 	protected <T, R> List<R> transform(

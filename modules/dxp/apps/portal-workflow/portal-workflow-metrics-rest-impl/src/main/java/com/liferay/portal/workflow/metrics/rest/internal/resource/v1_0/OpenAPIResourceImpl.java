@@ -86,6 +86,8 @@ public class OpenAPIResourceImpl {
 
 			add(TaskResourceImpl.class);
 
+			add(TimeRangeResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

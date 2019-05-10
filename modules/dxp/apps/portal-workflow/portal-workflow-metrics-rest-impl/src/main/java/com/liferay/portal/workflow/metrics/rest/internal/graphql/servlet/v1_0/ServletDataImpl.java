@@ -23,6 +23,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
 import javax.annotation.Generated;
 
@@ -58,6 +59,8 @@ public class ServletDataImpl implements ServletData {
 			_slaResourceComponentServiceObjects);
 		Query.setTaskResourceComponentServiceObjects(
 			_taskResourceComponentServiceObjects);
+		Query.setTimeRangeResourceComponentServiceObjects(
+			_timeRangeResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -98,5 +101,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaskResource>
 		_taskResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TimeRangeResource>
+		_timeRangeResourceComponentServiceObjects;
 
 }

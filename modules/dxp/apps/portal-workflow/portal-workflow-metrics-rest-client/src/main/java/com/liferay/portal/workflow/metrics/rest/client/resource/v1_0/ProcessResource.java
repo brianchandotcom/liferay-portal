@@ -63,7 +63,8 @@ public class ProcessResource {
 		return Page.of(content, ProcessSerDes::toDTO);
 	}
 
-	public Process getProcess(Long processId, Boolean completed)
+	public Process getProcess(
+			Long processId, Boolean completed, Integer timeRange)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

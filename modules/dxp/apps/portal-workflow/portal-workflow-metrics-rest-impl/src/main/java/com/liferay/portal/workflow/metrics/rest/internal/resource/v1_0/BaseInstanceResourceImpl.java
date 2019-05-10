@@ -61,6 +61,7 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "timeRange"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -75,6 +76,8 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 				slaStatuses,
 			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
 			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
+			@Parameter(hidden = true) @QueryParam("timeRange") Integer
+				timeRange,
 			@Context Pagination pagination)
 		throws Exception {
 

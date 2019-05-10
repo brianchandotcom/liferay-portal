@@ -182,7 +182,8 @@ public abstract class BaseInstanceResourceTestCase {
 					irrelevantProcessId, randomIrrelevantInstance());
 
 			Page<Instance> page = invokeGetProcessInstancesPage(
-				irrelevantProcessId, null, null, null, Pagination.of(1, 2));
+				irrelevantProcessId, null, null, null, null,
+				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -199,7 +200,7 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		Page<Instance> page = invokeGetProcessInstancesPage(
-			processId, null, null, null, Pagination.of(1, 2));
+			processId, null, null, null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -223,14 +224,14 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		Page<Instance> page1 = invokeGetProcessInstancesPage(
-			processId, null, null, null, Pagination.of(1, 2));
+			processId, null, null, null, null, Pagination.of(1, 2));
 
 		List<Instance> instances1 = (List<Instance>)page1.getItems();
 
 		Assert.assertEquals(instances1.toString(), 2, instances1.size());
 
 		Page<Instance> page2 = invokeGetProcessInstancesPage(
-			processId, null, null, null, Pagination.of(2, 2));
+			processId, null, null, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -269,7 +270,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 	protected Page<Instance> invokeGetProcessInstancesPage(
 			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			String[] taskKeys, Integer timeRange, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -296,7 +297,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 	protected Http.Response invokeGetProcessInstancesPageResponse(
 			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			String[] taskKeys, Integer timeRange, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

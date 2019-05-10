@@ -34,7 +34,7 @@ public class InstanceResource {
 
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
+			String[] taskKeys, Integer timeRange, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

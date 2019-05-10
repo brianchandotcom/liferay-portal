@@ -493,7 +493,7 @@ public class CSSBuilder implements AutoCloseable {
 	private static final String[] _EXCLUDES = {
 		"**/_diffs/**", "**/.sass-cache*/**", "**/.sass_cache_*/**",
 		"**/_sass_cache_*/**", "**/_styled/**", "**/_unstyled/**",
-		"**/css/aui/**", "**/tmp/**"
+		"**/css/aui/**", "**/css/clay/**", "**/tmp/**"
 	};
 
 	private static RTLCSSConverter _rtlCSSConverter;

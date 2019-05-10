@@ -4088,8 +4088,7 @@ public class PortalImpl implements Portal {
 		getPortalInetSocketAddressEventListeners() {
 
 		return _portalInetSocketAddressEventListeners.toArray(
-			new PortalInetSocketAddressEventListener
-				[_portalInetSocketAddressEventListeners.size()]);
+			new PortalInetSocketAddressEventListener[0]);
 	}
 
 	@Override

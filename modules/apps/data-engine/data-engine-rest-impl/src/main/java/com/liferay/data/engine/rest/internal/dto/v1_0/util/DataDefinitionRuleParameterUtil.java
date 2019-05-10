@@ -53,8 +53,7 @@ public class DataDefinitionRuleParameterUtil {
 		}
 
 		return dataDefinitionRuleParameters.toArray(
-			new DataDefinitionRuleParameter
-				[dataDefinitionRuleParameters.size()]);
+			new DataDefinitionRuleParameter[0]);
 	}
 
 	public static JSONObject toJSONObject(

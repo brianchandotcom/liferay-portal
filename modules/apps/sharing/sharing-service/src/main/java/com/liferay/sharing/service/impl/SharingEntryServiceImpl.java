@@ -161,8 +161,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntry.getClassPK(), sharingEntry.getGroupId());
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntryId, sharingEntryActions, shareable, expirationDate,
-			serviceContext);
+			getUserId(), sharingEntryId, sharingEntryActions, shareable,
+			expirationDate, serviceContext);
 	}
 
 	@ServiceReference(type = SharingPermission.class)

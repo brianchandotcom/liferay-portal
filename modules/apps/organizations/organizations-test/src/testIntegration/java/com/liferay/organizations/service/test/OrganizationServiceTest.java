@@ -133,23 +133,23 @@ public class OrganizationServiceTest {
 
 			allOrganizations.addAll(allChildOrganizations);
 
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				likeNameChildOrganizations, parentOrganizationId, name + "%");
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				likeNameChildOrganizations, parentOrganizationId,
 				StringUtil.toLowerCase(name) + "%");
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				likeNameChildOrganizations, parentOrganizationId,
 				StringUtil.toUpperCase(name) + "%");
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				likeNameChildOrganizations,
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				StringUtil.toUpperCase(name) + "%");
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				allChildOrganizations, parentOrganizationId, null);
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				allChildOrganizations, parentOrganizationId, "");
-			assertExpectedOrganizations(
+			_assertExpectedOrganizations(
 				allOrganizations,
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, "");
 		}
@@ -162,7 +162,7 @@ public class OrganizationServiceTest {
 		}
 	}
 
-	protected void assertExpectedOrganizations(
+	private void _assertExpectedOrganizations(
 			List<Organization> expectedOrganizations, long parentOrganizationId,
 			String nameSearch)
 		throws Exception {

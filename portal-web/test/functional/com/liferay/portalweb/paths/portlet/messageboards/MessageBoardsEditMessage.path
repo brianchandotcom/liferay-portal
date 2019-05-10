@@ -14,7 +14,11 @@
 	<td>//*[@data-qa-id='row'][contains(.,'${key_attachmentName}')]//span[contains(@class,'item-remove')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>ATTACHMENTS_SAVED_STATUS</td>
+	<td>//h4[contains(.,'All files ready to be saved')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ATTACHMENTS_SELECTED_FILE</td>
 	<td>//li[contains(@class,'upload-file')]//span[contains(.,'${key_attachmentName}')]</td>

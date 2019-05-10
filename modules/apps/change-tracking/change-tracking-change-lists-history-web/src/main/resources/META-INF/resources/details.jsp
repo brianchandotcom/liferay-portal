@@ -17,9 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ChangeListsHistoryDetailsDisplayContext changeListsHistoryDetailsDisplayContext = new ChangeListsHistoryDetailsDisplayContext(request, renderRequest, renderResponse);
+
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
 
-SearchContainer<CTEntry> ctEntrySearchContainer = changeListsHistoryDisplayContext.getCTCollectionDetailsSearchContainer(ctCollection);
+SearchContainer<CTEntry> ctEntrySearchContainer = changeListsHistoryDetailsDisplayContext.getCTCollectionSearchContainer(ctCollection);
+
+long ctCollectionId = 0;
 
 if (ctCollection != null) {
 	String title = HtmlUtil.escape(ctCollection.getName());
@@ -27,6 +31,8 @@ if (ctCollection != null) {
 	portletDisplay.setTitle(title);
 
 	renderResponse.setTitle(title);
+
+	ctCollectionId = ctCollection.getCtCollectionId();
 }
 
 String backURL = ParamUtil.getString(request, "backURL");
@@ -36,15 +42,15 @@ portletDisplay.setShowBackIcon(true);
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= changeListsHistoryDisplayContext.getViewSearchActionURL() %>"
-	filterDropdownItems="<%= changeListsHistoryDisplayContext.getFilterDropdownItems() %>"
+	clearResultsURL="<%= changeListsHistoryDetailsDisplayContext.getSearchActionURL(ctCollectionId) %>"
+	filterDropdownItems="<%= changeListsHistoryDetailsDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= ctEntrySearchContainer.getTotal() %>"
-	searchActionURL="<%= changeListsHistoryDisplayContext.getViewSearchActionURL() %>"
+	searchActionURL="<%= changeListsHistoryDetailsDisplayContext.getSearchActionURL(ctCollectionId) %>"
 	searchContainerId="changeListsHistory"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
-	sortingOrder="<%= changeListsHistoryDisplayContext.getOrderByType() %>"
-	sortingURL="<%= changeListsHistoryDisplayContext.getSortingURL() %>"
+	sortingOrder="<%= changeListsHistoryDetailsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= changeListsHistoryDetailsDisplayContext.getSortingURL() %>"
 />
 
 <div class="closed container-fluid-1280">
@@ -59,6 +65,8 @@ portletDisplay.setShowBackIcon(true);
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
+				orderable="<%= true %>"
+				orderableProperty="title"
 			>
 				<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntityTitle(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
 			</liferay-ui:search-container-column-text>
@@ -84,7 +92,7 @@ portletDisplay.setShowBackIcon(true);
 			<liferay-ui:search-container-column-text
 				name="change-type"
 			>
-				<liferay-ui:message key="<%= changeListsHistoryDisplayContext.getChangeType(curCTEntry.getChangeType()) %>" />
+				<liferay-ui:message key="<%= changeListsHistoryDetailsDisplayContext.getChangeType(curCTEntry.getChangeType()) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -92,7 +100,7 @@ portletDisplay.setShowBackIcon(true);
 			>
 
 				<%
-				int affectsCount = changeListsHistoryDisplayContext.getAffectsCount(curCTEntry);
+				int affectsCount = changeListsHistoryDetailsDisplayContext.getAffectsCount(curCTEntry);
 
 				if (affectsCount > 0) {
 				%>

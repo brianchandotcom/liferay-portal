@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -226,9 +228,15 @@ public class GroupFinderTest {
 
 		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
+		_groups.add(childGroup1);
+
 		LayoutTestUtil.addLayout(childGroup1, false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		_groups.add(childGroup2);
+
+		_groups.add(parentGroup);
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 
@@ -258,9 +266,15 @@ public class GroupFinderTest {
 
 		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
+		_groups.add(childGroup1);
+
 		LayoutTestUtil.addLayout(childGroup1, false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		_groups.add(childGroup2);
+
+		_groups.add(parentGroup);
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 
@@ -355,6 +369,9 @@ public class GroupFinderTest {
 
 	@Inject
 	private GroupFinder _groupFinder;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 	@Inject
 	private Portal _portal;

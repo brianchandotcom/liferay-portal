@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.data.binding;
+package com.liferay.segments.asah.internal.client.data.binding;
 
-import com.liferay.segments.internal.asah.client.model.Author;
-import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Results;
+import com.liferay.segments.asah.internal.client.model.Author;
+import com.liferay.segments.asah.internal.client.model.IndividualSegment;
+import com.liferay.segments.asah.internal.client.model.Results;
 
 import java.io.IOException;
 

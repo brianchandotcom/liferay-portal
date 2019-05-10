@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.data.binding;
+package com.liferay.segments.asah.internal.client.data.binding;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import com.liferay.segments.internal.asah.client.model.PageMetadata;
-import com.liferay.segments.internal.asah.client.model.Results;
+import com.liferay.segments.asah.internal.client.model.PageMetadata;
+import com.liferay.segments.asah.internal.client.model.Results;
 
 import java.io.IOException;
 

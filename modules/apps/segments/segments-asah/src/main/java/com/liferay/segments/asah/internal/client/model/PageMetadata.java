@@ -12,23 +12,44 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.asah.internal.client.model;
 
-import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author David Arques
  */
-public interface JSONWebServiceClient {
+public class PageMetadata {
 
-	public String doGet(
-		String url, MultivaluedMap<String, Object> parameters,
-		Map<String, String> headers);
+	public long getNumber() {
+		return _number;
+	}
 
-	public String getBaseURI();
+	public long getSize() {
+		return _size;
+	}
 
-	public void setBaseURI(String baseURI);
+	public long getTotalElements() {
+		return _totalElements;
+	}
+
+	public long getTotalPages() {
+		return _totalPages;
+	}
+
+	protected PageMetadata() {
+	}
+
+	@JsonProperty("number")
+	private long _number;
+
+	@JsonProperty("size")
+	private long _size;
+
+	@JsonProperty("totalElements")
+	private long _totalElements;
+
+	@JsonProperty("totalPages")
+	private long _totalPages;
 
 }

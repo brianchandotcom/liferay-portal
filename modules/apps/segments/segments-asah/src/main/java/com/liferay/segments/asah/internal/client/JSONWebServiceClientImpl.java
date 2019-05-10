@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.asah.internal.client;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 

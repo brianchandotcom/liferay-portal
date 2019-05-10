@@ -12,42 +12,25 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.model;
+package com.liferay.segments.asah.internal.configuration;
 
-import java.util.Collections;
-import java.util.List;
+import aQute.bnd.annotation.ProviderType;
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Shinn Lok
  * @author David Arques
  */
-public class Results<T> {
+@ExtendedObjectClassDefinition(category = "segments")
+@Meta.OCD(
+	id = "com.liferay.segments.asah.internal.configuration.SegmentsAsahConfiguration",
+	localization = "content/Language", name = "segments-asah-configuration-name"
+)
+@ProviderType
+public interface SegmentsAsahConfiguration {
 
-	public Results() {
-	}
-
-	public Results(List<T> items, int total) {
-		_items = items;
-		_total = total;
-	}
-
-	public List<T> getItems() {
-		return _items;
-	}
-
-	public int getTotal() {
-		return _total;
-	}
-
-	public void setItems(List<T> items) {
-		_items = items;
-	}
-
-	public void setTotal(int total) {
-		_total = total;
-	}
-
-	private List<T> _items = Collections.emptyList();
-	private int _total;
+	@Meta.AD(deflt = "15", name = "check-interval", required = false)
+	public int checkInterval();
 
 }

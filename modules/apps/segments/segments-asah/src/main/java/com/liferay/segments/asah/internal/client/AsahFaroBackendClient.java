@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.asah.internal.client;
 
-import com.liferay.segments.internal.asah.client.model.Individual;
-import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Results;
-import com.liferay.segments.internal.asah.client.util.OrderByField;
+import com.liferay.segments.asah.internal.client.model.Individual;
+import com.liferay.segments.asah.internal.client.model.IndividualSegment;
+import com.liferay.segments.asah.internal.client.model.Results;
+import com.liferay.segments.asah.internal.client.util.OrderByField;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.util;
+package com.liferay.segments.asah.internal.client.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;

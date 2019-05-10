@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.model;
+package com.liferay.segments.asah.internal.client.model;
 
 import java.util.ArrayList;
 import java.util.Date;

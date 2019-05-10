@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.messaging;
+package com.liferay.segments.asah.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
+import com.liferay.segments.asah.internal.configuration.SegmentsAsahConfiguration;
 
 import java.util.Map;
 
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  */
 @Component(
-	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	configurationPid = "com.liferay.segments.asah.internal.configuration.SegmentsAsahConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = AsahFaroBackendMessageListener.class
 )
@@ -51,13 +51,13 @@ public class AsahFaroBackendMessageListener extends BaseMessageListener {
 	protected void activate(Map<String, Object> properties) {
 		Class<?> clazz = getClass();
 
-		SegmentsServiceConfiguration segmentsServiceConfiguration =
+		SegmentsAsahConfiguration segmentsAsahConfiguration =
 			ConfigurableUtil.createConfigurable(
-				SegmentsServiceConfiguration.class, properties);
+				SegmentsAsahConfiguration.class, properties);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			clazz.getName(), clazz.getName(), null, null,
-			segmentsServiceConfiguration.checkInterval(), TimeUnit.MINUTE);
+			segmentsAsahConfiguration.checkInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			clazz.getName(), trigger);

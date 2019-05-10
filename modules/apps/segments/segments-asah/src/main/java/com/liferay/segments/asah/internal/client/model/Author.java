@@ -12,44 +12,49 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.model;
+package com.liferay.segments.asah.internal.client.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.liferay.petra.string.StringBundler;
 
 /**
+ * @author Matthew Kong
  * @author David Arques
  */
-public class PageMetadata {
+public class Author {
 
-	public long getNumber() {
-		return _number;
+	public Author() {
 	}
 
-	public long getSize() {
-		return _size;
+	public String getId() {
+		return _id;
 	}
 
-	public long getTotalElements() {
-		return _totalElements;
+	public String getName() {
+		return _name;
 	}
 
-	public long getTotalPages() {
-		return _totalPages;
+	public void setId(String id) {
+		_id = id;
 	}
 
-	protected PageMetadata() {
+	public void setName(String name) {
+		_name = name;
 	}
 
-	@JsonProperty("number")
-	private long _number;
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
 
-	@JsonProperty("size")
-	private long _size;
+		sb.append("{id=");
+		sb.append(_id);
+		sb.append(", name=");
+		sb.append(_name);
+		sb.append("}");
 
-	@JsonProperty("totalElements")
-	private long _totalElements;
+		return sb.toString();
+	}
 
-	@JsonProperty("totalPages")
-	private long _totalPages;
+	private String _id;
+	private String _name;
 
 }

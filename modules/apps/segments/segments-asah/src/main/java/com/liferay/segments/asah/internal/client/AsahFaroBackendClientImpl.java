@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client;
+package com.liferay.segments.asah.internal.client;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.segments.internal.asah.client.data.binding.IndividualJSONObjectMapper;
-import com.liferay.segments.internal.asah.client.data.binding.IndividualSegmentJSONObjectMapper;
-import com.liferay.segments.internal.asah.client.model.Individual;
-import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Results;
-import com.liferay.segments.internal.asah.client.util.FilterBuilder;
-import com.liferay.segments.internal.asah.client.util.FilterConstants;
-import com.liferay.segments.internal.asah.client.util.OrderByField;
+import com.liferay.segments.asah.internal.client.data.binding.IndividualJSONObjectMapper;
+import com.liferay.segments.asah.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
+import com.liferay.segments.asah.internal.client.model.Individual;
+import com.liferay.segments.asah.internal.client.model.IndividualSegment;
+import com.liferay.segments.asah.internal.client.model.Results;
+import com.liferay.segments.asah.internal.client.util.FilterBuilder;
+import com.liferay.segments.asah.internal.client.util.FilterConstants;
+import com.liferay.segments.asah.internal.client.util.OrderByField;
 
 import java.io.IOException;
 

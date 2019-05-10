@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.util;
+package com.liferay.segments.asah.internal.client.util;
 
 /**
  * @author Shinn Lok

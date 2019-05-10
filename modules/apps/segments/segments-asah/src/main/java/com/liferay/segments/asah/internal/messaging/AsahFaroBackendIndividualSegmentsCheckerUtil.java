@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.messaging;
+package com.liferay.segments.asah.internal.messaging;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,14 +32,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.internal.client.AsahFaroBackendClient;
+import com.liferay.segments.asah.internal.client.AsahFaroBackendClientImpl;
+import com.liferay.segments.asah.internal.client.JSONWebServiceClient;
+import com.liferay.segments.asah.internal.client.model.Individual;
+import com.liferay.segments.asah.internal.client.model.IndividualSegment;
+import com.liferay.segments.asah.internal.client.model.Results;
+import com.liferay.segments.asah.internal.client.util.OrderByField;
 import com.liferay.segments.constants.SegmentsConstants;
-import com.liferay.segments.internal.asah.client.AsahFaroBackendClient;
-import com.liferay.segments.internal.asah.client.AsahFaroBackendClientImpl;
-import com.liferay.segments.internal.asah.client.JSONWebServiceClient;
-import com.liferay.segments.internal.asah.client.model.Individual;
-import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Results;
-import com.liferay.segments.internal.asah.client.util.OrderByField;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;

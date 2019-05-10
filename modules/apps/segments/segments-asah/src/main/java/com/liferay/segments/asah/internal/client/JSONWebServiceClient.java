@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.model;
+package com.liferay.segments.asah.internal.client;
+
+import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 /**
- * @author Shinn Lok
  * @author David Arques
  */
-public interface Rels {
+public interface JSONWebServiceClient {
 
-	public static final String INDIVIDUAL_SEGMENT_INDIVIDUALS = "individuals";
+	public String doGet(
+		String url, MultivaluedMap<String, Object> parameters,
+		Map<String, String> headers);
 
-	public static final String INDIVIDUAL_SEGMENTS = "individual-segments";
+	public String getBaseURI();
+
+	public void setBaseURI(String baseURI);
 
 }

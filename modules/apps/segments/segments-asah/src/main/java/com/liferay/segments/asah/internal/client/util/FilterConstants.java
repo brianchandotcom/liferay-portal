@@ -12,49 +12,32 @@
  * details.
  */
 
-package com.liferay.segments.internal.asah.client.model;
-
-import com.liferay.petra.string.StringBundler;
+package com.liferay.segments.asah.internal.client.util;
 
 /**
  * @author Matthew Kong
  * @author David Arques
  */
-public class Author {
+public class FilterConstants {
 
-	public Author() {
+	public static final String COMPARISON_OPERATOR_EQUALS = " eq ";
+
+	public static final String COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL =
+		" ge ";
+
+	public static final String COMPARISON_OPERATOR_NOT_EQUALS = " ne ";
+
+	public static final String FIELD_NAME_CONTEXT_INDIVIDUAL =
+		"demographics/?/value";
+
+	public static final String FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT =
+		"fields/?/value";
+
+	public static final String LOGICAL_OPERATOR_AND = " and ";
+
+	public static final String LOGICAL_OPERATOR_OR = " or ";
+
+	private FilterConstants() {
 	}
-
-	public String getId() {
-		return _id;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("{id=");
-		sb.append(_id);
-		sb.append(", name=");
-		sb.append(_name);
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _id;
-	private String _name;
 
 }

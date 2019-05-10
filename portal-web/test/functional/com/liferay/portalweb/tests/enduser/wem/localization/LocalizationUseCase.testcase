@@ -59,9 +59,9 @@ definition {
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland");
 
-		LanguagePortlet.viewLanguagesPresent(currentLocales = "Deutsch-Deutschland,español-España");
+		LanguagePortlet.viewLanguagesPresent(currentLocales = "deutsch-Deutschland,español-España");
 	}
 
 	@priority = "4"
@@ -148,7 +148,7 @@ definition {
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland,Deutsch-Deutschland,español-España");
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland,deutsch-Deutschland,español-España");
 
 		LanguagePortlet.viewLanguagesPresent(currentLocales = "français-France,中文-中国");
 
@@ -186,9 +186,9 @@ definition {
 
 		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
+		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland");
 
-		LanguagePortlet.viewLanguagesPresent(currentLocales = "Deutsch-Deutschland,español-España");
+		LanguagePortlet.viewLanguagesPresent(currentLocales = "deutsch-Deutschland,español-España");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 

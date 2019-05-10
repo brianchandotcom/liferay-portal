@@ -84,7 +84,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
-			textIcon = "Deutsch-Deutschland");
+			textIcon = "deutsch-Deutschland");
 
 		Refresh();
 

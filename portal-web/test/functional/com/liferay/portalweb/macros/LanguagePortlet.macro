@@ -64,7 +64,7 @@ definition {
 	macro tearDownLanguagePG {
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 	}
 
 	macro toggleDisplayTemplate {

@@ -1185,7 +1185,7 @@ definition {
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
 			portletName = "JournalContentPortlet",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}

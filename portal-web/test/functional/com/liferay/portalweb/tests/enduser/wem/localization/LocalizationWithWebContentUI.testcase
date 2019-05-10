@@ -108,7 +108,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -315,6 +315,6 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 	}
 }

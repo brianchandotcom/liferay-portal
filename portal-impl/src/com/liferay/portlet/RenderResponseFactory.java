@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portlet.internal.RenderRequestImpl;
 import com.liferay.portlet.internal.RenderResponseImpl;
@@ -24,6 +22,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.filter.RenderRequestWrapper;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

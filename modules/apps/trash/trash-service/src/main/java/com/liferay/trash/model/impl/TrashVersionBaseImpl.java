@@ -14,7 +14,7 @@
 
 package com.liferay.trash.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashVersionLocalServiceUtil;

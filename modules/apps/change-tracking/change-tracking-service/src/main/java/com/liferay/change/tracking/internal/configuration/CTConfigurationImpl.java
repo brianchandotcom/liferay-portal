@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.internal.configuration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.change.tracking.internal.configuration.builder.CTConfigurationBuilderImpl;
 import com.liferay.portal.kernel.model.BaseModel;
 
@@ -23,6 +21,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

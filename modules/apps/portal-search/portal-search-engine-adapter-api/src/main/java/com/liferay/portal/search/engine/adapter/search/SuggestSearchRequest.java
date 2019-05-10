@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.engine.adapter.search;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.suggest.Suggester;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

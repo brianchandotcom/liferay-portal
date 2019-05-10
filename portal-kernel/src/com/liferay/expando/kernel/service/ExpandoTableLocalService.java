@@ -14,7 +14,7 @@
 
 package com.liferay.expando.kernel.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

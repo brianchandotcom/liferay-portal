@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.portal.kernel.bean.BeanReference;

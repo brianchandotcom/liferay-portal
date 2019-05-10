@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -25,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.naming.NamingException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

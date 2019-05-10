@@ -14,9 +14,9 @@
 
 package com.liferay.segments.field.customizer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides methods for retrieving segment field customizers defined by {@link

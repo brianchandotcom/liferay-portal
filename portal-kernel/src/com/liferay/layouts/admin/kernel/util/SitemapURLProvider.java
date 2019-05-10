@@ -14,12 +14,12 @@
 
 package com.liferay.layouts.admin.kernel.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.xml.Element;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eduardo García

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.query;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

@@ -14,9 +14,9 @@
 
 package com.liferay.adaptive.media.processor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Generates a particular type of media.

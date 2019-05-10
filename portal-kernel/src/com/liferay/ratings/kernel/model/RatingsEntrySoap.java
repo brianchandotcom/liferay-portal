@@ -14,7 +14,7 @@
 
 package com.liferay.ratings.kernel.model;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.io.Serializable;
 

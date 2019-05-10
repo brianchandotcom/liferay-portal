@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Rafael Praxedes

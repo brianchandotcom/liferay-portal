@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shuyang Zhou

@@ -14,8 +14,6 @@
 
 package com.liferay.info.display.contributor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -23,6 +21,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jürgen Kappler

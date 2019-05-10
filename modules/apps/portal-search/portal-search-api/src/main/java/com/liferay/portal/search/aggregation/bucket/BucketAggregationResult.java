@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.AggregationResult;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.legacy.document;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.aop;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.lang.reflect.Method;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Immutable AOP method invocation to by used by {@link ChainableMethodAdvice}

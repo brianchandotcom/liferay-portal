@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.highlight;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

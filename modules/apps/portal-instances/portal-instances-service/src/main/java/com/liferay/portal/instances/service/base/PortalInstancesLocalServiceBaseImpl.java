@@ -14,7 +14,7 @@
 
 package com.liferay.portal.instances.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.bean.BeanReference;

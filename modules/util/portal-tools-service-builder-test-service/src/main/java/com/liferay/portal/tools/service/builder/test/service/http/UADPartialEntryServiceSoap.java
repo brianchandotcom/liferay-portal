@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

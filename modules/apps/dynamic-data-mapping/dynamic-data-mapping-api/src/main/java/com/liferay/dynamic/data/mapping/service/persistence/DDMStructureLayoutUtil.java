@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

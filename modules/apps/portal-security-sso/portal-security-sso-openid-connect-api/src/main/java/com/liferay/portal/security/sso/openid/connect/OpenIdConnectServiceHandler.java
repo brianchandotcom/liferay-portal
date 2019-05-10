@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Thuong Dinh

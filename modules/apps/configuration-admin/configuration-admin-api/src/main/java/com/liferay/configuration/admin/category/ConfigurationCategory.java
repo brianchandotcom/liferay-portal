@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.category;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer

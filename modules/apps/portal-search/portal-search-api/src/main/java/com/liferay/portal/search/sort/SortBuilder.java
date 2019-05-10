@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.sort;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

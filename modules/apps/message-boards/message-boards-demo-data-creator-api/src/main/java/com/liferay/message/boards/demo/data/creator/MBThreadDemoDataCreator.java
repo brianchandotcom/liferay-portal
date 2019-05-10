@@ -14,8 +14,6 @@
 
 package com.liferay.message.boards.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -23,6 +21,8 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Sergio González

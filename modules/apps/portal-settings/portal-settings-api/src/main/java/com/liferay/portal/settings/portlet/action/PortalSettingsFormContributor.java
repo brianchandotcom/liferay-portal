@@ -14,13 +14,13 @@
 
 package com.liferay.portal.settings.portlet.action;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

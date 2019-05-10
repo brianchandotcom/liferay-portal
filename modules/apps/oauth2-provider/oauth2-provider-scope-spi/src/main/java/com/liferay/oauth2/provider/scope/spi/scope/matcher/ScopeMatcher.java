@@ -14,11 +14,11 @@
 
 package com.liferay.oauth2.provider.scope.spi.scope.matcher;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * This interface represents the strategy used to match scope. Some of these

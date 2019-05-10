@@ -14,7 +14,7 @@
 
 package com.liferay.asset.category.property.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil;
 import com.liferay.portal.kernel.log.Log;

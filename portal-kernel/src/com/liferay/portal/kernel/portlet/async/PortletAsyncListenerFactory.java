@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.portlet.async;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shuyang Zhou

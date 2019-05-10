@@ -14,8 +14,6 @@
 
 package com.liferay.journal.content.web.internal.exportimport.portlet.preferences.processor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -25,6 +23,7 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**

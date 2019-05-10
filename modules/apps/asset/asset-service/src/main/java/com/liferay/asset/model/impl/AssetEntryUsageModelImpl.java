@@ -14,7 +14,7 @@
 
 package com.liferay.asset.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.model.AssetEntryUsageModel;

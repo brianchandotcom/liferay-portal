@@ -14,10 +14,10 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.model.User;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bruno Farache

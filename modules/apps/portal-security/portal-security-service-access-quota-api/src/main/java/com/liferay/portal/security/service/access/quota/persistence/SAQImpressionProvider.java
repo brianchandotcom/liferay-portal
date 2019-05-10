@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.service.access.quota.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.security.service.access.quota.metric.SAQContextMatcher;
 
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Stian Sigvartsen

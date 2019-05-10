@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

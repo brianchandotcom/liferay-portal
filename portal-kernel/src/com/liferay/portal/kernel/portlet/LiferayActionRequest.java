@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ClientDataRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

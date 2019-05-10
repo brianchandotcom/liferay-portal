@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io.exporter;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordExporterException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Leonardo Barros

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.service.permission;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -24,6 +22,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import java.util.Collection;
 
 import javax.portlet.PortletMode;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

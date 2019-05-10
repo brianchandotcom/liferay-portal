@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.aggregation;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

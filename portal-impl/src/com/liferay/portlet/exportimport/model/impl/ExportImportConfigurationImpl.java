@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.exportimport.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.io.Serializable;
 
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,7 +14,7 @@
 
 package com.liferay.contacts.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.petra.lang.HashUtil;

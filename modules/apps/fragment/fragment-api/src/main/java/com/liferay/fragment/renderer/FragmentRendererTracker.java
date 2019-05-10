@@ -14,9 +14,9 @@
 
 package com.liferay.fragment.renderer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer

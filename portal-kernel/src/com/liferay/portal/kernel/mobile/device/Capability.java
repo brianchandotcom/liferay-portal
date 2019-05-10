@@ -14,14 +14,14 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Milen Dyankov

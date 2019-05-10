@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.changeset;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.odata.filter.expression;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringBundler;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Defines expression visitors with arbitrary return types. This interface's

@@ -14,8 +14,6 @@
 
 package com.liferay.wiki.engine;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiPage;
@@ -23,6 +21,8 @@ import com.liferay.wiki.model.WikiPage;
 import java.util.Collection;
 
 import javax.portlet.PortletURL;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Preston Crary

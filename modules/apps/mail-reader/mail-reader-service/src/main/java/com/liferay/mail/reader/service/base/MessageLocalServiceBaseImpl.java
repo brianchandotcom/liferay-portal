@@ -14,7 +14,7 @@
 
 package com.liferay.mail.reader.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.service.MessageLocalService;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.web.portlet.shared.task;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.RenderRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

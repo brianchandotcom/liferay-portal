@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.aggregation;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

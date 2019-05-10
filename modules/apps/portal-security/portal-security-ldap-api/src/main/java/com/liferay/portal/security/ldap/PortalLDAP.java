@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.ldap;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 import javax.naming.Binding;
@@ -23,6 +21,8 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Edward C. Han

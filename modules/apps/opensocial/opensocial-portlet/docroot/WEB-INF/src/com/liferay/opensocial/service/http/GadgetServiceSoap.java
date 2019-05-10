@@ -14,7 +14,7 @@
 
 package com.liferay.opensocial.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.opensocial.service.GadgetServiceUtil;
 import com.liferay.portal.kernel.log.Log;

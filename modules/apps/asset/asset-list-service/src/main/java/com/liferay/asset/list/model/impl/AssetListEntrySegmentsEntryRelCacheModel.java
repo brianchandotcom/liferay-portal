@@ -14,7 +14,7 @@
 
 package com.liferay.asset.list.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.petra.lang.HashUtil;

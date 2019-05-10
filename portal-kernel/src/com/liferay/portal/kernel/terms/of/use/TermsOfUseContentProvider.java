@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.terms.of.use;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eduardo García

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * See http://www.zytrax.com/tech/web/browser_ids.htm for examples.

@@ -14,14 +14,14 @@
 
 package com.liferay.exportimport.internal.xstream;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamMarshallingContext;
 
 import com.thoughtworks.xstream.converters.MarshallingContext;
 
 import java.util.Iterator;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

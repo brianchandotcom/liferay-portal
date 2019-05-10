@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.service.access.policy.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -27,6 +25,8 @@ import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 
 import java.util.List;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.scope.spi.scope.finder;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * This class is the entry point to the OAuth2 Scopes framework. Applications

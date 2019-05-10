@@ -14,8 +14,6 @@
 
 package com.liferay.segments.criteria;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents a segment criteria as a composition of {@link Criterion} objects.

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.internal.service.persistence.CachelessTableMapperImpl;
 import com.liferay.portal.kernel.internal.service.persistence.ReverseTableMapper;
 import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
@@ -30,6 +28,8 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shuyang Zhou

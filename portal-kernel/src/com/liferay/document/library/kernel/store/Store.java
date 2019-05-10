@@ -14,12 +14,12 @@
 
 package com.liferay.document.library.kernel.store;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
 import java.io.InputStream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The interface for all file store implementations. Most, if not all

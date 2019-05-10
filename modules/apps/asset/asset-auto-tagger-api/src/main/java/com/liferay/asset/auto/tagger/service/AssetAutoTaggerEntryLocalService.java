@@ -14,7 +14,7 @@
 
 package com.liferay.asset.auto.tagger.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.kernel.model.AssetEntry;

@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.opener.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

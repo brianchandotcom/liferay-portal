@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.data.handler.base;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalServiceUtil;
@@ -36,6 +34,8 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

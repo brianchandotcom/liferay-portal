@@ -14,9 +14,9 @@
 
 package com.liferay.info.provider;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eudaldo Alonso

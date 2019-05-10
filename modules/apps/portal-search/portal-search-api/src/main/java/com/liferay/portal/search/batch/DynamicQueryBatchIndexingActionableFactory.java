@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.batch;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

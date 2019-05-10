@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.atom;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -28,6 +26,8 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Igor Spasic

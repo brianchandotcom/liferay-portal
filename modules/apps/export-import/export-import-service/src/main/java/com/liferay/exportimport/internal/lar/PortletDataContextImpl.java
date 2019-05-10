@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -140,6 +138,8 @@ import java.util.Map;
 import java.util.Set;
 
 import jodd.bean.BeanUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * <p>

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.StringBundler;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Abstract class containing common methods for all devices

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +22,8 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author     Shuyang Zhou

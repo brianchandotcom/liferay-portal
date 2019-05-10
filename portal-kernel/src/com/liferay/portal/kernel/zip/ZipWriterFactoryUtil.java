@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.zip;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.File;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Raymond Augé

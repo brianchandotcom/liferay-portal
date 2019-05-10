@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.significance;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.script.Script;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

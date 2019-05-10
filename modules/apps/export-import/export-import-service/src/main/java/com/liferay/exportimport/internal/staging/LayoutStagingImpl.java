@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.internal.staging;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
@@ -40,6 +38,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.kernel.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;

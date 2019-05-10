@@ -14,7 +14,7 @@
 
 package com.liferay.asset.entry.rel.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eudaldo Alonso

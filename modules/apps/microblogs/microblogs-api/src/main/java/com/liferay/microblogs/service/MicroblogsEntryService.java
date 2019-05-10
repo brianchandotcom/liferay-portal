@@ -14,7 +14,7 @@
 
 package com.liferay.microblogs.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;

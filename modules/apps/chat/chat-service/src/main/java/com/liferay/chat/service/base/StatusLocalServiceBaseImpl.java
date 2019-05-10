@@ -14,7 +14,7 @@
 
 package com.liferay.chat.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.StatusLocalService;

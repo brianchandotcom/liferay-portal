@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.upload;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Pei-Jung Lan

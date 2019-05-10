@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tag.stats.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.tag.stats.exception.NoSuchTagStatsException;
 import com.liferay.asset.tag.stats.model.AssetTagStats;

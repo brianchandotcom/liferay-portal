@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.hits;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.highlight.HighlightField;
 
 import java.util.Map;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

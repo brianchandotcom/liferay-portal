@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.trash.kernel.model.TrashEntry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Zsolt Berentey

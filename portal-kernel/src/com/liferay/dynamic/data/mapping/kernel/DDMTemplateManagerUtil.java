@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -24,6 +22,8 @@ import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marcellus Tavares

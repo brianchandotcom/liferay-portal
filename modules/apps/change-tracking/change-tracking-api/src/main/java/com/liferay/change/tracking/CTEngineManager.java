@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
@@ -25,6 +23,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the main internal manager interface to interact with the Change

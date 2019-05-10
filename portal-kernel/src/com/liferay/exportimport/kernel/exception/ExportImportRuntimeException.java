@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.kernel.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Gergely Mathe

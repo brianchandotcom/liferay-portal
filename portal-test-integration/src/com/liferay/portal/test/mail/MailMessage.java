@@ -14,9 +14,9 @@
 
 package com.liferay.portal.test.mail;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Iterator;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Adam Brandizzi

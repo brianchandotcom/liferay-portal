@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.context;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Rafael Praxedes

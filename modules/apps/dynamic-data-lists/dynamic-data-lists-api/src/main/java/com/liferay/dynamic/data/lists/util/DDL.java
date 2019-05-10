@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.lists.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,6 +27,8 @@ import java.util.Locale;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents a utility class used by DDL applications.

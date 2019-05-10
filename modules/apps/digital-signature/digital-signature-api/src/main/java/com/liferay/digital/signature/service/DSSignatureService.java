@@ -14,10 +14,10 @@
 
 package com.liferay.digital.signature.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.digital.signature.request.PackageDSSignatureRequest;
 import com.liferay.digital.signature.response.DSSignatureResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

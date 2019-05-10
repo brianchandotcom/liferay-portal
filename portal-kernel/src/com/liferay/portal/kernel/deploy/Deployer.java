@@ -14,14 +14,14 @@
 
 package com.liferay.portal.kernel.deploy;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.plugin.PluginPackage;
 
 import java.io.File;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,13 +14,13 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Raymond Augé

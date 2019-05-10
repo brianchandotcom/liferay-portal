@@ -14,9 +14,9 @@
 
 package com.liferay.petra.salesforce.client;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.sforce.ws.ConnectorConfig;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

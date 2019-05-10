@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.web.search.request;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.facet.Facet;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author     Rodrigo Paulino

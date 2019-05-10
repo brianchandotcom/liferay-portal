@@ -14,7 +14,7 @@
 
 package com.liferay.invitation.invite.members.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

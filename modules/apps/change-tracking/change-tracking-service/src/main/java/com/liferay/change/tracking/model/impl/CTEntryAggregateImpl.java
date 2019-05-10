@@ -14,12 +14,12 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

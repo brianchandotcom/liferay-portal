@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;

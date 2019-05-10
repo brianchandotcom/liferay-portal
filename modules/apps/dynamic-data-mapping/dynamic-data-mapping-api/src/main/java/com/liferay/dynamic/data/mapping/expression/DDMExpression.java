@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
 import java.util.Collections;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

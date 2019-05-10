@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.model.Group;
@@ -26,6 +24,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eduardo García

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.internal.aggregation.metrics;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
 import com.liferay.portal.search.internal.aggregation.BaseAggregation;
@@ -24,6 +22,8 @@ import com.liferay.portal.search.script.Script;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

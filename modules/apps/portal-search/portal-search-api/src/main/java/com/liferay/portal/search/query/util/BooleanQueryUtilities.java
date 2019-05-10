@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.query.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.query.BooleanQuery;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

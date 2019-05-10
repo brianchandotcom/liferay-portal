@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.kernel.controller;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregationResult;
 import com.liferay.portal.search.internal.aggregation.metrics.StatsAggregationResultImpl;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

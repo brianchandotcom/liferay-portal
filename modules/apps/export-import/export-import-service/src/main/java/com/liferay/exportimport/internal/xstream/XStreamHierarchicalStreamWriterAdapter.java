@@ -14,11 +14,11 @@
 
 package com.liferay.exportimport.internal.xstream;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.xstream.XStreamHierarchicalStreamWriter;
 
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.List;
 
 import javax.portlet.Event;
 import javax.portlet.StateAwareResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

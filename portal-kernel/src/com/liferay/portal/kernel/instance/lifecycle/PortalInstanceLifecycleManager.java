@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.instance.lifecycle;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Company;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

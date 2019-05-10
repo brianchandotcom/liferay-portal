@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.backgroundtask.display;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Andrew Betts

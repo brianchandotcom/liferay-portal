@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.file.rank.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.petra.lang.HashUtil;

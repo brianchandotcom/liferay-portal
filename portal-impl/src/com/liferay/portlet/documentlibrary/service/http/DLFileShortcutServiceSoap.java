@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLFileShortcutServiceUtil;
 import com.liferay.portal.kernel.log.Log;

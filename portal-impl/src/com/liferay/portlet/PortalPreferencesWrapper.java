@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.IOException;
@@ -27,6 +25,8 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alexander Chow

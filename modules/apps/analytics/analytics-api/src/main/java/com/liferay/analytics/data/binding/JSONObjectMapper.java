@@ -14,9 +14,9 @@
 
 package com.liferay.analytics.data.binding;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.IOException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marcellus Tavares

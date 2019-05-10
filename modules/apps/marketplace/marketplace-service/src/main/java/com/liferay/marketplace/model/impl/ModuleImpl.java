@@ -14,9 +14,9 @@
 
 package com.liferay.marketplace.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.Validator;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Ryan Park

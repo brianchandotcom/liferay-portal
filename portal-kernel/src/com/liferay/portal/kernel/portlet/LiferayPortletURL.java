@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.Set;
@@ -23,6 +21,8 @@ import java.util.function.BiConsumer;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents a URL pointing to a portlet.

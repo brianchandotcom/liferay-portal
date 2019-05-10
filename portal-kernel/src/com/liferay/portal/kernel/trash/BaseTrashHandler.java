@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.trash;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -43,6 +41,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation of {@link TrashHandler}.

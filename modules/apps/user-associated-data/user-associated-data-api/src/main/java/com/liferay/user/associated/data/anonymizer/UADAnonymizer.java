@@ -14,11 +14,11 @@
 
 package com.liferay.user.associated.data.anonymizer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.component.UADComponent;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a way to retrieve, count, anonymize, and delete type {@code T}

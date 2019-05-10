@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.kernel.background.task;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

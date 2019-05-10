@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.polls.service.PollsVoteServiceUtil;
 import com.liferay.portal.kernel.log.Log;

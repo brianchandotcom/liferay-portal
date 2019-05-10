@@ -14,8 +14,6 @@
 
 package com.liferay.digital.signature.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,6 +22,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

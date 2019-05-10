@@ -14,7 +14,7 @@
 
 package com.liferay.external.reference.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.external.reference.service.ERAssetVocabularyLocalService;

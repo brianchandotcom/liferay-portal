@@ -14,9 +14,9 @@
 
 package com.liferay.segments.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eduardo García

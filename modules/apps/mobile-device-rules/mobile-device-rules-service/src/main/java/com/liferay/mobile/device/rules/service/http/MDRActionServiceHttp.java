@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
 import com.liferay.portal.kernel.log.Log;

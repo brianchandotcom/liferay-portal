@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.web.layout.prototype;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Layout;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

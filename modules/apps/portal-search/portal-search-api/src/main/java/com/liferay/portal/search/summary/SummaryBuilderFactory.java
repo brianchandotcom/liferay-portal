@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.summary;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler

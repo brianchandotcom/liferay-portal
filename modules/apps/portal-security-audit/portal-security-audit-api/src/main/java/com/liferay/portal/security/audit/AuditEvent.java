@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.audit;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Greenwald

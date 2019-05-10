@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.regex.Pattern;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Julio Camarero

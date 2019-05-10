@@ -14,14 +14,14 @@
 
 package com.liferay.fragment.processor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Pavel Savinov

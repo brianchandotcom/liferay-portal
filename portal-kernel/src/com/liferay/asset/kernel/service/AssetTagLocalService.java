@@ -14,7 +14,7 @@
 
 package com.liferay.asset.kernel.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

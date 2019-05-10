@@ -14,7 +14,7 @@
 
 package com.liferay.counter.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.petra.lang.HashUtil;

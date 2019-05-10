@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.language;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

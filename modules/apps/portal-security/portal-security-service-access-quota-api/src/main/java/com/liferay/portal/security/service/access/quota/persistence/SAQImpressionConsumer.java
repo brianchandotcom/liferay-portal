@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.service.access.quota.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Stian Sigvartsen

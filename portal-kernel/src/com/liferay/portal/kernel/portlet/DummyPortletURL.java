@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
@@ -29,6 +27,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.annotations.PortletSerializable;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

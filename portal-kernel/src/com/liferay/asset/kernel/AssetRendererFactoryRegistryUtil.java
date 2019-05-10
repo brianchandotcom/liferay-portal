@@ -14,8 +14,6 @@
 
 package com.liferay.asset.kernel;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +32,8 @@ import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bruno Farache

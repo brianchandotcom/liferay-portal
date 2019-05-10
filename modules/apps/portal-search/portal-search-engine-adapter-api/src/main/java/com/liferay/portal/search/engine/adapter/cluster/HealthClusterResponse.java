@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.cluster;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringBundler;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Dylan Rebelak

@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Edward C. Han

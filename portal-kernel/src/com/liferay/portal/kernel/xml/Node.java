@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.xml;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

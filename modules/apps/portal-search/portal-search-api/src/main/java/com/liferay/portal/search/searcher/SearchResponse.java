@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.searcher;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -28,6 +26,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Contains the full response of an executed search, as returned from the search

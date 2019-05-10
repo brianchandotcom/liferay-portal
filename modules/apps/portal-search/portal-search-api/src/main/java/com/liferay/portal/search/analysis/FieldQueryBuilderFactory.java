@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.analysis;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Rodrigo Paulino

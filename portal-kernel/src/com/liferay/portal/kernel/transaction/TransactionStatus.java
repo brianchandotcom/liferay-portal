@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.transaction;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shuyang Zhou

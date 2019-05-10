@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.dao.jdbc.aop;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Stack;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

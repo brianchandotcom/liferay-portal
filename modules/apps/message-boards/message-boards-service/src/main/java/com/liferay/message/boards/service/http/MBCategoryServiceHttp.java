@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.portal.kernel.log.Log;

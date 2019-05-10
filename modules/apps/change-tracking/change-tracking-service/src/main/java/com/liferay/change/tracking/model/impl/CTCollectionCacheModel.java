@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.petra.lang.HashUtil;

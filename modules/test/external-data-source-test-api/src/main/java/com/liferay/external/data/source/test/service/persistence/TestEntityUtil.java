@@ -14,7 +14,7 @@
 
 package com.liferay.external.data.source.test.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

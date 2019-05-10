@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

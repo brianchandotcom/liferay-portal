@@ -14,7 +14,7 @@
 
 package com.liferay.staging.constants;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Levente Hudák

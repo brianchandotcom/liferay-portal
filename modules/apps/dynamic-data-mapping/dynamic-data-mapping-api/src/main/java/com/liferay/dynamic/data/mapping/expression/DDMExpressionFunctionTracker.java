@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Leonardo Barros

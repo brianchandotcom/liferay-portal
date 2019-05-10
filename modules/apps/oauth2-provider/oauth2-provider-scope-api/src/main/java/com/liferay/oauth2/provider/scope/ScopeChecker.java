@@ -14,7 +14,7 @@
 
 package com.liferay.oauth2.provider.scope;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a programmatic interface for applications to check scope

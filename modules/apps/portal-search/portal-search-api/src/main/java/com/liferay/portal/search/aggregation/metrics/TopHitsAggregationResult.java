@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.aggregation.metrics;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.hits.SearchHits;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.legacy.searcher;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Creates a search response builder for building a search response from a

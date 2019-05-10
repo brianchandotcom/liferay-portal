@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.portlet.async;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

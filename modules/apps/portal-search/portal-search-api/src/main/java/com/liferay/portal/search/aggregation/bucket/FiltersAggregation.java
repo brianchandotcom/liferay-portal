@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.query.Query;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

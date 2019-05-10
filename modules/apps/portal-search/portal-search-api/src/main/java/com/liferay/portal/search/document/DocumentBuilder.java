@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.document;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.lifecycle;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.internal.lar.ExportImportProcessCallbackUtil;
 import com.liferay.exportimport.kernel.lifecycle.BaseProcessExportImportLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +23,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author     Daniel Kocsis

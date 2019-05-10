@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.xml;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -25,6 +23,8 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

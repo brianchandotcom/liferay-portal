@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.scope.spi.application.descriptor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents the localization information for OAuth2 applications.

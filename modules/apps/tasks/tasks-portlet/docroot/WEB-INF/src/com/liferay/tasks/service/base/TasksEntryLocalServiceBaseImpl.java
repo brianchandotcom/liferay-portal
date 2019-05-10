@@ -14,7 +14,7 @@
 
 package com.liferay.tasks.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;

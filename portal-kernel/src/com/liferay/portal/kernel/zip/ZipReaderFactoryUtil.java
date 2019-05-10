@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.zip;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Raymond Augé

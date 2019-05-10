@@ -14,7 +14,7 @@
 
 package com.liferay.journal.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.settings;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Iván Zaera

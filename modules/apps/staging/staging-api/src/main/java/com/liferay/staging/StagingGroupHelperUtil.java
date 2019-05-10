@@ -14,7 +14,7 @@
 
 package com.liferay.staging;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

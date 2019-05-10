@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;

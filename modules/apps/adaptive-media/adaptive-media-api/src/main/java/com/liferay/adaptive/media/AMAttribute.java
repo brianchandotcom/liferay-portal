@@ -14,13 +14,13 @@
 
 package com.liferay.adaptive.media;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.adaptive.media.util.AMAttributeConverterUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents a characteristic of an {@link AdaptiveMedia} instance (e.g., its

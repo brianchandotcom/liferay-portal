@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -36,6 +34,8 @@ import java.io.StringReader;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;

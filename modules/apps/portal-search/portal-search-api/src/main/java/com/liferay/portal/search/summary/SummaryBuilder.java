@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.summary;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

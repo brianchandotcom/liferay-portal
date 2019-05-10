@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.words;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.jazzy.InvalidWord;
 
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shinn Lok

@@ -14,11 +14,11 @@
 
 package com.liferay.site.initializer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.site.exception.InitializationException;
 
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marco Leo

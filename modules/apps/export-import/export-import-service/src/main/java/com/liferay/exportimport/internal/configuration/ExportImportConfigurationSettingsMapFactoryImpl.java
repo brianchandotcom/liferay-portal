@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.internal.configuration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -44,6 +42,7 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

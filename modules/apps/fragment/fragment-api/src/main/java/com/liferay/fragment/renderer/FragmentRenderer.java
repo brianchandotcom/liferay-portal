@@ -14,8 +14,6 @@
 
 package com.liferay.fragment.renderer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,6 +24,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer

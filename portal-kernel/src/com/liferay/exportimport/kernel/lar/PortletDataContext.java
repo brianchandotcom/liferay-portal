@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -41,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * <p>

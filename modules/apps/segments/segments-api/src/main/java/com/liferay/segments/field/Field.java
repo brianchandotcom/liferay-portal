@@ -14,12 +14,12 @@
 
 package com.liferay.segments.field;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents a segments criteria field.

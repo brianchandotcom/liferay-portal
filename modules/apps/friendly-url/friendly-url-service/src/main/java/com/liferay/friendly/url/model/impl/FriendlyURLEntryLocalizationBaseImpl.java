@@ -14,7 +14,7 @@
 
 package com.liferay.friendly.url.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 

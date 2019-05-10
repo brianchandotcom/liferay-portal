@@ -14,7 +14,7 @@
 
 package com.liferay.asset.category.property.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

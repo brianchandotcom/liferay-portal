@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.service.configuration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.InputStream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Miguel Pastor

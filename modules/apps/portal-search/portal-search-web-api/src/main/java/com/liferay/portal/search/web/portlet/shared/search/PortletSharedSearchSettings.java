@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.portlet.shared.search;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
@@ -23,6 +21,8 @@ import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

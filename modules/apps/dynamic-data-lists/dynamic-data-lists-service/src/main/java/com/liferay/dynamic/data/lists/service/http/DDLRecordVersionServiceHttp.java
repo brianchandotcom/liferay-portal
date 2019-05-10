@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil;
 import com.liferay.portal.kernel.log.Log;

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.image;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.model.Image;
 
@@ -28,6 +26,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.concurrent.Future;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

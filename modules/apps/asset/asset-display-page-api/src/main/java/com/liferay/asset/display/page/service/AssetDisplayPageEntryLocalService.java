@@ -14,7 +14,7 @@
 
 package com.liferay.asset.display.page.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

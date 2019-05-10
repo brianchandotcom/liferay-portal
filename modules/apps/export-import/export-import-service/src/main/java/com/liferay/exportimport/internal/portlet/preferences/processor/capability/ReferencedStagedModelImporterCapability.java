@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.internal.portlet.preferences.processor.capability;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -37,6 +35,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

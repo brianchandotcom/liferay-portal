@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.sort;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.query.Query;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

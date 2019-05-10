@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.wedeploy.auth.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Supritha Sundaram

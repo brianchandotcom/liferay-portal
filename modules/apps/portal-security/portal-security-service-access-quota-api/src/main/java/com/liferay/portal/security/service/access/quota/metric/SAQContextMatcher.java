@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.service.access.quota.metric;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Stian Sigvartsen

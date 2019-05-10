@@ -14,7 +14,7 @@
 
 package com.liferay.journal.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

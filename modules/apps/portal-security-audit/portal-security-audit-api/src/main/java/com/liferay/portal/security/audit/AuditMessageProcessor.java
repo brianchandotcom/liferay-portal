@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.audit;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

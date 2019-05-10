@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.searcher;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Performs a search using the Liferay Search Framework.

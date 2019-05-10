@@ -14,7 +14,7 @@
 
 package com.liferay.flags.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.flags.service.FlagsEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;

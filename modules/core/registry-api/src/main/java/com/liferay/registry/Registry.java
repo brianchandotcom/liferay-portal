@@ -14,13 +14,13 @@
 
 package com.liferay.registry;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Raymond Augé

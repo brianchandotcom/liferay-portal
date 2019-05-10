@@ -14,7 +14,7 @@
 
 package com.liferay.announcements.kernel.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

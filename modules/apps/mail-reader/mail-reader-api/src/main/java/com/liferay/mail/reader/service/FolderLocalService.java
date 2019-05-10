@@ -14,7 +14,7 @@
 
 package com.liferay.mail.reader.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

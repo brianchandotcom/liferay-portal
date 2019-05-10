@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.module.configuration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 
 import java.util.Dictionary;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Ferrer

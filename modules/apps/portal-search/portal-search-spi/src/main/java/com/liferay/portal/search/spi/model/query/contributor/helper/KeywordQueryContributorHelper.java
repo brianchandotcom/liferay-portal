@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.spi.model.query.contributor.helper;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.SearchContext;
 
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

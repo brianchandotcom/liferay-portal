@@ -14,9 +14,9 @@
 
 package com.liferay.trash.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alexander Chow

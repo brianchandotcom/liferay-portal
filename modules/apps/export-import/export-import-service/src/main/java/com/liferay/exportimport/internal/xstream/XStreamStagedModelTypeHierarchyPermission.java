@@ -14,11 +14,11 @@
 
 package com.liferay.exportimport.internal.xstream;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.StagedModel;
 
 import com.thoughtworks.xstream.security.TypePermission;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

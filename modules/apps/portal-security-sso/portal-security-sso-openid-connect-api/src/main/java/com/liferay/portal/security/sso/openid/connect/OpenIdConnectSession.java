@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jesse Rao

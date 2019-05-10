@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.exportimport.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;

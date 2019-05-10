@@ -14,7 +14,7 @@
 
 package com.liferay.asset.list.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

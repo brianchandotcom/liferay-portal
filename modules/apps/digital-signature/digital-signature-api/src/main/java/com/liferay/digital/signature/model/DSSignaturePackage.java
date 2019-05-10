@@ -14,10 +14,10 @@
 
 package com.liferay.digital.signature.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Collection;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

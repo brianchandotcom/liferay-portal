@@ -14,8 +14,6 @@
 
 package com.liferay.portal.relationship;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.ClassedModel;
 
 import java.util.Collection;
@@ -24,6 +22,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

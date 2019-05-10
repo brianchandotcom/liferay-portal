@@ -14,7 +14,7 @@
 
 package com.liferay.friendly.url.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

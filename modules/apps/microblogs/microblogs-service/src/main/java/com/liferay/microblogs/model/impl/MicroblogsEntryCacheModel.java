@@ -14,7 +14,7 @@
 
 package com.liferay.microblogs.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.petra.lang.HashUtil;

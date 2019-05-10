@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.scope.spi.prefix.handler;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Interface to create {@link PrefixHandler} using a given prefix. This allows

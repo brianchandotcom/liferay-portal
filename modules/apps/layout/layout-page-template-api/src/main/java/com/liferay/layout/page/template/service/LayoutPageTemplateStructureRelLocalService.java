@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;

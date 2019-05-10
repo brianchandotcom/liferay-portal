@@ -14,7 +14,7 @@
 
 package com.liferay.external.reference.service.base;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.external.reference.service.ERUserLocalService;
 import com.liferay.portal.kernel.bean.BeanReference;

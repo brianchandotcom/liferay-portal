@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cache;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
 
 import java.io.Serializable;
@@ -23,6 +21,8 @@ import java.io.Serializable;
 import java.net.URL;
 
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Joseph Shum

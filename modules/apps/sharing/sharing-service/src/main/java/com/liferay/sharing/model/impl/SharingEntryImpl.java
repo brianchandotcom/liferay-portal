@@ -14,9 +14,9 @@
 
 package com.liferay.sharing.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.sharing.security.permission.SharingEntryAction;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model implementation for the {@code SharingEntry} service.

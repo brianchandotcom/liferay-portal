@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

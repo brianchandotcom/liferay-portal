@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -25,6 +23,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Tina Tian

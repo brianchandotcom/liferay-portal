@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +44,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListMap;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bruno Farache

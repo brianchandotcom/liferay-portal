@@ -14,7 +14,7 @@
 
 package com.liferay.push.notifications.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Silvio Santos

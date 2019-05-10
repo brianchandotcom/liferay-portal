@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.image.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.model.AMImageEntry;

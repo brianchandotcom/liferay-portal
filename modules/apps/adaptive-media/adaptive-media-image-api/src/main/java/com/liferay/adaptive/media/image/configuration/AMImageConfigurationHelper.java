@@ -14,8 +14,6 @@
 
 package com.liferay.adaptive.media.image.configuration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.adaptive.media.exception.AMImageConfigurationException;
 import com.liferay.adaptive.media.exception.AMImageConfigurationException.InvalidStateAMImageConfigurationException;
 
@@ -25,6 +23,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Manages and fetches an {@link AMImageConfigurationEntry}. This interface is

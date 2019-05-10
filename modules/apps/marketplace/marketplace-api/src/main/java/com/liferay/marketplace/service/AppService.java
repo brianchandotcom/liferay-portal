@@ -14,7 +14,7 @@
 
 package com.liferay.marketplace.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.exception.PortalException;

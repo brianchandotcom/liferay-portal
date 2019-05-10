@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.portal.kernel.exception.PortalException;

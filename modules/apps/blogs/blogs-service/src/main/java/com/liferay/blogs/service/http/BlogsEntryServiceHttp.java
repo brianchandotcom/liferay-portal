@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.metadata;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +26,8 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Miguel Pastor

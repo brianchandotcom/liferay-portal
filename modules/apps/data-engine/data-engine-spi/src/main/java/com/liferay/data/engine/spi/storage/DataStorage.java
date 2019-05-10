@@ -14,9 +14,9 @@
 
 package com.liferay.data.engine.spi.storage;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jeyvison Nascimento

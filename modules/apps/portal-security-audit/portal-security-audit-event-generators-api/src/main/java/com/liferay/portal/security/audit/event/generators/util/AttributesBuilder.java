@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.audit.event.generators.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

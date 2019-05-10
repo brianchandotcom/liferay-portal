@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.content.model;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.sql.Blob;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tag.stats.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

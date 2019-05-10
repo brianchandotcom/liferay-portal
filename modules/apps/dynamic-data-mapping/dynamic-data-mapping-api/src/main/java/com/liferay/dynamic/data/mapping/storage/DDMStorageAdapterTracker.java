@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Leonardo Barros

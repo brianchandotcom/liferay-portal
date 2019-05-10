@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.sync.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.petra.lang.HashUtil;

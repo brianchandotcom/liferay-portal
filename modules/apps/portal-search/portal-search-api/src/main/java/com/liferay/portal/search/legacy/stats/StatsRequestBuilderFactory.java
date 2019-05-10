@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.legacy.stats;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler

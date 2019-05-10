@@ -14,14 +14,14 @@
 
 package com.liferay.portal.kernel.json;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Externalizable;
 import java.io.Writer;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

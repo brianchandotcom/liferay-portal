@@ -14,13 +14,13 @@
 
 package com.liferay.adaptive.media;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.InputStream;
 
 import java.net.URI;
 
 import java.util.Optional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Represents content (images, audio, video, and other types of content) along

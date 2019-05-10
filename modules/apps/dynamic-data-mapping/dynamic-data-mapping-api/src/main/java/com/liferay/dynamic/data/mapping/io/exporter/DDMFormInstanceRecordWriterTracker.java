@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io.exporter;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Leonardo Barros

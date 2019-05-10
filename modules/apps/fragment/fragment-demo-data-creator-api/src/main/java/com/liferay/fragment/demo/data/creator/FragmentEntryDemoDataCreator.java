@@ -14,12 +14,12 @@
 
 package com.liferay.fragment.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jürgen Kappler

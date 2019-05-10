@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Sergio González

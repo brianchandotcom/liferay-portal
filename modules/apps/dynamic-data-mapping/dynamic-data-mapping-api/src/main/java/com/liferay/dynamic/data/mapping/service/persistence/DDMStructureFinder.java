@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

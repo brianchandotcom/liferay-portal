@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.geolocation.DistanceUnit;
 import com.liferay.portal.search.geolocation.GeoDistance;
@@ -23,6 +21,8 @@ import com.liferay.portal.search.geolocation.GeoDistanceType;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

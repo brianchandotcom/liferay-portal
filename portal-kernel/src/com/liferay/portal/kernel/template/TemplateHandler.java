@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.template;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Juan Fernández

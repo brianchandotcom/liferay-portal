@@ -14,8 +14,6 @@
 
 package com.liferay.item.selector;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -24,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a helper class to retrieve the {@link ItemSelectorRendering} and the

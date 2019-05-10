@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Leonardo Barros

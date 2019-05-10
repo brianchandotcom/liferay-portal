@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.CalendarUtil;
 
 import java.math.BigDecimal;
@@ -23,6 +21,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.petra.lang.HashUtil;

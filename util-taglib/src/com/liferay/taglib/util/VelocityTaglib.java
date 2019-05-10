@@ -14,8 +14,6 @@
 
 package com.liferay.taglib.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -31,6 +29,8 @@ import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Reuther

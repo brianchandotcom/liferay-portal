@@ -14,10 +14,10 @@
 
 package com.liferay.users.admin.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Pei-Jung Lan

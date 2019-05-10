@@ -14,7 +14,7 @@
 
 package com.liferay.journal.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.petra.lang.HashUtil;

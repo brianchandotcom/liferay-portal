@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

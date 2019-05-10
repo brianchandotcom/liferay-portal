@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.repository.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lock.Lock;
@@ -27,6 +25,8 @@ import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Alexander Chow

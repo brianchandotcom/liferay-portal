@@ -14,7 +14,7 @@
 
 package com.liferay.opensocial.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.petra.lang.HashUtil;

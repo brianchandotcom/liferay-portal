@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.scope.liferay;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Lists scope aliases and matching {@link LiferayOAuth2Scope}s based on a

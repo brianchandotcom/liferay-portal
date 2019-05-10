@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.bean;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

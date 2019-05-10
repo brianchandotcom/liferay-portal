@@ -14,7 +14,7 @@
 
 package com.liferay.polls.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

@@ -14,9 +14,9 @@
 
 package com.liferay.users.admin.demo.data.creator;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Sergio González

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.internal.stats;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.stats.StatsResponse;
 
 import java.io.Serializable;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

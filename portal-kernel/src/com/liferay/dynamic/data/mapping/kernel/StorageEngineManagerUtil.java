@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Rafael Praxedes

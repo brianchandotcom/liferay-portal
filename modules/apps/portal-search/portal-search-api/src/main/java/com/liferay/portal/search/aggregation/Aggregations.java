@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.aggregation;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.aggregation.bucket.ChildrenAggregation;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
@@ -66,6 +64,8 @@ import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregati
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.script.Script;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

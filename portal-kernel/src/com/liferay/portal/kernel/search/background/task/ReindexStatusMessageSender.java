@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search.background.task;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Andrew Betts

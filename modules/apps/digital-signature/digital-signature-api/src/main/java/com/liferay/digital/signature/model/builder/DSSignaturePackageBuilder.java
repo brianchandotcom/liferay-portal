@@ -14,14 +14,14 @@
 
 package com.liferay.digital.signature.model.builder;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEmailNotification;
 import com.liferay.digital.signature.model.DSParticipant;
 import com.liferay.digital.signature.model.DSSignaturePackage;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

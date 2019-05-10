@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.expando.service.http;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.expando.kernel.service.ExpandoColumnServiceUtil;
 import com.liferay.portal.kernel.log.Log;

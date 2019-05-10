@@ -14,7 +14,7 @@
 
 package com.liferay.journal.util;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides Change Tracking related information about Journal entities.

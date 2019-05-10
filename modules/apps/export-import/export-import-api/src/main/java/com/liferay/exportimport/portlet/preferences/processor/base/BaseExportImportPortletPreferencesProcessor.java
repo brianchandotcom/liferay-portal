@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.portlet.preferences.processor.base;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.petra.string.StringBundler;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

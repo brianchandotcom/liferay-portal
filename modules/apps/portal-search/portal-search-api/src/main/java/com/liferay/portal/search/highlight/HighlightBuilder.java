@@ -14,11 +14,11 @@
 
 package com.liferay.portal.search.highlight;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.query.Query;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao

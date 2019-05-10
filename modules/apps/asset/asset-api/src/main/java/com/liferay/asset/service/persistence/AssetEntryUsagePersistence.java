@@ -14,7 +14,7 @@
 
 package com.liferay.asset.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.exception.NoSuchEntryUsageException;
 import com.liferay.asset.model.AssetEntryUsage;

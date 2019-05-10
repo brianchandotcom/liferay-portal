@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.geolocation;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.assignment;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

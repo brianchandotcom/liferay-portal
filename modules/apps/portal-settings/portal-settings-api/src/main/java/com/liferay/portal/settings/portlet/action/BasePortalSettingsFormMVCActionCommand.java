@@ -14,8 +14,6 @@
 
 package com.liferay.portal.settings.portlet.action;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -37,6 +35,8 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.ValidatorException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author     Tomas Polesovsky

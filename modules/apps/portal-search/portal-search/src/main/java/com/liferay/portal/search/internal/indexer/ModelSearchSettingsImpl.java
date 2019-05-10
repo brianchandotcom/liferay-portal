@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.internal.indexer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

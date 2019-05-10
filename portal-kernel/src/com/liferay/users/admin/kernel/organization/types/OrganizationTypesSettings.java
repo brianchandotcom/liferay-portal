@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.kernel.organization.types;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marco Leo

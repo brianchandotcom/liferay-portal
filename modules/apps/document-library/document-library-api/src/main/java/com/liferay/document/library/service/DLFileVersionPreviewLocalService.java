@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

@@ -14,9 +14,9 @@
 
 package com.liferay.digital.signature.request.builder;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.digital.signature.request.VoidPackageDSSignatureRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

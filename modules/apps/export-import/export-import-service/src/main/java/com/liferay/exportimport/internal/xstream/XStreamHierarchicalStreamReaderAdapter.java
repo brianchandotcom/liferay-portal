@@ -14,13 +14,13 @@
 
 package com.liferay.exportimport.internal.xstream;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.xstream.XStreamHierarchicalStreamReader;
 
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 
 import java.util.Iterator;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Kocsis

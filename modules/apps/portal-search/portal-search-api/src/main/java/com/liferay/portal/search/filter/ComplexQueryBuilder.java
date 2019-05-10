@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.filter;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 
 import java.util.Collection;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira

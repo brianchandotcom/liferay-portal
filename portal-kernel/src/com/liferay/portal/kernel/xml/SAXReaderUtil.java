@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.xml;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -29,6 +27,8 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

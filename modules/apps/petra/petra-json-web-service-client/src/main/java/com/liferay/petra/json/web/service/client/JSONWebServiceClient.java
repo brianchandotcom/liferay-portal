@@ -14,8 +14,6 @@
 
 package com.liferay.petra.json.web.service.client;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.fasterxml.jackson.databind.Module;
 
 import java.security.KeyStore;
@@ -24,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.NameValuePair;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Ivica Cardic

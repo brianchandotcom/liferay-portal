@@ -14,13 +14,13 @@
 
 package com.liferay.exportimport.changeset;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó

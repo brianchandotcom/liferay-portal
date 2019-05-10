@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.trash;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -33,6 +31,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The interface for managing the basic trash operations of the Recycle Bin,

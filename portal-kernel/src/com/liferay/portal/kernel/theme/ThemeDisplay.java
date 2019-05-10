@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.theme;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
@@ -78,6 +76,8 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides general configuration methods for the portal, providing access to

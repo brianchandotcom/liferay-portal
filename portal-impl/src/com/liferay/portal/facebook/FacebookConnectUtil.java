@@ -14,8 +14,6 @@
 
 package com.liferay.portal.facebook;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.registry.Registry;
@@ -23,6 +21,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wilson Man

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.settings;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler

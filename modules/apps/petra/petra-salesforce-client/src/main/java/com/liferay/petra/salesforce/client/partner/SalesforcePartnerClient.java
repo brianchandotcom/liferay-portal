@@ -14,8 +14,6 @@
 
 package com.liferay.petra.salesforce.client.partner;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.salesforce.client.SalesforceClient;
 
 import com.sforce.soap.partner.DeleteResult;
@@ -33,6 +31,8 @@ import com.sforce.ws.ConnectionException;
 
 import java.util.Calendar;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

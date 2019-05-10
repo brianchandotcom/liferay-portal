@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.sso;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -26,6 +24,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * <p>

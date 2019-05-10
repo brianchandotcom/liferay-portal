@@ -14,8 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
@@ -41,6 +39,8 @@ import org.hibernate.engine.SessionImplementor;
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Preston Crary

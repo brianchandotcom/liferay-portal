@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.searcher;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
@@ -26,6 +24,8 @@ import com.liferay.portal.search.stats.StatsRequest;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Builds a search request that can be used for executing a search.

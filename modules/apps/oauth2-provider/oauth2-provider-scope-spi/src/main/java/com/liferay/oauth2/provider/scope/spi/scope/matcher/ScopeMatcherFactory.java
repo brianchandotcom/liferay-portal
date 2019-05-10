@@ -14,7 +14,7 @@
 
 package com.liferay.oauth2.provider.scope.spi.scope.matcher;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Factory that creates {@link ScopeMatcher} for a given input. This allow for

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -25,6 +23,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base implementation for all model classes. This class should never need

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.facet.category;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.search.facet.FacetFactory;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler

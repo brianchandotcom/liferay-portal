@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.oauth2.provider.scope.internal.configuration.ScopeLocatorConfiguration;
 import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
@@ -44,6 +42,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

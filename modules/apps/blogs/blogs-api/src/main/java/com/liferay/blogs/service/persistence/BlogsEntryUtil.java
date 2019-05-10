@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

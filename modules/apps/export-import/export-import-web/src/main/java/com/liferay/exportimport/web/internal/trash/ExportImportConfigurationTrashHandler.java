@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.web.internal.trash;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +32,7 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

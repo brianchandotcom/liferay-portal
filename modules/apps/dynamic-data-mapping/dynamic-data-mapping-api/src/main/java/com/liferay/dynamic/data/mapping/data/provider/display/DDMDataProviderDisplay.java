@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.display;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Lino Alves

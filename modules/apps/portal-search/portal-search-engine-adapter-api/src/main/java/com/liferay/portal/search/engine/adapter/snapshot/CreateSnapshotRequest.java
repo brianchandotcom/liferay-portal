@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.snapshot;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

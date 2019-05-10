@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.comment;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Adolfo Pérez

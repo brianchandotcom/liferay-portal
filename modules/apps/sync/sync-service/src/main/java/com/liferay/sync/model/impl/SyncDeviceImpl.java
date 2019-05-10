@@ -14,8 +14,6 @@
 
 package com.liferay.sync.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.SyncClientMinBuildException;
@@ -26,6 +24,8 @@ import com.liferay.sync.exception.SyncDeviceWipeException;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Shinn Lok

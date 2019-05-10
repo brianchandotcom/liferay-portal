@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.indexer;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

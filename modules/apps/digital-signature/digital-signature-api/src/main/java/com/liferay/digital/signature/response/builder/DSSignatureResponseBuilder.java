@@ -14,12 +14,12 @@
 
 package com.liferay.digital.signature.response.builder;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.digital.signature.common.DSSignaturePackageStatus;
 import com.liferay.digital.signature.response.DSSignatureResponse;
 
 import java.time.ZonedDateTime;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han

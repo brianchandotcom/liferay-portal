@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.image.optimizer;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides an interface that generates missing adaptive media images for an

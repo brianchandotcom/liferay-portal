@@ -14,12 +14,12 @@
 
 package com.liferay.user.associated.data.exporter;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.component.UADComponent;
 
 import java.io.File;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Handles converting the user-related type {@code T} entities into a format

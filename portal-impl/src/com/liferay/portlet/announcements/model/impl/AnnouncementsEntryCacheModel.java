@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.petra.lang.HashUtil;

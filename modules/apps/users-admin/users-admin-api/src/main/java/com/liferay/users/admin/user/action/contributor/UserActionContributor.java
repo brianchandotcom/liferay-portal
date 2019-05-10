@@ -14,12 +14,12 @@
 
 package com.liferay.users.admin.user.action.contributor;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.User;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Drew Brokke

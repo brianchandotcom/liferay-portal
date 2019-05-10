@@ -14,7 +14,7 @@
 
 package com.liferay.asset.kernel.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;

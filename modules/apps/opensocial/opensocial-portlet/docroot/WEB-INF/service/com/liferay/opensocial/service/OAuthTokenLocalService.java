@@ -14,7 +14,7 @@
 
 package com.liferay.opensocial.service;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

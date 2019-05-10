@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.audit.event.generators.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Mika Koivisto

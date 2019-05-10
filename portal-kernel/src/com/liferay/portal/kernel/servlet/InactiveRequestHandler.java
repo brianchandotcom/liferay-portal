@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Drew Brokke

@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author     Marcellus Tavares

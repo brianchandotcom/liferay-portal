@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Eduardo Lundgren

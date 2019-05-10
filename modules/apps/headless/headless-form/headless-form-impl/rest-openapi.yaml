@@ -354,16 +354,8 @@ components:
                 id:
                     format: int64
                     type: integer
-                id:
-                    format: int64
-                    type: integer
                 name:
                     type: string
-                name:
-                    type: string
-                siteId:
-                    format: int64
-                    type: integer
                 siteId:
                     format: int64
                     type: integer

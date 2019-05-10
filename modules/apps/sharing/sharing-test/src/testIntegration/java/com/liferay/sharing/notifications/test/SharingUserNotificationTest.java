@@ -126,7 +126,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		return _sharingEntryLocalService.updateSharingEntry(
-			((SharingEntry)baseModel).getSharingEntryId(),
+			user.getUserId(), ((SharingEntry)baseModel).getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.VIEW), false, null,
 			serviceContext);
 	}

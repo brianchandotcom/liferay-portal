@@ -717,10 +717,7 @@ public class ConfigurationPersistenceManager
 				"dictionary like '%felix.fileinstall.filename=%' and " +
 					"dictionary not like '%service.bundleLocation=\"?\"%'",
 			dictionary -> {
-				String bundleLocation = (String)dictionary.get(
-					_SERVICE_BUNDLELOCATION);
-
-				if (bundleLocation == null) {
+				if (dictionary.get(_SERVICE_BUNDLELOCATION) == null) {
 					dictionary.put(_SERVICE_BUNDLELOCATION, "?");
 				}
 			});

@@ -98,7 +98,7 @@ public class UserGroupServiceTest {
 		String name = RandomTestUtil.randomString(50);
 
 		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = addUserGroup();
+			UserGroup userGroup = _addUserGroup();
 
 			userGroup.setName(name + i);
 
@@ -108,20 +108,20 @@ public class UserGroupServiceTest {
 			likeNameUserGroups.add(userGroup);
 		}
 
-		allUserGroups.add(addUserGroup());
-		allUserGroups.add(addUserGroup());
-		allUserGroups.add(addUserGroup());
+		allUserGroups.add(_addUserGroup());
+		allUserGroups.add(_addUserGroup());
+		allUserGroups.add(_addUserGroup());
 
-		assertExpectedUserGroups(likeNameUserGroups, name + "%");
-		assertExpectedUserGroups(
+		_assertExpectedUserGroups(likeNameUserGroups, name + "%");
+		_assertExpectedUserGroups(
 			likeNameUserGroups, StringUtil.toLowerCase(name) + "%");
-		assertExpectedUserGroups(
+		_assertExpectedUserGroups(
 			likeNameUserGroups, StringUtil.toUpperCase(name) + "%");
-		assertExpectedUserGroups(allUserGroups, null);
-		assertExpectedUserGroups(allUserGroups, "");
+		_assertExpectedUserGroups(allUserGroups, null);
+		_assertExpectedUserGroups(allUserGroups, "");
 	}
 
-	protected UserGroup addUserGroup() throws Exception {
+	private UserGroup _addUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroups.add(userGroup);
@@ -129,7 +129,7 @@ public class UserGroupServiceTest {
 		return userGroup;
 	}
 
-	protected void assertExpectedUserGroups(
+	private void _assertExpectedUserGroups(
 			List<UserGroup> expectedUserGroups, String nameSearch)
 		throws Exception {
 

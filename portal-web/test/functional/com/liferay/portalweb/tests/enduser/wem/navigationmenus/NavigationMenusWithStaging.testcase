@@ -99,6 +99,62 @@ definition {
 		}
 	}
 
+	@description = "Deleted Navigation menus will not appear in live after publish. This case covers LPS-89358."
+	@priority = "3"
+	test DeletedNavigationMenuNotInLiveAfterPublish {
+		task ("Add the first page to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page 1");
+		}
+
+		task ("Add a URL item to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com/",
+				urlName = "Liferay");
+		}
+
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Navigate to navigation menus admin in the live site") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the navigation menu") {
+			LexiconEntry.viewEntryName(rowEntry = "Test Navigation Menu Name");
+		}
+
+		task ("Navigate to navigation menus admin in the staging site") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
+		}
+
+		task ("Delete the navigation menu") {
+
+			LexiconEntry.delete(
+				menuItem = "Delete",
+				rowEntry = "Test Navigation Menu Name");
+		}
+
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Navigate to navigation menus admin in the live site") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the navigation menu was deleted") {
+			LexiconEntry.viewNoEntry(rowEntry = "Test Navigation Menu Name");
+		}
+	}
+
 	@description = "Edits to navigation menus will appear in live until after publish. This test has the Navigation Menu widget display a specific navigation menu and covers LPS-86525."
 	@priority = "5"
 	test PublishEditedNavigationMenu {

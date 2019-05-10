@@ -177,7 +177,8 @@ public class LiferayCiInitK8sNodeUtil {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Please set \'", environmentVariableName, "\'"));
+					"Unable to find required environment variable \'",
+					environmentVariableName, "\'"));
 		}
 
 		return environmentVariableValue;

@@ -28,13 +28,16 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zoltan Csaszi
  */
+@Component(service = BackgroundTaskFinder.class)
 public class BackgroundTaskFinderImpl
 	extends BackgroundTaskFinderBaseImpl implements BackgroundTaskFinder {
 
@@ -171,7 +174,7 @@ public class BackgroundTaskFinderImpl
 		return sql;
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

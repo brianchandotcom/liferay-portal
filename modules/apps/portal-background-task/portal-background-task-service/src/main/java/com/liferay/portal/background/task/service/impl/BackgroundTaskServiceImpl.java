@@ -14,11 +14,21 @@
 
 package com.liferay.portal.background.task.service.impl;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.service.base.BackgroundTaskServiceBaseImpl;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	property = {
+		"json.web.service.context.name=backgroundtask",
+		"json.web.service.context.path=BackgroundTask"
+	},
+	service = AopService.class
+)
 public class BackgroundTaskServiceImpl extends BackgroundTaskServiceBaseImpl {
 
 	@Override

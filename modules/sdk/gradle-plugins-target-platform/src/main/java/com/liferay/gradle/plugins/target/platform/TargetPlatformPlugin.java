@@ -113,8 +113,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			});
 
-		for (Project sub : targetPlatformExtension.getSubprojects()) {
-			GradleUtil.applyPlugin(sub, DependencyManagementPlugin.class);
+		for (Project subproject : targetPlatformExtension.getSubprojects()) {
+			GradleUtil.applyPlugin(
+				subproject, DependencyManagementPlugin.class);
 		}
 
 		Gradle gradle = project.getGradle();

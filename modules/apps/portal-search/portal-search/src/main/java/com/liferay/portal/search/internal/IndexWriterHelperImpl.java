@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.IndexWriterHelperConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
@@ -633,7 +635,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		if (PermissionThreadLocal.isFlushResourcePermissionEnabled(
 				name, primKey)) {
 
-			_searchPermissionChecker.updatePermissionFields(name, primKey);
+			_searchPermissionChecker.updatePermissionFields(
+				_getIndexerModelName(name), primKey);
 		}
 	}
 
@@ -657,6 +660,13 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		else {
 			searchContext.setCommitImmediately(true);
 		}
+	}
+
+	private String _getIndexerModelName(String name) {
+		String[] names = StringUtil.split(
+			name, ResourceActionsUtil.getCompositeModelNameSeparator());
+
+		return names[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

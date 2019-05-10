@@ -61,7 +61,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 
-<aui:form action="<%= actionCommandURL %>" cssClass="portlet-users-admin-edit-user" method="post" name="fm">
+<aui:form action="<%= actionCommandURL %>" cssClass="portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect.toString() %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= selUserId %>" />
 	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.display.contributor;
+package com.liferay.info.display.request.attributes.contributor;
 
 import javax.servlet.http.HttpServletRequest;
 

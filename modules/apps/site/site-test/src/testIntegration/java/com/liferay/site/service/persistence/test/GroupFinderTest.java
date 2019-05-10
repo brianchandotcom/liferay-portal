@@ -220,8 +220,6 @@ public class GroupFinderTest {
 
 		int initialGroupCount = groups.size();
 
-		GroupTestUtil.addGroup();
-
 		Group parentGroup = GroupTestUtil.addGroup();
 
 		LayoutTestUtil.addLayout(parentGroup, false);
@@ -253,8 +251,6 @@ public class GroupFinderTest {
 		int initialGroupCount = _groupFinder.countByLayouts(
 			TestPropsValues.getCompanyId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, true, true);
-
-		GroupTestUtil.addGroup();
 
 		Group parentGroup = GroupTestUtil.addGroup();
 

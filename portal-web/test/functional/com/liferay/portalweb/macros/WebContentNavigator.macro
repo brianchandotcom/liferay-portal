@@ -35,7 +35,13 @@ definition {
 	}
 
 	macro gotoAddPGViaWCD {
-		Portlet.clickPortletPlusIconPG(portletName = "Web Content Display");
+		var portletName = "Web Content Display";
+
+		if (isSet(portletNameTranslation)) {
+			var portletName = "${portletNameTranslation}";
+		}
+
+		Portlet.clickPortletPlusIconPG(portletName = "${portletName}");
 
 		if (!(contains("${structureName}", "{structureName}"))) {
 			var structureName = "${structureName}";

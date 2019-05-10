@@ -143,7 +143,9 @@ definition {
 	}
 
 	macro addLocalizedPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(structureName = "${localizedBasicWebContent}");
+		WebContentNavigator.gotoAddPGViaWCD(
+			portletNameTranslation = "${portletNameTranslation}",
+			structureName = "${localizedBasicWebContent}");
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",

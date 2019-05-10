@@ -542,7 +542,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Site Administration",
-			portlet = "Configuración del sitio web");
+			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "español (España),alemán (Alemania)",
@@ -557,6 +557,7 @@ definition {
 
 		WebContent.addLocalizedPGViaWCD(
 			localizedBasicWebContent = "Contenido web básico",
+			portletNameTranslation = "Visor de contenido web",
 			webContentContent = "Web Content1 Content",
 			webContentTitle = "Web Content1 Title");
 

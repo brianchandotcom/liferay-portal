@@ -83,7 +83,7 @@
 		<pathelement path="${classpath.full}" />
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="biz.aQute.bnd.jar,jsp-api.jar,mail.jar,servlet-api.jar"
+			includes="osgi-annotation-versioning.jar,jsp-api.jar,mail.jar,servlet-api.jar"
 		/>
 		<fileset
 			dir="${project.dir}/lib/global"
@@ -1717,7 +1717,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<path refid="lib.pre.classpath" />
 				<fileset
 					dir="${project.dir}/lib/development"
-					excludes="biz.aQute.bnd.jar,jalopy.jar,jetty*.jar,tomcat*.jar"
+					excludes="osgi-annotation-versioning.jar,jalopy.jar,jetty*.jar,tomcat*.jar"
 					includes="*.jar"
 				/>
 				<fileset

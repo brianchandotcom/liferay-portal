@@ -3,7 +3,6 @@
 /development/annotations.jar
 /development/ant-apache-bsf.jar
 /development/appium.jar
-/development/biz.aQute.bnd.jar
 /development/catalina.jar
 /development/com.liferay.jenkins.results.parser.jar
 /development/db2jcc.jar
@@ -50,6 +49,7 @@
 /development/ojdbc14.jar
 /development/ojdbc5.jar
 /development/ojdbc6.jar
+/development/osgi-annotation-versioning.jar
 /development/p6spy.jar
 /development/persistence.jar
 /development/postgresql.jar

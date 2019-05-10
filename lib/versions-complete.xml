@@ -4850,18 +4850,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/biz.aQute.bnd.jar</file-name>
-				<version>3.5.0</version>
-				<project-name>Bnd</project-name>
-				<project-url>http://bnd.bndtools.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/bsh.jar</file-name>
 				<version>2.0 B4</version>
 				<project-name>BeanShell</project-name>

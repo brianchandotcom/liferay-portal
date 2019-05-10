@@ -41,7 +41,6 @@
 	<classpathentry kind="lib" path="lib/development/ant-contrib.jar"/>
 	<classpathentry kind="lib" path="lib/development/antelope.jar"/>
 	<classpathentry kind="lib" path="lib/development/appium.jar"/>
-	<classpathentry kind="lib" path="lib/development/biz.aQute.bnd.jar"/>
 	<classpathentry kind="lib" path="lib/development/bsh.jar"/>
 	<classpathentry kind="lib" path="lib/development/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.beanshell.jar"/>
@@ -87,6 +86,7 @@
 	<classpathentry kind="lib" path="lib/development/mockito.jar"/>
 	<classpathentry kind="lib" path="lib/development/mysql.jar"/>
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi-annotation-versioning.jar"/>
 	<classpathentry kind="lib" path="lib/development/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/persistence.jar"/>

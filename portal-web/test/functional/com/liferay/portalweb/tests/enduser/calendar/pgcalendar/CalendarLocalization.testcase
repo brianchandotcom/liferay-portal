@@ -81,7 +81,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		CalendarScheduler.viewDay(eventTitle = "Calendar Event Title");
 	}

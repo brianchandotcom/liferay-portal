@@ -405,7 +405,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
-			textIcon = "Deutsch-Deutschland");
+			textIcon = "deutsch-Deutschland");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -437,7 +437,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 	}
 
 	@priority = "5"
@@ -849,7 +849,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
-			textIcon = "Deutsch-Deutschland");
+			textIcon = "deutsch-Deutschland");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -860,7 +860,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

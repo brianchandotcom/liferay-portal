@@ -64,7 +64,7 @@ definition {
 		Page.viewSiteNameTranslationsPG(
 			locale = "en-US",
 			siteName = "Site Name",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		Page.viewSiteNameTranslationsPG(
 			locale = "es-ES",
@@ -149,7 +149,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		Navigator.gotoPage(pageName = "Language Test Page");
 	}
@@ -188,7 +188,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		Navigator.gotoPage(pageName = "Language Test Page");
 	}
@@ -227,7 +227,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 
 		Navigator.gotoPage(pageName = "Language Test Page");
 	}
@@ -594,7 +594,7 @@ definition {
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States");
+			textIcon = "english-United States");
 	}
 
 	@description = "This is a use case for LPS-59345"

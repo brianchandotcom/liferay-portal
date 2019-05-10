@@ -12,85 +12,6 @@ const WithEvaluator = ChildComponent => {
 	 */
 
 	class Evaluator extends Component {
-		static PROPS = {
-
-			/**
-			 * @default
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?number}
-			 */
-
-			activePage: Config.number().value(0),
-
-			/**
-			 * @default undefined
-			 * @memberof Evaluator
-			 * @type {string}
-			 * @required
-			 */
-
-			defaultLanguageId: Config.string(),
-
-			editable: Config.bool().value(false),
-
-			/**
-			 * @default undefined
-			 * @memberof Evaluator
-			 * @type {string}
-			 * @required
-			 */
-
-			editingLanguageId: Config.string(),
-
-			/**
-			 * @default undefined
-			 * @memberof Evaluator
-			 * @type {string}
-			 * @required
-			 */
-
-			fieldType: Config.string().required(),
-
-			/**
-			 * @default undefined
-			 * @memberof Evaluator
-			 * @type {object}
-			 * @required
-			 */
-
-			formContext: Config.object().required(),
-
-			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			paginationMode: Config.string().required(),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormRenderer
-			 * @type {!string}
-			 */
-
-			spritemap: Config.string().required(),
-
-			/**
-			 * @default undefined
-			 * @memberof Evaluator
-			 * @type {string}
-			 * @required
-			 */
-
-			url: Config.string()
-		}
-
-		static STATE = {
-			pages: Config.array().valueFn('_pagesValueFn')
-		}
 
 		attached() {
 			this.evaluate();
@@ -255,6 +176,86 @@ const WithEvaluator = ChildComponent => {
 			return formContext.pages;
 		}
 	}
+
+	Evaluator.PROPS = {
+
+		/**
+		 * @default
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
+
+		/**
+		 * @default undefined
+		 * @memberof Evaluator
+		 * @type {string}
+		 * @required
+		 */
+
+		defaultLanguageId: Config.string(),
+
+		editable: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @memberof Evaluator
+		 * @type {string}
+		 * @required
+		 */
+
+		editingLanguageId: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @memberof Evaluator
+		 * @type {string}
+		 * @required
+		 */
+
+		fieldType: Config.string().required(),
+
+		/**
+		 * @default undefined
+		 * @memberof Evaluator
+		 * @type {object}
+		 * @required
+		 */
+
+		formContext: Config.object().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().required(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required(),
+
+		/**
+		 * @default undefined
+		 * @memberof Evaluator
+		 * @type {string}
+		 * @required
+		 */
+
+		url: Config.string()
+	};
+
+	Evaluator.STATE = {
+		pages: Config.array().valueFn('_pagesValueFn')
+	};
 
 	return Evaluator;
 };

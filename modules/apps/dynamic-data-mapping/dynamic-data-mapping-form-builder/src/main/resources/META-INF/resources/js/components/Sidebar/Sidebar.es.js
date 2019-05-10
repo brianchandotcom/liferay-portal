@@ -25,115 +25,6 @@ const FormWithEvaluator = WithEvaluator(FormRenderer);
  */
 
 class Sidebar extends Component {
-	static STATE = {
-
-		/**
-		 * @default 0
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?number}
-		 */
-
-		activeTab: Config.number().value(0).internal(),
-
-		/**
-		 * @default _dropdownFieldTypesValueFn
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?array}
-		 */
-
-		dropdownFieldTypes: Config.array().valueFn('_dropdownFieldTypesValueFn'),
-
-		/**
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {array}
-		 */
-
-		fieldTypesGroup: Config.object().valueFn('_fieldTypesGroupValueFn'),
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?bool}
-		 */
-
-		open: Config.bool().internal().value(false),
-
-		/**
-		 * @default object
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?object}
-		 */
-
-		tabs: Config.object().value(
-			{
-				add: {
-					items: [
-						Liferay.Language.get('elements'),
-						Liferay.Language.get('element-sets')
-					]
-				},
-				edit: {
-					items: [
-						Liferay.Language.get('basic'),
-						Liferay.Language.get('properties')
-					]
-				}
-			}
-		).internal()
-	};
-
-	static PROPS = {
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?string}
-		 */
-
-		defaultLanguageId: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?string}
-		 */
-
-		editingLanguageId: Config.string(),
-
-		/**
-		 * @default []
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(array|undefined)}
-		 */
-
-		fieldTypes: Config.array().value([]),
-
-		/**
-		 * @default {}
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?object}
-		 */
-
-		focusedField: focusedFieldStructure.value({}),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?(string|undefined)}
-		 */
-
-		spritemap: Config.string().required()
-	};
 
 	attached() {
 		this._bindDragAndDrop();
@@ -1044,5 +935,115 @@ class Sidebar extends Component {
 		);
 	}
 }
+
+Sidebar.STATE = {
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?number}
+	 */
+
+	activeTab: Config.number().value(0).internal(),
+
+	/**
+	 * @default _dropdownFieldTypesValueFn
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?array}
+	 */
+
+	dropdownFieldTypes: Config.array().valueFn('_dropdownFieldTypesValueFn'),
+
+	/**
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {array}
+	 */
+
+	fieldTypesGroup: Config.object().valueFn('_fieldTypesGroupValueFn'),
+
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?bool}
+	 */
+
+	open: Config.bool().internal().value(false),
+
+	/**
+	 * @default object
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?object}
+	 */
+
+	tabs: Config.object().value(
+		{
+			add: {
+				items: [
+					Liferay.Language.get('elements'),
+					Liferay.Language.get('element-sets')
+				]
+			},
+			edit: {
+				items: [
+					Liferay.Language.get('basic'),
+					Liferay.Language.get('properties')
+				]
+			}
+		}
+	).internal()
+};
+
+Sidebar.PROPS = {
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?string}
+	 */
+
+	defaultLanguageId: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?string}
+	 */
+
+	editingLanguageId: Config.string(),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?(array|undefined)}
+	 */
+
+	fieldTypes: Config.array().value([]),
+
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?object}
+	 */
+
+	focusedField: focusedFieldStructure.value({}),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
+	 * @type {?(string|undefined)}
+	 */
+
+	spritemap: Config.string().required()
+};
 
 export default Sidebar;

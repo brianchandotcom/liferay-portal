@@ -37,300 +37,6 @@ const fieldOptionStructure = Config.shapeOf(
  */
 
 class RuleEditor extends Component {
-	static STATE = {
-		actions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					action: Config.string(),
-					calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
-					expression: Config.string(),
-					hasRequiredInputs: Config.bool(),
-					inputs: Config.object(),
-					label: Config.string(),
-					outputs: Config.object(),
-					target: Config.string()
-				}
-			)
-		).internal().setter('_setActions').value([]),
-
-		actionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_actionsFieldOptionsValueFn'),
-
-		actionTypes: Config.arrayOf(
-			Config.shapeOf(
-				{
-					label: Config.string(),
-					value: Config.string()
-				}
-			)
-		).internal().value(
-			[
-				{
-					label: Liferay.Language.get('show'),
-					value: 'show'
-				},
-				{
-					label: Liferay.Language.get('enable'),
-					value: 'enable'
-				},
-				{
-					label: Liferay.Language.get('require'),
-					value: 'require'
-				},
-				{
-					label: Liferay.Language.get('autofill'),
-					value: 'auto-fill'
-				},
-				{
-					label: Liferay.Language.get('calculate'),
-					value: 'calculate'
-				},
-				{
-					label: Liferay.Language.get('jump-to-page'),
-					value: 'jump-to-page'
-				}
-			]
-		),
-
-		/**
-		 * Used for tracking which action we are currently focused on
-		 * when trying to delete an action.
-		 * @default 0
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {Number}
-		 */
-		activeActionIndex: Config.number().value(-1),
-
-		/**
-		 * Used for tracking which condition we are currently focused on
-		 * when trying to delete a condition.
-		 * @default 0
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {Number}
-		 */
-
-		activeConditionIndex: Config.number().value(-1),
-
-		calculatorFunctions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					label: Config.string(),
-					tooltip: Config.string(),
-					value: Config.string()
-				}
-			)
-		).internal().value([]),
-
-		calculatorResultOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_calculatorResultOptionsValueFn'),
-
-		/**
-		 * @default 0
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {?array}
-		 */
-
-		conditions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					operands: Config.arrayOf(
-						Config.shapeOf(
-							{
-								dataType: Config.string(),
-								label: Config.string(),
-								repeatable: Config.bool(),
-								type: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					operator: Config.string()
-				}
-			)
-		).internal().setter('_setConditions').value([]),
-
-		conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsValueFn'),
-
-		dataProvider: Config.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string(),
-					name: Config.string(),
-					uuid: Config.string()
-				}
-			)
-		).internal(),
-
-		dataProviderInstanceParameterSettingsURL: Config.string().required(),
-
-		dataProviderInstancesURL: Config.string().required(),
-
-		deletedFields: Config.arrayOf(Config.string()).value([]),
-
-		fixedOptions: Config.arrayOf(
-			fieldOptionStructure
-		).value(
-			[
-				{
-					dataType: 'user',
-					label: Liferay.Language.get('user'),
-					name: 'user',
-					value: 'user'
-				}
-			]
-		),
-
-		functionsMetadata: Config.shapeOf(
-			{
-				number: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				),
-				text: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				),
-				user: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				)
-			}
-		),
-
-		functionsURL: Config.string(),
-
-		invalidRule: Config.bool().value(true),
-
-		loadingDataProviderOptions: Config.bool(),
-
-		logicalOperator: Config.string().internal().value('or'),
-
-		pageOptions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					dataType: Config.string(),
-					name: Config.string(),
-					options: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					type: Config.string(),
-					value: Config.string()
-				}
-			)
-		).internal().value([]),
-
-		pages: Config.array().required(),
-
-		readOnly: Config.bool().value(false),
-
-		roles: Config.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string(),
-					name: Config.string()
-				}
-			)
-		).valueFn('_rolesValueFn'),
-
-		/**
-		 * @default 0
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {?array}
-		 */
-
-		rule: Config.shapeOf(
-			{
-				actions: Config.arrayOf(
-					Config.shapeOf(
-						{
-							action: Config.string(),
-							calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
-							ddmDataProviderInstanceUUID: Config.string(),
-							expression: Config.string(),
-							inputs: Config.object(),
-							label: Config.string(),
-							outputs: Config.object(),
-							target: Config.string()
-						}
-					)
-				),
-				conditions: Config.arrayOf(
-					Config.shapeOf(
-						{
-							operands: Config.arrayOf(
-								Config.shapeOf(
-									{
-										label: Config.string(),
-										repeatable: Config.bool(),
-										type: Config.string(),
-										value: Config.string()
-									}
-								)
-							),
-							operator: Config.string()
-						}
-					)
-				),
-				['logical-operator']: Config.string()
-			}
-		),
-
-		ruleEditedIndex: Config.number(),
-
-		secondOperandList: Config.arrayOf(
-			Config.shapeOf(
-				{
-					name: Config.string(),
-					value: Config.string()
-				}
-			)
-		).value(
-			[
-				{
-					value: Liferay.Language.get('value')
-				},
-				{
-					name: 'field',
-					value: Liferay.Language.get('other-field')
-				}
-			]
-		),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof RuleEditor
-		 * @type {!string}
-		 */
-
-		spritemap: Config.string().required()
-	}
 
 	convertAutoFillDataToArray(action, type) {
 		const data = action[type];
@@ -1827,6 +1533,301 @@ class RuleEditor extends Component {
 			this._validateActionsAutoFill(autofillActions, 'outputs');
 	}
 }
+
+RuleEditor.STATE = {
+	actions: Config.arrayOf(
+		Config.shapeOf(
+			{
+				action: Config.string(),
+				calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
+				expression: Config.string(),
+				hasRequiredInputs: Config.bool(),
+				inputs: Config.object(),
+				label: Config.string(),
+				outputs: Config.object(),
+				target: Config.string()
+			}
+		)
+	).internal().setter('_setActions').value([]),
+
+	actionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_actionsFieldOptionsValueFn'),
+
+	actionTypes: Config.arrayOf(
+		Config.shapeOf(
+			{
+				label: Config.string(),
+				value: Config.string()
+			}
+		)
+	).internal().value(
+		[
+			{
+				label: Liferay.Language.get('show'),
+				value: 'show'
+			},
+			{
+				label: Liferay.Language.get('enable'),
+				value: 'enable'
+			},
+			{
+				label: Liferay.Language.get('require'),
+				value: 'require'
+			},
+			{
+				label: Liferay.Language.get('autofill'),
+				value: 'auto-fill'
+			},
+			{
+				label: Liferay.Language.get('calculate'),
+				value: 'calculate'
+			},
+			{
+				label: Liferay.Language.get('jump-to-page'),
+				value: 'jump-to-page'
+			}
+		]
+	),
+
+	/**
+	 * Used for tracking which action we are currently focused on
+	 * when trying to delete an action.
+	 * @default 0
+	 * @instance
+	 * @memberof RuleEditor
+	 * @type {Number}
+	 */
+	activeActionIndex: Config.number().value(-1),
+
+	/**
+	 * Used for tracking which condition we are currently focused on
+	 * when trying to delete a condition.
+	 * @default 0
+	 * @instance
+	 * @memberof RuleEditor
+	 * @type {Number}
+	 */
+
+	activeConditionIndex: Config.number().value(-1),
+
+	calculatorFunctions: Config.arrayOf(
+		Config.shapeOf(
+			{
+				label: Config.string(),
+				tooltip: Config.string(),
+				value: Config.string()
+			}
+		)
+	).internal().value([]),
+
+	calculatorResultOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_calculatorResultOptionsValueFn'),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberof RuleEditor
+	 * @type {?array}
+	 */
+
+	conditions: Config.arrayOf(
+		Config.shapeOf(
+			{
+				operands: Config.arrayOf(
+					Config.shapeOf(
+						{
+							dataType: Config.string(),
+							label: Config.string(),
+							repeatable: Config.bool(),
+							type: Config.string(),
+							value: Config.string()
+						}
+					)
+				),
+				operator: Config.string()
+			}
+		)
+	).internal().setter('_setConditions').value([]),
+
+	conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsValueFn'),
+
+	dataProvider: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string(),
+				name: Config.string(),
+				uuid: Config.string()
+			}
+		)
+	).internal(),
+
+	dataProviderInstanceParameterSettingsURL: Config.string().required(),
+
+	dataProviderInstancesURL: Config.string().required(),
+
+	deletedFields: Config.arrayOf(Config.string()).value([]),
+
+	fixedOptions: Config.arrayOf(
+		fieldOptionStructure
+	).value(
+		[
+			{
+				dataType: 'user',
+				label: Liferay.Language.get('user'),
+				name: 'user',
+				value: 'user'
+			}
+		]
+	),
+
+	functionsMetadata: Config.shapeOf(
+		{
+			number: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			),
+			text: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			),
+			user: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			)
+		}
+	),
+
+	functionsURL: Config.string(),
+
+	invalidRule: Config.bool().value(true),
+
+	loadingDataProviderOptions: Config.bool(),
+
+	logicalOperator: Config.string().internal().value('or'),
+
+	pageOptions: Config.arrayOf(
+		Config.shapeOf(
+			{
+				dataType: Config.string(),
+				name: Config.string(),
+				options: Config.arrayOf(
+					Config.shapeOf(
+						{
+							label: Config.string(),
+							name: Config.string(),
+							value: Config.string()
+						}
+					)
+				),
+				type: Config.string(),
+				value: Config.string()
+			}
+		)
+	).internal().value([]),
+
+	pages: Config.array().required(),
+
+	readOnly: Config.bool().value(false),
+
+	roles: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string(),
+				name: Config.string()
+			}
+		)
+	).valueFn('_rolesValueFn'),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberof RuleEditor
+	 * @type {?array}
+	 */
+
+	rule: Config.shapeOf(
+		{
+			actions: Config.arrayOf(
+				Config.shapeOf(
+					{
+						action: Config.string(),
+						calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
+						ddmDataProviderInstanceUUID: Config.string(),
+						expression: Config.string(),
+						inputs: Config.object(),
+						label: Config.string(),
+						outputs: Config.object(),
+						target: Config.string()
+					}
+				)
+			),
+			conditions: Config.arrayOf(
+				Config.shapeOf(
+					{
+						operands: Config.arrayOf(
+							Config.shapeOf(
+								{
+									label: Config.string(),
+									repeatable: Config.bool(),
+									type: Config.string(),
+									value: Config.string()
+								}
+							)
+						),
+						operator: Config.string()
+					}
+				)
+			),
+			['logical-operator']: Config.string()
+		}
+	),
+
+	ruleEditedIndex: Config.number(),
+
+	secondOperandList: Config.arrayOf(
+		Config.shapeOf(
+			{
+				name: Config.string(),
+				value: Config.string()
+			}
+		)
+	).value(
+		[
+			{
+				value: Liferay.Language.get('value')
+			},
+			{
+				name: 'field',
+				value: Liferay.Language.get('other-field')
+			}
+		]
+	),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof RuleEditor
+	 * @type {!string}
+	 */
+
+	spritemap: Config.string().required()
+};
 
 Soy.register(RuleEditor, templates);
 

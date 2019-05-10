@@ -23,154 +23,6 @@ import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
  */
 
 class LayoutProvider extends Component {
-	static PROPS = {
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?string}
-		 */
-
-		defaultLanguageId: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?string}
-		 */
-
-		editingLanguageId: Config.string(),
-
-		/**
-		 * @default {}
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?object}
-		 */
-
-		events: Config.setter('_setEvents'),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?(array|undefined)}
-		 */
-
-		initialPages: Config.arrayOf(pageStructure).setter('_setInitialPages').value([]),
-
-		/**
-		 * @default 'wizard'
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?string}
-		 */
-
-		initialPaginationMode: Config.string().value('wizard'),
-
-		/**
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {object}
-		 */
-
-		initialSuccessPageSettings: Config.shapeOf(
-			{
-				body: Config.object(),
-				enabled: Config.bool(),
-				title: Config.object()
-			}
-		),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?(array|undefined)}
-		 */
-
-		rules: Config.arrayOf(ruleStructure),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?(array|undefined)}
-		 */
-
-		spritemap: Config.string()
-
-	};
-
-	static STATE = {
-
-		/**
-		 * @instance
-		 * @memberof FormPage
-		 * @type {?number}
-		 */
-
-		activePage: Config.number().value(0),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?object}
-		 */
-
-		focusedField: Config.shapeOf(
-			{
-				columnIndex: Config.oneOfType(
-					[
-						Config.bool().value(false),
-						Config.number()
-					]
-				).required(),
-				pageIndex: Config.number().required(),
-				rowIndex: Config.number().required(),
-				type: Config.string().required()
-			}
-		).value({}),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?array}
-		 */
-
-		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
-
-		/**
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {string}
-		 */
-
-		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?(array|undefined)}
-		 */
-
-		rules: Config.arrayOf(ruleStructure).valueFn('_rulesValueFn'),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {?(object|undefined)}
-		 */
-
-		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
-	};
-
 	createNewPage() {
 		const languageId = this.props.editingLanguageId;
 		const page = {
@@ -746,5 +598,153 @@ class LayoutProvider extends Component {
 		return this.props.initialSuccessPageSettings;
 	}
 }
+
+LayoutProvider.PROPS = {
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	defaultLanguageId: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	editingLanguageId: Config.string(),
+
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?object}
+	 */
+
+	events: Config.setter('_setEvents'),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(array|undefined)}
+	 */
+
+	initialPages: Config.arrayOf(pageStructure).setter('_setInitialPages').value([]),
+
+	/**
+	 * @default 'wizard'
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	initialPaginationMode: Config.string().value('wizard'),
+
+	/**
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {object}
+	 */
+
+	initialSuccessPageSettings: Config.shapeOf(
+		{
+			body: Config.object(),
+			enabled: Config.bool(),
+			title: Config.object()
+		}
+	),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(array|undefined)}
+	 */
+
+	rules: Config.arrayOf(ruleStructure),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(array|undefined)}
+	 */
+
+	spritemap: Config.string()
+
+};
+
+LayoutProvider.STATE = {
+
+	/**
+	 * @instance
+	 * @memberof FormPage
+	 * @type {?number}
+	 */
+
+	activePage: Config.number().value(0),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?object}
+	 */
+
+	focusedField: Config.shapeOf(
+		{
+			columnIndex: Config.oneOfType(
+				[
+					Config.bool().value(false),
+					Config.number()
+				]
+			).required(),
+			pageIndex: Config.number().required(),
+			rowIndex: Config.number().required(),
+			type: Config.string().required()
+		}
+	).value({}),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?array}
+	 */
+
+	pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
+
+	/**
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {string}
+	 */
+
+	paginationMode: Config.string().valueFn('_paginationModeValueFn'),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(array|undefined)}
+	 */
+
+	rules: Config.arrayOf(ruleStructure).valueFn('_rulesValueFn'),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?(object|undefined)}
+	 */
+
+	successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
+};
 
 export default LayoutProvider;

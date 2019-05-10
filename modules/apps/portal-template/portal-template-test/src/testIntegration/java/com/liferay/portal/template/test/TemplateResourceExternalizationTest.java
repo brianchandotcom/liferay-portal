@@ -42,6 +42,8 @@ import java.io.OutputStream;
 
 import java.net.URL;
 
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -123,7 +125,7 @@ public class TemplateResourceExternalizationTest {
 		DDMTemplate ddmTemplate = (DDMTemplate)ProxyUtil.newProxyInstance(
 			clazz.getClassLoader(), new Class<?>[] {clazz},
 			(proxy, method, arguments) -> {
-				if ("getTemplateId".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getTemplateId")) {
 					return templateId;
 				}
 

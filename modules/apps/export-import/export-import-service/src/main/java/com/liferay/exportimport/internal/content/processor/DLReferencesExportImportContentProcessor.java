@@ -59,6 +59,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -162,7 +163,7 @@ public class DLReferencesExportImportContentProcessor
 				return map;
 			}
 
-			if ("portlet_file_entry".equals(pathArray[2])) {
+			if (Objects.equals(pathArray[2], "portlet_file_entry")) {
 				map.put("groupId", new String[] {pathArray[3]});
 				map.put("title", new String[] {_http.decodeURL(pathArray[4])});
 			}

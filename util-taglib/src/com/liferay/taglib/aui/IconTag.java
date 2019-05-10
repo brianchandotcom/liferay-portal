@@ -32,6 +32,7 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
@@ -163,7 +164,7 @@ public class IconTag extends BaseIconTag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		try {
-			if ("lexicon".equals(getMarkupView())) {
+			if (Objects.equals(getMarkupView(), "lexicon")) {
 				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
 				jspWriter.write(GetterUtil.getString(getImage()));
 				jspWriter.write(

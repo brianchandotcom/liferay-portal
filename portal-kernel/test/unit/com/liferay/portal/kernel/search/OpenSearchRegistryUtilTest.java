@@ -22,6 +22,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -44,7 +45,7 @@ public class OpenSearchRegistryUtilTest {
 			OpenSearch.class.getClassLoader(),
 			new Class<?>[] {OpenSearch.class},
 			(proxy, method, args) -> {
-				if ("getClassName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getClassName")) {
 					return _CLASS_NAME;
 				}
 

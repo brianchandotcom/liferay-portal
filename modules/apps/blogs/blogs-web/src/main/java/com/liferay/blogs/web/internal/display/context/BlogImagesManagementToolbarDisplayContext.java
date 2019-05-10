@@ -220,7 +220,8 @@ public class BlogImagesManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive("title".equals(getOrderByCol()));
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "title"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol", "title");
 						dropdownItem.setLabel(
@@ -229,7 +230,8 @@ public class BlogImagesManagementToolbarDisplayContext {
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive("size".equals(getOrderByCol()));
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "size"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol", "size");
 						dropdownItem.setLabel(

@@ -2830,7 +2830,7 @@ public class ServiceBuilder {
 		JavaField[] cacheFields = _getCacheFields(modelImplJavaClass);
 
 		for (JavaField javaField : cacheFields) {
-			if ("_className".equals(javaField.getName())) {
+			if (Objects.equals(javaField.getName(), "_className")) {
 				hasClassNameCacheField = true;
 
 				break;
@@ -3837,7 +3837,7 @@ public class ServiceBuilder {
 			List<EntityColumn> entityColumns = entity.getEntityColumns();
 
 			for (EntityColumn entityColumn : entityColumns) {
-				if ("sequence".equals(entityColumn.getIdType())) {
+				if (Objects.equals(entityColumn.getIdType(), "sequence")) {
 					StringBundler sb = new StringBundler(3);
 
 					String sequenceName = entityColumn.getIdParam();

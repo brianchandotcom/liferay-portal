@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -52,7 +53,7 @@ public class LiferayDescriptorParser {
 			for (Element element : portletElement.elements()) {
 				String elementName = element.getName();
 
-				if (!"portlet-name".equals(elementName)) {
+				if (!Objects.equals(elementName, "portlet-name")) {
 					String key = "com.liferay.portlet.".concat(elementName);
 
 					Set<String> values = configuration.get(key);

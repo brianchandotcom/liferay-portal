@@ -23,6 +23,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -49,7 +50,7 @@ public class StagedModelDataHandlerRegistryUtilTest {
 				StagedModelDataHandlerRegistryUtilTest.class.getClassLoader(),
 				new Class<?>[] {StagedModelDataHandler.class},
 				(proxy, method, args) -> {
-					if ("getClassNames".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getClassNames")) {
 						return new String[] {_CLASS_NAME};
 					}
 

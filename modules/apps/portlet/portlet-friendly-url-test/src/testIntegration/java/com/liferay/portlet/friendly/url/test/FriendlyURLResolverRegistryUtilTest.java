@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -139,7 +140,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			FriendlyURLResolver.class.getClassLoader(),
 			new Class<?>[] {FriendlyURLResolver.class},
 			(proxy, method, args) -> {
-				if ("getURLSeparator".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getURLSeparator")) {
 					return _SEPARATOR;
 				}
 

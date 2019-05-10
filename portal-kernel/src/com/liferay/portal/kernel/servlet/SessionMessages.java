@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -469,7 +470,7 @@ public class SessionMessages {
 		}
 
 		private String _transformKey(String key) {
-			if ("request_processed".equals(key)) {
+			if (Objects.equals(key, "request_processed")) {
 				key = "requestProcessed";
 			}
 

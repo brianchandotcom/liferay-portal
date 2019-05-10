@@ -21,6 +21,8 @@ import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.portlet.RenderURLTag;
 import com.liferay.taglib.ui.IconTag;
 
+import java.util.Objects;
+
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +51,7 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
-		if ("/login/forgot_password".equals(mvcRenderCommandName)) {
+		if (Objects.equals(mvcRenderCommandName, "/login/forgot_password")) {
 			return;
 		}
 

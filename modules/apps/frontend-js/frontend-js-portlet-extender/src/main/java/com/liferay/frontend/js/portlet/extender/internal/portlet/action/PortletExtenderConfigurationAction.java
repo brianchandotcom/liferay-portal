@@ -45,6 +45,7 @@ import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -256,7 +257,7 @@ public class PortletExtenderConfigurationAction
 					predefinedValue.setDefaultLocale(themeDisplay.getLocale());
 
 					if (key.contains(ddmFormField.getName())) {
-						if ("select".equals(ddmFormField.getType())) {
+						if (Objects.equals(ddmFormField.getType(), "select")) {
 							JSONArray valuesJSONArray =
 								JSONFactoryUtil.createJSONArray();
 

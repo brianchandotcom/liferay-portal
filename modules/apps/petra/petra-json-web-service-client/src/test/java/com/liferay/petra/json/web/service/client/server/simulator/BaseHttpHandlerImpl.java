@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -213,7 +214,7 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 	protected String getResponseBody(HttpExchange httpExchange) {
 		String contentType = getAccept(httpExchange);
 
-		if ("application/json".equals(contentType)) {
+		if (Objects.equals(contentType, "application/json")) {
 			return SimulatorConstants.RESPONSE_SUCCESS_IN_JSON;
 		}
 
@@ -225,7 +226,7 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 
 		String acceptContentType = getAccept(httpExchange);
 
-		if ("application/json".equals(acceptContentType)) {
+		if (Objects.equals(acceptContentType, "application/json")) {
 			return getAsJSON(parameters);
 		}
 

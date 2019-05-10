@@ -450,7 +450,8 @@ public class SharedAssetsViewDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive("sharedDate".equals(orderByCol));
+						dropdownItem.setActive(
+							Objects.equals(orderByCol, "sharedDate"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol",
 							"sharedDate");

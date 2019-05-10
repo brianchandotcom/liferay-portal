@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -131,7 +132,7 @@ public class ExportTemplatesToolbarDisplayContext
 		searchContainer.setOrderByCol("name");
 		searchContainer.setOrderByComparator(
 			new ExportImportConfigurationNameComparator(
-				"asc".equals(getOrderByType())));
+				Objects.equals(getOrderByType(), "asc")));
 		searchContainer.setOrderByType(getOrderByType());
 
 		int exportImportConfigurationType =

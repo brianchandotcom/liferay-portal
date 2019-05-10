@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -262,7 +263,7 @@ public class MVCActionCommandTest {
 					LiferayPortletConfig.class.getClassLoader(),
 					new Class<?>[] {LiferayPortletConfig.class},
 					(proxy, method, args) -> {
-						if ("getPortletId".equals(method.getName())) {
+						if (Objects.equals(method.getName(), "getPortletId")) {
 							return "testPortlet";
 						}
 

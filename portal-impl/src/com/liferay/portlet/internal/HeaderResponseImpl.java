@@ -80,7 +80,9 @@ public class HeaderResponseImpl
 			throw new IllegalArgumentException();
 		}
 
-		if ("PortletHub".equals(name) && "javax.portlet".equals(scope)) {
+		if (Objects.equals(name, "PortletHub") &&
+			Objects.equals(scope, "javax.portlet")) {
+
 			return;
 		}
 

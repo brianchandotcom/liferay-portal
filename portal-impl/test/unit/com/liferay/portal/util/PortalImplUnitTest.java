@@ -28,6 +28,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -321,11 +322,11 @@ public class PortalImplUnitTest {
 					(proxy, method, args) -> {
 						calledAlwaysAllowDoAsUser[0] = true;
 
-						if ("equals".equals(method.getName())) {
+						if (Objects.equals(method.getName(), "equals")) {
 							return true;
 						}
 
-						if ("hashcode".equals(method.getName())) {
+						if (Objects.equals(method.getName(), "hashcode")) {
 							return 0;
 						}
 

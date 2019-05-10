@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.ui.IconTag;
 
+import java.util.Objects;
+
 import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +54,7 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
-		if ("/login/create_account".equals(mvcRenderCommandName)) {
+		if (Objects.equals(mvcRenderCommandName, "/login/create_account")) {
 			return;
 		}
 

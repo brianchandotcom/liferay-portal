@@ -23,6 +23,8 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformer;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 
+import java.util.Objects;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.AfterClass;
@@ -62,7 +64,9 @@ public class RatingsDataTransformerUtilTest {
 				RatingsDataTransformer.class.getClassLoader(),
 				new Class<?>[] {RatingsDataTransformer.class},
 				(proxy, method, args) -> {
-					if ("transformRatingsData".equals(method.getName())) {
+					if (Objects.equals(
+							method.getName(), "transformRatingsData")) {
+
 						_calledTransformRatingsData = true;
 					}
 

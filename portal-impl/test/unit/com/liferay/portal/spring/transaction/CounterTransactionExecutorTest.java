@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.junit.Assert;
@@ -332,7 +333,7 @@ public class CounterTransactionExecutorTest {
 					public Object invoke(
 						Object proxy, Method method, Object[] args) {
 
-						if ("rollbackOn".equals(method.getName())) {
+						if (Objects.equals(method.getName(), "rollbackOn")) {
 							return predicate.test((Throwable)args[0]);
 						}
 

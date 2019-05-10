@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.test.util.microcontain
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -45,7 +46,7 @@ public class Activator {
 		return Stream.of(
 			_class.getMethods()
 		).filter(
-			method -> "activate".equals(method.getName())
+			method -> Objects.equals(method.getName(), "activate")
 		).findAny();
 	}
 

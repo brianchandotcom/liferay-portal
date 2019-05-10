@@ -44,6 +44,7 @@ import com.liferay.portlet.StrictPortletPreferencesImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -76,7 +77,9 @@ public class PortletPreferencesLocalServiceTest
 				PortletPreferencesLocalServiceTest.class.getClassLoader(),
 				new Class<?>[] {ServletContext.class},
 				(proxy, method, args) -> {
-					if ("getServletContextName".equals(method.getName())) {
+					if (Objects.equals(
+							method.getName(), "getServletContextName")) {
+
 						return StringPool.BLANK;
 					}
 

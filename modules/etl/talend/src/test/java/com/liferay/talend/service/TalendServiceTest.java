@@ -15,6 +15,7 @@
 package com.liferay.talend.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -49,8 +50,8 @@ public class TalendServiceTest {
 	@Test
 	public void testGetTalendSchemaIfOpenAPIRequiredJsonArrayPresent() {
 		for (Schema.Entry entry : _schema.getEntries()) {
-			if ("propertyName1".equals(entry.getName()) ||
-				"propertyName3".equals(entry.getName())) {
+			if (Objects.equals(entry.getName(), "propertyName1") ||
+				Objects.equals(entry.getName(), "propertyName3")) {
 
 				Assert.assertFalse(entry.isNullable());
 			}

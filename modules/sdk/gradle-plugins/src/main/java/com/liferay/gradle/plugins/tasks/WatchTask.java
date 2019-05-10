@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
@@ -297,22 +298,22 @@ public class WatchTask extends DefaultTask {
 	private static final int _getState(String state) {
 		String bundleState = state.toUpperCase();
 
-		if ("ACTIVE".equals(bundleState)) {
+		if (Objects.equals(bundleState, "ACTIVE")) {
 			return Bundle.ACTIVE;
 		}
-		else if ("INSTALLED".equals(bundleState)) {
+		else if (Objects.equals(bundleState, "INSTALLED")) {
 			return Bundle.INSTALLED;
 		}
-		else if ("RESOLVED".equals(bundleState)) {
+		else if (Objects.equals(bundleState, "RESOLVED")) {
 			return Bundle.RESOLVED;
 		}
-		else if ("STARTING".equals(bundleState)) {
+		else if (Objects.equals(bundleState, "STARTING")) {
 			return Bundle.STARTING;
 		}
-		else if ("STOPPING".equals(bundleState)) {
+		else if (Objects.equals(bundleState, "STOPPING")) {
 			return Bundle.STOPPING;
 		}
-		else if ("UNINSTALLED".equals(bundleState)) {
+		else if (Objects.equals(bundleState, "UNINSTALLED")) {
 			return Bundle.UNINSTALLED;
 		}
 

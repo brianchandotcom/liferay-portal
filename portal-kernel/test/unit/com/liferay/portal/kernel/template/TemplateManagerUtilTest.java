@@ -23,6 +23,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.AfterClass;
@@ -42,11 +43,11 @@ public class TemplateManagerUtilTest {
 			TemplateManager.class.getClassLoader(),
 			new Class<?>[] {TemplateManager.class},
 			(proxy, method, args) -> {
-				if ("getName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getName")) {
 					return _TEST_TEMPLATE_MANAGER_NAME;
 				}
 
-				if ("getTemplate".equals(method.getName()) &&
+				if (Objects.equals(method.getName(), "getTemplate") &&
 					(args[0] == _TEMPLATE_RESOURCE)) {
 
 					return _TEMPLATE;

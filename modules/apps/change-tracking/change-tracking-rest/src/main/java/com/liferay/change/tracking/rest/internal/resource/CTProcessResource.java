@@ -46,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -292,11 +293,11 @@ public class CTProcessResource {
 		if (ArrayUtil.isNotEmpty(sortColumns)) {
 			String sortColumn = GetterUtil.getString(sortColumns[0]);
 
-			if ("name".equals(sortColumn)) {
+			if (Objects.equals(sortColumn, "name")) {
 				orderByComparator = OrderByComparatorFactoryUtil.create(
 					"CTCollection", sortColumns);
 			}
-			else if ("publishDate".equals(sortColumn)) {
+			else if (Objects.equals(sortColumn, "publishDate")) {
 				orderByComparator = OrderByComparatorFactoryUtil.create(
 					"CTProcess", "createDate", sortColumns[1]);
 			}

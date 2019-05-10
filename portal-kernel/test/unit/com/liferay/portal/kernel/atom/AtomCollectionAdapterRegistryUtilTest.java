@@ -21,6 +21,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -45,7 +46,7 @@ public class AtomCollectionAdapterRegistryUtilTest {
 				AtomCollectionAdapter.class.getClassLoader(),
 				new Class<?>[] {AtomCollectionAdapter.class},
 				(proxy, method, args) -> {
-					if ("getCollectionName".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getCollectionName")) {
 						return _TEST_ATOM_COLLECTION_NAME;
 					}
 

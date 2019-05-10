@@ -37,6 +37,7 @@ import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -155,7 +156,7 @@ public class CTDDMTemplateLocalServiceWrapper
 	}
 
 	private boolean _isBasicWebContent(DDMTemplate ddmTemplate) {
-		if ("BASIC-WEB-CONTENT".equals(ddmTemplate.getTemplateKey())) {
+		if (Objects.equals(ddmTemplate.getTemplateKey(), "BASIC-WEB-CONTENT")) {
 			return true;
 		}
 

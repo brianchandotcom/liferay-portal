@@ -94,6 +94,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -1163,7 +1164,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		for (String oldValue : oldValues) {
 			String newValue = oldValue;
 
-			if ("[$COMPANY_GROUP_SCOPE_ID$]".equals(oldValue)) {
+			if (Objects.equals(oldValue, "[$COMPANY_GROUP_SCOPE_ID$]")) {
 				oldValue = String.valueOf(companyGroupId);
 			}
 

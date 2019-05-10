@@ -39,6 +39,7 @@ import java.io.InputStream;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
@@ -223,8 +224,9 @@ public class SpringExtenderDependencyManagerTest {
 				public boolean add(LoggingEvent loggingEvent) {
 					boolean added = super.add(loggingEvent);
 
-					if ("Stopped scanning for unavailable components".equals(
-							loggingEvent.getMessage())) {
+					if (Objects.equals(
+							loggingEvent.getMessage(),
+							"Stopped scanning for unavailable components")) {
 
 						return added;
 					}

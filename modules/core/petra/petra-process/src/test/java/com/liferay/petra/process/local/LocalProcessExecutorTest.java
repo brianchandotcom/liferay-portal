@@ -62,6 +62,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -374,7 +375,9 @@ public class LocalProcessExecutorTest {
 						return "NULL_SHUTDOWN_HOOK_ACCEPTED";
 					}
 					catch (IllegalArgumentException iae) {
-						if (!"Shutdown hook is null".equals(iae.getMessage())) {
+						if (!Objects.equals(
+								iae.getMessage(), "Shutdown hook is null")) {
+
 							return iae.getMessage();
 						}
 					}
@@ -1076,7 +1079,7 @@ public class LocalProcessExecutorTest {
 
 	private static Serializable _shutdown() {
 		for (Thread thread : ThreadTestUtil.getThreads()) {
-			if ((thread != null) && "main".equals(thread.getName())) {
+			if ((thread != null) && Objects.equals(thread.getName(), "main")) {
 				thread.interrupt();
 
 				try {

@@ -21,6 +21,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,11 +36,11 @@ public class XmlRpcMethodUtilTest {
 		Method xmlRpcMethod = (Method)ProxyUtil.newProxyInstance(
 			Method.class.getClassLoader(), new Class<?>[] {Method.class},
 			(proxy, method, args) -> {
-				if ("getToken".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getToken")) {
 					return _TOKEN;
 				}
 
-				if ("getMethodName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getMethodName")) {
 					return _METHOD_NAME;
 				}
 

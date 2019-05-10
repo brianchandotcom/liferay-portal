@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Objects;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -151,7 +153,7 @@ public class AMImageHTMLExportImportContentProcessor
 				String.valueOf(fileEntryId));
 			element.removeAttr(_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH);
 
-			if ("picture".equals(element.tagName())) {
+			if (Objects.equals(element.tagName(), "picture")) {
 				Elements imgElements = element.getElementsByTag("img");
 
 				Element imgElement = imgElements.first();

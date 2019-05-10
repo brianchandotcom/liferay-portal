@@ -1245,7 +1245,9 @@ public class BeanPortletExtension implements Extension {
 
 			BeanMethod beanMethod = beanMethodFactory.create(beanManager);
 
-			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
+			if ((portletNames.length > 0) &&
+				Objects.equals(portletNames[0], "*")) {
+
 				wildcardBeanMethods.add(beanMethod);
 			}
 			else {

@@ -20,6 +20,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,7 +37,7 @@ public class LockListenerRegistryUtilTest {
 			LockListener.class.getClassLoader(),
 			new Class<?>[] {LockListener.class},
 			(proxy, method, args) -> {
-				if ("getClassName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getClassName")) {
 					return _CLASS_NAME;
 				}
 

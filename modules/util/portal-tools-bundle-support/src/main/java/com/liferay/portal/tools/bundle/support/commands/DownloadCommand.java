@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author David Truong
@@ -49,7 +50,7 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 
 		URI uri = _url.toURI();
 
-		if ("file".equals(uri.getScheme())) {
+		if (Objects.equals(uri.getScheme(), "file")) {
 			_downloadPath = Paths.get(uri);
 		}
 		else if (_token) {

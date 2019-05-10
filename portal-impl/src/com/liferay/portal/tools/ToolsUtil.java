@@ -43,6 +43,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -90,6 +91,9 @@ public class ToolsUtil {
 
 		for (Element element : elements) {
 			String elementName = element.getName();
+
+			if (Objects.equals(elementName, "author")) {
+			}
 
 			if (elementName.equals("author")) {
 				element.detach();

@@ -9014,10 +9014,12 @@ public class PortalImpl implements Portal {
 
 			StrutsAction strutsAction = registry.getService(serviceReference);
 
-			if ("/portal/comment/discussion/edit".equals(path)) {
+			if (Objects.equals(path, "/portal/comment/discussion/edit")) {
 				_editDiscussionStrutsAction = strutsAction;
 			}
-			else if ("/portal/comment/discussion/get_comments".equals(path)) {
+			else if (Objects.equals(
+						path, "/portal/comment/discussion/get_comments")) {
+
 				_getCommentsStrutsAction = strutsAction;
 			}
 
@@ -9044,10 +9046,12 @@ public class PortalImpl implements Portal {
 			String path = GetterUtil.getString(
 				serviceReference.getProperty("path"));
 
-			if ("/portal/comment/discussion/edit".equals(path)) {
+			if (Objects.equals(path, "/portal/comment/discussion/edit")) {
 				_editDiscussionStrutsAction = null;
 			}
-			else if ("/portal/comment/discussion/get_comments".equals(path)) {
+			else if (Objects.equals(
+						path, "/portal/comment/discussion/get_comments")) {
+
 				_getCommentsStrutsAction = null;
 			}
 

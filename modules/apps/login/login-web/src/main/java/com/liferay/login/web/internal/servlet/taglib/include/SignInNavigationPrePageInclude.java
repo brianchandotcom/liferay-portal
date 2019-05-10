@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.ui.IconTag;
 
+import java.util.Objects;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -57,7 +59,7 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 			"mvcRenderCommandName");
 
 		if (Validator.isNull(mvcRenderCommandName) ||
-			"/login/login".equals(mvcRenderCommandName)) {
+			Objects.equals(mvcRenderCommandName, "/login/login")) {
 
 			return;
 		}

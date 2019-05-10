@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -187,7 +188,7 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 
 			String localized = columnElement.getAttribute("localized");
 
-			if ("extra-table".equals(localized)) {
+			if (Objects.equals(localized, "extra-table")) {
 				return true;
 			}
 		}

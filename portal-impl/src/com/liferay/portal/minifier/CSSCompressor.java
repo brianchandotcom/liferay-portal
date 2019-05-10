@@ -24,6 +24,7 @@ import java.io.Writer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -428,7 +429,7 @@ public class CSSCompressor {
 				else if ((endIndex > 0) && (css.charAt(endIndex - 1) != '\\')) {
 					foundTerminator = true;
 
-					if (!")".equals(terminator)) {
+					if (!Objects.equals(terminator, ")")) {
 						endIndex = css.indexOf(")", endIndex);
 					}
 				}
@@ -758,7 +759,9 @@ public class CSSCompressor {
 
 			boolean filter = false;
 
-			if ((matcher.group(1) != null) && !"".equals(matcher.group(1))) {
+			if ((matcher.group(1) != null) &&
+				!Objects.equals(matcher.group(1), "")) {
+
 				filter = true;
 			}
 

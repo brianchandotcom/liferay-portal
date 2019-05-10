@@ -34,6 +34,8 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.Objects;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.After;
@@ -95,7 +97,8 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 				Localization.class.getClassLoader(),
 				new Class<?>[] {Localization.class},
 				(proxy, method, args) -> {
-					if ("getLocalizationMap".equals(method.getName()) &&
+					if (Objects.equals(
+							method.getName(), "getLocalizationMap") &&
 						(args.length == 3)) {
 
 						return _localization.getLocalizationMap(

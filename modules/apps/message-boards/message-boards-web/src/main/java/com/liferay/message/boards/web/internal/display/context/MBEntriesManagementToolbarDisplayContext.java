@@ -547,7 +547,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive("title".equals(getOrderByCol()));
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "title"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol", "title");
 						dropdownItem.setLabel(
@@ -557,7 +558,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							"modified-date".equals(getOrderByCol()));
+							Objects.equals(getOrderByCol(), "modified-date"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol",
 							"modified-date");

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +38,7 @@ public class JavaAggregateTestRuleParameterOrderCheck extends BaseFileCheck {
 			List<String> parametersList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
-			if ("false".equals(parametersList.get(0))) {
+			if (Objects.equals(parametersList.get(0), "false")) {
 				return content;
 			}
 

@@ -301,7 +301,7 @@ public class BlogEntriesDisplayContext {
 				orderByAsc = false;
 			}
 
-			if ("display-date".equals(orderByCol)) {
+			if (Objects.equals(orderByCol, "display-date")) {
 				sort = new Sort(Field.DISPLAY_DATE, Sort.LONG_TYPE, orderByAsc);
 			}
 			else {

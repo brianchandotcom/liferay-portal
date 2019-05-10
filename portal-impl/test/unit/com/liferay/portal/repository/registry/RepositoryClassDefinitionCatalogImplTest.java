@@ -25,6 +25,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -141,11 +142,13 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			RepositoryDefiner.class.getClassLoader(),
 			new Class<?>[] {RepositoryDefiner.class},
 			(proxy, method, args) -> {
-				if ("getClassName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getClassName")) {
 					return className;
 				}
 
-				if ("getRepositoryConfiguration".equals(method.getName())) {
+				if (Objects.equals(
+						method.getName(), "getRepositoryConfiguration")) {
+
 					RepositoryConfigurationBuilder
 						repositoryConfigurationBuilder =
 							new RepositoryConfigurationBuilder();
@@ -153,7 +156,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 					return repositoryConfigurationBuilder.build();
 				}
 
-				if ("isExternalRepository".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "isExternalRepository")) {
 					return external;
 				}
 

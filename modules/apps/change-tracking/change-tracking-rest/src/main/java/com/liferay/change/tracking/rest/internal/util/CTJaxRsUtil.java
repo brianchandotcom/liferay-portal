@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -110,10 +111,12 @@ public class CTJaxRsUtil {
 
 		String direction = StringUtil.toLowerCase(sortElements[1].trim());
 
-		if ("desc".equals(direction)) {
+		if (Objects.equals(direction, "desc")) {
 			asc = false;
 		}
-		else if (Validator.isNotNull(direction) && !"asc".equals(direction)) {
+		else if (Validator.isNotNull(direction) &&
+				 !Objects.equals(direction, "asc")) {
+
 			throw new IllegalArgumentException("Invalid sort direction value");
 		}
 

@@ -22,6 +22,8 @@ import java.io.IOException;
 
 import java.lang.reflect.Method;
 
+import java.util.Objects;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -50,8 +52,9 @@ public class WebSphereAsyncServletRequestFilter extends BasePortalFilter {
 
 		Class<?> clazz = servletRequest.getClass();
 
-		if ("com.ibm.ws.webcontainer.srt.SRTServletRequest".equals(
-				clazz.getName())) {
+		if (Objects.equals(
+				clazz.getName(),
+				"com.ibm.ws.webcontainer.srt.SRTServletRequest")) {
 
 			try {
 				if (_setAsyncSupportedMethod == null) {

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -222,7 +223,8 @@ public class CTDDMStructureLocalServiceWrapper
 		long journalClassNameId = _portal.getClassNameId(JournalArticle.class);
 
 		if ((ddmStructure.getClassNameId() == journalClassNameId) &&
-			"BASIC-WEB-CONTENT".equals(ddmStructure.getStructureKey())) {
+			Objects.equals(
+				ddmStructure.getStructureKey(), "BASIC-WEB-CONTENT")) {
 
 			return true;
 		}

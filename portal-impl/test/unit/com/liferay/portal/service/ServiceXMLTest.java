@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -59,7 +60,7 @@ public class ServiceXMLTest {
 
 		Path fileNamePath = path.getFileName();
 
-		if ("service.xml".equals(fileNamePath.toString())) {
+		if (Objects.equals(fileNamePath.toString(), "service.xml")) {
 			return true;
 		}
 

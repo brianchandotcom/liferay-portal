@@ -41,6 +41,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -207,9 +208,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		SessionFactory sessionFactory = super.newSessionFactory(configuration);
 
-		if (".*".equals(
+		if (Objects.equals(
 				PropsValues.
-					HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP)) {
+					HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP,
+				".*")) {
 
 			// For wildcard match, simply disable the optimization
 

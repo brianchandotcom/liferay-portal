@@ -31,6 +31,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.filter.ActionFilter;
@@ -147,15 +148,15 @@ public class InvokerFilterContainerImplTest {
 			ActionFilter.class.getClassLoader(),
 			new Class<?>[] {ActionFilter.class},
 			(proxy, method, args) -> {
-				if ("equals".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "equals")) {
 					return false;
 				}
 
-				if ("hashcode".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "hashcode")) {
 					return 0;
 				}
 
-				if ("init".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "init")) {
 					calledInit[0] = true;
 				}
 
@@ -178,11 +179,11 @@ public class InvokerFilterContainerImplTest {
 		T portletFilter = (T)ProxyUtil.newProxyInstance(
 			clazz.getClassLoader(), new Class<?>[] {clazz},
 			(proxy, method, args) -> {
-				if ("equals".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "equals")) {
 					return false;
 				}
 
-				if ("hashcode".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "hashcode")) {
 					return 0;
 				}
 

@@ -30,6 +30,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.json.JsonObject;
 
@@ -205,7 +206,7 @@ public class ConnectionService {
 
 		String tokenType = authorizationJsonObject.getString("token_type");
 
-		if (!"Bearer".equals(tokenType)) {
+		if (!Objects.equals(tokenType, "Bearer")) {
 			throw new OAuth2Exception(
 				"Unexpected token type received " + tokenType);
 		}

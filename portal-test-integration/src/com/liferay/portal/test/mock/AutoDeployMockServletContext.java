@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import javax.servlet.ServletRegistration;
 
@@ -36,12 +37,12 @@ public class AutoDeployMockServletContext extends MockServletContext {
 
 	@Override
 	public ServletRegistration getServletRegistration(String servletName) {
-		if ("Main Servlet".equals(servletName)) {
+		if (Objects.equals(servletName, "Main Servlet")) {
 			return (ServletRegistration)ProxyUtil.newProxyInstance(
 				ServletRegistration.class.getClassLoader(),
 				new Class<?>[] {ServletRegistration.class},
 				(proxy, method, args) -> {
-					if ("getMappings".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getMappings")) {
 						return Collections.singleton("/c/*");
 					}
 

@@ -20,6 +20,7 @@ import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -33,7 +34,7 @@ public class PortalExecutorManagerInvocationHandler
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) {
-		if ("getPortalExecutor".equals(method.getName())) {
+		if (Objects.equals(method.getName(), "getPortalExecutor")) {
 			return new NoticeableThreadPoolExecutor(
 				1, 1, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1),
 				Executors.defaultThreadFactory(),

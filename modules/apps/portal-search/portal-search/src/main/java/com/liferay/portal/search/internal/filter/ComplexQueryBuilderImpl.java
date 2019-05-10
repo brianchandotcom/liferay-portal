@@ -147,19 +147,19 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 		}
 
 		protected Query buildQuery(String type, String field, String value) {
-			if ("bool".equals(type)) {
+			if (Objects.equals(type, "bool")) {
 				return _queries.booleanQuery();
 			}
 
-			if ("exists".equals(type)) {
+			if (Objects.equals(type, "exists")) {
 				return _queries.exists(field);
 			}
 
-			if ("fuzzy".equals(type)) {
+			if (Objects.equals(type, "fuzzy")) {
 				return _queries.fuzzy(field, value);
 			}
 
-			if ("match".equals(type)) {
+			if (Objects.equals(type, "match")) {
 				if (Validator.isBlank(value)) {
 					return null;
 				}
@@ -167,15 +167,15 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return _queries.match(field, value);
 			}
 
-			if ("match_phrase".equals(type)) {
+			if (Objects.equals(type, "match_phrase")) {
 				return _queries.matchPhrase(field, value);
 			}
 
-			if ("match_phrase_prefix".equals(type)) {
+			if (Objects.equals(type, "match_phrase_prefix")) {
 				return _queries.matchPhrasePrefix(field, value);
 			}
 
-			if ("multi_match".equals(type)) {
+			if (Objects.equals(type, "multi_match")) {
 				if (Validator.isBlank(value)) {
 					return null;
 				}
@@ -184,11 +184,11 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 					value, SearchStringUtil.splitAndUnquote(field));
 			}
 
-			if ("prefix".equals(type)) {
+			if (Objects.equals(type, "prefix")) {
 				return _queries.prefix(field, value);
 			}
 
-			if ("query_string".equals(type)) {
+			if (Objects.equals(type, "query_string")) {
 				StringQuery stringQuery = _queries.string(value);
 
 				if (!Validator.isBlank(field)) {
@@ -198,15 +198,15 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return stringQuery;
 			}
 
-			if ("regexp".equals(type)) {
+			if (Objects.equals(type, "regexp")) {
 				return _queries.regex(field, value);
 			}
 
-			if ("script".equals(type)) {
+			if (Objects.equals(type, "script")) {
 				return _queries.script(_scripts.script(value));
 			}
 
-			if ("simple_query_string".equals(type)) {
+			if (Objects.equals(type, "simple_query_string")) {
 				SimpleStringQuery simpleStringQuery = _queries.simpleString(
 					value);
 
@@ -217,11 +217,11 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return simpleStringQuery;
 			}
 
-			if ("term".equals(type)) {
+			if (Objects.equals(type, "term")) {
 				return _queries.term(field, value);
 			}
 
-			if ("wildcard".equals(type)) {
+			if (Objects.equals(type, "wildcard")) {
 				return _queries.wildcard(field, value);
 			}
 

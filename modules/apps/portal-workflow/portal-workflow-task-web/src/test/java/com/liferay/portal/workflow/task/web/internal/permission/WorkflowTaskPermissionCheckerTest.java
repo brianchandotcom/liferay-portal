@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -236,7 +237,9 @@ public class WorkflowTaskPermissionCheckerTest {
 						AssetRenderer.class.getClassLoader(),
 						new Class<?>[] {AssetRenderer.class},
 						(proxy, method, args) -> {
-							if ("hasViewPermission".equals(method.getName())) {
+							if (Objects.equals(
+									method.getName(), "hasViewPermission")) {
+
 								return hasAssetViewPermission;
 							}
 

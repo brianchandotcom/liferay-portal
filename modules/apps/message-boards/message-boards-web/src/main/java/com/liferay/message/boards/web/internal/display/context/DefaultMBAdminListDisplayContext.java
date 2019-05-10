@@ -178,7 +178,7 @@ public class DefaultMBAdminListDisplayContext
 			String entriesNavigation = ParamUtil.getString(
 				_httpServletRequest, "entriesNavigation", "all");
 
-			if ("all".equals(entriesNavigation)) {
+			if (Objects.equals(entriesNavigation, "all")) {
 				int status = WorkflowConstants.STATUS_APPROVED;
 
 				PermissionChecker permissionChecker =
@@ -205,7 +205,7 @@ public class DefaultMBAdminListDisplayContext
 						themeDisplay.getScopeGroupId(), _categoryId,
 						queryDefinition));
 			}
-			else if ("threads".equals(entriesNavigation)) {
+			else if (Objects.equals(entriesNavigation, "threads")) {
 				int status = WorkflowConstants.STATUS_APPROVED;
 
 				PermissionChecker permissionChecker =
@@ -233,7 +233,7 @@ public class DefaultMBAdminListDisplayContext
 						themeDisplay.getScopeGroupId(), _categoryId,
 						queryDefinition));
 			}
-			else if ("categories".equals(entriesNavigation)) {
+			else if (Objects.equals(entriesNavigation, "categories")) {
 				int status = WorkflowConstants.STATUS_APPROVED;
 
 				PermissionChecker permissionChecker =

@@ -86,6 +86,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -393,7 +394,7 @@ public class WabProcessor {
 
 						Filter filter = new Filter(filterString);
 
-						if ("osgi.extender".equals(namespace) &&
+						if (Objects.equals(namespace, "osgi.extender") &&
 							filter.matchMap(arguments)) {
 
 							attrs.putTyped(

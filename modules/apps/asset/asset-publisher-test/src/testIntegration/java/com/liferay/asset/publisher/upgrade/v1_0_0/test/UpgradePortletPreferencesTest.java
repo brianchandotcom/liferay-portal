@@ -54,6 +54,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -468,8 +469,9 @@ public class UpgradePortletPreferencesTest {
 		Bundle assetPublisherWebBundle = null;
 
 		for (Bundle curBundle : bundleContext.getBundles()) {
-			if ("com.liferay.asset.publisher.web".equals(
-					curBundle.getSymbolicName())) {
+			if (Objects.equals(
+					curBundle.getSymbolicName(),
+					"com.liferay.asset.publisher.web")) {
 
 				assetPublisherWebBundle = curBundle;
 

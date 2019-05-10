@@ -26,6 +26,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class AuthVerifierPipelineTest {
 					AuthVerifier.class.getClassLoader(),
 					new Class<?>[] {AuthVerifier.class},
 					(proxy, method, args) -> {
-						if ("verify".equals(method.getName())) {
+						if (Objects.equals(method.getName(), "verify")) {
 							return authVerifierResult;
 						}
 

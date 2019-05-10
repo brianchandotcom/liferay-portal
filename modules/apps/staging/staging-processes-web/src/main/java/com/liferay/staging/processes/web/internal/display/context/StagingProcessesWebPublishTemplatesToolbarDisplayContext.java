@@ -32,6 +32,7 @@ import com.liferay.staging.processes.web.internal.search.PublishConfigurationDis
 import com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -133,7 +134,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 		searchContainer.setOrderByCol("name");
 		searchContainer.setOrderByComparator(
 			new ExportImportConfigurationNameComparator(
-				"asc".equals(getOrderByType())));
+				Objects.equals(getOrderByType(), "asc")));
 		searchContainer.setOrderByType(getOrderByType());
 
 		int exportImportConfigurationType =

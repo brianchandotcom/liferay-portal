@@ -25,6 +25,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -65,15 +66,15 @@ public class WorkflowHandlerRegistryUtilTest {
 			WorkflowHandler.class.getClassLoader(),
 			new Class<?>[] {WorkflowHandler.class},
 			(proxy, method, args) -> {
-				if ("getClassName".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "getClassName")) {
 					return _CLASS_NAME;
 				}
 
-				if ("updateStatus".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "updateStatus")) {
 					_calledWorkflowHandler = true;
 				}
 
-				if ("isScopeable".equals(method.getName())) {
+				if (Objects.equals(method.getName(), "isScopeable")) {
 					return false;
 				}
 

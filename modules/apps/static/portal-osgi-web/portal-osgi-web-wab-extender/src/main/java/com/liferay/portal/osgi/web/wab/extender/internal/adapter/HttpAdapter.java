@@ -25,6 +25,7 @@ import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.Objects;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -190,7 +191,7 @@ public class HttpAdapter {
 			if (methodName.equals("getInitParameter") && (args != null) &&
 				(args.length == 1)) {
 
-				if ("osgi.http.endpoint".equals(args[0])) {
+				if (Objects.equals(args[0], "osgi.http.endpoint")) {
 					return _servletContext.getInitParameter((String)args[0]);
 				}
 

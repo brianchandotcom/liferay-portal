@@ -255,7 +255,8 @@ public class BlogEntriesManagementToolbarDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive("title".equals(getOrderByCol()));
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "title"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol", "title");
 						dropdownItem.setLabel(
@@ -265,7 +266,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							"display-date".equals(getOrderByCol()));
+							Objects.equals(getOrderByCol(), "display-date"));
 						dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol",
 							"display-date");

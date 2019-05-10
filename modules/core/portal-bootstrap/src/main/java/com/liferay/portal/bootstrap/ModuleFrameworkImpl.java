@@ -81,6 +81,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -1637,8 +1638,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Bundle fileInstallBundle = null;
 
 		for (Bundle bundle : installedBundles) {
-			if ("org.apache.felix.fileinstall".equals(
-					bundle.getSymbolicName())) {
+			if (Objects.equals(
+					bundle.getSymbolicName(), "org.apache.felix.fileinstall")) {
 
 				fileInstallBundle = bundle;
 

@@ -49,6 +49,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executors;
@@ -131,7 +132,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				AutoBatchPreparedStatementUtilTest.class.getClassLoader(),
 				new Class<?>[] {PortalExecutorManager.class},
 				(proxy, method, args) -> {
-					if ("getPortalExecutor".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getPortalExecutor")) {
 						return new NoticeableThreadPoolExecutor(
 							1, 1, 60, TimeUnit.SECONDS,
 							new LinkedBlockingQueue<>(1),

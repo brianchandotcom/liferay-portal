@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.enterprise.inject.spi.BeanManager;
@@ -50,7 +51,7 @@ public class RegistrationUtil {
 		String portletName, Set<String> allPortletNames, BeanFilter beanFilter,
 		BeanManager beanManager, ServletContext servletContext) {
 
-		if ("*".equals(portletName)) {
+		if (Objects.equals(portletName, "*")) {
 			for (String curPortletName : allPortletNames) {
 				String portletId = _getPortletId(
 					curPortletName, servletContext.getServletContextName());

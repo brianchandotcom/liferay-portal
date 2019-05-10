@@ -21,6 +21,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.AfterClass;
@@ -41,17 +42,20 @@ public class TemplateResourceLoaderUtilTest {
 				TemplateResourceLoader.class.getClassLoader(),
 				new Class<?>[] {TemplateResourceLoader.class},
 				(proxy, method, args) -> {
-					if ("getName".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getName")) {
 						return _TEST_TEMPLATE_RESOURCE_LOADER_NAME;
 					}
 
-					if ("getTemplateResource".equals(method.getName()) &&
+					if (Objects.equals(
+							method.getName(), "getTemplateResource") &&
 						_TEST_TEMPLATE_RESOURCE_TEMPLATE_ID.equals(args[0])) {
 
 						return _TEMPLATE_RESOURCE;
 					}
 
-					if ("hasTemplateResource".equals(method.getName())) {
+					if (Objects.equals(
+							method.getName(), "hasTemplateResource")) {
+
 						return _TEST_TEMPLATE_RESOURCE_TEMPLATE_ID.equals(
 							args[0]);
 					}

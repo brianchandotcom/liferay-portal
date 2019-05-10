@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -167,7 +168,7 @@ public class SoyTestHelper {
 				SingleVMPool.class.getClassLoader(),
 				new Class<?>[] {SingleVMPool.class},
 				(proxy, method, args) -> {
-					if ("getPortalCache".equals(method.getName())) {
+					if (Objects.equals(method.getName(), "getPortalCache")) {
 						return mockPortalCache();
 					}
 

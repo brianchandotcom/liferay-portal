@@ -26,7 +26,7 @@ import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.segments.criteria.extension.sample.internal.odata.entity.KBArticleEntityModel;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.odata.search.ODataSearchHelper;
+import com.liferay.segments.odata.search.ODataSearchAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class KBArticleODataRetriever implements ODataRetriever<KBArticle> {
 			int end)
 		throws PortalException {
 
-		Hits hits = _oDataSearchHelper.search(
+		Hits hits = _oDataSearchAdapter.search(
 			companyId, filterString, KBArticle.class.getName(), _entityModel,
 			_getFilterParser(), locale, start, end);
 
@@ -63,7 +63,7 @@ public class KBArticleODataRetriever implements ODataRetriever<KBArticle> {
 			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
-		return _oDataSearchHelper.searchCount(
+		return _oDataSearchAdapter.searchCount(
 			companyId, filterString, KBArticle.class.getName(), _entityModel,
 			_getFilterParser(), locale);
 	}
@@ -100,6 +100,6 @@ public class KBArticleODataRetriever implements ODataRetriever<KBArticle> {
 	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference
-	private ODataSearchHelper _oDataSearchHelper;
+	private ODataSearchAdapter _oDataSearchAdapter;
 
 }

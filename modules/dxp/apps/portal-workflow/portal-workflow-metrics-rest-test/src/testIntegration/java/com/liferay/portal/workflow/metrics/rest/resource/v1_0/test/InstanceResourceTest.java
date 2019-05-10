@@ -79,12 +79,31 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	@Override
+	protected Instance testGetProcessInstance_addInstance() throws Exception {
+		Instance instance = randomInstance();
+
+		_process = _workflowMetricsRESTTestHelper.addProcess(
+			testGroup.getCompanyId());
+
+		instance.setProcessId(_process.getId());
+
+		instance = _workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), instance);
+
+		_instances.add(instance);
+
+		return instance;
+	}
+
+	@Override
 	protected Instance testGetProcessInstancesPage_addInstance(
 			Long processId, Instance instance)
 		throws Exception {
 
+		instance.setProcessId(processId);
+
 		instance = _workflowMetricsRESTTestHelper.addInstance(
-			testGroup.getCompanyId(), processId, instance);
+			testGroup.getCompanyId(), instance);
 
 		_instances.add(instance);
 

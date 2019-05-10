@@ -37,6 +37,7 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -55,14 +56,13 @@ public class WorkflowMetricsRESTTestHelper {
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
-	public Instance addInstance(
-			long companyId, long processId, Instance instance)
+	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			"workflow-metrics-instances",
 			_createWorkflowMetricsInstanceDocument(
-				companyId, instance.getId(), processId)) {
+				companyId, instance.getId(), instance.getProcessId())) {
 
 			{
 				setType("WorkflowMetricsInstanceType");
@@ -77,6 +77,9 @@ public class WorkflowMetricsRESTTestHelper {
 		return new Instance() {
 			{
 				id = instance.getId();
+				processId = instance.getProcessId();
+				slaStatus = instance.getSLAStatus();
+				status = instance.getStatus();
 			}
 		};
 	}
@@ -417,6 +420,7 @@ public class WorkflowMetricsRESTTestHelper {
 			_digest(companyId, processId, instanceId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", false);
+		document.addDate("createDate", new Date());
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);

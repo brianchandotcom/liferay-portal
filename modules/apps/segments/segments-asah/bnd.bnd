@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Segments Asah
+Bundle-SymbolicName: com.liferay.segments.asah
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.segments.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.segments.lang)"

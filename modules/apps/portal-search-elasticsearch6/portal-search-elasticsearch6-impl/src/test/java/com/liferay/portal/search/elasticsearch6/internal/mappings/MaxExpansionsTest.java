@@ -22,7 +22,6 @@ import com.liferay.portal.search.internal.analysis.DescriptionFieldQueryBuilder;
 import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;
 import com.liferay.portal.search.query.FuzzyQuery;
 import com.liferay.portal.search.query.MatchPhrasePrefixQuery;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseFieldQueryBuilderTestCase;
 
@@ -89,7 +88,6 @@ public class MaxExpansionsTest extends BaseFieldQueryBuilderTestCase {
 	protected IndexingFixture createIndexingFixture() throws Exception {
 		return new ElasticsearchIndexingFixture() {
 			{
-				setCompanyId(BaseIndexingTestCase.COMPANY_ID);
 				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
 				setLiferayMappingsAddedToIndex(true);
 			}

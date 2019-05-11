@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.persistence.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.listener.ConfigurationModelListenerProvider;
@@ -713,17 +714,21 @@ public class ConfigurationPersistenceManager
 
 	private void _verifyConfigurationsBundleLocation() {
 		_verifyConfigurations(
-			"select configurationId, dictionary from Configuration_ where " +
-				"dictionary like '%felix.fileinstall.filename=%' and " +
-					"dictionary not like '%service.bundleLocation=\"%'",
+			StringBundler.concat(
+				"select configurationId, dictionary from Configuration_ where ",
+				"dictionary like '%felix.fileinstall.filename=%' and ",
+				"dictionary not like '%",
+				ConfigurationAdmin.SERVICE_BUNDLELOCATION, "=\"%'"),
 			dictionary -> dictionary.put(
 				ConfigurationAdmin.SERVICE_BUNDLELOCATION, "?"));
 	}
 
 	private void _verifyConfigurationsFileName() {
 		_verifyConfigurations(
-			"select configurationId, dictionary from Configuration_ where " +
-				"dictionary like '%felix.fileinstall.filename=\"file:%'",
+			StringBundler.concat(
+				"select configurationId, dictionary from Configuration_ where ",
+				"dictionary like '%", _FELIX_FILE_INSTALL_FILENAME,
+				"=\"file:%'"),
 			dictionary -> {
 				String fileName = (String)dictionary.get(
 					_FELIX_FILE_INSTALL_FILENAME);

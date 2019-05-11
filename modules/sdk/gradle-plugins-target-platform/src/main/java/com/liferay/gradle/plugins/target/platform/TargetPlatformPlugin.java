@@ -24,6 +24,7 @@ import groovy.lang.Closure;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -45,8 +46,11 @@ import org.gradle.api.tasks.bundling.Jar;
 /**
  * @author Gregory Amerson
  * @author Andrea Di Giorgi
+ * @author Raymond Augé
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
+
+	public static final String PLATFORM_BNDRUN = "platform.bndrun";
 
 	public static final String PLUGIN_NAME = "targetPlatform";
 
@@ -73,9 +77,21 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		final Configuration targetPlatformDistroConfiguration =
 			_addConfigurationTargetPlatformDistro(project);
 
-		ResolveTask resolveTask = _addTaskResolve(project);
+		Logger logger = project.getLogger();
 
-		_configureTaskResolve(project, resolveTask);
+		File bndrunFile = project.file(PLATFORM_BNDRUN);
+
+		if (bndrunFile.exists()) {
+			ResolveTask resolveTask = _addTaskResolve(project);
+
+			_configureTaskResolve(project, resolveTask, bndrunFile);
+		}
+		else {
+			logger.info(
+				"Explicitly excluding {} from resolution because there is " +
+					"no " + PLATFORM_BNDRUN + "  file at the root of the " +
+						"gradle workspace", project);
+		}
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -154,8 +170,10 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		resolveTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		resolveTask.setDescription(
-			"Checks whether a set of OSGi bundles can be found to meet all " +
-				"the requirements of the current project.");
+			"Checks whether the project and it's runtime dependencies will " +
+				"have their requirements met when installed into the " +
+					"Liferay portal instance defined by the configured " +
+						"distro.");
 		resolveTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		return resolveTask;
@@ -196,10 +214,23 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		spec = targetPlatformExtension.getResolveOnlyIf();
 
+		Project rootProject = subproject.getRootProject();
+
+		File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
+
+		if (!bndrunFile.exists()) {
+			logger.info(
+				"Explicitly excluding {} from resolution because there is " +
+					"no " + PLATFORM_BNDRUN + "  file at the root of the " +
+						"gradle workspace", subproject);
+
+			return;
+		}
+
 		if (spec.isSatisfiedBy(subproject)) {
 			ResolveTask resolveTask = _addTaskResolve(subproject);
 
-			_configureTaskResolve(subproject, resolveTask);
+			_configureTaskResolve(subproject, resolveTask, bndrunFile);
 		}
 		else if (logger.isInfoEnabled()) {
 			logger.info("Explicitly excluding {} from resolution", subproject);
@@ -207,32 +238,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskResolve(
-		Project project, ResolveTask resolveTask) {
+		Project project, ResolveTask resolveTask, File bndrunFile) {
 
-		/**
-		 * bundle {
-		 includeTransitiveDependencies true
-		 buildPathConfigurations 'compileClasspath'
-		 instruction "-fixupmessages.extra",
-		 '"annotations are deprecated";is:=warning',
-		 '"In component <name not yet determined>...";is:=warning',
-		 '"No interface specified on ...";is:=warning',
-		 '"Unable to determine whether the annotation ...";is:=warning'
-		 instruction "-check", "EXPORTS"
-		 }
-		 */
-
-		/**
-		 * task resolve(type: Resolve, dependsOn: "deploy", overwrite: true) {
-		 description = "Resolve a project against the Liferay Distro"
-		 group = "verification"
-		 bndrun = file("${rootProject.projectDir}/bnd.bndrun")
-		 failOnChanges false
-		 reportOptional false
-		 bundles = [project.jar.archivePath, project.configurations.default]
-		 project.ext.liferayDistro = "${rootProject.configurations.targetPlatformDistro.files.first()};version=file" <-----
-		 }
-		 */
 		TaskContainer taskContainer = project.getTasks();
 
 		resolveTask.dependsOn(taskContainer.findByName("assemble"));
@@ -240,7 +247,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		resolveTask.setDescription(
 			"Resolve a project against the Liferay distro");
 		resolveTask.setGroup("verification");
-		resolveTask.setBndrunFile(project.file(""));
+		resolveTask.setBndrunFile(bndrunFile);
 		resolveTask.setFailOnChanges(false);
 		resolveTask.setReportOptional(false);
 	}

@@ -19,7 +19,6 @@ import com.liferay.gradle.plugins.target.platform.TargetPlatformIDEPlugin;
 import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
-import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.util.Validator;
@@ -35,6 +34,7 @@ import org.gradle.api.specs.Spec;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Raymond Augé
  */
 public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
@@ -55,7 +55,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
 
-		_configureConfigurationBundles(project);
 		_configureTargetPlatform(project);
 
 		String normalizedTargetPlatformVersion =
@@ -134,19 +133,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureConfigurationBundles(Project project) {
-		Configuration configuration = GradleUtil.getConfiguration(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BUNDLES_CONFIGURATION_NAME);
-
-		Configuration providedModulesConfiguration =
-			GradleUtil.getConfiguration(
-				project,
-				RootProjectConfigurator.PROVIDED_MODULES_CONFIGURATION_NAME);
-
-		configuration.extendsFrom(providedModulesConfiguration);
 	}
 
 	private void _configureTargetPlatform(Project project) {

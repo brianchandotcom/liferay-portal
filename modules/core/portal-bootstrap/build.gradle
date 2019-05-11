@@ -27,8 +27,8 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 
 		properties liferayOSGi.bundleDefaultInstructions
 
-		property "-check", "imports"
-		property "-fixupmessages", '"Classpath is empty. Private-Package ...";is:=ignore'
+		property "-check", "IMPORTS"
+		property "-fixupmessages.liferay.services", "This bundle contains Liferay services"
 		property "-include", "system.packages.extra.bnd"
 
 		property "Bundle-SymbolicName", {

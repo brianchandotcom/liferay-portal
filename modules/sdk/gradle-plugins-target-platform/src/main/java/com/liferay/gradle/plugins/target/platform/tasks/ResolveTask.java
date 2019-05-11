@@ -26,6 +26,7 @@ import aQute.bnd.service.RepositoryPlugin;
 import aQute.service.reporter.Report;
 
 import biz.aQute.resolve.Bndrun;
+import biz.aQute.resolve.ResolveProcess;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 
@@ -54,6 +55,7 @@ import org.osgi.service.resolver.ResolutionException;
 /**
  * @author Gregory Amerson
  * @author Andrea Di Giorgi
+ * @author Raymond Augé
  */
 public class ResolveTask extends DefaultTask {
 
@@ -142,20 +144,20 @@ public class ResolveTask extends DefaultTask {
 					bndrun.getPropertiesFile() + " has workspace errors");
 			}
 
-			Processor parentProcessor = bndrun.getParent();
-
 			try {
 				Properties gradleProperties = new PropertiesWrapper();
 
 				gradleProperties.put("project", project);
-				gradleProperties.put(
-					"targetPlatformDistro",
-					_distroFileCollection.getSingleFile());
+
+				String distroReference = getDistroFile().getAbsolutePath() + ";version=file";
+
+				gradleProperties.put("targetPlatformDistro", distroReference);
+
 				gradleProperties.put("task", this);
 
 				Processor processor = new ProcessorWrapper(gradleProperties);
 
-				processor.setParent(parentProcessor);
+				processor.setParent(bndrun.getParent());
 
 				bndrun.setParent(processor);
 
@@ -174,10 +176,12 @@ public class ResolveTask extends DefaultTask {
 					));
 			}
 			catch (ResolutionException re) {
+				logger.error(ResolveProcess.format(re, isReportOptional()));
+				throw new GradleException(
+					bndrun.getPropertiesFile() + " resolution exception", re);
 			}
 			finally {
 				_logReport(bndrun, logger);
-				bndrun.setParent(parentProcessor);
 			}
 
 			if (!bndrun.isOk()) {

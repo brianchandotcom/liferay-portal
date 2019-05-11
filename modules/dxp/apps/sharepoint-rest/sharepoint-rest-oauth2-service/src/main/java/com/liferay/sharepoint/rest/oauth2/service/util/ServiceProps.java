@@ -14,13 +14,13 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.util;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 
 import java.util.Properties;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Adolfo Pérez

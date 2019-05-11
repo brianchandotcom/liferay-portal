@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -62,6 +60,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the kaleo process local service.

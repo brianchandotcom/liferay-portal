@@ -14,10 +14,10 @@
 
 package com.liferay.saml.persistence.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the SamlIdpSpSession service. Represents a row in the &quot;SamlIdpSpSession&quot; database table, with each column mapped to a property of this class.

@@ -14,11 +14,11 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the sharepoint o auth2 token entry service.

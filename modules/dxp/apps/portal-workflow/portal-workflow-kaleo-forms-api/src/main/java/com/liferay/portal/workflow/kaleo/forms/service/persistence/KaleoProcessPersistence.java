@@ -14,11 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the kaleo process service.

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.reports.engine.console.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the source service.

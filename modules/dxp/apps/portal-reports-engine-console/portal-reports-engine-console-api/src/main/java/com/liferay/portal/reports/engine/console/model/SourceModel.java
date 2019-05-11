@@ -14,8 +14,6 @@
 
 package com.liferay.portal.reports.engine.console.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -26,6 +24,8 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the Source service. Represents a row in the &quot;Reports_Source&quot; database table, with each column mapped to a property of this class.

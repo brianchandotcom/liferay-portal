@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -44,6 +42,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the kaleo process link service.

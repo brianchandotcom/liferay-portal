@@ -14,8 +14,6 @@
 
 package com.liferay.oauth.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth.exception.NoSuchUserException;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.model.impl.OAuthUserImpl;
@@ -49,6 +47,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the o auth user service.

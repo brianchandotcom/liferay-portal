@@ -14,8 +14,6 @@
 
 package com.liferay.oauth.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.oauth.model.OAuthApplication;
@@ -47,6 +45,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the OAuthApplication service. Represents a row in the &quot;OAuth_OAuthApplication&quot; database table, with each column mapped to a property of this class.

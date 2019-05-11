@@ -14,11 +14,11 @@
 
 package com.liferay.portal.resiliency.spi.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the spi definition service.

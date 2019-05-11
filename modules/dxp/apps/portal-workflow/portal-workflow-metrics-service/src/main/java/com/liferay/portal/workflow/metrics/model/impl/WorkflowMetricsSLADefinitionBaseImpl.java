@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the WorkflowMetricsSLADefinition service. Represents a row in the &quot;WorkflowMetricsSLADefinition&quot; database table, with each column mapped to a property of this class.

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the workflow metrics sla definition service.

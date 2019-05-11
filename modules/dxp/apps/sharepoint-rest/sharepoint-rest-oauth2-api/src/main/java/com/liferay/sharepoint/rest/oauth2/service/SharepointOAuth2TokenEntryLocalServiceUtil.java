@@ -15,7 +15,6 @@
 package com.liferay.sharepoint.rest.oauth2.service;
 
 import org.osgi.annotation.versioning.ProviderType;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;

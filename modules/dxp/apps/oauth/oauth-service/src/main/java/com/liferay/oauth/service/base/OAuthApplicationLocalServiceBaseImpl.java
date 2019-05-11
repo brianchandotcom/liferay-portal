@@ -14,8 +14,6 @@
 
 package com.liferay.oauth.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.oauth.service.persistence.OAuthApplicationPersistence;
@@ -52,6 +50,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the o auth application local service.

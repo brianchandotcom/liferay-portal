@@ -14,11 +14,11 @@
 
 package com.liferay.portal.reports.engine.console.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the entry service.

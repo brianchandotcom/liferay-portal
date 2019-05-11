@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.forms.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the KaleoProcessLink service. Represents a row in the &quot;KaleoProcessLink&quot; database table, with each column mapped to a property of this class.

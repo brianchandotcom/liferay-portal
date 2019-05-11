@@ -14,8 +14,6 @@
 
 package com.liferay.saml.persistence.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -37,6 +35,8 @@ import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for SamlSpAuthRequest. Methods of this

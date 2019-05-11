@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.forms.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -25,6 +23,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing KaleoProcessLink in entity cache.

@@ -14,13 +14,13 @@
 
 package com.liferay.sharepoint.rest.oauth2.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * This class is used by SOAP remote services.

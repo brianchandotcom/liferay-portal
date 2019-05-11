@@ -14,13 +14,13 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the saml sp auth request service.

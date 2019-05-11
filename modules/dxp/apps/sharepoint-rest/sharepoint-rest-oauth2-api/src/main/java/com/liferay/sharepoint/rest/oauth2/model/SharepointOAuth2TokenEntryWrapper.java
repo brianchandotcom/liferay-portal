@@ -14,14 +14,14 @@
 
 package com.liferay.sharepoint.rest.oauth2.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * <p>

@@ -14,8 +14,6 @@
 
 package com.liferay.oauth.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -39,6 +37,8 @@ import java.io.Serializable;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for OAuthApplication. Methods of this

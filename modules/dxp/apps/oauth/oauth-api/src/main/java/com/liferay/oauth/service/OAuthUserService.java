@@ -14,8 +14,6 @@
 
 package com.liferay.oauth.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,6 +24,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for OAuthUser. Methods of this

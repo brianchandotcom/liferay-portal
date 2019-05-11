@@ -14,13 +14,13 @@
 
 package com.liferay.oauth.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth.service.OAuthUserServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

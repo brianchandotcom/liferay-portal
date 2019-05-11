@@ -14,9 +14,9 @@
 
 package com.liferay.portal.resiliency.spi.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service utility for SPIDefinition. This utility wraps

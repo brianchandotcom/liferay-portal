@@ -4,9 +4,9 @@ package ${apiPackagePath}.model;
 	import ${apiPackagePath}.service.persistence.${entity.name}PK;
 </#if>
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.sql.Blob;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The Blob model class for lazy loading the ${column.name} column in ${entity.name}.

@@ -2,14 +2,14 @@ package ${packagePath}.service.http;
 
 import ${apiPackagePath}.model.${entity.name};
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author ${author}

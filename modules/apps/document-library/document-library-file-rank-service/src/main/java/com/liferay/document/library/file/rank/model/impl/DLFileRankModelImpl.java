@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.file.rank.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.model.DLFileRankModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -43,6 +41,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the DLFileRank service. Represents a row in the &quot;DLFileRank&quot; database table, with each column mapped to a property of this class.

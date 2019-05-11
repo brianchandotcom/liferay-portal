@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
@@ -40,6 +38,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for OAuth2Authorization. Methods of this

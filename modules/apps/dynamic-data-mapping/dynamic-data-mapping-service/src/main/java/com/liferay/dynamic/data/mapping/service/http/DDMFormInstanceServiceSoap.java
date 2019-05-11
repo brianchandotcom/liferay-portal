@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,6 +23,8 @@ import java.rmi.RemoteException;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

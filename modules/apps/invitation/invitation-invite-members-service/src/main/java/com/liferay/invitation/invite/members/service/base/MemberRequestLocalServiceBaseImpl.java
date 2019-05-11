@@ -14,8 +14,6 @@
 
 package com.liferay.invitation.invite.members.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence;
@@ -52,6 +50,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the member request local service.

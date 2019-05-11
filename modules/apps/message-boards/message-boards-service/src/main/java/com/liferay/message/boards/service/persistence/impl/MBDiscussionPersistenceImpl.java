@@ -14,8 +14,6 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchDiscussionException;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.impl.MBDiscussionImpl;
@@ -54,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the message boards discussion service.

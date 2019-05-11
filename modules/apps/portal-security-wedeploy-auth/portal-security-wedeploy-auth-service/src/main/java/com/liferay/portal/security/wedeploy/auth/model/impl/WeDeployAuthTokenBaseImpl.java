@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.wedeploy.auth.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the WeDeployAuthToken service. Represents a row in the &quot;WeDeployAuth_WeDeployAuthToken&quot; database table, with each column mapped to a property of this class.

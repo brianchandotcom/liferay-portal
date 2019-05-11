@@ -14,8 +14,6 @@
 
 package com.liferay.social.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -25,6 +23,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestFeedEntry;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for SocialRequestInterpreter. Methods of this

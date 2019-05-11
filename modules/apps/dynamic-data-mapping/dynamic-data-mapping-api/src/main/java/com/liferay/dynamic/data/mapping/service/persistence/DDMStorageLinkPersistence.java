@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the ddm storage link service.

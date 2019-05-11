@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the Team service. Represents a row in the &quot;Team&quot; database table, with each column mapped to a property of this class.

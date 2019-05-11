@@ -14,8 +14,6 @@
 
 package com.liferay.opensocial.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.opensocial.exception.NoSuchOAuthConsumerException;
 import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.opensocial.model.impl.OAuthConsumerImpl;
@@ -51,6 +49,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the o auth consumer service.

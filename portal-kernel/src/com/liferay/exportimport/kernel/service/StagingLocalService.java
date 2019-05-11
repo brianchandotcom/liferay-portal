@@ -14,8 +14,6 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for Staging. Methods of this

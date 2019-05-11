@@ -14,8 +14,6 @@
 
 package com.liferay.changeset.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.model.impl.ChangesetEntryImpl;
@@ -54,6 +52,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

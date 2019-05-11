@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.announcements.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
@@ -46,6 +44,8 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the announcements flag service.

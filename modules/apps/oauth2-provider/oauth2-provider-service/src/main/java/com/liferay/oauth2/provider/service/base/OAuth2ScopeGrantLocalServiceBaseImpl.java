@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
@@ -50,6 +48,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

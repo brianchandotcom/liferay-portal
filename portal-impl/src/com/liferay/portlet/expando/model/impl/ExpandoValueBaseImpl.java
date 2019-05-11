@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.expando.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.

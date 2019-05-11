@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalService;
 import com.liferay.mail.reader.service.persistence.AccountPersistence;
@@ -53,6 +51,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the account local service.

@@ -14,13 +14,13 @@
 
 package com.liferay.segments.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.segments.service.SegmentsEntryRelServiceUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

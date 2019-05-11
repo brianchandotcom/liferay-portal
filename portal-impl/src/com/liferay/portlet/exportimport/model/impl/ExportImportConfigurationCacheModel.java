@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.exportimport.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
@@ -28,6 +26,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing ExportImportConfiguration in entity cache.

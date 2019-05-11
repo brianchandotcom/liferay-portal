@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.exception.NoSuchEntryException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -63,6 +61,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

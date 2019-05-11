@@ -14,11 +14,11 @@
 
 package com.liferay.portal.background.task.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the background task service.

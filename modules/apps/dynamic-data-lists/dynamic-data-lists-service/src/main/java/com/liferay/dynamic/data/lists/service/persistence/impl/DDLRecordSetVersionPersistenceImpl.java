@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.lists.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionImpl;
@@ -49,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the ddl record set version service.

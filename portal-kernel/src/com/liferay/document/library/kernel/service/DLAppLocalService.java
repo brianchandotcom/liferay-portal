@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.File;
 import java.io.InputStream;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLApp. Methods of this

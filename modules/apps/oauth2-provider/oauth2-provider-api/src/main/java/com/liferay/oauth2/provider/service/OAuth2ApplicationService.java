@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.InputStream;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for OAuth2Application. Methods of this

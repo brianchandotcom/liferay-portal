@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the LocalizedEntryLocalization service. Represents a row in the &quot;LocalizedEntryLocalization&quot; database table, with each column mapped to a property of this class.

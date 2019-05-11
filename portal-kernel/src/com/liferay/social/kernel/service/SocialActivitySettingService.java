@@ -14,8 +14,6 @@
 
 package com.liferay.social.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,6 +28,8 @@ import com.liferay.social.kernel.model.SocialActivityDefinition;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for SocialActivitySetting. Methods of this

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.background.task.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -30,6 +28,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing BackgroundTask in entity cache.

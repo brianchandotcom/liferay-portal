@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryFinder;
@@ -61,6 +59,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the asset tag local service.

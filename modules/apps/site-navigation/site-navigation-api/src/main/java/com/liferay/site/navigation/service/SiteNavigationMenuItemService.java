@@ -14,8 +14,6 @@
 
 package com.liferay.site.navigation.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for SiteNavigationMenuItem. Methods of this

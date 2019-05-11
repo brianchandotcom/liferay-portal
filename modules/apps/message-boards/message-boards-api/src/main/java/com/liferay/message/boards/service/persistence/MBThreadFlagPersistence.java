@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchThreadFlagException;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the message boards thread flag service.

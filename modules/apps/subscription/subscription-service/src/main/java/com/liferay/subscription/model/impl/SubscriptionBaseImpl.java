@@ -14,10 +14,10 @@
 
 package com.liferay.subscription.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Subscription service. Represents a row in the &quot;Subscription&quot; database table, with each column mapped to a property of this class.

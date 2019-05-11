@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * This class is used by SOAP remote services.

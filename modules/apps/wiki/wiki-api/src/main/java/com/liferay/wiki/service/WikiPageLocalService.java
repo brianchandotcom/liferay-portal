@@ -14,8 +14,6 @@
 
 package com.liferay.wiki.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -52,6 +50,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.portlet.PortletURL;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for WikiPage. Methods of this

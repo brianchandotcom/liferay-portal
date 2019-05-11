@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
@@ -54,6 +52,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

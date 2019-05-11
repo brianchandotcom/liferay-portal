@@ -14,8 +14,6 @@
 
 package com.liferay.journal.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for JournalFolder. Methods of this

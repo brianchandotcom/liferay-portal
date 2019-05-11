@@ -14,11 +14,11 @@
 
 package com.liferay.ratings.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the ratings stats service.

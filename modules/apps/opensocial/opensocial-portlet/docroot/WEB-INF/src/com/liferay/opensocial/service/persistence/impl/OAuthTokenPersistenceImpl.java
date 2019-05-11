@@ -14,8 +14,6 @@
 
 package com.liferay.opensocial.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.opensocial.exception.NoSuchOAuthTokenException;
 import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.opensocial.model.impl.OAuthTokenImpl;
@@ -51,6 +49,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the o auth token service.

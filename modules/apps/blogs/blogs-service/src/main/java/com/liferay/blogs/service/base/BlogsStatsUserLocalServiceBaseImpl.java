@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.service.persistence.BlogsEntryFinder;
@@ -51,6 +49,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

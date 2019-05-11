@@ -14,11 +14,11 @@
 
 package com.liferay.mail.reader.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.exception.NoSuchMessageException;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the message service.

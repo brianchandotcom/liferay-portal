@@ -14,10 +14,10 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the CTProcess service. Represents a row in the &quot;CTProcess&quot; database table, with each column mapped to a property of this class.

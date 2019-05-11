@@ -14,8 +14,6 @@
 
 package com.liferay.segments.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -30,6 +28,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.model.SegmentsEntryRel;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for SegmentsEntryRel. Methods of this

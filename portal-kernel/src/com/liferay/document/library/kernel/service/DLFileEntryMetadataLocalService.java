@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -40,6 +38,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLFileEntryMetadata. Methods of this

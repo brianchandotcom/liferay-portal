@@ -14,8 +14,6 @@
 
 package com.liferay.adaptive.media.image.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence;
@@ -48,6 +46,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

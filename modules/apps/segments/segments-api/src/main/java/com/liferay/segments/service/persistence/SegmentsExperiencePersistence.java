@@ -14,11 +14,11 @@
 
 package com.liferay.segments.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the segments experience service.

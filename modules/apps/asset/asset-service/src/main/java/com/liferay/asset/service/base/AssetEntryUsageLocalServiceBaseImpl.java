@@ -14,8 +14,6 @@
 
 package com.liferay.asset.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.asset.service.persistence.AssetEntryUsagePersistence;
@@ -48,6 +46,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

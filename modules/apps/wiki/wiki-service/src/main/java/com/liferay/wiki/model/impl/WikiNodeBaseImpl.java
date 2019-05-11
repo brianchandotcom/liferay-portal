@@ -14,10 +14,10 @@
 
 package com.liferay.wiki.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the WikiNode service. Represents a row in the &quot;WikiNode&quot; database table, with each column mapped to a property of this class.

@@ -14,10 +14,10 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the CTEntryAggregate service. Represents a row in the &quot;CTEntryAggregate&quot; database table, with each column mapped to a property of this class.

@@ -14,10 +14,10 @@
 
 package com.liferay.adaptive.media.image.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the AMImageEntry service. Represents a row in the &quot;AMImageEntry&quot; database table, with each column mapped to a property of this class.

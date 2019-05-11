@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetTagStats;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
@@ -25,6 +23,8 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing AssetTagStats in entity cache.

@@ -14,10 +14,10 @@
 
 package com.liferay.asset.tag.stats.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the AssetTagStats service. Represents a row in the &quot;AssetTagStats&quot; database table, with each column mapped to a property of this class.

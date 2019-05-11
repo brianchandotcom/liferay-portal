@@ -14,11 +14,11 @@
 
 package com.liferay.oauth2.provider.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the o auth2 application service.

@@ -14,10 +14,10 @@
 
 package com.liferay.powwow.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the PowwowParticipant service. Represents a row in the &quot;PowwowParticipant&quot; database table, with each column mapped to a property of this class.

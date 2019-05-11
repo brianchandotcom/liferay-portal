@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.model.Attachment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -38,6 +36,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for Attachment. Methods of this

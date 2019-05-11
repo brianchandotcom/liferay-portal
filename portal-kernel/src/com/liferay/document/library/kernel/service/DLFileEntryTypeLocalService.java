@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -47,6 +45,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLFileEntryType. Methods of this

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.model.UserIdMapper;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the user ID mapper service.

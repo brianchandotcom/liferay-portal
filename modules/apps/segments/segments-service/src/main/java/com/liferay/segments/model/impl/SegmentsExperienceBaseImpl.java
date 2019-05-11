@@ -14,10 +14,10 @@
 
 package com.liferay.segments.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the SegmentsExperience service. Represents a row in the &quot;SegmentsExperience&quot; database table, with each column mapped to a property of this class.

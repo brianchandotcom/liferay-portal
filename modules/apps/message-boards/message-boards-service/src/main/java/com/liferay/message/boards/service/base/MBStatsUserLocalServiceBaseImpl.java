@@ -14,8 +14,6 @@
 
 package com.liferay.message.boards.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
@@ -54,6 +52,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the message boards stats user local service.

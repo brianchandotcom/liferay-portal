@@ -14,13 +14,13 @@
 
 package com.liferay.microblogs.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.microblogs.exception.NoSuchEntryException;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the microblogs entry service.

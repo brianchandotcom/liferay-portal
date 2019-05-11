@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.exception.NoSuchMessageException;
 import com.liferay.mail.reader.model.Message;
 import com.liferay.mail.reader.model.impl.MessageImpl;
@@ -52,6 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the message service.

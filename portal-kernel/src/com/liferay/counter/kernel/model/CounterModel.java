@@ -14,10 +14,10 @@
 
 package com.liferay.counter.kernel.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.

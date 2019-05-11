@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.exception.NoSuchAttachmentException;
 import com.liferay.mail.reader.model.Attachment;
 import com.liferay.mail.reader.model.impl.AttachmentImpl;
@@ -48,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the attachment service.

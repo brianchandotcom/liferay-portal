@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.exception.NoSuchFileVersionPreviewException;
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the dl file version preview service.

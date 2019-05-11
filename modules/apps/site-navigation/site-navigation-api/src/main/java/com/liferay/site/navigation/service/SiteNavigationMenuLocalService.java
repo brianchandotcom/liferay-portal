@@ -14,8 +14,6 @@
 
 package com.liferay.site.navigation.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -41,6 +39,8 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for SiteNavigationMenu. Methods of this

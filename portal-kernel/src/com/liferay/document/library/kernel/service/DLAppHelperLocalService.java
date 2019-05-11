@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -36,6 +34,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLAppHelper. Methods of this

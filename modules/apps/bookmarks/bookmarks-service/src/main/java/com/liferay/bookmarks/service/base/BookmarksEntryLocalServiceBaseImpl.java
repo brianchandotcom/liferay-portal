@@ -14,8 +14,6 @@
 
 package com.liferay.bookmarks.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryFinder;
@@ -66,6 +64,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

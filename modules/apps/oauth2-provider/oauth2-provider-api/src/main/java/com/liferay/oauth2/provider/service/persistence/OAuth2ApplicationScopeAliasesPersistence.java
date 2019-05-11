@@ -14,11 +14,11 @@
 
 package com.liferay.oauth2.provider.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the o auth2 application scope aliases service.

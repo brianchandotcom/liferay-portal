@@ -14,8 +14,6 @@
 
 package com.liferay.asset.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -42,6 +40,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for AssetEntry. Methods of this

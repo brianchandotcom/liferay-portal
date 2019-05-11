@@ -14,8 +14,6 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchBanException;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.model.impl.MBBanImpl;
@@ -54,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the message boards ban service.

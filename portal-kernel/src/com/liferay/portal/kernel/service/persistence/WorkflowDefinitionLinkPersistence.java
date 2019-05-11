@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the workflow definition link service.

@@ -14,8 +14,6 @@
 
 package com.liferay.chat.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.service.EntryLocalService;
 import com.liferay.chat.service.persistence.EntryFinder;
@@ -51,6 +49,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

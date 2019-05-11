@@ -14,10 +14,10 @@
 
 package com.liferay.wiki.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the WikiPageResource service. Represents a row in the &quot;WikiPageResource&quot; database table, with each column mapped to a property of this class.

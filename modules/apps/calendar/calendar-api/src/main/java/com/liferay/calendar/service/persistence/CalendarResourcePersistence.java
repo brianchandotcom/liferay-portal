@@ -14,11 +14,11 @@
 
 package com.liferay.calendar.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the calendar resource service.

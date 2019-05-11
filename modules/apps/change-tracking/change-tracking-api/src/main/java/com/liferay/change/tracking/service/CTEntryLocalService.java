@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -39,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for CTEntry. Methods of this

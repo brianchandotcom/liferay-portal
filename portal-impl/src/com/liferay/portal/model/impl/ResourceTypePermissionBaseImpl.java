@@ -14,10 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the ResourceTypePermission service. Represents a row in the &quot;ResourceTypePermission&quot; database table, with each column mapped to a property of this class.

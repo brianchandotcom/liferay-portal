@@ -14,8 +14,6 @@
 
 package com.liferay.chat.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.chat.exception.NoSuchEntryException;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.impl.EntryImpl;
@@ -50,6 +48,7 @@ import java.util.Objects;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

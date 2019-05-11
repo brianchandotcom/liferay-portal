@@ -14,11 +14,11 @@
 
 package com.liferay.powwow.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.powwow.exception.NoSuchServerException;
 import com.liferay.powwow.model.PowwowServer;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the powwow server service.

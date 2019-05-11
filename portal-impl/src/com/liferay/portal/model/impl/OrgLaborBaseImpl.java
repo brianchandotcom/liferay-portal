@@ -14,10 +14,10 @@
 
 package com.liferay.portal.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the OrgLabor service. Represents a row in the &quot;OrgLabor&quot; database table, with each column mapped to a property of this class.

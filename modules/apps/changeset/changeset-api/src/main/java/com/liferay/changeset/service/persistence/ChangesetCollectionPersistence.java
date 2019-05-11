@@ -14,11 +14,11 @@
 
 package com.liferay.changeset.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the changeset collection service.

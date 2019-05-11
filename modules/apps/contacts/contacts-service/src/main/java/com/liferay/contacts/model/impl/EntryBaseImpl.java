@@ -14,10 +14,10 @@
 
 package com.liferay.contacts.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Entry service. Represents a row in the &quot;Contacts_Entry&quot; database table, with each column mapped to a property of this class.

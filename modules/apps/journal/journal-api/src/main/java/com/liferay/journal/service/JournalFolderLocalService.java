@@ -14,8 +14,6 @@
 
 package com.liferay.journal.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.exception.NoSuchFolderException;
@@ -44,6 +42,8 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for JournalFolder. Methods of this

@@ -14,9 +14,9 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service utility for ExportImportConfiguration. This utility wraps

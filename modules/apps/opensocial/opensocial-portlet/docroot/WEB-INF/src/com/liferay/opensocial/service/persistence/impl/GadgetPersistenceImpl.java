@@ -14,8 +14,6 @@
 
 package com.liferay.opensocial.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.opensocial.exception.NoSuchGadgetException;
 import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.model.impl.GadgetImpl;
@@ -57,6 +55,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the gadget service.

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagModel;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagSoap;
@@ -48,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the AnnouncementsFlag service. Represents a row in the &quot;AnnouncementsFlag&quot; database table, with each column mapped to a property of this class.

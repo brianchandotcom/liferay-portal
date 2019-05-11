@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
 import com.liferay.portal.kernel.model.UserTrackerPath;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the user tracker path service.

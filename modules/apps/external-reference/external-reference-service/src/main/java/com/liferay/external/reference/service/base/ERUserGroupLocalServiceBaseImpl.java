@@ -14,8 +14,6 @@
 
 package com.liferay.external.reference.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.external.reference.service.ERUserGroupLocalService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the er user group local service.

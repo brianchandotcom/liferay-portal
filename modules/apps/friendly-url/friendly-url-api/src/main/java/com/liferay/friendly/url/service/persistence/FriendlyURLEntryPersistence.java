@@ -14,11 +14,11 @@
 
 package com.liferay.friendly.url.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the friendly url entry service.

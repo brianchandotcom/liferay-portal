@@ -14,11 +14,11 @@
 
 package com.liferay.asset.category.property.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.category.property.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the asset category property service.

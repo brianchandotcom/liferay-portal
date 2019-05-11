@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.BaseModel;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the DLFileVersionPreview service. Represents a row in the &quot;DLFileVersionPreview&quot; database table, with each column mapped to a property of this class.

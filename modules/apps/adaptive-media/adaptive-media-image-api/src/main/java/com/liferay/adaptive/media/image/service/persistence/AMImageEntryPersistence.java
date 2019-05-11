@@ -14,11 +14,11 @@
 
 package com.liferay.adaptive.media.image.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.adaptive.media.image.exception.NoSuchAMImageEntryException;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the am image entry service.

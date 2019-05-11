@@ -14,8 +14,6 @@
 
 package com.liferay.adaptive.media.image.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -39,6 +37,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for AMImageEntry. Methods of this

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.exception.NoSuchTagStatsException;
 import com.liferay.asset.kernel.model.AssetTagStats;
 import com.liferay.asset.kernel.service.persistence.AssetTagStatsPersistence;
@@ -46,6 +44,8 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the asset tag stats service.

@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.opener.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -37,6 +35,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLOpenerFileEntryReference. Methods of this

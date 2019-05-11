@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the UserGroupRole service. Represents a row in the &quot;UserGroupRole&quot; database table, with each column mapped to a property of this class.

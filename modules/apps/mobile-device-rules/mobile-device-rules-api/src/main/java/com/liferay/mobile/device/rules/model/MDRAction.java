@@ -14,12 +14,12 @@
 
 package com.liferay.mobile.device.rules.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model interface for the MDRAction service. Represents a row in the &quot;MDRAction&quot; database table, with each column mapped to a property of this class.

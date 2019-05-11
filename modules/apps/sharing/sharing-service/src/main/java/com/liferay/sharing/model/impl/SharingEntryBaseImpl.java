@@ -14,10 +14,10 @@
 
 package com.liferay.sharing.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the SharingEntry service. Represents a row in the &quot;SharingEntry&quot; database table, with each column mapped to a property of this class.

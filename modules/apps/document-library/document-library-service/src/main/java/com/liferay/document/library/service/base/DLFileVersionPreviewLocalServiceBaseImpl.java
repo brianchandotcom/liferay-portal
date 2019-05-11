@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
@@ -48,6 +46,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

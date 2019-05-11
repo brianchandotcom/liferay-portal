@@ -14,11 +14,11 @@
 
 package com.liferay.asset.display.page.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the asset display page entry service.

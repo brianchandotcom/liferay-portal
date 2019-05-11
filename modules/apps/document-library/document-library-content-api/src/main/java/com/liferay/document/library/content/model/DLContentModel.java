@@ -14,13 +14,13 @@
 
 package com.liferay.document.library.content.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.sql.Blob;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the DLContent service. Represents a row in the &quot;DLContent&quot; database table, with each column mapped to a property of this class.

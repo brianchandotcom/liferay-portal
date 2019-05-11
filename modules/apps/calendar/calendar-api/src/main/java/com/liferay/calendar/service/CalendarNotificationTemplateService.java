@@ -14,8 +14,6 @@
 
 package com.liferay.calendar.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
@@ -27,6 +25,8 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for CalendarNotificationTemplate. Methods of this

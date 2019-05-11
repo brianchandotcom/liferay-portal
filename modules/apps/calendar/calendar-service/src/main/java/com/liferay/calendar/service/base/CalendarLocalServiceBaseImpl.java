@@ -14,8 +14,6 @@
 
 package com.liferay.calendar.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.persistence.CalendarBookingFinder;
@@ -60,6 +58,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

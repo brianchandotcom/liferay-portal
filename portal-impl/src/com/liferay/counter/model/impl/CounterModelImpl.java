@@ -14,8 +14,6 @@
 
 package com.liferay.counter.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.petra.string.StringBundler;
@@ -36,6 +34,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.

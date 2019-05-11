@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -35,6 +33,8 @@ import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for BlogsEntry. Methods of this

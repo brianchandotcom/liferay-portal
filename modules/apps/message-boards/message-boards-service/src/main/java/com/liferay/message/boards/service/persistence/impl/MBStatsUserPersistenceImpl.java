@@ -14,8 +14,6 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchStatsUserException;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.impl.MBStatsUserImpl;
@@ -45,6 +43,8 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the message boards stats user service.

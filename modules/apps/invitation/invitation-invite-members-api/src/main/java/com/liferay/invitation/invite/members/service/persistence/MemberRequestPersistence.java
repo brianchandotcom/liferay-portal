@@ -14,11 +14,11 @@
 
 package com.liferay.invitation.invite.members.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.invitation.invite.members.exception.NoSuchMemberRequestException;
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the member request service.

@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTProcessModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -42,6 +40,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the CTProcess service. Represents a row in the &quot;CTProcess&quot; database table, with each column mapped to a property of this class.

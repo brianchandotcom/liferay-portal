@@ -14,8 +14,6 @@
 
 package com.liferay.mobile.device.rules.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for MDRRuleGroup. Methods of this

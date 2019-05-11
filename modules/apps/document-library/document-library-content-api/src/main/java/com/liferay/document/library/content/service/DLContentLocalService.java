@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.content.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
@@ -39,6 +37,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for DLContent. Methods of this

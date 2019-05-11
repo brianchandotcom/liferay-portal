@@ -14,8 +14,6 @@
 
 package com.liferay.layout.page.template.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
@@ -27,6 +25,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing LayoutPageTemplateCollection in entity cache.

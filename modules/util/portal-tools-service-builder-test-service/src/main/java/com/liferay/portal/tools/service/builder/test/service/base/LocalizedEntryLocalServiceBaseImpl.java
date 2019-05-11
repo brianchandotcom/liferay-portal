@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -53,6 +51,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the localized entry local service.

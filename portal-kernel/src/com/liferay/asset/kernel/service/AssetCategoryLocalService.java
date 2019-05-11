@@ -14,8 +14,6 @@
 
 package com.liferay.asset.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
@@ -48,6 +46,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for AssetCategory. Methods of this

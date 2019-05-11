@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.announcements.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
@@ -49,6 +47,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the announcements delivery local service.

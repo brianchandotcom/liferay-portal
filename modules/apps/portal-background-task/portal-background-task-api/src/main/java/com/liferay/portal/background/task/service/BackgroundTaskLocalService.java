@@ -14,8 +14,6 @@
 
 package com.liferay.portal.background.task.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -41,6 +39,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for BackgroundTask. Methods of this

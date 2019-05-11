@@ -14,11 +14,11 @@
 
 package com.liferay.mobile.device.rules.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the mdr rule group service.

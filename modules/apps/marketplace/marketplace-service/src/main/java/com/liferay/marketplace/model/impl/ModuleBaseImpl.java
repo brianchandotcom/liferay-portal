@@ -14,10 +14,10 @@
 
 package com.liferay.marketplace.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Module service. Represents a row in the &quot;Marketplace_Module&quot; database table, with each column mapped to a property of this class.

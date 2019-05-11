@@ -14,10 +14,10 @@
 
 package com.liferay.calendar.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the CalendarBooking service. Represents a row in the &quot;CalendarBooking&quot; database table, with each column mapped to a property of this class.

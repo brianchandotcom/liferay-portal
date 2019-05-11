@@ -14,8 +14,6 @@
 
 package com.liferay.expando.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -42,6 +40,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for ExpandoValue. Methods of this

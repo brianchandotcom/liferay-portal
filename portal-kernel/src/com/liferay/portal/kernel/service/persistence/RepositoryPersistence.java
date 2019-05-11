@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.model.Repository;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the repository service.

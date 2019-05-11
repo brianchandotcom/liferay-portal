@@ -14,8 +14,6 @@
 
 package com.liferay.knowledge.base.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
@@ -78,6 +76,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the kb article local service.

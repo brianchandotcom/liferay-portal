@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchDiscussionException;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the message boards discussion service.

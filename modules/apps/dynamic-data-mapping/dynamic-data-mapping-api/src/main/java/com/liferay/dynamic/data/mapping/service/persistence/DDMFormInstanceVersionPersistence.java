@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the ddm form instance version service.

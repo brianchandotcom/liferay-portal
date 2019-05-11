@@ -14,8 +14,6 @@
 
 package com.liferay.sharing.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -30,6 +28,8 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.Collection;
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for SharingEntry. Methods of this

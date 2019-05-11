@@ -14,13 +14,13 @@
 
 package com.liferay.mobile.device.rules.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

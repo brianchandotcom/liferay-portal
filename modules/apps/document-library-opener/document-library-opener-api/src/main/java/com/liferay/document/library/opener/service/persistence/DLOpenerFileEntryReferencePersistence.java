@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.opener.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.opener.exception.NoSuchFileEntryReferenceException;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the dl opener file entry reference service.

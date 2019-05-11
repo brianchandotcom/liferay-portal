@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.asset.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.service.AssetCategoryPropertyServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

@@ -14,13 +14,13 @@
 
 package com.liferay.message.boards.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the message boards thread service.

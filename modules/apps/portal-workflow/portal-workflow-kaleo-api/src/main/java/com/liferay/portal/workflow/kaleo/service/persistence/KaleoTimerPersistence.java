@@ -14,11 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the kaleo timer service.

@@ -14,11 +14,11 @@
 
 package com.liferay.opensocial.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.opensocial.exception.NoSuchOAuthConsumerException;
 import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the o auth consumer service.

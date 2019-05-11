@@ -14,8 +14,6 @@
 
 package com.liferay.changeset.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -37,6 +35,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for ChangesetCollection. Methods of this

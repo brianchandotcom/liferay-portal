@@ -14,8 +14,6 @@
 
 package com.liferay.polls.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.polls.model.PollsVote;
@@ -27,6 +25,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing PollsVote in entity cache.

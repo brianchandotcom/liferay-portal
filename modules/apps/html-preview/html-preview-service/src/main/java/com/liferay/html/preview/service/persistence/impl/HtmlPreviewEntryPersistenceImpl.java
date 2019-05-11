@@ -14,8 +14,6 @@
 
 package com.liferay.html.preview.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.html.preview.exception.NoSuchHtmlPreviewEntryException;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl;
@@ -49,6 +47,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the html preview entry service.

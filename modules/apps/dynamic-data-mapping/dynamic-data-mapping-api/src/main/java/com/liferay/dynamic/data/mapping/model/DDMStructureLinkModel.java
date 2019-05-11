@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the DDMStructureLink service. Represents a row in the &quot;DDMStructureLink&quot; database table, with each column mapped to a property of this class.

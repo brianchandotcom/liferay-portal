@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.social.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.social.kernel.service.SocialRequestInterpreterLocalService;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the social request interpreter local service.

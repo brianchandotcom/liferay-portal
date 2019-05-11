@@ -14,11 +14,11 @@
 
 package com.liferay.chat.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.chat.exception.NoSuchEntryException;
 import com.liferay.chat.model.Entry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the entry service.

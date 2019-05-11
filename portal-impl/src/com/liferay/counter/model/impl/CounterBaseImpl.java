@@ -14,9 +14,9 @@
 
 package com.liferay.counter.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.counter.kernel.model.Counter;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.

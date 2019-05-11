@@ -14,8 +14,6 @@
 
 package com.liferay.wiki.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -37,6 +35,8 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for WikiPage. Methods of this

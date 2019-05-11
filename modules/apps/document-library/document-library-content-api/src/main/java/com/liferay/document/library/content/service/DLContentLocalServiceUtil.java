@@ -15,7 +15,6 @@
 package com.liferay.document.library.content.service;
 
 import org.osgi.annotation.versioning.ProviderType;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;

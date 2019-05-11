@@ -14,8 +14,6 @@
 
 package com.liferay.asset.tag.stats.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.tag.stats.exception.NoSuchTagStatsException;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl;
@@ -51,6 +49,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

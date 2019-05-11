@@ -14,8 +14,6 @@
 
 package com.liferay.asset.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +32,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for AssetCategory. Methods of this

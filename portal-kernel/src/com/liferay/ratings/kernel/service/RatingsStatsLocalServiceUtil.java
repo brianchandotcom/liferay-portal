@@ -14,9 +14,9 @@
 
 package com.liferay.ratings.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service utility for RatingsStats. This utility wraps

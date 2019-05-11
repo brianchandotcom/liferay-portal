@@ -14,8 +14,6 @@
 
 package com.liferay.asset.list.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.list.exception.NoSuchEntrySegmentsEntryRelException;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelImpl;
@@ -60,6 +58,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

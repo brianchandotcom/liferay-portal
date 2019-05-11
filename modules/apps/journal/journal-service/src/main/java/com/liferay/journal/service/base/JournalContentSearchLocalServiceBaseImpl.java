@@ -14,8 +14,6 @@
 
 package com.liferay.journal.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
@@ -48,6 +46,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**

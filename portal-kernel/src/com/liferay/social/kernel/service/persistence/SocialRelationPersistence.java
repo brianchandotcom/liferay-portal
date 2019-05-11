@@ -14,11 +14,11 @@
 
 package com.liferay.social.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchRelationException;
 import com.liferay.social.kernel.model.SocialRelation;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the social relation service.

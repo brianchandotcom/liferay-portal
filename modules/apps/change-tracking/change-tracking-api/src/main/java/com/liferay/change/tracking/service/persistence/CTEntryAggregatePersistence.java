@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.exception.NoSuchEntryAggregateException;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the ct entry aggregate service.

@@ -14,8 +14,6 @@
 
 package com.liferay.asset.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.model.AssetEntryUsageModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -40,6 +38,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the AssetEntryUsage service. Represents a row in the &quot;AssetEntryUsage&quot; database table, with each column mapped to a property of this class.

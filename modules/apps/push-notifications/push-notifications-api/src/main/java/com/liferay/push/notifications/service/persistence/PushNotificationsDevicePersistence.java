@@ -14,11 +14,11 @@
 
 package com.liferay.push.notifications.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the push notifications device service.

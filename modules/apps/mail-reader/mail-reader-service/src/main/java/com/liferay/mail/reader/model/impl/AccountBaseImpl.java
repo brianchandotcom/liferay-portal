@@ -14,10 +14,10 @@
 
 package com.liferay.mail.reader.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Account service. Represents a row in the &quot;Mail_Account&quot; database table, with each column mapped to a property of this class.

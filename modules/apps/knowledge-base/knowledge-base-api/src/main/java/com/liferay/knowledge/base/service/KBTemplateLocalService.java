@@ -14,8 +14,6 @@
 
 package com.liferay.knowledge.base.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -42,6 +40,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for KBTemplate. Methods of this

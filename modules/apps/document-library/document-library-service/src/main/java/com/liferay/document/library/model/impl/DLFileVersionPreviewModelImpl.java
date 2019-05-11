@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.model.DLFileVersionPreviewModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -38,6 +36,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the DLFileVersionPreview service. Represents a row in the &quot;DLFileVersionPreview&quot; database table, with each column mapped to a property of this class.

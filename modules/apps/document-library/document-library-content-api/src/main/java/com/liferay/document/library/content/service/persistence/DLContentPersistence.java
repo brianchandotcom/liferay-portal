@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.content.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the document library content service.

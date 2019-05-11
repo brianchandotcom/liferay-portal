@@ -14,11 +14,11 @@
 
 package com.liferay.asset.tag.stats.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.tag.stats.exception.NoSuchTagStatsException;
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the asset tag stats service.

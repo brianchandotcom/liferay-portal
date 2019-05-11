@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the MBStatsUser service. Represents a row in the &quot;MBStatsUser&quot; database table, with each column mapped to a property of this class.

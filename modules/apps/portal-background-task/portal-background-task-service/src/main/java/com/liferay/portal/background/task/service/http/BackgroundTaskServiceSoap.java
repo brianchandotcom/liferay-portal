@@ -14,13 +14,13 @@
 
 package com.liferay.portal.background.task.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.background.task.service.BackgroundTaskServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

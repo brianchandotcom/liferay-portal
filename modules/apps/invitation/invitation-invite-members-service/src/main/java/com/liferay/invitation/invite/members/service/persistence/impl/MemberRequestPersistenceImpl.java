@@ -14,8 +14,6 @@
 
 package com.liferay.invitation.invite.members.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.invitation.invite.members.exception.NoSuchMemberRequestException;
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.model.impl.MemberRequestImpl;
@@ -53,6 +51,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the member request service.

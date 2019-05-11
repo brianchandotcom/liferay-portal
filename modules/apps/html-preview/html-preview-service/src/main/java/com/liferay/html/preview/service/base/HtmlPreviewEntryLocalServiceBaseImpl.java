@@ -14,8 +14,6 @@
 
 package com.liferay.html.preview.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence;
@@ -49,6 +47,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the html preview entry local service.

@@ -14,8 +14,6 @@
 
 package com.liferay.changeset.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.model.ChangesetEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -44,6 +42,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the ChangesetEntry service. Represents a row in the &quot;ChangesetEntry&quot; database table, with each column mapped to a property of this class.

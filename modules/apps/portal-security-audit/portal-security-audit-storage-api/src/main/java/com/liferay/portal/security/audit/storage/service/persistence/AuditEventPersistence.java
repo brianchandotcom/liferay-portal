@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.audit.storage.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the audit event service.

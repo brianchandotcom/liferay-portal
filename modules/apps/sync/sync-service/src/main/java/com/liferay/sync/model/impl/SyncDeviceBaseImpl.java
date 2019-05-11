@@ -14,10 +14,10 @@
 
 package com.liferay.sync.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the SyncDevice service. Represents a row in the &quot;SyncDevice&quot; database table, with each column mapped to a property of this class.

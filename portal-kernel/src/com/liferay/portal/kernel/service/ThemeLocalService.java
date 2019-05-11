@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ColorScheme;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for Theme. Methods of this

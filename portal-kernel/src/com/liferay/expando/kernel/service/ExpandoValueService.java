@@ -14,8 +14,6 @@
 
 package com.liferay.expando.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,6 +30,8 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for ExpandoValue. Methods of this

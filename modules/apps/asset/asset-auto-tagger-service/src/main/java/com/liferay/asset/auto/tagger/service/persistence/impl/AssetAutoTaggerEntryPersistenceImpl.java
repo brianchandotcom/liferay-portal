@@ -14,8 +14,6 @@
 
 package com.liferay.asset.auto.tagger.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.auto.tagger.exception.NoSuchEntryException;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl;
@@ -54,6 +52,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

@@ -14,11 +14,11 @@
 
 package com.liferay.layout.page.template.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the layout page template collection service.

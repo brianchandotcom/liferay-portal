@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.file.rank.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.file.rank.exception.NoSuchFileRankException;
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the document library file rank service.

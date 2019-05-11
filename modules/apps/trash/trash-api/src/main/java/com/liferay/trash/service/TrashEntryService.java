@@ -14,8 +14,6 @@
 
 package com.liferay.trash.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
@@ -33,6 +31,8 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for TrashEntry. Methods of this

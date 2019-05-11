@@ -14,13 +14,13 @@
 
 package com.liferay.blogs.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.blogs.exception.NoSuchStatsUserException;
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the blogs stats user service.

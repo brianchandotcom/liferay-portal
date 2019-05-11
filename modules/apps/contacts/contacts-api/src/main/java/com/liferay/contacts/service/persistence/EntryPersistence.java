@@ -14,11 +14,11 @@
 
 package com.liferay.contacts.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.contacts.exception.NoSuchEntryException;
 import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the entry service.

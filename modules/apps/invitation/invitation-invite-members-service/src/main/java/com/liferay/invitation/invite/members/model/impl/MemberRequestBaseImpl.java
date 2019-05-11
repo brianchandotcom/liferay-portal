@@ -14,10 +14,10 @@
 
 package com.liferay.invitation.invite.members.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the MemberRequest service. Represents a row in the &quot;IM_MemberRequest&quot; database table, with each column mapped to a property of this class.

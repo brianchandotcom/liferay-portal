@@ -14,8 +14,6 @@
 
 package com.liferay.knowledge.base.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.impl.KBCommentImpl;
@@ -57,6 +55,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the kb comment service.

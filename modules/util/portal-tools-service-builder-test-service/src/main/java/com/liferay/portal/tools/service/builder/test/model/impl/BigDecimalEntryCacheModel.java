@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,6 +25,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.math.BigDecimal;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The cache model class for representing BigDecimalEntry in entity cache.

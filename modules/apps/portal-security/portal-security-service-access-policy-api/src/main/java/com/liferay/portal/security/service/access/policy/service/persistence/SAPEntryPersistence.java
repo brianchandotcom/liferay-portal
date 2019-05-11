@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.service.access.policy.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the sap entry service.

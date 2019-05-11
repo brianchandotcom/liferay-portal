@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
@@ -24,6 +22,8 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the versioned entry service.

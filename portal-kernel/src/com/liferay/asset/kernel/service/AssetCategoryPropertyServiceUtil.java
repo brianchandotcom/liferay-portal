@@ -14,9 +14,9 @@
 
 package com.liferay.asset.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service utility for AssetCategoryProperty. This utility wraps

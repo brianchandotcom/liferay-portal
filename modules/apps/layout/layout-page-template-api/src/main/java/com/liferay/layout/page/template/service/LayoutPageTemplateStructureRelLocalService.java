@@ -14,8 +14,6 @@
 
 package com.liferay.layout.page.template.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -41,6 +39,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for LayoutPageTemplateStructureRel. Methods of this

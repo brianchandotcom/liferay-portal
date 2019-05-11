@@ -14,11 +14,11 @@
 
 package com.liferay.sync.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sync.exception.NoSuchDLObjectException;
 import com.liferay.sync.model.SyncDLObject;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the sync dl object service.

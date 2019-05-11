@@ -14,11 +14,11 @@
 
 package com.liferay.social.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityLimitException;
 import com.liferay.social.kernel.model.SocialActivityLimit;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the social activity limit service.

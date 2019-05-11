@@ -14,8 +14,6 @@
 
 package com.liferay.social.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -30,6 +28,8 @@ import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for SocialActivityInterpreter. Methods of this

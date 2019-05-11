@@ -14,11 +14,11 @@
 
 package com.liferay.tasks.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.tasks.exception.NoSuchTasksEntryException;
 import com.liferay.tasks.model.TasksEntry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the tasks entry service.

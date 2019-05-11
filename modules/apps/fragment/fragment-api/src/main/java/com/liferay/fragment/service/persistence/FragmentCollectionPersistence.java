@@ -14,11 +14,11 @@
 
 package com.liferay.fragment.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the fragment collection service.

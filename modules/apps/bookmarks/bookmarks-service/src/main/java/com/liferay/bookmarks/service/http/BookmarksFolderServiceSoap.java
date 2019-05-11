@@ -14,14 +14,14 @@
 
 package com.liferay.bookmarks.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

@@ -14,8 +14,6 @@
 
 package com.liferay.change.tracking.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.change.tracking.exception.NoSuchProcessException;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.impl.CTProcessImpl;
@@ -51,6 +49,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

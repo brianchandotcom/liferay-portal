@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the DLFileVersionPreview service. Represents a row in the &quot;DLFileVersionPreview&quot; database table, with each column mapped to a property of this class.

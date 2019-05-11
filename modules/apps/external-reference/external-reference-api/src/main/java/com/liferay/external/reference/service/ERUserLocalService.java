@@ -14,8 +14,6 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
@@ -27,6 +25,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for ERUser. Methods of this

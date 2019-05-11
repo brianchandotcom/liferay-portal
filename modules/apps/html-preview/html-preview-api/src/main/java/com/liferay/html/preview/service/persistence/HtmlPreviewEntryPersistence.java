@@ -14,11 +14,11 @@
 
 package com.liferay.html.preview.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.html.preview.exception.NoSuchHtmlPreviewEntryException;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the html preview entry service.

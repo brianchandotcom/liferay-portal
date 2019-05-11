@@ -14,11 +14,11 @@
 
 package com.liferay.bookmarks.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the bookmarks entry service.

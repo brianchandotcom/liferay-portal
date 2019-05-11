@@ -14,11 +14,11 @@
 
 package com.liferay.wiki.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the wiki page service.

@@ -14,8 +14,6 @@
 
 package com.liferay.mail.reader.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.mail.reader.exception.NoSuchFolderException;
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.model.impl.FolderImpl;
@@ -50,6 +48,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the folder service.

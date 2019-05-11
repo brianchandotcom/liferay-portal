@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
@@ -39,6 +37,8 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for OAuth2ScopeGrant. Methods of this

@@ -14,11 +14,11 @@
 
 package com.liferay.polls.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the polls vote service.

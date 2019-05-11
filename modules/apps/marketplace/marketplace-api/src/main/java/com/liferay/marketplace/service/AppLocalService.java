@@ -14,8 +14,6 @@
 
 package com.liferay.marketplace.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -40,6 +38,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for App. Methods of this

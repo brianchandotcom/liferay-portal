@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.announcements.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
@@ -47,6 +45,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the announcements flag local service.

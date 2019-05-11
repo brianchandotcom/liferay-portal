@@ -14,8 +14,6 @@
 
 package com.liferay.chat.service.persistence.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.chat.exception.NoSuchStatusException;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.model.impl.StatusImpl;
@@ -52,6 +50,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

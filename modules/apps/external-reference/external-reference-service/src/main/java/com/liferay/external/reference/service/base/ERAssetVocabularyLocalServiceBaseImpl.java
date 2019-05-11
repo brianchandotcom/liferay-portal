@@ -14,8 +14,6 @@
 
 package com.liferay.external.reference.service.base;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.external.reference.service.ERAssetVocabularyLocalService;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the er asset vocabulary local service.

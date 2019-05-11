@@ -14,10 +14,10 @@
 
 package com.liferay.opensocial.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.service.GadgetLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the Gadget service. Represents a row in the &quot;OpenSocial_Gadget&quot; database table, with each column mapped to a property of this class.

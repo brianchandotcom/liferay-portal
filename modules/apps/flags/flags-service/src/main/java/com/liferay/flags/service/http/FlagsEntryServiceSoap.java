@@ -14,13 +14,13 @@
 
 package com.liferay.flags.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.flags.service.FlagsEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

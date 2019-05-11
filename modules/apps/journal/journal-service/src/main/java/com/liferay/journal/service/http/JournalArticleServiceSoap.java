@@ -14,8 +14,6 @@
 
 package com.liferay.journal.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +25,8 @@ import java.rmi.RemoteException;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the

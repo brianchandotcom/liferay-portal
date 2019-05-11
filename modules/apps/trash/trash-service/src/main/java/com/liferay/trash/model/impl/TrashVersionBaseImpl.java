@@ -14,10 +14,10 @@
 
 package com.liferay.trash.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashVersionLocalServiceUtil;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the TrashVersion service. Represents a row in the &quot;TrashVersion&quot; database table, with each column mapped to a property of this class.

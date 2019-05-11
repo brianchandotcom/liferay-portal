@@ -14,13 +14,13 @@
 
 package com.liferay.journal.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the journal article service.

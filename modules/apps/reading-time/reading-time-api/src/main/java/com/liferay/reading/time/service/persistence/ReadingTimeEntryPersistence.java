@@ -14,11 +14,11 @@
 
 package com.liferay.reading.time.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the reading time entry service.

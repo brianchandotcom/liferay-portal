@@ -14,8 +14,6 @@
 
 package com.liferay.changeset.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -38,6 +36,8 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for ChangesetEntry. Methods of this

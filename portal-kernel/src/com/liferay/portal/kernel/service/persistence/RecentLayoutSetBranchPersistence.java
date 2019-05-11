@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the recent layout set branch service.

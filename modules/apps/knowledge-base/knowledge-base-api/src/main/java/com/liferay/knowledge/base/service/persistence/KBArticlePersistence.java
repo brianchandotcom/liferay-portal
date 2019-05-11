@@ -14,11 +14,11 @@
 
 package com.liferay.knowledge.base.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the kb article service.

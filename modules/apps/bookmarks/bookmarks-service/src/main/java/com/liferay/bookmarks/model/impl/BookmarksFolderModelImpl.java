@@ -14,8 +14,6 @@
 
 package com.liferay.bookmarks.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderModel;
 import com.liferay.bookmarks.model.BookmarksFolderSoap;
@@ -54,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the BookmarksFolder service. Represents a row in the &quot;BookmarksFolder&quot; database table, with each column mapped to a property of this class.

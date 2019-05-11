@@ -14,8 +14,6 @@
 
 package com.liferay.knowledge.base.service;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the remote service interface for KBTemplate. Methods of this

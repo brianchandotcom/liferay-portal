@@ -716,7 +716,8 @@ public class ConfigurationPersistenceManager
 			"select configurationId, dictionary from Configuration_ where " +
 				"dictionary like '%felix.fileinstall.filename=%' and " +
 					"dictionary not like '%service.bundleLocation=\"%'",
-			dictionary -> dictionary.put(_SERVICE_BUNDLELOCATION, "?"));
+			dictionary -> dictionary.put(
+				ConfigurationAdmin.SERVICE_BUNDLELOCATION, "?"));
 	}
 
 	private void _verifyConfigurationsFileName() {
@@ -735,9 +736,6 @@ public class ConfigurationPersistenceManager
 
 	private static final String _FELIX_FILE_INSTALL_FILENAME =
 		"felix.fileinstall.filename";
-
-	private static final String _SERVICE_BUNDLELOCATION =
-		"service.bundleLocation";
 
 	private static final Dictionary<?, ?> _emptyDictionary =
 		new HashMapDictionary<>();

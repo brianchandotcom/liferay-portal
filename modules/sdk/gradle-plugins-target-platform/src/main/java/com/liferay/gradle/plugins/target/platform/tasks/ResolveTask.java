@@ -15,28 +15,27 @@
 package com.liferay.gradle.plugins.target.platform.tasks;
 
 import aQute.bnd.build.Workspace;
+import aQute.bnd.build.model.clauses.HeaderClause;
+import aQute.bnd.build.model.conversions.Converter;
+import aQute.bnd.gradle.FileSetRepositoryConvention;
+import aQute.bnd.gradle.PropertiesWrapper;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.repository.fileset.FileSetRepository;
+import aQute.bnd.osgi.Processor;
 import aQute.bnd.service.RepositoryPlugin;
 
 import aQute.service.reporter.Report;
 
 import biz.aQute.resolve.Bndrun;
-import biz.aQute.resolve.ResolveProcess;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
-import com.liferay.gradle.util.FileUtil;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.IOException;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.gradle.StartParameter;
 import org.gradle.api.DefaultTask;
@@ -45,11 +44,9 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 
 import org.osgi.service.resolver.ResolutionException;
@@ -68,22 +65,17 @@ public class ResolveTask extends DefaultTask {
 		StartParameter startParameter = gradle.getStartParameter();
 
 		_offline = startParameter.isOffline();
+
+		Convention convention = getConvention();
+
+		Map<String, Object> plugins = convention.getPlugins();
+
+		plugins.put("bundles", new FileSetRepositoryConvention(this));
 	}
 
 	@InputFile
-	@Optional
 	public File getBndrunFile() {
 		return GradleUtil.toFile(getProject(), _bndrunFile);
-	}
-
-	@InputFiles
-	@SkipWhenEmpty
-	public FileCollection getBundles() {
-		return _bundlesFileCollection;
-	}
-
-	public FileCollection getDistro() {
-		return _distroFileCollection;
 	}
 
 	@InputFile
@@ -91,116 +83,106 @@ public class ResolveTask extends DefaultTask {
 		return _distroFileCollection.getSingleFile();
 	}
 
-	@InputFiles
-	@SkipWhenEmpty
-	public FileCollection getRequirements() {
-		return _requirementsFileCollection;
-	}
-
 	@Input
-	public boolean isIgnoreFailures() {
-		return GradleUtil.toBoolean(_ignoreFailures);
+	public boolean isFailOnChanges() {
+		return GradleUtil.toBoolean(_failOnChanges);
 	}
 
 	public boolean isOffline() {
 		return GradleUtil.toBoolean(_offline);
 	}
 
+	@Input
+	public boolean isReportOptional() {
+		return GradleUtil.toBoolean(_reportOptional);
+	}
+
 	@TaskAction
-	public void resolve() throws IOException {
+	public void resolve() throws Exception {
 		Logger logger = getLogger();
 		Project project = getProject();
-
 		File bndrunFile = getBndrunFile();
-
-		if (bndrunFile == null) {
-			bndrunFile = _writeTemporaryBndrunFile();
-		}
-
 		File temporaryDir = getTemporaryDir();
 
-		File cnfDir = new File(temporaryDir, Workspace.CNFDIR);
-
-		project.mkdir(cnfDir);
-
 		try (Bndrun bndrun = Bndrun.createBndrun(null, bndrunFile)) {
+			Workspace workspace = bndrun.getWorkspace();
 			bndrun.setBase(temporaryDir);
 
-			Workspace workspace = bndrun.getWorkspace();
-
-			workspace.setBuildDir(cnfDir);
 			workspace.setOffline(isOffline());
 
-			FileCollection bundlesFileCollection = getBundles();
+			File cnfDir = new File(temporaryDir, Workspace.CNFDIR);
 
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Bundles available for resolving: {}",
-					bundlesFileCollection.getAsPath());
-			}
+			project.mkdir(cnfDir);
 
-			FileSetRepository fileSetRepository = new FileSetRepository(
-				getName(), bundlesFileCollection.getFiles());
+			workspace.setBuildDir(cnfDir);
 
-			workspace.addBasicPlugin(fileSetRepository);
+			Convention convention = getConvention();
 
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Resolving runbundles required for {}",
-					bndrun.getPropertiesFile());
-			}
+			FileSetRepositoryConvention fileSetRepositoryConvention =
+				convention.findPlugin(FileSetRepositoryConvention.class);
 
-			for (RepositoryPlugin repositoryPlugin :
-					workspace.getRepositories()) {
+			if (fileSetRepositoryConvention != null) {
+				workspace.addBasicPlugin(
+					fileSetRepositoryConvention.getFileSetRepository(
+						getName()));
 
-				repositoryPlugin.list(null);
+				for (RepositoryPlugin repositoryPlugin :
+						workspace.getRepositories()) {
+
+					repositoryPlugin.list(null);
+				}
 			}
 
 			bndrun.getInfo(workspace);
 
-			_logReport(bndrun);
+			_logReport(bndrun, logger);
 
 			if (!bndrun.isOk()) {
 				throw new GradleException(
-					"Standalone workspace errors in " + bndrunFile);
+					bndrun.getPropertiesFile() + " has workspace errors");
 			}
+
+			Processor parentProcessor = bndrun.getParent();
 
 			try {
-				String result = bndrun.resolve(false, true);
+				Properties gradleProperties = new PropertiesWrapper();
 
-				if (logger.isInfoEnabled()) {
-					logger.info("{}: {}", Constants.RUNBUNDLES, result);
-				}
+				gradleProperties.put("project", project);
+				gradleProperties.put(
+					"targetPlatformDistro",
+					_distroFileCollection.getSingleFile());
+				gradleProperties.put("task", this);
+
+				Processor processor = new ProcessorWrapper(gradleProperties);
+
+				processor.setParent(parentProcessor);
+
+				bndrun.setParent(processor);
+
+				logger.info(
+					"Resolving bundles required for {}",
+					bndrun.getPropertiesFile());
+
+				List<String> runBundles = bndrun.resolve(
+					isFailOnChanges(), false, _runbundlesFormatter);
+
+				logger.lifecycle(
+					"{}:\n    {}", Constants.RUNBUNDLES,
+					runBundles.stream(
+					).collect(
+						Collectors.joining("\n    ")
+					));
 			}
 			catch (ResolutionException re) {
-				String message =
-					"Unresolved requirements in " + project + ": " +
-						ResolveProcess.format(re.getUnresolvedRequirements());
-
-				if (isIgnoreFailures()) {
-					logger.error(message);
-				}
-				else {
-					throw new GradleException(message, re);
-				}
 			}
 			finally {
-				_logReport(bndrun);
+				_logReport(bndrun, logger);
+				bndrun.setParent(parentProcessor);
 			}
 
-			if (!bndrun.isOk() && !isIgnoreFailures()) {
-				throw new GradleException("Resolution failure in " + project);
-			}
-		}
-		catch (Exception e) {
-			String message =
-				"Resolution exception in " + project + ": " + e.getMessage();
-
-			if (isIgnoreFailures()) {
-				logger.error(message);
-			}
-			else {
-				throw new GradleException(message, e);
+			if (!bndrun.isOk()) {
+				throw new GradleException(
+					bndrun.getPropertiesFile() + " resolution failure");
 			}
 		}
 	}
@@ -209,41 +191,23 @@ public class ResolveTask extends DefaultTask {
 		_bndrunFile = bndrunFile;
 	}
 
-	public void setBundles(FileCollection bundlesFileCollection) {
-		_bundlesFileCollection = bundlesFileCollection;
-	}
-
 	public void setDistro(FileCollection distroFileCollection) {
 		_distroFileCollection = distroFileCollection;
 	}
 
-	public void setIgnoreFailures(Object ignoreFailures) {
-		_ignoreFailures = ignoreFailures;
+	public void setFailOnChanges(Object failOnChanges) {
+		_failOnChanges = failOnChanges;
 	}
 
 	public void setOffline(Object offline) {
 		_offline = offline;
 	}
 
-	public void setRequirements(FileCollection requirementsFileCollection) {
-		_requirementsFileCollection = requirementsFileCollection;
+	public void setReportOptional(Object reportOptional) {
+		_reportOptional = reportOptional;
 	}
 
-	private String _getManifestValue(File file, String name)
-		throws IOException {
-
-		try (JarFile jarFile = new JarFile(file)) {
-			Manifest manifest = jarFile.getManifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			return attributes.getValue(name);
-		}
-	}
-
-	private void _logReport(Report report) {
-		Logger logger = getLogger();
-
+	private void _logReport(Report report, Logger logger) {
 		if (logger.isWarnEnabled()) {
 			for (String warning : report.getWarnings()) {
 				Report.Location location = report.getLocation(warning);
@@ -275,63 +239,48 @@ public class ResolveTask extends DefaultTask {
 		}
 	}
 
-	private File _writeTemporaryBndrunFile() throws IOException {
-		File bndrunFile = new File(getTemporaryDir(), "resolve.bndrun");
+	private Object _bndrunFile;
+	private FileCollection _distroFileCollection;
+	private Object _failOnChanges = Boolean.FALSE;
+	private Object _offline;
+	private Object _reportOptional = Boolean.TRUE;
 
-		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				bndrunFile.toPath(), StandardCharsets.UTF_8)) {
+	private Converter<List<String>, Collection<? extends HeaderClause>>
+		_runbundlesFormatter =
+			new Converter<List<String>, Collection<? extends HeaderClause>>() {
 
-			bufferedWriter.write("-distro: \"");
-			bufferedWriter.write(FileUtil.getAbsolutePath(getDistroFile()));
-			bufferedWriter.write("\";version=file");
-			bufferedWriter.newLine();
+				@Override
+				public List<String> convert(
+						Collection<? extends HeaderClause> input)
+					throws IllegalArgumentException {
 
-			bufferedWriter.write("-resolve.effective: active, resolve");
-			bufferedWriter.newLine();
-
-			bufferedWriter.write("-resourceonly: true");
-			bufferedWriter.newLine();
-
-			bufferedWriter.write("-runrequires:\\");
-			bufferedWriter.newLine();
-
-			boolean first = true;
-
-			for (File requirementFile : getRequirements()) {
-				String bundleSymbolicName = _getManifestValue(
-					requirementFile, Constants.BUNDLE_SYMBOLICNAME);
-
-				if (bundleSymbolicName == null) {
-					continue;
+					return input.stream(
+					).map(
+						HeaderClause::toString
+					).collect(
+						Collectors.toList()
+					);
 				}
 
-				if (!first) {
-					bufferedWriter.write(",\\");
-					bufferedWriter.newLine();
-				}
-				else {
-					first = false;
+				@Override
+				public List<String> error(String msg) {
+					return null;
 				}
 
-				bufferedWriter.write(
-					"\tosgi.identity;filter:='(osgi.identity=");
-				bufferedWriter.write(bundleSymbolicName);
-				bufferedWriter.write(")'");
-			}
+			};
 
-			bufferedWriter.newLine();
+	static class ProcessorWrapper extends Processor {
 
-			bufferedWriter.write("-standalone:");
+		public Properties getProperties() {
+			return _internalProperties;
 		}
 
-		return bndrunFile;
-	}
+		ProcessorWrapper(Properties properties) {
+			_internalProperties = properties;
+		}
 
-	private Object _bndrunFile;
-	private FileCollection _bundlesFileCollection;
-	private FileCollection _distroFileCollection;
-	private Object _ignoreFailures;
-	private Object _offline;
-	private FileCollection _requirementsFileCollection;
+		private final Properties _internalProperties;
+
+	}
 
 }

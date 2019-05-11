@@ -73,10 +73,6 @@ public class TargetPlatformExtension {
 		return _subprojects;
 	}
 
-	public boolean isIgnoreResolveFailures() {
-		return GradleUtil.toBoolean(_ignoreResolveFailures);
-	}
-
 	public TargetPlatformExtension onlyIf(Closure<Boolean> onlyIfClosure) {
 		_onlyIfSpec = _onlyIfSpec.and(onlyIfClosure);
 
@@ -103,10 +99,6 @@ public class TargetPlatformExtension {
 		_resolveOnlyIfSpec = _resolveOnlyIfSpec.and(resolveOnlyIfSpec);
 
 		return this;
-	}
-
-	public void setIgnoreResolveFailures(Object ignoreResolveFailures) {
-		_ignoreResolveFailures = ignoreResolveFailures;
 	}
 
 	public void setOnlyIf(Closure<Boolean> onlyIfClosure) {
@@ -149,7 +141,6 @@ public class TargetPlatformExtension {
 		return subprojects(Arrays.asList(subprojects));
 	}
 
-	private Object _ignoreResolveFailures;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
 	private final Project _project;
 	private AndSpec<Project> _resolveOnlyIfSpec = new AndSpec<>();

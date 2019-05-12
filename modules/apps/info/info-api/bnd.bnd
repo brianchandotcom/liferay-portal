@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.info.constants,\
 	com.liferay.info.display.contributor,\
 	com.liferay.info.display.request.attributes.contributor,\
+	com.liferay.info.display.url.provider,\
 	com.liferay.info.pagination,\
 	com.liferay.info.provider,\
 	com.liferay.info.renderer,\

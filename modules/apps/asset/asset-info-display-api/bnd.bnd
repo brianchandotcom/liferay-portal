@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.asset.info.display.api
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.asset.info.display.contributor,\
-	com.liferay.asset.info.display.contributor.util
+	com.liferay.asset.info.display.contributor.util,\
+	com.liferay.asset.info.display.url.provider

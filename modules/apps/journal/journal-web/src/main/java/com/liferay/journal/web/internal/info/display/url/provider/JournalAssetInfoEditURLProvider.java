@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.info.display.contributor;
+package com.liferay.journal.web.internal.info.display.url.provider;
 
-import com.liferay.asset.info.display.contributor.BaseAssetInfoEditURLProvider;
-import com.liferay.info.display.contributor.InfoEditURLProvider;
+import com.liferay.asset.info.display.url.provider.BaseAssetInfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = InfoEditURLProvider.class
 )
-public class BlogsAssetInfoEditURLProvider
+public class JournalAssetInfoEditURLProvider
 	extends BaseAssetInfoEditURLProvider {
 }

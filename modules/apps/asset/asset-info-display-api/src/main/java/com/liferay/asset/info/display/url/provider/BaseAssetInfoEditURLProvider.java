@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.asset.info.display.contributor;
+package com.liferay.asset.info.display.url.provider;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.info.display.contributor;
+package com.liferay.document.library.web.internal.info.display.url.provider;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.info.display.contributor.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;

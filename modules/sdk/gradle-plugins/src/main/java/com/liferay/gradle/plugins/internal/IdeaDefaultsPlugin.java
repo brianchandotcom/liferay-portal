@@ -31,6 +31,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
@@ -89,10 +90,12 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-			File classesDir = sourceSetOutput.getClassesDir();
+			FileCollection classesDirs = sourceSetOutput.getClassesDirs();
 
-			if (!FileUtil.isChild(classesDir, project.getBuildDir())) {
-				excludeDirs.add(classesDir);
+			for (File classesDir : classesDirs) {
+				if (!FileUtil.isChild(classesDir, project.getBuildDir())) {
+					excludeDirs.add(classesDir);
+				}
 			}
 
 			File resourcesDir = sourceSetOutput.getResourcesDir();
@@ -119,6 +122,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		IdeaModuleIml ideaModuleIml = ideaModule.getIml();
 
+		@SuppressWarnings("serial")
 		Closure<Void> closure = new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")

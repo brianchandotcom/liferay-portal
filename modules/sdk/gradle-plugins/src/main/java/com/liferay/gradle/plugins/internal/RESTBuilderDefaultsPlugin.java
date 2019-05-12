@@ -66,6 +66,7 @@ public class RESTBuilderDefaultsPlugin
 	private RESTBuilderDefaultsPlugin() {
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskProcessResources(BuildRESTTask buildRESTTask) {
 		final Project project = buildRESTTask.getProject();
 

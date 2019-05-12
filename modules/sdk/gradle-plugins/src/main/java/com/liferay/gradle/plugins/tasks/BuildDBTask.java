@@ -45,6 +45,7 @@ public class BuildDBTask extends JavaExec {
 			"com/liferay/portal/tools/dependencies/portal-tools.properties");
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildDBTask databaseTypes(Iterable<Object> databaseTypes) {
 		GUtil.addToCollection(_databaseTypes, databaseTypes);
 

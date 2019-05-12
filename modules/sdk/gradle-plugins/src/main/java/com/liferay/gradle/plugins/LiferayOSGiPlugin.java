@@ -228,6 +228,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	@SuppressWarnings("serial")
 	private void _addDeployedFile(
 		final LiferayExtension liferayExtension,
 		final AbstractArchiveTask abstractArchiveTask, boolean lazy) {
@@ -960,7 +961,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		File classesDir = new File(docrootDir, "WEB-INF/classes");
 
-		sourceSetOutput.setClassesDir(classesDir);
+		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
+
+		sourceDirectorySet.setOutputDir(classesDir);
+
 		sourceSetOutput.setResourcesDir(classesDir);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
@@ -988,6 +992,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private void _configureTaskCleanDependsOn(Delete delete) {
 		Project project = delete.getProject();
 
+		@SuppressWarnings("serial")
 		Closure<Set<String>> closure = new Closure<Set<String>>(project) {
 
 			@SuppressWarnings("unused")

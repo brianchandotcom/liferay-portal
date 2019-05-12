@@ -136,6 +136,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public static void unzip(
 		Project project, final File file, final File destinationDir) {
 

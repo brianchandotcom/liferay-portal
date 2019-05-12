@@ -223,6 +223,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskDeploy(final Project project, Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
@@ -254,6 +255,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 	}
 
+	@SuppressWarnings("serial")
 	private Jar _configureTaskJar(
 		final Jar jar, final Sync unzipOriginalModuleTask) {
 

@@ -174,6 +174,7 @@ public class ServiceBuilderDefaultsPlugin
 			});
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskProcessResources(
 		final BuildServiceTask buildServiceTask) {
 

@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.target.platform;
 
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.target.platform.internal.util.SkipIfExecutingParentTaskSpec;
 import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
 import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
@@ -25,6 +24,7 @@ import groovy.lang.Closure;
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 
 import java.io.File;
+
 import java.util.Arrays;
 import java.util.Set;
 
@@ -33,7 +33,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -84,13 +83,16 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		if (bndrunFile.exists()) {
 			ResolveTask resolveTask = _addTaskResolve(project);
 
-			_configureTaskResolve(project, resolveTask, bndrunFile);
+			_configureTaskResolve(
+				project, resolveTask, bndrunFile,
+				targetPlatformDistroConfiguration);
 		}
 		else {
 			logger.info(
-				"Explicitly excluding {} from resolution because there is " +
-					"no " + PLATFORM_BNDRUN + "  file at the root of the " +
-						"gradle workspace", project);
+				"Explicitly excluding {} from resolution because there is no " +
+					PLATFORM_BNDRUN +
+						" file at the root of the gradle workspace",
+				project);
 		}
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -124,8 +126,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 				public void doCall(Project subproject) {
 					if (subprojects.contains(subproject)) {
 						_configureSubproject(
-							subproject, project.getDependencies(),
-							project.getLogger(),
+							subproject, project.getLogger(),
 							targetPlatformBomsConfiguration,
 							targetPlatformDistroConfiguration,
 							targetPlatformExtension);
@@ -168,19 +169,17 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		final ResolveTask resolveTask = GradleUtil.addTask(
 			project, RESOLVE_TASK_NAME, ResolveTask.class);
 
-		resolveTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		resolveTask.setDescription(
-			"Checks whether the project and it's runtime dependencies will " +
-				"have their requirements met when installed into the " +
-					"Liferay portal instance defined by the configured " +
-						"distro.");
+			"Checks whether the project and it is runtime dependencies will " +
+				"have their requirements met when installed into the Liferay " +
+					"portal instance defined by the configured distro.");
 		resolveTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		return resolveTask;
 	}
 
 	private void _configureSubproject(
-		Project subproject, DependencyHandler dependencyHandler, Logger logger,
+		Project subproject, Logger logger,
 		Configuration targetPlatformBomsConfiguration,
 		Configuration targetPlatformDistroConfiguration,
 		TargetPlatformExtension targetPlatformExtension) {
@@ -220,9 +219,10 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		if (!bndrunFile.exists()) {
 			logger.info(
-				"Explicitly excluding {} from resolution because there is " +
-					"no " + PLATFORM_BNDRUN + "  file at the root of the " +
-						"gradle workspace", subproject);
+				"Explicitly excluding {} from resolution because there is no " +
+					PLATFORM_BNDRUN +
+						" file at the root of the gradle workspace",
+				subproject);
 
 			return;
 		}
@@ -230,7 +230,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		if (spec.isSatisfiedBy(subproject)) {
 			ResolveTask resolveTask = _addTaskResolve(subproject);
 
-			_configureTaskResolve(subproject, resolveTask, bndrunFile);
+			_configureTaskResolve(
+				subproject, resolveTask, bndrunFile,
+				targetPlatformDistroConfiguration);
 		}
 		else if (logger.isInfoEnabled()) {
 			logger.info("Explicitly excluding {} from resolution", subproject);
@@ -238,7 +240,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskResolve(
-		Project project, ResolveTask resolveTask, File bndrunFile) {
+		Project project, ResolveTask resolveTask, File bndrunFile,
+		Configuration targetPlatformDistroConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -250,6 +253,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		resolveTask.setBndrunFile(bndrunFile);
 		resolveTask.setFailOnChanges(false);
 		resolveTask.setReportOptional(false);
+
+		resolveTask.setDistro(targetPlatformDistroConfiguration);
 	}
 
 	private static final Iterable<String> _configurationNames = Arrays.asList(
@@ -259,7 +264,5 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
 		"testCompileOnly", "testIntegration", "testImplementation",
 		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly");
-	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
-		new SkipIfExecutingParentTaskSpec();
 
 }

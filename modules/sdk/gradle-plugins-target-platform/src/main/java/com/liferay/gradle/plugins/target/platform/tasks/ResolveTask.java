@@ -149,7 +149,8 @@ public class ResolveTask extends DefaultTask {
 
 				gradleProperties.put("project", project);
 
-				String distroReference = getDistroFile().getAbsolutePath() + ";version=file";
+				String distroReference =
+					getDistroFile().getAbsolutePath() + ";version=file";
 
 				gradleProperties.put("targetPlatformDistro", distroReference);
 
@@ -177,6 +178,7 @@ public class ResolveTask extends DefaultTask {
 			}
 			catch (ResolutionException re) {
 				logger.error(ResolveProcess.format(re, isReportOptional()));
+
 				throw new GradleException(
 					bndrun.getPropertiesFile() + " resolution exception", re);
 			}
@@ -243,13 +245,7 @@ public class ResolveTask extends DefaultTask {
 		}
 	}
 
-	private Object _bndrunFile;
-	private FileCollection _distroFileCollection;
-	private Object _failOnChanges = Boolean.FALSE;
-	private Object _offline;
-	private Object _reportOptional = Boolean.TRUE;
-
-	private Converter<List<String>, Collection<? extends HeaderClause>>
+	private static Converter<List<String>, Collection<? extends HeaderClause>>
 		_runbundlesFormatter =
 			new Converter<List<String>, Collection<? extends HeaderClause>>() {
 
@@ -273,14 +269,20 @@ public class ResolveTask extends DefaultTask {
 
 			};
 
-	static class ProcessorWrapper extends Processor {
+	private Object _bndrunFile;
+	private FileCollection _distroFileCollection;
+	private Object _failOnChanges = Boolean.FALSE;
+	private Object _offline;
+	private Object _reportOptional = Boolean.TRUE;
+
+	private static class ProcessorWrapper extends Processor {
+
+		public ProcessorWrapper(Properties properties) {
+			_internalProperties = properties;
+		}
 
 		public Properties getProperties() {
 			return _internalProperties;
-		}
-
-		ProcessorWrapper(Properties properties) {
-			_internalProperties = properties;
 		}
 
 		private final Properties _internalProperties;

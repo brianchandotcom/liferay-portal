@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.info.display.contributor;
+package com.liferay.asset.info.display.internal.contributor.field;
 
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.reading.time.message.ReadingTimeMessageProvider;
-import com.liferay.reading.time.model.ReadingTimeEntry;
-import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,18 +30,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryReadingTimeInfoDisplayContributorField
-	implements InfoDisplayContributorField<BlogsEntry> {
+public class AssetEntryAuthorNameInfoDisplayContributorField
+	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "readingTime";
+		return "authorName";
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class BlogsEntryReadingTimeInfoDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "reading-time");
+		return LanguageUtil.get(resourceBundle, "author-name");
 	}
 
 	@Override
@@ -58,18 +58,17 @@ public class BlogsEntryReadingTimeInfoDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ReadingTimeEntry readingTimeEntry =
-			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
-				blogsEntry);
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
-		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
+		if (user != null) {
+			return user.getFullName();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference
-	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
-
-	@Reference
-	private ReadingTimeMessageProvider _readingTimeMessageProvider;
+	private UserLocalService _userLocalService;
 
 }

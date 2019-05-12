@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.info.display.contributor;
+package com.liferay.document.library.web.internal.info.display.contributor.field;
 
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.reading.time.message.ReadingTimeMessageProvider;
-import com.liferay.reading.time.model.ReadingTimeEntry;
-import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,43 +31,40 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryReadingTimeInfoDisplayContributorField
-	implements InfoDisplayContributorField<BlogsEntry> {
+public class DLFileEntryDownloadURLInfoDisplayContributorField
+	implements InfoDisplayContributorField<FileEntry> {
 
 	@Override
 	public String getKey() {
-		return "readingTime";
+		return "downloadURL";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "reading-time");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(locale, getClass()), "download-url");
 	}
 
 	@Override
 	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.TEXT;
+		return InfoDisplayContributorFieldType.URL;
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ReadingTimeEntry readingTimeEntry =
-			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
-				blogsEntry);
-
-		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
+	public String getValue(FileEntry fileEntry, Locale locale) {
+		try {
+			return _dlURLHelper.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+		}
+		catch (Exception pe) {
+			return null;
+		}
 	}
 
 	@Reference
-	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
-
-	@Reference
-	private ReadingTimeMessageProvider _readingTimeMessageProvider;
+	private DLURLHelper _dlURLHelper;
 
 }

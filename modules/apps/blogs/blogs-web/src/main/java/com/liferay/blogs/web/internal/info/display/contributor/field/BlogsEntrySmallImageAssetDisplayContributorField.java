@@ -12,36 +12,39 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.info.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor.field;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.display.contributor.field.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.reading.time.message.ReadingTimeMessageProvider;
-import com.liferay.reading.time.model.ReadingTimeEntry;
-import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Eudaldo Alonso
  */
 @Component(
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryReadingTimeInfoDisplayContributorField
-	implements InfoDisplayContributorField<BlogsEntry> {
+public class BlogsEntrySmallImageAssetDisplayContributorField
+	extends BaseInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "readingTime";
+		return "smallImage";
 	}
 
 	@Override
@@ -49,27 +52,38 @@ public class BlogsEntryReadingTimeInfoDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "reading-time");
+		return LanguageUtil.get(resourceBundle, "small-image");
 	}
 
 	@Override
 	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.TEXT;
+		return InfoDisplayContributorFieldType.IMAGE;
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ReadingTimeEntry readingTimeEntry =
-			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
-				blogsEntry);
+	public Object getValue(BlogsEntry blogsEntry, Locale locale) {
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (themeDisplay != null) {
+			try {
+				jsonObject.put(
+					"url", blogsEntry.getSmallImageURL(themeDisplay));
+
+				return jsonObject;
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+
+				return null;
+			}
+		}
+
+		return jsonObject;
 	}
 
-	@Reference
-	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
-
-	@Reference
-	private ReadingTimeMessageProvider _readingTimeMessageProvider;
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntrySmallImageAssetDisplayContributorField.class);
 
 }

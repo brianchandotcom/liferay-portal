@@ -4,6 +4,7 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.info.constants,\
 	com.liferay.info.display.contributor,\
+	com.liferay.info.display.contributor.field,\
 	com.liferay.info.display.request.attributes.contributor,\
 	com.liferay.info.display.url.provider,\
 	com.liferay.info.pagination,\

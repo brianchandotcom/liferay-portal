@@ -13,9 +13,9 @@ Provide-Capability:\
 		type="document-library-web";\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
 	soy;\
 		filter:="(|(type=asset-taglib)(type=frontend-js-web))"
-	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /document-library-web
 -dsannotations-options: inherit

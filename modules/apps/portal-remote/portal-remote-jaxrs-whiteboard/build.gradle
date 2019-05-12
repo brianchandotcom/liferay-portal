@@ -9,7 +9,6 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
 	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "1.0.4"
-	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.jax.rs-api", version: "1.0.4"
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.2.5"
 	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-annotation_1.3_spec", version: "1.1"
 	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-jaxrs_2.1_spec", version: "1.1"

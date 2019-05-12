@@ -307,6 +307,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		"zipZippableResources";
 
 	@Override
+	@SuppressWarnings("serial")
 	public void apply(final Project project) {
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
@@ -1048,6 +1049,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			new Action<Task>() {
 
 				@Override
+				@SuppressWarnings("serial")
 				public void execute(Task task) {
 					MavenPluginConvention mavenPluginConvention =
 						GradleUtil.getConvention(
@@ -1464,6 +1466,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
+	@SuppressWarnings({"serial", "unchecked"})
 	private ReplaceRegexTask _addTaskUpdateFileVersions(final Project project) {
 		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
@@ -1868,6 +1871,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			new Action<FileCopyDetails>() {
 
 				@Override
+				@SuppressWarnings("serial")
 				public void execute(final FileCopyDetails fileCopyDetails) {
 					fileCopyDetails.filter(
 						new Closure<Void>(copy) {
@@ -1901,6 +1905,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _checkJsonVersion(Project project, String fileName) {
 		File file = project.file(fileName);
 
@@ -1931,6 +1936,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureArtifacts(
 		Project project, Jar jarJSDocTask, Jar jarJSPTask, Jar jarJavadocTask,
 		Jar jarSourcesTask, Jar jarSourcesCommercialTask, Jar jarTLDDocTask) {
@@ -2578,6 +2584,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureEclipse(Project project) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
@@ -2785,11 +2792,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-		if (FileUtil.isChild(
-				sourceSetOutput.getClassesDir(), project.getBuildDir())) {
+		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
 
-			sourceSetOutput.setClassesDir(classesDirName);
-			sourceSetOutput.setResourcesDir(classesDirName);
+		FileCollection classesDirs = sourceSetOutput.getClassesDirs();
+
+		for (File classesDir : classesDirs) {
+			if (FileUtil.isChild(classesDir, project.getBuildDir())) {
+				sourceDirectorySet.setOutputDir(classesDir);
+				sourceSetOutput.setResourcesDir(classesDirName);
+			}
 		}
 	}
 
@@ -3302,7 +3313,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
 			ConfigurableFileTree configurableFileTree = project.fileTree(
-				sourceSetOutput.getClassesDir());
+				sourceSetOutput.getClassesDirs());
 
 			configurableFileTree.setBuiltBy(
 				Collections.singleton(sourceSetOutput));
@@ -3342,6 +3353,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			new Action<PatchTask>() {
 
 				@Override
+				@SuppressWarnings("serial")
 				public void execute(final PatchTask patchTask) {
 					jarSourcesTask.from(
 						new Callable<FileCollection>() {

@@ -120,6 +120,7 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 			"1.0.1");
 	}
 
+	@SuppressWarnings("serial")
 	private Copy _addTaskImportFiles(final Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, IMPORT_FILES_TASK_NAME, Copy.class);
@@ -263,6 +264,7 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 			});
 	}
 
+	@SuppressWarnings({"serial", "unchecked"})
 	private void _configureTaskUpdateFileVersions(
 		Project project, File portalRootDir) {
 

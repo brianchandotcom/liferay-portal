@@ -162,6 +162,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Iterable<?> prepNextFiles) {
 

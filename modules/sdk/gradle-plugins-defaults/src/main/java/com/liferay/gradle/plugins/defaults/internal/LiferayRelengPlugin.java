@@ -790,6 +790,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskProcessResources(
 		Project project, final BuildChangeLogTask buildChangeLogTask) {
 

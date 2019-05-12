@@ -155,6 +155,7 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
+	@SuppressWarnings("serial")
 	private ReplaceRegexTask _addTaskUpdateVersion(final Project project) {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,

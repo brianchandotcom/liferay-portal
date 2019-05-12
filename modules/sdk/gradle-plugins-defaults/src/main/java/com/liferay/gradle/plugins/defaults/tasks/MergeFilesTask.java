@@ -73,6 +73,7 @@ public class MergeFilesTask extends DefaultTask {
 		return GradleUtil.toString(_separator);
 	}
 
+	@SuppressWarnings("unchecked")
 	public MergeFilesTask inputFiles(Iterable<?> inputFiles) {
 		GUtil.addToCollection(_inputFiles, inputFiles);
 

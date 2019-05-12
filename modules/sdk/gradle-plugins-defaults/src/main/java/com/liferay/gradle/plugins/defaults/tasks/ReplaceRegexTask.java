@@ -89,10 +89,13 @@ public class ReplaceRegexTask extends DefaultTask {
 		return match(regex, Arrays.asList(files));
 	}
 
-	public ReplaceRegexTask pre(Closure<String>... preClosures) {
+	public ReplaceRegexTask pre(
+		@SuppressWarnings("unchecked") Closure<String>... preClosures) {
+
 		return pre(Arrays.asList(preClosures));
 	}
 
+	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask pre(Iterable<Closure<String>> preClosures) {
 		GUtil.addToCollection(_preClosures, preClosures);
 
@@ -100,11 +103,13 @@ public class ReplaceRegexTask extends DefaultTask {
 	}
 
 	public ReplaceRegexTask replaceOnlyIf(
-		Closure<Boolean>... replaceOnlyIfClosures) {
+		@SuppressWarnings("unchecked")
+			Closure<Boolean>... replaceOnlyIfClosures) {
 
 		return replaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}
 
+	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask replaceOnlyIf(
 		Iterable<Closure<Boolean>> replaceOnlyIfClosures) {
 
@@ -135,7 +140,9 @@ public class ReplaceRegexTask extends DefaultTask {
 		_matches.putAll(matches);
 	}
 
-	public void setPre(Closure<String>... preClosures) {
+	public void setPre(
+		@SuppressWarnings("unchecked") Closure<String>... preClosures) {
+
 		setPre(Arrays.asList(preClosures));
 	}
 
@@ -149,7 +156,10 @@ public class ReplaceRegexTask extends DefaultTask {
 		_replacement = replacement;
 	}
 
-	public void setReplaceOnlyIf(Closure<Boolean>... replaceOnlyIfClosures) {
+	public void setReplaceOnlyIf(
+		@SuppressWarnings("unchecked")
+			Closure<Boolean>... replaceOnlyIfClosures) {
+
 		setReplaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}
 
@@ -173,6 +183,7 @@ public class ReplaceRegexTask extends DefaultTask {
 		return replacementObj;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _replaceRegex(
 			File file, Pattern pattern, Object replacementObj)
 		throws IOException {

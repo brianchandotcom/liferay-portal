@@ -73,6 +73,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			});
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz, boolean overwrite) {
 

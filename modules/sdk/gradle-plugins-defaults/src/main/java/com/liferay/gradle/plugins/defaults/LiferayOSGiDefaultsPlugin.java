@@ -68,6 +68,7 @@ import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtensio
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -689,7 +690,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return GradlePluginsDefaultsUtil.getBundleInstruction(
+					return BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 				}
 
@@ -1063,7 +1064,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					StringBuilder sb = new StringBuilder();
 
-					sb.append(sourceSetOutput.getClassesDir());
+					sb.append(sourceSetOutput.getClassesDirs());
 					sb.append("/META-INF/maven/");
 					sb.append(groupId);
 					sb.append('/');
@@ -1679,8 +1680,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _applyPlugins(Project project) {
 		if (Validator.isNotNull(
-				GradlePluginsDefaultsUtil.getBundleInstruction(
-					project, "Main-Class"))) {
+				BndBuilderUtil.getInstruction(project, "Main-Class"))) {
 
 			GradleUtil.applyPlugin(project, ApplicationPlugin.class);
 		}
@@ -1763,8 +1763,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
-			Map<String, String> bundleInstructions =
-				GradlePluginsDefaultsUtil.getBundleInstructions(project);
+			Map<String, Object> bundleInstructions =
+				BndBuilderUtil.getInstructions(project);
 
 			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
 
@@ -2099,16 +2099,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleInstructions(Project project) {
-		Map<String, String> bundleInstructions =
-			GradlePluginsDefaultsUtil.getBundleInstructions(project);
+		Map<String, Object> bundleInstructions = BndBuilderUtil.getInstructions(
+			project);
 
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":private:apps:")) {
 
-			String exportPackage = bundleInstructions.get(
-				Constants.EXPORT_PACKAGE);
+			String exportPackage = GradleUtil.toString(
+				bundleInstructions.get(Constants.EXPORT_PACKAGE));
 
 			if (Validator.isNotNull(exportPackage)) {
 				exportPackage = "!com.liferay.*.kernel.*," + exportPackage;
@@ -2120,7 +2120,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (!bundleInstructions.containsKey(Constants.EXPORT_CONTENTS) &&
 			!bundleInstructions.containsKey("-check")) {
 
-			bundleInstructions.put("-check", "exports");
+			bundleInstructions.put("-check", "EXPORTS");
 		}
 	}
 
@@ -3439,7 +3439,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadocFilter(Javadoc javadoc) {
-		String exportPackage = GradlePluginsDefaultsUtil.getBundleInstruction(
+		String exportPackage = BndBuilderUtil.getInstruction(
 			javadoc.getProject(), Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
@@ -3544,8 +3544,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append(project.getVersion());
 		sb.append(" - ");
 		sb.append(
-			GradlePluginsDefaultsUtil.getBundleInstruction(
-				project, Constants.BUNDLE_NAME));
+			BndBuilderUtil.getInstruction(project, Constants.BUNDLE_NAME));
 
 		javadoc.setTitle(sb.toString());
 	}
@@ -3646,7 +3645,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksJspC(Project project) {
-		String fragmentHost = GradlePluginsDefaultsUtil.getBundleInstruction(
+		String fragmentHost = BndBuilderUtil.getInstruction(
 			project, Constants.FRAGMENT_HOST);
 
 		if (Validator.isNotNull(fragmentHost)) {

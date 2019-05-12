@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.StringUtil;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -93,9 +94,8 @@ public class PublishPluginDefaultsPlugin
 			PluginConfig pluginConfig = pluginConfigs.create(name);
 
 			if (gradlePluginFiles.length == 1) {
-				String displayName =
-					GradlePluginsDefaultsUtil.getBundleInstruction(
-						project, Constants.BUNDLE_NAME);
+				String displayName = BndBuilderUtil.getInstruction(
+					project, Constants.BUNDLE_NAME);
 
 				pluginConfig.setDisplayName(displayName);
 			}
@@ -116,9 +116,8 @@ public class PublishPluginDefaultsPlugin
 					if (Validator.isNull(
 							pluginBundleExtension.getDescription())) {
 
-						String description =
-							GradlePluginsDefaultsUtil.getBundleInstruction(
-								project, Constants.BUNDLE_DESCRIPTION);
+						String description = BndBuilderUtil.getInstruction(
+							project, Constants.BUNDLE_DESCRIPTION);
 
 						pluginBundleExtension.setDescription(description);
 					}

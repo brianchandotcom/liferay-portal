@@ -4,7 +4,3 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.asset.info.display.contributor,\
 	com.liferay.asset.info.display.contributor.util
-Import-Package:\
-	com.liferay.info.display.contributor;version="[1.0.0,2.0.0)",\
-	\
-	*

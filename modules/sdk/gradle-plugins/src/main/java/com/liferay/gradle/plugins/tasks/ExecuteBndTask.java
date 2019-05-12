@@ -14,9 +14,19 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import aQute.bnd.gradle.BndUtils;
+import aQute.bnd.gradle.PropertiesWrapper;
+import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Processor;
+import aQute.bnd.version.MavenVersion;
+import aQute.bnd.version.Version;
+
+import aQute.lib.utf8properties.UTF8Properties;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,23 +37,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import org.dm.gradle.plugins.bundle.BundleExtension;
-import org.dm.gradle.plugins.bundle.JarBuilder;
+import java.util.jar.Manifest;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.UncheckedIOException;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.internal.Factory;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Raymond Augé
  */
 public class ExecuteBndTask extends DefaultTask {
 
@@ -54,62 +63,122 @@ public class ExecuteBndTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void executeBnd() {
+	public void executeBnd() throws Exception {
+		Project project = getProject();
+
 		Logger logger = getLogger();
-		Properties properties = getProperties();
 
 		long clockStart = System.currentTimeMillis();
 
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			getProject(), BundleExtension.class);
+		Properties gradleProperties = new PropertiesWrapper();
 
-		Factory<JarBuilder> jarBuilderFactory =
-			bundleExtension.getJarBuilderFactory();
+		gradleProperties.put("task", this);
+		gradleProperties.put("project", project);
 
-		JarBuilder jarBuilder = jarBuilderFactory.create();
+		try (Builder builder = new Builder(
+				new Processor(gradleProperties, false))) {
 
-		jarBuilder.withBase(getBaseDir());
-		jarBuilder.withClasspath(_toArray(getClasspath()));
-		jarBuilder.withFailOnError(isFailOnError());
-		jarBuilder.withName(
-			properties.getProperty(Constants.BUNDLE_SYMBOLICNAME));
-		jarBuilder.withProperties(properties);
-		jarBuilder.withResources(_toArray(getResourceDirs()));
-		jarBuilder.withSourcepath(getSourceDirs());
-		jarBuilder.withVersion(
-			properties.getProperty(Constants.BUNDLE_VERSION));
+			Properties properties = getProperties();
 
-		if (logger.isInfoEnabled()) {
-			jarBuilder.withTrace(true);
-		}
-		else {
-			jarBuilder.withTrace(true);
-		}
+			builder.setJar(new Jar("dot"));
+			builder.setBase(getBaseDir());
+			builder.setProperties(properties);
 
-		File outputFile = getOutputFile();
+			ConfigurableFileCollection buildPath = project.files(
+				getClasspath(), getResourceDirs());
 
-		if (isWriteManifest()) {
-			File outputDir = outputFile.getParentFile();
+			builder.setProperty("project.buildpath", buildPath.getAsPath());
+			builder.setClasspath(_toArray(buildPath));
 
-			outputDir.mkdirs();
-
-			try (OutputStream outputStream = new FileOutputStream(outputFile)) {
-				jarBuilder.writeManifestTo(outputStream);
+			if (logger.isDebugEnabled()) {
+				logger.debug("builder classpath: {}", buildPath.getAsPath());
 			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
+
+			ConfigurableFileCollection sourcePath = project.files(
+				getSourceDirs());
+
+			builder.setProperty("project.sourcepath", sourcePath.getAsPath());
+			builder.setSourcepath(_toArray(sourcePath));
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("builder sourcepath: {}", sourcePath.getAsPath());
 			}
-		}
-		else {
-			jarBuilder.writeJarTo(outputFile);
-		}
 
-		if (logger.isLifecycleEnabled()) {
-			long clockStop = System.currentTimeMillis();
+			String bundleSymbolicName = builder.getProperty(
+				Constants.BUNDLE_SYMBOLICNAME);
 
-			logger.lifecycle(
-				"Building the {} file took {} seconds.", outputFile.getName(),
-				(clockStop - clockStart) / 1000);
+			if (Validator.isNull(bundleSymbolicName) ||
+				Constants.EMPTY_HEADER.equals(bundleSymbolicName)) {
+
+				builder.setProperty(
+					Constants.BUNDLE_SYMBOLICNAME, project.getName());
+			}
+
+			String bundleVersion = builder.getProperty(
+				Constants.BUNDLE_VERSION);
+
+			if ((Validator.isNull(bundleVersion) ||
+				 Constants.EMPTY_HEADER.equals(bundleVersion)) &&
+				(project.getVersion() != null)) {
+
+				Object version = project.getVersion();
+
+				MavenVersion mavenVersion = MavenVersion.parseString(
+					version.toString());
+
+				Version osgiVersion = mavenVersion.getOSGiVersion();
+
+				builder.setProperty(
+					Constants.BUNDLE_VERSION, osgiVersion.toString());
+			}
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("builder properties: {}", properties);
+			}
+
+			Jar jar = builder.build();
+
+			if (!builder.isOk()) {
+				BndUtils.logReport(builder, logger);
+
+				throw new GradleException(this + " failed");
+			}
+
+			File outputFile = getOutputFile();
+
+			if (isWriteManifest()) {
+				File outputDir = outputFile.getParentFile();
+
+				outputDir.mkdirs();
+
+				try (OutputStream outputStream = new FileOutputStream(
+						outputFile)) {
+
+					Manifest manifest = jar.getManifest();
+
+					manifest.write(outputStream);
+				}
+				catch (IOException ioe) {
+					throw new GradleException(this + " failed", ioe);
+				}
+			}
+			else {
+				jar.write(outputFile);
+			}
+
+			BndUtils.logReport(builder, logger);
+
+			if (!builder.isOk()) {
+				throw new GradleException(this + " failed");
+			}
+
+			if (logger.isInfoEnabled()) {
+				long clockStop = System.currentTimeMillis();
+
+				logger.info(
+					"Building the {} file took {} seconds.",
+					outputFile.getName(), (clockStop - clockStart) / 1000);
+			}
 		}
 	}
 
@@ -130,10 +199,10 @@ public class ExecuteBndTask extends DefaultTask {
 
 	@Input
 	public Properties getProperties() {
-		Properties properties = new Properties();
+		Properties properties = new UTF8Properties();
 
 		for (Map.Entry<String, Object> entry : _properties.entrySet()) {
-			properties.setProperty(
+			properties.put(
 				entry.getKey(), GradleUtil.toString(entry.getValue()));
 		}
 

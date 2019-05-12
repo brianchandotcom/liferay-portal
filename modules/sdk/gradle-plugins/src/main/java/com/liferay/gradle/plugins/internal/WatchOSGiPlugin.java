@@ -17,11 +17,11 @@ package com.liferay.gradle.plugins.internal;
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
-import com.liferay.gradle.plugins.internal.util.GradlePluginsUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
 import com.liferay.gradle.plugins.tasks.WatchTask;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -119,7 +119,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return GradlePluginsUtil.getBundleInstruction(
+					return BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_NAME) + " Libs";
 				}
 
@@ -131,7 +131,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return GradlePluginsUtil.getBundleInstruction(
+					return BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME) + ".libs";
 				}
 
@@ -145,7 +145,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return GradlePluginsUtil.getBundleInstruction(
+					return BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 				}
 

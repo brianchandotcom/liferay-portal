@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.internal;
 
+import aQute.bnd.gradle.BndBuilderPlugin;
+
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.db.support.DBSupportPlugin;
@@ -28,8 +30,6 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.concurrent.Callable;
-
-import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -86,12 +86,12 @@ public class ServiceBuilderDefaultsPlugin
 			});
 
 		GradleUtil.withPlugin(
-			project, BundlePlugin.class,
-			new Action<BundlePlugin>() {
+			project, BndBuilderPlugin.class,
+			new Action<BndBuilderPlugin>() {
 
 				@Override
-				public void execute(BundlePlugin bundlePlugin) {
-					_configureTasksBuildServiceForBundlePlugin(project);
+				public void execute(BndBuilderPlugin bndBuilderPlugin) {
+					_configureTasksBuildServiceForBndBuilderPlugin(project);
 				}
 
 			});
@@ -149,7 +149,7 @@ public class ServiceBuilderDefaultsPlugin
 		buildDBTask.setClasspath(fileCollection);
 	}
 
-	private void _configureTaskBuildServiceForBundlePlugin(
+	private void _configureTaskBuildServiceForBndBuilderPlugin(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
@@ -218,7 +218,9 @@ public class ServiceBuilderDefaultsPlugin
 			});
 	}
 
-	private void _configureTasksBuildServiceForBundlePlugin(Project project) {
+	private void _configureTasksBuildServiceForBndBuilderPlugin(
+		Project project) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -227,7 +229,8 @@ public class ServiceBuilderDefaultsPlugin
 
 				@Override
 				public void execute(BuildServiceTask buildServiceTask) {
-					_configureTaskBuildServiceForBundlePlugin(buildServiceTask);
+					_configureTaskBuildServiceForBndBuilderPlugin(
+						buildServiceTask);
 				}
 
 			});

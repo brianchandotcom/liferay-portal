@@ -14,10 +14,21 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.gradle.BndBuilderPlugin;
+import aQute.bnd.gradle.BndUtils;
+import aQute.bnd.gradle.BundleTaskConvention;
+import aQute.bnd.gradle.PropertiesWrapper;
 import aQute.bnd.header.Parameters;
+import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.osgi.Processor;
+import aQute.bnd.version.MavenVersion;
+import aQute.bnd.version.Version;
+
+import aQute.lib.utf8properties.UTF8Properties;
 
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.internal.AlloyTaglibDefaultsPlugin;
@@ -38,7 +49,6 @@ import com.liferay.gradle.plugins.internal.WSDDBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WatchOSGiPlugin;
 import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
-import com.liferay.gradle.plugins.internal.util.GradlePluginsUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -58,6 +68,7 @@ import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
@@ -68,32 +79,29 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
-
-import org.dm.gradle.plugins.bundle.BundleExtension;
-import org.dm.gradle.plugins.bundle.BundlePlugin;
-import org.dm.gradle.plugins.bundle.BundleUtils;
-import org.dm.gradle.plugins.bundle.JarBuilder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -103,6 +111,8 @@ import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.ApplicationPluginConvention;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.Convention;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -120,12 +130,11 @@ import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.internal.Factory;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Raymond Augé
  */
 public class LiferayOSGiPlugin implements Plugin<Project> {
 
@@ -201,29 +210,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	public static class LiferayJarBuilderFactory
-		implements Factory<JarBuilder> {
-
-		@Override
-		public JarBuilder create() {
-			LiferayJarBuilder liferayJarBuilder = new LiferayJarBuilder();
-
-			return liferayJarBuilder.withContextClassLoader(
-				_contextClassLoader);
-		}
-
-		public ClassLoader getContextClassLoader() {
-			return _contextClassLoader;
-		}
-
-		public void setContextClassLoader(ClassLoader contextClassLoader) {
-			_contextClassLoader = contextClassLoader;
-		}
-
-		private ClassLoader _contextClassLoader;
-
 	}
 
 	private Configuration _addConfigurationCompileInclude(Project project) {
@@ -531,53 +517,142 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					Project project = task.getProject();
 
-					BundleExtension bundleExtension = GradleUtil.getExtension(
-						project, BundleExtension.class);
+					Logger logger = project.getLogger();
 
-					Factory<JarBuilder> jarBuilderFactory =
-						bundleExtension.getJarBuilderFactory();
+					Properties gradleProperties = new PropertiesWrapper();
 
-					JarBuilder jarBuilder = jarBuilderFactory.create();
+					gradleProperties.put("task", task);
+					gradleProperties.put("project", project);
 
-					Map<String, String> properties = _getProperties(project);
+					try (Builder builder = new Builder(
+							new Processor(gradleProperties, false))) {
 
-					jarBuilder.withBase(BundleUtils.getBase(project));
-					jarBuilder.withClasspath(_getClasspath(project));
-					jarBuilder.withFailOnError(true);
-					jarBuilder.withName(
-						properties.get(Constants.BUNDLE_SYMBOLICNAME));
-					jarBuilder.withProperties(properties);
-					jarBuilder.withResources(new File[0]);
-					jarBuilder.withSourcepath(BundleUtils.getSources(project));
-					jarBuilder.withTrace(bundleExtension.isTrace());
-					jarBuilder.withVersion(BundleUtils.getVersion(project));
+						Map<String, String> properties = _getProperties(
+							project);
 
-					TaskOutputs taskOutputs = task.getOutputs();
+						File buildFile = project.getBuildFile();
 
-					FileCollection fileCollection = taskOutputs.getFiles();
+						builder.setBase(buildFile.getParentFile());
 
-					jarBuilder.writeJarTo(fileCollection.getSingleFile());
-				}
+						builder.putAll(properties, true);
 
-				private File[] _getClasspath(Project project) {
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
+						SourceSet sourceSet = GradleUtil.getSourceSet(
+							project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+						SourceDirectorySet sourceDirectorySet =
+							sourceSet.getJava();
 
-					return new File[] {
-						sourceSetOutput.getClassesDir(),
-						sourceSetOutput.getResourcesDir()
-					};
+						SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+						ConfigurableFileCollection buildPath = project.files(
+							sourceDirectorySet.getOutputDir(),
+							sourceSetOutput.getResourcesDir());
+
+						builder.setProperty(
+							"project.buildpath", buildPath.getAsPath());
+						builder.setClasspath(
+							buildPath.getFiles(
+							).toArray(
+								new File[0]
+							));
+
+						if (logger.isDebugEnabled()) {
+							logger.debug(
+								"builder classpath: {}", buildPath.getAsPath());
+						}
+
+						SourceDirectorySet allSource = sourceSet.getAllSource();
+
+						ConfigurableFileCollection sourcePath = project.files(
+							allSource.getSrcDirs(
+							).stream(
+							).filter(
+								File::exists
+							).collect(
+								Collectors.toList()
+							));
+
+						builder.setProperty(
+							"project.sourcepath", sourcePath.getAsPath());
+						builder.setSourcepath(
+							sourcePath.getFiles(
+							).toArray(
+								new File[0]
+							));
+
+						if (logger.isDebugEnabled()) {
+							logger.debug(
+								"builder sourcepath: {}",
+								builder.getSourcePath());
+						}
+
+						String bundleSymbolicName = builder.getProperty(
+							Constants.BUNDLE_SYMBOLICNAME);
+
+						if (Validator.isNull(bundleSymbolicName) ||
+							Constants.EMPTY_HEADER.equals(bundleSymbolicName)) {
+
+							builder.setProperty(
+								Constants.BUNDLE_SYMBOLICNAME,
+								project.getName());
+						}
+
+						String bundleVersion = builder.getProperty(
+							Constants.BUNDLE_VERSION);
+
+						if ((Validator.isNull(bundleVersion) ||
+							 Constants.EMPTY_HEADER.equals(bundleVersion)) &&
+							(project.getVersion() != null)) {
+
+							Object version = project.getVersion();
+
+							MavenVersion mavenVersion =
+								MavenVersion.parseString(version.toString());
+
+							Version osgiVersion = mavenVersion.getOSGiVersion();
+
+							builder.setProperty(
+								Constants.BUNDLE_VERSION,
+								osgiVersion.toString());
+						}
+
+						if (logger.isDebugEnabled()) {
+							logger.debug("builder properties: {}", properties);
+						}
+
+						aQute.bnd.osgi.Jar bndJar = builder.build();
+
+						if (!builder.isOk()) {
+							BndUtils.logReport(builder, logger);
+
+							new GradleException(buildWSDDTask + " failed");
+						}
+
+						TaskOutputs taskOutputs = task.getOutputs();
+
+						FileCollection fileCollection = taskOutputs.getFiles();
+
+						bndJar.write(fileCollection.getSingleFile());
+
+						BndUtils.logReport(builder, logger);
+
+						if (!builder.isOk()) {
+							new GradleException(buildWSDDTask + " failed");
+						}
+					}
+					catch (Exception e) {
+						new GradleException(buildWSDDTask + " failed", e);
+					}
 				}
 
 				private Map<String, String> _getProperties(Project project) {
-					LiferayOSGiExtension liferayOSGiExtension =
-						GradleUtil.getExtension(
-							project, LiferayOSGiExtension.class);
+					Map<String, String> properties = new HashMap<>();
 
-					Map<String, String> properties =
-						liferayOSGiExtension.getBundleDefaultInstructions();
+					BundleExtension bundleExtension = GradleUtil.getExtension(
+						project, BundleExtension.class);
+
+					bundleExtension.forEach(
+						(k, v) -> properties.put(k, GradleUtil.toString(v)));
 
 					Map<String, ?> projectProperties = project.getProperties();
 
@@ -597,7 +672,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						LiferayOSGiExtension.
 							BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML);
 
-					String bundleName = GradlePluginsUtil.getBundleInstruction(
+					String bundleName = BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_NAME);
 
 					if (Validator.isNotNull(bundleName)) {
@@ -606,9 +681,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							bundleName + " WSDD descriptors");
 					}
 
-					String bundleSymbolicName =
-						GradlePluginsUtil.getBundleInstruction(
-							project, Constants.BUNDLE_SYMBOLICNAME);
+					String bundleSymbolicName = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
 
 					properties.put(
 						Constants.BUNDLE_SYMBOLICNAME,
@@ -672,7 +746,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, BundlePlugin.class);
+		GradleUtil.applyPlugin(project, BndBuilderPlugin.class);
 
 		_configureBundleExtension(project);
 
@@ -730,7 +804,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.getConvention(
 				project, ApplicationPluginConvention.class);
 
-		String mainClassName = GradlePluginsUtil.getBundleInstruction(
+		String mainClassName = BndBuilderUtil.getInstruction(
 			project, "Main-Class");
 
 		if (Validator.isNotNull(mainClassName)) {
@@ -742,7 +816,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
-		String bundleSymbolicName = GradlePluginsUtil.getBundleInstruction(
+		String bundleSymbolicName = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_SYMBOLICNAME);
 
 		if (Validator.isNull(bundleSymbolicName)) {
@@ -761,29 +835,33 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleExtension(Project project) {
-		_replaceJarBuilderFactory(project);
+		BundleExtension bundleExtension = new BundleExtension();
 
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			project, BundleExtension.class);
+		ExtensionContainer extensionContainer = project.getExtensions();
 
-		bundleExtension.setFailOnError(true);
+		extensionContainer.add(
+			BundleExtension.class, "bundle", bundleExtension);
 
 		File file = project.file("bnd.bnd");
 
 		if (file.exists()) {
-			Map<String, Object> bundleInstructions =
-				GradlePluginsUtil.getBundleInstructions(bundleExtension);
+			UTF8Properties properties = new UTF8Properties();
 
-			Properties properties = GUtil.loadProperties(file);
+			try {
+				properties.load(file, new Processor());
 
-			Enumeration<Object> keys = properties.keys();
+				Enumeration<Object> keys = properties.keys();
 
-			while (keys.hasMoreElements()) {
-				String key = (String)keys.nextElement();
+				while (keys.hasMoreElements()) {
+					String key = (String)keys.nextElement();
 
-				String value = properties.getProperty(key);
+					String value = properties.getProperty(key);
 
-				bundleInstructions.put(key, value);
+					bundleExtension.put(key, value);
+				}
+			}
+			catch (Exception e) {
+				throw new GradleException("Could not read " + file, e);
 			}
 		}
 	}
@@ -792,8 +870,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Project project, final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
 
-		Map<String, Object> bundleInstructions =
-			GradlePluginsUtil.getBundleInstructions(project);
+		Map<String, Object> bundleInstructions = BndBuilderUtil.getInstructions(
+			project);
 
 		IncludeResourceCompileIncludeInstruction
 			includeResourceCompileIncludeInstruction =
@@ -821,10 +899,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				compileIncludeConfiguration.getName(),
 			includeResourceCompileIncludeInstruction);
 
-		Map<String, String> bundleDefaultInstructions =
+		Map<String, Object> bundleDefaultInstructions =
 			liferayOSGiExtension.getBundleDefaultInstructions();
 
-		for (Map.Entry<String, String> entry :
+		for (Map.Entry<String, Object> entry :
 				bundleDefaultInstructions.entrySet()) {
 
 			String key = entry.getKey();
@@ -836,11 +914,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDescription(Project project) {
-		String description = GradlePluginsUtil.getBundleInstruction(
+		String description = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_DESCRIPTION);
 
 		if (Validator.isNull(description)) {
-			description = GradlePluginsUtil.getBundleInstruction(
+			description = BndBuilderUtil.getInstruction(
 				project, Constants.BUNDLE_NAME);
 		}
 
@@ -975,15 +1053,51 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJar(Project project) {
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		jar.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Map<String, Object> bundleInstructions =
+						BndBuilderUtil.getInstructions(project);
+
+					Map<String, ?> projectProperties = project.getProperties();
+
+					for (Map.Entry<String, ?> entry :
+							projectProperties.entrySet()) {
+
+						String key = entry.getKey();
+
+						Matcher matcher = _keyRegex.matcher(key);
+
+						if (matcher.matches()) {
+							bundleInstructions.put(
+								key, GradleUtil.toString(entry.getValue()));
+						}
+					}
+
+					Convention convention = jar.getConvention();
+
+					BundleTaskConvention bundleTaskConvention =
+						convention.getPlugin(BundleTaskConvention.class);
+
+					bundleTaskConvention.setBndfile(
+						new File("$$$DOESNOTEXIST$$$"));
+
+					bundleTaskConvention.setBnd(bundleInstructions);
+				}
+
+			});
+
 		File bndFile = project.file("bnd.bnd");
 
 		if (!bndFile.exists()) {
 			return;
 		}
 
-		Task jarTask = GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		TaskInputs taskInputs = jarTask.getInputs();
+		TaskInputs taskInputs = jar.getInputs();
 
 		taskInputs.file(bndFile);
 	}
@@ -997,9 +1111,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadoc(Project project) {
-		String bundleName = GradlePluginsUtil.getBundleInstruction(
+		String bundleName = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_NAME);
-		String bundleVersion = GradlePluginsUtil.getBundleInstruction(
+		String bundleVersion = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNull(bundleName) || Validator.isNull(bundleVersion)) {
@@ -1089,7 +1203,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureVersion(Project project) {
-		String bundleVersion = GradlePluginsUtil.getBundleInstruction(
+		String bundleVersion = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
@@ -1097,147 +1211,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _replaceJarBuilderFactory(Project project) {
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			project, BundleExtension.class);
-
-		bundleExtension.setJarBuilderFactory(new LiferayJarBuilderFactory());
-	}
-
 	private static final String _CACHE_PLUGIN_ID = "com.liferay.cache";
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayOSGiPlugin.class);
 
-	private static class LiferayJarBuilder extends JarBuilder {
-
-		@Override
-		public JarBuilder withClasspath(Object files) {
-			List<File> filesList = new ArrayList<>(
-				Arrays.asList((File[])files));
-
-			Iterator<File> iterator = filesList.iterator();
-
-			while (iterator.hasNext()) {
-				File file = iterator.next();
-
-				String fileName = file.getName();
-
-				if (_classpathFiles.contains(file) ||
-					fileName.endsWith(".pom") || !file.exists()) {
-
-					iterator.remove();
-
-					continue;
-				}
-
-				_classpathFiles.add(file);
-
-				if (_logger.isInfoEnabled()) {
-					_logger.info("CLASSPATH: {}", file.getAbsolutePath());
-				}
-			}
-
-			return super.withClasspath(filesList.toArray(new File[0]));
-		}
-
-		public JarBuilder withContextClassLoader(
-			ClassLoader contextClassLoader) {
-
-			_contextClassLoader = contextClassLoader;
-
-			return this;
-		}
-
-		@Override
-		public JarBuilder withResources(Object files) {
-			List<File> filesList = new ArrayList<>(
-				Arrays.asList((File[])files));
-
-			Iterator<File> iterator = filesList.iterator();
-
-			while (iterator.hasNext()) {
-				File file = iterator.next();
-
-				if (_resourceFiles.contains(file) || !file.exists()) {
-					iterator.remove();
-
-					continue;
-				}
-
-				_resourceFiles.add(file);
-
-				if (_logger.isInfoEnabled()) {
-					_logger.info("RESOURCE: {}", file.getAbsolutePath());
-				}
-			}
-
-			return super.withResources(filesList.toArray(new File[0]));
-		}
-
-		@Override
-		public void writeJarTo(File file) {
-			ClassLoader contextClassLoader = _replaceContextClassLoader(
-				_contextClassLoader);
-
-			try {
-				super.writeJarTo(file);
-			}
-			finally {
-				_replaceContextClassLoader(contextClassLoader);
-			}
-		}
-
-		@Override
-		public void writeManifestTo(OutputStream outputStream) {
-			ClassLoader contextClassLoader = _replaceContextClassLoader(
-				_contextClassLoader);
-
-			try {
-				super.writeManifestTo(outputStream);
-			}
-			finally {
-				_replaceContextClassLoader(contextClassLoader);
-			}
-		}
-
-		@Override
-		public void writeManifestTo(
-			OutputStream outputStream,
-			@SuppressWarnings("rawtypes") Closure closure) {
-
-			ClassLoader contextClassLoader = _replaceContextClassLoader(
-				_contextClassLoader);
-
-			try {
-				super.writeManifestTo(outputStream, closure);
-			}
-			finally {
-				_replaceContextClassLoader(contextClassLoader);
-			}
-		}
-
-		private ClassLoader _replaceContextClassLoader(
-			ClassLoader newContextClassLoader) {
-
-			if (newContextClassLoader == null) {
-				return null;
-			}
-
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
-
-			currentThread.setContextClassLoader(newContextClassLoader);
-
-			return contextClassLoader;
-		}
-
-		private final Set<File> _classpathFiles = new HashSet<>();
-		private ClassLoader _contextClassLoader;
-		private final Set<File> _resourceFiles = new HashSet<>();
-
-	}
+	private static final Pattern _keyRegex = Pattern.compile(
+		"[a-z][\\p{Alnum}-_.]*");
 
 }

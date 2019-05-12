@@ -12,16 +12,20 @@
  * details.
  */
 
-package com.liferay.info.display.contributor;
+package com.liferay.blogs.web.internal.info.display.url.provider;
 
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.asset.info.display.url.provider.BaseAssetInfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jürgen Kappler
  */
-public interface InfoEditURLProvider<T> {
-
-	public String getURL(T t, HttpServletRequest httpServletRequest)
-		throws Exception;
-
+@Component(
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
+	service = InfoEditURLProvider.class
+)
+public class BlogsAssetInfoEditURLProvider
+	extends BaseAssetInfoEditURLProvider {
 }

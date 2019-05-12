@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.info.internal.display.contributor;
+package com.liferay.info.internal.display.url.provider;
 
-import com.liferay.info.display.contributor.InfoEditURLProvider;
-import com.liferay.info.display.contributor.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

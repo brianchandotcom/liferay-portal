@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.info.display.contributor;
+package com.liferay.info.display.url.provider;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
-public interface InfoEditURLProviderTracker {
+public interface InfoEditURLProvider<T> {
 
-	public InfoEditURLProvider getInfoEditURLProvider(String className);
+	public String getURL(T t, HttpServletRequest httpServletRequest)
+		throws Exception;
 
 }

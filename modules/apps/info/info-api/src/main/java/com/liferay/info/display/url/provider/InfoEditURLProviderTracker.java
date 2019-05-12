@@ -12,20 +12,13 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.info.display.contributor;
-
-import com.liferay.asset.info.display.contributor.BaseAssetInfoEditURLProvider;
-import com.liferay.info.display.contributor.InfoEditURLProvider;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.info.display.url.provider;
 
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = InfoEditURLProvider.class
-)
-public class JournalAssetInfoEditURLProvider
-	extends BaseAssetInfoEditURLProvider {
+public interface InfoEditURLProviderTracker {
+
+	public InfoEditURLProvider getInfoEditURLProvider(String className);
+
 }

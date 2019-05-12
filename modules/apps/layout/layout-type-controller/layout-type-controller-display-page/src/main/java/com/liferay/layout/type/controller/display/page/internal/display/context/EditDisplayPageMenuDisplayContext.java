@@ -18,7 +18,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.info.display.contributor.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;

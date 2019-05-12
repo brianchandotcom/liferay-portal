@@ -12,23 +12,27 @@
  * details.
  */
 
-package com.liferay.asset.display.contributor;
+package com.liferay.info.display.contributor.field;
 
-import java.util.List;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * @author     Lance Ji
- * @deprecated As of Judson (7.1.x), replaced by {@link
- *             InfoDisplayContributorFieldTracker}
+ * @author Eudaldo Alonso
  */
-@Deprecated
-public interface AssetDisplayContributorTracker {
+public abstract class BaseInfoDisplayContributorField<T>
+	implements InfoDisplayContributorField<T> {
 
-	public AssetDisplayContributor getAssetDisplayContributor(String className);
+	protected ThemeDisplay getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-	public AssetDisplayContributor
-		getAssetDisplayContributorByAssetURLSeparator(String assetURLSeparator);
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
 
-	public List<AssetDisplayContributor> getAssetDisplayContributors();
+		return null;
+	}
 
 }

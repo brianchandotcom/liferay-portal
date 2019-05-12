@@ -12,22 +12,16 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.info.display.contributor;
+package com.liferay.blogs.web.internal.info.display.contributor.field;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.reading.time.message.ReadingTimeMessageProvider;
-import com.liferay.reading.time.model.ReadingTimeEntry;
-import com.liferay.reading.time.service.ReadingTimeEntryLocalService;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -36,20 +30,17 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = InfoDisplayContributorField.class
 )
-public class BlogsEntryReadingTimeInfoDisplayContributorField
+public class BlogsEntrySubtitleInfoDisplayContributorField
 	implements InfoDisplayContributorField<BlogsEntry> {
 
 	@Override
 	public String getKey() {
-		return "readingTime";
+		return "subtitle";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "reading-time");
+		return LanguageUtil.get(locale, "subtitle");
 	}
 
 	@Override
@@ -59,17 +50,7 @@ public class BlogsEntryReadingTimeInfoDisplayContributorField
 
 	@Override
 	public String getValue(BlogsEntry blogsEntry, Locale locale) {
-		ReadingTimeEntry readingTimeEntry =
-			_readingTimeEntryLocalService.fetchOrAddReadingTimeEntry(
-				blogsEntry);
-
-		return _readingTimeMessageProvider.provide(readingTimeEntry, locale);
+		return blogsEntry.getSubtitle();
 	}
-
-	@Reference
-	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
-
-	@Reference
-	private ReadingTimeMessageProvider _readingTimeMessageProvider;
 
 }

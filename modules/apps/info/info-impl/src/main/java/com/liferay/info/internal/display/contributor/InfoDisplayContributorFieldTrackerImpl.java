@@ -14,8 +14,8 @@
 
 package com.liferay.info.internal.display.contributor;
 
-import com.liferay.info.display.contributor.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.InfoDisplayContributorFieldTracker;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;

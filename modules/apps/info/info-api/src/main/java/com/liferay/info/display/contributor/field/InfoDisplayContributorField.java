@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.asset.display.contributor;
+package com.liferay.info.display.contributor.field;
 
-import java.util.List;
+import java.util.Locale;
 
 /**
- * @author     Lance Ji
- * @deprecated As of Judson (7.1.x), replaced by {@link
- *             InfoDisplayContributorFieldTracker}
+ * @author Jürgen Kappler
  */
-@Deprecated
-public interface AssetDisplayContributorTracker {
+public interface InfoDisplayContributorField<T> {
 
-	public AssetDisplayContributor getAssetDisplayContributor(String className);
+	public String getKey();
 
-	public AssetDisplayContributor
-		getAssetDisplayContributorByAssetURLSeparator(String assetURLSeparator);
+	public String getLabel(Locale locale);
 
-	public List<AssetDisplayContributor> getAssetDisplayContributors();
+	public InfoDisplayContributorFieldType getType();
+
+	public Object getValue(T model, Locale locale);
 
 }

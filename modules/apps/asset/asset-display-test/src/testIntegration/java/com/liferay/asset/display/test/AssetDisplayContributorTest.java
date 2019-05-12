@@ -16,8 +16,8 @@ package com.liferay.asset.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.info.display.contributor.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.InfoDisplayContributorFieldTracker;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

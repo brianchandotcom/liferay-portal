@@ -66,9 +66,13 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(
 			Constants.FIXUPMESSAGES + ".deprecated",
 			"annotations are deprecated");
+		_bundleDefaultInstructions.put(
+			Constants.FIXUPMESSAGES + ".classpath.empty",
+			"Classpath is empty.");
 		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
 		_bundleDefaultInstructions.put(
-			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
+			Constants.PLUGIN + ".liferay",
+			StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
 
 		_bundleDefaultInstructions.put(
 			"Javac-Debug",
@@ -118,7 +122,7 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(
 			BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML,
 			"service.xml,*/service.xml");
-		_bundleDefaultInstructions.put("-contract", "JavaPortlet,JavaServlet");
+		_bundleDefaultInstructions.put("-contract", "*");
 		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
 		_bundleDefaultInstructions.put("-sass", "*");
 	}

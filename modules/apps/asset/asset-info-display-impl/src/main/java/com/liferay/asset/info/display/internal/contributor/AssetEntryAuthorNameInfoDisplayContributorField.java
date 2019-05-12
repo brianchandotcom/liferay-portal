@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = InfoDisplayContributorField.class
 )
-public class AssetEntryAuthorNamInfoDisplayContributorField
+public class AssetEntryAuthorNameInfoDisplayContributorField
 	implements InfoDisplayContributorField<AssetEntry> {
 
 	@Override

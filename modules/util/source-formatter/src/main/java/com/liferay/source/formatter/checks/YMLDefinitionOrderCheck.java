@@ -74,6 +74,17 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 				@Override
 				public int compare(String definition1, String definition2) {
+					String trimmedDefinition1 = StringUtil.trimLeading(
+						definition1);
+					String trimmedDefinition2 = StringUtil.trimLeading(
+						definition2);
+
+					if (trimmedDefinition1.startsWith("{{") ||
+						trimmedDefinition2.startsWith("{{")) {
+
+						return 0;
+					}
+
 					if (Validator.isNull(definition1) ||
 						Validator.isNull(definition2)) {
 

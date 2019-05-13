@@ -61,30 +61,6 @@
 		"metal-state": "2.16.8",
 		"object-hash": "^1.3.0"
 	},
-	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-core": "^6.26.3",
-		"babel-eslint": "^8.2.6",
-		"babel-plugin-module-resolver": "^3.1.1",
-		"babel-plugin-transform-class-properties": "^6.24.1",
-		"babel-plugin-transform-decorators-legacy": "^1.3.5",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-plugin-transform-runtime": "^6.23.0",
-		"babel-preset-env": "^1.7.0",
-		"babel-preset-metal-jsx": "^0.1.1",
-		"browser-sync": "^2.24.7",
-		"check-source-formatting": "^2.0.14",
-		"cross-env": "^5.2.0",
-		"cross-spawn": "^6.0.5",
-		"eslint": "^4.10.0",
-		"eslint-config-liferay": "^3.0.0",
-		"jest": "^24.5.0",
-		"jest-fetch-mock": "^1.6.6",
-		"metal-jest-serializer": "^2.0.0",
-		"metal-tools-soy": "^6.0.0",
-		"opn-cli": "^3.1.0",
-		"rimraf": "^2.6.2"
-	},
 	"jest": {
 		"automock": false,
 		"coverageDirectory": "build/coverage",
@@ -128,13 +104,9 @@
 	"name": "dynamic-data-mapping-form-web",
 	"private": true,
 	"scripts": {
-		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
-		"format": "liferay-npm-scripts format",
-		"start": "node watch.js",
-		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
-		"test:snapshots": "NODE_ENV=test jest --coverage -u",
-		"test_DISABLED": "cross-env NODE_ENV=test jest --coverage"
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"
 }

@@ -83,23 +83,23 @@ public class ExecuteBndTask extends DefaultTask {
 			builder.setBase(getBaseDir());
 			builder.setProperties(properties);
 
-			FileCollection buildPath = project.files(
+			FileCollection buildDirs = project.files(
 				getClasspath(), getResourceDirs());
 
-			builder.setProperty("project.buildpath", buildPath.getAsPath());
-			builder.setClasspath(_toArray(buildPath));
+			builder.setProperty("project.buildpath", buildDirs.getAsPath());
+			builder.setClasspath(_toArray(buildDirs));
 
 			if (logger.isDebugEnabled()) {
-				logger.debug("builder classpath: {}", buildPath.getAsPath());
+				logger.debug("builder classpath: {}", buildDirs.getAsPath());
 			}
 
-			FileCollection sourcePath = project.files(getSourceDirs());
+			FileCollection sourceDirs = project.files(getSourceDirs());
 
-			builder.setProperty("project.sourcepath", sourcePath.getAsPath());
-			builder.setSourcepath(_toArray(sourcePath));
+			builder.setProperty("project.sourcepath", sourceDirs.getAsPath());
+			builder.setSourcepath(_toArray(sourceDirs));
 
 			if (logger.isDebugEnabled()) {
-				logger.debug("builder sourcepath: {}", sourcePath.getAsPath());
+				logger.debug("builder sourcepath: {}", sourceDirs.getAsPath());
 			}
 
 			String bundleSymbolicName = builder.getProperty(

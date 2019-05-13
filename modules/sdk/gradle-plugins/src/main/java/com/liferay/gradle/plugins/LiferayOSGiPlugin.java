@@ -544,26 +544,26 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-						FileCollection buildPath = project.files(
+						FileCollection buildDirs = project.files(
 							sourceDirectorySet.getOutputDir(),
 							sourceSetOutput.getResourcesDir());
 
 						builder.setProperty(
-							"project.buildpath", buildPath.getAsPath());
+							"project.buildpath", buildDirs.getAsPath());
 						builder.setClasspath(
-							buildPath.getFiles(
+							buildDirs.getFiles(
 							).toArray(
 								new File[0]
 							));
 
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"builder classpath: {}", buildPath.getAsPath());
+								"builder classpath: {}", buildDirs.getAsPath());
 						}
 
 						SourceDirectorySet allSource = sourceSet.getAllSource();
 
-						FileCollection sourcePath = project.files(
+						FileCollection sourceDirs = project.files(
 							allSource.getSrcDirs(
 							).stream(
 							).filter(
@@ -573,9 +573,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							));
 
 						builder.setProperty(
-							"project.sourcepath", sourcePath.getAsPath());
+							"project.sourcepath", sourceDirs.getAsPath());
 						builder.setSourcepath(
-							sourcePath.getFiles(
+							sourceDirs.getFiles(
 							).toArray(
 								new File[0]
 							));
@@ -845,17 +845,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		File file = project.file("bnd.bnd");
 
 		if (file.exists()) {
-			UTF8Properties properties = new UTF8Properties();
+			UTF8Properties utf8Properties = new UTF8Properties();
 
 			try {
-				properties.load(file, new Processor());
+				utf8Properties.load(file, new Processor());
 
-				Enumeration<Object> keys = properties.keys();
+				Enumeration<Object> keys = utf8Properties.keys();
 
 				while (keys.hasMoreElements()) {
 					String key = (String)keys.nextElement();
 
-					String value = properties.getProperty(key);
+					String value = utf8Properties.getProperty(key);
 
 					bundleExtension.put(key, value);
 				}

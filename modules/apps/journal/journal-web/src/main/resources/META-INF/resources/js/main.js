@@ -177,7 +177,10 @@ AUI.add(
 									function() {
 										return new Do.Prevent('Update input language has to be called only when we update a translation');
 									},
-									inputComponent, 'updateInputLanguage', inputComponent);
+									inputComponent,
+									'updateInputLanguage',
+									inputComponent
+								);
 
 								inputComponent.selectFlag(selectedLanguageId);
 

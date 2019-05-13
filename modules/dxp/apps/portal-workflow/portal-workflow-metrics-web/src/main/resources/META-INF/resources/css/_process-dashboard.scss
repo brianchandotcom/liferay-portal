@@ -19,6 +19,17 @@ $c: ".workflow-process-dashboard";
 		}
 	}
 
+	.panel {
+		.management-bar {
+			min-height: auto;
+
+			.dropdown-toggle {
+				margin: 0 !important;
+				padding: 0.5rem !important;
+			}
+		}
+	}
+
 	.process-dashboard-summary-card {
 		border: 1px solid #E7E7ED;
 		border-radius: 0.25rem;

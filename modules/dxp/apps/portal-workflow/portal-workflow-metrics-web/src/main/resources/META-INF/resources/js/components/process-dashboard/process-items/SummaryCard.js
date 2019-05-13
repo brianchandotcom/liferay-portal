@@ -36,14 +36,20 @@ class SummaryCard extends React.Component {
 	}
 
 	getFiltersQuery() {
-		const { completed, slaStatusFilter } = this.props;
+		const { completed, slaStatusFilter, timeRange } = this.props;
 
-		return {
+		const filterParams = {
 			[filterKeys.processStatus]: [
 				completed ? processStatusKeys.completed : processStatusKeys.pending
 			],
 			[filterKeys.slaStatus]: [slaStatusFilter]
 		};
+
+		if (timeRange) {
+			filterParams[filterKeys.completionPeriod] = timeRange.key;
+		}
+
+		return filterParams;
 	}
 
 	@autobind

@@ -1,8 +1,4 @@
 import {
-	CompletedItemsCard,
-	PendingItemsCard
-} from './process-items/ProcessItemsCard';
-import {
 	Redirect,
 	Route,
 	HashRouter as Router,
@@ -11,8 +7,10 @@ import {
 import AlertMessage from './AlertMessage';
 import { AppContext } from '../AppContext';
 import { ChildLink } from '../../shared/components/router/routerWrapper';
+import CompletedItemsCard from './process-items/CompletedItemsCard';
 import DropDownHeader from './DropDownHeader';
 import { getPathname } from '../../shared/components/tabs/TabItem';
+import PendingItemsCard from './process-items/PendingItemsCard';
 import React from 'react';
 import { sub } from '../../shared/util/lang';
 import Tabs from '../../shared/components/tabs/Tabs';

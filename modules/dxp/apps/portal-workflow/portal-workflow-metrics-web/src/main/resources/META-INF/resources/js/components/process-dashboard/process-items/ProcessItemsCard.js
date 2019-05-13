@@ -1,4 +1,5 @@
 import { AppContext } from '../../AppContext';
+import Filter from '../../../shared/components/filter/Filter';
 import Icon from '../../../shared/components/Icon';
 import LoadingState from '../../../shared/components/loading/LoadingState';
 import Panel from '../../../shared/components/Panel';
@@ -8,7 +9,7 @@ import ReloadButton from '../../../shared/components/list/ReloadButton';
 import SummaryCard from './SummaryCard';
 import Tooltip from '../../../shared/components/Tooltip';
 
-class ProcessItemsCard extends React.Component {
+export default class ProcessItemsCard extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -20,7 +21,17 @@ class ProcessItemsCard extends React.Component {
 	}
 
 	componentWillMount() {
-		return this.requestData()
+		return this.loadData();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.timeRange !== this.props.timeRange) {
+			return this.loadData(nextProps);
+		}
+	}
+
+	loadData(props = this.props) {
+		return this.requestData(props)
 			.then(data => {
 				this.context.setTitle(data.title);
 
@@ -40,11 +51,15 @@ class ProcessItemsCard extends React.Component {
 			});
 	}
 
-	requestData() {
+	requestData(props = this.props) {
 		const { client } = this.context;
-		const { completed = false, processId } = this.props;
+		const { completed = false, processId, timeRange } = props;
 
-		const urlRequest = `/processes/${processId}?completed=${completed}`;
+		let urlRequest = `/processes/${processId}?completed=${completed}`;
+
+		if (timeRange && Number.isInteger(timeRange.id)) {
+			urlRequest += `&timeRange=${timeRange.id}`;
+		}
 
 		this.setState({
 			loading: true
@@ -55,7 +70,14 @@ class ProcessItemsCard extends React.Component {
 
 	render() {
 		const { error, loading, process } = this.state;
-		const { completed, panelDescription, panelTitle, processId } = this.props;
+		const {
+			completed,
+			description,
+			filter,
+			processId,
+			timeRange,
+			title
+		} = this.props;
 
 		const errorRender = Component =>
 			(error && (
@@ -76,13 +98,25 @@ class ProcessItemsCard extends React.Component {
 
 		return (
 			<Panel>
-				<Panel.Header elementClasses={'dashboard-panel-header'}>
-					<div>
-						<span className={'mr-3'}>{panelTitle}</span>
+				<Panel.Header
+					elementClasses={['dashboard-panel-header', filter && 'pb-0']}
+				>
+					<div className="autofit-row">
+						<div className="autofit-col autofit-col-expand flex-row">
+							<span className="mr-3">{title}</span>
 
-						<Tooltip message={panelDescription} position="right" width="288">
-							<Icon iconName={'question-circle-full'} />
-						</Tooltip>
+							<Tooltip message={description} position="right" width="288">
+								<Icon iconName={'question-circle-full'} />
+							</Tooltip>
+						</div>
+
+						{filter && (
+							<div className="autofit-col m-0 management-bar management-bar-light navbar">
+								<ul className="navbar-nav">
+									<Filter {...filter} filterKey={filter.key} position="right" />
+								</ul>
+							</div>
+						)}
 					</div>
 				</Panel.Header>
 
@@ -96,6 +130,7 @@ class ProcessItemsCard extends React.Component {
 										completed={completed}
 										key={index}
 										processId={processId}
+										timeRange={timeRange}
 										total={panel.addressedToField === panel.totalField}
 										totalValue={process[panel.totalField]}
 										value={process[panel.addressedToField]}
@@ -111,32 +146,3 @@ class ProcessItemsCard extends React.Component {
 }
 
 ProcessItemsCard.contextType = AppContext;
-
-export class CompletedItemsCard extends React.Component {
-	render() {
-		const { processId } = this.props;
-
-		return (
-			<ProcessItemsCard
-				completed
-				panelDescription={Liferay.Language.get('completed-items-description')}
-				panelTitle={Liferay.Language.get('completed-items')}
-				processId={processId}
-			/>
-		);
-	}
-}
-
-export class PendingItemsCard extends React.Component {
-	render() {
-		const { processId } = this.props;
-
-		return (
-			<ProcessItemsCard
-				panelDescription={Liferay.Language.get('pending-items-description')}
-				panelTitle={Liferay.Language.get('pending-items')}
-				processId={processId}
-			/>
-		);
-	}
-}

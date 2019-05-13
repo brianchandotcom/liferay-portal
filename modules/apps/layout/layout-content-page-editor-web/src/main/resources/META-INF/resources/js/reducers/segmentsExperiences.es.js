@@ -1,9 +1,11 @@
 import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from '../actions/actions.es';
-import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
+import {deepClone, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {removeExperience, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {getRowFragmentEntryLinkIds} from '../utils/FragmentsEditorGetUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/add-segments-experience';
 
@@ -262,6 +264,8 @@ function createSegmentsExperienceReducer(state, action) {
 												segmentsExperienceId
 											);
 
+											nextNewState = _provideDefaultValueToFragments(nextNewState, segmentsExperienceId);
+
 											resolve(nextNewState);
 										}
 									).catch(
@@ -281,6 +285,106 @@ function createSegmentsExperienceReducer(state, action) {
 				resolve(nextState);
 			}
 		}
+	);
+}
+
+/**
+ * Adds content to each fragmentEntryLink editable value
+ * based on the defaultSegment values, or on the defaultValue
+ *
+ * @param {object} state
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {object} state.fragmentEntryLinks
+ * @param {object} state.layoutData
+ * @param {string} incomingExperienceId
+ * @returns
+ */
+function _provideDefaultValueToFragments(state, incomingExperienceId) {
+	let nextState = state;
+
+	const defaultSegmentsExperienceKey = prefixSegmentsExperienceId(nextState.defaultSegmentsExperienceId);
+	const incomingExperienceKey = prefixSegmentsExperienceId(incomingExperienceId);
+
+	const listOfFragments = Object.entries(nextState.fragmentEntryLinks).reduce(
+		(acc, entry) => {
+			const [
+				fragmentEntryLinkId,
+				fragmentEntryLink
+			] = entry;
+			let newAcc = acc;
+			if (getFragmentRowIndex(nextState.layoutData.structure, fragmentEntryLinkId) !== -1) {
+				const newEditableValues = Object.assign(
+					{},
+					fragmentEntryLink.editableValues,
+					{
+						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.entries(
+							fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+						).reduce(
+							(editableAcc, editableEntry) => {
+								const [editableKey, editableValue] = editableEntry;
+								let newEditableValue = editableValue;
+
+								if (editableValue[defaultSegmentsExperienceKey]) {
+									newEditableValue = Object.assign(
+										{},
+										editableValue,
+										{
+											[prefixSegmentsExperienceId]: deepClone(
+												editableValue[defaultSegmentsExperienceKey]
+											)
+										}
+									);
+								}
+								else {
+									newEditableValue = Object.assign(
+										{},
+										editableValue,
+										{
+											[incomingExperienceKey]: {
+												defaultValue: editableValue.defaultValue
+											}
+										}
+									);
+								}
+
+								return Object.assign(
+									{},
+									editableAcc,
+									{
+										[editableKey]: newEditableValue
+									}
+								);
+							},
+							{}
+						)
+					}
+				);
+				const newFragmentEntryLink = Object.assign(
+					{},
+					fragmentEntryLink,
+					{
+						editableValues: newEditableValues
+					}
+				);
+
+				newAcc = Object.assign(
+					{},
+					acc,
+					{
+						[fragmentEntryLinkId]: newFragmentEntryLink
+					}
+				);
+			}
+
+			return newAcc;
+		},
+		{}
+	);
+
+	return setIn(
+		nextState,
+		['fragmentEntryLinks'],
+		listOfFragments
 	);
 }
 

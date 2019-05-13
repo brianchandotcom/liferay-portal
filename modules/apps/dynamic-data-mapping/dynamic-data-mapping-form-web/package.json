@@ -62,14 +62,6 @@
 		"object-hash": "^1.3.0"
 	},
 	"jest": {
-		"automock": false,
-		"coverageDirectory": "build/coverage",
-		"coverageThreshold": {
-			"global": {
-				"functions": 80,
-				"lines": 80
-			}
-		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
 			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
@@ -82,23 +74,20 @@
 			"/__mock__/"
 		],
 		"setupFiles": [
-			"<rootDir>/test/metal/setup/setup.js",
-			"<rootDir>/test/metal/setup/setup_framework.js"
+			"<rootDir>/jest-setup.config.js"
+		],
+		"setupFilesAfterEnv": [
+			"<rootDir>jest-setup-after-env.config.js"
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],
-		"testMatch": [
-			"<rootDir>/test/metal/js/**/*.es.js"
+		"testPathIgnorePatterns": [
+			"ShareFormPopover"
 		],
-		"testResultsProcessor": "liferay-jest-junit-reporter",
-		"testURL": "http://localhost",
 		"transform": {
-			".*": "<rootDir>/jest-preprocessor.js"
-		},
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
-		]
+			".+": "./jest-workspaces-transform.js"
+		}
 	},
 	"main": "admin/js/main.es.js",
 	"name": "dynamic-data-mapping-form-web",
@@ -106,7 +95,8 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
-		"format": "liferay-npm-scripts format"
+		"format": "liferay-npm-scripts format",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "3.0.0"
 }

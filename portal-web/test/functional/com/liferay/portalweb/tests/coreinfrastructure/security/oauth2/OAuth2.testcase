@@ -159,7 +159,9 @@ definition {
 	}
 
 	test EditApplicationScopes {
-		property prepare.oauth2.global.scopes = "true";
+		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
+		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config";
+		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

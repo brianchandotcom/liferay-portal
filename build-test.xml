@@ -1922,14 +1922,6 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-oauth2-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config">mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]
-osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;
-passthrough=&quot;true&quot;</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-patching-tool">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
@@ -5855,20 +5847,6 @@ go</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="prepare.oauth2.global.scopes" />
-
-		<if>
-			<equals arg1="${prepare.oauth2.global.scopes}" arg2="true" />
-			<then>
-				<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/com.liferay.oauth2.provider.scope.sample.qa.jar to ${liferay.home}/deploy/com.liferay.oauth2.provider.scope.sample.qa.jar</echo>
-
-				<copy
-					file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/com.liferay.oauth2.provider.scope.sample.qa.jar"
-					todir="${liferay.home}/deploy"
-				/>
-			</then>
-		</if>
-
 		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/deploy" property="deploy.dir" value="${app.server.parent.dir}/deploy">
 			<or>
 				<not>
@@ -7371,15 +7349,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 
 		<prepare-elasticsearch-configuration />
-
-		<get-testcase-property property.name="prepare.oauth2.global.scopes" />
-
-		<if>
-			<equals arg1="${prepare.oauth2.global.scopes}" arg2="true" />
-			<then>
-				<prepare-oauth2-configuration />
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-patching-tool">

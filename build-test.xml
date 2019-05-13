@@ -5893,6 +5893,7 @@ go</echo>
 						<jar
 							basedir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
 							destfile="${project.dir}/tmp/${liferay.dependency.jars}"
+							manifest="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}/META-INF/MANIFEST.MF"
 						/>
 
 						<echo>Copying ${project.dir}/tmp/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>

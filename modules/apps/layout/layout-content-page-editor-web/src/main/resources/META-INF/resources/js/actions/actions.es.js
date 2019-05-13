@@ -23,8 +23,11 @@ export const ADD_ROW = 'addRow';
 export const MOVE_ROW = 'moveRow';
 export const REMOVE_ROW = 'removeRow';
 export const UPDATE_ROW_COLUMNS = 'updateRowColumns';
-export const UPDATE_ROW_COLUMNS_NUMBER = 'updateRowColumnsNumber';
 export const UPDATE_ROW_CONFIG = 'updateRowConfig';
+
+export const UPDATE_ROW_COLUMNS_NUMBER_ERROR = 'UPDATE_ROW_COLUMNS_NUMBER_ERROR';
+export const UPDATE_ROW_COLUMNS_NUMBER_LOADING = 'UPDATE_ROW_COLUMNS_NUMBER_LOADING';
+export const UPDATE_ROW_COLUMNS_NUMBER_SUCCESS = 'UPDATE_ROW_COLUMNS_NUMBER_SUCCESS';
 
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 export const ADD_PORTLET = 'addPortlet';

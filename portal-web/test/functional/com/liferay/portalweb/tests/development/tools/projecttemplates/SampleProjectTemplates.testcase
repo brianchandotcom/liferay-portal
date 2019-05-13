@@ -25,7 +25,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test MvcPortletTemplateSmoke {
 		property portal.acceptance = "true";

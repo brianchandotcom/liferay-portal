@@ -64,7 +64,7 @@ public class ClientState {
 	public Connection open(
 			Class<?> testClass,
 			Map<String, List<String>> filteredMethodNamesMap)
-		throws Exception {
+		throws Throwable {
 
 		if (_bundleId == 0) {
 			ServerSocket serverSocket = _socketState.getServerSocket();
@@ -103,10 +103,10 @@ public class ClientState {
 					try {
 						_frameworkState.uninstallBundle(_bundleId);
 					}
-					catch (Exception e) {
+					catch (Throwable t) {
 						throw new IOException(
 							"Unable to uninstall bundle " + _bundleId + ": " +
-								e);
+								t);
 					}
 					finally {
 						_frameworkState.close();
@@ -236,7 +236,7 @@ public class ClientState {
 	private static long _installBundle(
 			Map<String, List<String>> filteredMethodNamesMap,
 			InetAddress inetAddress, int port, long passCode)
-		throws Exception {
+		throws Throwable {
 
 		byte[] bytes = BndBundleUtil.createBundle(
 			filteredMethodNamesMap, inetAddress.getHostAddress(), port,

@@ -24,45 +24,41 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Matthew Tambara
  */
-public interface FrameworkCommand extends Serializable {
+public interface FrameworkCommand<T extends Serializable> extends Serializable {
 
-	public static FrameworkCommand installBundle(
+	public static FrameworkCommand<Long> installBundle(
 		String location, byte[] bytes) {
 
 		return bundleContext -> {
-			long bundleId = -1;
-
 			try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
 				Bundle bundle = bundleContext.installBundle(
 					location, inputStream);
 
-				bundleId = bundle.getBundleId();
+				return bundle.getBundleId();
 			}
-
-			return bundleId;
 		};
 	}
 
-	public static FrameworkCommand startBundle(long bundleId) {
+	public static FrameworkCommand<?> startBundle(long bundleId) {
 		return bundleContext -> {
 			Bundle bundle = bundleContext.getBundle(bundleId);
 
 			bundle.start();
 
-			return 0;
+			return null;
 		};
 	}
 
-	public static FrameworkCommand uninstallBundle(long bundleId) {
+	public static FrameworkCommand<?> uninstallBundle(long bundleId) {
 		return bundleContext -> {
 			Bundle bundle = bundleContext.getBundle(bundleId);
 
 			bundle.uninstall();
 
-			return 0;
+			return null;
 		};
 	}
 
-	public long execute(BundleContext bundleContext) throws Exception;
+	public T execute(BundleContext bundleContext) throws Exception;
 
 }

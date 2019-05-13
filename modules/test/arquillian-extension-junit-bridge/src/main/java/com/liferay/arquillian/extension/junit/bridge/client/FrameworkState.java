@@ -20,6 +20,7 @@ import com.liferay.arquillian.extension.junit.bridge.connector.FrameworkResult;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import java.net.ConnectException;
 import java.net.InetAddress;
@@ -98,7 +99,7 @@ public class FrameworkState {
 		_objectOutputStream.flush();
 	}
 
-	public long installBundle(String location, byte[] bytes) throws Exception {
+	public long installBundle(String location, byte[] bytes) throws Throwable {
 		_objectOutputStream.writeObject(
 			FrameworkCommand.installBundle(location, bytes));
 
@@ -107,7 +108,7 @@ public class FrameworkState {
 		return _getResult();
 	}
 
-	public void startBundle(long bundleId) throws Exception {
+	public void startBundle(long bundleId) throws Throwable {
 		_objectOutputStream.writeObject(FrameworkCommand.startBundle(bundleId));
 
 		_objectOutputStream.flush();
@@ -115,7 +116,7 @@ public class FrameworkState {
 		_getResult();
 	}
 
-	public void uninstallBundle(long bundleId) throws Exception {
+	public void uninstallBundle(long bundleId) throws Throwable {
 		_objectOutputStream.writeObject(
 			FrameworkCommand.uninstallBundle(bundleId));
 
@@ -124,11 +125,11 @@ public class FrameworkState {
 		_getResult();
 	}
 
-	private long _getResult() throws Exception {
-		FrameworkResult frameworkResult =
-			(FrameworkResult)_objectInputStream.readObject();
+	private <T extends Serializable> T _getResult() throws Throwable {
+		FrameworkResult<T> frameworkResult =
+			(FrameworkResult<T>)_objectInputStream.readObject();
 
-		return frameworkResult.getBundleId();
+		return frameworkResult.get();
 	}
 
 	private static final int _MAX_RETRY_ATTEMPTS = 5;

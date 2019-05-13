@@ -15,9 +15,12 @@
 package com.liferay.document.library.internal.security.io;
 
 import com.liferay.document.library.internal.util.InputStreamUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -48,6 +51,13 @@ public class SafePNGInputStreamTest {
 		InputStream inputStream = _createInputStream(new byte[0]);
 
 		Assert.assertEquals(-1, inputStream.read());
+	}
+
+	@Test
+	public void testPNGFile() throws Exception {
+		Assert.assertArrayEquals(
+			_getBytes("filtered.png"),
+			_getBytes(_createInputStream(_getBytes("original.png"))));
 	}
 
 	@Test
@@ -109,6 +119,24 @@ public class SafePNGInputStreamTest {
 		return new SafePNGInputStream(
 			InputStreamUtil.toBufferedInputStream(
 				new UnsyncByteArrayInputStream(ArrayUtil.append(bytes))));
+	}
+
+	private static byte[] _getBytes(InputStream inputStream)
+		throws IOException {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
+
+		return unsyncByteArrayOutputStream.toByteArray();
+	}
+
+	private static byte[] _getBytes(String fileName) throws IOException {
+		return _getBytes(
+			SafePNGInputStreamTest.class.getResourceAsStream(
+				"/com/liferay/document/library/internal/security/io" +
+					"/dependencies/" + fileName));
 	}
 
 	private static final byte[] _MISC_CHUNK1 = {

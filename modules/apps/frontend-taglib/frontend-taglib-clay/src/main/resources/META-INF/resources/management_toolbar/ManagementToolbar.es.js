@@ -35,6 +35,18 @@ class ManagementToolbar extends ClayComponent {
 				];
 
 				this._searchContainer = searchContainer;
+
+				const currentPageElements = searchContainer.select.getCurrentPageElements().size();
+				const currentPageSelectedElements = searchContainer.select.getCurrentPageSelectedElements().size();
+
+				const currentPageSelected = currentPageElements === currentPageSelectedElements;
+
+				if (currentPageSelectedElements !== 0) {
+					this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
+				}
+				else {
+					this.checkboxStatus = 'unchecked';
+				}
 			}
 		);
 
@@ -200,7 +212,7 @@ class ManagementToolbar extends ClayComponent {
 
 		this.checkboxStatus = 'unchecked';
 
-		if (this.selectedItems !== 0) {
+		if (currentPageSelectedElements !== 0) {
 			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
 		}
 

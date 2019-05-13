@@ -111,6 +111,12 @@ AUI.add(
 						return instance._getAllElements(true);
 					},
 
+					getCurrentPageElements: function() {
+						var instance = this;
+
+						return instance._getCurrentPageElements();
+					},
+
 					getCurrentPageSelectedElements: function() {
 						var instance = this;
 

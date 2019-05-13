@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PublishButton should render published 1`] = `<button class="btn btn-default btn-primary" type="button">Unpublish Form</button>`;
+exports[`PublishButton should render published 1`] = `<div><button class="btn btn-default btn-primary" type="button">Unpublish Form</button></div>`;
 
-exports[`PublishButton should render unpublished 1`] = `<button class="btn btn-default btn-primary" type="button">Publish Form</button>`;
+exports[`PublishButton should render unpublished 1`] = `<div><button class="btn btn-default btn-primary" type="button">Publish Form</button></div>`;

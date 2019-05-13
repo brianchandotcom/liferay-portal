@@ -173,7 +173,7 @@ class LocalizedDropdown extends React.Component {
  *
  * @param {string} [keyLang='']
  * @param {boolean} [lowercase=true]
- * @returns
+ * @returns {string}
  */
 function keyLangToLanguageTag(keyLang = '', lowercase = true) {
 	let langTag = keyLang.replace(/_/g, '-');

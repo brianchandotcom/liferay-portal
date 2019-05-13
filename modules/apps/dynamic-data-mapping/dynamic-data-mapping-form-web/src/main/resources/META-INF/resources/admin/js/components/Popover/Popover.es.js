@@ -26,20 +26,6 @@ const getAlignPosition = (source, target, suggestedPosition) => {
 const CLASSNAME = 'ddm-share-url-popover';
 
 class Popover extends Component {
-	static PROPS = {
-		alignElement: Config.object(),
-		content: Config.string(),
-		placement: Config.number(),
-		title: Config.string(),
-		visible: Config.bool()
-	};
-
-	static STATE = {
-		displayed: Config.bool().valueFn('_visibleValueFn'),
-		position: Config.string(),
-		width: Config.number().value(240)
-	};
-
 	attached() {
 		const {alignElement} = this.props;
 
@@ -179,5 +165,19 @@ class Popover extends Component {
 		return this.props.visible;
 	}
 }
+
+Popover.PROPS = {
+	alignElement: Config.object(),
+	content: Config.string(),
+	placement: Config.number(),
+	title: Config.string(),
+	visible: Config.bool()
+};
+
+Popover.STATE = {
+	displayed: Config.bool().valueFn('_visibleValueFn'),
+	position: Config.string(),
+	width: Config.number().value(240)
+};
 
 export default Popover;

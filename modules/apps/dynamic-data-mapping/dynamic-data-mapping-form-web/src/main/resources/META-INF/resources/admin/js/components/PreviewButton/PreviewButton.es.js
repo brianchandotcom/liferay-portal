@@ -4,11 +4,6 @@ import Notifications from '../../util/Notifications.es';
 import {Config} from 'metal-state';
 
 class PreviewButton extends Component {
-	static PROPS = {
-		resolvePreviewURL: Config.func().required(),
-		spritemap: Config.string().required()
-	};
-
 	preview() {
 		const {resolvePreviewURL} = this.props;
 
@@ -49,5 +44,10 @@ class PreviewButton extends Component {
 		this.preview();
 	}
 }
+
+PreviewButton.PROPS = {
+	resolvePreviewURL: Config.func().required(),
+	spritemap: Config.string().required()
+};
 
 export default PreviewButton;

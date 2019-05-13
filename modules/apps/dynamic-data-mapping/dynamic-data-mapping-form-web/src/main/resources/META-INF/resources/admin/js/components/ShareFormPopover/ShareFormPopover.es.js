@@ -7,43 +7,6 @@ import {EventHandler} from 'metal-events';
 import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 
 class ShareFormPopover extends Component {
-	static PROPS = {
-
-		/**
-		 * The element to align with.
-		 * @default ""
-		 * @instance
-		 * @memberof ShareFormPopover
-		 * @type {object}
-		 */
-
-		alignElement: Config.object().required(),
-
-		/**
-		 * The spritemap for Clay icons.
-		 * @default ""
-		 * @instance
-		 * @memberof ShareFormPopover
-		 * @type {spritemap}
-		 */
-
-		spritemap: Config.string().required(),
-
-		/**
-		 * The url to share the form.
-		 * @default ""
-		 * @instance
-		 * @memberof ShareFormPopover
-		 * @type {string}
-		 */
-
-		url: Config.string().required()
-	};
-
-	static STATE = {
-		success: Config.bool().value(false)
-	};
-
 	attached() {
 		this._clipboard = new Clipboard(
 			{
@@ -162,5 +125,42 @@ class ShareFormPopover extends Component {
 		this.emit('popoverClosed');
 	}
 }
+
+ShareFormPopover.PROPS = {
+
+	/**
+	 * The element to align with.
+	 * @default ""
+	 * @instance
+	 * @memberof ShareFormPopover
+	 * @type {object}
+	 */
+
+	alignElement: Config.object().required(),
+
+	/**
+	 * The spritemap for Clay icons.
+	 * @default ""
+	 * @instance
+	 * @memberof ShareFormPopover
+	 * @type {spritemap}
+	 */
+
+	spritemap: Config.string().required(),
+
+	/**
+	 * The url to share the form.
+	 * @default ""
+	 * @instance
+	 * @memberof ShareFormPopover
+	 * @type {string}
+	 */
+
+	url: Config.string().required()
+};
+
+ShareFormPopover.STATE = {
+	success: Config.bool().value(false)
+};
 
 export default ShareFormPopover;

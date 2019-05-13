@@ -70,5 +70,6 @@
 		<exception>WorkflowMetricsSLADefinitionPauseNodeKeys</exception>
 		<exception>WorkflowMetricsSLADefinitionStartNodeKeys</exception>
 		<exception>WorkflowMetricsSLADefinitionStopNodeKeys</exception>
+		<exception>WorkflowMetricsSLADefinitionTimeframe</exception>
 	</exceptions>
 </service-builder>

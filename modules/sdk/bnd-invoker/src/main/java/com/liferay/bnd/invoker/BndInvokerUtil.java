@@ -36,11 +36,6 @@ public class BndInvokerUtil {
 
 		BndTask bndTask = new BndTask();
 
-		bndTask.setClasspath("classes");
-		bndTask.setExceptions(true);
-		bndTask.setFiles("bnd.bnd");
-		bndTask.setOutput(output);
-
 		Project project = new Project();
 
 		project.setBaseDir(baseDir);
@@ -56,6 +51,11 @@ public class BndInvokerUtil {
 		}
 
 		bndTask.setProject(project);
+
+		bndTask.setClasspath("classes");
+		bndTask.setExceptions(true);
+		bndTask.setFiles("bnd.bnd");
+		bndTask.setOutput(output);
 
 		bndTask.execute();
 	}

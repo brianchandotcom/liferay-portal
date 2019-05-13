@@ -31,15 +31,16 @@ public interface BlogsFileUploadsConfiguration {
 
 	@Meta.AD(
 		deflt = ".gif,.jpeg,.jpg,.png",
-		description = "allowed-blogs-image-extensions-description",
-		name = "allowed-blogs-image-extensions", required = false
+		description = "blogs-allowed-image-file-extensions-description",
+		name = "blogs-allowed-image-file-extensions", required = false
 	)
-	public String[] blogsImageExtensions();
+	public String[] imageExtensions();
 
 	@Meta.AD(
-		deflt = "5242880", description = "maximum-blogs-image-size-description",
-		name = "maximum-blogs-image-size", required = false
+		deflt = "5242880",
+		description = "blogs-image-maximum-file-size-description",
+		name = "blogs-image-maximum-file-size", required = false
 	)
-	public long blogsImageMaxSize();
+	public long imageMaxSize();
 
 }

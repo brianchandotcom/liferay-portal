@@ -147,8 +147,8 @@ public class BlogsContentEditorConfigContributor
 			new UploadItemSelectorCriterion(
 				PortletKeys.BLOGS, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				_blogsFileUploadsConfiguration.blogsImageMaxSize(),
-				_blogsFileUploadsConfiguration.blogsImageExtensions());
+				_blogsFileUploadsConfiguration.imageMaxSize(),
+				_blogsFileUploadsConfiguration.imageExtensions());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());

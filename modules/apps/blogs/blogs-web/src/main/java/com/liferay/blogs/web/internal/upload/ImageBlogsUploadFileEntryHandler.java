@@ -118,7 +118,7 @@ public class ImageBlogsUploadFileEntryHandler
 		throws PortalException {
 
 		long blogsImageMaxSize =
-			_blogsFileUploadsConfiguration.blogsImageMaxSize();
+			_blogsFileUploadsConfiguration.imageMaxSize();
 
 		if ((blogsImageMaxSize > 0) && (size > blogsImageMaxSize)) {
 			throw new EntryImageSizeException();
@@ -127,7 +127,7 @@ public class ImageBlogsUploadFileEntryHandler
 		String extension = FileUtil.getExtension(fileName);
 
 		for (String imageExtension :
-				_blogsFileUploadsConfiguration.blogsImageExtensions()) {
+				_blogsFileUploadsConfiguration.imageExtensions()) {
 
 			if (StringPool.STAR.equals(imageExtension) ||
 				imageExtension.equals(StringPool.PERIOD + extension)) {

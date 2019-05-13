@@ -2266,7 +2266,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			boolean validSmallImageExtension = false;
 
 			for (String imageExtension :
-					_blogsFileUploadsConfiguration.blogsImageExtensions()) {
+					_blogsFileUploadsConfiguration.imageExtensions()) {
 
 				if (StringPool.STAR.equals(imageExtension) ||
 					imageExtension.equals(

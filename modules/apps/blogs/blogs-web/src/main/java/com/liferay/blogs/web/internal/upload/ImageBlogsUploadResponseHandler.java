@@ -67,7 +67,7 @@ public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 
 				errorMessage = StringUtil.merge(
-					_blogsFileUploadsConfiguration.blogsImageExtensions());
+					_blogsFileUploadsConfiguration.imageExtensions());
 			}
 			else if (pe instanceof EntryImageSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;

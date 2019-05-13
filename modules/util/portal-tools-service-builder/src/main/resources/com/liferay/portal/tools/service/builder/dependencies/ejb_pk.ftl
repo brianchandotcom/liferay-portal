@@ -8,8 +8,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import java.io.Serializable;
 
 import java.util.Date;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * @author ${author}

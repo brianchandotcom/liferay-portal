@@ -12,8 +12,7 @@ import java.rmi.RemoteException;
 
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * Provides the SOAP utility for the

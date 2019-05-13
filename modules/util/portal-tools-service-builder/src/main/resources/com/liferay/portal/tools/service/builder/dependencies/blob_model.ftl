@@ -5,8 +5,7 @@ package ${apiPackagePath}.model;
 </#if>
 
 import java.sql.Blob;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The Blob model class for lazy loading the ${column.name} column in ${entity.name}.

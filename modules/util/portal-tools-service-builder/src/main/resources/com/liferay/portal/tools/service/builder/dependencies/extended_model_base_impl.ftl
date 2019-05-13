@@ -14,7 +14,7 @@ import ${apiPackagePath}.model.${entity.name};
 	import java.util.List;
 </#if>
 
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The extended model base implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.

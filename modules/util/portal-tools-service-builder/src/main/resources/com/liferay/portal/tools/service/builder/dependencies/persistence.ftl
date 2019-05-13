@@ -17,8 +17,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The persistence interface for the ${entity.humanName} service.

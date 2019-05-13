@@ -96,8 +96,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The base model implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.

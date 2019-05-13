@@ -22,8 +22,7 @@ import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The cache model class for representing ${entity.name} in entity cache.

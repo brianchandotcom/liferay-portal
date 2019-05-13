@@ -1,6 +1,6 @@
 package ${apiPackagePath}.service.persistence;
 
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * @author ${author}

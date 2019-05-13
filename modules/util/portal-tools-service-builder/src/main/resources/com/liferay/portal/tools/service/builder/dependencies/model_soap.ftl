@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * This class is used by SOAP remote services<#if entity.hasRemoteService()>, specifically {@link ${packagePath}.service.http.${entity.name}ServiceSoap}</#if>.

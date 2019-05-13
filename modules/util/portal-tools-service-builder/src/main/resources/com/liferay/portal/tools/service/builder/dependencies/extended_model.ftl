@@ -7,8 +7,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The extended model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.

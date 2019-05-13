@@ -38,8 +38,7 @@ import java.sql.Blob;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * The base model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.

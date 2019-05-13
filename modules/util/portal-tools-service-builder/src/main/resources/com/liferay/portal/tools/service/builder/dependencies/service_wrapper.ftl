@@ -1,8 +1,7 @@
 package ${apiPackagePath}.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * Provides a wrapper for {@link ${entity.name}${sessionTypeName}Service}.

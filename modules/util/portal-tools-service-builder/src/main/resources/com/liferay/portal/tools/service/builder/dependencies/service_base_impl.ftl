@@ -10,8 +10,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;

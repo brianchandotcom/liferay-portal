@@ -3,8 +3,7 @@
 package ${apiPackagePath}.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
-
-import org.osgi.annotation.versioning.ProviderType;
+import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 /**
  * @author ${author}

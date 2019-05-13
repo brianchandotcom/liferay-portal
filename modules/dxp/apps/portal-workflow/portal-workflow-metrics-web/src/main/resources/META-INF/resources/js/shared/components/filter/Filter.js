@@ -132,6 +132,7 @@ class Filter extends React.Component {
 
 				<div className={`${className} dropdown-menu`} role="menu">
 					<FilterSearch
+						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange}
 						totalCount={items.length}
 					>

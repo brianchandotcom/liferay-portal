@@ -3,8 +3,9 @@ import Icon from '../Icon';
 
 export default class FilterSearch extends React.Component {
 	render() {
-		const { children, onChange, totalCount } = this.props;
+		const { children, filteredItems, onChange, totalCount } = this.props;
 
+		const emptyResults = filteredItems.length === 0;
 		const searchEnabled = totalCount > 12;
 
 		return (
@@ -30,6 +31,16 @@ export default class FilterSearch extends React.Component {
 							</div>
 						</div>
 					</form>
+				)}
+
+				{emptyResults && (
+					<ul className="list-unstyled">
+						<li>
+							<span className="disabled dropdown-item">
+								{Liferay.Language.get('no-results-were-found')}
+							</span>
+						</li>
+					</ul>
 				)}
 
 				{children}

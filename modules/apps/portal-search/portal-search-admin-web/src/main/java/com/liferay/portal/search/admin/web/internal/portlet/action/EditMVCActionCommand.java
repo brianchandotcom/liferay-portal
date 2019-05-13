@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -105,10 +107,16 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
+		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
+
+		if (!ArrayUtil.contains(companyIds, CompanyConstants.SYSTEM)) {
+			companyIds = ArrayUtil.append(
+				new long[] {CompanyConstants.SYSTEM}, companyIds);
+		}
+
 		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
 			_indexWriterHelper.reindex(
-				themeDisplay.getUserId(), "reindex",
-				_portalInstancesLocalService.getCompanyIds(), className,
+				themeDisplay.getUserId(), "reindex", companyIds, className,
 				taskContextMap);
 
 			return;
@@ -161,8 +169,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_indexWriterHelper.reindex(
-				themeDisplay.getUserId(), jobName,
-				_portalInstancesLocalService.getCompanyIds(), className,
+				themeDisplay.getUserId(), jobName, companyIds, className,
 				taskContextMap);
 
 			countDownLatch.await(

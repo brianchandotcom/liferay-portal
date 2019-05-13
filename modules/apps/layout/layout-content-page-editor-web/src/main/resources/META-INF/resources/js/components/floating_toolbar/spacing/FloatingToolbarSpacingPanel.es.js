@@ -4,10 +4,11 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
 import {CONFIG_KEYS, CONTAINER_TYPES, NUMBER_OF_COLUMNS_OPTIONS, PADDING_OPTIONS} from '../../../utils/rowConstants';
-import {updateRow} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import templates from './FloatingToolbarSpacingPanel.soy';
-import {UPDATE_ROW_COLUMNS_NUMBER, UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import templates from './FloatingToolbarSpacingPanel.soy';
+import {updateRow} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {updateRowColumnsNumberAction} from '../../../actions/updateRowColumnsNumber.es';
+import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarSpacingPanel
@@ -91,13 +92,11 @@ class FloatingToolbarSpacingPanel extends Component {
 		}
 
 		if (updateRowColumns) {
-			updateRow(
-				this.store,
-				UPDATE_ROW_COLUMNS_NUMBER,
-				{
-					numberOfColumns: event.delegateTarget.value,
-					rowId: this.itemId
-				}
+			this.store.dispatch(
+				updateRowColumnsNumberAction(
+					event.delegateTarget.value,
+					this.itemId
+				)
 			);
 		}
 	}

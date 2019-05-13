@@ -509,7 +509,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		<%@ include file="/calendar_booking_recurrence_container.jspf" %>
 	</div>
 
-	<aui:button-row>
+	<aui:button-row cssClass="d-block">
 		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
 			<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
 		</div>
@@ -522,7 +522,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 		%>
 
-		<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+		<aui:button cssClass="ml-0" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 		<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
 

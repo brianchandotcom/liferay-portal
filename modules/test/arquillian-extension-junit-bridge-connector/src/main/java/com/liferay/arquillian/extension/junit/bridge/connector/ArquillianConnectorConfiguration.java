@@ -23,14 +23,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "module-container")
 @Meta.OCD(
-	id = "com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnectorConfiguration"
+	id = "com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnectorConfiguration",
+	localization = "content/Language",
+	name = "arquillian-connector-configuration-name"
 )
 public interface ArquillianConnectorConfiguration {
 
-	@Meta.AD(deflt = "32763", required = false)
+	@Meta.AD(deflt = "32763", name = "port", required = false)
 	public int port();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "passcode", required = false)
 	public String passcode();
 
 }

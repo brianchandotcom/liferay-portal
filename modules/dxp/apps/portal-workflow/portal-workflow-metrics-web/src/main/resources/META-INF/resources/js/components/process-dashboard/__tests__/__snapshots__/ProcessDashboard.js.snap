@@ -81,26 +81,125 @@ exports[`Should render component with completed tab activated 1`] = `
           className="workflow-process-dashboard"
         >
           <DropDownHeader>
-            <Portal
-              containerInfo={
+            <PortalComponent
+              container={
                 <div
                   class="control-menu-icon"
                 >
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <span>
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                            >
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              replace={true}
+            >
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                            >
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
                         <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
                           focusable="false"
                           role="presentation"
                         >
@@ -108,143 +207,25 @@ exports[`Should render component with completed tab activated 1`] = `
                             href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                           />
                         </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              }
-            >
-              <div
-                className="dropdown lfr-icon-menu nav-item portlet-options"
-              >
-                <a
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  className="direction-right dropdown-toggle icon-monospaced"
-                  data-toggle="dropdown"
-                  href="javascript:;"
-                  role="button"
-                  title="Options"
-                >
-                  <span>
-                    <Icon
-                      iconName="ellipsis-v"
-                    >
-                      <svg
-                        className="lexicon-icon lexicon-icon-ellipsis-v"
-                        focusable="false"
-                        role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                        />
-                      </svg>
-                    </Icon>
-                  </span>
-                </a>
-                <div
-                  className="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                  role="menu"
-                >
-                  <ul
-                    className="list-unstyled"
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
                   >
-                    <MenuItem>
-                      <li>
-                        <withRouter()
-                          className="dropdown-item"
-                          to="/slas/35315/20/1"
-                        >
-                          <Route>
-                            <Component
-                              className="dropdown-item"
-                              history={
-                                Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/dashboard/35315",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
-                                }
-                              }
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "match": Object {
-                                    "params": Object {
-                                      "page": 1,
-                                      "search": undefined,
-                                      "sort": undefined,
-                                    },
-                                  },
-                                  "pathname": "/dashboard/35315",
-                                  "search": "?backPath=%2F",
-                                }
-                              }
-                              match={
-                                Object {
-                                  "isExact": false,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              to="/slas/35315/20/1"
-                            >
-                              <ChildLinkWrapper
-                                backPath="/"
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Route>
+                              <Component
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -287,36 +268,107 @@ exports[`Should render component with completed tab activated 1`] = `
                                     "replace": [Function],
                                   }
                                 }
+                                location={
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                                match={
+                                  Object {
+                                    "isExact": false,
+                                    "params": Object {},
+                                    "path": "/",
+                                    "url": "/",
+                                  }
+                                }
                                 to="/slas/35315/20/1"
                               >
-                                <Link
+                                <ChildLinkWrapper
+                                  backPath="/"
                                   className="dropdown-item"
-                                  replace={false}
-                                  to={
+                                  currentPath="/dashboard/35315?backPath=%2F"
+                                  history={
                                     Object {
-                                      "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/dashboard/35315",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/dashboard/35315",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
                                     }
                                   }
+                                  to="/slas/35315/20/1"
                                 >
-                                  <a
+                                  <Link
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                                    onClick={[Function]}
+                                    replace={false}
+                                    to={
+                                      Object {
+                                        "pathname": "/slas/35315/20/1",
+                                        "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      }
+                                    }
                                   >
-                                    SLA Settings
-                                  </a>
-                                </Link>
-                              </ChildLinkWrapper>
-                            </Component>
-                          </Route>
-                        </withRouter()>
-                      </li>
-                    </MenuItem>
-                  </ul>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                      onClick={[Function]}
+                                    >
+                                      SLA Settings
+                                    </a>
+                                  </Link>
+                                </ChildLinkWrapper>
+                              </Component>
+                            </Route>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Portal>
+              </Portal>
+            </PortalComponent>
           </DropDownHeader>
           <withRouter(Tabs)
             tabs={
@@ -683,212 +735,151 @@ exports[`Should render component with default tab activated 1`] = `
           className="workflow-process-dashboard"
         >
           <DropDownHeader>
-            <Portal
-              containerInfo={
+            <PortalComponent
+              container={
                 <div
                   class="control-menu-icon"
                 >
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
+                  <div>
                     <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <ul
-                        class="list-unstyled"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
                           >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                            >
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
+              replace={true}
             >
-              <div
-                className="dropdown lfr-icon-menu nav-item portlet-options"
-              >
-                <a
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  className="direction-right dropdown-toggle icon-monospaced"
-                  data-toggle="dropdown"
-                  href="javascript:;"
-                  role="button"
-                  title="Options"
-                >
-                  <span>
-                    <Icon
-                      iconName="ellipsis-v"
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <svg
-                        className="lexicon-icon lexicon-icon-ellipsis-v"
-                        focusable="false"
-                        role="presentation"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                        />
-                      </svg>
-                    </Icon>
-                  </span>
-                </a>
-                <div
-                  className="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                  role="menu"
-                >
-                  <ul
-                    className="list-unstyled"
-                  >
-                    <MenuItem>
-                      <li>
-                        <withRouter()
-                          className="dropdown-item"
-                          to="/slas/35315/20/1"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <Route>
-                            <Component
-                              className="dropdown-item"
-                              history={
-                                Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/dashboard/35315",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
-                                }
-                              }
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "match": Object {
-                                    "params": Object {
-                                      "page": 1,
-                                      "search": undefined,
-                                      "sort": undefined,
-                                    },
-                                  },
-                                  "pathname": "/dashboard/35315",
-                                  "search": "?backPath=%2F",
-                                }
-                              }
-                              match={
-                                Object {
-                                  "isExact": false,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              to="/slas/35315/20/1"
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                             >
-                              <ChildLinkWrapper
-                                backPath="/"
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Route>
+                              <Component
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -931,36 +922,107 @@ exports[`Should render component with default tab activated 1`] = `
                                     "replace": [Function],
                                   }
                                 }
+                                location={
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                                match={
+                                  Object {
+                                    "isExact": false,
+                                    "params": Object {},
+                                    "path": "/",
+                                    "url": "/",
+                                  }
+                                }
                                 to="/slas/35315/20/1"
                               >
-                                <Link
+                                <ChildLinkWrapper
+                                  backPath="/"
                                   className="dropdown-item"
-                                  replace={false}
-                                  to={
+                                  currentPath="/dashboard/35315?backPath=%2F"
+                                  history={
                                     Object {
-                                      "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/dashboard/35315",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/dashboard/35315",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
                                     }
                                   }
+                                  to="/slas/35315/20/1"
                                 >
-                                  <a
+                                  <Link
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                                    onClick={[Function]}
+                                    replace={false}
+                                    to={
+                                      Object {
+                                        "pathname": "/slas/35315/20/1",
+                                        "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
+                                      }
+                                    }
                                   >
-                                    SLA Settings
-                                  </a>
-                                </Link>
-                              </ChildLinkWrapper>
-                            </Component>
-                          </Route>
-                        </withRouter()>
-                      </li>
-                    </MenuItem>
-                  </ul>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                      onClick={[Function]}
+                                    >
+                                      SLA Settings
+                                    </a>
+                                  </Link>
+                                </ChildLinkWrapper>
+                              </Component>
+                            </Route>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Portal>
+              </Portal>
+            </PortalComponent>
           </DropDownHeader>
           <withRouter(Tabs)
             tabs={
@@ -1327,254 +1389,151 @@ exports[`Should render component with failure state 1`] = `
           className="workflow-process-dashboard"
         >
           <DropDownHeader>
-            <Portal
-              containerInfo={
+            <PortalComponent
+              container={
                 <div
                   class="control-menu-icon"
                 >
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
+                  <div>
                     <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <ul
-                        class="list-unstyled"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
                           >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
+              replace={true}
             >
-              <div
-                className="dropdown lfr-icon-menu nav-item portlet-options"
-              >
-                <a
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  className="direction-right dropdown-toggle icon-monospaced"
-                  data-toggle="dropdown"
-                  href="javascript:;"
-                  role="button"
-                  title="Options"
-                >
-                  <span>
-                    <Icon
-                      iconName="ellipsis-v"
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <svg
-                        className="lexicon-icon lexicon-icon-ellipsis-v"
-                        focusable="false"
-                        role="presentation"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                        />
-                      </svg>
-                    </Icon>
-                  </span>
-                </a>
-                <div
-                  className="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                  role="menu"
-                >
-                  <ul
-                    className="list-unstyled"
-                  >
-                    <MenuItem>
-                      <li>
-                        <withRouter()
-                          className="dropdown-item"
-                          to="/slas/35315/20/1"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <Route>
-                            <Component
-                              className="dropdown-item"
-                              history={
-                                Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/dashboard/35315/completed",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
-                                }
-                              }
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "match": Object {
-                                    "params": Object {
-                                      "page": 1,
-                                      "search": undefined,
-                                      "sort": undefined,
-                                    },
-                                  },
-                                  "pathname": "/dashboard/35315/completed",
-                                  "search": "?backPath=%2F",
-                                }
-                              }
-                              match={
-                                Object {
-                                  "isExact": false,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              to="/slas/35315/20/1"
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              <ChildLinkWrapper
-                                backPath="/"
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Route>
+                              <Component
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -1617,36 +1576,107 @@ exports[`Should render component with failure state 1`] = `
                                     "replace": [Function],
                                   }
                                 }
+                                location={
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                                match={
+                                  Object {
+                                    "isExact": false,
+                                    "params": Object {},
+                                    "path": "/",
+                                    "url": "/",
+                                  }
+                                }
                                 to="/slas/35315/20/1"
                               >
-                                <Link
+                                <ChildLinkWrapper
+                                  backPath="/"
                                   className="dropdown-item"
-                                  replace={false}
-                                  to={
+                                  currentPath="/dashboard/35315/completed?backPath=%2F"
+                                  history={
                                     Object {
-                                      "pathname": "/slas/35315/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/dashboard/35315/completed",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/dashboard/35315/completed",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
                                     }
                                   }
+                                  to="/slas/35315/20/1"
                                 >
-                                  <a
+                                  <Link
                                     className="dropdown-item"
-                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                                    onClick={[Function]}
+                                    replace={false}
+                                    to={
+                                      Object {
+                                        "pathname": "/slas/35315/20/1",
+                                        "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      }
+                                    }
                                   >
-                                    SLA Settings
-                                  </a>
-                                </Link>
-                              </ChildLinkWrapper>
-                            </Component>
-                          </Route>
-                        </withRouter()>
-                      </li>
-                    </MenuItem>
-                  </ul>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                      onClick={[Function]}
+                                    >
+                                      SLA Settings
+                                    </a>
+                                  </Link>
+                                </ChildLinkWrapper>
+                              </Component>
+                            </Route>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Portal>
+              </Portal>
+            </PortalComponent>
           </DropDownHeader>
           <withRouter(Tabs)
             tabs={
@@ -2267,296 +2297,151 @@ exports[`Should render with blocked SLA 1`] = `
           className="workflow-process-dashboard"
         >
           <DropDownHeader>
-            <Portal
-              containerInfo={
+            <PortalComponent
+              container={
                 <div
                   class="control-menu-icon"
                 >
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
+                  <div>
                     <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <ul
-                        class="list-unstyled"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
                           >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div
-                    class="dropdown lfr-icon-menu nav-item portlet-options"
-                  >
-                    <a
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="direction-right dropdown-toggle icon-monospaced"
-                      data-toggle="dropdown"
-                      href="javascript:;"
-                      role="button"
-                      title="Options"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <div
-                      class="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                      role="menu"
-                    >
-                      <ul
-                        class="list-unstyled"
-                      >
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                          >
-                            SLA Settings
-                          </a>
-                        </li>
-                      </ul>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
+              replace={true}
             >
-              <div
-                className="dropdown lfr-icon-menu nav-item portlet-options"
-              >
-                <a
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  className="direction-right dropdown-toggle icon-monospaced"
-                  data-toggle="dropdown"
-                  href="javascript:;"
-                  role="button"
-                  title="Options"
-                >
-                  <span>
-                    <Icon
-                      iconName="ellipsis-v"
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
                     >
-                      <svg
-                        className="lexicon-icon lexicon-icon-ellipsis-v"
-                        focusable="false"
-                        role="presentation"
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
                       >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                        />
-                      </svg>
-                    </Icon>
-                  </span>
-                </a>
-                <div
-                  className="dropdown-menu dropdown-menu-header dropdown-menu-right"
-                  role="menu"
-                >
-                  <ul
-                    className="list-unstyled"
-                  >
-                    <MenuItem>
-                      <li>
-                        <withRouter()
-                          className="dropdown-item"
-                          to="/slas/123/20/1"
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
                         >
-                          <Route>
-                            <Component
-                              className="dropdown-item"
-                              history={
-                                Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/dashboard/35315/completed",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
-                                }
-                              }
-                              location={
-                                Object {
-                                  "hash": "",
-                                  "match": Object {
-                                    "params": Object {
-                                      "page": 1,
-                                      "search": undefined,
-                                      "sort": undefined,
-                                    },
-                                  },
-                                  "pathname": "/dashboard/35315/completed",
-                                  "search": "?backPath=%2F",
-                                }
-                              }
-                              match={
-                                Object {
-                                  "isExact": false,
-                                  "params": Object {},
-                                  "path": "/",
-                                  "url": "/",
-                                }
-                              }
-                              to="/slas/123/20/1"
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              <ChildLinkWrapper
-                                backPath="/"
+                              SLA Settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/123/20/1"
+                          >
+                            <Route>
+                              <Component
                                 className="dropdown-item"
-                                currentPath="/dashboard/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -2599,36 +2484,107 @@ exports[`Should render with blocked SLA 1`] = `
                                     "replace": [Function],
                                   }
                                 }
+                                location={
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                                match={
+                                  Object {
+                                    "isExact": false,
+                                    "params": Object {},
+                                    "path": "/",
+                                    "url": "/",
+                                  }
+                                }
                                 to="/slas/123/20/1"
                               >
-                                <Link
+                                <ChildLinkWrapper
+                                  backPath="/"
                                   className="dropdown-item"
-                                  replace={false}
-                                  to={
+                                  currentPath="/dashboard/35315/completed?backPath=%2F"
+                                  history={
                                     Object {
-                                      "pathname": "/slas/123/20/1",
-                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/dashboard/35315/completed",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/dashboard/35315/completed",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
                                     }
                                   }
+                                  to="/slas/123/20/1"
                                 >
-                                  <a
+                                  <Link
                                     className="dropdown-item"
-                                    href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                                    onClick={[Function]}
+                                    replace={false}
+                                    to={
+                                      Object {
+                                        "pathname": "/slas/123/20/1",
+                                        "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                      }
+                                    }
                                   >
-                                    SLA Settings
-                                  </a>
-                                </Link>
-                              </ChildLinkWrapper>
-                            </Component>
-                          </Route>
-                        </withRouter()>
-                      </li>
-                    </MenuItem>
-                  </ul>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                      onClick={[Function]}
+                                    >
+                                      SLA Settings
+                                    </a>
+                                  </Link>
+                                </ChildLinkWrapper>
+                              </Component>
+                            </Route>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Portal>
+              </Portal>
+            </PortalComponent>
           </DropDownHeader>
           <withRouter(Tabs)
             tabs={

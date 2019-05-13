@@ -18,16 +18,10 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -70,24 +64,6 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 		timeRange.setName(_getName(id));
 
 		return timeRange;
-	}
-
-	private LocalDateTime _getEndLocalDateTime(int rangeKey) {
-		if (rangeKey == 1) {
-			LocalDateTime localDateTime = LocalDateTime.of(
-				LocalDate.now(ZoneId.of(_user.getTimeZoneId())),
-				LocalTime.MIDNIGHT);
-
-			return localDateTime.minusHours(1);
-		}
-
-		LocalDateTime localDateTime = LocalDateTime.now(
-			ZoneId.of(_user.getTimeZoneId()));
-
-		localDateTime = localDateTime.withMinute(0);
-		localDateTime = localDateTime.withSecond(0);
-
-		return localDateTime.withNano(0);
 	}
 
 	private String _getName(int id) {
@@ -134,38 +110,12 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 			"last-year");
 	}
 
-	private LocalDateTime _getStartLocalDateTime(int rangeKey) {
-		LocalDateTime localDateTime = _getEndLocalDateTime(rangeKey);
-
-		if (rangeKey == 1) {
-			return localDateTime.minusHours(23);
-		}
-
-		localDateTime = localDateTime.withHour(0);
-
-		if (rangeKey == 0) {
-			return localDateTime;
-		}
-		else if (rangeKey == 365) {
-			return localDateTime.minusYears(1);
-		}
-
-		return localDateTime.minusDays(rangeKey - 1);
-	}
-
 	private boolean _isDefault(int id) {
 		if (id == 30) {
 			return true;
 		}
 
 		return false;
-	}
-
-	private Date _toDate(LocalDateTime localDateTime) {
-		ZonedDateTime zonedDateTime = localDateTime.atZone(
-			ZoneId.of(_user.getTimeZoneId()));
-
-		return Date.from(zonedDateTime.toInstant());
 	}
 
 	@Reference

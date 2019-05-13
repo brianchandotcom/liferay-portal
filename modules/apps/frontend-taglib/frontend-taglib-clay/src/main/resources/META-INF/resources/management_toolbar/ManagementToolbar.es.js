@@ -39,14 +39,7 @@ class ManagementToolbar extends ClayComponent {
 				const currentPageElements = searchContainer.select.getCurrentPageElements().size();
 				const currentPageSelectedElements = searchContainer.select.getCurrentPageSelectedElements().size();
 
-				const currentPageSelected = currentPageElements === currentPageSelectedElements;
-
-				if (currentPageSelectedElements !== 0) {
-					this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
-				}
-				else {
-					this.checkboxStatus = 'unchecked';
-				}
+				this._setCheckboxStatus(currentPageElements, currentPageSelectedElements);
 			}
 		);
 
@@ -210,11 +203,7 @@ class ManagementToolbar extends ClayComponent {
 
 		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
 
-		this.checkboxStatus = 'unchecked';
-
-		if (currentPageSelectedElements !== 0) {
-			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
-		}
+		this._setCheckboxStatus(currentPageElements, currentPageSelectedElements);
 
 		if (this.supportsBulkActions) {
 			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
@@ -231,6 +220,25 @@ class ManagementToolbar extends ClayComponent {
 					);
 				}
 			);
+		}
+	}
+
+		/**
+	 * Updates management toolbar ative status checkbox.
+	 * @param {boolean} currentPageElements is all elements in the current page selected
+	 * @param {number} currentPageSelectedElements number of seleteed elemets in current page
+	 * @private
+	 * @review
+	 */
+
+	_setCheckboxStatus(currentPageElements, currentPageSelectedElements) {
+		if (currentPageSelectedElements > 0) {
+			this.checkboxStatus = currentPageElements === currentPageSelectedElements
+				? 'checked'
+				: 'indeterminate';
+		}
+		else {
+			this.checkboxStatus = 'unchecked';
 		}
 	}
 }

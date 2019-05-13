@@ -53,6 +53,8 @@ class RuleEditor extends Component {
 			)
 		).internal().setter('_setActions').value([]),
 
+		actionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_actionsFieldOptionsValueFn'),
+
 		actionTypes: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -148,6 +150,8 @@ class RuleEditor extends Component {
 			)
 		).internal().setter('_setConditions').value([]),
 
+		conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsFn'),
+
 		dataProvider: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -163,26 +167,6 @@ class RuleEditor extends Component {
 		dataProviderInstancesURL: Config.string().required(),
 
 		deletedFields: Config.arrayOf(Config.string()).value([]),
-
-		fieldOptions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					dataType: Config.string(),
-					name: Config.string(),
-					options: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					type: Config.string(),
-					value: Config.string()
-				}
-			)
-		).internal().valueFn('_fieldOptionsValueFn'),
 
 		fixedOptions: Config.arrayOf(
 			fieldOptionStructure
@@ -358,10 +342,10 @@ class RuleEditor extends Component {
 
 				const fieldsTypes = this.getTypesByFieldType(type);
 
-				const fieldOptions = this.getFieldsByTypes(this.fieldOptions, fieldsTypes);
+				const actionsFieldOptions = this.getFieldsByTypes(this.actionsFieldOptions, fieldsTypes);
 
 				return {
-					fieldOptions,
+					actionsFieldOptions,
 					label,
 					name,
 					required,
@@ -665,10 +649,11 @@ class RuleEditor extends Component {
 		this.setState(
 			{
 				actions: this._syncActions(actions),
+				actionsFieldOptions: this._actionsFieldOptionsValueFn(),
 				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
 				conditions,
+				conditionsFieldOptions: this._conditionsFieldOptionsFn(['paragraph']),
 				deletedFields: this._getDeletedFields(visitor),
-				fieldOptions: this._fieldOptionsValueFn(),
 				pageOptions: pageOptions(pages, maxPage),
 				roles: this._rolesValueFn()
 			}
@@ -820,32 +805,20 @@ class RuleEditor extends Component {
 		);
 	}
 
-	_fieldOptionsValueFn() {
-		const {pages} = this;
-		const fields = [];
-		const visitor = new PagesVisitor(pages);
+	_actionsFieldOptionsValueFn() {
+		return this._getFieldOptions();
+	}
 
-		visitor.mapFields(
-			field => {
-				fields.push(
-					{
-						...field,
-						options: field.options ? field.options : [],
-						value: field.fieldName
-					}
-				);
-			}
-		);
-
-		return fields;
+	_conditionsFieldOptionsFn(omittedFieldsList) {
+		return this._getFieldOptions(omittedFieldsList);
 	}
 
 	_getDeletedFields(visitor) {
 		const existentFields = [];
-		const {fieldOptions} = this;
+		const {actionsFieldOptions} = this;
 		let deletedFields = [];
 
-		fieldOptions.forEach(
+		actionsFieldOptions.forEach(
 			field => {
 				visitor.mapFields(
 					({fieldName}) => {
@@ -857,7 +830,7 @@ class RuleEditor extends Component {
 			}
 		);
 
-		const oldFields = fieldOptions.map(field => field.fieldName);
+		const oldFields = actionsFieldOptions.map(field => field.fieldName);
 
 		deletedFields = oldFields.filter(
 			field => {
@@ -866,6 +839,28 @@ class RuleEditor extends Component {
 		);
 
 		return deletedFields;
+	}
+
+	_getFieldOptions(omittedFieldsList = []) {
+		const {pages} = this;
+		const fields = [];
+		const visitor = new PagesVisitor(pages);
+
+		visitor.mapFields(
+			field => {
+				if (omittedFieldsList.indexOf(field.type) < 0) {
+					fields.push(
+						{
+							...field,
+							options: field.options ? field.options : [],
+							value: field.fieldName
+						}
+					);
+				}
+			}
+		);
+
+		return fields;
 	}
 
 	_getFieldLabel(fieldName) {
@@ -906,7 +901,7 @@ class RuleEditor extends Component {
 			dataType = 'user';
 		}
 		else {
-			const selectedField = this.fieldOptions.find(
+			const selectedField = this.actionsFieldOptions.find(
 				field => field.value === fieldName
 			);
 
@@ -1428,7 +1423,7 @@ class RuleEditor extends Component {
 		if (Array.isArray(action.outputs)) {
 			action.outputs.forEach(
 				output => {
-					delete output.fieldOptions;
+					delete output.actionsFieldOptions;
 					delete output.name;
 					delete output.type;
 				}

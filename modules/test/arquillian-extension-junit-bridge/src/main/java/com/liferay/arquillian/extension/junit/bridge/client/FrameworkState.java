@@ -128,12 +128,6 @@ public class FrameworkState {
 		FrameworkResult frameworkResult =
 			(FrameworkResult)_objectInputStream.readObject();
 
-		Exception exception = frameworkResult.getException();
-
-		if (exception != null) {
-			throw exception;
-		}
-
 		return frameworkResult.getBundleId();
 	}
 

@@ -21,12 +21,12 @@ import java.io.Serializable;
  */
 public class FrameworkResult implements Serializable {
 
-	public long getBundleId() {
-		return _bundleId;
-	}
+	public long getBundleId() throws Exception {
+		if (_exception != null) {
+			throw _exception;
+		}
 
-	public Exception getException() {
-		return _exception;
+		return _bundleId;
 	}
 
 	public void setBundleId(long bundleId) {

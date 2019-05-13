@@ -65,6 +65,8 @@ public class TGZUtil {
 			TarArchiveOutputStream tarArchiveOutputStream =
 				new TarArchiveOutputStream(gzipCompressorOutputStream)) {
 
+			tarArchiveOutputStream.setBigNumberMode(
+				TarArchiveOutputStream.BIGNUMBER_POSIX);
 			tarArchiveOutputStream.setLongFileMode(
 				TarArchiveOutputStream.LONGFILE_POSIX);
 

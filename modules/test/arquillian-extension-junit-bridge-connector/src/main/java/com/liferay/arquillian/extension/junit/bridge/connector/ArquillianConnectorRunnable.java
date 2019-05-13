@@ -99,7 +99,7 @@ public class ArquillianConnectorRunnable implements Runnable {
 		catch (ClosedByInterruptException cbie) {
 		}
 		catch (Exception e) {
-			_log.fatal(
+			_log.error(
 				"Encountered a problem while using " +
 					_inetAddress.getHostAddress() + ":" + _port +
 						". Shutting down now.",

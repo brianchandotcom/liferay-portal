@@ -48,7 +48,9 @@ if (ratingsStats != null) {
 	ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), BlogsEntry.class.getName(), entry.getEntryId());
 }
 
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+}
 
 request.setAttribute("view_entry_content.jsp-entry", entry);
 

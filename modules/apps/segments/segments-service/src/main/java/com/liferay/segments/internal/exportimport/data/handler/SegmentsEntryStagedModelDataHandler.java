@@ -61,7 +61,7 @@ public class SegmentsEntryStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(SegmentsEntry segmentsEntry) {
-		return segmentsEntry.getName();
+		return segmentsEntry.getNameCurrentValue();
 	}
 
 	@Override

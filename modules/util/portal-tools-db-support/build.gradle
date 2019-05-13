@@ -35,6 +35,10 @@ formatSource {
 	mustRunAfter formatXML
 }
 
+javadoc {
+	options.tags = ["goal", "parameter", "required"]
+}
+
 liferayOSGi {
 	expandCompileInclude = true
 }

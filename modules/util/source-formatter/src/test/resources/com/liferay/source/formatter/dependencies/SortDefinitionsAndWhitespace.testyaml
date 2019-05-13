@@ -23,9 +23,12 @@ components:
       properties:
         url:
           type: string
+        url:
+          type: string
         id:
           type: integer
           format: int64
+          type: integer
         urlType:
           type: string
       description: https://www.schema.org/WebUrl

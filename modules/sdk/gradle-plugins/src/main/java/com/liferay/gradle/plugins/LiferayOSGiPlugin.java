@@ -558,7 +558,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"builder classpath: {}", buildDirs.getAsPath());
+								"Builder Classpath: {}", buildDirs.getAsPath());
 						}
 
 						SourceDirectorySet allSource = sourceSet.getAllSource();
@@ -582,7 +582,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"builder sourcepath: {}",
+								"Builder Sourcepath: {}",
 								builder.getSourcePath());
 						}
 
@@ -617,7 +617,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						}
 
 						if (logger.isDebugEnabled()) {
-							logger.debug("builder properties: {}", properties);
+							logger.debug("Builder Properties: {}", properties);
 						}
 
 						aQute.bnd.osgi.Jar bndJar = builder.build();

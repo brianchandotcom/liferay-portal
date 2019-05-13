@@ -471,10 +471,17 @@ class RuleEditor extends Component {
 		let list = [];
 
 		if (fieldType == 'list') {
-			list = ['select', 'checkbox_multiple', 'radio'];
+			list = ['checkbox_multiple', 'radio', 'select'];
 		}
 		else if (fieldType == 'text') {
-			list = ['select', 'checkbox_multiple', 'radio', 'text', 'numeric', 'date'];
+			list = [
+				'checkbox_multiple',
+				'date',
+				'numeric',
+				'radio',
+				'select',
+				'text'
+			];
 		}
 		else if (fieldType == 'number') {
 			list = ['numeric'];

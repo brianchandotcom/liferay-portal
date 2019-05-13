@@ -124,7 +124,7 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Object visitMethodExpression(
 		List<Object> expressions, MethodExpression.Type type) {
 
-		return null;
+		return _filterStringSB.toString();
 	}
 
 	@Override

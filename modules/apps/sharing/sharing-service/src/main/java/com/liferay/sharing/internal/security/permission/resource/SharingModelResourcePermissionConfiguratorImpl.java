@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.internal.security.permission.resource;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.internal.configuration.SharingSystemConfiguration;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,20 +43,29 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
+	configurationPid = "com.liferay.sharing.internal.configuration.SharingSystemConfiguration",
 	immediate = true, service = SharingModelResourcePermissionConfigurator.class
 )
 public class SharingModelResourcePermissionConfiguratorImpl
 	implements SharingModelResourcePermissionConfigurator {
+
+	@Activate
+	public void activate(Map<String, Object> properties) {
+		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
+			SharingSystemConfiguration.class, properties);
+	}
 
 	@Override
 	public <T extends GroupedModel> void configure(
 		ModelResourcePermission<T> modelResourcePermission,
 		Consumer<ModelResourcePermissionLogic<T>> consumer) {
 
-		consumer.accept(
-			new SharingModelResourcePermissionLogicImpl<>(
-				_classNameLocalService.getClassNameId(
-					modelResourcePermission.getModelName())));
+		if (_sharingSystemConfiguration.enabled()) {
+			consumer.accept(
+				new SharingModelResourcePermissionLogicImpl<>(
+					_classNameLocalService.getClassNameId(
+						modelResourcePermission.getModelName())));
+		}
 	}
 
 	private static Map<String, SharingEntryAction> _getSharingEntryActions() {
@@ -83,6 +95,8 @@ public class SharingModelResourcePermissionConfiguratorImpl
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	private SharingSystemConfiguration _sharingSystemConfiguration;
 
 	private class SharingModelResourcePermissionLogicImpl
 		<T extends GroupedModel>

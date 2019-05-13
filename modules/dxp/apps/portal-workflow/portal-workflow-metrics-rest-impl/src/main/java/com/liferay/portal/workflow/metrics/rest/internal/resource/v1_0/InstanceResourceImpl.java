@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -563,8 +563,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			Bucket::getKey
 		).map(
-			taskName -> LanguageUtil.get(
-				contextAcceptLanguage.getPreferredLocale(), taskName)
+			taskName -> _language.get(
+				_resourceHelper.getResourceBundle(
+					contextAcceptLanguage.getPreferredLocale()),
+				taskName)
 		).collect(
 			Collectors.toList()
 		);
@@ -662,6 +664,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Queries _queries;

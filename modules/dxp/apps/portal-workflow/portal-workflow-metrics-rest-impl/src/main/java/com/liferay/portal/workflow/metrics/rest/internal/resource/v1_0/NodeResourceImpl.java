@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -89,14 +89,18 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 			{
 				id = document.getLong("nodeId");
 				initial = GetterUtil.getBoolean(document.getValue("initial"));
-				name = LanguageUtil.get(
-					contextAcceptLanguage.getPreferredLocale(),
+				name = _language.get(
+					_resourceHelper.getResourceBundle(
+						contextAcceptLanguage.getPreferredLocale()),
 					document.getString("name"));
 				terminal = GetterUtil.getBoolean(document.getValue("terminal"));
 				type = document.getString("type");
 			}
 		};
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Queries _queries;

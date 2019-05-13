@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -199,8 +199,10 @@ public class TaskResourceImpl
 		return new Task() {
 			{
 				key = taskName;
-				name = LanguageUtil.get(
-					contextAcceptLanguage.getPreferredLocale(), taskName);
+				name = _language.get(
+					_resourceHelper.getResourceBundle(
+						contextAcceptLanguage.getPreferredLocale()),
+					taskName);
 			}
 		};
 	}
@@ -479,6 +481,9 @@ public class TaskResourceImpl
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Queries _queries;

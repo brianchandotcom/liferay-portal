@@ -110,7 +110,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES = {"**/*.yaml", "**/*.yml"};
 
 	private static final Pattern _sequencesAndMappingsPattern1 =
-		Pattern.compile("^( *)[^ -].+(\n\\1-(\n\\1 .+)*)+", Pattern.MULTILINE);
+		Pattern.compile("^( *)[^ -].+:(\n\\1-(\n\\1 .+)*)+", Pattern.MULTILINE);
 	private static final Pattern _sequencesAndMappingsPattern2 =
 		Pattern.compile("(^( *)-)(?: )(.+(\n|\\Z))", Pattern.MULTILINE);
 

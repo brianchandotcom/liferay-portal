@@ -240,6 +240,8 @@ definition {
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: Basic Web Content");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		WebContentTemplates.viewTableEntryCP(
 			templateDescription = "Test WC Template Description",
 			templateName = "Test WC Template");

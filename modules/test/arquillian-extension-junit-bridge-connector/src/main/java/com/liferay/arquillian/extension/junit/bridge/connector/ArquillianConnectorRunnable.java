@@ -27,7 +27,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import java.nio.channels.ClosedByInterruptException;
-import java.nio.channels.ServerSocketChannel;
 
 import org.osgi.framework.BundleContext;
 
@@ -47,10 +46,7 @@ public class ArquillianConnectorRunnable implements Runnable {
 	@Override
 	public void run() {
 		try {
-			ServerSocketChannel serverSocketChannel =
-				ServerSocketChannel.open();
-
-			ServerSocket serverSocket = serverSocketChannel.socket();
+			ServerSocket serverSocket = new ServerSocket();
 
 			serverSocket.bind(new InetSocketAddress(_inetAddress, _port));
 

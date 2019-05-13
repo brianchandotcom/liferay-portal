@@ -1,4 +1,4 @@
-import { CompletedItemsCard } from '../ProcessItemsCard';
+import CompletedItemsCard from '../CompletedItemsCard';
 import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
 import React from 'react';

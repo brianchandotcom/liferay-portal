@@ -17,7 +17,7 @@ function mockItems(count) {
 	return items;
 }
 
-test('Should active item when checkbox is checked', () => {
+test('Should active item when input is checked', () => {
 	const items = [
 		{
 			active: false,
@@ -39,7 +39,9 @@ test('Should active item when checkbox is checked', () => {
 
 	const instance = component.find(Filter).instance();
 
-	instance.onCheckboxChange({ target: { checked: true, name: 'overdue' } });
+	instance.onInputChange({
+		target: { checked: true, dataset: { key: 'overdue' } }
+	});
 
 	expect(instance.state.items[0].active).toEqual(true);
 });
@@ -68,7 +70,9 @@ test('Should hide dropdown when click outside filter', () => {
 	const instance = component.find(Filter).instance();
 
 	instance.toggleDropDown();
-	instance.onCheckboxChange({ target: { checked: true, name: 'overdue' } });
+	instance.onInputChange({
+		target: { checked: true, dataset: { key: 'overdue' } }
+	});
 	instance.onClickOutside(document.body);
 
 	expect(instance.state.expanded).toEqual(false);

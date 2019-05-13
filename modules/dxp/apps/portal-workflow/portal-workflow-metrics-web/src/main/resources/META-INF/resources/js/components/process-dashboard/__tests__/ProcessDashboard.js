@@ -1,6 +1,6 @@
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
-import { PendingItemsCard } from '../process-items/ProcessItemsCard';
+import PendingItemsCard from '../process-items/PendingItemsCard';
 import ProcessDashboard from '../ProcessDashboard';
 import React from 'react';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
@@ -62,6 +62,9 @@ test('Should render dashboard route children', () => {
 	const component = mount(
 		<Router client={fetch({})}>
 			{withParams(PendingItemsCard, WorkloadByStepCard)({
+				location: {
+					search: ''
+				},
 				match: {
 					params: {
 						processId: 35315

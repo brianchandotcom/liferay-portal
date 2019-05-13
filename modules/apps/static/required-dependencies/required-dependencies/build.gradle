@@ -1,13 +1,5 @@
-import com.liferay.gradle.util.copy.RenameDependencyClosure
-
-task deployTestLibs(type: Copy)
-
 configurations {
 	compileOnly {
-		transitive = false
-	}
-
-	testLibs {
 		transitive = false
 	}
 }
@@ -48,17 +40,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "org.osgi.util.function", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
-
-	testLibs group: "org.apache.aries", name: "org.apache.aries.util", version: "1.0.0"
-	testLibs group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.1"
-	testLibs group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.core", version: "1.1.3"
 }
 
 deploy {
 	setActions([])
 
 	dependsOn = []
-	finalizedBy deployTestLibs
 }
 
 deployDependencies {
@@ -68,22 +55,4 @@ deployDependencies {
 	rename(/geronimo-interceptor_1\.2_spec-(.+)\.jar/, "geronimo-interceptor_1.2_spec" + renameSuffix)
 	rename(/geronimo-jcdi_2\.0_spec-(.+)\.jar/, "geronimo-jcdi_2.0_spec" + renameSuffix)
 	rename(/javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
-}
-
-deployTestLibs {
-	ext {
-		autoClean = false
-	}
-
-	from configurations.testLibs
-
-	into {
-		"${liferay.liferayHome}/osgi/test"
-	}
-
-	outputs.upToDateWhen {
-		false
-	}
-
-	rename new RenameDependencyClosure(project, configurations.testLibs.name)
 }

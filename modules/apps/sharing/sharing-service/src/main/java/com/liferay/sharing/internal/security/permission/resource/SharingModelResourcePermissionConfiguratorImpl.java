@@ -48,7 +48,10 @@ public class SharingModelResourcePermissionConfiguratorImpl
 		ModelResourcePermission<T> modelResourcePermission,
 		Consumer<ModelResourcePermissionLogic<T>> consumer) {
 
-		consumer.accept(new SharingModelResourcePermissionLogicImpl<>());
+		consumer.accept(
+			new SharingModelResourcePermissionLogicImpl<>(
+				_classNameLocalService.getClassNameId(
+					modelResourcePermission.getModelName())));
 	}
 
 	@Reference
@@ -85,10 +88,8 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				SharingEntryAction sharingEntryAction =
 					SharingEntryAction.parseFromActionId(actionId);
 
-				long classNameId = _classNameLocalService.getClassNameId(name);
-
 				if (_sharingEntryLocalService.hasSharingPermission(
-						permissionChecker.getUserId(), classNameId,
+						permissionChecker.getUserId(), _classNameId,
 						(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
 
 					return true;
@@ -97,6 +98,12 @@ public class SharingModelResourcePermissionConfiguratorImpl
 
 			return null;
 		}
+
+		private SharingModelResourcePermissionLogicImpl(long classNameId) {
+			_classNameId = classNameId;
+		}
+
+		private final long _classNameId;
 
 	}
 

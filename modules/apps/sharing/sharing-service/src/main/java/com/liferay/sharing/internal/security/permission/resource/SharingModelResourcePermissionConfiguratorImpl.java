@@ -27,6 +27,8 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,6 +56,22 @@ public class SharingModelResourcePermissionConfiguratorImpl
 					modelResourcePermission.getModelName())));
 	}
 
+	private static Map<String, SharingEntryAction> _getSharingEntryActions() {
+		Map<String, SharingEntryAction> sharingEntryActions = new HashMap<>();
+
+		for (SharingEntryAction sharingEntryAction :
+				SharingEntryAction.values()) {
+
+			sharingEntryActions.put(
+				sharingEntryAction.getActionId(), sharingEntryAction);
+		}
+
+		return sharingEntryActions;
+	}
+
+	private static final Map<String, SharingEntryAction> _sharingEntryActions =
+		_getSharingEntryActions();
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -76,6 +94,13 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				String actionId)
 			throws PortalException {
 
+			SharingEntryAction sharingEntryAction = _sharingEntryActions.get(
+				actionId);
+
+			if (sharingEntryAction == null) {
+				return null;
+			}
+
 			SharingConfiguration sharingConfiguration =
 				_sharingConfigurationFactory.getGroupSharingConfiguration(
 					_groupLocalService.getGroup(model.getGroupId()));
@@ -84,16 +109,11 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				return null;
 			}
 
-			if (SharingEntryAction.isSupportedActionId(actionId)) {
-				SharingEntryAction sharingEntryAction =
-					SharingEntryAction.parseFromActionId(actionId);
+			if (_sharingEntryLocalService.hasSharingPermission(
+					permissionChecker.getUserId(), _classNameId,
+					(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
 
-				if (_sharingEntryLocalService.hasSharingPermission(
-						permissionChecker.getUserId(), _classNameId,
-						(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
-
-					return true;
-				}
+				return true;
 			}
 
 			return null;

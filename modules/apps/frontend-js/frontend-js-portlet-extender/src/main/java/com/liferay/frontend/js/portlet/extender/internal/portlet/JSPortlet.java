@@ -26,11 +26,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.portlet.PortletPreferences;
@@ -100,7 +102,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 			return;
 		}
 
-		Map<String, String> configuration = new HashMap<>();
+		Map<String, Object> configuration = new HashMap<>();
 
 		Enumeration<String> keys = properties.keys();
 
@@ -111,7 +113,16 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 				continue;
 			}
 
-			configuration.put(key, String.valueOf(properties.get(key)));
+			Object value = properties.get(key);
+
+			if (value instanceof Vector) {
+				value = new ArrayList<>((Vector)value);
+			}
+			else {
+				value = String.valueOf(value);
+			}
+
+			configuration.put(key, value);
 		}
 
 		_configuration.set(configuration);
@@ -159,7 +170,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 	}
 
 	private String _getSystemConfiguration() {
-		return _jsonFactory.looseSerialize(_configuration.get());
+		return _jsonFactory.looseSerializeDeep(_configuration.get());
 	}
 
 	private static final String _TPL_HTML;
@@ -173,7 +184,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		_TPL_JAVA_SCRIPT = _loadTemplate("bootstrap.js.tpl");
 	}
 
-	private final AtomicReference<Map<String, String>> _configuration =
+	private final AtomicReference<Map<String, Object>> _configuration =
 		new AtomicReference<>();
 	private final JSONFactory _jsonFactory;
 	private final String _packageName;

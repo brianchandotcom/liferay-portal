@@ -1,13 +1,29 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class PortalComponent extends React.Component {
-	componentWillMount() {
+	constructor(props) {
+		super(props);
+		this.element = document.createElement('div');
+	}
+
+	componentDidMount() {
 		const { container, replace } = this.props;
 
-		if (container && replace) {
-			container.innerHTML = '';
+		if (!container) {
+			return;
 		}
+
+		if (replace) {
+			if (container.children.length) {
+				container.removeChild(container.children[0]);
+			}
+			else {
+				container.innerHTML = '';
+			}
+		}
+
+		container.appendChild(this.element);
 	}
 
 	render() {
@@ -17,6 +33,10 @@ export default class PortalComponent extends React.Component {
 			return null;
 		}
 
-		return <Fragment>{ReactDOM.createPortal(children, container)}</Fragment>;
+		return (
+			<React.Fragment>
+				{ReactDOM.createPortal(children, this.element)}
+			</React.Fragment>
+		);
 	}
 }

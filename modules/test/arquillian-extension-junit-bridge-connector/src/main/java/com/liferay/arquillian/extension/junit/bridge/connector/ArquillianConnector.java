@@ -60,8 +60,10 @@ public class ArquillianConnector {
 	}
 
 	@Deactivate
-	public void deacticate() {
+	public void deacticate() throws InterruptedException {
 		_thread.interrupt();
+
+		_thread.join();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

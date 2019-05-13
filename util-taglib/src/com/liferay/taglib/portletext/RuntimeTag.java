@@ -367,9 +367,10 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 			else {
 				doTag(
-					_portletName, _instanceId, _queryString, _settingsScope,
-					_defaultPreferences, _persistSettings, pageContext,
-					httpServletRequest, httpServletResponse);
+					_portletName, _instanceId, _queryString,
+					_SETTINGS_SCOPE_DEFAULT, _defaultPreferences,
+					_persistSettings, pageContext, httpServletRequest,
+					httpServletResponse);
 			}
 
 			return EVAL_PAGE;
@@ -411,8 +412,11 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		_queryString = queryString;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setSettingsScope(String settingsScope) {
-		_settingsScope = settingsScope;
 	}
 
 	/**
@@ -474,6 +478,5 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	private PortletProvider.Action _portletProviderAction;
 	private String _portletProviderClassName;
 	private String _queryString;
-	private String _settingsScope = _SETTINGS_SCOPE_DEFAULT;
 
 }

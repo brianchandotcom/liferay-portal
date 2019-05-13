@@ -89,7 +89,7 @@ dependencies {
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.smartcn", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.stempel", version: elasticsearchVersion
 
-	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "3.1.0"
+	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"

@@ -7,7 +7,7 @@ dependencies {
 	compileInclude group: "org.apache.jackrabbit", name: "jackrabbit-spi", version: "2.2.4"
 	compileInclude group: "org.apache.jackrabbit", name: "jackrabbit-spi-commons", version: "2.2.4"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "3.1.0"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"

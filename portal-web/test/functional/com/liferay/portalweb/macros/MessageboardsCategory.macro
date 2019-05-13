@@ -102,17 +102,15 @@ definition {
 	}
 
 	macro addSubcategoryToSubcategoryPG {
-		var key_categoryName = "${categoryName}";
-
 		AssertClick(
+			key_categoryName = "${categoryName}",
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 			value1 = "${categoryName}");
 
-		var key_subCategoryName = "${subCategoryName}";
-
 		AssertClick(
+			key_categoryName = "${subCategoryName}",
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = "${subCategoryName}");
 
 		AssertClick(
 			locator1 = "Button#ADD_CATEGORY",
@@ -396,23 +394,24 @@ definition {
 	}
 
 	macro viewSubcategoryFromSubcategoryPG {
-		var key_categoryName = "${categoryName}";
-		var key_subCategoryDescription = "${subCategoryDescription}";
-		var key_subCategoryName = "${subCategoryName}";
-
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
 			value1 = "${categoryName}");
 
 		AssertTextEquals(
+			key_categoryName = "${subCategoryName}",
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = "${subCategoryName}");
 
 		AssertTextEquals(
+			key_categoryDescription = "${subCategoryDescription}",
+			key_categoryName = "${subCategoryName}",
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-			value1 = "${categoryDescription}");
+			value1 = "${subCategoryDescription}");
 
-		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
+		Click(
+			key_categoryName = "${subCategoryName}",
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",

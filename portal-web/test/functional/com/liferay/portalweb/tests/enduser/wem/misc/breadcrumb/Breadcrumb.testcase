@@ -143,7 +143,7 @@ definition {
 
 		MessageboardsCategory.addSubcategoryToSubcategoryPG(
 			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
+			subCategoryDescription = "MB Subcategory Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
 			subCategorySubCategoryName = "MB Subcategory Subcategory Name");
 
@@ -165,7 +165,7 @@ definition {
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
 			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Description",
+			subCategoryDescription = "MB Subcategory Subcategory Description",
 			subCategoryName = "MB Subcategory Subcategory Name");
 
 		Breadcrumb.viewPG(
@@ -196,7 +196,7 @@ definition {
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
 			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Description",
+			subCategoryDescription = "MB Subcategory Subcategory Description",
 			subCategoryName = "MB Subcategory Subcategory Name");
 
 		Breadcrumb.viewSpecificPG(
@@ -224,7 +224,7 @@ definition {
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
 			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Description",
+			subCategoryDescription = "MB Subcategory Subcategory Description",
 			subCategoryName = "MB Subcategory Subcategory Name");
 
 		Breadcrumb.viewPG(

@@ -138,8 +138,7 @@ public interface AMImageQueryBuilder
 		 *
 		 * <p>
 		 * The distance comparator is implemented based on the value returned by
-		 * the method {@link
-		 * AMAttribute#distance(Object, Object)}.
+		 * the method {@link AMAttribute#distance(Object, Object)}.
 		 * </p>
 		 *
 		 * <p>

@@ -76,25 +76,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		final Configuration targetPlatformDistroConfiguration =
 			_addConfigurationTargetPlatformDistro(project);
 
-		Logger logger = project.getLogger();
-
-		File bndrunFile = project.file(PLATFORM_BNDRUN);
-
-		if (bndrunFile.exists()) {
-			ResolveTask resolveTask = _addTaskResolve(project);
-
-			_configureTaskResolve(
-				project, resolveTask, bndrunFile,
-				targetPlatformDistroConfiguration);
-		}
-		else {
-			logger.info(
-				"Explicitly excluding {} from resolution because there is no " +
-					PLATFORM_BNDRUN +
-						" file at the root of the gradle workspace",
-				project);
-		}
-
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(

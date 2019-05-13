@@ -8,16 +8,10 @@
 						"jest": true
 					},
 					"extends": "liferay",
-					"globals": {
-						"AlloyEditor": true
-					},
 					"parser": "babel-eslint",
 					"parserOptions": {
 						"ecmaVersion": 7
 					},
-					"plugins": [
-						"sort-class-members"
-					],
 					"rules": {
 						"no-unknown-property": [
 							2,
@@ -26,43 +20,6 @@
 									"class",
 									"xlink:href"
 								]
-							}
-						],
-						"sort-class-members/sort-class-members": [
-							2,
-							{
-								"groups": {
-									"conventional-private-methods": [
-										{
-											"name": "/^_.+$/",
-											"sort": "alphabetical",
-											"type": "method"
-										}
-									],
-									"methods": [
-										{
-											"sort": "alphabetical",
-											"type": "method"
-										}
-									]
-								},
-								"order": [
-									"[static-properties]",
-									"[static-methods]",
-									"[properties]",
-									"[conventional-private-properties]",
-									"constructor",
-									"[methods]",
-									"[conventional-private-methods]"
-								]
-							}
-						],
-						"sort-keys": [
-							"error",
-							"asc",
-							{
-								"caseSensitive": false,
-								"natural": false
 							}
 						]
 					}

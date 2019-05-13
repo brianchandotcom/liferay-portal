@@ -648,10 +648,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				private Map<String, String> _getProperties(Project project) {
 					Map<String, String> properties = new HashMap<>();
 
-					BundleExtension bundleExtension = GradleUtil.getExtension(
-						project, BundleExtension.class);
+					Map<String, Object> instructions =
+						BndBuilderUtil.getInstructions(project);
 
-					bundleExtension.forEach(
+					instructions.forEach(
 						(k, v) -> properties.put(k, GradleUtil.toString(v)));
 
 					properties.remove(Constants.DONOTCOPY);
@@ -1051,7 +1051,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
-					Map<String, Object> bundleInstructions =
+					Map<String, Object> instructions =
 						BndBuilderUtil.getInstructions(project);
 
 					Map<String, ?> projectProperties = project.getProperties();
@@ -1064,7 +1064,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						Matcher matcher = _keyRegex.matcher(key);
 
 						if (matcher.matches()) {
-							bundleInstructions.put(
+							instructions.put(
 								key, GradleUtil.toString(entry.getValue()));
 						}
 					}
@@ -1077,7 +1077,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					bundleTaskConvention.setBndfile(
 						new File("$$$DOESNOTEXIST$$$"));
 
-					bundleTaskConvention.setBnd(bundleInstructions);
+					bundleTaskConvention.setBnd(instructions);
 				}
 
 			});

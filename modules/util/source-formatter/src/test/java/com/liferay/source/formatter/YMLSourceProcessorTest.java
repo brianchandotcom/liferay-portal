@@ -27,6 +27,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortDefinitionsOnHelmYaml() throws Exception {
+		test("SortDefinitionsOnHelmYaml.testyaml");
+	}
+
+	@Test
 	public void testSortSpecificDefinitions() throws Exception {
 		test("SortSpecificDefinitions.testyaml");
 	}

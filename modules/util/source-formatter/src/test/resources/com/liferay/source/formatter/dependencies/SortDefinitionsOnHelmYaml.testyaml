@@ -1,0 +1,29 @@
+kind: Service
+apiVersion: v1
+metadata:
+    namespace: {{ $namespace }}
+    name: {{ $masterSubdomain }}
+spec:
+    {{- if $.Values.slave.ports.vnc.enabled }}
+    ports:
+        - name: {{ $.Values.slave.ports.vnc.name }}
+          containerPort: {{ $.Values.slave.ports.vnc.containerPort }}
+    {{- end }}
+    selector:
+        app: {{ $masterPodName }}
+    type: NodePort
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+    namespace: {{ $namespace }}
+    name: {{ $masterPodName }}-ingress-resource
+spec:
+    rules:
+      - host: {{ $.Values.ingressHostname }}
+        http:
+            paths:
+              - backend:
+                    servicePort: 8080
+                    serviceName: {{ $masterSubdomain }}
+                path: /{{ $masterPodName }}

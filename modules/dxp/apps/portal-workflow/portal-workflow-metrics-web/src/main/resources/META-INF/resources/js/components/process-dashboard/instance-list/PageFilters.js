@@ -4,6 +4,11 @@ import {
 	slaStatusKeys
 } from './filterConstants';
 
+const completionPeriodFilter = {
+	key: filterKeys.completionPeriod,
+	name: Liferay.Language.get('completion-period')
+};
+
 const processStatusFilter = {
 	key: filterKeys.processStatus,
 	name: Liferay.Language.get('process-status')
@@ -46,6 +51,7 @@ const slaStatusItems = [
 ];
 
 export {
+	completionPeriodFilter,
 	processStatusFilter,
 	processStatusItems,
 	processStepFilter,

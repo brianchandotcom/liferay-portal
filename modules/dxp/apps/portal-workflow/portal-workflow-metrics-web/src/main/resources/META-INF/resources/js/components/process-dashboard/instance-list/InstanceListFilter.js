@@ -1,73 +1,96 @@
 import {
+	completionPeriodFilter,
 	processStatusFilter,
 	processStatusItems,
 	processStepFilter,
 	slaStatusFilter,
 	slaStatusItems
 } from './PageFilters';
+import {
+	getFiltersParam,
+	isSelected,
+	verifySelectedItems
+} from '../../../shared/components/filter/util/filterUtil';
 import React, { Fragment } from 'react';
 import { AppContext } from '../../AppContext';
 import Filter from '../../../shared/components/filter/Filter';
 import FilterResultsBar from '../../../shared/components/filter/FilterResultsBar';
-import { getFiltersParam } from '../../../shared/components/filter/util/filterUtil';
+import { processStatusKeys } from './filterConstants';
+import processTaskStore from '../store/processTaskStore';
+import timeRangeStore from '../store/timeRangeStore';
 
 class InstanceListFilter extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			processStepItems: []
+			loaded: false
 		};
-	}
-
-	get filters() {
-		const filters = [
-			{
-				...slaStatusFilter,
-				items: [...slaStatusItems]
-			},
-			{
-				...processStatusFilter,
-				items: [...processStatusItems]
-			},
-			{
-				...processStepFilter,
-				items: [...this.state.processStepItems]
-			}
-		];
-		const { query } = this.props;
-
-		const filtersParam = getFiltersParam(query);
-
-		filters.forEach(filter => {
-			const filterValues = filtersParam[filter.key] || [];
-
-			filter.items.forEach(item => {
-				item.active = filterValues.includes(item.key);
-			});
-		});
-
-		return filters;
 	}
 
 	componentWillMount() {
 		return this.loadData();
 	}
 
-	loadData(props = this.props) {
-		return this.requestData(props).then(({ items = [] }) => {
-			this.setState({ processStepItems: items });
+	get filters() {
+		const filters = [
+			{
+				...slaStatusFilter,
+				items: [...slaStatusItems],
+				multiple: true
+			},
+			{
+				...processStatusFilter,
+				items: [...processStatusItems],
+				multiple: true
+			}
+		];
+
+		const { query } = this.props;
+
+		if (this.showCompletedFilter(query)) {
+			filters.push({
+				...completionPeriodFilter,
+				defaultItem: timeRangeStore.defaultTimeRange,
+				items: [...timeRangeStore.getState().timeRanges],
+				multiple: false
+			});
+		}
+
+		filters.push({
+			...processStepFilter,
+			items: [...processTaskStore.getState().processTasks],
+			multiple: true
 		});
+
+		const filtersParam = getFiltersParam(query);
+
+		filters.forEach(filter => {
+			verifySelectedItems(filter, filtersParam);
+		});
+
+		return filters;
 	}
 
-	requestData({ processId }) {
-		const { client } = this.context;
+	loadData(props = this.props) {
+		const promises = [
+			processTaskStore.fetchProcessTasks(props.processId),
+			timeRangeStore.fetchTimeRanges()
+		];
 
-		return client
-			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
-			.then(({ data }) => {
-				return data;
-			});
+		return Promise.all(promises).then(() =>
+			this.setState({
+				loaded: true
+			})
+		);
+	}
+
+	showCompletedFilter(query) {
+		return isSelected(
+			processStatusFilter.key,
+			processStatusKeys.completed,
+			query
+		);
 	}
 
 	render() {
@@ -85,8 +108,8 @@ class InstanceListFilter extends React.Component {
 								</strong>
 							</li>
 
-							{filters.map((filter, index) => (
-								<Filter {...filter} filterKey={filter.key} key={index} />
+							{filters.map(filter => (
+								<Filter {...filter} filterKey={filter.key} key={filter.key} />
 							))}
 						</ul>
 					</div>

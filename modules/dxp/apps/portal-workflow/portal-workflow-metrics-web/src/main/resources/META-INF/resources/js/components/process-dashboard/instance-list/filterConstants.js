@@ -1,4 +1,5 @@
 export const filterKeys = {
+	completionPeriod: 'timeRange',
 	processStatus: 'statuses',
 	processStep: 'taskKeys',
 	slaStatus: 'slaStatuses'

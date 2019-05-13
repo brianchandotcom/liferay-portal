@@ -20,6 +20,14 @@ export function getSelectedItemsQuery(items, key, queryString) {
 	return stringify(queryParams);
 }
 
+export function isSelected(filterKey, itemKey, queryString) {
+	const filtersParam = getFiltersParam(queryString);
+
+	const filterValues = filtersParam[filterKey] || [];
+
+	return filterValues.includes(itemKey);
+}
+
 export function pushToHistory(filterQuery, routerProps) {
 	const {
 		history,
@@ -59,4 +67,19 @@ export function removeItem(filter, itemToRemove, queryString) {
 	queryParams.filters = filtersParam;
 
 	return stringify(queryParams);
+}
+
+export function verifySelectedItems(filter, filtersParam) {
+	const filterValues = filtersParam[filter.key] || [];
+
+	filter.items.forEach(item => {
+		if (Array.isArray(filterValues)) {
+			item.active = filterValues.includes(item.key);
+		}
+		else {
+			item.active = filterValues === item.key;
+		}
+	});
+
+	return filter;
 }

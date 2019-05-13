@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
+import com.liferay.data.engine.rest.internal.constants.DataRuleFunctionConstants;
 import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
@@ -25,19 +26,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jeyvison Nascimento
  */
+@Component(
+	immediate = true,
+	property = {
+		"data.engine.rule.function.name=matchExpression",
+		"data.engine.rule.function.type=" + DataRuleFunctionConstants.VALIDATION_RULE_TYPE
+	},
+	service = DataRuleFunction.class
+)
 public class MatchExpressionDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
-		SPIDataDefinitionField dataDefinitionField,
-		Map<String, Object> dataDefinitionRuleParameters, Object value) {
+		Map<String, Object> dataDefinitionRuleParameters,
+		SPIDataDefinitionField spiDataDefinitionField, Object value) {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionResult.of(
-				dataDefinitionField.getName(), "value-must-match-expression");
+				spiDataDefinitionField, "value-must-match-expression");
 
 		if (value == null) {
 			return dataRuleFunctionResult;

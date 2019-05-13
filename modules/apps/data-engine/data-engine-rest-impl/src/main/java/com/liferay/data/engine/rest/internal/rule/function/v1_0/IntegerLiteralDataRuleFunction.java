@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
+import com.liferay.data.engine.rest.internal.constants.DataRuleFunctionConstants;
 import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
@@ -22,20 +23,29 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jeyvison Nascimento
  */
+@Component(
+	immediate = true,
+	property = {
+		"data.engine.rule.function.name=integerLiteral",
+		"data.engine.rule.function.type=" + DataRuleFunctionConstants.VALIDATION_RULE_TYPE
+	},
+	service = DataRuleFunction.class
+)
 public class IntegerLiteralDataRuleFunction implements DataRuleFunction {
 
 	@Override
 	public DataRuleFunctionResult validate(
-		SPIDataDefinitionField dataDefinitionField,
-		Map<String, Object> dataDefinitionRuleParameters, Object value) {
+		Map<String, Object> dataDefinitionRuleParameters,
+		SPIDataDefinitionField spiDataDefinitionField, Object value) {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionResult.of(
-				dataDefinitionField.getName(),
-				"value-must-be-an-integer-value");
+				spiDataDefinitionField, "value-must-be-an-integer-value");
 
 		if (value == null) {
 			return dataRuleFunctionResult;

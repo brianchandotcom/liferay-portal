@@ -27,9 +27,20 @@ exports[`Should render component 1`] = `
     </svg>
   </button>
   <div
-    className=" dropdown-menu"
+    className="dropdown-menu"
     role="menu"
   >
+    <ul
+      className="list-unstyled"
+    >
+      <li>
+        <span
+          className="disabled dropdown-item"
+        >
+          No results were found.
+        </span>
+      </li>
+    </ul>
     <ul
       className="list-unstyled"
     />
@@ -64,7 +75,7 @@ exports[`Should render component with search wrapper 1`] = `
     </svg>
   </button>
   <div
-    className=" dropdown-menu"
+    className="dropdown-menu"
     role="menu"
   >
     <form>
@@ -109,394 +120,379 @@ exports[`Should render component with search wrapper 1`] = `
       className="list-unstyled"
     >
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-0"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-0"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 0
-              </span>
+              Item Name 0
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-1"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-1"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 1
-              </span>
+              Item Name 1
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-2"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-2"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 2
-              </span>
+              Item Name 2
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-3"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-3"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 3
-              </span>
+              Item Name 3
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-4"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-4"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 4
-              </span>
+              Item Name 4
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-5"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-5"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 5
-              </span>
+              Item Name 5
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-6"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-6"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 6
-              </span>
+              Item Name 6
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-7"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-7"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 7
-              </span>
+              Item Name 7
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-8"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-8"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 8
-              </span>
+              Item Name 8
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-9"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-9"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 9
-              </span>
+              Item Name 9
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-10"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-10"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 10
-              </span>
+              Item Name 10
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-11"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-11"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 11
-              </span>
+              Item Name 11
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-12"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-12"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 12
-              </span>
+              Item Name 12
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className=" dropdown-item"
+        className="dropdown-item"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={false}
-              className="custom-control-input"
-              name="key-13"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-13"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 13
-              </span>
+              Item Name 13
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
       <li
-        className="active dropdown-item"
+        className="dropdown-item active"
       >
-        <div
-          className="custom-checkbox custom-control"
+        <label
+          className="custom-control custom-radio"
         >
-          <label>
-            <input
-              checked={true}
-              className="custom-control-input"
-              name="key-14"
-              onChange={[Function]}
-              type="checkbox"
-            />
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-14"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          >
             <span
-              className="custom-control-label"
+              className="custom-control-label-text"
             >
-              <span
-                className="custom-control-label-text"
-              >
-                Item Name 14
-              </span>
+              Item Name 14
             </span>
-          </label>
-        </div>
+          </span>
+        </label>
       </li>
     </ul>
   </div>

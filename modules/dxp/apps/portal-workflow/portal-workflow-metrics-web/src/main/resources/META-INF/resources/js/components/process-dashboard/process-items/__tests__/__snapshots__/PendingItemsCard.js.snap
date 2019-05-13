@@ -77,9 +77,9 @@ exports[`Should render component 1`] = `
         processId="35315"
       >
         <ProcessItemsCard
-          panelDescription="Pending workflow items are counted and categorized by their SLA status."
-          panelTitle="Pending Items"
+          description="Pending workflow items are counted and categorized by their SLA status."
           processId="35315"
+          title="Pending Items"
         >
           <Panel>
             <div
@@ -89,47 +89,58 @@ exports[`Should render component 1`] = `
                 className="panel panel-secondary"
               >
                 <Header
-                  elementClasses="dashboard-panel-header"
+                  elementClasses={
+                    Array [
+                      "dashboard-panel-header",
+                      undefined,
+                    ]
+                  }
                 >
                   <div
                     className="panel-header dashboard-panel-header"
                   >
                     <div>
-                      <div>
-                        <span
-                          className="mr-3"
-                        >
-                          Pending Items
-                        </span>
-                        <Tooltip
-                          message="Pending workflow items are counted and categorized by their SLA status."
-                          position="right"
-                          width="288"
+                      <div
+                        className="autofit-row"
+                      >
+                        <div
+                          className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="workflow-tooltip"
-                            onMouseLeave={[Function]}
+                            className="mr-3"
+                          >
+                            Pending Items
+                          </span>
+                          <Tooltip
+                            message="Pending workflow items are counted and categorized by their SLA status."
+                            position="right"
+                            width="288"
                           >
                             <span
-                              className="tooltip-trigger"
-                              onMouseOver={[Function]}
+                              className="workflow-tooltip"
+                              onMouseLeave={[Function]}
                             >
-                              <Icon
-                                iconName="question-circle-full"
+                              <span
+                                className="tooltip-trigger"
+                                onMouseOver={[Function]}
                               >
-                                <svg
-                                  className="lexicon-icon lexicon-icon-question-circle-full"
-                                  focusable="false"
-                                  role="presentation"
+                                <Icon
+                                  iconName="question-circle-full"
                                 >
-                                  <use
-                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                  />
-                                </svg>
-                              </Icon>
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-question-circle-full"
+                                    focusable="false"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </span>
                             </span>
-                          </span>
-                        </Tooltip>
+                          </Tooltip>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -237,9 +248,9 @@ exports[`Should render component with failure state 1`] = `
         processId="35315"
       >
         <ProcessItemsCard
-          panelDescription="Pending workflow items are counted and categorized by their SLA status."
-          panelTitle="Pending Items"
+          description="Pending workflow items are counted and categorized by their SLA status."
           processId="35315"
+          title="Pending Items"
         >
           <Panel>
             <div
@@ -249,47 +260,58 @@ exports[`Should render component with failure state 1`] = `
                 className="panel panel-secondary"
               >
                 <Header
-                  elementClasses="dashboard-panel-header"
+                  elementClasses={
+                    Array [
+                      "dashboard-panel-header",
+                      undefined,
+                    ]
+                  }
                 >
                   <div
                     className="panel-header dashboard-panel-header"
                   >
                     <div>
-                      <div>
-                        <span
-                          className="mr-3"
-                        >
-                          Pending Items
-                        </span>
-                        <Tooltip
-                          message="Pending workflow items are counted and categorized by their SLA status."
-                          position="right"
-                          width="288"
+                      <div
+                        className="autofit-row"
+                      >
+                        <div
+                          className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="workflow-tooltip"
-                            onMouseLeave={[Function]}
+                            className="mr-3"
+                          >
+                            Pending Items
+                          </span>
+                          <Tooltip
+                            message="Pending workflow items are counted and categorized by their SLA status."
+                            position="right"
+                            width="288"
                           >
                             <span
-                              className="tooltip-trigger"
-                              onMouseOver={[Function]}
+                              className="workflow-tooltip"
+                              onMouseLeave={[Function]}
                             >
-                              <Icon
-                                iconName="question-circle-full"
+                              <span
+                                className="tooltip-trigger"
+                                onMouseOver={[Function]}
                               >
-                                <svg
-                                  className="lexicon-icon lexicon-icon-question-circle-full"
-                                  focusable="false"
-                                  role="presentation"
+                                <Icon
+                                  iconName="question-circle-full"
                                 >
-                                  <use
-                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                  />
-                                </svg>
-                              </Icon>
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-question-circle-full"
+                                    focusable="false"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </span>
                             </span>
-                          </span>
-                        </Tooltip>
+                          </Tooltip>
+                        </div>
                       </div>
                     </div>
                   </div>

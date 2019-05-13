@@ -78,9 +78,20 @@ exports[`Should render component 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          panelDescription="Completed workflow items are counted and categorized by their SLA status."
-          panelTitle="Completed Items"
+          description="Completed workflow items are counted and categorized by their SLA status."
+          filter={
+            Object {
+              "defaultItem": null,
+              "hideControl": true,
+              "items": Array [],
+              "key": "timeRange",
+              "multiple": false,
+              "name": "Completion Period",
+            }
+          }
           processId="35315"
+          timeRange={null}
+          title="Completed Items"
         >
           <Panel>
             <div
@@ -90,47 +101,208 @@ exports[`Should render component 1`] = `
                 className="panel panel-secondary"
               >
                 <Header
-                  elementClasses="dashboard-panel-header"
+                  elementClasses={
+                    Array [
+                      "dashboard-panel-header",
+                      "pb-0",
+                    ]
+                  }
                 >
                   <div
-                    className="panel-header dashboard-panel-header"
+                    className="panel-header dashboard-panel-header pb-0"
                   >
                     <div>
-                      <div>
-                        <span
-                          className="mr-3"
-                        >
-                          Completed Items
-                        </span>
-                        <Tooltip
-                          message="Completed workflow items are counted and categorized by their SLA status."
-                          position="right"
-                          width="288"
+                      <div
+                        className="autofit-row"
+                      >
+                        <div
+                          className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="workflow-tooltip"
-                            onMouseLeave={[Function]}
+                            className="mr-3"
+                          >
+                            Completed Items
+                          </span>
+                          <Tooltip
+                            message="Completed workflow items are counted and categorized by their SLA status."
+                            position="right"
+                            width="288"
                           >
                             <span
-                              className="tooltip-trigger"
-                              onMouseOver={[Function]}
+                              className="workflow-tooltip"
+                              onMouseLeave={[Function]}
                             >
-                              <Icon
-                                iconName="question-circle-full"
+                              <span
+                                className="tooltip-trigger"
+                                onMouseOver={[Function]}
                               >
-                                <svg
-                                  className="lexicon-icon lexicon-icon-question-circle-full"
-                                  focusable="false"
-                                  role="presentation"
+                                <Icon
+                                  iconName="question-circle-full"
                                 >
-                                  <use
-                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                  />
-                                </svg>
-                              </Icon>
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-question-circle-full"
+                                    focusable="false"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </span>
                             </span>
-                          </span>
-                        </Tooltip>
+                          </Tooltip>
+                        </div>
+                        <div
+                          className="autofit-col m-0 management-bar management-bar-light navbar"
+                        >
+                          <ul
+                            className="navbar-nav"
+                          >
+                            <withRouter(Filter)
+                              defaultItem={null}
+                              filterKey="timeRange"
+                              hideControl={true}
+                              items={Array []}
+                              key="timeRange"
+                              multiple={false}
+                              name="Completion Period"
+                              position="right"
+                            >
+                              <Route>
+                                <Filter
+                                  defaultItem={null}
+                                  filterKey="timeRange"
+                                  hideControl={true}
+                                  history={
+                                    Object {
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/processes/1/10/title%3Aasc",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/processes/1/10/title%3Aasc",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
+                                    }
+                                  }
+                                  items={Array []}
+                                  location={
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/processes/1/10/title%3Aasc",
+                                      "search": "?backPath=%2F",
+                                    }
+                                  }
+                                  match={
+                                    Object {
+                                      "isExact": false,
+                                      "params": Object {},
+                                      "path": "/",
+                                      "url": "/",
+                                    }
+                                  }
+                                  multiple={false}
+                                  name="Completion Period"
+                                  position="right"
+                                >
+                                  <li
+                                    className="dropdown nav-item"
+                                  >
+                                    <button
+                                      aria-expanded={false}
+                                      aria-haspopup="true"
+                                      className="dropdown-toggle nav-link"
+                                      onClick={[Function]}
+                                      type="button"
+                                    >
+                                      <span
+                                        className="mr-2 navbar-text-truncate"
+                                      >
+                                        Completion Period
+                                      </span>
+                                      <Icon
+                                        iconName="caret-bottom"
+                                      >
+                                        <svg
+                                          className="lexicon-icon lexicon-icon-caret-bottom"
+                                          focusable="false"
+                                          role="presentation"
+                                        >
+                                          <use
+                                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                                          />
+                                        </svg>
+                                      </Icon>
+                                    </button>
+                                    <div
+                                      className="dropdown-menu dropdown-menu-right"
+                                      role="menu"
+                                    >
+                                      <FilterSearch
+                                        filteredItems={Array []}
+                                        onChange={[Function]}
+                                        totalCount={0}
+                                      >
+                                        <ul
+                                          className="list-unstyled"
+                                        >
+                                          <li>
+                                            <span
+                                              className="disabled dropdown-item"
+                                            >
+                                              No results were found.
+                                            </span>
+                                          </li>
+                                        </ul>
+                                        <ul
+                                          className="list-unstyled"
+                                        />
+                                      </FilterSearch>
+                                    </div>
+                                  </li>
+                                </Filter>
+                              </Route>
+                            </withRouter(Filter)>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -239,9 +411,20 @@ exports[`Should render component with failure state 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          panelDescription="Completed workflow items are counted and categorized by their SLA status."
-          panelTitle="Completed Items"
+          description="Completed workflow items are counted and categorized by their SLA status."
+          filter={
+            Object {
+              "defaultItem": null,
+              "hideControl": true,
+              "items": Array [],
+              "key": "timeRange",
+              "multiple": false,
+              "name": "Completion Period",
+            }
+          }
           processId="35315"
+          timeRange={null}
+          title="Completed Items"
         >
           <Panel>
             <div
@@ -251,47 +434,208 @@ exports[`Should render component with failure state 1`] = `
                 className="panel panel-secondary"
               >
                 <Header
-                  elementClasses="dashboard-panel-header"
+                  elementClasses={
+                    Array [
+                      "dashboard-panel-header",
+                      "pb-0",
+                    ]
+                  }
                 >
                   <div
-                    className="panel-header dashboard-panel-header"
+                    className="panel-header dashboard-panel-header pb-0"
                   >
                     <div>
-                      <div>
-                        <span
-                          className="mr-3"
-                        >
-                          Completed Items
-                        </span>
-                        <Tooltip
-                          message="Completed workflow items are counted and categorized by their SLA status."
-                          position="right"
-                          width="288"
+                      <div
+                        className="autofit-row"
+                      >
+                        <div
+                          className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="workflow-tooltip"
-                            onMouseLeave={[Function]}
+                            className="mr-3"
+                          >
+                            Completed Items
+                          </span>
+                          <Tooltip
+                            message="Completed workflow items are counted and categorized by their SLA status."
+                            position="right"
+                            width="288"
                           >
                             <span
-                              className="tooltip-trigger"
-                              onMouseOver={[Function]}
+                              className="workflow-tooltip"
+                              onMouseLeave={[Function]}
                             >
-                              <Icon
-                                iconName="question-circle-full"
+                              <span
+                                className="tooltip-trigger"
+                                onMouseOver={[Function]}
                               >
-                                <svg
-                                  className="lexicon-icon lexicon-icon-question-circle-full"
-                                  focusable="false"
-                                  role="presentation"
+                                <Icon
+                                  iconName="question-circle-full"
                                 >
-                                  <use
-                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                  />
-                                </svg>
-                              </Icon>
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-question-circle-full"
+                                    focusable="false"
+                                    role="presentation"
+                                  >
+                                    <use
+                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </span>
                             </span>
-                          </span>
-                        </Tooltip>
+                          </Tooltip>
+                        </div>
+                        <div
+                          className="autofit-col m-0 management-bar management-bar-light navbar"
+                        >
+                          <ul
+                            className="navbar-nav"
+                          >
+                            <withRouter(Filter)
+                              defaultItem={null}
+                              filterKey="timeRange"
+                              hideControl={true}
+                              items={Array []}
+                              key="timeRange"
+                              multiple={false}
+                              name="Completion Period"
+                              position="right"
+                            >
+                              <Route>
+                                <Filter
+                                  defaultItem={null}
+                                  filterKey="timeRange"
+                                  hideControl={true}
+                                  history={
+                                    Object {
+                                      "action": "POP",
+                                      "block": [Function],
+                                      "canGo": [Function],
+                                      "createHref": [Function],
+                                      "entries": Array [
+                                        Object {
+                                          "hash": "",
+                                          "match": Object {
+                                            "params": Object {
+                                              "page": 1,
+                                              "search": undefined,
+                                              "sort": undefined,
+                                            },
+                                          },
+                                          "pathname": "/processes/1/10/title%3Aasc",
+                                          "search": "?backPath=%2F",
+                                        },
+                                      ],
+                                      "go": [Function],
+                                      "goBack": [Function],
+                                      "goForward": [Function],
+                                      "index": 0,
+                                      "length": 1,
+                                      "listen": [Function],
+                                      "location": Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/processes/1/10/title%3Aasc",
+                                        "search": "?backPath=%2F",
+                                      },
+                                      "push": [Function],
+                                      "replace": [Function],
+                                    }
+                                  }
+                                  items={Array []}
+                                  location={
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/processes/1/10/title%3Aasc",
+                                      "search": "?backPath=%2F",
+                                    }
+                                  }
+                                  match={
+                                    Object {
+                                      "isExact": false,
+                                      "params": Object {},
+                                      "path": "/",
+                                      "url": "/",
+                                    }
+                                  }
+                                  multiple={false}
+                                  name="Completion Period"
+                                  position="right"
+                                >
+                                  <li
+                                    className="dropdown nav-item"
+                                  >
+                                    <button
+                                      aria-expanded={false}
+                                      aria-haspopup="true"
+                                      className="dropdown-toggle nav-link"
+                                      onClick={[Function]}
+                                      type="button"
+                                    >
+                                      <span
+                                        className="mr-2 navbar-text-truncate"
+                                      >
+                                        Completion Period
+                                      </span>
+                                      <Icon
+                                        iconName="caret-bottom"
+                                      >
+                                        <svg
+                                          className="lexicon-icon lexicon-icon-caret-bottom"
+                                          focusable="false"
+                                          role="presentation"
+                                        >
+                                          <use
+                                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                                          />
+                                        </svg>
+                                      </Icon>
+                                    </button>
+                                    <div
+                                      className="dropdown-menu dropdown-menu-right"
+                                      role="menu"
+                                    >
+                                      <FilterSearch
+                                        filteredItems={Array []}
+                                        onChange={[Function]}
+                                        totalCount={0}
+                                      >
+                                        <ul
+                                          className="list-unstyled"
+                                        >
+                                          <li>
+                                            <span
+                                              className="disabled dropdown-item"
+                                            >
+                                              No results were found.
+                                            </span>
+                                          </li>
+                                        </ul>
+                                        <ul
+                                          className="list-unstyled"
+                                        />
+                                      </FilterSearch>
+                                    </div>
+                                  </li>
+                                </Filter>
+                              </Route>
+                            </withRouter(Filter)>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>

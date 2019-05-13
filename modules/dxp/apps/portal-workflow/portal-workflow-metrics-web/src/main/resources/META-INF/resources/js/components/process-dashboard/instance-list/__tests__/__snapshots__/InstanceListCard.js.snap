@@ -123,7 +123,8 @@ exports[`Should component receive props 1`] = `
                       },
                     ]
                   }
-                  key="0"
+                  key="slaStatuses"
+                  multiple={true}
                   name="SLA Status"
                 >
                   <Route>
@@ -212,6 +213,7 @@ exports[`Should component receive props 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="SLA Status"
                     >
                       <li
@@ -244,10 +246,29 @@ exports[`Should component receive props 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Overdue",
+                                  "name": "Overdue",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "OnTime",
+                                  "name": "On Time",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Untracked",
+                                  "name": "Untracked",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={3}
                           >
@@ -256,104 +277,104 @@ exports[`Should component receive props 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Overdue"
                                 key="0"
+                                multiple={true}
                                 name="Overdue"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Overdue"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Overdue"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Overdue
-                                        </span>
+                                        Overdue
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="OnTime"
                                 key="1"
+                                multiple={true}
                                 name="On Time"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="OnTime"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="OnTime"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          On Time
-                                        </span>
+                                        On Time
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Untracked"
                                 key="2"
+                                multiple={true}
                                 name="Untracked"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Untracked"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Untracked"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Untracked
-                                        </span>
+                                        Untracked
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -379,7 +400,8 @@ exports[`Should component receive props 1`] = `
                       },
                     ]
                   }
-                  key="1"
+                  key="statuses"
+                  multiple={true}
                   name="Process Status"
                 >
                   <Route>
@@ -463,6 +485,7 @@ exports[`Should component receive props 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Status"
                     >
                       <li
@@ -495,10 +518,24 @@ exports[`Should component receive props 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Pending",
+                                  "name": "pending",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Completed",
+                                  "name": "completed",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={2}
                           >
@@ -507,70 +544,70 @@ exports[`Should component receive props 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Pending"
                                 key="0"
+                                multiple={true}
                                 name="pending"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Pending"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Pending"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          pending
-                                        </span>
+                                        pending
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Completed"
                                 key="1"
+                                multiple={true}
                                 name="completed"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Completed"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Completed"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          completed
-                                        </span>
+                                        completed
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -583,7 +620,8 @@ exports[`Should component receive props 1`] = `
                 <withRouter(Filter)
                   filterKey="taskKeys"
                   items={Array []}
-                  key="2"
+                  key="taskKeys"
+                  multiple={true}
                   name="Process Step"
                 >
                   <Route>
@@ -654,6 +692,7 @@ exports[`Should component receive props 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Step"
                     >
                       <li
@@ -686,13 +725,25 @@ exports[`Should component receive props 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={Array []}
                             onChange={[Function]}
                             totalCount={0}
                           >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <li>
+                                <span
+                                  className="disabled dropdown-item"
+                                >
+                                  No results were found.
+                                </span>
+                              </li>
+                            </ul>
                             <ul
                               className="list-unstyled"
                             />
@@ -711,16 +762,19 @@ exports[`Should component receive props 1`] = `
                 Object {
                   "items": Array [],
                   "key": "slaStatuses",
+                  "multiple": true,
                   "name": "SLA Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
+                  "multiple": true,
                   "name": "Process Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
+                  "multiple": true,
                   "name": "Process Step",
                 },
               ]
@@ -734,16 +788,19 @@ exports[`Should component receive props 1`] = `
                     Object {
                       "items": Array [],
                       "key": "slaStatuses",
+                      "multiple": true,
                       "name": "SLA Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
+                      "multiple": true,
                       "name": "Process Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
+                      "multiple": true,
                       "name": "Process Step",
                     },
                   ]
@@ -963,7 +1020,8 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       },
                     ]
                   }
-                  key="0"
+                  key="slaStatuses"
+                  multiple={true}
                   name="SLA Status"
                 >
                   <Route>
@@ -1052,6 +1110,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="SLA Status"
                     >
                       <li
@@ -1084,10 +1143,29 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Overdue",
+                                  "name": "Overdue",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "OnTime",
+                                  "name": "On Time",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Untracked",
+                                  "name": "Untracked",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={3}
                           >
@@ -1096,104 +1174,104 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Overdue"
                                 key="0"
+                                multiple={true}
                                 name="Overdue"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Overdue"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Overdue"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Overdue
-                                        </span>
+                                        Overdue
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="OnTime"
                                 key="1"
+                                multiple={true}
                                 name="On Time"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="OnTime"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="OnTime"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          On Time
-                                        </span>
+                                        On Time
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Untracked"
                                 key="2"
+                                multiple={true}
                                 name="Untracked"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Untracked"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Untracked"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Untracked
-                                        </span>
+                                        Untracked
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -1219,7 +1297,8 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       },
                     ]
                   }
-                  key="1"
+                  key="statuses"
+                  multiple={true}
                   name="Process Status"
                 >
                   <Route>
@@ -1303,6 +1382,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Status"
                     >
                       <li
@@ -1335,10 +1415,24 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Pending",
+                                  "name": "pending",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Completed",
+                                  "name": "completed",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={2}
                           >
@@ -1347,70 +1441,70 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Pending"
                                 key="0"
+                                multiple={true}
                                 name="pending"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Pending"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Pending"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          pending
-                                        </span>
+                                        pending
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Completed"
                                 key="1"
+                                multiple={true}
                                 name="completed"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Completed"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Completed"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          completed
-                                        </span>
+                                        completed
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -1423,7 +1517,8 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                 <withRouter(Filter)
                   filterKey="taskKeys"
                   items={Array []}
-                  key="2"
+                  key="taskKeys"
+                  multiple={true}
                   name="Process Step"
                 >
                   <Route>
@@ -1494,6 +1589,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Step"
                     >
                       <li
@@ -1526,13 +1622,25 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={Array []}
                             onChange={[Function]}
                             totalCount={0}
                           >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <li>
+                                <span
+                                  className="disabled dropdown-item"
+                                >
+                                  No results were found.
+                                </span>
+                              </li>
+                            </ul>
                             <ul
                               className="list-unstyled"
                             />
@@ -1551,16 +1659,19 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                 Object {
                   "items": Array [],
                   "key": "slaStatuses",
+                  "multiple": true,
                   "name": "SLA Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
+                  "multiple": true,
                   "name": "Process Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
+                  "multiple": true,
                   "name": "Process Step",
                 },
               ]
@@ -1574,16 +1685,19 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     Object {
                       "items": Array [],
                       "key": "slaStatuses",
+                      "multiple": true,
                       "name": "SLA Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
+                      "multiple": true,
                       "name": "Process Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
+                      "multiple": true,
                       "name": "Process Step",
                     },
                   ]
@@ -1808,7 +1922,8 @@ exports[`Should render component 1`] = `
                       },
                     ]
                   }
-                  key="0"
+                  key="slaStatuses"
+                  multiple={true}
                   name="SLA Status"
                 >
                   <Route>
@@ -1897,6 +2012,7 @@ exports[`Should render component 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="SLA Status"
                     >
                       <li
@@ -1929,10 +2045,29 @@ exports[`Should render component 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Overdue",
+                                  "name": "Overdue",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "OnTime",
+                                  "name": "On Time",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Untracked",
+                                  "name": "Untracked",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={3}
                           >
@@ -1941,104 +2076,104 @@ exports[`Should render component 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Overdue"
                                 key="0"
+                                multiple={true}
                                 name="Overdue"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Overdue"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Overdue"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Overdue
-                                        </span>
+                                        Overdue
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="OnTime"
                                 key="1"
+                                multiple={true}
                                 name="On Time"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="OnTime"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="OnTime"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          On Time
-                                        </span>
+                                        On Time
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Untracked"
                                 key="2"
+                                multiple={true}
                                 name="Untracked"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Untracked"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Untracked"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          Untracked
-                                        </span>
+                                        Untracked
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -2064,7 +2199,8 @@ exports[`Should render component 1`] = `
                       },
                     ]
                   }
-                  key="1"
+                  key="statuses"
+                  multiple={true}
                   name="Process Status"
                 >
                   <Route>
@@ -2148,6 +2284,7 @@ exports[`Should render component 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Status"
                     >
                       <li
@@ -2180,10 +2317,24 @@ exports[`Should render component 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={
+                              Array [
+                                Object {
+                                  "active": false,
+                                  "key": "Pending",
+                                  "name": "pending",
+                                },
+                                Object {
+                                  "active": false,
+                                  "key": "Completed",
+                                  "name": "completed",
+                                },
+                              ]
+                            }
                             onChange={[Function]}
                             totalCount={2}
                           >
@@ -2192,70 +2343,70 @@ exports[`Should render component 1`] = `
                             >
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Pending"
                                 key="0"
+                                multiple={true}
                                 name="pending"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Pending"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Pending"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          pending
-                                        </span>
+                                        pending
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                               <FilterItem
                                 active={false}
+                                hideControl={false}
                                 itemKey="Completed"
                                 key="1"
+                                multiple={true}
                                 name="completed"
                                 onChange={[Function]}
                               >
                                 <li
-                                  className=" dropdown-item"
+                                  className="dropdown-item"
                                 >
-                                  <div
-                                    className="custom-checkbox custom-control"
+                                  <label
+                                    className="custom-control custom-checkbox"
                                   >
-                                    <label>
-                                      <input
-                                        checked={false}
-                                        className="custom-control-input"
-                                        name="Completed"
-                                        onChange={[Function]}
-                                        type="checkbox"
-                                      />
+                                    <input
+                                      checked={false}
+                                      className="custom-control-input"
+                                      data-key="Completed"
+                                      onChange={[Function]}
+                                      type="checkbox"
+                                    />
+                                    <span
+                                      className="custom-control-label"
+                                    >
                                       <span
-                                        className="custom-control-label"
+                                        className="custom-control-label-text"
                                       >
-                                        <span
-                                          className="custom-control-label-text"
-                                        >
-                                          completed
-                                        </span>
+                                        completed
                                       </span>
-                                    </label>
-                                  </div>
+                                    </span>
+                                  </label>
                                 </li>
                               </FilterItem>
                             </ul>
@@ -2268,7 +2419,8 @@ exports[`Should render component 1`] = `
                 <withRouter(Filter)
                   filterKey="taskKeys"
                   items={Array []}
-                  key="2"
+                  key="taskKeys"
+                  multiple={true}
                   name="Process Step"
                 >
                   <Route>
@@ -2339,6 +2491,7 @@ exports[`Should render component 1`] = `
                           "url": "/",
                         }
                       }
+                      multiple={true}
                       name="Process Step"
                     >
                       <li
@@ -2371,13 +2524,25 @@ exports[`Should render component 1`] = `
                           </Icon>
                         </button>
                         <div
-                          className=" dropdown-menu"
+                          className="dropdown-menu"
                           role="menu"
                         >
                           <FilterSearch
+                            filteredItems={Array []}
                             onChange={[Function]}
                             totalCount={0}
                           >
+                            <ul
+                              className="list-unstyled"
+                            >
+                              <li>
+                                <span
+                                  className="disabled dropdown-item"
+                                >
+                                  No results were found.
+                                </span>
+                              </li>
+                            </ul>
                             <ul
                               className="list-unstyled"
                             />
@@ -2396,16 +2561,19 @@ exports[`Should render component 1`] = `
                 Object {
                   "items": Array [],
                   "key": "slaStatuses",
+                  "multiple": true,
                   "name": "SLA Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
+                  "multiple": true,
                   "name": "Process Status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
+                  "multiple": true,
                   "name": "Process Step",
                 },
               ]
@@ -2419,16 +2587,19 @@ exports[`Should render component 1`] = `
                     Object {
                       "items": Array [],
                       "key": "slaStatuses",
+                      "multiple": true,
                       "name": "SLA Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
+                      "multiple": true,
                       "name": "Process Status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
+                      "multiple": true,
                       "name": "Process Step",
                     },
                   ]
@@ -2578,89 +2749,83 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
             <ul
               className="list-unstyled"
             >
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Overdue"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Overdue"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        Overdue
-                      </span>
+                      Overdue
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="OnTime"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="OnTime"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        On Time
-                      </span>
+                      On Time
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Untracked"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Untracked"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        Untracked
-                      </span>
+                      Untracked
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
             </ul>
           </div>
@@ -2691,63 +2856,59 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
             <ul
               className="list-unstyled"
             >
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Pending"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Pending"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        pending
-                      </span>
+                      pending
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Completed"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Completed"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        completed
-                      </span>
+                      completed
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
             </ul>
           </div>
@@ -2778,9 +2939,20 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
+            <ul
+              className="list-unstyled"
+            >
+              <li>
+                <span
+                  className="disabled dropdown-item"
+                >
+                  No results were found.
+                </span>
+              </li>
+            </ul>
             <ul
               className="list-unstyled"
             />
@@ -2852,89 +3024,83 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
             <ul
               className="list-unstyled"
             >
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Overdue"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Overdue"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        Overdue
-                      </span>
+                      Overdue
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="OnTime"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="OnTime"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        On Time
-                      </span>
+                      On Time
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Untracked"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Untracked"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        Untracked
-                      </span>
+                      Untracked
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
             </ul>
           </div>
@@ -2965,63 +3131,59 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
             <ul
               className="list-unstyled"
             >
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Pending"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Pending"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        pending
-                      </span>
+                      pending
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
               <li
-                className=" dropdown-item"
+                className="dropdown-item"
               >
-                <div
-                  className="custom-checkbox custom-control"
+                <label
+                  className="custom-control custom-checkbox"
                 >
-                  <label>
-                    <input
-                      checked={false}
-                      className="custom-control-input"
-                      name="Completed"
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
+                  <input
+                    checked={false}
+                    className="custom-control-input"
+                    data-key="Completed"
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <span
+                    className="custom-control-label"
+                  >
                     <span
-                      className="custom-control-label"
+                      className="custom-control-label-text"
                     >
-                      <span
-                        className="custom-control-label-text"
-                      >
-                        completed
-                      </span>
+                      completed
                     </span>
-                  </label>
-                </div>
+                  </span>
+                </label>
               </li>
             </ul>
           </div>
@@ -3052,9 +3214,20 @@ Array [
             </svg>
           </button>
           <div
-            className=" dropdown-menu"
+            className="dropdown-menu"
             role="menu"
           >
+            <ul
+              className="list-unstyled"
+            >
+              <li>
+                <span
+                  className="disabled dropdown-item"
+                >
+                  No results were found.
+                </span>
+              </li>
+            </ul>
             <ul
               className="list-unstyled"
             />

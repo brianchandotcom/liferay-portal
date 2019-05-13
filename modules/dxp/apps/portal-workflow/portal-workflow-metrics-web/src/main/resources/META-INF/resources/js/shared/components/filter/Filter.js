@@ -2,6 +2,7 @@ import { getSelectedItemsQuery, pushToHistory } from './util/filterUtil';
 import autobind from 'autobind-decorator';
 import FilterItem from './FilterItem';
 import FilterSearch from './FilterSearch';
+import getClassName from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
@@ -10,7 +11,7 @@ class Filter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.checkboxChanged = false;
+		this.itemChanged = false;
 
 		this.state = {
 			expanded: false,
@@ -22,6 +23,8 @@ class Filter extends React.Component {
 	}
 
 	componentDidMount() {
+		this.selectDefaultItem(this.props);
+
 		document.addEventListener('mousedown', this.onClickOutside);
 	}
 
@@ -29,11 +32,15 @@ class Filter extends React.Component {
 		document.removeEventListener('mousedown', this.onClickOutside);
 	}
 
-	componentWillReceiveProps({ items }) {
-		if (items !== this.state.items) {
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.items !== this.state.items) {
 			this.setState({
-				items
+				items: nextProps.items
 			});
+		}
+
+		if (nextProps.defaultItem !== this.props.defaultItem) {
+			this.selectDefaultItem(nextProps);
 		}
 	}
 
@@ -62,10 +69,19 @@ class Filter extends React.Component {
 	}
 
 	@autobind
-	onCheckboxChange({ target }) {
+	onInputChange({ target }) {
 		const { items } = this.state;
+		const { multiple } = this.props;
 
-		const currentIndex = items.findIndex(item => item.key == target.name);
+		if (!multiple) {
+			items.forEach(item => {
+				item.active = false;
+			});
+		}
+
+		const currentIndex = items.findIndex(
+			item => item.key == target.dataset.key
+		);
 
 		items[currentIndex].active = target.checked;
 
@@ -73,7 +89,7 @@ class Filter extends React.Component {
 			items
 		});
 
-		this.checkboxChanged = true;
+		this.itemChanged = true;
 	}
 
 	@autobind
@@ -84,10 +100,10 @@ class Filter extends React.Component {
 		if (clickOutside && this.state.expanded) {
 			this.setExpanded(false);
 
-			if (this.checkboxChanged) {
+			if (this.itemChanged) {
 				pushToHistory(this.filterQuery, this.props);
 
-				this.checkboxChanged = false;
+				this.itemChanged = false;
 			}
 		}
 	}
@@ -97,6 +113,27 @@ class Filter extends React.Component {
 		this.setState({
 			searchTerm: target.value
 		});
+	}
+
+	selectDefaultItem({ defaultItem, items, multiple }) {
+		if (defaultItem && !multiple) {
+			const selectedItems = items.filter(item => item.active);
+
+			if (!selectedItems.length) {
+				const index = items.findIndex(item => item.key == defaultItem.key);
+
+				items[index].active = true;
+
+				this.setState(
+					{
+						items
+					},
+					() => {
+						pushToHistory(this.filterQuery, this.props);
+					}
+				);
+			}
+		}
 	}
 
 	setExpanded(expanded) {
@@ -112,9 +149,13 @@ class Filter extends React.Component {
 
 	render() {
 		const { expanded, items } = this.state;
-		const { name } = this.props;
+		const { hideControl = false, multiple, name, position } = this.props;
 
-		const className = expanded ? 'show' : '';
+		const className = getClassName(
+			'dropdown-menu',
+			expanded && 'show',
+			position && `dropdown-menu-${position}`
+		);
 
 		return (
 			<li className="dropdown nav-item" ref={this.setWrapperRef}>
@@ -130,7 +171,7 @@ class Filter extends React.Component {
 					<Icon iconName="caret-bottom" />
 				</button>
 
-				<div className={`${className} dropdown-menu`} role="menu">
+				<div className={className} role="menu">
 					<FilterSearch
 						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange}
@@ -140,9 +181,11 @@ class Filter extends React.Component {
 							{this.filteredItems.map((item, index) => (
 								<FilterItem
 									{...item}
+									hideControl={hideControl}
 									itemKey={item.key}
 									key={index}
-									onChange={this.onCheckboxChange}
+									multiple={multiple}
+									onChange={this.onInputChange}
 								/>
 							))}
 						</ul>

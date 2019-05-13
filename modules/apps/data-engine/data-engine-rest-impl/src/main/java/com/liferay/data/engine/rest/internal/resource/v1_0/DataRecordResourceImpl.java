@@ -22,12 +22,12 @@ import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionFieldUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
-import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionFactory;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
+import com.liferay.data.engine.spi.rule.function.DataRuleFunctionTracker;
 import com.liferay.data.engine.spi.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -323,7 +323,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		for (DataDefinitionRule dataDefinitionRule : dataDefinitionRules) {
 			DataRuleFunction dataRuleFunction =
-				DataRuleFunctionFactory.getDataRuleFunction(
+				_dataRuleFunctionTracker.getDataRuleFunction(
 					dataDefinitionRule.getName());
 
 			if (dataRuleFunction == null) {
@@ -338,9 +338,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 				DataRuleFunctionResult dataRuleFunctionResult =
 					dataRuleFunction.validate(
+						dataDefinitionRule.getDataDefinitionRuleParameters(),
 						DataDefinitionFieldUtil.toSPIDataDefinitionField(
 							dataDefinitionField),
-						dataDefinitionRule.getDataDefinitionRuleParameters(),
 						dataRecordValues.get(dataDefinitionField.getName()));
 
 				if (dataRuleFunctionResult.isValid()) {
@@ -362,6 +362,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	}
 
 	private DataRecordExporter _dataRecordExporter;
+
+	@Reference
+	private DataRuleFunctionTracker _dataRuleFunctionTracker;
 
 	@Reference
 	private DataStorageTracker _dataStorageTracker;

@@ -101,7 +101,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -545,7 +544,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-						ConfigurableFileCollection buildPath = project.files(
+						FileCollection buildPath = project.files(
 							sourceDirectorySet.getOutputDir(),
 							sourceSetOutput.getResourcesDir());
 
@@ -564,7 +563,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						SourceDirectorySet allSource = sourceSet.getAllSource();
 
-						ConfigurableFileCollection sourcePath = project.files(
+						FileCollection sourcePath = project.files(
 							allSource.getSrcDirs(
 							).stream(
 							).filter(

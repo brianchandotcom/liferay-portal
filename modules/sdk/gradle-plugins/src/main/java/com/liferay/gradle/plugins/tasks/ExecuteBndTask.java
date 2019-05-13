@@ -42,7 +42,6 @@ import java.util.jar.Manifest;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
@@ -84,7 +83,7 @@ public class ExecuteBndTask extends DefaultTask {
 			builder.setBase(getBaseDir());
 			builder.setProperties(properties);
 
-			ConfigurableFileCollection buildPath = project.files(
+			FileCollection buildPath = project.files(
 				getClasspath(), getResourceDirs());
 
 			builder.setProperty("project.buildpath", buildPath.getAsPath());
@@ -94,8 +93,7 @@ public class ExecuteBndTask extends DefaultTask {
 				logger.debug("builder classpath: {}", buildPath.getAsPath());
 			}
 
-			ConfigurableFileCollection sourcePath = project.files(
-				getSourceDirs());
+			FileCollection sourcePath = project.files(getSourceDirs());
 
 			builder.setProperty("project.sourcepath", sourcePath.getAsPath());
 			builder.setSourcepath(_toArray(sourcePath));

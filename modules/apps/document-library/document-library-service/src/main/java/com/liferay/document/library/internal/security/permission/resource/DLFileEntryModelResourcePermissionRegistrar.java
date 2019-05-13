@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionLogic;
+import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 
 import java.util.Dictionary;
 
@@ -79,7 +79,10 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 					consumer.accept(
 						new DLFileEntryWorkflowedModelPermissionLogic(
 							modelResourcePermission));
-					consumer.accept(_sharingModelResourcePermissionLogic);
+
+					_sharingModelResourcePermissionConfigurator.configure(
+						modelResourcePermission, consumer);
+
 					consumer.accept(
 						(permissionChecker, name, fileEntry, actionId) -> {
 							String className = fileEntry.getClassName();
@@ -172,8 +175,8 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
 	@Reference
-	private SharingModelResourcePermissionLogic
-		_sharingModelResourcePermissionLogic;
+	private SharingModelResourcePermissionConfigurator
+		_sharingModelResourcePermissionConfigurator;
 
 	@Reference
 	private StagingPermission _stagingPermission;

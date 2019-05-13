@@ -1,6 +1,105 @@
+import {getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {MAX_COLUMNS} from '../utils/rowConstants';
+import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
+
+/**
+ * @param {function} dispatch
+ * @param {Array} fragmentEntryLinkIdsToRemove
+ * @param {object} layoutData
+ * @param {string} segmentsExperienceId
+ * @review
+ */
+function updateRowColumnsNumber(
+	dispatch,
+	fragmentEntryLinkIdsToRemove,
+	layoutData,
+	segmentsExperienceId
+) {
+	updatePageEditorLayoutData(
+		layoutData,
+		segmentsExperienceId
+	).then(
+		() => removeFragmentEntryLinks(
+			layoutData,
+			fragmentEntryLinkIdsToRemove,
+			segmentsExperienceId
+		)
+	).then(
+		() => {
+			dispatch(
+				updateRowColumnsNumberSuccessAction(
+					fragmentEntryLinkIdsToRemove,
+					layoutData
+				)
+			);
+		}
+	).catch(
+		() => {
+			dispatch(
+				updateRowColumnsNumberErrorAction()
+			);
+		}
+	);
+}
+
+/**
+ * @param {number} numberOfColumns
+ * @param {string} rowId
+ * @return {function}
+ * @review
+ */
+function updateRowColumnsNumberAction(numberOfColumns, rowId) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
+		const rowIndex = getRowIndex(
+			state.layoutData.structure,
+			rowId
+		);
+
+		let columns = state.layoutData.structure[rowIndex].columns;
+		let nextData;
+
+		if (numberOfColumns > columns.length) {
+			nextData = _addColumns(
+				state.layoutData,
+				rowIndex,
+				numberOfColumns,
+				columnsSize
+			);
+		}
+		else {
+			nextData = _removeColumns(
+				state.layoutData,
+				rowIndex,
+				numberOfColumns,
+				columnsSize
+			);
+		}
+
+		let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds(
+			{
+				columns: columns.slice(
+					numberOfColumns - columns.length
+				)
+			}
+		);
+
+		dispatch(
+			updateRowColumnsNumberLoadingAction()
+		);
+
+		updateRowColumnsNumber(
+			dispatch,
+			fragmentEntryLinkIdsToRemove,
+			nextData,
+			state.segmentsExperienceId,
+		);
+	};
+}
 
 /**
  * @return {object}
@@ -141,3 +240,7 @@ function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 
 	return nextData;
 }
+
+export {
+	updateRowColumnsNumberAction
+};

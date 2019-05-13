@@ -5881,6 +5881,15 @@ go</echo>
 		<echo>Deploy directory is ${deploy.dir}.</echo>
 
 		<if>
+			<not>
+				<isset property="liferay.dependency.jars" />
+			</not>
+			<then>
+				<get-testcase-property property.name="liferay.dependency.jars" />
+			</then>
+		</if>
+
+		<if>
 			<isset property="liferay.dependency.jars" />
 			<then>
 				<property name="liferay.dependency.jars" value="${liferay.dependency.jars}" />

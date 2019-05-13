@@ -171,8 +171,11 @@ class FormBuilderBase extends Component {
 						value: 'dynamic'
 					};
 				}
-
-				return field;
+				
+				return {
+					...field,
+					readOnly: true
+				};
 			}
 		);
 	}

@@ -16,12 +16,10 @@ package com.liferay.source.formatter;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.DebugUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
@@ -83,10 +81,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Set<String> modifiedMessages)
 		throws Exception {
 
-		if (!_javaParserEnabled) {
-			return content;
-		}
-
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		String newContent = JavaParser.parse(
@@ -124,10 +118,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void preFormat() throws CheckstyleException {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-		_javaParserEnabled = GetterUtil.getBoolean(
-			SourceFormatterUtil.getPropertyValue(
-				"java.parser.enabled", getPropertiesMap()));
 
 		_checkstyleLogger = new CheckstyleLogger(
 			sourceFormatterArgs.getBaseDirName());
@@ -248,7 +238,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private Configuration _checkstyleConfiguration;
 	private CheckstyleLogger _checkstyleLogger;
-	private boolean _javaParserEnabled;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
 	private final List<File> _ungeneratedFiles = new ArrayList<>();

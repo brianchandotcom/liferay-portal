@@ -1066,7 +1066,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					StringBuilder sb = new StringBuilder();
 
-					sb.append(sourceSetOutput.getClassesDirs());
+					FileCollection classesDirs =
+						sourceSetOutput.getClassesDirs();
+
+					sb.append(classesDirs.getSingleFile());
 					sb.append("/META-INF/maven/");
 					sb.append(groupId);
 					sb.append('/');

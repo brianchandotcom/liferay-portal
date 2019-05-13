@@ -579,7 +579,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Site Administration",
-			portlet = "Configuración del sitio web");
+			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",

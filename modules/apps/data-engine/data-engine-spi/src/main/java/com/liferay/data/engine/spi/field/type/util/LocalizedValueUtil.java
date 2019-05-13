@@ -73,6 +73,10 @@ public class LocalizedValueUtil {
 	}
 
 	public static <V> Map<String, V> toLocalizedValues(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, V> localizedValues = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();

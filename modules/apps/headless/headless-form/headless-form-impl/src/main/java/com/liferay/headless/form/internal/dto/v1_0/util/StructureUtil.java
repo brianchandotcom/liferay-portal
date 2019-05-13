@@ -140,6 +140,8 @@ public class StructureUtil {
 
 		return new FormField() {
 			{
+				displayStyle = GetterUtil.getString(
+					ddmFormField.getProperty("displayStyle"));
 				immutable = ddmFormField.isTransient();
 				inputControl = type;
 				label = _toString(locale, ddmFormField.getLabel());

@@ -22,7 +22,8 @@
 	new LayoutBuilder.default(
 		{
 			context: <%= dataLayout %>,
-			dataLayoutInputId: '<%= namespace %>dataLayout',
+			dataDefinitionInputId: '<%= namespace + dataDefinitionInputId %>',
+			dataLayoutInputId: '<%= namespace + dataLayoutInputId %>',
 			editingLanguageId: '<%= themeDisplay.getLanguageId() %>',
 			fieldTypes: <%= fieldTypes %>,
 			namespace: '<%= namespace %>',

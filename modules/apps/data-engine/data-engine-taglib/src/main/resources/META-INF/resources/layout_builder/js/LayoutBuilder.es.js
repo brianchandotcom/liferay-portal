@@ -77,12 +77,16 @@ class LayoutBuilder extends Component {
 	}
 
 	_handlePagesChanged({newVal}) {
-		const {dataLayoutInputId} = this.props;
+		const {dataDefinitionInputId, dataLayoutInputId} = this.props;
 
-		if (dataLayoutInputId) {
+		if (dataDefinitionInputId && dataLayoutInputId) {
+			const dataDefinitionInput = document.querySelector(`#${dataDefinitionInputId}`);
 			const dataLayoutInput = document.querySelector(`#${dataLayoutInputId}`);
 
-			dataLayoutInput.value = this._serializeDataLayout(newVal);
+			const data = this._serialize(newVal);
+
+			dataLayoutInput.value = data.layout;
+			dataDefinitionInput.value = data.definition;
 		}
 	}
 
@@ -101,8 +105,9 @@ class LayoutBuilder extends Component {
 		return promise;
 	}
 
-	_serializeDataLayout(pages) {
+	_serialize(pages) {
 		const pagesVisitor = new PagesVisitor(pages);
+		const columnDefinitions = [];
 
 		const newPages = pagesVisitor.mapFields(
 			({fieldName, settingsContext}) => {
@@ -124,14 +129,16 @@ class LayoutBuilder extends Component {
 					}
 				);
 
-				return {
-					...columnConfig,
-					fieldName
-				};
+				columnDefinitions.push(columnConfig);
+
+				return fieldName;
 			}
 		);
 
-		return JSON.stringify(newPages);
+		return {
+			layout: JSON.stringify(newPages),
+			definition: JSON.stringify(columnDefinitions)
+		};
 	}
 
 	_setContext(context) {
@@ -210,58 +217,12 @@ LayoutBuilder.PROPS = {
 			rules: Config.array()
 		}
 	).required().setter('_setContext'),
-
-	/**
-	 * The target input for the serialized data layout.
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
+	dataDefinitionInputId: Config.string(),
 	dataLayoutInputId: Config.string(),
-
-
-	editingLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
-
-	/**
-	 * The available field types to display on the side bar.
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
-	fieldTypes: Config.array().value([]),
-
-	/**
-	 * The default language id of the form.
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
 	defaultLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
-
-	/**
-	 * The namespace of the portlet.
-	 * @default undefined
-	 * @instance
-	 * @memberof FormBuilderTagLib
-	 * @type {!string}
-	 */
-
+	editingLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
+	fieldTypes: Config.array().value([]),
 	namespace: Config.string().required(),
-
-	/**
-	 * The path to the SVG spritemap file containing the icons.
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!string}
-	 */
-
 	spritemap: Config.string().required()
 };
 

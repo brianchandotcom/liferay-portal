@@ -16,6 +16,7 @@ import { getPathname } from '../../shared/components/tabs/TabItem';
 import React from 'react';
 import { sub } from '../../shared/util/lang';
 import Tabs from '../../shared/components/tabs/Tabs';
+import { withParams } from '../../shared/components/router/routerUtil';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 
 class ProcessDashboard extends React.Component {
@@ -151,9 +152,6 @@ class ProcessDashboard extends React.Component {
 		);
 	}
 }
-
-export const withParams = (...args) => ({ match: { params } }) =>
-	args.map((Component, index) => <Component {...params} key={index} />);
 
 ProcessDashboard.contextType = AppContext;
 export default ProcessDashboard;

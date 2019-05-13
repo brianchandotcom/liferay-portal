@@ -1,9 +1,10 @@
-import ProcessDashboard, { withParams } from '../ProcessDashboard';
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
 import { PendingItemsCard } from '../process-items/ProcessItemsCard';
+import ProcessDashboard from '../ProcessDashboard';
 import React from 'react';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import { withParams } from '../../../shared/components/router/routerUtil';
 import WorkloadByStepCard from '../workload-by-step/WorkloadByStepCard';
 
 beforeAll(() => {

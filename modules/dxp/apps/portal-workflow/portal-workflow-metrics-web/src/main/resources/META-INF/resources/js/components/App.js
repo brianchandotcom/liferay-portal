@@ -13,6 +13,7 @@ import ProcessListCard from './process-list/ProcessListCard';
 import React from 'react';
 import SLAForm from './sla/SLAForm';
 import SLAListCard from './sla/SLAListCard';
+import { withParams } from '../shared/components/router/routerUtil';
 
 /**
  * @class
@@ -46,10 +47,6 @@ export default class AppComponent extends React.Component {
 
 	render() {
 		const { defaultDelta, namespace, title } = this.state;
-		const withParams = Component => ({
-			location: { search },
-			match: { params }
-		}) => <Component {...params} query={search} />;
 
 		return (
 			<Router>

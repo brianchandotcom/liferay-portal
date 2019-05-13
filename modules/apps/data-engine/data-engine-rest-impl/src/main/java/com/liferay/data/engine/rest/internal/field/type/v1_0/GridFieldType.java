@@ -18,7 +18,7 @@ import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomProperti
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.data.engine.spi.field.type.BaseFieldType;
 import com.liferay.data.engine.spi.field.type.FieldType;
-import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;

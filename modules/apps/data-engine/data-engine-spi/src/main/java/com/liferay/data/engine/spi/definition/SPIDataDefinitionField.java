@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.field.type;
+package com.liferay.data.engine.spi.definition;
 
 import com.liferay.petra.lang.HashUtil;
 

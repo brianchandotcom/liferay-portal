@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.spi.field.type;
 
+import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Map;

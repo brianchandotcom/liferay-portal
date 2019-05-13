@@ -12,6 +12,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/vis
 class LayoutBuilder extends Component {
 
 	attached() {
+		const {layoutProvider} = this.refs;
 		const dependencies = [this._getTranslationManager()];
 
 		Promise.all(dependencies).then(
@@ -43,7 +44,7 @@ class LayoutBuilder extends Component {
 			defaultLanguageId,
 			editingLanguageId,
 			fieldTypes,
-			namespace,
+			portletNamespace,
 			spritemap
 		} = this.props;
 
@@ -66,28 +67,14 @@ class LayoutBuilder extends Component {
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
 						fieldTypes={fieldTypes}
-						namespace={namespace}
 						paginationMode={'wizard'}
+						portletNamespace={portletNamespace}
 						ref="builder"
 						spritemap={spritemap}
 					/>
 				</LayoutProvider>
 			</div>
 		);
-	}
-
-	_handlePagesChanged({newVal}) {
-		const {dataDefinitionInputId, dataLayoutInputId} = this.props;
-
-		if (dataDefinitionInputId && dataLayoutInputId) {
-			const dataDefinitionInput = document.querySelector(`#${dataDefinitionInputId}`);
-			const dataLayoutInput = document.querySelector(`#${dataLayoutInputId}`);
-
-			const data = this._serialize(newVal);
-
-			dataLayoutInput.value = data.layout;
-			dataDefinitionInput.value = data.definition;
-		}
 	}
 
 	_getTranslationManager() {
@@ -105,9 +92,24 @@ class LayoutBuilder extends Component {
 		return promise;
 	}
 
+	_handlePagesChanged({newVal}) {
+		const {dataDefinitionInputId, dataLayoutInputId} = this.props;
+
+		if (dataDefinitionInputId && dataLayoutInputId) {
+			const dataDefinitionInput = document.querySelector(`#${dataDefinitionInputId}`);
+			const dataLayoutInput = document.querySelector(`#${dataLayoutInputId}`);
+
+			const data = this._serialize(newVal);
+
+			dataLayoutInput.value = data.layout;
+			dataDefinitionInput.value = data.definition;
+		}
+	}
+
 	_serialize(pages) {
-		const pagesVisitor = new PagesVisitor(pages);
+		const {defaultLanguageId} = this.props;
 		const columnDefinitions = [];
+		const pagesVisitor = new PagesVisitor(pages);
 
 		const newPages = pagesVisitor.mapFields(
 			({fieldName, settingsContext}) => {
@@ -136,8 +138,18 @@ class LayoutBuilder extends Component {
 		);
 
 		return {
-			layout: JSON.stringify(newPages),
-			definition: JSON.stringify(columnDefinitions)
+			definition: JSON.stringify(
+				{
+					fields: columnDefinitions
+				}
+			),
+			layout: JSON.stringify(
+				{
+					defaultLanguageId,
+					pages: newPages,
+					paginationMode: 'wizard'
+				}
+			)
 		};
 	}
 
@@ -183,16 +195,16 @@ class LayoutBuilder extends Component {
 					let {description, localizedDescription, localizedTitle, title} = page;
 
 					if (!core.isString(description)) {
-						description = description[languageId];
+						description = description[defaultLanguageId];
 						localizedDescription = {
-							[languageId]: description
+							[defaultLanguageId]: description
 						};
 					}
 
 					if (!core.isString(title)) {
-						title = title[languageId];
+						title = title[defaultLanguageId];
 						localizedTitle = {
-							[languageId]: title
+							[defaultLanguageId]: title
 						};
 					}
 
@@ -222,7 +234,7 @@ LayoutBuilder.PROPS = {
 	defaultLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
 	editingLanguageId: Config.string().value(themeDisplay.getDefaultLanguageId()),
 	fieldTypes: Config.array().value([]),
-	namespace: Config.string().required(),
+	portletNamespace: Config.string().required(),
 	spritemap: Config.string().required()
 };
 

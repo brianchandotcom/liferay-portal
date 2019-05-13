@@ -26,7 +26,7 @@
 			dataLayoutInputId: '<%= namespace + dataLayoutInputId %>',
 			editingLanguageId: '<%= themeDisplay.getLanguageId() %>',
 			fieldTypes: <%= fieldTypes %>,
-			namespace: '<%= namespace %>',
+			portletNamespace: '<%= namespace %>',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},
 		'#<%= namespace %>container'

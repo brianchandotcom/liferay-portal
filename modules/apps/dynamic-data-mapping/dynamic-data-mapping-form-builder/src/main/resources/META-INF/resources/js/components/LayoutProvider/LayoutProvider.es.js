@@ -280,11 +280,11 @@ class LayoutProvider extends Component {
 
 		pages = visitor.mapFields(
 			field => {
-				const {options, settingsContext} = field;
+				const {fieldName, options, settingsContext} = field;
 
 				return {
 					...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
-					options,
+					fieldName, options,
 					settingsContext: {
 						...settingsContext,
 						pages: this.getLocalizedPages(settingsContext.pages)

@@ -37,7 +37,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Set" %>
 
-
 <%!
 private static ArrayList<Object> _toArrayList(Object obj) {
 	return (ArrayList<Object>)_deserialize(obj);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -25,6 +26,7 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
@@ -275,8 +277,17 @@ public class ProcessResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		termsAggregation.addChildAggregation(
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		FilterAggregation filterAggregation = _aggregations.filter(
+			"instanceCountFilter",
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("instanceId", "0")));
+
+		filterAggregation.addChildAggregation(
 			_aggregations.cardinality("instanceCount", "instanceId"));
+
+		termsAggregation.addChildrenAggregations(filterAggregation);
 
 		if ((fieldSort != null) &&
 			_isOrderByInstanceCount(fieldSort.getField())) {
@@ -481,11 +492,16 @@ public class ProcessResourceImpl
 			return;
 		}
 
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)bucket.getChildAggregationResult(
-				"instanceCount");
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"instanceCountFilter");
 
-		process.setInstanceCount(cardinalityAggregationResult.getValue() - 1);
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)
+				filterAggregationResult.getChildAggregationResult(
+					"instanceCount");
+
+		process.setInstanceCount(cardinalityAggregationResult.getValue());
 	}
 
 	private void _setOnTimeInstanceCount(Bucket bucket, Process process) {
@@ -525,19 +541,18 @@ public class ProcessResourceImpl
 
 		String fieldName = sort.getFieldName();
 
-		if (!_isOrderByInstanceCount(fieldName) &&
-			!_isOrderByTitle(fieldName)) {
-
-			fieldName = StringUtil.extractFirst(fieldName, "InstanceCount");
-
-			fieldName = fieldName.concat(
-				StringPool.GREATER_THAN
-			).concat(
-				"instanceCount.value"
-			);
+		if (_isOrderByInstanceCount(fieldName)) {
+			fieldName = StringBundler.concat(
+				"instanceCountFilter", StringPool.GREATER_THAN,
+				"instanceCount");
 		}
 		else if (_isOrderByTitle(fieldName)) {
 			fieldName = titleFieldName;
+		}
+		else {
+			fieldName = StringBundler.concat(
+				StringUtil.extractFirst(fieldName, "InstanceCount"),
+				StringPool.GREATER_THAN, "instanceCount.value");
 		}
 
 		FieldSort fieldSort = _sorts.field(fieldName);

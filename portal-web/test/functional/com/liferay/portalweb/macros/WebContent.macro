@@ -1188,6 +1188,8 @@ definition {
 
 		Panel.expandPanel(panel = "Default Template");
 
+		Pause(locator1 = "3000");
+
 		AssertClick(
 			locator1 = "WCEditWebContent#SELECT_TEMPLATE",
 			value1 = "Select");
@@ -1195,6 +1197,8 @@ definition {
 		IFrame.selectTopFrame();
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Pause(locator1 = "3000");
 
 		LexiconCard.clickCardWithConfirmation(card = "${templateName}");
 

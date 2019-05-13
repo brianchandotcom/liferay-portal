@@ -115,18 +115,18 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				return null;
 			}
 
+			if (!_sharingEntryLocalService.hasSharingPermission(
+					permissionChecker.getUserId(), _classNameId,
+					(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
+
+				return null;
+			}
+
 			SharingConfiguration sharingConfiguration =
 				_sharingConfigurationFactory.getGroupSharingConfiguration(
 					_groupLocalService.getGroup(model.getGroupId()));
 
-			if (!sharingConfiguration.isEnabled()) {
-				return null;
-			}
-
-			if (_sharingEntryLocalService.hasSharingPermission(
-					permissionChecker.getUserId(), _classNameId,
-					(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
-
+			if (sharingConfiguration.isEnabled()) {
 				return true;
 			}
 

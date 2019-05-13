@@ -1017,7 +1017,7 @@ definition {
 		Gmail.gotoHtmlMode();
 
 		Gmail.viewMail(
-			emailFromUserName = "Test Test",
+			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "GMMB1",
 			gmailMessageBody = "MB Thread Message Body",
 			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1");

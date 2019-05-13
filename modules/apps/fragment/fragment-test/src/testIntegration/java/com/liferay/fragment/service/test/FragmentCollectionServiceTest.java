@@ -573,7 +573,11 @@ public class FragmentCollectionServiceTest {
 	private FragmentCollectionService _fragmentCollectionService;
 
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _groupUser;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

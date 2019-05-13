@@ -604,11 +604,14 @@ public class SiteNavigationMenuServiceTest {
 	private Company _company;
 
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _groupUser;
 
 	@Inject
 	private SiteNavigationMenuService _siteNavigationMenuService;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

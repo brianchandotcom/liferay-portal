@@ -716,7 +716,7 @@ class Sidebar extends Component {
 			'validation'
 		];
 
-		const getPreviousField = ({fieldName, type, value}) => {
+		const getPreviousField = ({fieldName, type}) => {
 			let field;
 
 			oldVisitor.findField(
@@ -743,16 +743,13 @@ class Sidebar extends Component {
 					const previousField = getPreviousField(newField);
 
 					if (previousField) {
-						const {multiple, visible} = newField;
+						newField.value = previousField.value;
 
-						for (const prop in newField) {
-							if (previousField.hasOwnProperty(prop) && !this._keepNewFieldDataSourceTypeProperties(prop)) {
-								newField[prop] = previousField[prop];
-							}
+						if (newField.localizable && previousField.localizable) {
+							newField.localizedValue = {
+								...previousField.localizedValue
+							};
 						}
-
-						newField.multiple = multiple;
-						newField.visible = visible;
 
 						if (newField.fieldName === 'predefinedValue') {
 							delete newField.value;
@@ -763,10 +760,6 @@ class Sidebar extends Component {
 				}
 			)
 		};
-	}
-
-	_keepNewFieldDataSourceTypeProperties(prop) {
-		return (prop == 'options') || (prop == 'label') || (prop == 'value') || prop == ('showLabel');
 	}
 
 	_openValueFn() {

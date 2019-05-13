@@ -33,6 +33,7 @@ import MultiSelect from '../../shared/components/MultiSelect';
 import nodeStore from './store/nodeStore';
 import { openErrorToast } from '../../shared/util/toast';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import slaStore from './store/slaStore';
 
 /**
@@ -243,15 +244,27 @@ class SLAForm extends React.Component {
 	}
 
 	render() {
+		const { defaultDelta } = this.context;
 		const { errors, loading = false, redirectToSLAList = false } = this.state;
-		const { id } = this.props;
+		const { id, processId, query } = this.props;
 
 		if (loading) {
 			return <LoadingState />;
 		}
 
 		if (redirectToSLAList) {
-			return <BackRedirect />;
+			if (id) {
+				return <BackRedirect />;
+			}
+
+			return (
+				<Redirect
+					to={{
+						pathname: `/slas/${processId}/${defaultDelta}/1`,
+						search: query
+					}}
+				/>
+			);
 		}
 
 		const { calendars } = calendarStore.getState();

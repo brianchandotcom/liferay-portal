@@ -8,16 +8,10 @@
 						"jest": true
 					},
 					"extends": "liferay",
-					"globals": {
-						"AlloyEditor": true
-					},
 					"parser": "babel-eslint",
 					"parserOptions": {
 						"ecmaVersion": 7
 					},
-					"plugins": [
-						"sort-class-members"
-					],
 					"rules": {
 						"no-unknown-property": [
 							2,
@@ -26,43 +20,6 @@
 									"class",
 									"xlink:href"
 								]
-							}
-						],
-						"sort-class-members/sort-class-members": [
-							2,
-							{
-								"groups": {
-									"conventional-private-methods": [
-										{
-											"name": "/^_.+$/",
-											"sort": "alphabetical",
-											"type": "method"
-										}
-									],
-									"methods": [
-										{
-											"sort": "alphabetical",
-											"type": "method"
-										}
-									]
-								},
-								"order": [
-									"[static-properties]",
-									"[static-methods]",
-									"[properties]",
-									"[conventional-private-properties]",
-									"constructor",
-									"[methods]",
-									"[conventional-private-methods]"
-								]
-							}
-						],
-						"sort-keys": [
-							"error",
-							"asc",
-							{
-								"caseSensitive": false,
-								"natural": false
 							}
 						]
 					}
@@ -97,10 +54,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.0",
 		"@babel/preset-env": "^7.4.2",
 		"babel-eslint": "^8.2.6",
-		"browser-sync": "^2.24.7",
 		"check-source-formatting": "^2.0.14",
-		"cross-env": "^5.2.0",
-		"cross-spawn": "^6.0.5",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
 		"jest": "^24.5.0",

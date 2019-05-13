@@ -68,7 +68,10 @@ public class LiferayOSGiExtension {
 			"annotations are deprecated");
 		_bundleDefaultInstructions.put(
 			Constants.FIXUPMESSAGES + ".classpath.empty",
-			"Classpath is empty.");
+			"Classpath is empty");
+		_bundleDefaultInstructions.put(
+			Constants.FIXUPMESSAGES + ".unicode.string",
+			"Invalid unicode string");
 		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
 		_bundleDefaultInstructions.put(
 			Constants.PLUGIN + ".liferay",

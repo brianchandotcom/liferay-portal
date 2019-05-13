@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -542,17 +541,15 @@ public class ProcessResourceImpl
 		String fieldName = sort.getFieldName();
 
 		if (_isOrderByInstanceCount(fieldName)) {
-			fieldName = StringBundler.concat(
-				"instanceCountFilter", StringPool.GREATER_THAN,
-				"instanceCount");
+			fieldName = "instanceCountFilter > instanceCount";
 		}
 		else if (_isOrderByTitle(fieldName)) {
 			fieldName = titleFieldName;
 		}
 		else {
-			fieldName = StringBundler.concat(
-				StringUtil.extractFirst(fieldName, "InstanceCount"),
-				StringPool.GREATER_THAN, "instanceCount.value");
+			fieldName =
+				StringUtil.extractFirst(fieldName, "InstanceCount") +
+					" > instanceCount.value";
 		}
 
 		FieldSort fieldSort = _sorts.field(fieldName);

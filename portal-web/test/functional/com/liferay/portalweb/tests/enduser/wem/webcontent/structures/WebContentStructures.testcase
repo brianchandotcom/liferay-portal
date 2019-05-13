@@ -232,9 +232,9 @@ definition {
 			templateDescription = "Test WC Template Description",
 			templateName = "Test WC Template");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Test WC Template");
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Edit",
+			templateName = "Test WC Template");
 
 		Navigator.gotoBack();
 

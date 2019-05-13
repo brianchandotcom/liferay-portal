@@ -747,7 +747,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER",
-				value1 = "This area is defined by the theme. To change theme settings go to page configuration.");
+				value1 = "This area is defined by the theme. To change theme settings go to the Look and Feel configuration in the sidebar.");
 		}
 
 		task ("Click away from the header so the popover will disappear") {
@@ -763,7 +763,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER",
-				value1 = "This area is defined by the theme. To change theme settings go to page configuration.");
+				value1 = "This area is defined by the theme. To change theme settings go to the Look and Feel configuration in the sidebar.");
 		}
 	}
 }

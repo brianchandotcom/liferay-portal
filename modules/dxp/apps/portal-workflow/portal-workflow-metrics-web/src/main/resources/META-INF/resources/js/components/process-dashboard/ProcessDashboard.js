@@ -39,7 +39,7 @@ class ProcessDashboard extends React.Component {
 
 	loadSLACount() {
 		return this.context.client
-			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=0`)
+			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1`)
 			.then(({ data: { totalCount } }) => totalCount);
 	}
 
@@ -100,7 +100,7 @@ class ProcessDashboard extends React.Component {
 								blockedSLACount
 							])} ${Liferay.Language.get(
 								'fix-the-sla-configuration-to-resume-accurate-reporting'
-							)}`}
+							)} `}
 
 							<ChildLink to={`/slas/${processId}/${defaultDelta}/1`}>
 								<strong>{Liferay.Language.get('set-up-slas')}</strong>

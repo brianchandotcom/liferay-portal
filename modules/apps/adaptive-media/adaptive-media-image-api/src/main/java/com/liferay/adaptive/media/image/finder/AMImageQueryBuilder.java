@@ -142,9 +142,8 @@ public interface AMImageQueryBuilder
 		 * </p>
 		 *
 		 * <p>
-		 * If the method {@link StrictSortStep#orderBy(AMAttribute, SortOrder)}
-		 * is invoked in the same query builder, it takes precedence and this
-		 * method has no effect.
+		 * If the method {@link StrictSortStep#orderBy} is invoked in the same
+		 * query builder, it takes precedence and this method has no effect.
 		 * </p>
 		 *
 		 * <p>
@@ -187,9 +186,8 @@ public interface AMImageQueryBuilder
 		 * </p>
 		 *
 		 * <p>
-		 * If the method {@link StrictSortStep#orderBy(AMAttribute, SortOrder)}
-		 * is invoked in the same query builder, it takes precedence and this
-		 * method has no effect.
+		 * If the method {@link StrictSortStep#orderBy} is invoked in the same
+		 * query builder, it takes precedence and this method has no effect.
 		 * </p>
 		 *
 		 * <p>
@@ -260,9 +258,8 @@ public interface AMImageQueryBuilder
 		 * </p>
 		 *
 		 * <p>
-		 * If the method {@link #orderBy(AMAttribute, SortOrder)}
-		 * is invoked in the same query builder, it takes precedence and this
-		 * method has no effect.
+		 * If the method {@link #orderBy} is invoked in the same query builder,
+		 * it takes precedence and this method has no effect.
 		 * </p>
 		 *
 		 * <p>

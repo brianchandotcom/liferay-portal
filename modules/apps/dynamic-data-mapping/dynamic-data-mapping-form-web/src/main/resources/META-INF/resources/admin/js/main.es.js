@@ -238,9 +238,11 @@ class Form extends Component {
 			ref: 'layoutProvider'
 		};
 
+		const LayoutProviderTag = LayoutProvider;
+
 		return (
 			<div class={'ddm-form-builder'}>
-				<LayoutProvider {...layoutProviderProps}>
+				<LayoutProviderTag {...layoutProviderProps}>
 					{this.isFormBuilderView() && (
 						<RuleBuilder
 							dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
@@ -268,7 +270,7 @@ class Form extends Component {
 						view={view}
 						visible={!this.isShowRuleBuilder()}
 					/>
-				</LayoutProvider>
+				</LayoutProviderTag>
 
 				<div class="container-fluid-1280">
 					{this.isFormBuilderView() && (

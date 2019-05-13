@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.YMLSourceUtil;
@@ -24,6 +23,7 @@ import com.liferay.source.formatter.checks.util.YMLSourceUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +57,21 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
+	private List<String> _removeDuplicateAttribute(List<String> list) {
+		List<String> definitions = new ArrayList<>();
+		Iterator<String> itr = list.iterator();
+
+		while (itr.hasNext()) {
+			String s = itr.next();
+
+			if (!definitions.contains(s) || s.startsWith("{{")) {
+				definitions.add(s);
+			}
+		}
+
+		return definitions;
+	}
+
 	private String _sortDefinitions(
 		String fileName, String content, String indent) {
 
@@ -69,7 +84,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		List<String> oldDefinitions = new ArrayList<>(definitions);
 
-		ListUtil.distinct(definitions);
+		definitions = _removeDuplicateAttribute(definitions);
 
 		Collections.sort(
 			definitions,

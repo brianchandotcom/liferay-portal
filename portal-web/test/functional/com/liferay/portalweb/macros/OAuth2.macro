@@ -154,6 +154,29 @@ definition {
 		AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED");
 	}
 
+	macro getAuthorizationCode {
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+
+		Button.click(button = "Authorize");
+
+		Pause(locator1 = "5000");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("## * Current URL: ${currentURL}");
+
+		return "${currentURL}";
+
+		var authorizationCode = StringUtil.extractLast("${currentURL}", "code=");
+
+		echo("## * Authorization Code: ${authorizationCode}");
+
+		return "${authorizationCode}";
+	}
+
 	macro inputApplicationValues {
 		if (isSet(clientId)) {
 			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_BUTTON");

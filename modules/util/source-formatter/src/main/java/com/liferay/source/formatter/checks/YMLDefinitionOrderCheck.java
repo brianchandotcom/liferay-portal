@@ -41,7 +41,19 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _sortDefinitions(fileName, content, StringPool.BLANK);
+		String[] ymlDefinitions = content.split("\n---\n");
+
+		StringBundler sb = new StringBundler(ymlDefinitions.length * 2);
+
+		for (String ymlDefinition : ymlDefinitions) {
+			sb.append(
+				_sortDefinitions(fileName, ymlDefinition, StringPool.BLANK));
+			sb.append("\n---\n");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private String _sortDefinitions(

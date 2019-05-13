@@ -16,14 +16,18 @@ package com.liferay.frontend.js.portlet.extender.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -43,10 +47,11 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,13 +72,17 @@ public class PortletExtenderConfigurationAction
 
 	public PortletExtenderConfigurationAction(
 			DDM ddm, DDMFormRenderer ddmFormRenderer,
+			DDMFormValuesFactory ddmFormValuesFactory,
 			JSONObject preferencesJSONObject)
 		throws PortalException {
 
 		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormValuesFactory = ddmFormValuesFactory;
 
 		_ddmForm = ddm.getDDMForm(preferencesJSONObject.toJSONString());
 		_preferencesJSONObject = preferencesJSONObject;
+
+		_ddmFormFieldsMap = _ddmForm.getDDMFormFieldsMap(true);
 
 		_populateFieldNames();
 	}
@@ -89,8 +98,6 @@ public class PortletExtenderConfigurationAction
 				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		_setPortletPreferencesToDDMFormValues(themeDisplay, portletDisplay);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -125,30 +132,44 @@ public class PortletExtenderConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		Map<String, String[]> parameters = actionRequest.getParameterMap();
+		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
+			actionRequest, _ddmForm);
 
-		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-			String key = entry.getKey();
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
 
-			if (!key.startsWith("ddm$$")) {
-				continue;
-			}
+		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
+				ddmFormFieldValuesMap.entrySet()) {
 
-			String[] names = key.split("\\$");
+			List<DDMFormFieldValue> ddmFormFieldValues = entry.getValue();
 
-			if (names.length < 3) {
-				continue;
-			}
+			Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
 
-			String name = names[2];
+			DDMFormField ddmFormField = _ddmFormFieldsMap.get(entry.getKey());
 
-			if (!_fieldNames.contains(name)) {
-				continue;
-			}
+			String ddmFormFieldType = ddmFormField.getType();
 
-			String value = entry.getValue()[0];
+			String[] values = stream.map(
+				ddmFormFieldValue -> {
+					Value value = ddmFormFieldValue.getValue();
 
-			setPreference(actionRequest, name, value);
+					String stringValue = value.getString(
+						value.getDefaultLocale());
+
+					if (ddmFormFieldType.equals(DDMFormFieldType.SELECT)) {
+						stringValue = stringValue.replace(
+							"[\"", StringPool.BLANK);
+						stringValue = stringValue.replace(
+							"\"]", StringPool.BLANK);
+					}
+
+					return stringValue;
+				}
+			).toArray(
+				String[]::new
+			);
+
+			setPreference(actionRequest, entry.getKey(), values);
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
@@ -169,8 +190,9 @@ public class PortletExtenderConfigurationAction
 	}
 
 	private DDMFormRenderingContext _createDDMFormRenderingContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -199,7 +221,28 @@ public class PortletExtenderConfigurationAction
 
 		ddmFormRenderingContext.setReadOnly(false);
 
+		_setDDMFormValues(ddmFormRenderingContext, themeDisplay);
+
 		return ddmFormRenderingContext;
+	}
+
+	private LocalizedValue _createLocalizedValue(
+		String fieldName, String value, Locale locale) {
+
+		LocalizedValue localizedValue = new LocalizedValue(locale);
+
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
+
+		String ddmFormFieldType = ddmFormField.getType();
+
+		if (ddmFormFieldType.equals(DDMFormFieldType.SELECT)) {
+			localizedValue.addString(locale, "[\"" + value + "\"]");
+		}
+		else {
+			localizedValue.addString(locale, value);
+		}
+
+		return localizedValue;
 	}
 
 	private String _getActionURL(
@@ -238,9 +281,19 @@ public class PortletExtenderConfigurationAction
 		}
 	}
 
-	private void _setPortletPreferencesToDDMFormValues(
-			ThemeDisplay themeDisplay, PortletDisplay portletDisplay)
+	private void _setDDMFormValues(
+			DDMFormRenderingContext ddmFormRenderingContext,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(_ddmForm);
+
+		Locale locale = _ddmForm.getDefaultLocale();
+
+		ddmFormValues.addAvailableLocale(locale);
+		ddmFormValues.setDefaultLocale(locale);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getExistingPortletSetup(
@@ -249,37 +302,23 @@ public class PortletExtenderConfigurationAction
 		Map<String, String[]> portletPreferencesMap =
 			portletPreferences.getMap();
 
-		portletPreferencesMap.forEach(
-			(key, values) -> {
-				for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
-					LocalizedValue predefinedValue = new LocalizedValue();
+		for (Map.Entry<String, String[]> entry :
+				portletPreferencesMap.entrySet()) {
 
-					predefinedValue.setDefaultLocale(themeDisplay.getLocale());
+			String fieldName = entry.getKey();
 
-					if (key.contains(ddmFormField.getName())) {
-						if (Objects.equals(ddmFormField.getType(), "select")) {
-							JSONArray valuesJSONArray =
-								JSONFactoryUtil.createJSONArray();
+			for (String value : entry.getValue()) {
+				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-							for (String value : values) {
-								valuesJSONArray.put(value);
-							}
+				ddmFormFieldValue.setName(fieldName);
+				ddmFormFieldValue.setValue(
+					_createLocalizedValue(fieldName, value, locale));
 
-							predefinedValue.addString(
-								themeDisplay.getLocale(),
-								valuesJSONArray.toString());
-						}
-						else {
-							predefinedValue.addString(
-								themeDisplay.getLocale(), values[0]);
-						}
+				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+			}
+		}
 
-						ddmFormField.setPredefinedValue(predefinedValue);
-						ddmFormField.setProperty(
-							"predefinedValue", predefinedValue);
-					}
-				}
-			});
+		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 	}
 
 	private static final String _TPL_CONFIGURATION_FORM;
@@ -292,7 +331,9 @@ public class PortletExtenderConfigurationAction
 	}
 
 	private final DDMForm _ddmForm;
+	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final Set<String> _fieldNames = new HashSet<>();
 	private final JSONObject _preferencesJSONObject;
 

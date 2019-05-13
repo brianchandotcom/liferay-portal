@@ -1,3 +1,4 @@
+<%@ taglib prefix="clay" uri="http://liferay.com/tld/clay" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -17,26 +18,26 @@
 <%@ include file="/image_selector/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;
+	String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;
 
-String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
-long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
-String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
-String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
-long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
-String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
-String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
-String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
+	String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
+	long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
+	String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
+	String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
+	long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
+	String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:paramName"));
+	String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
+	String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
 
-String cropRegion = ParamUtil.getString(request, paramName + "CropRegion");
+	String cropRegion = ParamUtil.getString(request, paramName + "CropRegion");
 
-String imageURL = null;
+	String imageURL = null;
 
-if (fileEntryId != 0) {
-	FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+	if (fileEntryId != 0) {
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
-	imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
-}
+		imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+	}
 %>
 
 <div class="drop-zone <%= (fileEntryId == 0) ? "drop-enabled" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %> taglib-image-selector" id="<%= randomNamespace %>taglibImageSelector">
@@ -110,53 +111,52 @@ if (fileEntryId != 0) {
 	</div>
 
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
-		<aui:button cssClass="browse-image btn-monospaced btn-sm" icon="icon-refresh" />
-
-		<aui:button cssClass="btn-monospaced btn-sm" icon="icon-trash" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" />
+		<clay:button icon="picture" monospaced="<%= true %>" style="secondary"  elementClasses="browse-image" />
+		<clay:button elementClasses="btn-monospaced" icon="trash" style="secondary"  id='<%= randomNamespace + "removeImage" %>' />
 	</div>
 </div>
 
 <%
-String modules = "liferay-image-selector";
+	String modules = "liferay-image-selector";
 
-if (!draggableImage.equals("none")) {
-	modules += ",liferay-cover-cropper";
-}
+	if (!draggableImage.equals("none")) {
+		modules += ",liferay-cover-cropper";
+	}
 %>
 
 <aui:script use="<%= modules %>">
 	var imageSelector = new Liferay.ImageSelector(
-		{
-			errorNode: '#<%= randomNamespace + "errorAlert" %>',
-			fileEntryImageNode: '#<%= randomNamespace %>image',
-			itemSelectorEventName: '<%= itemSelectorEventName %>',
-			itemSelectorURL: '<%= itemSelectorURL %>',
-			maxFileSize: <%= maxFileSize %>,
-			namespace: '<%= randomNamespace %>',
-			paramName: '<portlet:namespace /><%= paramName %>',
-			rootNode: '#<%= randomNamespace %>taglibImageSelector',
-			uploadURL: '<%= uploadURL %>',
-			validExtensions: '<%= validExtensions %>'
-		}
+	{
+	errorNode: '#<%= randomNamespace + "errorAlert" %>',
+	fileEntryImageNode: '#<%= randomNamespace %>image',
+	itemSelectorEventName: '<%= itemSelectorEventName %>',
+	itemSelectorURL: '<%= itemSelectorURL %>',
+	maxFileSize: <%= maxFileSize %>,
+	namespace: '<%= randomNamespace %>',
+	paramName: '<portlet:namespace /><%= paramName %>',
+	rootNode: '#<%= randomNamespace %>taglibImageSelector',
+	uploadURL: '<%= uploadURL %>',
+	validExtensions: '<%= validExtensions %>'
+	}
 	);
 
 	<c:if test='<%= !draggableImage.equals("none") %>'>
 		imageSelector.plug(
-			Liferay.CoverCropper,
-			{
-				direction: '<%= draggableImage %>',
-				imageContainerSelector: '.image-wrapper',
-				imageSelector: '#<%= randomNamespace %>image'
-			}
+		Liferay.CoverCropper,
+		{
+		direction: '<%= draggableImage %>',
+		imageContainerSelector: '.image-wrapper',
+		imageSelector: '#<%= randomNamespace %>image'
+		}
 		);
 	</c:if>
 
 	var destroyInstance = function(event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			imageSelector.destroy();
+	if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+	imageSelector.destroy();
 
-			Liferay.detach('destroyPortlet', destroyInstance);
-		}
+	Liferay.detach('destroyPortlet', destroyInstance);
+	}
 	};
 
 	Liferay.on('destroyPortlet', destroyInstance);

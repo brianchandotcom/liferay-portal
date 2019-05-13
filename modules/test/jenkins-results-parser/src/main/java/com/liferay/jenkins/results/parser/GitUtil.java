@@ -67,25 +67,12 @@ public class GitUtil {
 	}
 
 	public static String getDefaultBranchName(File workingDirectory) {
-		ExecutionResult executionResult = executeBashCommands(
-			RETRIES_SIZE_MAX, MILLIS_RETRY_DELAY, MILLIS_TIMEOUT,
-			workingDirectory,
-			JenkinsResultsParserUtil.combine(
-				"git remote show origin | grep \"HEAD branch\" | ",
-				"cut -d \":\" -f 2"));
+		String defaultBranchName = _getDefaultBranchName(
+			workingDirectory, "origin");
 
-		if (executionResult.getExitValue() != 0) {
-			System.out.println(executionResult.getStandardError());
-
-			return null;
-		}
-
-		String defaultBranchName = executionResult.getStandardOut();
-
-		defaultBranchName = defaultBranchName.trim();
-
-		if (defaultBranchName.isEmpty()) {
-			return null;
+		if (defaultBranchName == null) {
+			defaultBranchName = _getDefaultBranchName(
+				workingDirectory, "upstream");
 		}
 
 		return defaultBranchName;
@@ -433,6 +420,34 @@ public class GitUtil {
 
 		return new ExecutionResult(
 			process.exitValue(), standardErr.trim(), standardOut.trim());
+	}
+
+	private static String _getDefaultBranchName(
+		File workingDirectory, String gitRemoteName) {
+
+		ExecutionResult executionResult = executeBashCommands(
+			RETRIES_SIZE_MAX, MILLIS_RETRY_DELAY, MILLIS_TIMEOUT,
+			workingDirectory,
+			JenkinsResultsParserUtil.combine(
+				"git remote show ", gitRemoteName, " | grep \"HEAD branch\" | ",
+				"cut -d \":\" -f 2"));
+
+		if (executionResult.getExitValue() != 0) {
+			return null;
+		}
+
+		String defaultBranchName = executionResult.getStandardOut();
+
+		defaultBranchName = defaultBranchName.replace(
+			"Finished executing Bash commands.", "");
+
+		defaultBranchName = defaultBranchName.trim();
+
+		if (defaultBranchName.isEmpty()) {
+			return null;
+		}
+
+		return defaultBranchName;
 	}
 
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =

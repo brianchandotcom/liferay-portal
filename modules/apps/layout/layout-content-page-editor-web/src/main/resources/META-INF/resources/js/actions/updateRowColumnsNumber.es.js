@@ -1,5 +1,43 @@
 import {MAX_COLUMNS} from '../utils/rowConstants';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
+
+/**
+ * @return {object}
+ * @review
+ */
+function updateRowColumnsNumberErrorAction() {
+	return {
+		type: UPDATE_ROW_COLUMNS_NUMBER_ERROR
+	};
+}
+
+/**
+ * @return {object}
+ * @review
+ */
+function updateRowColumnsNumberLoadingAction() {
+	return {
+		type: UPDATE_ROW_COLUMNS_NUMBER_LOADING
+	};
+}
+
+/**
+ * @param {Array} fragmentEntryLinkIdsToRemove
+ * @param {object} layoutData
+ * @return {object}
+ * @review
+ */
+function updateRowColumnsNumberSuccessAction(
+	fragmentEntryLinkIdsToRemove,
+	layoutData
+) {
+	return {
+		fragmentEntryLinkIdsToRemove,
+		layoutData,
+		type: UPDATE_ROW_COLUMNS_NUMBER_SUCCESS
+	};
+}
 
 /**
  * Returns a new layoutData with the given columns inserted in the specified

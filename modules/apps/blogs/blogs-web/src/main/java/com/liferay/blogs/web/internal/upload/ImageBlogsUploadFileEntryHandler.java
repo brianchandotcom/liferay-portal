@@ -117,8 +117,7 @@ public class ImageBlogsUploadFileEntryHandler
 	private void _validateFile(String fileName, long size)
 		throws PortalException {
 
-		long blogsImageMaxSize =
-			_blogsFileUploadsConfiguration.imageMaxSize();
+		long blogsImageMaxSize = _blogsFileUploadsConfiguration.imageMaxSize();
 
 		if ((blogsImageMaxSize > 0) && (size > blogsImageMaxSize)) {
 			throw new EntryImageSizeException();

@@ -63,16 +63,16 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
 	}
 
+	public BlogsItemSelectorCriterion getBlogsItemSelectorCriterion() {
+		return _blogsItemSelectorCriterion;
+	}
+
 	public String[] getImageExtensions() throws ConfigurationException {
 		return _getBlogsFileUploadsConfiguration().imageExtensions();
 	}
 
 	public long getImageMaxSize() throws ConfigurationException {
 		return _getBlogsFileUploadsConfiguration().imageMaxSize();
-	}
-
-	public BlogsItemSelectorCriterion getBlogsItemSelectorCriterion() {
-		return _blogsItemSelectorCriterion;
 	}
 
 	public String getItemSelectedEventName() {

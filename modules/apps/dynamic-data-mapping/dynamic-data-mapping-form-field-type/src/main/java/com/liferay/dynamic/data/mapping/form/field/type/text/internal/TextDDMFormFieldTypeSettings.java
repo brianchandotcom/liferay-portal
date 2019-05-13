@@ -99,7 +99,7 @@ public interface TextDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider"},
-		optionValues = {"manual", "data-provider"},
+		optionValues = {"manual", "data-provider"}, predefinedValue = "manual",
 		properties = "showLabel=false", type = "radio"
 	)
 	public String dataSourceType();

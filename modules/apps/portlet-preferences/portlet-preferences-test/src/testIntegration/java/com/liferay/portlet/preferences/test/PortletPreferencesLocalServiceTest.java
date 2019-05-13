@@ -74,7 +74,7 @@ public class PortletPreferencesLocalServiceTest
 	public static void setUpClass() {
 		_portletApp.setServletContext(
 			(ServletContext)ProxyUtil.newProxyInstance(
-				PortletPreferencesLocalServiceTest.class.getClassLoader(),
+				ServletContext.class.getClassLoader(),
 				new Class<?>[] {ServletContext.class},
 				(proxy, method, args) -> {
 					if (Objects.equals(

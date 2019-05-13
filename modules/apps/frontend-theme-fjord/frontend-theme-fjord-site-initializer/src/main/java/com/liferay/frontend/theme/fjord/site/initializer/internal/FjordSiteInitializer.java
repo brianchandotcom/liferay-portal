@@ -126,14 +126,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				_addLayoutPageTemplateCollection(serviceContext);
 
-			List<FragmentEntry> footerFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/common/footer", serviceContext);
-
-			List<FragmentEntry> headerFragmentEntries = _addFragmentEntries(
-				fragmentCollection.getFragmentCollectionId(),
-				_PATH + "/fragments/common/header", serviceContext);
-
 			List<FragmentEntry> homeFragmentEntries = _addFragmentEntries(
 				fragmentCollection.getFragmentCollectionId(),
 				_PATH + "/fragments/home", serviceContext);
@@ -150,13 +142,23 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 			homeFragmentEntries.addAll(featuresFragmentEntries);
 
-			downloadFragmentEntries.add(0, headerFragmentEntries.get(1));
+			List<FragmentEntry> headerFragmentEntries = _addFragmentEntries(
+				fragmentCollection.getFragmentCollectionId(),
+				_PATH + "/fragments/common/header", serviceContext);
+
+			FragmentEntry headerFullscreenFragmentEntry = _getFragmentEntry(
+				headerFragmentEntries, "Header-fullscreen");
+
+			downloadFragmentEntries.add(0, headerFullscreenFragmentEntry);
+			featuresFragmentEntries.add(0, headerFullscreenFragmentEntry);
+			homeFragmentEntries.add(0, headerFullscreenFragmentEntry);
+
+			List<FragmentEntry> footerFragmentEntries = _addFragmentEntries(
+				fragmentCollection.getFragmentCollectionId(),
+				_PATH + "/fragments/common/footer", serviceContext);
+
 			downloadFragmentEntries.addAll(footerFragmentEntries);
-
-			featuresFragmentEntries.add(0, headerFragmentEntries.get(1));
 			featuresFragmentEntries.addAll(footerFragmentEntries);
-
-			homeFragmentEntries.add(0, headerFragmentEntries.get(1));
 			homeFragmentEntries.addAll(footerFragmentEntries);
 
 			_addLayout(
@@ -378,6 +380,19 @@ public class FjordSiteInitializer implements SiteInitializer {
 		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
+	}
+
+	private FragmentEntry _getFragmentEntry(
+		List<FragmentEntry> fragmentEntries, String name) {
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			if (name.equals(fragmentEntry.getName())) {
+				return fragmentEntry;
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"Unable to find Fragment entry " + name);
 	}
 
 	private long _getPreviewFileEntryId(

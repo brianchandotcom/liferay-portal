@@ -3,7 +3,7 @@ import core from 'metal';
 import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 /**
  * Layout Builder.

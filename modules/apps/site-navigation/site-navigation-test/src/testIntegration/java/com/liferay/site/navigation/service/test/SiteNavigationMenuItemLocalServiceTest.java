@@ -298,6 +298,20 @@ public class SiteNavigationMenuItemLocalServiceTest {
 			childSiteNavigationMenuItem, actualSiteNavigationMenuItems.get(0));
 	}
 
+	@Test
+	public void testGetSiteNavigationMenuItemsCount() throws PortalException {
+		SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
+
+		SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
+
+		Assert.assertEquals(
+			2,
+			SiteNavigationMenuItemUtil.countBySiteNavigationMenuId(
+				_siteNavigationMenu.getSiteNavigationMenuId()));
+	}
+
 	@Test(expected = InvalidSiteNavigationMenuItemOrderException.class)
 	public void testInvalidParentSiteNavigationMenuItem()
 		throws PortalException {

@@ -521,8 +521,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					Properties gradleProperties = new PropertiesWrapper();
 
-					gradleProperties.put("task", task);
 					gradleProperties.put("project", project);
+					gradleProperties.put("task", task);
 
 					try (Builder builder = new Builder(
 							new Processor(gradleProperties, false))) {
@@ -548,13 +548,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							sourceDirectorySet.getOutputDir(),
 							sourceSetOutput.getResourcesDir());
 
-						builder.setProperty(
-							"project.buildpath", buildDirs.getAsPath());
 						builder.setClasspath(
 							buildDirs.getFiles(
 							).toArray(
 								new File[0]
 							));
+						builder.setProperty(
+							"project.buildpath", buildDirs.getAsPath());
 
 						if (logger.isDebugEnabled()) {
 							logger.debug(

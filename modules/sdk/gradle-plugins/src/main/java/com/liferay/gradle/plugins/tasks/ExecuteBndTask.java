@@ -71,23 +71,23 @@ public class ExecuteBndTask extends DefaultTask {
 
 		Properties gradleProperties = new PropertiesWrapper();
 
-		gradleProperties.put("task", this);
 		gradleProperties.put("project", project);
+		gradleProperties.put("task", this);
 
 		try (Builder builder = new Builder(
 				new Processor(gradleProperties, false))) {
 
 			Properties properties = getProperties();
 
-			builder.setJar(new Jar("dot"));
 			builder.setBase(getBaseDir());
+			builder.setJar(new Jar("dot"));
 			builder.setProperties(properties);
 
 			FileCollection buildDirs = project.files(
 				getClasspath(), getResourceDirs());
 
-			builder.setProperty("project.buildpath", buildDirs.getAsPath());
 			builder.setClasspath(_toArray(buildDirs));
+			builder.setProperty("project.buildpath", buildDirs.getAsPath());
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("builder classpath: {}", buildDirs.getAsPath());

@@ -5889,20 +5889,22 @@ go</echo>
 			</then>
 		</if>
 
+		<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+
 		<if>
 			<isset property="liferay.dependency.jars" />
 			<then>
 				<property name="liferay.dependency.jars" value="${liferay.dependency.jars}" />
 
 				<if>
-					<available file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}" type="dir" />
+					<available file="${liferay.dependency.dir}/${liferay.dependency.jars}" type="dir" />
 					<then>
-						<echo>Archiving ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${project.dir}/tmp/${liferay.dependency.jars}.</echo>
+						<echo>Archiving ${liferay.dependency.dir}/${liferay.dependency.jars} to ${project.dir}/tmp/${liferay.dependency.jars}.</echo>
 
 						<jar
-							basedir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
+							basedir="${liferay.dependency.dir}/${liferay.dependency.jars}"
 							destfile="${project.dir}/tmp/${liferay.dependency.jars}"
-							manifest="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}/META-INF/MANIFEST.MF"
+							manifest="${liferay.dependency.dir}/${liferay.dependency.jars}/META-INF/MANIFEST.MF"
 						/>
 
 						<echo>Copying ${project.dir}/tmp/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
@@ -5913,10 +5915,10 @@ go</echo>
 						/>
 					</then>
 					<else>
-						<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+						<echo>Copying ${liferay.dependency.dir}/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
 
 						<copy
-							file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
+							file="${liferay.dependency.dir}/${liferay.dependency.jars}"
 							todir="${deploy.dir}"
 						/>
 					</else>

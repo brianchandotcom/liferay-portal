@@ -75,9 +75,19 @@ public class SafePNGInputStream extends InputStream {
 			return _bufferedInputStream.read();
 		}
 
-		_bufferedInputStream.skip(chunkLength + _CRC_SIZE);
+		long bytesToSkip = chunkLength + _CRC_SIZE;
 
-		return _bufferedInputStream.read();
+		while (bytesToSkip > 0) {
+			long skipped = _bufferedInputStream.skip(bytesToSkip);
+
+			if (skipped <= 0) {
+				break;
+			}
+
+			bytesToSkip -= skipped;
+		}
+
+		return read();
 	}
 
 	private void _detectPNGSignature() throws IOException {

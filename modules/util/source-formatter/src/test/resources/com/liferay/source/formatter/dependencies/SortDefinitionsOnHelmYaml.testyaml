@@ -13,6 +13,8 @@ spec:
         app: {{ $masterPodName }}
     type: NodePort
 ---
+{{- if $.Values.master.ports.vnc.enabled }}
+{{- if $.Values.slave.ports.vnc.enabled }}
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
@@ -27,3 +29,5 @@ spec:
                     servicePort: 8080
                     serviceName: {{ $masterSubdomain }}
                 path: /{{ $masterPodName }}
+{{- end }}
+{{- end }}

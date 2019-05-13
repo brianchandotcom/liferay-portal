@@ -1,8 +1,7 @@
-import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS, UPDATE_ROW_COLUMNS_NUMBER, UPDATE_ROW_CONFIG} from '../actions/actions.es';
+import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS, UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS, UPDATE_ROW_CONFIG} from '../actions/actions.es';
 import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
-import {MAX_COLUMNS} from '../utils/rowConstants';
 import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
@@ -231,8 +230,8 @@ const updateRowColumnsReducer = (state, action) => new Promise(
 /**
  * @param {object} state
  * @param {object} action
- * @param {number} action.numberOfColumns
- * @param {string} action.rowId
+ * @param {Array} action.fragmentEntryLinkIdsToRemove
+ * @param {object} action.layoutData
  * @param {string} action.type
  * @return {object}
  * @review
@@ -242,40 +241,15 @@ function updateRowColumnsNumberReducer(state, action) {
 
 	return new Promise(
 		resolve => {
-			if (action.type === UPDATE_ROW_COLUMNS_NUMBER) {
+			if (action.type === UPDATE_ROW_COLUMNS_NUMBER_ERROR ||
+				action.type === UPDATE_ROW_COLUMNS_NUMBER_LOADING ||
+				action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
 
-				let fragmentEntryLinkIdsToRemove = [];
-				let nextData;
+				if (action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
+					nextState = setIn(nextState, ['savingChanges'], false);
+					nextState = setIn(nextState, ['layoutData'], action.layoutData);
 
-				const numberOfColumns = action.numberOfColumns;
-
-				const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
-
-				const rowIndex = getRowIndex(
-					nextState.layoutData.structure,
-					action.rowId
-				);
-
-				let columns = nextState.layoutData.structure[rowIndex].columns;
-
-				if (numberOfColumns > columns.length) {
-					nextData = _addColumns(
-						nextState.layoutData,
-						rowIndex,
-						numberOfColumns,
-						columnsSize
-					);
-				}
-				else {
-					let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds(
-						{
-							columns: columns.slice(
-								numberOfColumns - columns.length
-							)
-						}
-					);
-
-					fragmentEntryLinkIdsToRemove.forEach(
+					action.fragmentEntryLinkIdsToRemove.forEach(
 						fragmentEntryLinkId => {
 							nextState = updateWidgets(
 								nextState,
@@ -283,39 +257,16 @@ function updateRowColumnsNumberReducer(state, action) {
 							);
 						}
 					);
-
-					nextData = _removeColumns(
-						nextState.layoutData,
-						rowIndex,
-						numberOfColumns,
-						columnsSize
-					);
 				}
-
-				updatePageEditorLayoutData(
-					nextData,
-					nextState.segmentsExperienceId
-				).then(
-					() => removeFragmentEntryLinks(
-						nextData,
-						fragmentEntryLinkIdsToRemove,
-						nextState.segmentsExperienceId
-					)
-				).then(
-					() => {
-						nextState = setIn(nextState, ['layoutData'], nextData);
-
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(state);
-					}
-				);
+				else if (action.type === UPDATE_ROW_COLUMNS_NUMBER_ERROR) {
+					nextState = setIn(nextState, ['savingChanges'], false);
+				}
+				else if (action.type === UPDATE_ROW_COLUMNS_NUMBER_LOADING) {
+					nextState = setIn(nextState, ['savingChanges'], true);
+				}
 			}
-			else {
-				resolve(state);
-			}
+
+			resolve(nextState);
 		}
 	);
 }

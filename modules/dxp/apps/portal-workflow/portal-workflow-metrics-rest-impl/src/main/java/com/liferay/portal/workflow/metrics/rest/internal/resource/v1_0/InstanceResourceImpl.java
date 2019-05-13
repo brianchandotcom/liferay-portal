@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SLAStatus;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.Status;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
@@ -67,6 +69,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -188,7 +192,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
-			processId, slaStatuses, statuses, taskKeys);
+			processId, slaStatuses, statuses, taskKeys, timeRange);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
 
@@ -196,7 +200,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return Page.of(
 				_getInstances(
 					searchSearchResponse.getCount(), pagination, processId,
-					slaStatuses, statuses, taskKeys),
+					slaStatuses, statuses, taskKeys, timeRange),
 				pagination, instanceCount);
 		}
 
@@ -395,7 +399,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private List<Instance> _getInstances(
 		long instanceCount, Pagination pagination, long processId,
-		String[] slaStatuses, String[] statuses, String[] taskKeys) {
+		String[] slaStatuses, String[] statuses, String[] taskKeys,
+		Integer timeRange) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -423,8 +428,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			onTimeFilterAggregation, overdueFilterAggregation,
 			taskNameTermsAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
-				ListUtil.toList(taskKeys)));
+				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
+				ListUtil.toList(slaStatuses),
+				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 
 		termsAggregation.addPipelineAggregations(
 			_createBucketSelectorPipelineAggregation(),
@@ -495,14 +502,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private SearchSearchResponse _getSearchSearchResponse(
 		long processId, String[] slaStatuses, String[] statuses,
-		String[] taskKeys) {
+		String[] taskKeys, Integer timeRange) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
-				ListUtil.toList(taskKeys)));
+				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
+				ListUtil.toList(slaStatuses),
+				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
 			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
@@ -682,6 +691,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Sorts _sorts;
+
+	@Context
+	private User _user;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

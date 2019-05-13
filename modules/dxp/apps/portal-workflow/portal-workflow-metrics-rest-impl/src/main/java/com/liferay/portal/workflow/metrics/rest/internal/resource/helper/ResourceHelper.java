@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -123,8 +124,8 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			List<String> slaStatuses, List<String> statuses,
-			List<String> taskNames) {
+			Date endDate, List<String> slaStatuses, Date startDate,
+			List<String> statuses, List<String> taskNames) {
 
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -138,8 +139,16 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			new HashMap<String, Object>() {
 				{
+					if (endDate != null) {
+						put("endDate", endDate.getTime());
+					}
+
 					if (!slaStatuses.isEmpty()) {
 						put("slaStatuses", slaStatuses);
+					}
+
+					if (startDate != null) {
+						put("startDate", startDate.getTime());
 					}
 
 					if (!statuses.isEmpty()) {

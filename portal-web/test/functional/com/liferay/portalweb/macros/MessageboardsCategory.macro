@@ -31,7 +31,7 @@ definition {
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
 				value1 = "Question");
 		}
-		else if ("${displayStyle" == "Default") {
+		else if ("${displayStyle}" == "Default") {
 			Select(
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
 				value1 = "Default");

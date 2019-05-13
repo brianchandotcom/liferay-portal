@@ -56,6 +56,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="cropRegion" type="hidden" />
 			<aui:input name="currentLogoURL" type="hidden" value="<%= currentImageURL %>" />
+			<aui:input name="preserveRatio" type="hidden" value="<%= String.valueOf(preserveRatio) %>" />
 			<aui:input name="previewURL" type="hidden" value="<%= previewURL %>" />
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input name="tempImageFileName" type="hidden" value="<%= tempImageFileName %>" />

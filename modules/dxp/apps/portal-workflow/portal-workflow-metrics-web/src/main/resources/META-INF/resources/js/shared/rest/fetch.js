@@ -11,6 +11,10 @@ const restClient = axios.create({
 	baseURL: '/o/portal-workflow-metrics/v1.0'
 });
 
+axios.defaults.headers.common[
+	'Accept-Language'
+] = Liferay.ThemeDisplay.getBCP47LanguageId();
+
 axios.defaults.params = {
 	['p_auth']: Liferay.authToken
 };

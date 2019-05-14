@@ -190,7 +190,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			"folderId", String.valueOf(fileEntry.getFolderId()));
 
 		liferayPortletURL.setParameter(
-			"googleDocsRedirect", _portal.getCurrentCompleteURL(request));
+			"googleDocsRedirect", _portal.getCurrentURL(request));
 
 		return liferayPortletURL.toString();
 	}

@@ -234,7 +234,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {
-		return _portal.getCurrentCompleteURL(
+		return _portal.getCurrentURL(
 			_portal.getHttpServletRequest(portletRequest));
 	}
 

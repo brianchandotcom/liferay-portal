@@ -14,12 +14,12 @@
 
 package com.liferay.bean.portlet.extension;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

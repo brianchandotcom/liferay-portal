@@ -14,11 +14,11 @@
 
 package com.liferay.bean.portlet.extension;
 
-import aQute.bnd.annotation.ProviderType;
-
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

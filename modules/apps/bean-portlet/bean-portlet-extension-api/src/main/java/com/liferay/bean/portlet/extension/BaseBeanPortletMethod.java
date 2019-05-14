@@ -14,8 +14,6 @@
 
 package com.liferay.bean.portlet.extension;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,6 +32,8 @@ import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 
 import javax.xml.namespace.QName;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

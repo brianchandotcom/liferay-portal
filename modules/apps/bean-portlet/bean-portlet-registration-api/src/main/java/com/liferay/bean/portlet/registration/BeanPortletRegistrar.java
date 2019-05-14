@@ -14,8 +14,6 @@
 
 package com.liferay.bean.portlet.registration;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.bean.portlet.extension.BeanFilterMethodFactory;
 import com.liferay.bean.portlet.extension.BeanFilterMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
@@ -24,6 +22,8 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Neil Griffin

@@ -59,6 +59,39 @@ class DisabledAreaPopover extends Component {
 	}
 
 	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	rendered() {
+		if (this._position) {
+			requestAnimationFrame(
+				() => {
+					let popoverPosition = Align.TopCenter;
+
+					const suggestedAlign = Align.suggestAlignBestRegion(
+						this.refs.popover,
+						this._clickedElement,
+						popoverPosition
+					);
+
+					if (suggestedAlign.position !== popoverPosition) {
+						popoverPosition = Align.BottomCenter;
+					}
+
+					Align.align(
+						this.refs.popover,
+						this._clickedElement,
+						popoverPosition,
+						false
+					);
+
+					this._setPosition(popoverPosition);
+				}
+			);
+		}
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -122,26 +155,9 @@ class DisabledAreaPopover extends Component {
 	_handleElementClick(event) {
 		event.stopImmediatePropagation();
 
-		let popoverPosition = Align.TopCenter;
+		this._clickedElement = event.delegateTarget;
 
-		const suggestedAlign = Align.suggestAlignBestRegion(
-			this.refs.popover,
-			event.delegateTarget,
-			popoverPosition
-		);
-
-		if (suggestedAlign.position !== popoverPosition) {
-			popoverPosition = Align.BottomCenter;
-		}
-
-		const alignPosition = Align.align(
-			this.refs.popover,
-			event.delegateTarget,
-			popoverPosition,
-			false
-		);
-
-		this._setPosition(alignPosition);
+		this._setPosition(Align.TopCenter);
 	}
 
 	/**
@@ -161,6 +177,7 @@ class DisabledAreaPopover extends Component {
 	 * @review
 	 */
 	_hidePopover() {
+		this._clickedElement = null;
 		this._position = null;
 	}
 
@@ -172,7 +189,9 @@ class DisabledAreaPopover extends Component {
 	 * @review
 	 */
 	_setPosition(alignPosition) {
-		this._position = POPOVER_POSITIONS[alignPosition];
+		if (this._position !== POPOVER_POSITIONS[alignPosition]) {
+			this._position = POPOVER_POSITIONS[alignPosition];
+		}
 	}
 
 }

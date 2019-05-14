@@ -71,12 +71,20 @@ public class DLExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(new Capability[] {_exportCapability});
+		return ListUtil.toList(
+			new Capability[] {
+				_dlCommentsAndRatingsExporterImporterCapability,
+				_exportCapability
+			});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(new Capability[] {_importCapability});
+		return ListUtil.toList(
+			new Capability[] {
+				_dlCommentsAndRatingsExporterImporterCapability,
+				_importCapability
+			});
 	}
 
 	@Override
@@ -404,6 +412,10 @@ public class DLExportImportPortletPreferencesProcessor
 		DLExportImportPortletPreferencesProcessor.class);
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLCommentsAndRatingsExporterImporterCapability
+		_dlCommentsAndRatingsExporterImporterCapability;
 
 	@Reference(
 		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT</td>
-	<td>//div[contains(@class,'edit-controls')]//a[@title='Select']</td>
+	<td>//fieldset[@id='assetEntries']//a[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>

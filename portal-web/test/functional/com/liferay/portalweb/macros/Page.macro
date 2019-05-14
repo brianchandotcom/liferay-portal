@@ -179,6 +179,8 @@ definition {
 	}
 
 	macro editName {
+		Alert.closeMessage(messageType = "SUCCESS"); // Success message will block the Save button if success message is present and the product menu is closed.
+
 		PortletEntry.inputName(name = "${pageNameEdit}");
 
 		Button.clickSave();

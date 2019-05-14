@@ -23,7 +23,11 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFact
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -32,6 +36,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,6 +69,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DataEngineTaglibUtil.class)
 public class DataEngineTaglibUtil {
+
+	public static JSONObject getDataLayoutJSONObject(
+		long dataLayoutId, Locale locale, HttpServletRequest request) {
+
+		if (dataLayoutId == 0) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return _instance._getDataLayoutJSONObject(
+			dataLayoutId, locale, request);
+	}
 
 	public static JSONArray getFieldTypesJSONArray(HttpServletRequest request) {
 		return _instance._getFieldTypesJSONArray(request);
@@ -114,7 +130,6 @@ public class DataEngineTaglibUtil {
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
 			ddmFormRenderingContext.setHttpServletRequest(request);
-			//ddmFormRenderingContext.setHttpServletResponse(response);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
@@ -135,6 +150,47 @@ public class DataEngineTaglibUtil {
 		}
 
 		return null;
+	}
+
+	private JSONObject _getDataLayoutJSONObject(
+		long dataLayoutId, Locale locale, HttpServletRequest request) {
+
+		try {
+			String portletNamespace = ParamUtil.getString(
+				request, "portletNamespace");
+
+			DDMStructureLayout ddmStructureLayout =
+				_ddmStructureLayoutLocalService.getDDMStructureLayout(
+					dataLayoutId);
+
+			DDMStructureVersion ddmStructureVersion =
+				_ddmStructureVersionLocalService.getDDMStructureVersion(
+					ddmStructureLayout.getStructureVersionId());
+
+			DDMFormRenderingContext ddmFormRenderingContext =
+				new DDMFormRenderingContext();
+
+			ddmFormRenderingContext.setHttpServletRequest(request);
+			ddmFormRenderingContext.setContainerId("layoutBuilder");
+			ddmFormRenderingContext.setLocale(locale);
+			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+			ddmFormRenderingContext.setReturnFullContext(true);
+
+			String json = _jsonFactory.looseSerializeDeep(
+				_ddmFormTemplateContextFactory.create(
+					ddmStructureVersion.getDDMForm(),
+					ddmStructureLayout.getDDMFormLayout(),
+					ddmFormRenderingContext));
+
+			return _jsonFactory.createJSONObject(json);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private Class<?> _getDDMFormFieldTypeSettings(String type) {
@@ -288,6 +344,12 @@ public class DataEngineTaglibUtil {
 
 	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
+	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private FieldTypeTracker _fieldTypeTracker;

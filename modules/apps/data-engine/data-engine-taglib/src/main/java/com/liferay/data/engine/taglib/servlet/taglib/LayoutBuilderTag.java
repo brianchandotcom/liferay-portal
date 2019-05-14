@@ -16,7 +16,6 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataEngineTaglibUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.Locale;
@@ -37,7 +36,10 @@ public class LayoutBuilderTag extends BaseLayoutBuilderTag {
 			new Locale[] {LocaleThreadLocal.getThemeDisplayLocale()});
 
 		setNamespacedAttribute(
-			request, "dataLayout", JSONFactoryUtil.createJSONObject());
+			request, "dataLayout",
+			DataEngineTaglibUtil.getDataLayoutJSONObject(
+				getDataLayoutId(), LocaleThreadLocal.getThemeDisplayLocale(),
+				request));
 
 		setNamespacedAttribute(
 			request, "fieldTypes",

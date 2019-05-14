@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Fragment Entry Processor Freemarker
+Bundle-SymbolicName: com.liferay.fragment.entry.processor.freemarker
+Bundle-Version: 3.0.0

@@ -204,6 +204,11 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
+								<h2 class="h5">
+									<aui:a href="<%= rowURL.toString() %>">
+										<%= curPage.getTitle() %>
+									</aui:a>
+								</h2>
 
 								<%
 								Date modifiedDate = curPage.getModifiedDate();
@@ -221,13 +226,6 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 										</c:otherwise>
 									</c:choose>
 								</span>
-
-								<h2 class="h5">
-									<aui:a href="<%= rowURL.toString() %>">
-										<%= curPage.getTitle() %>
-									</aui:a>
-								</h2>
-
 								<span class="text-default">
 									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
 								</span>

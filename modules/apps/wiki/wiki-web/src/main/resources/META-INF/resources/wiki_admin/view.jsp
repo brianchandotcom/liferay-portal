@@ -166,6 +166,11 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
+								<h2 class="h5">
+									<aui:a href="<%= rowURL.toString() %>">
+										<%= HtmlUtil.escape(node.getName()) %>
+									</aui:a>
+								</h2>
 
 								<%
 								Date lastPostDate = node.getLastPostDate();
@@ -176,12 +181,6 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 										<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true)} %>" key="last-post-x-ago" />
 									</span>
 								</c:if>
-
-								<h2 class="h5">
-									<aui:a href="<%= rowURL.toString() %>">
-										<%= HtmlUtil.escape(node.getName()) %>
-									</aui:a>
-								</h2>
 
 								<span class="text-default">
 									<liferay-ui:message arguments="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>" key="x-pages" />

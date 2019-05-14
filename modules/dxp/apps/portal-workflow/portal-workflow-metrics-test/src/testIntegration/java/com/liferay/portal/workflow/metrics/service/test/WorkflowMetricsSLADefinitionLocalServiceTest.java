@@ -30,9 +30,9 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionPauseNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionTimeframeException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil;
 
@@ -148,7 +148,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
-	@Test(expected = WorkflowMetricsSLADefinitionPauseNodeKeysException.class)
+	@Test(expected = WorkflowMetricsSLADefinitionTimeframeException.class)
 	public void testAddSLADefinitionInvalidPauseNodeKeys() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
@@ -160,7 +160,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
-	@Test(expected = WorkflowMetricsSLADefinitionStartNodeKeysException.class)
+	@Test(expected = WorkflowMetricsSLADefinitionTimeframeException.class)
 	public void testAddSLADefinitionInvalidStartNodeKeys1() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
@@ -182,7 +182,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
-	@Test(expected = WorkflowMetricsSLADefinitionStopNodeKeysException.class)
+	@Test(expected = WorkflowMetricsSLADefinitionTimeframeException.class)
 	public void testAddSLADefinitionInvalidStopNodeKeys1() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.

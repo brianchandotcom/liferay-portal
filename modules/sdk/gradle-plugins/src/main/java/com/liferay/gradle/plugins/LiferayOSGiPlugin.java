@@ -834,8 +834,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (file.exists()) {
 			UTF8Properties utf8Properties = new UTF8Properties();
 
-			try {
-				utf8Properties.load(file, new Processor());
+			try (Processor processor = new Processor()) {
+				utf8Properties.load(file, processor);
 
 				Enumeration<Object> keys = utf8Properties.keys();
 

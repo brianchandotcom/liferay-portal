@@ -123,7 +123,11 @@ public class BndInvokerTask extends Task {
 			method.invoke(null, properties, baseDir, output);
 		}
 		finally {
-			Files.delete(tempBndPath);
+			File tempBndFile = tempBndPath.toFile();
+
+			if (!tempBndFile.delete()) {
+				tempBndFile.deleteOnExit();
+			}
 		}
 	}
 

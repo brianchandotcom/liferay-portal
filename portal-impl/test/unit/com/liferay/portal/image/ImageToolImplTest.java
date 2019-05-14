@@ -185,9 +185,9 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		Raster raster = expectedImage.getData();
+		Raster expectedRaster = expectedImage.getData();
 
-		DataBuffer expectedDataBuffer = raster.getDataBuffer();
+		DataBuffer expectedDataBuffer = expectedRaster.getDataBuffer();
 
 		String expectedType = FileUtil.getExtension(fileName);
 
@@ -207,9 +207,9 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(resultImage);
 
-		raster = resultImage.getData();
+		Raster resultRaster = resultImage.getData();
 
-		DataBuffer resultDataBuffer = raster.getDataBuffer();
+		DataBuffer resultDataBuffer = resultRaster.getDataBuffer();
 
 		String resultType = imageBag.getType();
 

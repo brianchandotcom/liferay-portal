@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-ldap-import-enabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-sign-authn-request')]</td>
 	<td></td>

@@ -684,6 +684,8 @@ definition {
 	}
 
 	macro publishCustomPublication {
+		Pause(locator1 = "3000");
+
 		LexiconEntry.gotoAdd();
 
 		if ("${remoteStaging}" == "true") {

@@ -16,22 +16,14 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.headless.delivery.client.dto.v1_0.Document;
-import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.ByteArrayInputStream;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -74,24 +66,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			RandomTestUtil.randomString(), new ServiceContext());
 
 		return folder.getFolderId();
-	}
-
-	@Override
-	protected MultipartBody toMultipartBody(Document document) {
-		testContentType = "multipart/form-data;boundary=PART";
-
-		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
-
-		String randomString = RandomTestUtil.randomString();
-
-		binaryFileMap.put(
-			"file",
-			new BinaryFile(
-				testContentType, RandomTestUtil.randomString(),
-				new ByteArrayInputStream(randomString.getBytes()), 0));
-
-		return MultipartBody.of(
-			binaryFileMap, __ -> null, DocumentSerDes.toMap(document));
 	}
 
 }

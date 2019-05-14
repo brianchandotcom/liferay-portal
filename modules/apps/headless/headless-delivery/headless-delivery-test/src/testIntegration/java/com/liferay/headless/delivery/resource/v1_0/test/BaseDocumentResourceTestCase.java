@@ -21,10 +21,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
+import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.resource.v1_0.DocumentFolderResource;
+import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
-import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,10 +44,12 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -58,6 +62,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -70,7 +75,6 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -106,6 +110,10 @@ public abstract class BaseDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
+		irrelevantDocumentFolder = invokePostSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
+		testDocumentFolder = invokePostSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
 		testLocale = LocaleUtil.getDefault();
 
 		_resourceURL = new URL(
@@ -406,64 +414,29 @@ public abstract class BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return invokePostDocumentFolderDocument(
-			documentFolderId, toMultipartBody(document));
+			documentFolderId, document);
 	}
 
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDocumentFolder.getId();
 	}
 
 	protected Long
 			testGetDocumentFolderDocumentsPage_getIrrelevantDocumentFolderId()
 		throws Exception {
 
-		return null;
+		return irrelevantDocumentFolder.getId();
 	}
 
 	protected Page<Document> invokeGetDocumentFolderDocumentsPage(
-			Long documentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
+		Long documentFolderId, String search, String filterString,
+		Pagination pagination, String sortString)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}/documents",
-					documentFolderId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentSerDes::toDTO);
+		return _clientDocumentResource.getDocumentFolderDocumentsPage(
+			documentFolderId, search, filterString, pagination, sortString);
 	}
 
 	protected Http.Response invokeGetDocumentFolderDocumentsPageResponse(
@@ -507,7 +480,20 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPostDocumentFolderDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document randomDocument = randomDocument();
+
+		Document postDocument = testPostDocumentFolderDocument_addDocument(
+			randomDocument);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+	}
+
+	protected Document testPostSiteDocument_addDocument(Document document)
+		throws Exception {
+
+		return invokePostSiteDocument(
+			testGetSiteDocumentsPage_getSiteId(), document);
 	}
 
 	protected Document testPostDocumentFolderDocument_addDocument(
@@ -516,50 +502,15 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return invokePostDocumentFolderDocument(
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId(),
-			toMultipartBody(document));
+			document);
 	}
 
 	protected Document invokePostDocumentFolderDocument(
-			Long documentFolderId, MultipartBody multipartBody)
+			Long documentFolderId, Document document)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.addPart("document", _toJSON(multipartBody.getValues()));
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}/documents",
-					documentFolderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.postDocumentFolderDocument(
+			documentFolderId, document, _getFilesMap());
 	}
 
 	protected Http.Response invokePostDocumentFolderDocumentResponse(
@@ -596,24 +547,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected Document testDeleteDocument_addDocument() throws Exception {
 		return invokePostSiteDocument(
-			testGroup.getGroupId(), toMultipartBody(randomDocument()));
+			testGroup.getGroupId(), randomDocument());
 	}
 
 	protected void invokeDeleteDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
+		_clientDocumentResource.deleteDocument(documentId);
 	}
 
 	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
@@ -645,33 +583,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected Document testGetDocument_addDocument() throws Exception {
 		return invokePostSiteDocument(
-			testGroup.getGroupId(), toMultipartBody(randomDocument()));
+			testGroup.getGroupId(), randomDocument());
 	}
 
 	protected Document invokeGetDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.getDocument(documentId);
 	}
 
 	protected Http.Response invokeGetDocumentResponse(Long documentId)
@@ -691,52 +607,38 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPatchDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document postDocument = testPatchDocument_addDocument();
+
+		Document randomPatchDocument = randomPatchDocument();
+
+		Document patchDocument = invokePatchDocument(
+			postDocument.getId(), randomPatchDocument,
+			_getFilesMap("liferay-2.png"));
+
+		Document expectedPatchDocument =
+			(Document)BeanUtils.cloneBean(postDocument);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchDocument, randomPatchDocument);
+
+		Document getDocument = invokeGetDocument(
+			patchDocument.getId());
+
+		assertEquals(expectedPatchDocument, getDocument);
+		assertValid(getDocument);;
 	}
 
 	protected Document testPatchDocument_addDocument() throws Exception {
 		return invokePostSiteDocument(
-			testGroup.getGroupId(), toMultipartBody(randomDocument()));
+			testGroup.getGroupId(), randomDocument());
 	}
 
 	protected Document invokePatchDocument(
-			Long documentId, MultipartBody multipartBody)
+			Long documentId, Document document, Map<String, File> files)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.addPart("document", _toJSON(multipartBody.getValues()));
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.patchDocument(
+			documentId, document, files);
 	}
 
 	protected Http.Response invokePatchDocumentResponse(
@@ -759,52 +661,36 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPutDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document postDocument =
+			testPutDocument_addDocument();
+
+		Document randomDocument = randomDocument();
+
+		Document putDocument = invokePutDocument(
+			postDocument.getId(), randomDocument,
+			_getFilesMap("liferay-2.png"));
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument = invokeGetDocument(
+			putDocument.getId());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+;
 	}
 
 	protected Document testPutDocument_addDocument() throws Exception {
 		return invokePostSiteDocument(
-			testGroup.getGroupId(), toMultipartBody(randomDocument()));
+			testGroup.getGroupId(), randomDocument());
 	}
 
 	protected Document invokePutDocument(
-			Long documentId, MultipartBody multipartBody)
+			Long documentId, Document document, Map<String, File> files)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.addPart("document", _toJSON(multipartBody.getValues()));
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.putDocument(documentId, document, files);
 	}
 
 	protected Http.Response invokePutDocumentResponse(
@@ -842,27 +728,13 @@ public abstract class BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return invokePostSiteDocument(
-			testGroup.getGroupId(), toMultipartBody(randomDocument()));
+			testGroup.getGroupId(), randomDocument());
 	}
 
 	protected void invokeDeleteDocumentMyRating(Long documentId)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath("/documents/{documentId}/my-rating", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
+		_clientDocumentResource.deleteDocument(documentId);
 	}
 
 	protected Http.Response invokeDeleteDocumentMyRatingResponse(
@@ -892,31 +764,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Rating invokeGetDocumentMyRating(Long documentId)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/documents/{documentId}/my-rating", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return com.liferay.headless.delivery.client.serdes.v1_0.
-				RatingSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.getDocumentMyRating(documentId);
 	}
 
 	protected Http.Response invokeGetDocumentMyRatingResponse(Long documentId)
@@ -943,33 +791,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Rating invokePostDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/documents/{documentId}/my-rating", documentId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return com.liferay.headless.delivery.client.serdes.v1_0.
-				RatingSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.postDocumentMyRating(documentId, rating);
 	}
 
 	protected Http.Response invokePostDocumentMyRatingResponse(
@@ -999,33 +821,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Rating invokePutDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/documents/{documentId}/my-rating", documentId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return com.liferay.headless.delivery.client.serdes.v1_0.
-				RatingSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.putDocumentMyRating(documentId, rating);
 	}
 
 	protected Http.Response invokePutDocumentMyRatingResponse(
@@ -1273,7 +1069,7 @@ public abstract class BaseDocumentResourceTestCase {
 			Long siteId, Document document)
 		throws Exception {
 
-		return invokePostSiteDocument(siteId, toMultipartBody(document));
+		return invokePostSiteDocument(siteId, document);
 	}
 
 	protected Long testGetSiteDocumentsPage_getSiteId() throws Exception {
@@ -1291,43 +1087,8 @@ public abstract class BaseDocumentResourceTestCase {
 			Pagination pagination, String sortString)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/documents", siteId);
-
-		if (flatten != null) {
-			location = HttpUtil.addParameter(location, "flatten", flatten);
-		}
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentSerDes::toDTO);
+		return _clientDocumentResource.getSiteDocumentsPage(
+			siteId, flatten, search, filterString, pagination, sortString);
 	}
 
 	protected Http.Response invokeGetSiteDocumentsPageResponse(
@@ -1372,54 +1133,29 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPostSiteDocument() throws Exception {
-		Assert.assertTrue(true);
-	}
+		Document randomDocument = randomDocument();
 
-	protected Document testPostSiteDocument_addDocument(Document document)
-		throws Exception {
+		Document postDocument =
+			testPostSiteDocument_addDocument(randomDocument);
 
-		return invokePostSiteDocument(
-			testGetSiteDocumentsPage_getSiteId(), toMultipartBody(document));
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
 	}
 
 	protected Document invokePostSiteDocument(
-			Long siteId, MultipartBody multipartBody)
+			Long siteId, Document document)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
+		return _clientDocumentResource.postSiteDocument(
+			siteId, document, _getFilesMap());
+	}
 
-		options.addPart("document", _toJSON(multipartBody.getValues()));
+	protected DocumentFolder invokePostSiteDocumentFolder(
+			Long siteId, DocumentFolder documentFolder)
+		throws Exception {
 
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/documents", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _documentFolderResource.postSiteDocumentFolder(
+			siteId, documentFolder);
 	}
 
 	protected Http.Response invokePostSiteDocumentResponse(
@@ -2115,6 +1851,19 @@ public abstract class BaseDocumentResourceTestCase {
 		};
 	}
 
+	protected DocumentFolder randomDocumentFolder() throws Exception {
+		return new DocumentFolder() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+				siteId = testGroup.getGroupId();
+			}
+		};
+	}
+
 	protected Document randomIrrelevantDocument() throws Exception {
 		Document randomIrrelevantDocument = randomDocument();
 
@@ -2125,13 +1874,10 @@ public abstract class BaseDocumentResourceTestCase {
 		return randomDocument();
 	}
 
-	protected MultipartBody toMultipartBody(Document document) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group irrelevantGroup;
+	protected DocumentFolder irrelevantDocumentFolder;
 	protected String testContentType = "application/json";
+	protected DocumentFolder testDocumentFolder;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
@@ -2152,6 +1898,25 @@ public abstract class BaseDocumentResourceTestCase {
 		options.addHeader("Content-Type", testContentType);
 
 		return options;
+	}
+
+	private Map<String, File> _getFilesMap() throws IOException {
+		return _getFilesMap("liferay.png");
+	}
+
+	private Map<String, File> _getFilesMap(String name) throws IOException {
+		Class<? extends BaseDocumentResourceTestCase> clazz = getClass();
+
+		File targetFile = File.createTempFile("prefix", "suffix");
+
+		FileUtil.write(
+			targetFile, clazz.getResourceAsStream("dependencies/" + name));
+
+		Map<String, File> files = new HashMap<>();
+
+		files.put("file", targetFile);
+
+		return files;
 	}
 
 	private String _toJSON(Map<String, String> map) {
@@ -2219,8 +1984,14 @@ public abstract class BaseDocumentResourceTestCase {
 	};
 	private static DateFormat _dateFormat;
 
+	private DocumentResource _clientDocumentResource = new DocumentResource();
+
+	private DocumentFolderResource _documentFolderResource =
+		new DocumentFolderResource();
+
 	@Inject
-	private DocumentResource _documentResource;
+	private com.liferay.headless.delivery.resource.v1_0.DocumentResource
+		_documentResource;
 
 	private URL _resourceURL;
 

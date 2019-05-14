@@ -43,6 +43,11 @@
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CARD_RADIO</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//input[@type='radio']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

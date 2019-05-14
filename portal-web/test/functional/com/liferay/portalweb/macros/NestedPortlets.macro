@@ -19,15 +19,15 @@ definition {
 	}
 
 	macro viewConfigurationDefaultLayoutTemplate {
-		var key_defaultcolumnName = "${defaultcolumnName}";
-
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertChecked(locator1 = "Portlet#LAYOUT_2_COLUMNS");
+		AssertChecked(
+			key_card = "${defaultcolumnName}",
+			locator1 = "LexiconCard#CARD_RADIO");
 
 		SelectFrameTop(value1 = "relative=top");
 	}

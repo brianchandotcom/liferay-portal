@@ -50,8 +50,6 @@ definition {
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		DMNavigator.gotoAddRepositoryCP();
 
 		DMRepository.edit(dmRepositoryName = "Sharepoint Repository Name");
@@ -347,8 +345,6 @@ definition {
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		DMDocument.moveToSubFolderCP(
 			dmDocumentTitle = "Document_1.txt",

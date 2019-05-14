@@ -51,8 +51,6 @@ definition {
 	macro gotoCP {
 		var key_dmRepositoryName = "${dmRepositoryName}";
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		AssertClick(
 			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
 			value1 = "${dmRepositoryName}");

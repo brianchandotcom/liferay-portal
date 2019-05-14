@@ -309,7 +309,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 				String[] navigationKeys = {
 					"all-pages", "draft-pages", "frontpage", "orphan-pages",
-					"recent-changes"
+					"pending-pages", "recent-changes"
 				};
 
 				PortletURL portletURL = _getPortletURL();

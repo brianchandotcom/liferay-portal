@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
 long userId = ParamUtil.getLong(request, "userId");
 
 User user2 = null;

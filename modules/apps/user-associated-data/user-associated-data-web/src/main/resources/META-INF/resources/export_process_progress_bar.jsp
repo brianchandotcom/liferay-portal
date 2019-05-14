@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int backgroundTaskId = ParamUtil.getInteger(request, "backgroundTaskId");
-
 BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("backgroundTask");
 
 BackgroundTaskStatus backgroundTaskStatus = BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(backgroundTask.getBackgroundTaskId());

@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long userGroupId = ParamUtil.getLong(request, "userGroupId");
-
-UserGroup userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {

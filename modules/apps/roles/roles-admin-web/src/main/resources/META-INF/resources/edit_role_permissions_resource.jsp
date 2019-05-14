@@ -23,7 +23,6 @@ String portletResource = (String)request.getAttribute("edit_role_permissions.jsp
 
 String curPortletResource = (String)request.getAttribute("edit_role_permissions.jsp-curPortletResource");
 String curModelResource = (String)request.getAttribute("edit_role_permissions.jsp-curModelResource");
-String curModelResourceName = (String)request.getAttribute("edit_role_permissions.jsp-curModelResourceName");
 
 Portlet curPortlet = null;
 String curPortletId = StringPool.BLANK;

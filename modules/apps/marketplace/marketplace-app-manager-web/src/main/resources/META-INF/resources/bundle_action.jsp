@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String app = ParamUtil.getString(request, "app");
-String category = ParamUtil.getString(request, "category");
-String state = ParamUtil.getString(request, "state");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Bundle bundle = (Bundle)row.getObject();

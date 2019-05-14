@@ -73,10 +73,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 				<aui:input name="ajax" type="hidden" value="<%= true %>" />
 
-				<%
-				DiscussionComment discussionComment = rootDiscussionComment;
-				%>
-
 				<c:if test="<%= commentSectionDisplayContext.isControlsVisible() %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">

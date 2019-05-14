@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "details");
-
 long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
 PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);

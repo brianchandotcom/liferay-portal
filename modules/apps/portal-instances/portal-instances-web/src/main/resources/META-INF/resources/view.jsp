@@ -19,8 +19,6 @@
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");

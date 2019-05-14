@@ -19,10 +19,7 @@
 <%
 String tabs1 = (String)request.getAttribute("edit_roles.jsp-tabs1");
 
-int cur = (Integer)request.getAttribute("edit_roles.jsp-cur");
-
 Group group = (Group)request.getAttribute("edit_roles.jsp-group");
-String groupDescriptiveName = (String)request.getAttribute("edit_roles.jsp-groupDescriptiveName");
 Role role = (Role)request.getAttribute("edit_roles.jsp-role");
 long roleId = (Long)request.getAttribute("edit_roles.jsp-roleId");
 

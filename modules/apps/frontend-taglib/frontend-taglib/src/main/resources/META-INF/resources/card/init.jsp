@@ -20,13 +20,6 @@
 String actionJsp = (String)request.getAttribute("liferay-frontend:card:actionJsp");
 ServletContext actionJspServletContext = (ServletContext)request.getAttribute("liferay-frontend:card:actionJspServletContext");
 String cardCssClass = (String)request.getAttribute("liferay-frontend:card:cardCssClass");
-boolean checkboxChecked = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:checkboxChecked"));
-String checkboxCSSClass = (String)request.getAttribute("liferay-frontend:card:checkboxCSSClass");
-Map<String, Object> checkboxData = (Map<String, Object>)request.getAttribute("liferay-frontend:card:checkboxData");
-boolean checkboxDisabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:checkboxDisabled"));
-String checkboxId = (String)request.getAttribute("liferay-frontend:card:checkboxId");
-String checkboxName = (String)request.getAttribute("liferay-frontend:card:checkboxName");
-String checkboxValue = (String)request.getAttribute("liferay-frontend:card:checkboxValue");
 String cssClass = (String)request.getAttribute("liferay-frontend:card:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:card:data");
 String imageCSSClass = (String)request.getAttribute("liferay-frontend:card:imageCSSClass");

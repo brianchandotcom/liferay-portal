@@ -45,8 +45,6 @@ if (threadId > 0) {
 }
 
 String body = BeanParamUtil.getString(replyMessage, request, "body");
-boolean quote = ParamUtil.getBoolean(request, "quote");
-boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
 String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
 

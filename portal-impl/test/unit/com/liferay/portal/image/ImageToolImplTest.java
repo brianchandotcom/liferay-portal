@@ -16,11 +16,9 @@ package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.image.ImageToolUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.FileImpl;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -37,8 +35,7 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -47,10 +44,12 @@ import org.junit.Test;
  */
 public class ImageToolImplTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+	}
 
 	@Test
 	public void testCropBMP() throws Exception {
@@ -104,12 +103,11 @@ public class ImageToolImplTest {
 
 	@Test
 	public void testRotation90Degrees() throws Exception {
-		ImageBag imageBag = ImageToolUtil.read(
-			getFile("rotation_90_degrees.jpg"));
+		ImageBag imageBag = _imageTool.read(getFile("rotation_90_degrees.jpg"));
 
 		RenderedImage originalImage = imageBag.getRenderedImage();
 
-		RenderedImage rotatedImage = ImageToolUtil.rotate(originalImage, 90);
+		RenderedImage rotatedImage = _imageTool.rotate(originalImage, 90);
 
 		Assert.assertEquals(originalImage.getHeight(), rotatedImage.getWidth());
 		Assert.assertEquals(originalImage.getWidth(), rotatedImage.getHeight());
@@ -121,7 +119,7 @@ public class ImageToolImplTest {
 
 		File file = getFile(fileName);
 
-		ImageBag imageBag = ImageToolUtil.read(file);
+		ImageBag imageBag = _imageTool.read(file);
 
 		RenderedImage image = imageBag.getRenderedImage();
 
@@ -190,7 +188,7 @@ public class ImageToolImplTest {
 
 		randomAccessFile.readFully(bytes);
 
-		ImageBag imageBag = ImageToolUtil.read(bytes);
+		ImageBag imageBag = _imageTool.read(bytes);
 
 		RenderedImage resultImage = imageBag.getRenderedImage();
 
@@ -236,7 +234,7 @@ public class ImageToolImplTest {
 			RenderedImage renderedImage, int height, int width, int x, int y)
 		throws Exception {
 
-		RenderedImage croppedRenderedImage = ImageToolUtil.crop(
+		RenderedImage croppedRenderedImage = _imageTool.crop(
 			renderedImage, height, width, x, y);
 
 		int maxHeight = renderedImage.getHeight() - Math.abs(y);
@@ -248,5 +246,7 @@ public class ImageToolImplTest {
 		Assert.assertEquals(
 			croppedRenderedImage.getWidth(), Math.min(maxWidth, width));
 	}
+
+	private final ImageTool _imageTool = ImageToolImpl.getInstance();
 
 }

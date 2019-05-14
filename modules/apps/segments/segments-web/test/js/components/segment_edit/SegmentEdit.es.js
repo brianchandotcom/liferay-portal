@@ -83,5 +83,53 @@ describe(
 				expect(image).toHaveAttribute('src', icon);
 			}
 		);
+
+		it(
+			'should render with edit buttons if the user has update permissions',
+			() => {
+				const hasUpdatePermission = true;
+
+				const {asFragment} = render(
+					<SegmentEdit
+						availableLocales={{
+							'en_US': ''
+						}}
+						defaultLanguageId="en_US"
+						initialSegmentName={{
+							'en_US': 'Segment title'
+						}}
+						hasUpdatePermission={hasUpdatePermission}
+						locale="en_US"
+						redirect="/test-url"
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should render without edit buttons if the user does not have update permissions',
+			() => {
+				const hasUpdatePermission = false;
+
+				const {asFragment} = render(
+					<SegmentEdit
+						availableLocales={{
+							'en_US': ''
+						}}
+						defaultLanguageId="en_US"
+						initialSegmentName={{
+							'en_US': 'Segment title'
+						}}
+						hasUpdatePermission={hasUpdatePermission}
+						locale="en_US"
+						redirect="/test-url"
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot();
+			}
+		);
 	}
 );

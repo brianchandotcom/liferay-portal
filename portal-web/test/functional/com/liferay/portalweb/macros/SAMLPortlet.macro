@@ -121,7 +121,7 @@ definition {
 	}
 
 	macro configureServiceProvider {
-		if ("${enbleLDAPImport}" == "true") {
+		if ("${LDAPImport}" == "enable") {
 			Check(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX");
 		}
 

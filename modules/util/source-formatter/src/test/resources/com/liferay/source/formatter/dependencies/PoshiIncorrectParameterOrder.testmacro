@@ -1,4 +1,5 @@
 definition {
+
 	test AddBlogsEntries {
 
 		echo("This is a message.");

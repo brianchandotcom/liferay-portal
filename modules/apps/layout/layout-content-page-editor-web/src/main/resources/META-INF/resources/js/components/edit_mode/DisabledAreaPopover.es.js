@@ -37,7 +37,12 @@ class DisabledAreaPopover extends Component {
 
 		this._documentListeners = [
 			on(document.body, 'click', this._handleDocumentClick.bind(this)),
-			on(window, 'scroll', this._handleWindowScroll.bind(this))
+
+			on(
+				'.fragment-entry-link-list-wrapper',
+				'scroll',
+				this._handleFragmentEntryLinkListScroll.bind(this)
+			)
 		];
 	}
 
@@ -146,7 +151,7 @@ class DisabledAreaPopover extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleWindowScroll() {
+	_handleFragmentEntryLinkListScroll() {
 		this._hidePopover();
 	}
 

@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Headless Delivery Test
 Bundle-SymbolicName: com.liferay.headless.delivery.test
 Bundle-Version: 1.0.0
--includeresource: com.liferay.headless.delivery.client.jar=com.liferay.headless.delivery.client-[0-9]*.jar
+-conditionalpackage:\
+	com.liferay.headless.delivery.client.dto.v1_0,\
+	com.liferay.headless.delivery.client.function,\
+	com.liferay.headless.delivery.client.json,\
+	com.liferay.headless.delivery.client.pagination,\
+	com.liferay.headless.delivery.client.serdes.v1_0

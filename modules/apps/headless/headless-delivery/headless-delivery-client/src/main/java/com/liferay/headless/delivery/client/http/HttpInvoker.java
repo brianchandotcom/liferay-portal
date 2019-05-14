@@ -15,14 +15,18 @@
 package com.liferay.headless.delivery.client.http;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import java.util.Base64;
@@ -72,6 +76,17 @@ public class HttpInvoker {
 
 		return httpResponse;
 	}
+
+	public HttpInvoker multipart() {
+		_contentType =
+			"multipart/form-data; charset=utf-8; boundary="
+				+ _MULTIPART_BOUNDARY;
+		_multipartBoundary = _MULTIPART_BOUNDARY;
+
+		return this;
+	}
+
+	public static final String _MULTIPART_BOUNDARY = "__MULTIPART_BOUNDARY__";
 
 	public HttpInvoker parameter(String name, String value) {
 		_parameters.put(name, value);
@@ -252,7 +267,7 @@ public class HttpInvoker {
 	private void _writeBody(HttpURLConnection httpURLConnection)
 		throws IOException {
 
-		if (_body == null) {
+		if (_body == null && _parts.isEmpty() && _files.isEmpty()) {
 			return;
 		}
 
@@ -265,14 +280,83 @@ public class HttpInvoker {
 
 		httpURLConnection.setDoOutput(true);
 
-		DataOutputStream dataOutputStream = new DataOutputStream(
-			httpURLConnection.getOutputStream());
+		OutputStream outputStream = httpURLConnection.getOutputStream();
 
-		dataOutputStream.writeBytes(_body);
+		try (PrintWriter printWriter =
+				 new PrintWriter(
+					 new OutputStreamWriter(outputStream, "UTF-8"), true)) {
 
-		dataOutputStream.flush();
+			if (_contentType.startsWith("multipart/form-data")) {
 
-		dataOutputStream.close();
+				for (Map.Entry<String, String> entry : _parts.entrySet()) {
+					_appendPart(
+						outputStream, printWriter, entry.getKey(),
+						entry.getValue());
+				}
+
+				for (Map.Entry<String, File> entry : _files.entrySet()) {
+					_appendPart(
+						outputStream, printWriter, entry.getKey(),
+						entry.getValue());
+				}
+
+				printWriter.append("--" + _multipartBoundary + "--");
+				printWriter.flush();
+
+				outputStream.flush();
+			}
+			else {
+				printWriter.append(_body);
+				printWriter.flush();
+			}
+		}
+	}
+
+	private void _appendPart(
+		OutputStream outputStream, PrintWriter printWriter, String key,
+		Object value) throws IOException {
+
+		printWriter.append(_NEW_LINE);
+		printWriter.append("--" + _multipartBoundary);
+		printWriter.append(_NEW_LINE);
+		printWriter.append("Content-Disposition: form-data;");
+		printWriter.append(" name=\"" + key + "\";");
+
+		if (value instanceof File) {
+			File file = (File)value;
+
+			String fileName = file.getName();
+
+			printWriter.append(" filename=\"" + fileName + "\"");
+			printWriter.append(_NEW_LINE);
+			printWriter.append(
+				"Content-Type: " +
+					URLConnection.guessContentTypeFromName(fileName));
+			printWriter.append(_NEW_LINE);
+			printWriter.append(_NEW_LINE);
+			printWriter.flush();
+
+			FileInputStream fileInputStream = new FileInputStream(file);
+
+			byte[] buffer = new byte[4096];
+
+			int bytesRead = -1;
+
+			while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
+
+			outputStream.flush();
+
+			fileInputStream.close();
+		}
+		else {
+			printWriter.append(_NEW_LINE);
+			printWriter.append(_NEW_LINE);
+			printWriter.append(value.toString());
+		}
+
+		printWriter.append(_NEW_LINE);
 	}
 
 	private String _body;
@@ -280,8 +364,10 @@ public class HttpInvoker {
 	private String _encodedUserNameAndPassword;
 	private Map<String, File> _files = new LinkedHashMap<>();
 	private HttpMethod _httpMethod = HttpMethod.GET;
+	private String _multipartBoundary;
 	private Map<String, String> _parameters = new LinkedHashMap<>();
 	private Map<String, String> _parts = new LinkedHashMap<>();
 	private String _path;
 
+	private static final String _NEW_LINE = "\r\n";
 }

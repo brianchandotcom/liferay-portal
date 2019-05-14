@@ -585,7 +585,6 @@ definition {
 		// AssertConsoleTextPresent(value1 = "Validation failure: Failed to resolve both a data and a key encryption credential");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";

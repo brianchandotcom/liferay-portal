@@ -14,11 +14,11 @@
 
 package com.liferay.portal.background.task.service.base;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -36,12 +36,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -50,6 +48,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the background task local service.
@@ -65,7 +64,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class BackgroundTaskLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements BackgroundTaskLocalService, IdentifiableOSGiService {
+	implements BackgroundTaskLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -333,138 +332,17 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		return backgroundTaskPersistence.update(backgroundTask);
 	}
 
-	/**
-	 * Returns the background task local service.
-	 *
-	 * @return the background task local service
-	 */
-	public BackgroundTaskLocalService getBackgroundTaskLocalService() {
-		return backgroundTaskLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			BackgroundTaskLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the background task local service.
-	 *
-	 * @param backgroundTaskLocalService the background task local service
-	 */
-	public void setBackgroundTaskLocalService(
-		BackgroundTaskLocalService backgroundTaskLocalService) {
-
-		this.backgroundTaskLocalService = backgroundTaskLocalService;
-	}
-
-	/**
-	 * Returns the background task persistence.
-	 *
-	 * @return the background task persistence
-	 */
-	public BackgroundTaskPersistence getBackgroundTaskPersistence() {
-		return backgroundTaskPersistence;
-	}
-
-	/**
-	 * Sets the background task persistence.
-	 *
-	 * @param backgroundTaskPersistence the background task persistence
-	 */
-	public void setBackgroundTaskPersistence(
-		BackgroundTaskPersistence backgroundTaskPersistence) {
-
-		this.backgroundTaskPersistence = backgroundTaskPersistence;
-	}
-
-	/**
-	 * Returns the background task finder.
-	 *
-	 * @return the background task finder
-	 */
-	public BackgroundTaskFinder getBackgroundTaskFinder() {
-		return backgroundTaskFinder;
-	}
-
-	/**
-	 * Sets the background task finder.
-	 *
-	 * @param backgroundTaskFinder the background task finder
-	 */
-	public void setBackgroundTaskFinder(
-		BackgroundTaskFinder backgroundTaskFinder) {
-
-		this.backgroundTaskFinder = backgroundTaskFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.background.task.model.BackgroundTask",
-			backgroundTaskLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.background.task.model.BackgroundTask");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		backgroundTaskLocalService = (BackgroundTaskLocalService)aopProxy;
 	}
 
 	/**
@@ -509,32 +387,20 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = BackgroundTaskLocalService.class)
 	protected BackgroundTaskLocalService backgroundTaskLocalService;
 
-	@BeanReference(type = BackgroundTaskPersistence.class)
+	@Reference
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
 
-	@BeanReference(type = BackgroundTaskFinder.class)
+	@Reference
 	protected BackgroundTaskFinder backgroundTaskFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

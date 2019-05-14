@@ -9,6 +9,8 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#SUBJECT");
 
+		AssertVisible(locator1 = "TextInput#SUBJECT");
+
 		Type(
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
@@ -82,6 +84,8 @@ definition {
 			value1 = "New Thread");
 
 		AssertElementPresent(locator1 = "TextInput#SUBJECT");
+
+		AssertVisible(locator1 = "TextInput#SUBJECT");
 
 		Click(locator1 = "TextInput#SUBJECT");
 

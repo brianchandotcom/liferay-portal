@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="" id="0" errors="0" failures="0" name="Jest" package="map.map-common" skipped="0" tests="62" time="0" timestamp="1557826490561">
+  <testcase classname="map.map-common.test.liferay" name="validators isSubsetOf() should return true if a set is subset of a superset" time="0.005">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase addData() should apply _getNativeFeatures() to the given parameter" time="0.007">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase addData() should emit a featuresAdded event after adding data" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase addData() should not emit a featuresAdded event with no features" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase addData() should wrap every feature with _wrapNativeFeature()" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase _handleFeatureClicked() should emit a featureClick event" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase _handleFeatureClicked() should wrap the given feature with _wrapNativeFeature()" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase _getNativeFeatures() should throw a not implemented error" time="0.002">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="GeoJSONBase _wrapNativeFeature() should throw a not implemented error" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _handleNativeEvent should call _getNormalizedEventData with the given event" time="0.008">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _handleNativeEvent should emit an event with the given event type" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _handleNativeEvent should add the normalized event data" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNativeEventFunction returns a function" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNativeEventFunction returns a function that calls _handleNativeEvent when executed" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNativeEventFunction returns a function that calls _handleNativeEvent with the given event object when executed" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNativeEventFunction returns a function that calls _handleNativeEvent with the given event type when executed" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNativeMarker should throw a not implemented error" time="0.003">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MarkerBase _getNormalizedEventData should throw a not implemented error" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase addMarker() should pass the given location object to the constructor" time="0.007">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase addMarker() should pass the existing _map to the constructor" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase addMarker() should do nothing is MarkerImpl is not implemented" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase constructor() should call _initializeMap as a fallback" time="0.002">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase destructor() should dispose existing _geoJSONLayer" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase destructor() should dispose existing search custom control" time="0.004">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase getNativeMap() should return the _map property" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase openDialog() should call _getDialog() method" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase openDialog() should call dialog.open() with the given dialog config" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _bindUIMB() should bind handlers to featuresAdded and featureClick events on geoJSONLayer" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _bindUIMB() should bind handlers to dragend event on geolocationMarker" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _bindUIMB() should bind handlers to click event on customControls[HOME]" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _bindUIMB() should bind handlers to search event on customControls[SEARCH]" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _getDialog() should do nothing if there is no MapBase.DialogImpl" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _getDialog() should pass the existing map to the dialog constructor" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _getDialog() should reuse the existing dialog instance" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _getGeoCoder() should do nothing if there is no MapBase.GeocoderImpl" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _getGeoCoder() should reuse the existing geocoder instance" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeGeoJSONData() should do nothing if there is no data attribute" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeGeoJSONData() should call geoJSONLayer.addData with data attribute" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeLocation() should directly call initializeMap with the given location if geolocation is false" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should store the given position as position" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should store the given position as originalPosition" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should create a new map and store it as _map" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should call _getControlsConfig()" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should call _createCustomControls()" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should call _bindUIMB()" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _initializeMap() should call _initializeGeoJSONData()" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeaturesAdded() should get the map bounds using getBounds()" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeaturesAdded() should get the feature geometry for each feature" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeaturesAdded() should update the map position when there is a single feature" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeaturesAdded() should add the features locations to the map bounds when there are multiple features" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeatureClicked() should emit a featureClick event" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoJSONLayerFeatureClicked() should send the given feature as event data" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoLocationMarkerDragended() should get the location position with geocoder.reverse()" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleGeoLocationMarkerDragended() should update the instance position" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleHomeButtonClicked() should call preventDefault on the given event" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleHomeButtonClicked() should set the instance position to _originalPosition" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handlePositionChanged() should call setCenter with the given location" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handlePositionChanged() should update the geolocationMarker position if present" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _handleSearchButtonClicked() should update the instance position" time="0">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase getBounds() should throw a not implemented Error" time="0.025">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase setCenter() should throw a not implemented Error" time="0.001">
+  </testcase>
+  <testcase classname="map.map-common.test.liferay" name="MapBase _createMap() should throw a not implemented Error" time="0.001">
+  </testcase>
+</testsuite>

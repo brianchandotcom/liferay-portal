@@ -107,6 +107,24 @@ describe('MapBase', () => {
 			expect(mapImpl.addMarker).toHaveBeenCalledTimes(1);
 			expect(result).toBe(undefined);
 		});
+
+	});
+
+	describe('constructor()', () => {
+		it('should call _initializeMap as a fallback', () => {
+			window.Liferay = {
+				Util: {
+					getGeolocation: jest.fn((success, fallback) => fallback()),
+				},
+			};
+
+			jest.spyOn(MapImpl.prototype, '_initializeMap');
+
+			const mapImpl = new MapImpl();
+
+			expect(mapImpl._initializeMap.mock.calls[0][0].location).toEqual({lat: 0, lng: 0});
+			expect(mapImpl.zoom).toBe(2);
+		});
 	});
 
 	describe('destructor()', () => {

@@ -265,7 +265,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -996,7 +996,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -1718,7 +1718,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -2440,7 +2440,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -3162,7 +3162,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -3884,7 +3884,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -4584,7 +4584,7 @@ exports[`Should redirect to SLA list 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -5201,7 +5201,7 @@ exports[`Should render component 1`] = `
         className="row"
       >
         <div
-          className="col col-sm-12 form-group"
+          className="col col-sm-12 form-group "
         >
           <label
             htmlFor="sla_time_pause"
@@ -5715,7 +5715,7 @@ exports[`Should render component in edit mode 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"
@@ -6467,7 +6467,7 @@ exports[`Should update state after input changes 1`] = `
                 className="row"
               >
                 <div
-                  className="col col-sm-12 form-group"
+                  className="col col-sm-12 form-group "
                 >
                   <FieldLabel
                     fieldId="sla_time_pause"

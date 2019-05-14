@@ -31,7 +31,7 @@
 	<h2 class="list-group-title">
 		<c:choose>
 			<c:when test="<%= bundle.getState() == BundleStateConstants.RESOLVED %>">
-				<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
+				<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(Constants.BUNDLE_NAME)) %>
 			</c:when>
 			<c:otherwise>
 				<portlet:renderURL var="rowURL">
@@ -42,14 +42,14 @@
 				</portlet:renderURL>
 
 				<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
-					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
+					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(Constants.BUNDLE_NAME)) %>
 				</a>
 			</c:otherwise>
 		</c:choose>
 	</h2>
 
 	<p class="list-group-text">
-		<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_DESCRIPTION)) %>
+		<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(Constants.BUNDLE_DESCRIPTION)) %>
 	</p>
 
 	<p class="list-group-text">

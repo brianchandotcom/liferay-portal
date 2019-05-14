@@ -26,8 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants" %><%@
-page import="com.liferay.marketplace.app.manager.web.internal.constants.BundleStateConstants" %><%@
+<%@ page import="com.liferay.marketplace.app.manager.web.internal.constants.BundleStateConstants" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.dao.search.MarketplaceAppManagerResultRowSplitter" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.AppManagerDisplayContext" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.AppManagerSearchResultsManagementToolbarDisplayContext" %><%@
@@ -58,7 +57,8 @@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<%@ page import="org.osgi.framework.Bundle" %>
+<%@ page import="org.osgi.framework.Bundle" %><%@
+page import="org.osgi.framework.Constants" %>
 
 <liferay-frontend:defineObjects />
 

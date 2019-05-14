@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.app.manager.web.internal.util;
 
-import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
 
 /**
  * @author Ryan Park
@@ -58,7 +58,7 @@ public class BundleUtil {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
-		String fragmentHost = headers.get(BundleConstants.FRAGMENT_HOST);
+		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 
 		if (Validator.isNotNull(fragmentHost)) {
 			return true;

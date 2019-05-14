@@ -67,7 +67,6 @@
 		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
 		<exception>WorkflowMetricsSLADefinitionDuration</exception>
 		<exception>WorkflowMetricsSLADefinitionName</exception>
-		<exception>WorkflowMetricsSLADefinitionPauseNodeKeys</exception>
 		<exception>WorkflowMetricsSLADefinitionStartNodeKeys</exception>
 		<exception>WorkflowMetricsSLADefinitionStopNodeKeys</exception>
 		<exception>WorkflowMetricsSLADefinitionTimeframe</exception>

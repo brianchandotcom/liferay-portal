@@ -17,6 +17,7 @@ package com.liferay.journal.internal.upgrade.v1_1_6;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -78,13 +79,14 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		sb.append("JournalArticle.resourcePrimKey ) ");
 		sb.append("group by groupId, resourcePrimKey");
 
+		String sql = SQLTransformer.transform(sb.toString());
+
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
 		User user = company.getDefaultUser();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				sb.toString())) {
+			PreparedStatement ps1 = connection.prepareStatement(sql)) {
 
 			ps1.setLong(1, company.getCompanyId());
 			ps1.setLong(2, journalArticleClassNameId);

@@ -36,7 +36,17 @@ class ManagementToolbar extends ClayComponent {
 
 				this._searchContainer = searchContainer;
 
-				this._setCheckboxStatus();
+				const select = searchContainer.select;
+				const bulkSelection = this.supportsBulkActions && select.get('bulkSelection');
+
+				this._setActiveStatus(
+					{
+						allSelectedElements: select.getAllSelectedElements(),
+						currentPageElements: select.getCurrentPageElements(),
+						currentPageSelectedElements: select.getCurrentPageSelectedElements()
+					},
+					bulkSelection
+				);
 			}
 		);
 
@@ -189,20 +199,10 @@ class ManagementToolbar extends ClayComponent {
 	 */
 
 	_handleSearchContainerRowToggled(event) {
-		const elements = event.elements;
-
-		const currentPageElements = elements.currentPageElements.size();
-		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
-
-		const currentPageSelected = currentPageElements === currentPageSelectedElements;
-
+		const actions = event.actions;
 		const bulkSelection = this.supportsBulkActions && this._searchContainer.select.get('bulkSelection');
 
-		this._setCheckboxStatus();
-
-		if (this.supportsBulkActions) {
-			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
-		}
+		this._setActiveStatus(event.elements, bulkSelection);
 
 		if (this.actionItems) {
 			this.actionItems = this.actionItems.map(
@@ -210,7 +210,7 @@ class ManagementToolbar extends ClayComponent {
 					return Object.assign(
 						actionItem,
 						{
-							disabled: event.actions && event.actions.indexOf(actionItem.data.action) === -1 && (!bulkSelection || !actionItem.data.enableOnBulk)
+							disabled: actions && actions.indexOf(actionItem.data.action) === -1 && (!bulkSelection || !actionItem.data.enableOnBulk)
 						}
 					);
 				}
@@ -220,30 +220,30 @@ class ManagementToolbar extends ClayComponent {
 
 	/**
 	 * Updates management toolbar ative status checkbox.
-	 * @param {boolean} currentPageElements is all elements in the current page selected
-	 * @param {number} currentPageSelectedElements number of seleteed elemets in current page
+	 * @param {object} elements lists of elements
+	 * @param {bool} bulkSelection if bulk selection is enabled
 	 * @private
 	 * @review
 	 */
 
-	_setCheckboxStatus() {
-		const elements = this._searchContainer.select;
+	_setActiveStatus(elements, bulkSelection) {
+		const currentPageElements = elements.currentPageElements.size();
+		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
 
-		const bulkSelection = this.supportsBulkActions && elements.get('bulkSelection');
+		const currentPageSelected = currentPageElements === currentPageSelectedElements;
 
-		this.selectedItems = bulkSelection ? this.totalItems : elements.getAllSelectedElements().filter(':enabled').size();
+		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
 		this.active = this.selectedItems > 0;
 
-		const currentPageElements = elements.getCurrentPageElements().size();
-		const currentPageSelectedElements = elements.getCurrentPageSelectedElements().size();
-
 		if (currentPageSelectedElements > 0) {
-			this.checkboxStatus = currentPageElements === currentPageSelectedElements ?
-				'checked' :
-				'indeterminate';
+			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
 		}
 		else {
 			this.checkboxStatus = 'unchecked';
+		}
+
+		if (this.supportsBulkActions) {
+			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
 		}
 	}
 }

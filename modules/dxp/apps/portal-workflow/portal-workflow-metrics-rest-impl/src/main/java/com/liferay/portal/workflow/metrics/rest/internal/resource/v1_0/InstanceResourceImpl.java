@@ -345,7 +345,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getString(sourcesMap.get("overdueDate")));
 				id = GetterUtil.getLong(sourcesMap.get("slaDefinitionId"));
 				name = _getSLAName(id);
-
 				onTime = GetterUtil.getBoolean(sourcesMap.get("onTime"));
 				remainingTime = GetterUtil.getLong(
 					sourcesMap.get("remainingTime"));

@@ -93,16 +93,16 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
+			targetPlatformVersion);
+		GradleUtil.addDependency(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
 			_GROUP_ID_LIFERAY_PORTAL, bomArtifactId, targetPlatformVersion);
 		GradleUtil.addDependency(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
 			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
-			targetPlatformVersion);
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
 			targetPlatformVersion);
 	}
 

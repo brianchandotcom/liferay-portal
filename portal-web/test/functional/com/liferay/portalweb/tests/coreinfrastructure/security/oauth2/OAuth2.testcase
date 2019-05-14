@@ -109,12 +109,12 @@ definition {
 
 	@description = "This is a use case for OAUTH2-242."
 	@priority = "5"
-	test AssertAuthorizationCodeWorksInClusterEnvironment {
+	test AssertAuthorizationCodeWorksInCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "OAuth2#AssertAuthorizationCodeWorksInClusterEnvironment";
+		property test.name.skip.portal.instance = "OAuth2#AssertAuthorizationCodeWorksInCluster";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -139,10 +139,10 @@ definition {
 		var reponse = JSONCurlUtil.post("${curl}");
 
 		if (contains("${reponse}", "access_token")) {
-			echo("OAuth2 Authorization Code is working in cluster environment.");
+			echo("OAuth2 Authorization Code is working in cluster.");
 		}
 		else {
-			fail("OAuth2 Authorization Code is not working in cluster environment.");
+			fail("OAuth2 Authorization Code is not working in cluster.");
 		}
 	}
 

@@ -192,7 +192,7 @@ public class DLAdminDisplayContext {
 		}
 		else {
 			orderByType = _portalPreferences.getValue(
-				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
+				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "desc");
 		}
 
 		return orderByType;

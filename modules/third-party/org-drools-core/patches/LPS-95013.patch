@@ -1,0 +1,44 @@
+diff --git a/org/drools/xml/ExtensibleXmlParser.java b/org/drools/xml/ExtensibleXmlParser.java
+index 1c692f7..7bc4ab2e 100644
+--- a/org/drools/xml/ExtensibleXmlParser.java
++++ b/org/drools/xml/ExtensibleXmlParser.java
+@@ -218,7 +218,15 @@ public class ExtensibleXmlParser extends DefaultHandler {
+                 throw new RuntimeException( "Unable to create new DOM Document",
+                                             e );
+             }
+-            
++            // XXE protection start
++            try {
++                f.setFeature("http://xml.org/sax/features/external-general-entities", false);
++                f.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++
++            } catch (ParserConfigurationException e) {
++                System.err.println(java.text.MessageFormat.format("Unable to set parser features due to {0}", e.getMessage()));
++            }
++            // XXE protection end
+             try {
+                 this.document = f.newDocumentBuilder().newDocument();
+             } catch ( Exception e ) {
+@@ -249,6 +257,15 @@ public class ExtensibleXmlParser extends DefaultHandler {
+             }
+             
+             factory.setNamespaceAware( true );
++            // XXE protection start
++            try {
++                factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
++                factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++
++            } catch (ParserConfigurationException e) {
++                System.err.println(java.text.MessageFormat.format("Unable to set parser features due to {0}", e.getMessage()));
++            }
++            // XXE protection end
+ 
+             final String isValidatingString = System.getProperty( "drools.schema.validating" );
+             if ( System.getProperty( "drools.schema.validating" ) != null ) {
+@@ -764,4 +781,5 @@ public class ExtensibleXmlParser extends DefaultHandler {
+     public void setTimeout(int timeout) {
+         this.timeout = timeout;
+     }
+ }
++/* @generated */
+\ No newline at end of file

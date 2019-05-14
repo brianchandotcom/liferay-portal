@@ -11,31 +11,44 @@
 @import "portlet/portlet_decorators";
 @import "portlet/portlet_hello_world";
 
-header {
-	.portlet, .field-wrapper, .form-group {
-		margin-bottom: 0;
-	}
-
-	.text-default {
-		color: #6B6C7E;
-		font-weight: 600;
-	}
-
-	.field-wrapper {
-		position: absolute;
-		right: 4px;
-		top: 2px;
-
-		a {
-			color: #FFF;
+body {
+	header {
+		.portlet, .field-wrapper, .form-group {
+			margin-bottom: 0;
 		}
-	}
 
-	.portlet {
-		margin-bottom: 0;
+		.text-default {
+			color: #6B6C7E;
+			font-weight: 600;
+		}
 
-		&:hover {
-			z-index: 1034;
+		.field-wrapper {
+			position: absolute;
+			right: 4px;
+			top: 2px;
+
+			a {
+				color: #FFF;
+			}
+		}
+
+		.portlet {
+			margin-bottom: 0;
+
+			&:hover {
+				z-index: 1034;
+			}
+		}
+
+		.user-personal-bar {
+			.fieldset {
+				position: relative;
+			}
+		}
+
+		.search-input {
+			font-size: 0.88rem;
+			padding: 0.28rem 2rem 0.28rem 1rem;
 		}
 	}
 
@@ -62,17 +75,6 @@ header {
 			right: calc(100% - 0.7rem);
 			top: -0.4rem;
 		}
-	}
-
-	.user-personal-bar {
-		.fieldset {
-			position: relative;
-		}
-	}
-
-	.search-input {
-		font-size: 0.88rem;
-		padding: 0.28rem 2rem 0.28rem 1rem;
 	}
 }
 

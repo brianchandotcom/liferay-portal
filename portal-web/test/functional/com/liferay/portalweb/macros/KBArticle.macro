@@ -917,6 +917,8 @@ definition {
 
 	macro selectAllCP {
 		PortletEntry.selectAll();
+
+		AssertElementPresent(locator1 = "Button#DELETE");
 	}
 
 	macro selectArticleCP {

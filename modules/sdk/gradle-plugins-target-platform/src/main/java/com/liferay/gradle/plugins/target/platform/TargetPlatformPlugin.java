@@ -31,17 +31,14 @@ import java.util.Set;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Gregory Amerson
@@ -170,20 +167,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		Configuration targetPlatformDistroConfiguration,
 		TargetPlatformExtension targetPlatformExtension) {
 
-		TaskContainer taskContainer = subproject.getTasks();
-
-		Task jarTask = taskContainer.findByName(JavaPlugin.JAR_TASK_NAME);
-
-		if (!(jarTask instanceof Jar)) {
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Excluding {} because it is not a valid Java project",
-					subproject);
-			}
-
-			return;
-		}
-
 		Spec<Project> spec = targetPlatformExtension.getOnlyIf();
 
 		if (!spec.isSatisfiedBy(subproject)) {
@@ -197,35 +180,14 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		TargetPlatformPluginUtil.configureDependencyManagement(
 			subproject, targetPlatformBomsConfiguration, _configurationNames);
 
-		Project rootProject = subproject.getRootProject();
-
-		File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
-
-		if (!bndrunFile.exists()) {
-			logger.info(
-				"Explicitly excluding {} from resolution because there is no " +
-					PLATFORM_BNDRUN +
-						" file at the root of the gradle workspace",
-				subproject);
-
-			return;
-		}
-
-		PluginManager pluginManager = subproject.getPluginManager();
-
-		if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
-			logger.info(
-				"Explicitly excluding {} from resolution because it does not " +
-					"appear to be an OSGi bundle.",
-				subproject);
-
-			return;
-		}
-
 		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();
 
 		if (resolveSpec.isSatisfiedBy(subproject)) {
 			ResolveTask resolveTask = _addTaskResolve(subproject);
+
+			Project rootProject = subproject.getRootProject();
+
+			File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
 
 			_configureTaskResolve(
 				subproject, resolveTask, bndrunFile,

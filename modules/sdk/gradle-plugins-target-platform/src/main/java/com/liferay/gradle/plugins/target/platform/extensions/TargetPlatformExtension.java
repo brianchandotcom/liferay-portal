@@ -20,14 +20,22 @@ import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPl
 
 import groovy.lang.Closure;
 
+import java.io.File;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.util.GUtil;
 
 /**
@@ -39,6 +47,66 @@ public class TargetPlatformExtension {
 		_project = project;
 
 		_subprojects.addAll(project.getSubprojects());
+
+		Logger logger = project.getLogger();
+
+		onlyIf(
+			p -> {
+				TaskContainer taskContainer = p.getTasks();
+
+				Task jarTask = taskContainer.findByName(
+					JavaPlugin.JAR_TASK_NAME);
+
+				if (!(jarTask instanceof Jar)) {
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Excluding {} because it is not a valid Java " +
+								"project",
+							p);
+					}
+
+					return false;
+				}
+
+				return true;
+			});
+
+		resolveOnlyIf(
+			p -> {
+				Project rootProject = p.getRootProject();
+
+				File bndrunFile = rootProject.file(
+					TargetPlatformPlugin.PLATFORM_BNDRUN);
+
+				if (!bndrunFile.exists()) {
+					logger.info(
+						"Explicitly excluding {} from resolution because " +
+							"there is no " +
+								TargetPlatformPlugin.PLATFORM_BNDRUN +
+									" file at the root of the gradle workspace",
+						p);
+
+					return false;
+				}
+
+				return true;
+			});
+
+		resolveOnlyIf(
+			p -> {
+				PluginManager pluginManager = p.getPluginManager();
+
+				if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
+					logger.info(
+						"Explicitly excluding {} from resolution because it " +
+							"does not appear to be an OSGi bundle.",
+						p);
+
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	public TargetPlatformExtension applyToConfiguration(

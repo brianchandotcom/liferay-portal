@@ -86,6 +86,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 				contributors: <%= editSegmentsEntryDisplayContext.getContributorsJSONArray() %>,
 				defaultLanguageId: '<%= editSegmentsEntryDisplayContext.getDefaultLanguageId() %>',
 				formId: '<portlet:namespace />editSegmentFm',
+				hasUpdatePermission: <%= editSegmentsEntryDisplayContext.hasUpdatePermission() %>,
 				initialMembersCount: <%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %>,
 				initialSegmentActive: <%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>,
 

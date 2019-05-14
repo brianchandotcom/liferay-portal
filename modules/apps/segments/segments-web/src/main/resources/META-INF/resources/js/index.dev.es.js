@@ -45,6 +45,7 @@ const altProps = {
 		}
 	],
 	defaultLanguageId: 'en_US',
+	hasUpdatePermission: true,
 	initialMembersCount: 0,
 	initialSegmentActive: false,
 	initialSegmentName: {

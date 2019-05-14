@@ -256,6 +256,7 @@ definition {
 	@priority = "5"
 	test EditSitePage {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WidgetPages#EditSitePage";
 		property testray.component.names = "Site Pages Administration,Training";
 
 		JSONLayout.addPublicLayout(

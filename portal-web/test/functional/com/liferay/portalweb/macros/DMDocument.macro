@@ -959,6 +959,13 @@ definition {
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
 		if ("${dmFolderName}" == "Home") {
+			if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
+				AssertClick(
+					key_breadcrumbName = "Home",
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+					value1 = "Home");
+			}
+
 			AssertClick(
 				locator1 = "Button#CHOOSE_THIS_FOLDER",
 				value1 = "Choose This Folder");

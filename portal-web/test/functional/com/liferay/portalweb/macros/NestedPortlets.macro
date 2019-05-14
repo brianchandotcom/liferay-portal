@@ -26,7 +26,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertChecked(
-			key_card = "${defaultcolumnName}",
+			key_card = "${defaultColumnName}",
 			locator1 = "LexiconCard#CARD_RADIO");
 
 		SelectFrameTop(value1 = "relative=top");

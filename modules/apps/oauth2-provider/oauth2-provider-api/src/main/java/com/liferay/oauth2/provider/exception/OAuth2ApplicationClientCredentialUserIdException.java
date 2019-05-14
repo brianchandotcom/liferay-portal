@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -25,21 +26,19 @@ import org.osgi.annotation.versioning.ProviderType;
 public class OAuth2ApplicationClientCredentialUserIdException
 	extends PortalException {
 
-	public OAuth2ApplicationClientCredentialUserIdException() {
-	}
-
-	public OAuth2ApplicationClientCredentialUserIdException(String msg) {
-		super(msg);
-	}
-
 	public OAuth2ApplicationClientCredentialUserIdException(
-		String msg, Throwable cause) {
+		long userId, long clientCredentialUserId) {
 
-		super(msg, cause);
+		super(
+			StringBundler.concat(
+				"User ", userId, " is not allowed to impersonate user ",
+				clientCredentialUserId, " via client credentials grant"));
+
+		this.userId = userId;
+		this.clientCredentialUserId = clientCredentialUserId;
 	}
 
-	public OAuth2ApplicationClientCredentialUserIdException(Throwable cause) {
-		super(cause);
-	}
+	public long clientCredentialUserId;
+	public long userId;
 
 }

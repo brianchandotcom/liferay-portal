@@ -71,6 +71,10 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuth2ApplicationRedirectURISchemeException)errorException).getMessage()) %>" key="redirect-uri-x-scheme-is-invalid" />
 					</liferay-ui:error>
 
+					<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
+						<liferay-ui:message arguments="<%= new Object[] {((OAuth2ApplicationClientCredentialUserIdException)errorException).userId, ((OAuth2ApplicationClientCredentialUserIdException)errorException).clientCredentialUserId} %>" key="client-credentials-x-can-not-impersonate-y" />
+					</liferay-ui:error>
+
 					<aui:model-context bean="<%= oAuth2Application %>" model="<%= OAuth2Application.class %>" />
 
 					<c:if test="<%= oAuth2Application != null %>">

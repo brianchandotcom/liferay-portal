@@ -25,6 +25,10 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
+	<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
+		<liferay-ui:message arguments="<%= new Object[] {((OAuth2ApplicationClientCredentialUserIdException)errorException).userId, ((OAuth2ApplicationClientCredentialUserIdException)errorException).clientCredentialUserId} %>" key="client-credentials-x-can-not-impersonate-y" />
+	</liferay-ui:error>
+
 	<div class="row">
 		<div class="col-lg-12">
 			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">

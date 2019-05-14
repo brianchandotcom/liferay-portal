@@ -74,7 +74,8 @@
 	display: inline-block;
 }
 
-a.control-menu-icon {
+a.control-menu-icon,
+.control-menu-icon .dropdown-toggle {
 	border-radius: 4px;
 	transition: box-shadow 0.15s ease-in-out;
 
@@ -107,6 +108,12 @@ a.control-menu-icon {
 
 	.layout-finder a {
 		color: $control-menu-level-2-link-color;
+	}
+
+	.personal-menu-dropdown .dropdown-toggle {
+		margin-bottom: -2px;
+		margin-top: -2px;
+		padding: 2px;
 	}
 }
 

@@ -335,20 +335,33 @@ public class FreeMarkerTool {
 			openAPIYAML, propertyName, schema);
 	}
 
-	public boolean isPathParameter(
-		JavaMethodParameter javaMethodParameter, Operation operation) {
+	public boolean isParameter(
+		JavaMethodParameter javaMethodParameter, Operation operation,
+		String type) {
 
 		String name = javaMethodParameter.getParameterName();
 
 		for (Parameter parameter : operation.getParameters()) {
 			if (Objects.equals(parameter.getName(), name) &&
-				Objects.equals(parameter.getIn(), "path")) {
+				Objects.equals(parameter.getIn(), type)) {
 
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public boolean isPathParameter(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
+
+		return isParameter(javaMethodParameter, operation, "path");
+	}
+
+	public boolean isQueryParameter(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
+
+		return isParameter(javaMethodParameter, operation, "query");
 	}
 
 	private FreeMarkerTool() {

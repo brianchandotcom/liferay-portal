@@ -192,7 +192,7 @@ public class JSPStylingCheck extends StylingCheck {
 	private static final Pattern _chainingPattern = Pattern.compile(
 		"\\WgetClass\\(\\)\\.");
 	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
-		"\n\t*<%\n+\t*%>\n");
+		"\n\t*<%\\!?\n+\t*%>(\n|\\Z)");
 	private static final Pattern _incorrectClosingTagPattern = Pattern.compile(
 		"\n(\t*)\t((?!<\\w).)* />\n");
 	private static final Pattern _incorrectLineBreakPattern1 = Pattern.compile(

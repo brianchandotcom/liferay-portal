@@ -4,6 +4,8 @@ Bundle-Version: 1.0.0
 -conditionalpackage:\
 	com.liferay.headless.admin.taxonomy.client.dto.v1_0,\
 	com.liferay.headless.admin.taxonomy.client.function,\
+	com.liferay.headless.admin.taxonomy.client.http,\
 	com.liferay.headless.admin.taxonomy.client.json,\
 	com.liferay.headless.admin.taxonomy.client.pagination,\
+	com.liferay.headless.admin.taxonomy.client.resource.v1_0,\
 	com.liferay.headless.admin.taxonomy.client.serdes.v1_0

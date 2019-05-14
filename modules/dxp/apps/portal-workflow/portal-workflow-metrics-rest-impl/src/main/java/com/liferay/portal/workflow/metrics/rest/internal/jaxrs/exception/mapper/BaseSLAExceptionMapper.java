@@ -14,12 +14,13 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
+
+import java.util.List;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -33,32 +34,23 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseSLAExceptionMapper<T extends PortalException>
 	implements ExceptionMapper<T> {
 
-	public String getFieldName() {
-		return StringPool.BLANK;
-	}
-
-	public abstract String getKey();
+	public abstract List<GenericError> toGenericErrors(T portalException);
 
 	@Override
 	public Response toResponse(T portalException) {
 		return Response.status(
 			Response.Status.BAD_REQUEST
 		).entity(
-			new GenericError() {
-				{
-					fieldName = BaseSLAExceptionMapper.this.getFieldName();
-					message = BaseSLAExceptionMapper.this.getMessage();
-				}
-			}
+			toGenericErrors(portalException)
 		).build();
 	}
 
-	protected String getMessage() {
+	protected String getMessage(String key) {
 		return language.get(
 			ResourceBundleUtil.getBundle(
 				_acceptLanguage.getPreferredLocale(),
 				BaseSLAExceptionMapper.class),
-			getKey());
+			key);
 	}
 
 	@Reference

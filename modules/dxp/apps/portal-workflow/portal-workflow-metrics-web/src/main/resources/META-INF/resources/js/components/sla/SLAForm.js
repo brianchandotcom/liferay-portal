@@ -149,9 +149,12 @@ class SLAForm extends React.Component {
 					} = result;
 
 					if (data) {
-						const errorKey = data.fieldName || ALERT_MESSAGE;
+						data.forEach(error => {
+							const errorKey = error.fieldName || ALERT_MESSAGE;
 
-						errors[errorKey] = data.message;
+							errors[errorKey] = error.message;
+						});
+
 						this.setState({ errors });
 					}
 					else {
@@ -444,7 +447,11 @@ class SLAForm extends React.Component {
 						</div>
 
 						<div className="row">
-							<div className="col col-sm-12 form-group">
+							<div
+								className={`col col-sm-12 form-group ${
+									errors[PAUSE_NODE_KEYS] ? 'has-error' : ''
+								}`}
+							>
 								<FieldLabel
 									fieldId="sla_time_pause"
 									text={Liferay.Language.get('pause')}
@@ -460,6 +467,10 @@ class SLAForm extends React.Component {
 									onChangeTags={this.handlePauseNodesChange}
 									selectedTagsId={pauseNodeTagIds}
 								/>
+
+								{errors[PAUSE_NODE_KEYS] && (
+									<FieldError error={errors[PAUSE_NODE_KEYS]} />
+								)}
 							</div>
 						</div>
 

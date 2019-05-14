@@ -640,6 +640,8 @@ definition {
 			pageName = "Display Page Name",
 			pageType = "Display Page Templates");
 
+		PortletEntry.publish();
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.addPublicPage(pageName = "Site Page Name");

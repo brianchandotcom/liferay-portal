@@ -511,8 +511,8 @@ definition {
 	}
 
 	macro deleteCP {
-		if (IsElementPresent(locator1 = "Button#DELETE_ENTRY")) {
-			ClickNoError(locator1 = "Button#DELETE_ENTRY");
+		if (IsElementPresent(locator1 = "Icon#DELETE")) {
+			ClickNoError(locator1 = "Icon#DELETE");
 		}
 		else {
 			Click(

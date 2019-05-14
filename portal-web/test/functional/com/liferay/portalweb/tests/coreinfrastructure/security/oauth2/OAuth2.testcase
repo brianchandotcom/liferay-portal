@@ -107,6 +107,45 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
+	@description = "This is a use case for OAUTH2-242."
+	@priority = "5"
+	test AssertAuthorizationCodeWorksInClusterEnvironment {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "OAuth2#AssertAuthorizationCodeWorksInClusterEnvironment";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			callbackURI = "http://www.liferay.com");
+
+		OAuth2.inputApplicationValues(
+			clientId = "abc123",
+			clientSecret = "abc123");
+
+		var authorizationCode = OAuth2.getAuthorizationCode();
+
+		var curl = '''
+			http://localhost:9080/o/oauth2/token \
+				 --data client_id=abc123&client_secret=abc123&grant_type=authorization_code&code=${authorizationCode}
+		''';
+
+		var reponse = JSONCurlUtil.post("${curl}");
+
+		if (contains("${reponse}", "access_token")) {
+			echo("OAuth2 Authorization Code is working in cluster environment.");
+		}
+		else {
+			fail("OAuth2 Authorization Code is not working in cluster environment.");
+		}
+	}
+
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 

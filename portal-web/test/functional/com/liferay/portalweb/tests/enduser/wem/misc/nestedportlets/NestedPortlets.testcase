@@ -43,7 +43,9 @@ definition {
 
 		Portlet.addPG(portletName = "Nested Applications");
 
-		NestedPortlets.viewConfigurationDefaultLayoutTemplate(portletName = "Nested Applications");
+		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
+			defaultcolumnName = "2 Columns (50/50)",
+			portletName = "Nested Applications");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 

@@ -19,6 +19,8 @@ definition {
 	}
 
 	macro viewConfigurationDefaultLayoutTemplate {
+		var key_defaultcolumnName = "${defaultcolumnName}";
+
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");

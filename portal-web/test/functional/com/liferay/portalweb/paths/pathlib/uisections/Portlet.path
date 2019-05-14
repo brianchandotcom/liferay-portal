@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>LAYOUT_2_COLUMNS</td>
-	<td>//input[contains(@id,'layoutTemplateId_1')]</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_defaultcolumnName}')]//input</td>
 	<td></td>
 </tr>
 <tr>

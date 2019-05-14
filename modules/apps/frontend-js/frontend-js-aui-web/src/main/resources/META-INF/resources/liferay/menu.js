@@ -21,53 +21,9 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
-		var PARENT_NODE = 'parentNode';
-
-		var STR_BOTTOM = 'b';
-
-		var STR_LEFT = 'l';
-
-		var STR_LTR = 'ltr';
-
-		var STR_RIGHT = 'r';
-
-		var STR_RTL = 'rtl';
-
-		var STR_TOP = 't';
-
-		var MAP_ALIGN_HORIZONTAL_OVERLAY = {
-			left: STR_RIGHT,
-			right: STR_LEFT
-		};
-
-		var MAP_ALIGN_HORIZONTAL_OVERLAY_RTL = {
-			left: STR_LEFT,
-			right: STR_RIGHT
-		};
-
-		var MAP_ALIGN_HORIZONTAL_TRIGGER = {
-			left: STR_LEFT,
-			right: STR_RIGHT
-		};
-
-		var MAP_ALIGN_HORIZONTAL_TRIGGER_RTL = {
-			left: STR_RIGHT,
-			right: STR_LEFT
-		};
-
-		var MAP_ALIGN_VERTICAL_OVERLAY = {
-			down: STR_TOP,
-			up: STR_BOTTOM
-		};
-
-		var MAP_ALIGN_VERTICAL_TRIGGER = {
-			down: STR_BOTTOM,
-			up: STR_TOP
-		};
-
 		var MAP_LIVE_SEARCH = {};
 
-		var REGEX_DIRECTION = /\bdirection-(down|left|right|up)\b/;
+		var PARENT_NODE = 'parentNode';
 
 		var REGEX_MAX_DISPLAY_ITEMS = /max-display-items-(\d+)/;
 
@@ -127,48 +83,6 @@ AUI.add(
 					}
 				}
 			},
-
-			_getAlignPoints: A.cached(
-				function(cssClass) {
-					var instance = this;
-
-					var alignPoints = DEFAULT_ALIGN_POINTS;
-
-					var defaultOverlayHorizontalAlign = STR_RIGHT;
-
-					var defaultTriggerHorizontalAlign = STR_LEFT;
-
-					var mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY;
-
-					var mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER;
-
-					var langDir = Liferay.Language.direction[themeDisplay.getLanguageId()] || STR_LTR;
-
-					if (langDir === STR_RTL) {
-						defaultOverlayHorizontalAlign = STR_LEFT;
-						defaultTriggerHorizontalAlign = STR_RIGHT;
-
-						mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY_RTL;
-						mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER_RTL;
-					}
-
-					if (cssClass.indexOf(AUTO) === -1) {
-						var directionMatch = cssClass.match(REGEX_DIRECTION);
-
-						var direction = directionMatch && directionMatch[1] || AUTO;
-
-						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultOverlayHorizontalAlign;
-						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
-
-						var triggerHorizontal = mapAlignHorizontalTrigger[direction] || defaultTriggerHorizontalAlign;
-						var triggerVertical = MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
-
-						alignPoints = [overlayVertical + overlayHorizontal, triggerVertical + triggerHorizontal];
-					}
-
-					return alignPoints;
-				}
-			),
 
 			_getMenu: function(trigger) {
 				var instance = this;

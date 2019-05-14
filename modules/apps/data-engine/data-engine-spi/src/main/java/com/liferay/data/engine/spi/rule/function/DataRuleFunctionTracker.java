@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.spi.rule.function;
 
-import aQute.bnd.annotation.ProviderType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jeyvison Nascimento

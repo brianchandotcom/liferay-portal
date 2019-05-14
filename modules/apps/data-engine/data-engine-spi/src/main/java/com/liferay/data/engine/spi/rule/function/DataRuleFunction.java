@@ -14,11 +14,11 @@
 
 package com.liferay.data.engine.spi.rule.function;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
 
 import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jeyvison Nascimento

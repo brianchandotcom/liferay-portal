@@ -48,6 +48,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -402,12 +403,13 @@ public class TaskResourceImpl
 
 		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
 
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.map(
+		return buckets.stream(
+		).map(
 			Bucket::getKey
 		).map(
 			this::_createTask
+		).sorted(
+			Comparator.comparing(Task::getName)
 		).collect(
 			LinkedHashMap::new, (map, task) -> map.put(task.getKey(), task),
 			Map::putAll

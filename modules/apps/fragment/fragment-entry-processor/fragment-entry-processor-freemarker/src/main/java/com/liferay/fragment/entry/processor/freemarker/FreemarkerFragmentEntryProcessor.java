@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.fragment.entry.processor.freemarker.configuration.FreemarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -35,6 +37,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -51,6 +54,16 @@ public class FreemarkerFragmentEntryProcessor
 			FragmentEntryLink fragmentEntryLink, String html,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
+
+		FreemarkerFragmentEntryProcessorConfiguration
+			freemarkerFragmentEntryProcessorConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FreemarkerFragmentEntryProcessorConfiguration.class,
+					fragmentEntryLink.getCompanyId());
+
+		if (!freemarkerFragmentEntryProcessorConfiguration.enable()) {
+			return html;
+		}
 
 		if ((fragmentEntryProcessorContext.getHttpServletRequest() == null) ||
 			(fragmentEntryProcessorContext.getHttpServletResponse() == null)) {
@@ -114,5 +127,8 @@ public class FreemarkerFragmentEntryProcessor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreemarkerFragmentEntryProcessor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

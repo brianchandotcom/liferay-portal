@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -98,11 +99,9 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			className = className.substring(
 				className.lastIndexOf(CharPool.PERIOD) + 1);
 
-			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
-
 			if (_hasUnusedJSPTerm(
-					fileName, regex, "class", checkedFileNames,
-					includeFileNames, _getContentsMap())) {
+					fileName, "\\W" + className + "\\W", "class",
+					checkedFileNames, includeFileNames, _getContentsMap())) {
 
 				unneededImports.add(importLine);
 			}
@@ -211,16 +210,10 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			Set<String> checkedFileNames, Set<String> includeFileNames)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
-		sb.append(portletDefineObjectProperty);
-		sb.append("( )?(\\.|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
-		sb.append("|(\\+(\\+)?)|(-(-)?)|(\\)))?");
-
 		return _hasUnusedJSPTerm(
-			fileName, sb.toString(), "portletDefineObjectProperty",
-			checkedFileNames, includeFileNames, _getContentsMap());
+			fileName, "\\W" + portletDefineObjectProperty + "\\W",
+			"portletDefineObjectProperty", checkedFileNames, includeFileNames,
+			_getContentsMap());
 	}
 
 	private boolean _hasUnusedVariable(
@@ -240,16 +233,9 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
-		sb.append(variableName);
-		sb.append("( )?(\\.|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
-		sb.append("|(\\+(\\+)?)|(-(-)?)|(\\)))?");
-
 		return _hasUnusedJSPTerm(
-			fileName, sb.toString(), "variable", checkedFileNames,
-			includeFileNames, _getContentsMap());
+			fileName, "\\W" + variableName + "\\W", "variable",
+			checkedFileNames, includeFileNames, _getContentsMap());
 	}
 
 	private boolean _isJSPDuplicateImport(
@@ -322,13 +308,24 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
+		int count = 0;
+
 		Pattern pattern = Pattern.compile(regex);
 
 		Matcher matcher = pattern.matcher(content);
 
-		if (matcher.find() &&
-			(!type.equals("variable") || (checkedForUnusedJSPTerm.size() > 1) ||
-			 matcher.find())) {
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJavaSource(content, matcher.start()) ||
+				!ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
+
+				count++;
+			}
+		}
+
+		if ((count > 1) ||
+			((count == 1) &&
+			 (!type.equals("variable") ||
+			  (checkedForUnusedJSPTerm.size() > 1)))) {
 
 			return true;
 		}

@@ -1276,9 +1276,11 @@ definition {
 	}
 
 	macro viewCheckedinCP {
+		DMDocument.expandInfo();
+
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEW_VERSION_NUMBER",
-			value1 = "${dmDocumentVersionNumber}");
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION",
+			value1 = "VERSION ${dmDocumentVersionNumber}");
 
 		AssertElementNotPresent(locator1 = "Message#CHECKOUT_SUCCESS");
 

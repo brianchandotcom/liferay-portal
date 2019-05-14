@@ -103,7 +103,8 @@ public class ImageToolImplTest {
 
 	@Test
 	public void testRotation90Degrees() throws Exception {
-		ImageBag imageBag = _imageTool.read(_getFile("rotation_90_degrees.jpg"));
+		ImageBag imageBag = _imageTool.read(
+			_getFile("rotation_90_degrees.jpg"));
 
 		RenderedImage originalImage = imageBag.getRenderedImage();
 
@@ -111,6 +112,31 @@ public class ImageToolImplTest {
 
 		Assert.assertEquals(originalImage.getHeight(), rotatedImage.getWidth());
 		Assert.assertEquals(originalImage.getWidth(), rotatedImage.getHeight());
+	}
+
+	private File _getFile(String fileName) {
+		fileName =
+			"portal-impl/test/unit/com/liferay/portal/image/dependencies/" +
+				fileName;
+
+		return new File(fileName);
+	}
+
+	private void _testCrop(
+			RenderedImage renderedImage, int height, int width, int x, int y)
+		throws Exception {
+
+		RenderedImage croppedRenderedImage = _imageTool.crop(
+			renderedImage, height, width, x, y);
+
+		int maxHeight = renderedImage.getHeight() - Math.abs(y);
+		int maxWidth = renderedImage.getWidth() - Math.abs(x);
+
+		Assert.assertEquals(
+			croppedRenderedImage.getHeight(), Math.min(maxHeight, height));
+
+		Assert.assertEquals(
+			croppedRenderedImage.getWidth(), Math.min(maxWidth, width));
 	}
 
 	private void _testCrop(String fileName) throws Exception {
@@ -155,14 +181,6 @@ public class ImageToolImplTest {
 		_testCrop(
 			image, image.getHeight() - (image.getHeight() / 2),
 			image.getWidth() - (image.getWidth() / 2), 0, 0);
-	}
-
-	private File _getFile(String fileName) {
-		fileName =
-			"portal-impl/test/unit/com/liferay/portal/image/dependencies/" +
-				fileName;
-
-		return new File(fileName);
 	}
 
 	private void _testRead(String fileName) throws Exception {
@@ -228,23 +246,6 @@ public class ImageToolImplTest {
 					expectedDataBufferInt.getBankData(),
 					resultDataBufferInt.getBankData()));
 		}
-	}
-
-	private void _testCrop(
-			RenderedImage renderedImage, int height, int width, int x, int y)
-		throws Exception {
-
-		RenderedImage croppedRenderedImage = _imageTool.crop(
-			renderedImage, height, width, x, y);
-
-		int maxHeight = renderedImage.getHeight() - Math.abs(y);
-		int maxWidth = renderedImage.getWidth() - Math.abs(x);
-
-		Assert.assertEquals(
-			croppedRenderedImage.getHeight(), Math.min(maxHeight, height));
-
-		Assert.assertEquals(
-			croppedRenderedImage.getWidth(), Math.min(maxWidth, width));
 	}
 
 	private final ImageTool _imageTool = ImageToolImpl.getInstance();

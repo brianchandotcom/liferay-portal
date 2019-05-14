@@ -115,11 +115,9 @@ public class ImageToolImplTest {
 	}
 
 	private File _getFile(String fileName) {
-		fileName =
+		return new File(
 			"portal-impl/test/unit/com/liferay/portal/image/dependencies/" +
-				fileName;
-
-		return new File(fileName);
+				fileName);
 	}
 
 	private void _testCrop(
@@ -129,23 +127,20 @@ public class ImageToolImplTest {
 		RenderedImage croppedRenderedImage = _imageTool.crop(
 			renderedImage, height, width, x, y);
 
-		int maxHeight = renderedImage.getHeight() - Math.abs(y);
-		int maxWidth = renderedImage.getWidth() - Math.abs(x);
+		Assert.assertEquals(
+			croppedRenderedImage.getHeight(),
+			Math.min(renderedImage.getHeight() - Math.abs(y), height));
 
 		Assert.assertEquals(
-			croppedRenderedImage.getHeight(), Math.min(maxHeight, height));
-
-		Assert.assertEquals(
-			croppedRenderedImage.getWidth(), Math.min(maxWidth, width));
+			croppedRenderedImage.getWidth(),
+			Math.min(renderedImage.getWidth() - Math.abs(x), width));
 	}
 
 	private void _testCrop(String fileName) throws Exception {
 
 		// Crop bottom right
 
-		File file = _getFile(fileName);
-
-		ImageBag imageBag = _imageTool.read(file);
+		ImageBag imageBag = _imageTool.read(_getFile(fileName));
 
 		RenderedImage image = imageBag.getRenderedImage();
 

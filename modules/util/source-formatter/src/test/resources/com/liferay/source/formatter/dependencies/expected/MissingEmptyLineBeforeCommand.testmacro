@@ -1,0 +1,21 @@
+@component-name = "portal-acceptance"
+definition {
+
+	@description = "This is the description for TestA."
+	@priority = "5"
+	test TestA
+	{
+		CalendarNavigator.gotoConfiguration();
+	}
+
+	test TestB {
+		property setup.wizard.enabled = "true";
+	}
+
+	@description = "This is the description for TestC."
+	@ignore = "true"
+	@priority = "5"
+	test TestC{
+		Upgrade.resetTestUserPassword();
+	}
+}

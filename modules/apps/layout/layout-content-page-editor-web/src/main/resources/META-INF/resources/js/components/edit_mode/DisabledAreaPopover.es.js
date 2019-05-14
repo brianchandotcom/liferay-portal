@@ -117,10 +117,23 @@ class DisabledAreaPopover extends Component {
 	_handleElementClick(event) {
 		event.stopImmediatePropagation();
 
+		let popoverPosition = Align.TopCenter;
+
+		const suggestedAlign = Align.suggestAlignBestRegion(
+			this.refs.popover,
+			event.delegateTarget,
+			popoverPosition
+		);
+
+		if (suggestedAlign.position !== popoverPosition) {
+			popoverPosition = Align.BottomCenter;
+		}
+
 		const alignPosition = Align.align(
 			this.refs.popover,
 			event.delegateTarget,
-			Align.TopCenter
+			popoverPosition,
+			false
 		);
 
 		this._setPosition(alignPosition);

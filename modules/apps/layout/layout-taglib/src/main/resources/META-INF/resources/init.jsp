@@ -34,10 +34,6 @@ page import="com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
-<%@ page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
-
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />

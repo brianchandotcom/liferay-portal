@@ -20,6 +20,7 @@
 		separator: bool,
 		type: string
 	]>}
+	{@param? active: bool}
 	{@param? checkboxStatus: string}
 	{@param? clearResultsURL: string}
 	{@param? clearSelectionURL: string}
@@ -116,6 +117,7 @@
 	{call ClayManagementToolbar.render}
 		{param defaultEventHandler: $defaultEventHandler /}
 		{param actionItems: $actionItems /}
+		{param active: $active /}
 		{param checkboxStatus: $checkboxStatus /}
 		{param clearResultsURL: $clearResultsURL /}
 		{param clearSelectionURL: $clearSelectionURL /}

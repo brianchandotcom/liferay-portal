@@ -36,10 +36,7 @@ class ManagementToolbar extends ClayComponent {
 
 				this._searchContainer = searchContainer;
 
-				const currentPageElements = searchContainer.select.getCurrentPageElements().size();
-				const currentPageSelectedElements = searchContainer.select.getCurrentPageSelectedElements().size();
-
-				this._setCheckboxStatus(currentPageElements, currentPageSelectedElements);
+				this._setCheckboxStatus();
 			}
 		);
 
@@ -192,7 +189,7 @@ class ManagementToolbar extends ClayComponent {
 	 */
 
 	_handleSearchContainerRowToggled(event) {
-		var elements = event.elements;
+		const elements = event.elements;
 
 		const currentPageElements = elements.currentPageElements.size();
 		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
@@ -201,9 +198,7 @@ class ManagementToolbar extends ClayComponent {
 
 		const bulkSelection = this.supportsBulkActions && this._searchContainer.select.get('bulkSelection');
 
-		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
-
-		this._setCheckboxStatus(currentPageElements, currentPageSelectedElements);
+		this._setCheckboxStatus();
 
 		if (this.supportsBulkActions) {
 			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
@@ -231,11 +226,20 @@ class ManagementToolbar extends ClayComponent {
 	 * @review
 	 */
 
-	_setCheckboxStatus(currentPageElements, currentPageSelectedElements) {
+	_setCheckboxStatus() {
+		const elements = this._searchContainer.select;
+		const bulkSelection = this.supportsBulkActions && elements.get('bulkSelection');
+
+		this.selectedItems = bulkSelection ? this.totalItems : elements.getAllSelectedElements().filter(':enabled').size();
+		this.active = this.selectedItems > 0;
+
+		const currentPageElements = elements.getCurrentPageElements().size();
+		const currentPageSelectedElements = elements.getCurrentPageSelectedElements().size();
+
 		if (currentPageSelectedElements > 0) {
-			this.checkboxStatus = currentPageElements === currentPageSelectedElements
-				? 'checked'
-				: 'indeterminate';
+			this.checkboxStatus = currentPageElements === currentPageSelectedElements ?
+				'checked' :
+				'indeterminate';
 		}
 		else {
 			this.checkboxStatus = 'unchecked';

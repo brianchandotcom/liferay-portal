@@ -62,7 +62,8 @@ public class OAuth2ApplicationServiceImpl
 
 		User user = getUser();
 
-		if ((clientCredentialUserId != user.getUserId()) &&
+		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS) &&
+			(clientCredentialUserId != user.getUserId()) &&
 			!ModelResourcePermissionHelper.contains(
 				_userModelResourcePermission, getPermissionChecker(), 0,
 				clientCredentialUserId, ActionKeys.IMPERSONATE)) {
@@ -217,20 +218,17 @@ public class OAuth2ApplicationServiceImpl
 		_oAuth2ApplicationModelResourcePermission.check(
 			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
-		if (clientCredentialUserId !=
-				oAuth2Application.getClientCredentialUserId()) {
+		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
+			long userId = getUserId();
 
-			User user = getUser();
-
-			if ((clientCredentialUserId != user.getUserId()) &&
+			if ((clientCredentialUserId != userId) &&
 				!ModelResourcePermissionHelper.contains(
 					_userModelResourcePermission, getPermissionChecker(), 0,
 					clientCredentialUserId, ActionKeys.IMPERSONATE)) {
 
 				throw new OAuth2ApplicationClientCredentialUserIdException(
 					StringBundler.concat(
-						"User ", user.getUserId(),
-						" is not allowed to impersonate user ",
+						"User ", userId, " is not allowed to impersonate user ",
 						clientCredentialUserId,
 						" via client credentials grant"));
 			}
@@ -285,6 +283,27 @@ public class OAuth2ApplicationServiceImpl
 			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
 		User user = getUser();
+
+		List<GrantType> allowedGrantTypesList =
+			oAuth2Application.getAllowedGrantTypesList();
+		long clientCredentialUserId =
+			oAuth2Application.getClientCredentialUserId();
+
+		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
+			long userId = getUserId();
+
+			if ((clientCredentialUserId != userId) &&
+				!ModelResourcePermissionHelper.contains(
+					_userModelResourcePermission, getPermissionChecker(), 0,
+					clientCredentialUserId, ActionKeys.IMPERSONATE)) {
+
+				throw new OAuth2ApplicationClientCredentialUserIdException(
+					StringBundler.concat(
+						"User ", userId, " is not allowed to impersonate user ",
+						clientCredentialUserId,
+						" via client credentials grant"));
+			}
+		}
 
 		return oAuth2ApplicationLocalService.updateScopeAliases(
 			user.getUserId(), user.getFullName(), oAuth2ApplicationId,

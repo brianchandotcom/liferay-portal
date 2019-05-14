@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Headless Admin Taxonomy Test
 Bundle-SymbolicName: com.liferay.headless.admin.taxonomy.test
 Bundle-Version: 1.0.0
--includeresource: com.liferay.headless.admin.taxonomy.client.jar=com.liferay.headless.admin.taxonomy.client-[0-9]*.jar
+-conditionalpackage:\
+	com.liferay.headless.admin.taxonomy.client.dto.v1_0,\
+	com.liferay.headless.admin.taxonomy.client.function,\
+	com.liferay.headless.admin.taxonomy.client.json,\
+	com.liferay.headless.admin.taxonomy.client.pagination,\
+	com.liferay.headless.admin.taxonomy.client.serdes.v1_0

@@ -104,7 +104,7 @@ public class ImageToolImplTest {
 	@Test
 	public void testRotation90Degrees() throws Exception {
 		ImageBag imageBag = _imageTool.read(
-			_getFile("rotation_90_degrees.jpg"));
+			new File(_FILE_DIR, "rotation_90_degrees.jpg"));
 
 		RenderedImage originalImage = imageBag.getRenderedImage();
 
@@ -112,12 +112,6 @@ public class ImageToolImplTest {
 
 		Assert.assertEquals(originalImage.getHeight(), rotatedImage.getWidth());
 		Assert.assertEquals(originalImage.getWidth(), rotatedImage.getHeight());
-	}
-
-	private File _getFile(String fileName) {
-		return new File(
-			"portal-impl/test/unit/com/liferay/portal/image/dependencies/" +
-				fileName);
 	}
 
 	private void _testCrop(
@@ -139,7 +133,7 @@ public class ImageToolImplTest {
 
 		// Crop bottom right
 
-		ImageBag imageBag = _imageTool.read(_getFile(fileName));
+		ImageBag imageBag = _imageTool.read(new File(_FILE_DIR, fileName));
 
 		RenderedImage image = imageBag.getRenderedImage();
 
@@ -178,7 +172,7 @@ public class ImageToolImplTest {
 	}
 
 	private void _testRead(String fileName) throws Exception {
-		File file = _getFile(fileName);
+		File file = new File(_FILE_DIR, fileName);
 
 		BufferedImage expectedImage = ImageIO.read(file);
 
@@ -241,6 +235,9 @@ public class ImageToolImplTest {
 					resultDataBufferInt.getBankData()));
 		}
 	}
+
+	private static final String _FILE_DIR =
+		"portal-impl/test/unit/com/liferay/portal/image/dependencies";
 
 	private final ImageTool _imageTool = ImageToolImpl.getInstance();
 

@@ -149,8 +149,10 @@ public class ResolveTask extends DefaultTask {
 
 				gradleProperties.put("project", project);
 
+				File distroFile = getDistroFile();
+
 				String distroReference =
-					getDistroFile().getAbsolutePath() + ";version=file";
+					distroFile.getAbsolutePath() + ";version=file";
 
 				gradleProperties.put("targetPlatformDistro", distroReference);
 

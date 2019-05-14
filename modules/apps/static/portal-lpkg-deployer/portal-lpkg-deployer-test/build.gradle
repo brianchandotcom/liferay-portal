@@ -6,7 +6,7 @@ dependencies {
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
-	testCompile group: "org.osgi", name: "osgi.core", version: "5.0.0"
+	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-string")

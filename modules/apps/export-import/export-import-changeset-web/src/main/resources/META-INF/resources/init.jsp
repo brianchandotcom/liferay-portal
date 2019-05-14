@@ -25,8 +25,4 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
-<%
-String portletResource = ParamUtil.getString(request, "portletResource");
-%>
-
 <%@ include file="/init-ext.jsp" %>

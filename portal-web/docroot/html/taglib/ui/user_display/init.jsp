@@ -25,7 +25,6 @@ boolean showUserDetails = GetterUtil.getBoolean((String)request.getAttribute("li
 boolean showUserName = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserName"));
 String url = (String)request.getAttribute("liferay-ui:user-display:url");
 User userDisplay = (User)request.getAttribute("liferay-ui:user-display:user");
-String userIconCssClass = (String)request.getAttribute("liferay-ui:user-display:userIconCssClass");
 String userName = GetterUtil.getString((String)request.getAttribute("liferay-ui:user-display:userName"));
 
 if (author) {

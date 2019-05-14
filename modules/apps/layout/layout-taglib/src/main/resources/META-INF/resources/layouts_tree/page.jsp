@@ -29,7 +29,6 @@ boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay
 LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("liferay-layout:layouts-tree:layoutSetBranch");
 String linkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:linkTemplate");
 String modules = (String)request.getAttribute("liferay-layout:layouts-tree:modules");
-Map<String, PortletURL> portletURLs = (Map<String, PortletURL>)request.getAttribute("liferay-layout:layouts-tree:portletURLs");
 JSONArray portletURLsJSONArray = (JSONArray)request.getAttribute("liferay-layout:layouts-tree:portletURLsJSONArray");
 boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:privateLayout"));
 String rootLinkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:rootLinkTemplate");

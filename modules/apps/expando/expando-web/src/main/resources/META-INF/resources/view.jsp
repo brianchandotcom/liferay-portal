@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 List<String> headerNames = new ArrayList<String>();

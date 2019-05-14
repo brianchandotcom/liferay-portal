@@ -17,10 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:className"));
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:displayStyle"));
 SocialBookmark socialBookmark = (SocialBookmark)request.getAttribute("liferay-social-bookmarks:bookmark:socialBookmark");
-String target = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:target"));
 String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String type = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:type"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:url"));

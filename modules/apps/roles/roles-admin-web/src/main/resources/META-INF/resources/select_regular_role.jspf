@@ -16,7 +16,6 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRegularRole");
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncRegularRoles");
 

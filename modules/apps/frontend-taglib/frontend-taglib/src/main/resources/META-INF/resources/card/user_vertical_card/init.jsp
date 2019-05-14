@@ -17,7 +17,6 @@
 <%@ include file="/card/init.jsp" %>
 
 <%
-String colorCssClass = (String)request.getAttribute("liferay-frontend:card:colorCssClass");
 String footer = (String)request.getAttribute("liferay-frontend:card:footer");
 String header = (String)request.getAttribute("liferay-frontend:card:header");
 String onClick = (String)request.getAttribute("liferay-frontend:card:onClick");

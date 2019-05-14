@@ -46,8 +46,6 @@ if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":resizable"));
-boolean showSource = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
 %>
 

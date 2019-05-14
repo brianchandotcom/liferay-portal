@@ -44,8 +44,6 @@ Team team = (Team)row.getObject();
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.PERMISSIONS) %>">
 
 		<%
-		Role role = team.getRole();
-
 		int[] roleTypes = {RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE};
 
 		Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());

@@ -3,6 +3,8 @@ import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
 import { completionPeriodKeys } from './filterConstants';
 import { getRequestUrl } from '../../../shared/components/filter/util/filterUtil';
+import { InstanceContext } from './InstanceContext';
+import InstanceItemDetail from './InstanceItemDetail';
 import InstanceListFilter from './InstanceListFilter';
 import InstanceListTable from './InstanceListTable';
 import ListView from '../../../shared/components/list/ListView';
@@ -94,8 +96,12 @@ class InstanceListCard extends React.Component {
 		});
 	}
 
+	setInstanceId(instanceId) {
+		this.setState({ instanceId });
+	}
+
 	render() {
-		const { error, items = [], loading, totalCount } = this.state;
+		const { error, instanceId, items = [], loading, totalCount } = this.state;
 		const { page, pageSize, processId, query } = this.props;
 
 		const fetching = !loading && !totalCount;
@@ -107,27 +113,32 @@ class InstanceListCard extends React.Component {
 					query={query}
 					totalCount={totalCount}
 				/>
+				<InstanceContext.Provider
+					value={{ setInstanceId: this.setInstanceId.bind(this) }}
+				>
+					<div className="container-fluid-1280 mt-4">
+						<ListView
+							emptyActionButton={<ReloadButton />}
+							emptyMessageText={Liferay.Language.get(
+								'there-are-no-process-items-at-the-moment'
+							)}
+							errorMessageText={error}
+							fetching={fetching}
+							loading={loading}
+						>
+							<InstanceListTable items={items} />
 
-				<div className="container-fluid-1280 mt-4">
-					<ListView
-						emptyActionButton={<ReloadButton />}
-						emptyMessageText={Liferay.Language.get(
-							'there-are-no-process-items-at-the-moment'
-						)}
-						errorMessageText={error}
-						fetching={fetching}
-						loading={loading}
-					>
-						<InstanceListTable items={items} />
+							<PaginationBar
+								page={page}
+								pageCount={items.length}
+								pageSize={pageSize}
+								totalCount={totalCount}
+							/>
+						</ListView>
+					</div>
 
-						<PaginationBar
-							page={page}
-							pageCount={items.length}
-							pageSize={pageSize}
-							totalCount={totalCount}
-						/>
-					</ListView>
-				</div>
+					<InstanceItemDetail instanceId={instanceId} processId={processId} />
+				</InstanceContext.Provider>
 			</Fragment>
 		);
 	}

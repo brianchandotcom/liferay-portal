@@ -156,8 +156,14 @@
 		text-decoration: none;
 	}
 
-	.list-group-item h3 {
-		margin-top: 5px;
+	.list-group .list-group-item {
+		h2.h5 {
+			font-weight: 600;
+		}
+
+		h3 {
+			margin-top: 5px;
+		}
 	}
 
 	.page-actions {

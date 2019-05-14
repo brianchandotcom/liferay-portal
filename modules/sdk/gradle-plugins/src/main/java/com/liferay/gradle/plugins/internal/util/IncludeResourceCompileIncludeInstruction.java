@@ -60,7 +60,13 @@ public class IncludeResourceCompileIncludeInstruction {
 				sb.append("lib/=");
 			}
 
-			sb.append(file.getAbsolutePath());
+			String absolutePath = file.getAbsolutePath();
+
+			if (File.separatorChar != '/') {
+				absolutePath = absolutePath.replace(File.separatorChar, '/');
+			}
+
+			sb.append(absolutePath);
 
 			if (!expand) {
 				sb.append(";lib:=true");

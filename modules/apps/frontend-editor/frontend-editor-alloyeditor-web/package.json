@@ -13,7 +13,7 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "2.0.3"
+		"alloyeditor": "2.0.4"
 	},
 	"name": "frontend-editor-alloyeditor-web",
 	"scripts": {

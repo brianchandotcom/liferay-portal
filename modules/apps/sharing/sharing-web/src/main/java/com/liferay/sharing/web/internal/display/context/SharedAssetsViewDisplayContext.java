@@ -368,6 +368,10 @@ public class SharedAssetsViewDisplayContext {
 					_themeDisplay.getPlid(), portletDisplay.getId(),
 					PortletRequest.RENDER_PHASE, false);
 
+			redirectURL.setParameter(
+				"mvcRenderCommandName",
+				"/shared_assets/close_sharing_entry_edit_dialog");
+
 			editPortletURL.setParameter("redirect", redirectURL.toString());
 
 			urlMenuItem.setURL(editPortletURL.toString());

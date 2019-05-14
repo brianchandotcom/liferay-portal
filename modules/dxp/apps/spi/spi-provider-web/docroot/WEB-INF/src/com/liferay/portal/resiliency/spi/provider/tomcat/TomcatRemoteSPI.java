@@ -89,7 +89,7 @@ public class TomcatRemoteSPI extends RemoteSPI {
 
 			Tomcat.addServlet(context, servletClassName, servlet);
 
-			context.addServletMapping(mappingPattern, servletClassName);
+			context.addServletMappingDecoded(mappingPattern, servletClassName);
 		}
 		catch (Exception e) {
 			throw new RemoteException("Unable to add servlet", e);

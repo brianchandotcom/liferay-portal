@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.http;
 
-import org.osgi.annotation.versioning.ProviderType;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the HTTP utility for the

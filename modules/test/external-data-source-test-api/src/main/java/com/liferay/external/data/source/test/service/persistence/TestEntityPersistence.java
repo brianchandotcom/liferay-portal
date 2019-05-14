@@ -14,6 +14,8 @@
 
 package com.liferay.external.data.source.test.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.external.data.source.test.exception.NoSuchTestEntityException;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -22,8 +24,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the test entity service.

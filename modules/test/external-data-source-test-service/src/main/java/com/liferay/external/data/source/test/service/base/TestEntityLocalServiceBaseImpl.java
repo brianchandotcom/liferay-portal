@@ -14,6 +14,8 @@
 
 package com.liferay.external.data.source.test.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalService;
 import com.liferay.external.data.source.test.service.persistence.TestEntityPersistence;
@@ -46,8 +48,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the test entity local service.

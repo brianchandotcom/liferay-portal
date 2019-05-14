@@ -14,10 +14,10 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalServiceUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the UADPartialEntry service. Represents a row in the &quot;UADPartialEntry&quot; database table, with each column mapped to a property of this class.

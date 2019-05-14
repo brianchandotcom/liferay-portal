@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,6 +14,8 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.external.data.source.test.model.TestEntity;
@@ -37,8 +39,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model implementation for the TestEntity service. Represents a row in the &quot;TestEntity&quot; database table, with each column mapped to a property of this class.

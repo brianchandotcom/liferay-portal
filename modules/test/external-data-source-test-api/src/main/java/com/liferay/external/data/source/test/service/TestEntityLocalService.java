@@ -14,6 +14,8 @@
 
 package com.liferay.external.data.source.test.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,8 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for TestEntity. Methods of this

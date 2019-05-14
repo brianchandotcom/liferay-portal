@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,8 +25,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * <p>

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -46,8 +48,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the base implementation for the nested sets tree entry local service.

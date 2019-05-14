@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the BigDecimalEntry service. Represents a row in the &quot;BigDecimalEntry&quot; database table, with each column mapped to a property of this class.

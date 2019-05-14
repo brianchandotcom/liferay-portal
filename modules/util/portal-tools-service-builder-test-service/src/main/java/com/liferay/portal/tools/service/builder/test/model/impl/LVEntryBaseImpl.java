@@ -14,12 +14,12 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntry;
 import com.liferay.portal.tools.service.builder.test.service.LVEntryLocalServiceUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the LVEntry service. Represents a row in the &quot;LVEntry&quot; database table, with each column mapped to a property of this class.

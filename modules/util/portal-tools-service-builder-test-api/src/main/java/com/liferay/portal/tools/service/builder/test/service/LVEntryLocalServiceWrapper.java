@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import com.liferay.portal.kernel.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link LVEntryLocalService}.

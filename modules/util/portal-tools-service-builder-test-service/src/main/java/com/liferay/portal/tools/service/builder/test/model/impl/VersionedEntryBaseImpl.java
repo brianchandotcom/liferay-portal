@@ -14,12 +14,12 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
 import com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalServiceUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the VersionedEntry service. Represents a row in the &quot;VersionedEntry&quot; database table, with each column mapped to a property of this class.

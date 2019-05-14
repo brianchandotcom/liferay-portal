@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
 
 /**
  * The extended model base implementation for the VersionedEntryVersion service. Represents a row in the &quot;VersionedEntryVersion&quot; database table, with each column mapped to a property of this class.

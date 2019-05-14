@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan

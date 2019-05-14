@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
 import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
@@ -24,8 +26,6 @@ import java.math.BigDecimal;
 
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the big decimal entry service.

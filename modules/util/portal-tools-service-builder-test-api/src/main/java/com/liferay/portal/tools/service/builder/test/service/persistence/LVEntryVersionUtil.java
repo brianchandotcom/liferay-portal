@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -25,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;

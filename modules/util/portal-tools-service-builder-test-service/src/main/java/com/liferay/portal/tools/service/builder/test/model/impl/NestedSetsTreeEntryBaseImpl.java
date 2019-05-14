@@ -14,10 +14,10 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
 import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalServiceUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the NestedSetsTreeEntry service. Represents a row in the &quot;NestedSetsTreeEntry&quot; database table, with each column mapped to a property of this class.

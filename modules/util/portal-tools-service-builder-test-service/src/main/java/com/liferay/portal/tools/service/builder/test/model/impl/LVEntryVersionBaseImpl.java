@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
 
 /**
  * The extended model base implementation for the LVEntryVersion service. Represents a row in the &quot;LVEntryVersion&quot; database table, with each column mapped to a property of this class.

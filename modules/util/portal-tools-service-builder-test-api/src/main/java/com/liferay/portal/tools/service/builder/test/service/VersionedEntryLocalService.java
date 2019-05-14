@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -38,8 +40,6 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for VersionedEntry. Methods of this

@@ -14,10 +14,10 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The extended model base implementation for the TestEntity service. Represents a row in the &quot;TestEntity&quot; database table, with each column mapped to a property of this class.

@@ -14,7 +14,7 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * The extended model implementation for the TestEntity service. Represents a

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,8 +47,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence implementation for the versioned entry service.

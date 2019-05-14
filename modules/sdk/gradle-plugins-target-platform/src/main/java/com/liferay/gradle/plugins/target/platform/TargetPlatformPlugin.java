@@ -38,6 +38,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
@@ -205,6 +206,17 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 				"Explicitly excluding {} from resolution because there is no " +
 					PLATFORM_BNDRUN +
 						" file at the root of the gradle workspace",
+				subproject);
+
+			return;
+		}
+
+		PluginManager pluginManager = subproject.getPluginManager();
+
+		if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
+			logger.info(
+				"Explicitly excluding {} from resolution because it does not " +
+					"appear to be an OSGi bundle.",
 				subproject);
 
 			return;

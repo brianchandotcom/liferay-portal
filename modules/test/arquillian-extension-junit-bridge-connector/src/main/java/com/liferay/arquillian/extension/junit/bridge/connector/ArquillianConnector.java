@@ -18,6 +18,10 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.IOException;
+
+import java.net.InetAddress;
+
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -48,27 +52,37 @@ public class ArquillianConnector {
 			_log.info("Listening on port " + port);
 		}
 
-		_thread = new Thread(
-			new ArquillianConnectorRunnable(
-				bundleContext, port,
-				arquillianConnectorConfiguration.passcode()),
-			"Arquillian-Connector-Thread");
+		try {
+			_arquillianConnectorThread = new ArquillianConnectorThread(
+				bundleContext, _inetAddress, port,
+				arquillianConnectorConfiguration.passcode());
+		}
+		catch (IOException ioe) {
+			_log.error(
+				"Encountered a problem while using " +
+					_inetAddress.getHostAddress() + ":" + port +
+						". Shutting down now.",
+				ioe);
 
-		_thread.setDaemon(true);
+			System.exit(-10);
+		}
 
-		_thread.start();
+		_arquillianConnectorThread.start();
 	}
 
 	@Deactivate
-	public void deacticate() throws InterruptedException {
-		_thread.interrupt();
+	public void deacticate() throws Exception {
+		_arquillianConnectorThread.close();
 
-		_thread.join();
+		_arquillianConnectorThread.join();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ArquillianConnector.class);
 
-	private Thread _thread;
+	private static final InetAddress _inetAddress =
+		InetAddress.getLoopbackAddress();
+
+	private ArquillianConnectorThread _arquillianConnectorThread;
 
 }

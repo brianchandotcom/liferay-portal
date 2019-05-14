@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
@@ -125,14 +123,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -156,14 +146,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}

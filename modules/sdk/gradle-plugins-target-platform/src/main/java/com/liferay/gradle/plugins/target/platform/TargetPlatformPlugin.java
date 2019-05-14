@@ -94,10 +94,21 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
 
 		for (Project subproject : subprojects) {
-			if (spec.isSatisfiedBy(subproject)) {
-				GradleUtil.applyPlugin(
-					subproject, DependencyManagementPlugin.class);
-			}
+			PluginContainer subprojectPluginContainer = subproject.getPlugins();
+
+			subprojectPluginContainer.withType(
+				JavaPlugin.class,
+				new Action<JavaPlugin>() {
+
+					@Override
+					public void execute(JavaPlugin javaPlugin) {
+						if (spec.isSatisfiedBy(subproject)) {
+							GradleUtil.applyPlugin(
+								subproject, DependencyManagementPlugin.class);
+						}
+					}
+
+				});
 		}
 
 		Gradle gradle = project.getGradle();

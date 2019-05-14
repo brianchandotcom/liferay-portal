@@ -91,11 +91,15 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			});
 
+		Spec<Project> spec = targetPlatformExtension.getOnlyIf();
+
 		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
 
 		for (Project subproject : subprojects) {
-			GradleUtil.applyPlugin(
-				subproject, DependencyManagementPlugin.class);
+			if (spec.isSatisfiedBy(subproject)) {
+				GradleUtil.applyPlugin(
+					subproject, DependencyManagementPlugin.class);
+			}
 		}
 
 		Gradle gradle = project.getGradle();
@@ -192,8 +196,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		TargetPlatformPluginUtil.configureDependencyManagement(
 			subproject, targetPlatformBomsConfiguration, _configurationNames);
 
-		spec = targetPlatformExtension.getResolveOnlyIf();
-
 		Project rootProject = subproject.getRootProject();
 
 		File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
@@ -208,7 +210,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (spec.isSatisfiedBy(subproject)) {
+		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();
+
+		if (resolveSpec.isSatisfiedBy(subproject)) {
 			ResolveTask resolveTask = _addTaskResolve(subproject);
 
 			_configureTaskResolve(

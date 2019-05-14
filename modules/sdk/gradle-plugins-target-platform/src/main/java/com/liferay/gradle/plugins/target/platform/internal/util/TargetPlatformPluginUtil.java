@@ -120,9 +120,6 @@ public class TargetPlatformPluginUtil {
 				}
 
 			});
-
-		// TODO add overrides here
-
 	}
 
 }

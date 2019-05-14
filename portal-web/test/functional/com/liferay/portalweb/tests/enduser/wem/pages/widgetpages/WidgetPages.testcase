@@ -282,12 +282,12 @@ definition {
 
 		Page.viewSelectedLayoutColumn(columnName = "1 Column");
 
-		Page.editName(pageNameEdit = "Home");
+		Page.editName(pageNameEdit = "Home Edit");
 
-		Navigator.gotoPage(pageName = "Home");
+		Navigator.gotoPage(pageName = "Home Edit");
 
 		Page.view(
-			pageName = "Home",
+			pageName = "Home Edit",
 			privacy = "Public Pages");
 	}
 

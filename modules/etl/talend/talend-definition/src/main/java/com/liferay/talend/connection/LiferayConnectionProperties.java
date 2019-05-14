@@ -436,9 +436,17 @@ public class LiferayConnectionProperties
 		"forceHttps");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _ITEMS_PER_PAGE);
-	public Property<LoginType> loginType;
-	public Property<String> name;
-	public Property<String> password;
+	public Property<LoginType> loginType = PropertyFactory.newEnum(
+		"loginType", LoginType.class
+	).setRequired();
+	public Property<String> name = PropertyFactory.newString(
+		"name"
+	).setRequired();
+	public Property<String> password = PropertyFactory.newString(
+		"password"
+	).setFlags(
+		EnumSet.of(Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING)
+	);
 	public Property<Integer> readTimeout = PropertyFactory.newInteger(
 		"readTimeout", _READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
@@ -501,21 +509,5 @@ public class LiferayConnectionProperties
 		LiferayConnectionProperties.class);
 
 	private static final long serialVersionUID = -746398918369840241L;
-
-	static {
-		loginType = PropertyFactory.newEnum("loginType", LoginType.class);
-
-		loginType = loginType.setRequired();
-
-		name = PropertyFactory.newString("name");
-
-		name = name.setRequired();
-
-		password = PropertyFactory.newString("password");
-
-		password = password.setFlags(
-			EnumSet.of(
-				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
-	}
 
 }

@@ -100,7 +100,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 				className.lastIndexOf(CharPool.PERIOD) + 1);
 
 			if (_hasUnusedJSPTerm(
-					fileName, "\\W" + className + "\\W", "class",
+					fileName, "\\W" + className + "[^\\w\"]", "class",
 					checkedFileNames, includeFileNames, _getContentsMap())) {
 
 				unneededImports.add(importLine);

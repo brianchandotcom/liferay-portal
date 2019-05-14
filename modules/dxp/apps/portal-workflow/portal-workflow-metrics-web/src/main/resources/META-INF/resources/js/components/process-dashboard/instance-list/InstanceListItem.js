@@ -1,8 +1,17 @@
+import autobind from 'autobind-decorator';
 import Icon from '../../../shared/components/Icon';
+import { InstanceContext } from './InstanceContext';
 import moment from 'moment';
 import React from 'react';
 
-export default class InstanceListItem extends React.Component {
+class InstanceListItem extends React.Component {
+	@autobind
+	updateId() {
+		const { id } = this.props;
+
+		this.context.setInstanceId(id);
+	}
+
 	getStatusIcon(status) {
 		if (status === 'OnTime') {
 			return {
@@ -60,7 +69,15 @@ export default class InstanceListItem extends React.Component {
 				</td>
 
 				<td className="lfr-title-column table-title">
-					<strong>{id}</strong>
+					<a
+						data-target="#instanceDetailModal"
+						data-toggle="modal"
+						href="javascript:;"
+						onClick={this.updateId}
+						tabIndex="-1"
+					>
+						<strong>{id}</strong>
+					</a>
 				</td>
 
 				<td>{`${assetType}: ${assetTitle}`}</td>
@@ -80,3 +97,6 @@ export default class InstanceListItem extends React.Component {
 		);
 	}
 }
+
+InstanceListItem.contextType = InstanceContext;
+export default InstanceListItem;

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,15 +42,16 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionPauseNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionTimeframeException;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -298,6 +300,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			String[] stopNodeKeys)
 		throws PortalException {
 
+		if (ArrayUtil.isEmpty(startNodeKeys)) {
+			throw new WorkflowMetricsSLADefinitionStartNodeKeysException();
+		}
+
+		if (ArrayUtil.isEmpty(stopNodeKeys)) {
+			throw new WorkflowMetricsSLADefinitionStopNodeKeysException();
+		}
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		Set<String> pauseNodeIds = _getNodeIds(pauseNodeKeys);
@@ -331,27 +341,32 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
 
+		List<String> fieldNames = new ArrayList<>();
+
 		long pauseNodeIdsCount = _getNodeIdsCount(
 			(FilterAggregationResult)aggregationResultsMap.get("pause"));
 
 		if (pauseNodeIdsCount != pauseNodeIds.size()) {
-			throw new WorkflowMetricsSLADefinitionPauseNodeKeysException();
+			fieldNames.add("pauseNodeKeys");
 		}
 
 		long startNodeIdsCount = _getNodeIdsCount(
 			(FilterAggregationResult)aggregationResultsMap.get("start"));
 
-		if (startNodeIds.isEmpty() ||
-			(startNodeIdsCount != startNodeIds.size())) {
-
-			throw new WorkflowMetricsSLADefinitionStartNodeKeysException();
+		if (startNodeIdsCount != startNodeIds.size()) {
+			fieldNames.add("startNodeKeys");
 		}
 
 		long stopNodeIdsCount = _getNodeIdsCount(
 			(FilterAggregationResult)aggregationResultsMap.get("stop"));
 
-		if (stopNodeIds.isEmpty() || (stopNodeIdsCount != stopNodeIds.size())) {
-			throw new WorkflowMetricsSLADefinitionStopNodeKeysException();
+		if (stopNodeIdsCount != stopNodeIds.size()) {
+			fieldNames.add("stopNodeKeys");
+		}
+
+		if (!fieldNames.isEmpty()) {
+			throw new WorkflowMetricsSLADefinitionTimeframeException(
+				fieldNames);
 		}
 	}
 

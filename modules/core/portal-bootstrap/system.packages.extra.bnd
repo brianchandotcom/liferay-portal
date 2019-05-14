@@ -27,7 +27,6 @@ Export-Package:\
 	!com.liferay.portal.freemarker,\
 	!com.liferay.portal.increment,\
 	!com.liferay.portal.javadoc,\
-	!com.liferay.portal.jcr.jackrabbit,\
 	!com.liferay.portal.jericho,\
 	!com.liferay.portal.license.*,\
 	!com.liferay.portal.messaging,\

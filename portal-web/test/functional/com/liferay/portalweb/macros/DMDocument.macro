@@ -1052,10 +1052,6 @@ definition {
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 
-		AssertClick(
-			locator1 = "DocumentsAndMediaSelectFolder#FOLDER_GENERIC",
-			value1 = "${dmFolderName}");
-
 		var key_dmFolderName = "${dmSubFolderName}";
 
 		AssertTextEquals(

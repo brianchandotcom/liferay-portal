@@ -53,52 +53,52 @@ public class ImageToolImplTest {
 
 	@Test
 	public void testCropBMP() throws Exception {
-		crop("liferay.bmp");
+		testCrop("liferay.bmp");
 	}
 
 	@Test
 	public void testCropGIF() throws Exception {
-		crop("liferay.gif");
+		testCrop("liferay.gif");
 	}
 
 	@Test
 	public void testCropJPEG() throws Exception {
-		crop("liferay.jpeg");
+		testCrop("liferay.jpeg");
 	}
 
 	@Test
 	public void testCropJPG() throws Exception {
-		crop("liferay.jpg");
+		testCrop("liferay.jpg");
 	}
 
 	@Test
 	public void testCropPNG() throws Exception {
-		crop("liferay.png");
+		testCrop("liferay.png");
 	}
 
 	@Test
 	public void testReadBMP() throws Exception {
-		read("liferay.bmp");
+		testRead("liferay.bmp");
 	}
 
 	@Test
 	public void testReadGIF() throws Exception {
-		read("liferay.gif");
+		testRead("liferay.gif");
 	}
 
 	@Test
 	public void testReadJPEG() throws Exception {
-		read("liferay.jpeg");
+		testRead("liferay.jpeg");
 	}
 
 	@Test
 	public void testReadJPG() throws Exception {
-		read("liferay.jpg");
+		testRead("liferay.jpg");
 	}
 
 	@Test
 	public void testReadPNG() throws Exception {
-		read("liferay.png");
+		testRead("liferay.png");
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class ImageToolImplTest {
 		Assert.assertEquals(originalImage.getWidth(), rotatedImage.getHeight());
 	}
 
-	protected void crop(String fileName) throws Exception {
+	protected void testCrop(String fileName) throws Exception {
 
 		// Crop bottom right
 
@@ -165,7 +165,7 @@ public class ImageToolImplTest {
 		return new File(fileName);
 	}
 
-	protected void read(String fileName) throws Exception {
+	protected void testRead(String fileName) throws Exception {
 		File file = getFile(fileName);
 
 		BufferedImage expectedImage = ImageIO.read(file);

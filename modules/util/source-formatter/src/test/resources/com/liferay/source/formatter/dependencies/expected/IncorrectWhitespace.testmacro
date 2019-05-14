@@ -1,4 +1,5 @@
 definition {
+
 	test AddBlogsEntries {
 		task ("Add a blogs entry called	;  'Blogs Entry2 Title() 	 ; ' with content 'Blogs Entry1 Content'") {
 			ProductMenu.gotoPortlet(

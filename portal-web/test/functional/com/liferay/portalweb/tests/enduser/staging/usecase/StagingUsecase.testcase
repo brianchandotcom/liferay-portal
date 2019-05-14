@@ -588,6 +588,56 @@ definition {
 			teamName = "Site Team Name");
 	}
 
+	@priority = "3"
+	test PublishWebContentFriendlyURLEncoding {
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = "disclaimer-f%25c3%25bcr-fonds",
+			webContentContent = "Web Content Content1",
+			webContentTitle = "Web Content Title1");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = "disclaimer-f%25c3%25bcr-fonds",
+			webContentContent = "Web Content Content2",
+			webContentTitle = "Web Content Title2");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishCustomPublication();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "Web Content Title1");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "Web Content Title2");
+	}
+
 	@priority = "4"
 	test SearchPublishTemplate {
 		ProductMenu.gotoPortlet(

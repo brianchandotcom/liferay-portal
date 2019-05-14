@@ -9,7 +9,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	testCompile group: "org.osgi", name: "osgi.core", version: "5.0.0"
 	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-lang")
 }

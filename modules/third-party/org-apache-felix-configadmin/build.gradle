@@ -9,8 +9,8 @@ targetCompatibility = "1.7"
 
 dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.9.8"
-	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }
 
 liferay {

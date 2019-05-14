@@ -1,7 +1,7 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "5.0.0"
 	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 }

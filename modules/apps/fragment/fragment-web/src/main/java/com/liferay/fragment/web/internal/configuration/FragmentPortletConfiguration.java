@@ -22,13 +22,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Eudaldo Alonso
  */
 @ExtendedObjectClassDefinition(
-	category = "web-content",
-	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
+	category = "page-fragments",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration",
 	localization = "content/Language",
-	name = "fragment-portlet-instance-configuration-name"
+	name = "fragment-thumbnail-configuration-name"
 )
 public interface FragmentPortletConfiguration {
 

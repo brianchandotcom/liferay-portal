@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,13 +40,18 @@ public class SLAStartNodeKeysExceptionMapper
 		<WorkflowMetricsSLADefinitionStartNodeKeysException> {
 
 	@Override
-	public String getFieldName() {
-		return "startNodeKeys";
-	}
+	public List<GenericError> toGenericErrors(
+		WorkflowMetricsSLADefinitionStartNodeKeysException
+			workflowMetricsSLADefinitionStartNodeKeysException) {
 
-	@Override
-	public String getKey() {
-		return "the-start-node-field-cannot-be-empty";
+		return Collections.singletonList(
+			new GenericError() {
+				{
+					fieldName = "startNodeKeys";
+					message = SLAStartNodeKeysExceptionMapper.this.getMessage(
+						"the-start-node-field-cannot-be-empty");
+				}
+			});
 	}
 
 }

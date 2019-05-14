@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionPauseNodeKeysException;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,13 +40,18 @@ public class SLAPauseNodeKeysExceptionMapper
 		<WorkflowMetricsSLADefinitionPauseNodeKeysException> {
 
 	@Override
-	public String getFieldName() {
-		return "pauseNodeKeys";
-	}
+	public List<GenericError> toGenericErrors(
+		WorkflowMetricsSLADefinitionPauseNodeKeysException
+			workflowMetricsSLADefinitionPauseNodeKeysException) {
 
-	@Override
-	public String getKey() {
-		return "the-pause-node-field-is-not-valid";
+		return Collections.singletonList(
+			new GenericError() {
+				{
+					fieldName = "pauseNodeKeys";
+					message = SLAPauseNodeKeysExceptionMapper.this.getMessage(
+						"the-pause-node-field-is-not-valid");
+				}
+			});
 	}
 
 }

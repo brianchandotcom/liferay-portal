@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,13 +40,18 @@ public class SLAStopNodeKeysExceptionMapper
 		<WorkflowMetricsSLADefinitionStopNodeKeysException> {
 
 	@Override
-	public String getFieldName() {
-		return "stopNodeKeys";
-	}
+	public List<GenericError> toGenericErrors(
+		WorkflowMetricsSLADefinitionStopNodeKeysException
+			workflowMetricsSLADefinitionStopNodeKeysException) {
 
-	@Override
-	public String getKey() {
-		return "the-stop-node-field-cannot-be-empty";
+		return Collections.singletonList(
+			new GenericError() {
+				{
+					fieldName = "stopNodeKeys";
+					message = SLAStopNodeKeysExceptionMapper.this.getMessage(
+						"the-stop-node-field-cannot-be-empty");
+				}
+			});
 	}
 
 }

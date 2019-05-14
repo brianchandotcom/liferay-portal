@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,13 +40,18 @@ public class SLADurationExceptionMapper
 		<WorkflowMetricsSLADefinitionDurationException> {
 
 	@Override
-	public String getFieldName() {
-		return "duration";
-	}
+	public List<GenericError> toGenericErrors(
+		WorkflowMetricsSLADefinitionDurationException
+			workflowMetricsSLADefinitionDurationException) {
 
-	@Override
-	public String getKey() {
-		return "a-duration-time-is-required";
+		return Collections.singletonList(
+			new GenericError() {
+				{
+					fieldName = "duration";
+					message = SLADurationExceptionMapper.this.getMessage(
+						"a-duration-time-is-required");
+				}
+			});
 	}
 
 }

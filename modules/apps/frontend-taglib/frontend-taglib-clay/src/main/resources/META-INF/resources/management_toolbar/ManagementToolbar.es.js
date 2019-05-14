@@ -218,7 +218,7 @@ class ManagementToolbar extends ClayComponent {
 		}
 	}
 
-		/**
+	/**
 	 * Updates management toolbar ative status checkbox.
 	 * @param {boolean} currentPageElements is all elements in the current page selected
 	 * @param {number} currentPageSelectedElements number of seleteed elemets in current page
@@ -228,6 +228,7 @@ class ManagementToolbar extends ClayComponent {
 
 	_setCheckboxStatus() {
 		const elements = this._searchContainer.select;
+
 		const bulkSelection = this.supportsBulkActions && elements.get('bulkSelection');
 
 		this.selectedItems = bulkSelection ? this.totalItems : elements.getAllSelectedElements().filter(':enabled').size();

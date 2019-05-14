@@ -121,8 +121,7 @@ public class ImageToolImplTest {
 	}
 
 	private void _testCrop(
-			RenderedImage renderedImage, int height, int width, int x, int y)
-		throws Exception {
+		RenderedImage renderedImage, int height, int width, int x, int y) {
 
 		RenderedImage croppedRenderedImage = _imageTool.crop(
 			renderedImage, height, width, x, y);

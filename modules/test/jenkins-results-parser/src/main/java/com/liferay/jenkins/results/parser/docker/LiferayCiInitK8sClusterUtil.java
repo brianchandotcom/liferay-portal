@@ -109,48 +109,53 @@ public class LiferayCiInitK8sClusterUtil {
 				gitArtifactsClusterDir, gitRepositoryName + ".tar.gz");
 			File gitRepositoryLocalArtifact = new File(
 				gitArtifactsLocalDir, gitRepositoryName + ".tar.gz");
+
 			File gitRepositoryLocalDir = new File(
 				gitArtifactsLocalDir, gitRepositoryName);
 
-			if (!gitRepositoryLocalDir.exists()) {
-				if (gitRepositoryLocalArtifact.exists()) {
+			if (gitRepositoryLocalDir.exists()) {
+				gitRepositoryLocalDir.delete();
+			}
+
+			if (gitRepositoryLocalArtifact.exists()) {
+				TGZUtil.unarchive(
+					gitRepositoryLocalArtifact, gitArtifactsLocalDir);
+			}
+			else if (gitRepositoryClusterArtifact.exists()) {
+				try {
+					JenkinsResultsParserUtil.copy(
+						gitRepositoryClusterArtifact,
+						gitRepositoryLocalArtifact);
+
 					TGZUtil.unarchive(
 						gitRepositoryLocalArtifact, gitArtifactsLocalDir);
 				}
-				else if (gitRepositoryClusterArtifact.exists()) {
-					try {
-						JenkinsResultsParserUtil.copy(
-							gitRepositoryClusterArtifact,
-							gitRepositoryLocalArtifact);
-					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
-					}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
 				}
-				else if (mirrorsAvailable) {
-					try {
-						URL gitArtifactURL = new URL(
-							JenkinsResultsParserUtil.combine(
-								"http://", mirrorsHostName,
-								"/github.com/liferay/", gitRepositoryName,
-								".tar.gz"));
+			}
+			else if (mirrorsAvailable) {
+				try {
+					URL gitArtifactURL = new URL(
+						JenkinsResultsParserUtil.combine(
+							"http://", mirrorsHostName, "/github.com/liferay/",
+							gitRepositoryName, ".tar.gz"));
 
-						JenkinsResultsParserUtil.toFile(
-							gitArtifactURL, gitRepositoryLocalArtifact);
+					JenkinsResultsParserUtil.toFile(
+						gitArtifactURL, gitRepositoryLocalArtifact);
 
-						TGZUtil.unarchive(
-							gitRepositoryLocalArtifact, gitArtifactsLocalDir);
-					}
-					catch (MalformedURLException murle) {
-						throw new RuntimeException(murle);
-					}
+					TGZUtil.unarchive(
+						gitRepositoryLocalArtifact, gitArtifactsLocalDir);
 				}
-				else {
-					String gitRemoteURL = JenkinsResultsParserUtil.combine(
-						"git@github.com:liferay/", gitRepositoryName, ".git");
-
-					GitUtil.clone(gitRemoteURL, gitRepositoryLocalDir);
+				catch (MalformedURLException murle) {
+					throw new RuntimeException(murle);
 				}
+			}
+			else {
+				String gitRemoteURL = JenkinsResultsParserUtil.combine(
+					"git@github.com:liferay/", gitRepositoryName, ".git");
+
+				GitUtil.clone(gitRemoteURL, gitRepositoryLocalDir);
 			}
 
 			GitWorkingDirectory gitWorkingDirectory =

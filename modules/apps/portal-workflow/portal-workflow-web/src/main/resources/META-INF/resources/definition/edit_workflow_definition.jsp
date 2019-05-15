@@ -41,30 +41,6 @@ portletDisplay.setURLBack(portletURL.toString());
 renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)));
 %>
 
-<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
-
-	<%
-	WorkflowDefinitionFileException wdfe = (WorkflowDefinitionFileException)errorException;
-	%>
-
-	<liferay-ui:message key="<%= HtmlUtil.escape(wdfe.getMessage()) %>" />
-</liferay-ui:error>
-
-<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-
-	<%
-	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
-
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks());
-
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks());
-	%>
-
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
-
 <liferay-portlet:actionURL name="deployWorkflowDefinition" var="deployWorkflowDefinitionURL">
 	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
@@ -225,7 +201,27 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 				<div class="card-horizontal main-content-card">
 					<div class="card-row-padded">
+						<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+
+							<%
+							RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
+							%>
+
+							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks()) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+						</liferay-ui:error>
+
+						<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
+
+							<%
+							WorkflowDefinitionFileException wdfe = (WorkflowDefinitionFileException)errorException;
+							%>
+
+							<liferay-ui:message key="<%= HtmlUtil.escape(wdfe.getMessage()) %>" />
+						</liferay-ui:error>
+
 						<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-add-a-workflow-title-before-publishing" />
+
+						<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
 
 						<aui:fieldset cssClass="workflow-definition-content">
 							<aui:col>

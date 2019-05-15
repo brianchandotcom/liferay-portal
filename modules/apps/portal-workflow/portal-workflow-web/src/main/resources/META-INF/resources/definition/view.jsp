@@ -35,19 +35,6 @@ portletURL.setParameter("definitionsNavigation", definitionsNavigation);
 WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch(renderRequest, portletURL);
 %>
 
-<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-
-	<%
-	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
-
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
-
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
-	%>
-
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
 <clay:management-toolbar
 	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
@@ -64,6 +51,15 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 />
 
 <div class="container-fluid-1280 workflow-definition-container">
+	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+
+		<%
+		RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks()) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
 		id="workflowDefinitions"

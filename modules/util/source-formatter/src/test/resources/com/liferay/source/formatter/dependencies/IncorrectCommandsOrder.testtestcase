@@ -1,5 +1,6 @@
 @component-name = "portal-acceptance"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "App Manager";
@@ -35,4 +36,5 @@ definition {
 	{
 		CalendarNavigator.gotoConfiguration();
 	}
+
 }

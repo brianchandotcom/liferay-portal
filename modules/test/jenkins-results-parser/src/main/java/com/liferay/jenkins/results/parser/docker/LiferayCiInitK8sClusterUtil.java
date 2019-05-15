@@ -39,17 +39,24 @@ public class LiferayCiInitK8sClusterUtil {
 
 	public static void init() {
 		JenkinsResultsParserUtil.regenerateSshIdRsa(
-			new File(_getEnvironmentVariable("SECRETS_VOLUME_DIR")));
+			new File(
+				JenkinsResultsParserUtil.getEnvironmentVariable(
+					"SECRETS_VOLUME_DIR")));
 
 		JenkinsResultsParserUtil.regenerateSshKnownHosts(
-			_getEnvironmentVariable("KNOWN_HOSTS"));
+			JenkinsResultsParserUtil.getEnvironmentVariable("KNOWN_HOSTS"));
 
-		String gitRepositoryNamesString = _getEnvironmentVariable(
-			"GIT_REPOSITORY_NAMES");
+		String gitRepositoryNamesString =
+			JenkinsResultsParserUtil.getEnvironmentVariable(
+				"GIT_REPOSITORY_NAMES");
 
 		_createGitArtifacts(
-			new File(_getEnvironmentVariable("GIT_ARTIFACTS_CLUSTER_DIR")),
-			new File(_getEnvironmentVariable("GIT_ARTIFACTS_LOCAL_DIR")),
+			new File(
+				JenkinsResultsParserUtil.getEnvironmentVariable(
+					"GIT_ARTIFACTS_CLUSTER_DIR")),
+			new File(
+				JenkinsResultsParserUtil.getEnvironmentVariable(
+					"GIT_ARTIFACTS_LOCAL_DIR")),
 			Arrays.asList(gitRepositoryNamesString.split(",")));
 	}
 
@@ -191,24 +198,6 @@ public class LiferayCiInitK8sClusterUtil {
 				throw new RuntimeException(ioe);
 			}
 		}
-	}
-
-	private static String _getEnvironmentVariable(
-		String environmentVariableName) {
-
-		String environmentVariableValue = System.getenv(
-			environmentVariableName);
-
-		if ((environmentVariableValue == null) ||
-			environmentVariableValue.isEmpty()) {
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find required environment variable \'",
-					environmentVariableName, "\'"));
-		}
-
-		return environmentVariableValue;
 	}
 
 }

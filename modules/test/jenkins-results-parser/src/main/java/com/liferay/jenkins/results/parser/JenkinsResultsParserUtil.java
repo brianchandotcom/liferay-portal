@@ -832,6 +832,24 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static String getEnvironmentVariable(
+		String environmentVariableName) {
+
+		String environmentVariableValue = System.getenv(
+			environmentVariableName);
+
+		if ((environmentVariableValue == null) ||
+			environmentVariableValue.isEmpty()) {
+
+			throw new RuntimeException(
+				combine(
+					"Unable to find required environment variable \'",
+					environmentVariableName, "\'"));
+		}
+
+		return environmentVariableValue;
+	}
+
 	public static List<File> getExcludedFiles(
 		List<PathMatcher> excludesPathMatchers, List<File> files) {
 

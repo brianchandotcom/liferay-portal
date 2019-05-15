@@ -489,18 +489,20 @@ class Form extends Component {
 		return (
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
-					<RuleBuilder
-						dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
-						dataProviderInstancesURL={this.props.dataProviderInstancesURL}
-						fieldTypes={fieldTypes}
-						functionsMetadata={this.props.functionsMetadata}
-						functionsURL={this.props.functionsURL}
-						pages={context.pages}
-						rolesURL={this.props.rolesURL}
-						rules={this.props.rules}
-						spritemap={spritemap}
-						visible={this.isShowRuleBuilder()}
-					/>
+					{this.isShowRuleBuilder() && (
+						<RuleBuilder
+							dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
+							dataProviderInstancesURL={this.props.dataProviderInstancesURL}
+							fieldTypes={fieldTypes}
+							functionsMetadata={this.props.functionsMetadata}
+							functionsURL={this.props.functionsURL}
+							pages={context.pages}
+							rolesURL={this.props.rolesURL}
+							rules={this.props.rules}
+							spritemap={spritemap}
+							visible={this.isShowRuleBuilder()}
+						/>
+					)}
 
 
 					<FormBuilder

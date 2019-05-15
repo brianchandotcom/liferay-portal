@@ -295,14 +295,15 @@ class Form extends Component {
 			this._createEditor('descriptionEditor')
 		];
 
+		dependencies.push(this._getTranslationManager());
+
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
-			dependencies.push(this._getTranslationManager());
 		}
 
 		Promise.all(dependencies).then(
 			results => {
-				const translationManager = results[3];
+				const translationManager = results[2];
 
 				if (translationManager) {
 					translationManager.on(
@@ -330,7 +331,7 @@ class Form extends Component {
 						namespace,
 						paginationMode,
 						published,
-						settingsDDMForm: results[2],
+						settingsDDMForm: results[3],
 						translationManager
 					},
 					this.element

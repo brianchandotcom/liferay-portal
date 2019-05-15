@@ -117,10 +117,17 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(Project subproject) {
-					if (subprojects.contains(subproject)) {
-						_configureSubproject(
-							subproject, project.getLogger(),
+				public void doCall(Project afterProject) {
+					if (afterProject.equals(project) && subprojects.isEmpty()) {
+						_configureAfterProject(
+							afterProject, project.getLogger(),
+							targetPlatformBomsConfiguration,
+							targetPlatformDistroConfiguration,
+							targetPlatformExtension);
+					}
+					else if (subprojects.contains(afterProject)) {
+						_configureAfterProject(
+							afterProject, project.getLogger(),
 							targetPlatformBomsConfiguration,
 							targetPlatformDistroConfiguration,
 							targetPlatformExtension);
@@ -172,40 +179,41 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		return resolveTask;
 	}
 
-	private void _configureSubproject(
-		Project subproject, Logger logger,
+	private void _configureAfterProject(
+		Project afterProject, Logger logger,
 		Configuration targetPlatformBomsConfiguration,
 		Configuration targetPlatformDistroConfiguration,
 		TargetPlatformExtension targetPlatformExtension) {
 
 		Spec<Project> spec = targetPlatformExtension.getOnlyIf();
 
-		if (!spec.isSatisfiedBy(subproject)) {
+		if (!spec.isSatisfiedBy(afterProject)) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Explicitly excluding {}", subproject);
+				logger.info("Explicitly excluding {}", afterProject);
 			}
 
 			return;
 		}
 
 		TargetPlatformPluginUtil.configureDependencyManagement(
-			subproject, targetPlatformBomsConfiguration, _configurationNames);
+			afterProject, targetPlatformBomsConfiguration, _configurationNames);
 
 		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();
 
-		if (resolveSpec.isSatisfiedBy(subproject)) {
-			ResolveTask resolveTask = _addTaskResolve(subproject);
+		if (resolveSpec.isSatisfiedBy(afterProject)) {
+			ResolveTask resolveTask = _addTaskResolve(afterProject);
 
-			Project rootProject = subproject.getRootProject();
+			Project rootProject = afterProject.getRootProject();
 
 			File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
 
 			_configureTaskResolve(
-				subproject, resolveTask, bndrunFile,
+				afterProject, resolveTask, bndrunFile,
 				targetPlatformDistroConfiguration);
 		}
 		else if (logger.isInfoEnabled()) {
-			logger.info("Explicitly excluding {} from resolution", subproject);
+			logger.info(
+				"Explicitly excluding {} from resolution", afterProject);
 		}
 	}
 

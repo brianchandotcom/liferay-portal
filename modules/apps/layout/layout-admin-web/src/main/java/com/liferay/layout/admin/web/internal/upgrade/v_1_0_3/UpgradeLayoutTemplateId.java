@@ -14,8 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.upgrade.v_1_0_3;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Sam Ziemer

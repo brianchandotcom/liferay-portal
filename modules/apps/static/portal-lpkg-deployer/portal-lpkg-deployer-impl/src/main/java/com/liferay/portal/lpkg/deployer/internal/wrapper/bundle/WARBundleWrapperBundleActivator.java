@@ -14,9 +14,9 @@
 
 package com.liferay.portal.lpkg.deployer.internal.wrapper.bundle;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.net.URL;
 

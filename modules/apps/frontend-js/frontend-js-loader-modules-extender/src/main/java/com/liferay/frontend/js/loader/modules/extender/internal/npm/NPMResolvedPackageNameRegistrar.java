@@ -15,7 +15,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import javax.servlet.ServletContext;
 

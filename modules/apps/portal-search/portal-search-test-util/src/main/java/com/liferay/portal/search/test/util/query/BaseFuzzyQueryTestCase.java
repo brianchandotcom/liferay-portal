@@ -59,7 +59,6 @@ public abstract class BaseFuzzyQueryTestCase extends BaseIndexingTestCase {
 
 				searchSearchRequest.setIndexNames("_all");
 				searchSearchRequest.setQuery(fuzzyQuery);
-				searchSearchRequest.setSize(30);
 
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();

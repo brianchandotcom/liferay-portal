@@ -147,12 +147,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72398."
-	@ignore = "true"
 	@priority = "5"
 	test LoginWithSpanishOnlyEnabledLocale {
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
-
-		// LPS-78681
 
 		User.firstLoginPG();
 

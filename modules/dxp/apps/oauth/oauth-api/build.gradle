@@ -5,6 +5,6 @@ dependencies {
 	compileOnly group: "net.oauth.core", name: "oauth", version: "20100527"
 	compileOnly group: "net.oauth.core", name: "oauth-provider", version: "20100527"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
-	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:static:osgi:osgi-util")
 }

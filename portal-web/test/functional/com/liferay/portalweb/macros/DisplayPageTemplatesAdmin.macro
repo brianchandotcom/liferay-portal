@@ -28,8 +28,8 @@ definition {
 	}
 
 	macro markDisplayPageAsDefault {
-		LexiconCard.clickEllipsisItem(
-			card = "${displayPageName}",
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "${displayPageName}",
 			item = "Mark As Default");
 
 		AssertVisible(

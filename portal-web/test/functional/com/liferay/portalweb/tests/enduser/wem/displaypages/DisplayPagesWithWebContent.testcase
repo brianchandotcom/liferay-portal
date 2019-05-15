@@ -111,11 +111,10 @@ definition {
 		task ("Configure the display page settings so the header and footer do not appear") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Configure");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(
+				displayPageName = "Display Page Name");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Look and Feel");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 
@@ -128,12 +127,6 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			Button.clickSave();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Edit");
 
 			Button.clickPublish();
 		}

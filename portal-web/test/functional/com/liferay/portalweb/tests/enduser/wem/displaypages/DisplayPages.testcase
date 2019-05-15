@@ -182,16 +182,8 @@ definition {
 	@description = "This is a test for LPS-86191. User can configure display page settings for any created display page, even if the display page is in draft status."
 	@priority = "5"
 	test ConfigureDraftStatusDisplayPage {
-		task ("Navigate back to Display Pages Admin without publishing") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Configure the draft status display page") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Configure");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+		task ("Configure the display page template's 'Look and Feel' while it is still in draft status") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 
@@ -203,11 +195,7 @@ definition {
 		}
 
 		task ("Assert the configuration saved properly") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Configure");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Look and Feel");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Show Footer",

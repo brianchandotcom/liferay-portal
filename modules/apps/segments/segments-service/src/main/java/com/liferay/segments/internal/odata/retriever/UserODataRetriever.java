@@ -55,8 +55,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		throws PortalException {
 
 		Hits hits = _oDataSearchAdapter.search(
-			companyId, filterString, User.class.getName(), _entityModel,
-			_filterParser, locale, start, end);
+			companyId, _filterParser, filterString, User.class.getName(),
+			_entityModel, locale, start, end);
 
 		return _getUsers(hits);
 	}
@@ -67,8 +67,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		throws PortalException {
 
 		return _oDataSearchAdapter.searchCount(
-			companyId, filterString, User.class.getName(), _entityModel,
-			_filterParser, locale);
+			companyId, _filterParser, filterString, User.class.getName(),
+			_entityModel, locale);
 	}
 
 	@Reference(

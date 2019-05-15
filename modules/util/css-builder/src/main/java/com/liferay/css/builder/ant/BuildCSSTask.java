@@ -19,6 +19,8 @@ import com.liferay.css.builder.CSSBuilderArgs;
 
 import java.io.File;
 
+import java.util.Arrays;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -74,7 +76,7 @@ public class BuildCSSTask extends Task {
 	}
 
 	public void setImportDir(File importDir) {
-		_cssBuilderArgs.setImportDir(importDir);
+		_cssBuilderArgs.setImportPaths(Arrays.asList(importDir));
 	}
 
 	public void setOutputDirName(String outputDirName) {

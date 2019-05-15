@@ -17,6 +17,8 @@ package com.liferay.css.builder;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.css.builder.internal.converters.PathParameterSplitter;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -47,8 +49,8 @@ public class CSSBuilderArgs {
 		return _dirNames;
 	}
 
-	public File getImportDir() {
-		return _importDir;
+	public List<File> getImportPaths() {
+		return _importPaths;
 	}
 
 	public String getOutputDirName() {
@@ -97,8 +99,8 @@ public class CSSBuilderArgs {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setImportDir(File importDir) {
-		_importDir = importDir;
+	public void setImportPaths(List<File> importPaths) {
+		_importPaths = importPaths;
 	}
 
 	public void setOutputDirName(String outputDirName) {
@@ -166,7 +168,7 @@ public class CSSBuilderArgs {
 		description = "The import directories of Sass libraries.",
 		names = "--import-paths", splitter = PathParameterSplitter.class
 	)
-	private File _importDir;
+	private List<File> _importPaths;
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",

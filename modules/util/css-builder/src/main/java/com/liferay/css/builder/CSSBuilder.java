@@ -92,22 +92,25 @@ public class CSSBuilder implements AutoCloseable {
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
-		File importDir = _cssBuilderArgs.getImportDir();
+		List<File> importPaths = _cssBuilderArgs.getImportPaths();
 
-		if (importDir != null) {
-			if (importDir.isFile()) {
-				importDir = _unzipImport(importDir);
+		_temporaryImportPath = Files.createTempDirectory("portalCssImportPath");
 
-				_cleanImportDir = true;
+		if ((importPaths != null) && !importPaths.isEmpty()) {
+			StringBuilder paths = new StringBuilder();
+
+			for (File importPath : importPaths) {
+				if (importPath.isFile()) {
+					importPath = _unzipImport(importPath);
+				}
+
+				paths.append(importPath);
+				paths.append(File.pathSeparator);
 			}
-			else {
-				_cleanImportDir = false;
-			}
 
-			_importDirName = importDir.getCanonicalPath();
+			_importDirName = paths.toString();
 		}
 		else {
-			_cleanImportDir = false;
 			_importDirName = null;
 		}
 
@@ -126,9 +129,7 @@ public class CSSBuilder implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		if (_cleanImportDir) {
-			FileUtil.deltree(Paths.get(_importDirName));
-		}
+		FileUtil.deltree(_temporaryImportPath);
 
 		_sassCompiler.close();
 	}
@@ -413,8 +414,7 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private File _unzipImport(File importFile) throws IOException {
-		Path portalCommonCssDirPath = Files.createTempDirectory(
-			"cssBuilderImport");
+		Path outputPath = _temporaryImportPath.resolve(importFile.getName());
 
 		try (ZipFile zipFile = new ZipFile(importFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
@@ -432,7 +432,7 @@ public class CSSBuilder implements AutoCloseable {
 
 				name = name.substring(19);
 
-				Path path = portalCommonCssDirPath.resolve(name);
+				Path path = outputPath.resolve(name);
 
 				Files.createDirectories(path.getParent());
 
@@ -442,7 +442,7 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
-		return portalCommonCssDirPath.toFile();
+		return outputPath.toFile();
 	}
 
 	private void _writeOutputFile(String fileName, String content, boolean rtl)
@@ -498,10 +498,10 @@ public class CSSBuilder implements AutoCloseable {
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
-	private final boolean _cleanImportDir;
 	private final CSSBuilderArgs _cssBuilderArgs;
 	private final String _importDirName;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
+	private final Path _temporaryImportPath;
 
 }

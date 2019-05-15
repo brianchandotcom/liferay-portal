@@ -20,6 +20,7 @@ import com.liferay.css.builder.CSSBuilderArgs;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.maven.model.Dependency;
@@ -56,7 +57,7 @@ public class BuildCSSMojo extends AbstractMojo {
 		try {
 			boolean artifactPresent = false;
 
-			if (_cssBuilderArgs.getImportDir() == null) {
+			if (_cssBuilderArgs.getImportPaths() == null) {
 				for (Dependency dependency : _project.getDependencies()) {
 					String artifactId = dependency.getArtifactId();
 
@@ -64,7 +65,8 @@ public class BuildCSSMojo extends AbstractMojo {
 						Artifact artifact = _resolveArtifact(dependency);
 
 						if (artifact != null) {
-							_cssBuilderArgs.setImportDir(artifact.getFile());
+							_cssBuilderArgs.setImportPaths(
+								Arrays.asList(artifact.getFile()));
 						}
 
 						artifactPresent = true;
@@ -74,7 +76,9 @@ public class BuildCSSMojo extends AbstractMojo {
 				}
 			}
 
-			if (!artifactPresent && (_cssBuilderArgs.getImportDir() == null)) {
+			if (!artifactPresent &&
+				(_cssBuilderArgs.getImportPaths() == null)) {
+
 				for (ComponentDependency componentDependency :
 						_pluginDescriptor.getDependencies()) {
 
@@ -84,7 +88,8 @@ public class BuildCSSMojo extends AbstractMojo {
 						Artifact artifact = _resolveArtifact(
 							componentDependency);
 
-						_cssBuilderArgs.setImportDir(artifact.getFile());
+						_cssBuilderArgs.setImportPaths(
+							Arrays.asList(artifact.getFile()));
 
 						break;
 					}
@@ -164,7 +169,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	public void setImportDir(File importDir) {
-		_cssBuilderArgs.setImportDir(importDir);
+		_cssBuilderArgs.setImportPaths(Arrays.asList(importDir));
 	}
 
 	/**

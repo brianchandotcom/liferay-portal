@@ -20,8 +20,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			MessageboardsPortlet.tearDownConfigurationEmailCP();
-
 			MessageboardsCategory.tearDownCP();
 
 			MessageboardsThread.tearDownCP();

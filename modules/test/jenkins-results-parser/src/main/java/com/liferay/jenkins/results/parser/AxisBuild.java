@@ -396,6 +396,13 @@ public class AxisBuild extends BaseBuild {
 
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
+		if (testReportJSONObject == null) {
+			System.out.println(
+				"Unable to get test results for: " + getBuildURL());
+
+			return Collections.emptyList();
+		}
+
 		return getTestResults(
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}

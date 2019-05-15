@@ -14,81 +14,16 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Hugo Huijser
  */
-public class JavaLogParametersCheck extends BaseFileCheck {
-
-	@Override
-	public boolean isPortalCheck() {
-		return true;
-	}
+public class JavaLogParametersCheck extends LogParametersCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _logPattern.matcher(content);
-
-		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
-				continue;
-			}
-
-			List<String> parametersList = JavaSourceUtil.getParameterList(
-				matcher.group());
-
-			if (parametersList.isEmpty()) {
-				continue;
-			}
-
-			String firstParameter = StringUtil.trim(parametersList.get(0));
-
-			if (!Validator.isVariableName(firstParameter)) {
-				continue;
-			}
-
-			String variableTypeName = getVariableTypeName(
-				content, content, firstParameter);
-
-			if (variableTypeName == null) {
-				continue;
-			}
-
-			if (variableTypeName.equals("StringBundler")) {
-				return StringUtil.replaceFirst(
-					content, firstParameter, firstParameter + ".toString()",
-					matcher.start(2));
-			}
-
-			if ((parametersList.size() == 1) &&
-				variableTypeName.endsWith("Exception")) {
-
-				return StringUtil.replaceFirst(
-					content, firstParameter,
-					StringBundler.concat(
-						firstParameter, StringPool.COMMA_AND_SPACE,
-						firstParameter),
-					matcher.start(2));
-			}
-		}
-
-		return content;
+		return formatLogParameters(content);
 	}
-
-	private static final Pattern _logPattern = Pattern.compile(
-		"_log\\.(debug|error|fatal|info|trace|warn)\\((.+?)\\);\n",
-		Pattern.DOTALL);
 
 }

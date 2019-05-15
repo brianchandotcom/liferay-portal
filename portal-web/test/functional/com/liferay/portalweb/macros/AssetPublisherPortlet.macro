@@ -194,7 +194,7 @@ definition {
 	}
 
 	macro configureCategoriesFilterPG {
-		AssetPublisherPortlet.gotoConfigurationPG();
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 

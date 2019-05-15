@@ -25,14 +25,11 @@ import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
-import org.elasticsearch.action.delete.DeleteAction;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
-import org.elasticsearch.action.get.GetAction;
 import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.index.IndexAction;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.action.update.UpdateAction;
+import org.elasticsearch.action.support.WriteRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -57,39 +54,40 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		Client client = _elasticsearchClientResolver.getClient();
 
-		DeleteRequestBuilder deleteRequestBuilder =
-			DeleteAction.INSTANCE.newRequestBuilder(client);
+		DeleteRequestBuilder deleteRequestBuilder = client.prepareDelete();
 
-		deleteRequestBuilder.setId(deleteDocumentRequest.getUid());
-		deleteRequestBuilder.setIndex(deleteDocumentRequest.getIndexName());
+		_setRefreshPolicy(
+			deleteRequestBuilder, deleteDocumentRequest.isRefresh());
 
-		if (deleteDocumentRequest.isRefresh()) {
-			deleteRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		deleteRequestBuilder.setType(deleteDocumentRequest.getType());
-
-		return deleteRequestBuilder;
+		return deleteRequestBuilder.setId(
+			deleteDocumentRequest.getUid()
+		).setIndex(
+			deleteDocumentRequest.getIndexName()
+		).setType(
+			_getType(deleteDocumentRequest.getType())
+		);
 	}
 
 	@Override
 	public GetRequestBuilder translate(GetDocumentRequest getDocumentRequest) {
 		Client client = _elasticsearchClientResolver.getClient();
 
-		GetRequestBuilder getRequestBuilder =
-			GetAction.INSTANCE.newRequestBuilder(client);
+		GetRequestBuilder getRequestBuilder = client.prepareGet();
 
-		getRequestBuilder.setId(getDocumentRequest.getId());
-		getRequestBuilder.setIndex(getDocumentRequest.getIndexName());
-		getRequestBuilder.setRefresh(getDocumentRequest.isRefresh());
-		getRequestBuilder.setFetchSource(
+		return getRequestBuilder.setId(
+			getDocumentRequest.getId()
+		).setIndex(
+			getDocumentRequest.getIndexName()
+		).setRefresh(
+			getDocumentRequest.isRefresh()
+		).setFetchSource(
 			getDocumentRequest.getFetchSourceIncludes(),
-			getDocumentRequest.getFetchSourceExcludes());
-		getRequestBuilder.setStoredFields(getDocumentRequest.getStoredFields());
-		getRequestBuilder.setType(getDocumentRequest.getType());
-
-		return getRequestBuilder;
+			getDocumentRequest.getFetchSourceExcludes()
+		).setStoredFields(
+			getDocumentRequest.getStoredFields()
+		).setType(
+			_getType(getDocumentRequest.getType())
+		);
 	}
 
 	@Override
@@ -98,23 +96,19 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		Client client = _elasticsearchClientResolver.getClient();
 
-		IndexRequestBuilder indexRequestBuilder =
-			IndexAction.INSTANCE.newRequestBuilder(client);
+		IndexRequestBuilder indexRequestBuilder = client.prepareIndex();
 
-		setIndexRequestBuilderId(indexRequestBuilder, indexDocumentRequest);
+		_setRefreshPolicy(
+			indexRequestBuilder, indexDocumentRequest.isRefresh());
+		_setSource(indexRequestBuilder, indexDocumentRequest);
 
-		indexRequestBuilder.setIndex(indexDocumentRequest.getIndexName());
-
-		if (indexDocumentRequest.isRefresh()) {
-			indexRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		indexRequestBuilder.setType(indexDocumentRequest.getType());
-
-		setSource(indexDocumentRequest, indexRequestBuilder);
-
-		return indexRequestBuilder;
+		return indexRequestBuilder.setId(
+			_getUid(indexDocumentRequest)
+		).setIndex(
+			indexDocumentRequest.getIndexName()
+		).setType(
+			_getType(indexDocumentRequest.getType())
+		);
 	}
 
 	@Override
@@ -123,94 +117,19 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		Client client = _elasticsearchClientResolver.getClient();
 
-		UpdateRequestBuilder updateRequestBuilder =
-			UpdateAction.INSTANCE.newRequestBuilder(client);
+		UpdateRequestBuilder updateRequestBuilder = client.prepareUpdate();
 
-		setUpdateRequestBuilderId(updateRequestBuilder, updateDocumentRequest);
+		_setDoc(updateRequestBuilder, updateDocumentRequest);
+		_setRefreshPolicy(
+			updateRequestBuilder, updateDocumentRequest.isRefresh());
 
-		updateRequestBuilder.setIndex(updateDocumentRequest.getIndexName());
-
-		if (updateDocumentRequest.isRefresh()) {
-			updateRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
-		}
-
-		updateRequestBuilder.setType(updateDocumentRequest.getType());
-
-		setDoc(updateDocumentRequest, updateRequestBuilder);
-
-		return updateRequestBuilder;
-	}
-
-	protected String getUid(IndexDocumentRequest indexDocumentRequest) {
-		String uid = indexDocumentRequest.getUid();
-
-		if (!Validator.isBlank(uid)) {
-			return uid;
-		}
-
-		if (indexDocumentRequest.getDocument() != null) {
-			Document document = indexDocumentRequest.getDocument();
-
-			return document.getString(Field.UID);
-		}
-
-		com.liferay.portal.kernel.search.Document document =
-			indexDocumentRequest.getDocument71();
-
-		Field field = document.getField(Field.UID);
-
-		if (field != null) {
-			return field.getValue();
-		}
-
-		return uid;
-	}
-
-	protected String getUid(UpdateDocumentRequest updateDocumentRequest) {
-		String uid = updateDocumentRequest.getUid();
-
-		if (!Validator.isBlank(uid)) {
-			return uid;
-		}
-
-		if (updateDocumentRequest.getDocument() != null) {
-			Document document = updateDocumentRequest.getDocument();
-
-			return document.getString(Field.UID);
-		}
-
-		com.liferay.portal.kernel.search.Document document =
-			updateDocumentRequest.getDocument71();
-
-		Field field = document.getField(Field.UID);
-
-		if (field != null) {
-			uid = field.getValue();
-		}
-
-		return uid;
-	}
-
-	protected void setDoc(
-		UpdateDocumentRequest updateDocumentRequest,
-		UpdateRequestBuilder updateRequestBuilder) {
-
-		if (updateDocumentRequest.getDocument() != null) {
-			XContentBuilder xContentBuilder =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
-					updateDocumentRequest.getDocument());
-
-			updateRequestBuilder.setDoc(xContentBuilder);
-		}
-		else {
-			String elasticsearchDocument =
-				_elasticsearchDocumentFactory.getElasticsearchDocument(
-					updateDocumentRequest.getDocument71());
-
-			updateRequestBuilder.setDoc(
-				elasticsearchDocument, XContentType.JSON);
-		}
+		return updateRequestBuilder.setId(
+			_getUid(updateDocumentRequest)
+		).setIndex(
+			updateDocumentRequest.getIndexName()
+		).setType(
+			_getType(updateDocumentRequest.getType())
+		);
 	}
 
 	@Reference(unbind = "-")
@@ -227,16 +146,100 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
 	}
 
-	protected void setIndexRequestBuilderId(
-		IndexRequestBuilder indexRequestBuilder,
-		IndexDocumentRequest indexDocumentRequest) {
+	private String _getType(String type) {
+		if (type != null) {
+			return type;
+		}
 
-		indexRequestBuilder.setId(getUid(indexDocumentRequest));
+		return "_doc";
 	}
 
-	protected void setSource(
-		IndexDocumentRequest indexDocumentRequest,
-		IndexRequestBuilder indexRequestBuilder) {
+	private String _getUid(IndexDocumentRequest indexDocumentRequest) {
+		String uid = indexDocumentRequest.getUid();
+
+		if (!Validator.isBlank(uid)) {
+			return uid;
+		}
+
+		if (indexDocumentRequest.getDocument() != null) {
+			Document document = indexDocumentRequest.getDocument();
+
+			return document.getString(Field.UID);
+		}
+
+		@SuppressWarnings("deprecation")
+		com.liferay.portal.kernel.search.Document document =
+			indexDocumentRequest.getDocument71();
+
+		Field field = document.getField(Field.UID);
+
+		if (field != null) {
+			return field.getValue();
+		}
+
+		return uid;
+	}
+
+	private String _getUid(UpdateDocumentRequest updateDocumentRequest) {
+		String uid = updateDocumentRequest.getUid();
+
+		if (!Validator.isBlank(uid)) {
+			return uid;
+		}
+
+		if (updateDocumentRequest.getDocument() != null) {
+			Document document = updateDocumentRequest.getDocument();
+
+			return document.getString(Field.UID);
+		}
+
+		@SuppressWarnings("deprecation")
+		com.liferay.portal.kernel.search.Document document =
+			updateDocumentRequest.getDocument71();
+
+		Field field = document.getField(Field.UID);
+
+		if (field != null) {
+			uid = field.getValue();
+		}
+
+		return uid;
+	}
+
+	private void _setDoc(
+		UpdateRequestBuilder updateRequestBuilder,
+		UpdateDocumentRequest updateDocumentRequest) {
+
+		if (updateDocumentRequest.getDocument() != null) {
+			XContentBuilder xContentBuilder =
+				_elasticsearchDocumentFactory.getElasticsearchDocument(
+					updateDocumentRequest.getDocument());
+
+			updateRequestBuilder.setDoc(xContentBuilder);
+		}
+		else {
+			@SuppressWarnings("deprecation")
+			String elasticsearchDocument =
+				_elasticsearchDocumentFactory.getElasticsearchDocument(
+					updateDocumentRequest.getDocument71());
+
+			updateRequestBuilder.setDoc(
+				elasticsearchDocument, XContentType.JSON);
+		}
+	}
+
+	private void _setRefreshPolicy(
+		WriteRequestBuilder writeRequestBuilder, boolean refresh) {
+
+		if (refresh) {
+			writeRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
+		}
+	}
+
+	private void _setSource(
+		IndexRequestBuilder indexRequestBuilder,
+		IndexDocumentRequest indexDocumentRequest) {
 
 		if (indexDocumentRequest.getDocument() != null) {
 			XContentBuilder xContentBuilder =
@@ -246,6 +249,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 			indexRequestBuilder.setSource(xContentBuilder);
 		}
 		else {
+			@SuppressWarnings("deprecation")
 			String elasticsearchDocument =
 				_elasticsearchDocumentFactory.getElasticsearchDocument(
 					indexDocumentRequest.getDocument71());
@@ -253,13 +257,6 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 			indexRequestBuilder.setSource(
 				elasticsearchDocument, XContentType.JSON);
 		}
-	}
-
-	protected void setUpdateRequestBuilderId(
-		UpdateRequestBuilder updateRequestBuilder,
-		UpdateDocumentRequest updateDocumentRequest) {
-
-		updateRequestBuilder.setId(getUid(updateDocumentRequest));
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

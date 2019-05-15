@@ -301,28 +301,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureFilterByCategories {
-		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Panel.expandPanel(panel = "Filter");
-
-		Click(locator1 = "APConfiguration#RULE_BUILDER_ADD_CONDITION");
-
-		Select(
-			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
-			value1 = "Categories");
-
-		AssetCategorization.addCategory(
-			categoryName = "${categoryName}",
-			vocabularyName = "${vocabularyName}");
-
-		PortletEntry.save();
-
-		SelectFrameTop();
-	}
-
 	macro configureFilterByFieldPG {
 		AssetPublisherPortlet.gotoConfigurationPG();
 

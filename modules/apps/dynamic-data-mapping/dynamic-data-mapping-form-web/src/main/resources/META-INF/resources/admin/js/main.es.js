@@ -391,6 +391,8 @@ class Form extends Component {
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
 		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
 		this.submitForm = this.submitForm.bind(this);
+
+		this.formBuilder = this._createFormBuilder();
 	}
 
 	disposed() {
@@ -478,7 +480,11 @@ class Form extends Component {
 			initialSuccessPageSettings: context.successPageSettings,
 			ref: 'layoutProvider'
 		};
+
+		const {formBuilder} = this;
 		const {saveButtonLabel} = this.state;
+
+		const FormBuilder = formBuilder;
 
 		return (
 			<div class={'ddm-form-builder'}>
@@ -496,20 +502,20 @@ class Form extends Component {
 						visible={this.isShowRuleBuilder()}
 					/>
 
-					{!this.isShowRuleBuilder() && (
-						<FormBuilder
-							fieldSetDefinitionURL={fieldSetDefinitionURL}
-							fieldSets={fieldSets}
-							fieldTypes={fieldTypes}
-							groupId={groupId}
-							namespace={this.props.namespace}
-							ref="builder"
-							rules={this.props.rules}
-							spritemap={spritemap}
-							view={view}
-							visible={!this.isShowRuleBuilder()}
-						/>
-					)}
+
+					<FormBuilder
+						fieldSetDefinitionURL={fieldSetDefinitionURL}
+						fieldSets={fieldSets}
+						fieldTypes={fieldTypes}
+						groupId={groupId}
+						namespace={this.props.namespace}
+						ref="builder"
+						rules={this.props.rules}
+						spritemap={spritemap}
+						view={view}
+						visible={!this.isShowRuleBuilder()}
+					/>
+
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">
@@ -674,6 +680,21 @@ class Form extends Component {
 		}
 
 		return promise;
+	}
+
+	_createFormBuilder() {
+		const composeList = [
+			withActionableFields,
+			withMoveableFields,
+			withMultiplePages,
+			withResizeableColumns
+		];
+
+		if (this.isFormBuilderView()) {
+			composeList.push(withEditablePageHeader);
+		}
+
+		return compose(...composeList)(FormBuilderBase);
 	}
 
 	_createFormURL() {

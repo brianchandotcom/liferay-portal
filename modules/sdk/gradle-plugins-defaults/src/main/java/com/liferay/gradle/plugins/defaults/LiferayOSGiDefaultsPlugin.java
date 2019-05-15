@@ -1065,6 +1065,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					final String groupId = String.valueOf(project.getGroup());
 
 					for (File classesDir : sourceSetOutput.getClassesDirs()) {
+						FileTree classesFileTree = project.fileTree(classesDir);
+
+						if (classesFileTree.isEmpty()) {
+							continue;
+						}
+
 						StringBuilder sb = new StringBuilder();
 
 						sb.append(classesDir);

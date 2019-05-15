@@ -1,0 +1,74 @@
+definition {
+
+	macro _addAssetCategoryIds {
+		if ((!(isSet(JSON))) || (!(isSet(assetCategoryIds)))) {
+			fail("Error, 'JSON' and 'assetCategoryNames' must all be set.");
+		}
+
+		var JSON = JSONUtil2._addJSONArray(
+			JSON = "${JSON}",
+			key = "assetCategoryIds");
+
+		var JSON = JSONUtil2._addJSONArrayValues(
+			JSON = "${JSON}",
+			key = "assetCategoryIds",
+			values = "${assetCategoryIds}");
+
+		return "${JSON}";
+	}
+
+	macro _addAssetTagNames {
+		if ((!(isSet(JSON))) || (!(isSet(assetTagNames)))) {
+			fail("Error, 'JSON' and 'assetTagNames' must all be set.");
+		}
+
+		var JSON = JSONUtil2._addJSONArray(
+			JSON = "${JSON}",
+			key = "assetTagNames");
+
+		var JSON = JSONUtil2._addJSONArrayValues(
+			JSON = "${JSON}",
+			key = "assetTagNames",
+			values = "${assetTagNames}");
+
+		return "${JSON}";
+	}
+
+	@summary = "See WorkflowConstants.java for available actions"
+	macro _addWorkflowAction {
+		if ((!(isSet(JSON))) || (!(isSet(workflowAction)))) {
+			fail("Error, 'JSON' and 'workflowAction' must all be set.");
+		}
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "workflowAction",
+			value = "${workflowAction}");
+
+		return "${JSON}";
+	}
+
+	macro setServiceContext {
+		var serviceContext = "{}";
+
+		if (isSet(assetCategoryIds)) {
+			var serviceContext = JSONServiceContextUtil._addAssetCategoryIds(
+				assetCategoryIds = "${assetCategoryIds}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(assetTagNames)) {
+			var serviceContext = JSONServiceContextUtil._addAssetTagNames(
+				assetTagNames = "${assetTagNames}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(workflowAction)) {
+			var serviceContext = JSONServiceContextUtil._addWorkflowAction(
+				JSON = "${serviceContext}",
+				workflowAction = "${workflowAction}");
+		}
+
+		return "${serviceContext}";
+	}
+}

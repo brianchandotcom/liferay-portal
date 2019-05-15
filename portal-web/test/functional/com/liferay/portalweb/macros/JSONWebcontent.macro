@@ -12,7 +12,6 @@ definition {
 		}
 
 		if (isSet(description)) {
-
 			var descriptionMap = '''{"en_US":"${description}"}''';
 		}
 		else {
@@ -151,6 +150,13 @@ definition {
 			fail("Please set 'groupName' to get groupId.");
 		}
 
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
 		JSONWebcontent._addWebContent(
 			content = "${content}",
 			contentMap = "${contentMap}",
@@ -177,6 +183,13 @@ definition {
 
 		if (!(isSet(title))) {
 			fail("Please set 'title.'");
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
 		}
 
 		JSONWebcontent._addWebContent(

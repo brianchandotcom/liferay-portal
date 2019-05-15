@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS</td>
+	<td>//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
 	<td>//div[@class='user-notifications']//div[contains(@data-qa-id,'rowItemContent')]//a</td>
 	<td></td>
@@ -78,6 +83,11 @@
 <tr>
 	<td>NOTIFICATIONS_CONFIGURATION_EMAIL_SWITCH</td>
 	<td>//div[contains(@id,'${key_contentType}Content')]//td[contains(.,'${key_actionType}')]//following-sibling::td[contains(@class,'lfr-email-column')]//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONFIGURATION_MENUITEM</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_menuItem}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,4 +1,16 @@
 definition {
+	macro configureNotificationPG {
+		MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+		Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+		var key_menuItem = "${menuItem}";
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
+			value1 = "${menuItem}");
+	}
+
 	macro disableUserDeliveries {
 		var key_contentType = "${contentType}";
 		var key_panel = "${contentType}";
@@ -28,7 +40,12 @@ definition {
 	macro gotoNotificationDelivery {
 		Navigator.gotoNotifications();
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+		if ("${notificationPG}" == "true") {
+			NotificationsPortlet.configureNotificationPG(menuItem = "Configuration");
+		}
+		else {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+		}
 	}
 
 	macro tearDownUserDeliveries {

@@ -39,6 +39,10 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 	firstResultRows = firstResultRowSplitterEntry.getResultRows();
 }
+
+if (fixedHeader) {
+	searchResultCssClass += " lfr-search-iterator-fixed-header-table";
+}
 %>
 
 <div class="table-responsive">
@@ -49,7 +53,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 			<liferay-util:buffer
-				var="tableHeaderContent"
+				var="theadContent"
 			>
 				<tr>
 
@@ -166,13 +170,12 @@ if (!resultRowSplitterEntries.isEmpty()) {
 			</liferay-util:buffer>
 
 			<thead>
-				<%= tableHeader %>
+				<%= theadContent %>
 			</thead>
-
 
 			<c:if test="<%= fixedHeader %>">
 				<thead class="lfr-search-iterator-fixed-header hide" id="<%= namespace + id %>fixedHeader">
-					<%= tableHeader %>
+					<%= theadContent %>
 				</thead>
 			</c:if>
 		</c:if>

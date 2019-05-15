@@ -119,5 +119,10 @@
 
 .lfr-search-iterator-fixed-header {
 	position: absolute;
-	z-index: 100;
+	width: 100%;
+	z-index: $zindex-sticky;
+}
+
+.lfr-search-iterator-fixed-header-table {
+	position: relative;
 }

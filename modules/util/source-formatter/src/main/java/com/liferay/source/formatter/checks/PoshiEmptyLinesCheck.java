@@ -34,6 +34,7 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 
 		content = content.replaceAll(
 			"(?<!\n)(\n\t(?!if|else)\\w+ \\{)", "\n$1");
+
 		content = content.replaceFirst("(definition \\{\n)(?!\n)", "$1\n");
 		content = content.replaceFirst("(?<!\n)(\n\\})$", "\n$1");
 

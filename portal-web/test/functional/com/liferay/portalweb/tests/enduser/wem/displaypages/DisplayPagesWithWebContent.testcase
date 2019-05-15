@@ -111,8 +111,7 @@ definition {
 		task ("Configure the display page settings so the header and footer do not appear") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(
-				displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.gotoTab(tabName = "Look and Feel");
 

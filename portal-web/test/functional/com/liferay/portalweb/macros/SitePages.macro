@@ -131,6 +131,8 @@ definition {
 	}
 
 	macro addPrivatePage {
+		Pause(locator1 = "3000");
+
 		var key_breadcrumbName="Pages";
 
 		if ("${siteTemplate}" == "true") {
@@ -167,6 +169,8 @@ definition {
 	}
 
 	macro addPublicPage {
+		Pause(locator1 = "3000");
+
 		var key_breadcrumbName="Pages";
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {

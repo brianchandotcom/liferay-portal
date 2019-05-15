@@ -17,6 +17,7 @@
 		<groupId>org.talend.components</groupId>
 		<artifactId>components-parent</artifactId>
 		<version>0.25.3</version>
+		<relativePath></relativePath>
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.definition</artifactId>
@@ -47,6 +48,9 @@
 	<properties>
 		<daikon.version>0.27.0</daikon.version>
 		<java.version>1.8</java.version>
+		<liferay.source.formatter.version>1.0.848</liferay.source.formatter.version>
+		<liferay.javadoc.formatter.version>1.0.31</liferay.javadoc.formatter.version>
+		<liferay.xml.formatter.version>1.0.5</liferay.xml.formatter.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
@@ -219,14 +223,17 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
+				<version>${liferay.javadoc.formatter.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.source.formatter</artifactId>
+				<version>${liferay.source.formatter.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.xml.formatter</artifactId>
+				<version>${liferay.xml.formatter.version}</version>
 				<configuration>
 					<fileName>pom.xml</fileName>
 				</configuration>
@@ -276,10 +283,12 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho-p2-extras-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

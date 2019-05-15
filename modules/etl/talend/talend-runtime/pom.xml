@@ -47,6 +47,9 @@
 	<properties>
 		<daikon.version>0.27.0</daikon.version>
 		<java.version>1.8</java.version>
+		<liferay.source.formatter.version>1.0.848</liferay.source.formatter.version>
+		<liferay.javadoc.formatter.version>1.0.31</liferay.javadoc.formatter.version>
+		<liferay.xml.formatter.version>1.0.5</liferay.xml.formatter.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
@@ -154,14 +157,17 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
+				<version>${liferay.javadoc.formatter.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.source.formatter</artifactId>
+				<version>${liferay.source.formatter.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.xml.formatter</artifactId>
+				<version>${liferay.xml.formatter.version}</version>
 				<configuration>
 					<fileName>pom.xml</fileName>
 				</configuration>
@@ -188,7 +194,7 @@
 							<outputDirectory>${basedir}/../tos-dependencies/component-definition/</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.definition/${version}/</directory>
+									<directory>${user.home}/.m2/repository/com/liferay/com.liferay.talend.definition/${project.version}/</directory>
 									<includes>
 										<include>**/*.jar</include>
 									</includes>

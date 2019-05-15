@@ -172,27 +172,28 @@ public class CSSBuilderArgs {
 		arity = 1,
 		description = "Whether to append the current timestamp to the URLs in the @import CSS at-rules.",
 		names = {
-			"append-css-import-timestamps", "sass.append.css.import.timestamps"
+			"--append-css-import-timestamps",
+			"sass.append.css.import.timestamps"
 		}
 	)
 	private boolean _appendCssImportTimestamps = APPEND_CSS_IMPORT_TIMESTAMPS;
 
 	@Parameter(
 		description = "The base directory that contains the SCSS files to compile.",
-		names = {"base-dir", "sass.docroot.dir"}
+		names = {"--base-dir", "sass.docroot.dir"}
 	)
 	private File _baseDir = new File(BASE_DIR_NAME);
 
 	@Parameter(
 		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
-		names = {"dir-names", "sass.dir"}
+		names = {"--dir-names", "sass.dir"}
 	)
 	private List<String> _dirNames = Arrays.asList(DIR_NAME);
 
 	@Parameter(
 		arity = 1,
 		description = "Whether to generate source maps for easier debugging.",
-		names = {"generate-source-map", "sass.generate.source.map"}
+		names = {"--generate-source-map", "sass.generate.source.map"}
 	)
 	private boolean _generateSourceMap;
 
@@ -203,9 +204,9 @@ public class CSSBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
-		description = "The import directory of Sass libraries.",
+		description = "The import directories of Sass libraries.",
 		names = {
-			"import-dir", "import-path", "sass.portal.common.dir",
+			"--import-dir", "--import-path", "sass.portal.common.dir",
 			"sass.portal.common.path"
 		}
 	)
@@ -213,25 +214,27 @@ public class CSSBuilderArgs {
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",
-		names = {"output-dir", "sass.output.dir"}
+		names = {"--output-dir", "sass.output.dir"}
 	)
 	private String _outputDirName = OUTPUT_DIR_NAME;
 
 	@Parameter(
 		description = "The numeric precision of numbers in Sass.",
-		names = {"precision", "sass.precision"}
+		names = {"--precision", "sass.precision"}
 	)
 	private int _precision = PRECISION;
 
 	@Parameter(
 		description = "The SCSS file patterns to exclude when converting for right-to-left (RTL) support.",
-		names = {"rtl-excluded-path-regexps", "sass.rtl.excluded.path.regexps"}
+		names = {
+			"--rtl-excluded-path-regexps", "sass.rtl.excluded.path.regexps"
+		}
 	)
 	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
 
 	@Parameter(
 		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". The Ruby Sass compiler requires \"com.liferay.sass.compiler.ruby.jar\", \"com.liferay.ruby.gems.jar\", and \"jruby-complete.jar\" to be added to the classpath.",
-		names = {"compiler", "sass.compiler.class.name"}
+		names = {"--compiler", "sass.compiler.class.name"}
 	)
 	private String _sassCompilerClassName = "jni";
 

@@ -219,13 +219,6 @@ definition {
 			threadBody = "MB Body",
 			threadSubject = "MB Subject");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		MessageboardsThread.gotoCP(threadSubject = "MB Subject");
-
 		MessageboardsThread.editCP(
 			mbAttachmentFile = "Document_1.doc",
 			threadAttachmentRemove = "true",

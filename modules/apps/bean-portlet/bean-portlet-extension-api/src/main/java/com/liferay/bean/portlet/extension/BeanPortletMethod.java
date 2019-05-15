@@ -28,9 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BeanPortletMethod extends Comparable<BeanPortletMethod> {
 
-	@Override
-	public int compareTo(BeanPortletMethod beanPortletMethod);
-
 	public String getActionName();
 
 	public Class<?> getBeanType();

@@ -3841,6 +3841,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<contains string="${test.batch.name}" substring="unit" />
 				</or>
 				<then>
+					<mkdir dir="${liferay.home}/osgi/test" />
+
 					<copy
 						todir="${liferay.home}/osgi/modules"
 					>

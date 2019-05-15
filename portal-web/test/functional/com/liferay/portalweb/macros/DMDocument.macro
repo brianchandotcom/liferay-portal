@@ -909,6 +909,8 @@ definition {
 	}
 
 	macro expandInfo {
+		Pause(locator1 = "3000");
+
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
 			ManagementBar.clickInfo();
 		}

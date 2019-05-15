@@ -616,6 +616,7 @@ definition {
 		User.logoutPG();
 
 		User.addCreateAccountPG(
+			newPassword = "password",
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userFirstName = "userfn",
 			userLastName = "userln",

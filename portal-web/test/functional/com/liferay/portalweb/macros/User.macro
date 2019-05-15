@@ -294,6 +294,7 @@ definition {
 
 	macro addCreateAccountPG {
 		User.createAccount(
+			newPassword = "${newPassword}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
@@ -972,6 +973,14 @@ definition {
 		Type(
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "${newPassword}");
+
+		Type(
+			locator1 = "TextInput#ENTER_AGAIN",
+			value1 = "${newPassword}");
 
 		Button.clickSave();
 	}

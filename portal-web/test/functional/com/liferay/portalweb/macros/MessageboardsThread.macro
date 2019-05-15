@@ -703,7 +703,7 @@ definition {
 	}
 
 	macro restoreMBAttachmentCP {
-		Click(locator1 = "Link#MOVE_TO_RECYCLING_BIN");
+		Click(locator1 = "MessageBoardsEditMessage#ATTACHMENTS_RECENTLY_REMOVED");
 
 		IFrame.selectModalFrame();
 

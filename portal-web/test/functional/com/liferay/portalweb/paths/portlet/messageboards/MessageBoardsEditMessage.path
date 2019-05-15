@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ATTACHMENTS_RECENTLY_REMOVED</td>
+	<td>//a[@id='view-removed-attachments-link']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ATTACHMENTS_SAVED_STATUS</td>
 	<td>//h4[contains(.,'All files ready to be saved')]</td>
 	<td></td>

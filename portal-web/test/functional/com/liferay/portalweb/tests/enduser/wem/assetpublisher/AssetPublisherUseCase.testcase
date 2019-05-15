@@ -1758,7 +1758,7 @@ definition {
 			assetTitle = "WC WebContent Title",
 			relatedAssetTitle = "Blogs Entry Title");
 
-		RelatedAssets.viewPG(assetTitle = "Blogs Entry Title");
+		RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -1769,7 +1769,7 @@ definition {
 			assetTitle = "Blogs Entry Title",
 			relatedAssetTitle = "WC WebContent Title");
 
-		RelatedAssets.viewPG(assetTitle = "WC WebContent Title");
+		RelatedAssets.viewPG(relatedAssetTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -1861,9 +1861,9 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit");
 
 		BlogsEntry.viewAsRelatedAssetPG(
-			assetTitle = "DM Document Title Edit",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			relatedAssetTitle = "DM Document Title Edit");
 	}
 
 	@priority = "4"

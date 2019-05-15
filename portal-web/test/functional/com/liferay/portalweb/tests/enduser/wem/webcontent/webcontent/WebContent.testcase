@@ -1355,6 +1355,6 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.viewRelatedAssetsPGViaWCD(assetTitle = "WC WebContent 5 Title");
+		WebContent.viewRelatedAssetsPGViaWCD(relatedAssetTitle = "WC WebContent 5 Title");
 	}
 }

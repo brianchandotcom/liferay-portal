@@ -6051,14 +6051,21 @@ go</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${project.templates}" arg2="theme" />
+				<equals arg1="${project.templates}" arg2="service-builder" />
 				<then>
 					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
 
-					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme" task="assemble" />
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/foo" task="buildService" />
+
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/foo" task="assemble" />
 
 					<copy
-						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme/build/libs/sampletheme.war"
+						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/foo/foo-api/build/libs/foo.api-1.0.0.jar"
+						todir="${liferay.home}/deploy"
+					/>
+
+					<copy
+						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/foo/foo-service/build/libs/foo.service-1.0.0.jar"
 						todir="${liferay.home}/deploy"
 					/>
 				</then>

@@ -29,7 +29,7 @@ import org.osgi.service.metatype.AttributeDefinition;
  */
 public class AttributeDefinitionUtil {
 
-	public static Object gePropertyObject(
+	public static Object getPropertyObject(
 		AttributeDefinition attributeDefinition, Configuration configuration) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
@@ -80,7 +80,7 @@ public class AttributeDefinitionUtil {
 	public static String[] getPropertyStringArray(
 		AttributeDefinition attributeDefinition, Configuration configuration) {
 
-		Object value = gePropertyObject(attributeDefinition, configuration);
+		Object value = getPropertyObject(attributeDefinition, configuration);
 
 		if (value instanceof String[]) {
 			return (String[])value;

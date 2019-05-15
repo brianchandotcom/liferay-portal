@@ -41,6 +41,7 @@ public class CDIScopedBean<T> implements ScopedBean<T>, Serializable {
 		_containerCreatedInstance = bean.create(creationalContext);
 	}
 
+	@Override
 	public void destroy() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(

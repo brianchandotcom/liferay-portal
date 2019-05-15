@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
-import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 import com.liferay.talend.utils.URIUtils;
 
@@ -72,8 +71,12 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 
-		String actual = _apioResourceCollection.getResourceActualPage();
-		String last = _apioResourceCollection.getResourceLastPage();
+		String actual = _apioResourceCollection.path(
+			"page"
+		).asText();
+		String last = _apioResourceCollection.path(
+			"lastPage"
+		).asText();
 
 		if (actual.equals(last)) {
 			_hasMore = false;
@@ -84,19 +87,19 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_hasMore = true;
 
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
+		/*
+				String nextResourceCollectionSegmentURL =
+					_apioResourceCollection.getResourceNextPage();
 
-		String nextResourceCollectionSegmentURL =
-			_apioResourceCollection.getResourceNextPage();
+				URI decoratedNextResourceCollectionSegmentURI =
+					URIUtils.addQueryConditionToURL(
+						nextResourceCollectionSegmentURL, _queryCondition);
 
-		URI decoratedNextResourceCollectionSegmentURI =
-			URIUtils.addQueryConditionToURL(
-				nextResourceCollectionSegmentURL, _queryCondition);
-
-		_apioResourceCollection = new ApioResourceCollection(
-			liferaySource.doApioGetRequest(
-				decoratedNextResourceCollectionSegmentURI.toString()));
-
-		_inputRecordsJsonNode = _apioResourceCollection.getMemberJsonNode();
+				_apioResourceCollection = new ApioResourceCollection(
+					liferaySource.doApioGetRequest(
+						decoratedNextResourceCollectionSegmentURI.toString()));
+		*/
+		_inputRecordsJsonNode = _apioResourceCollection.path("items");
 
 		_inputRecordsIndex = 0;
 
@@ -184,10 +187,10 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 					decoratedResourceURI.toString());
 		}
 
-		_apioResourceCollection = new ApioResourceCollection(
-			liferaySource.doApioGetRequest(decoratedResourceURI.toString()));
+		_apioResourceCollection = liferaySource.doApioGetRequest(
+			decoratedResourceURI.toString());
 
-		_inputRecordsJsonNode = _apioResourceCollection.getMemberJsonNode();
+		_inputRecordsJsonNode = _apioResourceCollection.path("items");
 
 		boolean start = false;
 
@@ -228,7 +231,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private transient ApioResourceCollection _apioResourceCollection;
+	private transient JsonNode _apioResourceCollection;
 
 	/**
 	 * Represents state of this Reader: whether it has more records

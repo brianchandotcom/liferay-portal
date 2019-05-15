@@ -20,9 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.runtime.apio.ApioException;
-import com.liferay.talend.runtime.apio.ApioResult;
-import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.utils.URIUtils;
 
 import java.net.URI;
@@ -51,25 +48,12 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.talend.daikon.exception.TalendRuntimeException;
+
 /**
  * @author Zoltán Takács
  */
 public class RESTClient {
-
-	/**
-	 * A {@link MediaType} constant representing {@value #JSON-LD} media type.
-	 *
-	 * @review
-	 */
-	public static final MediaType APPLICATION_JSON_LD = new MediaType(
-		"application", "ld+json");
-
-	/**
-	 * A {@code String} constant representing {@value #JSON-LD} media type.
-	 *
-	 * @review
-	 */
-	public static final String JSON_LD = "application/ld+json";
 
 	public RESTClient(LiferayConnectionProperties liferayConnectionProperties) {
 		this(
@@ -87,19 +71,20 @@ public class RESTClient {
 			liferayConnectionProperties);
 	}
 
-	public ApioResult executeDeleteRequest() throws ApioException {
+	public Response executeDeleteRequest() {
 		WebTarget webTarget = _client.target(getEndpointURI());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Target: {}", getEndpoint());
 		}
 
-		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
 
 		return _invokeBuilder(HttpMethod.DELETE, builder);
 	}
 
-	public ApioResult executeGetRequest() throws ApioException {
+	public Response executeGetRequest() {
 		URI decoratedURI = URIUtils.updateWithQueryParameters(
 			getEndpointURI(), _getQueryParametersMap());
 
@@ -109,37 +94,36 @@ public class RESTClient {
 			_log.debug("Target: {}", decoratedURI.toASCIIString());
 		}
 
-		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
 
 		return _invokeBuilder(HttpMethod.GET, builder);
 	}
 
-	public ApioResult executePostRequest(JsonNode jsonNode)
-		throws ApioException {
-
+	public Response executePostRequest(JsonNode jsonNode) {
 		WebTarget webTarget = _client.target(getEndpointURI());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Target: {}", getEndpoint());
 		}
 
-		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
 
 		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
 
 		return _invokeBuilder(HttpMethod.POST, builder, entity);
 	}
 
-	public ApioResult executePutRequest(JsonNode jsonNode)
-		throws ApioException {
-
+	public Response executePutRequest(JsonNode jsonNode) {
 		WebTarget webTarget = _client.target(getEndpointURI());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Target: {}", getEndpoint());
 		}
 
-		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
 
 		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
 
@@ -218,7 +202,8 @@ public class RESTClient {
 
 			WebTarget webTarget = _client.target(location);
 
-			Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+			Invocation.Builder builder = webTarget.request(
+				MediaType.APPLICATION_JSON_TYPE);
 
 			response = builder.get();
 		}
@@ -248,7 +233,7 @@ public class RESTClient {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(
-			JSONLDConstants.PER_PAGE,
+			"pageSize",
 			_liferayConnectionProperties.itemsPerPage.getStringValue());
 
 		return parameters;
@@ -282,26 +267,24 @@ public class RESTClient {
 		return response;
 	}
 
-	private ApioResult _invokeBuilder(
-			String httpMethod, Invocation.Builder builder)
-		throws ApioException {
+	private Response _invokeBuilder(
+		String httpMethod, Invocation.Builder builder) {
 
 		return _invokeBuilder(httpMethod, builder, null);
 	}
 
-	private ApioResult _invokeBuilder(
-			String httpMethod, Invocation.Builder builder,
-			Entity<String> entity)
-		throws ApioException {
+	private Response _invokeBuilder(
+		String httpMethod, Invocation.Builder builder, Entity<String> entity) {
 
 		Response response = _handleResponse(httpMethod, builder, entity);
 
 		String messageEntity = response.readEntity(String.class);
 		int statusCode = response.getStatus();
+
 		Response.StatusType statusType = response.getStatusInfo();
 
 		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
-			return new ApioResult(statusCode, messageEntity);
+			return response;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -310,13 +293,12 @@ public class RESTClient {
 				messageEntity);
 		}
 
-		throw new ApioException(
-			statusCode, "Request failed: \n" + messageEntity);
+		throw TalendRuntimeException.createUnexpectedException(
+			"HTTP Code: " + statusCode + "\nRequest failed: \n" +
+				messageEntity);
 	}
 
-	private String _jsonNodeToPrettyString(JsonNode jsonNode)
-		throws ApioException {
-
+	private String _jsonNodeToPrettyString(JsonNode jsonNode) {
 		String json;
 
 		try {
@@ -331,7 +313,7 @@ public class RESTClient {
 					"Unable to convert JsonNode to a String representation");
 			}
 
-			throw new ApioException(jpe);
+			throw TalendRuntimeException.createUnexpectedException(jpe);
 		}
 
 		return json;

@@ -15,7 +15,6 @@
 package com.liferay.talend.utils;
 
 import com.liferay.talend.exception.URIPathException;
-import com.liferay.talend.runtime.apio.constants.ApioConstants;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,9 +46,7 @@ public class URIUtils {
 		}
 
 		return updateWithQueryParameters(
-			resourceURL,
-			Collections.singletonMap(
-				ApioConstants.QUERY_PARAM_FILTER, queryCondition));
+			resourceURL, Collections.singletonMap("filter", queryCondition));
 	}
 
 	public static String getLastPathSegment(String url) {
@@ -89,8 +86,7 @@ public class URIUtils {
 	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
 		return updateWithQueryParameters(
 			resourceURL,
-			Collections.singletonMap(
-				ApioConstants.QUERY_PARAM_PER_PAGE, String.valueOf(limit)));
+			Collections.singletonMap("pageSize", String.valueOf(limit)));
 	}
 
 	public static URI updateWithQueryParameters(

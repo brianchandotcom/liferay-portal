@@ -105,17 +105,8 @@ public class LiferayWriter
 			resourceId
 		);
 
-		try {
-			_liferaySink.doApioDeleteRequest(
-				_runtimeContainer, singleResourceUri.toASCIIString());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to delete the resource", ioe);
-			}
-
-			throw ioe;
-		}
+		_liferaySink.doApioDeleteRequest(
+			_runtimeContainer, singleResourceUri.toASCIIString());
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
@@ -134,18 +125,8 @@ public class LiferayWriter
 			resourceId
 		);
 
-		try {
-			_liferaySink.doApioPutRequest(
-				_runtimeContainer, singleResourceUri.toASCIIString(),
-				objectNode);
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to update the resource: ", ioe);
-			}
-
-			throw ioe;
-		}
+		_liferaySink.doApioPutRequest(
+			_runtimeContainer, singleResourceUri.toASCIIString(), objectNode);
 	}
 
 	public void doUpsert(IndexedRecord indexedRecord) throws IOException {
@@ -155,17 +136,8 @@ public class LiferayWriter
 			_tLiferayOutputProperties.resource.resourceProperty.
 				getResourceURL();
 
-		try {
-			_liferaySink.doApioPostRequest(
-				_runtimeContainer, resourceURL, objectNode);
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to insert the resource: ", ioe);
-			}
-
-			throw ioe;
-		}
+		_liferaySink.doApioPostRequest(
+			_runtimeContainer, resourceURL, objectNode);
 	}
 
 	@Override

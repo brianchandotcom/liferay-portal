@@ -14,13 +14,12 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.runtime.apio.form.Property;
-import com.liferay.talend.runtime.apio.jsonld.ApioApiDocumentation;
-import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,11 +60,10 @@ public class ResourceCollectionSchemaInferrer {
 	 * @review
 	 */
 	public static Schema inferSchemaByResourceFields(
-			ApioResourceCollection apioResourceCollection)
+			JsonNode apioResourceCollection)
 		throws IOException {
 
-		List<String> fieldNames =
-			apioResourceCollection.getResourceElementFieldNames();
+		List<String> fieldNames = Arrays.asList("a", "b");
 
 		int size = fieldNames.size();
 
@@ -96,10 +94,9 @@ public class ResourceCollectionSchemaInferrer {
 	}
 
 	public static Schema inferSchemaByResourceType(
-		ApioApiDocumentation.SupportedClass resourceSupportedClass) {
+		JsonNode resourceSupportedClass) {
 
-		List<Property> supportedProperties =
-			resourceSupportedClass.getSupportedProperties();
+		List<String> supportedProperties = new ArrayList<>();
 
 		List<Schema.Field> schemaFields = new ArrayList<>(
 			supportedProperties.size() + 1);
@@ -112,9 +109,9 @@ public class ResourceCollectionSchemaInferrer {
 
 		int i = 1;
 
-		for (Property supportedProperty : supportedProperties) {
+		for (String supportedProperty : supportedProperties) {
 			String fieldName = NameUtil.correct(
-				supportedProperty.getName(), i, fieldNames);
+				supportedProperty, i, fieldNames);
 
 			fieldNames.add(fieldName);
 

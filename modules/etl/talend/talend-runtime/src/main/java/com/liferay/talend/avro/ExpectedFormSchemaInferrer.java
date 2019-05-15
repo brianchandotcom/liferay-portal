@@ -15,9 +15,6 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.constants.AvroConstants;
-import com.liferay.talend.runtime.apio.form.Property;
-import com.liferay.talend.runtime.apio.jsonld.ApioForm;
-import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.utils.SchemaUtils;
 
@@ -42,16 +39,16 @@ import org.talend.daikon.avro.SchemaConstants;
 public class ExpectedFormSchemaInferrer {
 
 	public static Schema inferSchemaByFormOperation(
-		Operation operation, ApioForm apioForm) {
+		String operation, String endpoint) {
 
-		String methodName = operation.getMethod();
+		String methodName = operation;
 		Schema schema = SchemaProperties.EMPTY_SCHEMA;
 
 		if (methodName.equals(Action.Delete.getMethodName())) {
 			schema = _getDeleteSchema();
 		}
 		else {
-			schema = _getSchema(apioForm, operation);
+			schema = _getSchema(endpoint, operation);
 		}
 
 		return schema;
@@ -70,18 +67,15 @@ public class ExpectedFormSchemaInferrer {
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
-	private static Schema _getSchema(ApioForm apioForm, Operation operation) {
-		List<Property> properties = new ArrayList<>(
-			apioForm.getSupportedProperties());
+	private static Schema _getSchema(String endpoint, String operation) {
+		List<String> properties = new ArrayList<>();
 
-		if (operation.isSingleModel()) {
+		if (operation.equals(".isSingleModel()")) {
 			properties.add(_ID_PROPERTY);
 		}
 
-		Predicate<Property> optionalPredicate =
-			property -> property.isWriteable() && !property.isRequired();
-		Predicate<Property> requiredPredicate =
-			property -> property.isWriteable() && property.isRequired();
+		Predicate<String> optionalPredicate = property -> false;
+		Predicate<String> requiredPredicate = property -> true;
 
 		Schema optionalSchema = _getSchemaFromProperties(
 			properties, optionalPredicate, true);
@@ -94,16 +88,16 @@ public class ExpectedFormSchemaInferrer {
 	}
 
 	private static Schema _getSchemaFromProperties(
-		List<Property> properties, Predicate<Property> propertyPredicate,
+		List<String> properties, Predicate<String> propertyPredicate,
 		boolean modifiable) {
 
-		Stream<Property> stream = properties.stream();
+		Stream<String> stream = properties.stream();
 
 		List<String> fieldNames = stream.filter(
 			propertyPredicate
 		).map(
 			property -> {
-				String name = property.getName();
+				String name = property;
 
 				if (name.startsWith("#")) {
 					return name.substring(1);
@@ -141,7 +135,6 @@ public class ExpectedFormSchemaInferrer {
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
-	private static final Property _ID_PROPERTY = new Property(
-		AvroConstants.ID, true, false, true);
+	private static final String _ID_PROPERTY = AvroConstants.ID;
 
 }

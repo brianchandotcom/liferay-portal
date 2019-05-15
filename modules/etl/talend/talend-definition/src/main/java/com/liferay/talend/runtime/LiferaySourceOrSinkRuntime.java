@@ -15,7 +15,6 @@
 package com.liferay.talend.runtime;
 
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.runtime.apio.operation.Operation;
 
 import java.io.IOException;
 
@@ -36,7 +35,7 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public List<NamedThing> getAvailableWebSites() throws IOException;
 
-	public Schema getExpectedFormSchema(Operation operation) throws IOException;
+	public Schema getExpectedFormSchema(String endpoint) throws IOException;
 
 	public String getResourceCollectionType(String resourceURL)
 		throws IOException;
@@ -45,9 +44,6 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 		throws IOException;
 
 	public Schema getResourceSchemaByType(String resourceType)
-		throws IOException;
-
-	public List<Operation> getResourceSupportedOperations(String resourceURL)
 		throws IOException;
 
 	public boolean hasWebSiteResource();

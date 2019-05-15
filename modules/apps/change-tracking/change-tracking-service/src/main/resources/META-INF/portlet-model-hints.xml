@@ -11,6 +11,7 @@
 		<field name="name" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
+			<hint name="max-length">200</hint>
 		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

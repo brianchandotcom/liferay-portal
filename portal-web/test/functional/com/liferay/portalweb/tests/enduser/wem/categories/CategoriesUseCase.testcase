@@ -685,6 +685,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithMultipleCategories(
+			allowMultipleCategories = "false",
 			categoryNameList = "Category Name 1,Category Name 2",
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",

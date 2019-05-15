@@ -405,6 +405,10 @@ definition {
 			categoryNameList = "${categoryNameList}",
 			vocabularyName = "${vocabularyName}");
 
+		if ("${allowMultipleCategories}" == "false") {
+			Button.clickPublish();
+		}
+
 		PortletEntry.publish();
 	}
 

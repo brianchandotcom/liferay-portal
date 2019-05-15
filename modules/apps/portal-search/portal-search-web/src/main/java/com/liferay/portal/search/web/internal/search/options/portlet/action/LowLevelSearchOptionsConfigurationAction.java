@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.insights.portlet.action;
+package com.liferay.portal.search.web.internal.search.options.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsPortletKeys;
+import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SearchInsightsPortletKeys.SEARCH_INSIGHTS,
+	property = "javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
 	service = ConfigurationAction.class
 )
-public class SearchInsightsConfigurationAction
+public class LowLevelSearchOptionsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
@@ -49,7 +49,7 @@ public class SearchInsightsConfigurationAction
 			return "/error.jsp";
 		}
 
-		return "/search/insights/configuration.jsp";
+		return "/search/options/configuration_low_level.jsp";
 	}
 
 }

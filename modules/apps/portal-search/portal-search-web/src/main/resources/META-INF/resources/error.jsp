@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.search.web.internal.search.options.constants;
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-/**
- * @author Wade Cao
- */
-public class SearchOptionsPortletKeys {
+<%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
 
-	public static final String SEARCH_OPTIONS =
-		"com_liferay_portal_search_web_search_options_portlet_" +
-			"SearchOptionsPortlet";
+<liferay-ui:header
+	showBackURL="<%= false %>"
+	title="error"
+/>
 
-	public static final String SEARCH_OPTIONS_LOW_LEVEL =
-		"com_liferay_portal_search_web_search_options_portlet_" +
-			"LowLevelSearchOptionsPortlet";
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
+	<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
+</c:if>
 
-}
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-permission-to-view-this-page" />

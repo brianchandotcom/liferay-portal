@@ -48,18 +48,18 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.restore-current-view=false",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Search Options",
+		"javax.portlet.display-name=Low Level Search Options",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/search/options/view.jsp",
-		"javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS,
+		"javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class SearchOptionsPortlet extends MVCPortlet {
+public class LowLevelSearchOptionsPortlet extends MVCPortlet {
 
 	@Override
 	public void render(

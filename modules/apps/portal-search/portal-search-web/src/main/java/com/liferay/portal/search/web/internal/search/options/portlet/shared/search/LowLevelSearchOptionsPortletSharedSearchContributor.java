@@ -18,6 +18,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -28,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS,
+	property = "javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
 	service = PortletSharedSearchContributor.class
 )
-public class SearchOptionsPortletSharedSearchContributor
+public class LowLevelSearchOptionsPortletSharedSearchContributor
 	implements PortletSharedSearchContributor {
 
 	@Override
@@ -47,10 +48,12 @@ public class SearchOptionsPortletSharedSearchContributor
 				searchOptionsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		searchRequestBuilder.basicFacetSelection(
-			searchOptionsPortletPreferences.isBasicFacetSelection()
-		).emptySearchEnabled(
-			searchOptionsPortletPreferences.isAllowEmptySearches()
+		searchRequestBuilder.fields(
+			SearchStringUtil.splitAndUnquote(
+				searchOptionsPortletPreferences.getFieldsToReturnOptional())
+		).indexes(
+			SearchStringUtil.splitAndUnquote(
+				searchOptionsPortletPreferences.getIndexesOptional())
 		);
 	}
 

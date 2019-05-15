@@ -1064,60 +1064,61 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project);
 					final String groupId = String.valueOf(project.getGroup());
 
-					StringBuilder sb = new StringBuilder();
+					for (File classesDir : sourceSetOutput.getClassesDirs()) {
+						StringBuilder sb = new StringBuilder();
 
-					FileCollection classesDirs =
-						sourceSetOutput.getClassesDirs();
+						sb.append(classesDir);
+						sb.append("/META-INF/maven/");
+						sb.append(groupId);
+						sb.append('/');
+						sb.append(artifactId);
 
-					sb.append(classesDirs.getSingleFile());
+						final String dirName = sb.toString();
 
-					sb.append("/META-INF/maven/");
-					sb.append(groupId);
-					sb.append('/');
-					sb.append(artifactId);
+						mavenPluginConvention.pom(
+							new Closure<MavenPom>(project) {
 
-					final String dirName = sb.toString();
+								@SuppressWarnings("unused")
+								public MavenPom doCall(MavenPom mavenPom) {
+									Conf2ScopeMappingContainer
+										conf2ScopeMappingContainer =
+											mavenPom.getScopeMappings();
 
-					mavenPluginConvention.pom(
-						new Closure<MavenPom>(project) {
-
-							@SuppressWarnings("unused")
-							public MavenPom doCall(MavenPom mavenPom) {
-								Conf2ScopeMappingContainer
-									conf2ScopeMappingContainer =
-										mavenPom.getScopeMappings();
-
-								Configuration configuration =
-									GradleUtil.getConfiguration(
-										project,
+									String compileOnlyConfigurationName =
 										JavaPlugin.
-											COMPILE_ONLY_CONFIGURATION_NAME);
+											COMPILE_ONLY_CONFIGURATION_NAME;
 
-								conf2ScopeMappingContainer.addMapping(
-									MavenPlugin.PROVIDED_COMPILE_PRIORITY,
-									configuration,
-									Conf2ScopeMappingContainer.PROVIDED);
+									Configuration configuration =
+										GradleUtil.getConfiguration(
+											project,
+											compileOnlyConfigurationName);
 
-								mavenPom.setArtifactId(artifactId);
-								mavenPom.setGroupId(groupId);
+									conf2ScopeMappingContainer.addMapping(
+										MavenPlugin.PROVIDED_COMPILE_PRIORITY,
+										configuration,
+										Conf2ScopeMappingContainer.PROVIDED);
 
-								mavenPom.writeTo(dirName + "/pom.xml");
+									mavenPom.setArtifactId(artifactId);
+									mavenPom.setGroupId(groupId);
 
-								return mavenPom;
-							}
+									mavenPom.writeTo(dirName + "/pom.xml");
 
-						});
+									return mavenPom;
+								}
 
-					File file = new File(dirName, "pom.properties");
+							});
 
-					Properties properties = new Properties();
+						File file = new File(dirName, "pom.properties");
 
-					properties.setProperty("artifactId", artifactId);
-					properties.setProperty("groupId", groupId);
-					properties.setProperty(
-						"version", String.valueOf(project.getVersion()));
+						Properties properties = new Properties();
 
-					FileUtil.writeProperties(file, properties);
+						properties.setProperty("artifactId", artifactId);
+						properties.setProperty("groupId", groupId);
+						properties.setProperty(
+							"version", String.valueOf(project.getVersion()));
+
+						FileUtil.writeProperties(file, properties);
+					}
 				}
 
 			});

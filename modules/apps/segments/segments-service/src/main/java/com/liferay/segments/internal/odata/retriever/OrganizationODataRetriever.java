@@ -52,8 +52,8 @@ public class OrganizationODataRetriever
 		throws PortalException {
 
 		Hits hits = _oDataSearchAdapter.search(
-			companyId, filterString, Organization.class.getName(), _entityModel,
-			_filterParser, locale, start, end);
+			companyId, _filterParser, filterString,
+			Organization.class.getName(), _entityModel, locale, start, end);
 
 		return _getOrganizations(hits);
 	}
@@ -64,8 +64,8 @@ public class OrganizationODataRetriever
 		throws PortalException {
 
 		return _oDataSearchAdapter.searchCount(
-			companyId, filterString, Organization.class.getName(), _entityModel,
-			_filterParser, locale);
+			companyId, _filterParser, filterString,
+			Organization.class.getName(), _entityModel, locale);
 	}
 
 	private Organization _getOrganization(Document document)

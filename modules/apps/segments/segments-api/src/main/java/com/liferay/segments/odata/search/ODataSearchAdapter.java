@@ -27,14 +27,14 @@ import java.util.Locale;
 public interface ODataSearchAdapter {
 
 	public Hits search(
-			long companyId, String filterString, String className,
-			EntityModel entityModel, FilterParser filterParser, Locale locale,
-			int start, int end)
+			long companyId, FilterParser filterParser, String filterString,
+			String className, EntityModel entityModel, Locale locale, int start,
+			int end)
 		throws PortalException;
 
 	public int searchCount(
-			long companyId, String filterString, String className,
-			EntityModel entityModel, FilterParser filterParser, Locale locale)
+			long companyId, FilterParser filterParser, String filterString,
+			String className, EntityModel entityModel, Locale locale)
 		throws PortalException;
 
 }

@@ -51,9 +51,9 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 	@Override
 	public Hits search(
-			long companyId, String filterString, String className,
-			EntityModel entityModel, FilterParser filterParser, Locale locale,
-			int start, int end)
+			long companyId, FilterParser filterParser, String filterString,
+			String className, EntityModel entityModel, Locale locale, int start,
+			int end)
 		throws PortalException {
 
 		try {
@@ -91,8 +91,8 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 	@Override
 	public int searchCount(
-			long companyId, String filterString, String className,
-			EntityModel entityModel, FilterParser filterParser, Locale locale)
+			long companyId, FilterParser filterParser, String filterString,
+			String className, EntityModel entityModel, Locale locale)
 		throws PortalException {
 
 		try {

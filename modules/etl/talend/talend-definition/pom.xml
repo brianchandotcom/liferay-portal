@@ -61,6 +61,11 @@
 			<artifactId>auto-service</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
 		</dependency>
@@ -224,6 +229,25 @@
 				<artifactId>com.liferay.xml.formatter</artifactId>
 				<configuration>
 					<fileName>pom.xml</fileName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.20-PAXEXAM-PATCH</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<argLine>-Xms512m -Xmx1024m</argLine>
+					<systemPropertyVariables>
+						<pax.exam.karaf.version>4.0.2</pax.exam.karaf.version>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>

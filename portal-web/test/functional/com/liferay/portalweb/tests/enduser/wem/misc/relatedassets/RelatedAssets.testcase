@@ -161,7 +161,7 @@ definition {
 			pageName = "Private Page Name",
 			siteName = "Site Name");
 
-		RelatedAssets.viewPG(assetTitle = "Web Content Title 2");
+		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 2");
 	}
 
 	@description = "This is a use case for LPS-72472."
@@ -245,7 +245,7 @@ definition {
 			assetContent = "Web Content Content 2",
 			assetTitle = "Web Content Title 2");
 
-		RelatedAssets.viewPG(assetTitle = "Web Content Title 1");
+		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 1");
 
 		Staging.gotoPublishToLive();
 
@@ -261,7 +261,7 @@ definition {
 			assetContent = "Web Content Content 2",
 			assetTitle = "Web Content Title 2");
 
-		RelatedAssets.viewPG(assetTitle = "Web Content Title 1");
+		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 1");
 	}
 
 	@priority = "3"
@@ -397,6 +397,6 @@ definition {
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title");
 
-		RelatedAssets.viewPG(assetTitle = "Web Content Title");
+		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title");
 	}
 }

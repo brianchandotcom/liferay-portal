@@ -52,8 +52,8 @@ public class KBArticleODataRetriever implements ODataRetriever<KBArticle> {
 		throws PortalException {
 
 		Hits hits = _oDataSearchAdapter.search(
-			companyId, filterString, KBArticle.class.getName(), _entityModel,
-			_getFilterParser(), locale, start, end);
+			companyId, _getFilterParser(), filterString,
+			KBArticle.class.getName(), _entityModel, locale, start, end);
 
 		return _getKBArticles(hits);
 	}
@@ -64,8 +64,8 @@ public class KBArticleODataRetriever implements ODataRetriever<KBArticle> {
 		throws PortalException {
 
 		return _oDataSearchAdapter.searchCount(
-			companyId, filterString, KBArticle.class.getName(), _entityModel,
-			_getFilterParser(), locale);
+			companyId, _getFilterParser(), filterString,
+			KBArticle.class.getName(), _entityModel, locale);
 	}
 
 	private FilterParser _getFilterParser() {

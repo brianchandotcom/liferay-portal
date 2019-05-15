@@ -22,22 +22,18 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 
 <liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
 
-<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-
-	<%
-	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
-
-	Object[] messageArguments = kaleoDesignerDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks(), request);
-
-	String messageKey = kaleoDesignerDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
-	%>
-
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
 <liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280 main-content-body">
+	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+
+		<%
+		RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks(), request) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
 		id="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"

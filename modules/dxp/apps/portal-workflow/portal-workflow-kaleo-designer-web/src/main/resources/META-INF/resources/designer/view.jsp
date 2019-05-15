@@ -55,15 +55,6 @@ if (cur > 0) {
 }
 %>
 
-<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-
-	<%
-	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
-	%>
-
-	<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks(), request) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />

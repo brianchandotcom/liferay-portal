@@ -46,4 +46,27 @@
 		font-size: 2.775rem;
 		font-weight: bold;
 	}
+
+	.line-clamp {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 100%;
+		position: relative;
+
+		.lfr-portal-tooltip {
+			display: inline;
+		}
+	  }
+
+	
+	@supports (-webkit-line-clamp: 2) {
+		.line-clamp {
+			display: -webkit-box;
+			white-space: initial;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			height: auto;
+		}
+	}
 }

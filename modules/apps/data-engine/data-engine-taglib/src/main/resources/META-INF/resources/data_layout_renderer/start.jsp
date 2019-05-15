@@ -14,4 +14,10 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/data_layout_renderer/init.jsp" %>
+
+<div class="portlet-forms">
+	<div class="container-fluid-1280 ddm-form-builder-app">
+		<%= content %>
+	</div>
+</div>

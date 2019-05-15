@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/data_layout_renderer/init.jsp" %>

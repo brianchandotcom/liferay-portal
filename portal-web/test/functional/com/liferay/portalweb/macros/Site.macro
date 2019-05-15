@@ -383,6 +383,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		Pause(locator1 = "3000");
+
 		LexiconEntry.selectEntry(rowEntry = "${userGroupName}");
 
 		SelectFrameTop();

@@ -696,7 +696,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryCP(
-			categoryNameList = "Category Name 2",
+			categoryNameList = "Category Name 1",
 			webContentTitle = "Web Content Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -704,7 +704,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewCategorizationCategoryNotVisibleCP(
-			categoryName = "Category Name 1",
+			categoryName = "Category Name 2",
 			webContentTitle = "Web Content Title");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");

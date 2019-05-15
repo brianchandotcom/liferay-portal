@@ -51,6 +51,6 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _missingEmptyLineBeforeCommandPattern =
-		Pattern.compile("(?:\n(\t@.+?=.+?\n)*\t(function|macro|test) .*\n)");
+		Pattern.compile("\n(\t@.+?=.+?\n)*\t(function|macro|test) .*\n");
 
 }

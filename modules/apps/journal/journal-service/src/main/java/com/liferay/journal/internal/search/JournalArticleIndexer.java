@@ -728,19 +728,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		try {
-			String articleId = document.get(Field.ARTICLE_ID);
-			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-			double version = GetterUtil.getDouble(document.get(Field.VERSION));
-			PortletRequestModel portletRequestModel = new PortletRequestModel(
-				portletRequest, portletResponse);
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
-				groupId, articleId, version, null, Constants.VIEW,
-				LocaleUtil.toLanguageId(snippetLocale), 1, portletRequestModel,
-				themeDisplay);
+			JournalArticleDisplay articleDisplay = null;
 
 			String description = document.get(
 				snippetLocale,
@@ -748,6 +736,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				Field.DESCRIPTION);
 
 			if (Validator.isBlank(description)) {
+				articleDisplay = _createArticleDisplay(
+					document, snippetLocale, portletRequest, portletResponse);
+
 				content = _html.stripHtml(articleDisplay.getDescription());
 			}
 			else {
@@ -757,6 +748,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			content = _html.replaceNewLine(content);
 
 			if (Validator.isBlank(content)) {
+				if (articleDisplay == null) {
+					articleDisplay = _createArticleDisplay(
+						document, snippetLocale, portletRequest,
+						portletResponse);
+				}
+
 				content = _html.extractText(articleDisplay.getContent());
 			}
 
@@ -937,6 +934,26 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	@Reference(unbind = "-")
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
+	}
+
+	private JournalArticleDisplay _createArticleDisplay(
+		Document document, Locale snippetLocale, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
+		String articleId = document.get(Field.ARTICLE_ID);
+		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+		double version = GetterUtil.getDouble(document.get(Field.VERSION));
+		PortletRequestModel portletRequestModel = new PortletRequestModel(
+			portletRequest, portletResponse);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
+			groupId, articleId, version, null, Constants.VIEW,
+			LocaleUtil.toLanguageId(snippetLocale), 1, portletRequestModel,
+			themeDisplay);
+
+		return articleDisplay;
 	}
 
 	private String _stripAndHighlight(String text) {

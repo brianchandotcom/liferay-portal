@@ -92,6 +92,33 @@
 			}
 		).render();
 
+		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
+			var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
+			var scrollingContainer = window !== Liferay.Util.getOpener() ? window : searchContainer.get('contentBox').ancestor('#main-content')._node;
+			var tHeadBoundingClientRectangle = fixedHeader.previousElementSibling.getBoundingClientRect();
+
+			var fixedHeaderScrollEvent = function(event) {
+				console.log(scrollingContainer);
+				fixedHeader.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - tHeadBoundingClientRectangle.height) + 'px)';
+
+				if (fixedHeader.classList.contains('hide') && (scrollingContainer.scrollTop >= tHeadBoundingClientRectangle.height)) {
+					fixedHeader.classList.remove('hide');
+				}
+				else if (scrollingContainer.scrollTop < tHeadBoundingClientRectangle.height) {
+					fixedHeader.classList.add('hide');
+				}
+			};
+
+			scrollingContainer.addEventListener('scroll', fixedHeaderScrollEvent);
+
+			Liferay.on(
+				'destroyPortlet',
+				function() {
+					scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
+				}
+			);
+		</c:if>
+
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
 
 		var destroySearchContainer = function(event) {

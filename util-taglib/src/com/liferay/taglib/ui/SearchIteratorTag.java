@@ -43,12 +43,20 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		return _searchResultCssClass;
 	}
 
+	public boolean isFixedHeader() {
+		return _fixedHeader;
+	}
+
 	public boolean isPaginate() {
 		return _paginate;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setFixedHeader(boolean fixedHeader) {
+		_fixedHeader = fixedHeader;
 	}
 
 	@Override
@@ -73,6 +81,7 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		super.cleanUp();
 
 		_displayStyle = DEFAULT_DISPLAY_STYLE;
+		_fixedHeader = false;
 		_markupView = null;
 		_paginate = true;
 		_resultRowSplitter = null;
@@ -103,6 +112,8 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:displayStyle", getDisplayStyle());
 		httpServletRequest.setAttribute(
+			"liferay-ui:search-iterator:fixedHeader", String.valueOf(_fixedHeader));
+		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:markupView", _markupView);
 		httpServletRequest.setAttribute(
 			"liferay-ui:search-iterator:paginate", String.valueOf(_paginate));
@@ -114,6 +125,7 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 	}
 
 	private String _displayStyle = DEFAULT_DISPLAY_STYLE;
+	private boolean _fixedHeader = false;
 	private String _markupView;
 	private boolean _paginate = true;
 	private ResultRowSplitter _resultRowSplitter;

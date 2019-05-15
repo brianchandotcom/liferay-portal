@@ -48,7 +48,9 @@ if (!resultRowSplitterEntries.isEmpty()) {
 		</c:if>
 
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
-			<thead>
+			<liferay-util:buffer
+				var="tableHeaderContent"
+			>
 				<tr>
 
 					<%
@@ -161,7 +163,18 @@ if (!resultRowSplitterEntries.isEmpty()) {
 					%>
 
 				</tr>
+			</liferay-util:buffer>
+
+			<thead>
+				<%= tableHeader %>
 			</thead>
+
+
+			<c:if test="<%= fixedHeader %>">
+				<thead class="lfr-search-iterator-fixed-header hide" id="<%= namespace + id %>fixedHeader">
+					<%= tableHeader %>
+				</thead>
+			</c:if>
 		</c:if>
 
 		<tbody>

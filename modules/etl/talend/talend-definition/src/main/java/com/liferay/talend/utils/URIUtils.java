@@ -46,12 +46,10 @@ public class URIUtils {
 			return getURI(resourceURL);
 		}
 
-		URI decoratedURI = updateWithQueryParameters(
+		return updateWithQueryParameters(
 			resourceURL,
 			Collections.singletonMap(
 				ApioConstants.QUERY_PARAM_FILTER, queryCondition));
-
-		return decoratedURI;
 	}
 
 	public static String getLastPathSegment(String url) {

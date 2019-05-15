@@ -92,10 +92,7 @@ public class ResourceCollectionSchemaInferrer {
 			schemaFields.add(i, designField);
 		}
 
-		Schema schema = Schema.createRecord(
-			"Runtime", null, null, false, schemaFields);
-
-		return schema;
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
 	public static Schema inferSchemaByResourceType(
@@ -130,10 +127,7 @@ public class ResourceCollectionSchemaInferrer {
 			i++;
 		}
 
-		Schema schema = Schema.createRecord(
-			"Runtime", null, null, false, schemaFields);
-
-		return schema;
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
 	private static void _addIdSchemaField(

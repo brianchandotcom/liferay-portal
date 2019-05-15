@@ -87,10 +87,7 @@ public class TLiferayOutputProperties
 
 		rejectFields.add(field);
 
-		Schema rejectSchema = SchemaUtils.newSchema(
-			inputSchema, "rejectOutput", rejectFields);
-
-		return rejectSchema;
+		return SchemaUtils.newSchema(inputSchema, "rejectOutput", rejectFields);
 	}
 
 	public TLiferayOutputProperties(String name) {
@@ -542,7 +539,7 @@ public class TLiferayOutputProperties
 
 		Stream<Operation> stream = operationStreamSupplier.get();
 
-		Operation supportedOperation = stream.filter(
+		return stream.filter(
 			operation -> method.equals(operation.getMethod())
 		).findFirst(
 		).orElseThrow(
@@ -551,8 +548,6 @@ public class TLiferayOutputProperties
 					"error.validation.operation", action.name(),
 					availableOperations))
 		);
-
-		return supportedOperation;
 	}
 
 	private void _setupSchemas() {

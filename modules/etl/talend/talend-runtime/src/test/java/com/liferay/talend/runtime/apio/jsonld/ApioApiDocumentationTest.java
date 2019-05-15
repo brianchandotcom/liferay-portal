@@ -30,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,7 +79,7 @@ public class ApioApiDocumentationTest {
 
 		ApioApiDocumentation.SupportedClass supportedClass =
 			supportedClassStream.filter(
-				clazz -> "Comment".equals(clazz.getName())
+				clazz -> Objects.equals("Comment", clazz.getName())
 			).findFirst(
 			).orElseThrow(
 				() -> new AssertionError(
@@ -114,7 +115,7 @@ public class ApioApiDocumentationTest {
 
 		ApioApiDocumentation.SupportedClass supportedClass =
 			supportedClassStream.filter(
-				clazz -> "BlogPosting".equals(clazz.getName())
+				clazz -> Objects.equals("BlogPosting", clazz.getName())
 			).findFirst(
 			).orElseThrow(
 				() -> new AssertionError(

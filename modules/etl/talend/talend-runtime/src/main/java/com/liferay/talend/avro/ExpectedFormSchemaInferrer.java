@@ -67,10 +67,7 @@ public class ExpectedFormSchemaInferrer {
 
 		schemaFields.add(designField);
 
-		Schema schema = Schema.createRecord(
-			"Runtime", null, null, false, schemaFields);
-
-		return schema;
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
 	private static Schema _getSchema(ApioForm apioForm, Operation operation) {

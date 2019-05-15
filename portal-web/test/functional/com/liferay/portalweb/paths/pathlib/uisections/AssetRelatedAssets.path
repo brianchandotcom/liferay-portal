@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//div[contains(@class,'links')]//a</td>
+	<td>//div[contains(@class,'links')]//a[contains(text(),'${key_relatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

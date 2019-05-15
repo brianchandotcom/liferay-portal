@@ -64,8 +64,8 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testMissingEmptyLineBeforeCommand() throws Exception {
-		test("MissingEmptyLineBeforeCommand.testmacro");
+	public void testMissingEmptyLines() throws Exception {
+		test("MissingEmptyLines.testmacro");
 	}
 
 }

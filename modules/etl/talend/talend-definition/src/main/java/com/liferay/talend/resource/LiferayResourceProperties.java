@@ -239,10 +239,10 @@ public class LiferayResourceProperties
 			getEffectiveLiferayConnectionProperties();
 
 		liferayConnectionProperties.webSiteProperty.setHost(
-			liferayConnectionProperties.endpoint.getValue());
+			liferayConnectionProperties.apiSpecURL.getValue());
 
 		resourceProperty.setHost(
-			liferayConnectionProperties.endpoint.getValue());
+			liferayConnectionProperties.apiSpecURL.getValue());
 
 		if (liferayConnectionProperties.siteFilter.getValue()) {
 			resourceProperty.setUriPrefix(
@@ -252,7 +252,7 @@ public class LiferayResourceProperties
 		}
 
 		resourceProperty.setUriPrefix(
-			liferayConnectionProperties.endpoint.getValue());
+			liferayConnectionProperties.apiSpecURL.getValue());
 	}
 
 	public ValidationResult validateValidateCondition() {
@@ -264,7 +264,7 @@ public class LiferayResourceProperties
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveLiferayConnectionProperties();
 
-		String endpointUrl = liferayConnectionProperties.endpoint.getValue();
+		String endpointUrl = liferayConnectionProperties.apiSpecURL.getValue();
 
 		try {
 			URIUtils.addQueryConditionToURL(endpointUrl, condition.getValue());
@@ -317,8 +317,8 @@ public class LiferayResourceProperties
 						referencedLiferayConnectionProperties.userId.
 							getValue());
 				_log.debug(
-					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
+					"API Spec URL: " +
+						referencedLiferayConnectionProperties.apiSpecURL.
 							getValue());
 			}
 
@@ -329,7 +329,8 @@ public class LiferayResourceProperties
 			_log.debug(
 				"User ID: " + liferayConnectionProperties.userId.getValue());
 			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+				"API Spec URL: " +
+					liferayConnectionProperties.apiSpecURL.getValue());
 		}
 
 		return liferayConnectionProperties;

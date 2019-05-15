@@ -62,8 +62,8 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(FORM_WIZARD));
 	}
 
-	public void afterEndpoint() {
-		webSiteProperty.setHost(endpoint.getValue());
+	public void afterApiSpecURL() {
+		webSiteProperty.setHost(apiSpecURL.getValue());
 	}
 
 	public void afterReferencedComponent() {
@@ -224,7 +224,7 @@ public class LiferayConnectionProperties
 		}
 
 		PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
-		PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
+		PropertiesUtils.setHidden(form, apiSpecURL, useOtherConnection);
 		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
 		PropertiesUtils.setHidden(form, password, useOtherConnection);
 		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
@@ -260,7 +260,7 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(name);
 
-		wizardForm.addRow(endpoint);
+		wizardForm.addRow(apiSpecURL);
 
 		wizardForm.addRow(anonymousLogin);
 
@@ -291,7 +291,7 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(loginMainWidget);
 
-		mainForm.addRow(endpoint);
+		mainForm.addRow(apiSpecURL);
 
 		mainForm.addRow(anonymousLogin);
 
@@ -334,7 +334,7 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(loginReferenceWidget);
 
-		referenceForm.addRow(endpoint);
+		referenceForm.addRow(apiSpecURL);
 
 		referenceForm.addRow(anonymousLogin);
 
@@ -382,7 +382,7 @@ public class LiferayConnectionProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		endpoint.setValue(_HOST);
+		apiSpecURL.setValue(_COMMERCE_CATALOG_OAS_URL);
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.Basic);
@@ -390,7 +390,7 @@ public class LiferayConnectionProperties
 		siteFilter.setValue(false);
 		userId.setValue(_USER_ID);
 		webSiteName.setValue("");
-		webSiteProperty.setHost(endpoint.getValue());
+		webSiteProperty.setHost(apiSpecURL.getValue());
 		webSiteProperty.setValue("");
 	}
 
@@ -427,9 +427,10 @@ public class LiferayConnectionProperties
 	public PresentationItem advanced = new PresentationItem("advanced");
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
+	public Property<String> apiSpecURL = PropertyFactory.newString(
+		"apiSpecURL");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
 		"connectTimeout", _CONNECT_TIMEOUT);
-	public Property<String> endpoint = PropertyFactory.newString("endpoint");
 	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
 		"followRedirects");
 	public Property<Boolean> forceHttps = PropertyFactory.newBoolean(
@@ -493,9 +494,11 @@ public class LiferayConnectionProperties
 			LiferayConnectionProperties.class);
 	}
 
-	private static final int _CONNECT_TIMEOUT = 30;
+	private static final String _COMMERCE_CATALOG_OAS_URL =
+		"\"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
+			"/openapi.yaml\"";
 
-	private static final String _HOST = "\"http://localhost:8080/o/api\"";
+	private static final int _CONNECT_TIMEOUT = 30;
 
 	private static final int _ITEMS_PER_PAGE = 100;
 

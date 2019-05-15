@@ -313,7 +313,7 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		String endpointURL = liferayConnectionProperties.endpoint.getValue();
+		String apiSpecURL = liferayConnectionProperties.apiSpecURL.getValue();
 
 		JsonNode apiDocumentationJsonNode = doApioGetRequest(
 			apiSpecURL.concat("/doc"));
@@ -333,7 +333,7 @@ public class LiferaySourceOrSink
 			String endpoint = restClient.getEndpoint();
 
 			if (!endpoint.equals(
-					liferayConnectionProperties.endpoint.getValue())) {
+					liferayConnectionProperties.apiSpecURL.getValue())) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -440,14 +440,15 @@ public class LiferaySourceOrSink
 
 		boolean anonymousLogin =
 			liferayConnectionProperties.anonymousLogin.getValue();
-		String endpoint = liferayConnectionProperties.endpoint.getValue();
+		String endpoint = liferayConnectionProperties.apiSpecURL.getValue();
 		String password = liferayConnectionProperties.password.getValue();
+
 		String userId = liferayConnectionProperties.userId.getValue();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Validate endpoint: {}",
-				liferayConnectionProperties.endpoint.getValue());
+				"Validate API Spec URL: {}",
+				liferayConnectionProperties.apiSpecURL.getValue());
 			_log.debug(
 				"Validate user ID: {}",
 				liferayConnectionProperties.userId.getValue());

@@ -57,7 +57,7 @@ public class RESTClient {
 
 	public RESTClient(LiferayConnectionProperties liferayConnectionProperties) {
 		this(
-			liferayConnectionProperties.endpoint.getValue(),
+			liferayConnectionProperties.apiSpecURL.getValue(),
 			liferayConnectionProperties);
 	}
 

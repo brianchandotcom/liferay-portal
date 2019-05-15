@@ -1,5 +1,6 @@
 import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
+import { getRequestUrl } from '../../../../shared/components/filter/util/filterUtil';
 import InstanceListCard from '../InstanceListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -28,17 +29,20 @@ test('Should build request url with query filters', () => {
 				page={1}
 				pageSize={10}
 				processId={12351}
-				query="?filters.slaStatus%5B0%5D=overdue"
+				query="?filters.status%5B0%5D=pending&filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B0%5D=ontime"
 			/>
 		</Router>
 	);
 
 	const instance = component.find(InstanceListCard).instance();
 
-	const requestUrl = instance.getRequestUrl();
+	const requestUrl = getRequestUrl(
+		instance.props.query,
+		'/processes/12351/instances?page=1&pageSize=10'
+	);
 
 	expect(requestUrl).toEqual(
-		'/processes/12351/instances?page=1&pageSize=10&slaStatus=overdue'
+		'/processes/12351/instances?page=1&pageSize=10&status=pending&slaStatus=overdue,ontime'
 	);
 });
 

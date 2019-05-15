@@ -152,6 +152,10 @@ public class WorkflowMetricsSLAProcessor {
 										getCompanyId());
 								addRequiredTerm("deleted", false);
 								addRequiredTerm("instanceId", instanceId);
+								addRequiredTerm(
+									"slaDefinitionId",
+									workflowMetricsSLADefinition.
+										getWorkflowMetricsSLADefinitionId());
 							}
 						});
 				}

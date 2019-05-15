@@ -34,4 +34,5 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
 	}
+
 }

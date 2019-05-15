@@ -1,4 +1,5 @@
 definition {
+
 	property incorrectline.portal.release.a = "true"; 	property portal.upstream = "true";
 	property incorrectline.portal.release.b = "true";property portal.upstream = "true";
 	property correctlin.testray.main.component.name = "Smoke";
@@ -19,4 +20,5 @@ definition {
 			portlet = "Blogs"
 		);
 	}
+
 }

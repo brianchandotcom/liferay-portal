@@ -20,6 +20,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.renderer.InfoItemRenderer;
 import com.liferay.info.renderer.InfoItemRendererTracker;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;

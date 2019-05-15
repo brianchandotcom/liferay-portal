@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.stats;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.io.Serializable;

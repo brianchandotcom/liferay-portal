@@ -16,7 +16,7 @@ package com.liferay.segments.internal.asah.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Date;
 import java.util.HashMap;

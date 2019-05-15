@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.query;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.search.query.DateRangeTermQuery;
 import com.liferay.portal.search.query.QueryVisitor;

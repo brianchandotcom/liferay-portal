@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
@@ -91,7 +91,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 		}
 		catch (PortalException pe) {
 			_log.error(
-				com.liferay.petra.string.StringBundler.concat(
+				StringBundler.concat(
 					"Unable to evaluate criteria ", criteria, " with filter ",
 					filterString, " and conjunction ", conjunction.getValue()),
 				pe);

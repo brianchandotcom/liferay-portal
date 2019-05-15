@@ -5,13 +5,18 @@ definition {
 		Button.viewNotPresent(button = "Select");
 	}
 
-	macro mapEditableTextToField {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			key_id = "${id}",
-			locator1 = "Fragment#EDITABLE_FIELD");
+	macro gotoEditableFieldMapping {
+		PageEditor.clickEditableField(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
 
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
+	}
+
+	macro mapEditableTextToField {
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
 
 		Select(
 			key_fieldLabel = "Source",

@@ -39,7 +39,9 @@ public abstract class LogParametersCheck extends BaseFileCheck {
 		Matcher matcher = _logPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start()) ||
+				!isJavaSource(content, matcher.start())) {
+
 				continue;
 			}
 
@@ -82,6 +84,10 @@ public abstract class LogParametersCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	protected boolean isJavaSource(String content, int pos) {
+		return true;
 	}
 
 	private static final Pattern _logPattern = Pattern.compile(

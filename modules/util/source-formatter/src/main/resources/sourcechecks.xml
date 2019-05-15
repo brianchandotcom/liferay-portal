@@ -369,6 +369,9 @@
 		<!-- Portal checks -->
 
 		<check name="JSPLanguageKeysCheck" />
+		<check name="JSPLogParametersCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSPSendRedirectCheck" />
 		<check name="JSPStringMethodsCheck" />
 		<check name="LocaleUtilCheck" />

@@ -38,7 +38,6 @@ JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("re
 				for (int i = 0; i < relevantIdpConnectionsJSONArray.length(); i++) {
 					JSONObject relevantIdpConnectionJSONObject = relevantIdpConnectionsJSONArray.getJSONObject(i);
 
-					String enabled = relevantIdpConnectionJSONObject.getString("enabled");
 					String entityId = relevantIdpConnectionJSONObject.getString("entityId");
 					String name = relevantIdpConnectionJSONObject.getString("name");
 				%>

@@ -27,8 +27,6 @@ DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
-long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
-
 String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERSION_DEFAULT);
 
 DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion(version);

@@ -110,7 +110,6 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 ReportsEngineDisplayContext reportsEngineDisplayContext = new ReportsEngineDisplayContext(liferayPortletRequest, liferayPortletResponse);

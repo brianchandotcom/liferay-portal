@@ -74,11 +74,6 @@ page import="javax.portlet.WindowState" %>
 
 <%
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
-String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
-String scopeTitle = ParamUtil.getString(request, "scopeTitle");
-boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
-boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
-boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext = (KaleoFormsAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 

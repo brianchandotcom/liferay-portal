@@ -331,6 +331,10 @@ definition {
 				key_attachmentName = "${mbAttachmentFile}",
 				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK",
 				value1 = "Move to Recycle Bin");
+
+			AssertElementNotPresent(
+				key_rowEntry = "${mbAttachmentFile}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
 
 		if (isSet(threadSubjectEdit)) {

@@ -235,6 +235,8 @@ definition {
 			threadSubject = "MB Subject",
 			userName = "Test Test");
 
+		AssertElementNotPresent(locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1");
+
 		PortletEntry.clickEditFromEllipsis();
 
 		MessageboardsThread.restoreMBAttachmentCP(mbAttachmentFile = "Document_1.doc");

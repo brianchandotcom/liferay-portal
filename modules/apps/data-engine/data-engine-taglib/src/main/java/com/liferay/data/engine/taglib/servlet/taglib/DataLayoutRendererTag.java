@@ -31,11 +31,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 
-	protected String getDataLayoutHTML() {
-		String dataLayoutHTML = StringPool.BLANK;
+	protected String getContent() {
+		String content = StringPool.BLANK;
 
 		try {
-			dataLayoutHTML = DataLayoutTaglibUtil.renderDataLayout(
+			content = DataLayoutTaglibUtil.renderDataLayout(
 				getDataLayoutId(), request,
 				PortalUtil.getHttpServletResponse(
 					(RenderResponse)request.getAttribute(
@@ -47,14 +47,14 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 			}
 		}
 
-		return dataLayoutHTML;
+		return content;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		setNamespacedAttribute(request, "content", getDataLayoutHTML());
+		setNamespacedAttribute(request, "content", getContent());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

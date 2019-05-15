@@ -2,4 +2,4 @@ Bundle-Activator: com.liferay.external.data.source.test.activator.ExternalDataSo
 Bundle-Name: Liferay External Data Source Test
 Bundle-SymbolicName: com.liferay.external.data.source.test
 Bundle-Version: 1.0.0
--includeresource: build/classes/java/testIntegration
+-includeresource: test-classes/integration

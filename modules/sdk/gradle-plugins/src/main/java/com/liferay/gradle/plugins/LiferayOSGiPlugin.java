@@ -947,10 +947,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		File classesDir = new File(docrootDir, "WEB-INF/classes");
 
-		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
-
-		sourceDirectorySet.setOutputDir(classesDir);
-
+		sourceSetOutput.setClassesDir(classesDir);
 		sourceSetOutput.setResourcesDir(classesDir);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();

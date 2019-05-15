@@ -22,7 +22,7 @@ import {PagesVisitor} from '../../util/visitors.es';
  * @extends Component
  */
 
-class FormBuilder extends Component {
+class FormBuilderBase extends Component {
 	static PROPS = {
 
 		/**
@@ -520,4 +520,6 @@ export default compose(
 	withMoveableFields,
 	withMultiplePages,
 	withResizeableColumns
-)(FormBuilder);
+)(FormBuilderBase);
+
+export {FormBuilderBase};

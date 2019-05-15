@@ -98,7 +98,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 
 				String expectedURL = StringBundler.concat(
 					"/web/", StringUtil.lowerCase(_group.getGroupKey()), "/d/",
-					String.valueOf(fileEntry.getFileEntryId()));
+					fileEntry.getFileEntryId());
 
 				Assert.assertEquals(
 					expectedURL,

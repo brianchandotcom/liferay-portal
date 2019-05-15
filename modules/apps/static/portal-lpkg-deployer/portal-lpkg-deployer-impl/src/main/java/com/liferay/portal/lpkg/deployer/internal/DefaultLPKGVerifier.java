@@ -107,7 +107,7 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 					throw new LPKGVerifyException(
 						StringBundler.concat(
-							"Existing LPKG bundle ", String.valueOf(bundle),
+							"Existing LPKG bundle ", bundle,
 							" has the same symbolic name and version as LPKG ",
 							"file ", location));
 				}

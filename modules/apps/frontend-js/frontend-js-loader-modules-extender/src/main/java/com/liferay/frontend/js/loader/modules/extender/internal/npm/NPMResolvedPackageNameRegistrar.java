@@ -89,8 +89,7 @@ public class NPMResolvedPackageNameRegistrar
 		return _bundleContext.createFilter(
 			StringBundler.concat(
 				"(&(objectClass=", ServletContext.class.getName(), ")",
-				"(service.bundleid=", String.valueOf(bundle.getBundleId()),
-				"))"));
+				"(service.bundleid=", bundle.getBundleId(), "))"));
 	}
 
 	private final BundleContext _bundleContext;

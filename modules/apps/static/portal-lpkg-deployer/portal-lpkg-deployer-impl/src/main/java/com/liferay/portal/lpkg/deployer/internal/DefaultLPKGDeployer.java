@@ -108,9 +108,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		if (!lpkgFilePath.startsWith(_deploymentDirPath)) {
 			throw new LPKGVerifyException(
 				StringBundler.concat(
-					"Unable to deploy ", String.valueOf(lpkgFile),
+					"Unable to deploy ", lpkgFile,
 					" from outside the deployment directory ",
-					String.valueOf(_deploymentDirPath)));
+					_deploymentDirPath));
 		}
 
 		List<Bundle> oldBundles = _lpkgVerifier.verify(lpkgFile);
@@ -122,9 +122,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Uninstalled older LPKG bundle ",
-							String.valueOf(bundle), " in order to install ",
-							String.valueOf(lpkgFile)));
+							"Uninstalled older LPKG bundle ", bundle,
+							" in order to install ", lpkgFile));
 				}
 
 				String location = LPKGLocationUtil.getLPKGLocation(lpkgFile);
@@ -140,8 +139,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			catch (BundleException be) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to uninstall ", String.valueOf(bundle),
-						" in order to install ", String.valueOf(lpkgFile)),
+						"Unable to uninstall ", bundle, " in order to install ",
+						lpkgFile),
 					be);
 			}
 		}
@@ -206,9 +205,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 					throw new Exception(
 						StringBundler.concat(
 							"Unable to refresh references to the new bundle ",
-							String.valueOf(lpkgBundle),
-							" because of framework event ",
-							String.valueOf(frameworkEvent)),
+							lpkgBundle, " because of framework event ",
+							frameworkEvent),
 						frameworkEvent.getThrowable());
 				}
 			}

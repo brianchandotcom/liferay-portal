@@ -144,10 +144,9 @@ public class SharingEntryLocalServiceImpl
 
 			throw new DuplicateSharingEntryException(
 				StringBundler.concat(
-					"A sharing entry already exists for user ",
-					String.valueOf(toUserId), " with classNameId ",
-					String.valueOf(classNameId), " and classPK ",
-					String.valueOf(classPK)));
+					"A sharing entry already exists for user ", toUserId,
+					" with classNameId ", classNameId, " and classPK ",
+					classPK));
 		}
 
 		long sharingEntryId = counterLocalService.increment();
@@ -297,8 +296,7 @@ public class SharingEntryLocalServiceImpl
 					_log.warn(
 						StringBundler.concat(
 							"Unable to index sharing entry for class name ",
-							className, " and primary key ",
-							String.valueOf(classPK)),
+							className, " and primary key ", classPK),
 						se);
 				}
 			}

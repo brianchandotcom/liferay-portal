@@ -213,9 +213,8 @@ public class JournalArticleImageUpgradeUtil {
 		}
 		catch (PortalException pe) {
 			String message = StringBundler.concat(
-				"Unable to get file entry with group ID ",
-				String.valueOf(groupId), ", folder ID ",
-				String.valueOf(folderId), ", and title ", title);
+				"Unable to get file entry with group ID ", groupId,
+				", folder ID ", folderId, ", and title ", title);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(message, pe);

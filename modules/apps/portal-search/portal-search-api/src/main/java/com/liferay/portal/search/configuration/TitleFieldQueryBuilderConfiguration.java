@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration",
 	localization = "content/Language",
-	name = "title-field-query-configuration-name"
+	name = "title-field-query-builder-configuration-name"
 )
 @ProviderType
 public interface TitleFieldQueryBuilderConfiguration {

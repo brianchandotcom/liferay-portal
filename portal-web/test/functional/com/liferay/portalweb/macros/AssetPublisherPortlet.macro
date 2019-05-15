@@ -1499,6 +1499,7 @@ definition {
 				value1 = "Related Assets");
 
 			AssertTextEquals(
+				key_relatedAssetTitle = "${relatedAssetTitle}",
 				locator1 = "AssetRelatedAssets#ASSET_TITLE",
 				value1 = "${relatedAssetTitle}");
 		}

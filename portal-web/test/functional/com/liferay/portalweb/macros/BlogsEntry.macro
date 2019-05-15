@@ -636,15 +636,13 @@ definition {
 	}
 
 	macro viewAsRelatedAssetPG {
-		var key_assetTitle = "${assetTitle}";
-		var key_entryContent = "${entryContent}";
-		var key_entryTitle = "${entryTitle}";
-
 		AssertTextEquals(
+			key_entryTitle = "${entryTitle}",
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
 		AssertTextEquals(
+			key_entryContent = "${entryContent}",
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 
@@ -653,8 +651,9 @@ definition {
 			value1 = "Related Assets");
 
 		AssertTextEquals(
+			key_relatedAssetTitle = "${relatedAssetTitle}",
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
-			value1 = "${assetTitle}");
+			value1 = "${relatedAssetTitle}");
 	}
 
 	macro viewContent {

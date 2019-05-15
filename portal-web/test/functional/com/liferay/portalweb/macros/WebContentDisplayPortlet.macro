@@ -331,6 +331,7 @@ definition {
 			value1 = "Subscribe");
 
 		AssertTextEquals(
+			key_relatedAssetTitle = "${relatedAssetTitle}",
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
 			value1 = "${relatedAssetTitle}");
 

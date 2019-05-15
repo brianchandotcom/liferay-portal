@@ -49,7 +49,7 @@ CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayCont
 				id='<%= renderResponse.getNamespace() + "filterCustomPanel" %>'
 				markupView="lexicon"
 				persistState="<%= true %>"
-				title="<%= customFilterDisplayContext.getHeading() %>"
+				title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 			>
 				<aui:form action="<%= customFilterDisplayContext.getSearchURL() %>" method="get" name="customFilterForm">
 					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />

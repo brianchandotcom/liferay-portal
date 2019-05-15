@@ -1,0 +1,5 @@
+{
+	"ignore":["**/*.js"],
+	"plugins":["transform-class-properties","transform-decorators-legacy","transform-object-rest-spread"],
+	"presets":["@babel/preset-env","env"]
+}

@@ -26,6 +26,7 @@ import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
 import com.liferay.data.engine.spi.field.type.FieldType;
 import com.liferay.data.engine.spi.field.type.FieldTypeTracker;
 import com.liferay.data.engine.spi.field.type.util.LocalizedValueUtil;
+import com.liferay.data.engine.spi.renderer.DataLayoutRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
@@ -52,33 +53,33 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcela Cunha
  */
-public class DataLayoutRenderer {
+@Component(immediate = true, service = DataLayoutRenderer.class)
+public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
-	public static String render(
-			Long dataLayoutId,
-			DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
-			DDMStructureVersionLocalService ddmStructureVersionLocalService,
-			FieldTypeTracker fieldTypeTracker,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, NPMResolver npmResolver,
-			SoyComponentRenderer soyComponentRenderer)
+	@Override
+	public String render(
+			Long dataLayoutId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		Writer writer = new UnsyncStringWriter();
 
 		ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-			_TEMPLATE_NAMESPACE, npmResolver.resolveModuleName(_MODULE_NAME));
+			_TEMPLATE_NAMESPACE, _npmResolver.resolveModuleName(_MODULE_NAME));
 
 		Map<String, Object> context = new HashMap<>();
 
 		DDMStructureLayout ddmStructureLayout =
-			ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
+			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
 
 		DDMStructureVersion ddmStructureVersion =
-			ddmStructureVersionLocalService.getDDMStructureVersion(
+			_ddmStructureVersionLocalService.getDDMStructureVersion(
 				ddmStructureLayout.getStructureVersionId());
 
 		DataLayout dataLayout = DataLayoutUtil.toDataLayout(
@@ -90,7 +91,7 @@ public class DataLayoutRenderer {
 				_getDataDefinitionFieldsMap(
 					DataDefinitionUtil.toDataDefinition(
 						ddmStructureVersion.getStructure())),
-				dataLayout.getDataLayoutPages(), fieldTypeTracker,
+				dataLayout.getDataLayoutPages(), _fieldTypeTracker,
 				httpServletRequest, httpServletResponse));
 
 		context.put("paginationMode", dataLayout.getPaginationMode());
@@ -103,13 +104,13 @@ public class DataLayoutRenderer {
 
 		context.put("spritemap", pathThemeImages.concat("/clay/icons.svg"));
 
-		soyComponentRenderer.renderSoyComponent(
+		_soyComponentRenderer.renderSoyComponent(
 			httpServletRequest, writer, componentDescriptor, context);
 
 		return writer.toString();
 	}
 
-	private static List<Object> _createDataLayoutColumnContexts(
+	private List<Object> _createDataLayoutColumnContexts(
 		Map<String, DataDefinitionField> dataDefinitionFields,
 		DataLayoutColumn[] dataLayoutColumns, FieldTypeTracker fieldTypeTracker,
 		HttpServletRequest httpServletRequest,
@@ -134,7 +135,7 @@ public class DataLayoutRenderer {
 		return dataLayoutColumnContexts;
 	}
 
-	private static List<Object> _createDataLayoutPageContexts(
+	private List<Object> _createDataLayoutPageContexts(
 		Map<String, DataDefinitionField> dataDefinitionFields,
 		DataLayoutPage[] dataLayoutPages, FieldTypeTracker fieldTypeTracker,
 		HttpServletRequest httpServletRequest,
@@ -171,7 +172,7 @@ public class DataLayoutRenderer {
 		return dataLayoutPageContexts;
 	}
 
-	private static List<Object> _createDataLayoutRowContexts(
+	private List<Object> _createDataLayoutRowContexts(
 		Map<String, DataDefinitionField> dataDefinitionFields,
 		DataLayoutRow[] dataLayoutRows, FieldTypeTracker fieldTypeTracker,
 		HttpServletRequest httpServletRequest,
@@ -194,7 +195,7 @@ public class DataLayoutRenderer {
 		return dataLayoutRowContexts;
 	}
 
-	private static List<Object> _createFieldTypeContexts(
+	private List<Object> _createFieldTypeContexts(
 		Map<String, DataDefinitionField> dataDefinitionFields,
 		String[] fieldNames, FieldTypeTracker fieldTypeTracker,
 		HttpServletRequest httpServletRequest,
@@ -221,7 +222,7 @@ public class DataLayoutRenderer {
 		return fieldTypeContexts;
 	}
 
-	private static Map<String, DataDefinitionField> _getDataDefinitionFieldsMap(
+	private Map<String, DataDefinitionField> _getDataDefinitionFieldsMap(
 		DataDefinition dataDefinition) {
 
 		List<DataDefinitionField> dataDefinitionFields = Arrays.asList(
@@ -234,9 +235,23 @@ public class DataLayoutRenderer {
 	}
 
 	private static final String _MODULE_NAME =
-		"dynamic-data-mapping-form-builder/metal/js/components/Form" +
-			"/FormRenderer.es";
+		"dynamic-data-mapping-form-renderer/js/metal/containers/Form/Form.es";
 
 	private static final String _TEMPLATE_NAMESPACE = "FormRenderer.render";
+
+	@Reference
+	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private FieldTypeTracker _fieldTypeTracker;
+
+	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
+	private SoyComponentRenderer _soyComponentRenderer;
 
 }

@@ -27,6 +27,7 @@
 			"apps/**/*-taglib",
 			"apps/**/*-web",
 			"apps/analytics/analytics-client-js",
+			"apps/data-engine/data-engine-rest-impl",
 			"apps/document-library/document-library-preview-audio",
 			"apps/document-library/document-library-preview-document",
 			"apps/document-library/document-library-preview-image",

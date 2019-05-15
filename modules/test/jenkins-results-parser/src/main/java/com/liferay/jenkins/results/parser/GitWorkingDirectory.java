@@ -1720,6 +1720,8 @@ public class GitWorkingDirectory {
 			}
 		}
 		catch (RuntimeException re) {
+			re.printStackTrace();
+
 			return null;
 		}
 

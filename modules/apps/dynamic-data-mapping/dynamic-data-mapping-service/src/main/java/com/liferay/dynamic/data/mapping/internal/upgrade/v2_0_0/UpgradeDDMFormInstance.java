@@ -368,9 +368,11 @@ public class UpgradeDDMFormInstance extends UpgradeProcess {
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property nameProperty = PropertyFactoryUtil.forName("name");
 				Property primKeyProperty = PropertyFactoryUtil.forName(
 					"primKey");
 
+				dynamicQuery.add(nameProperty.eq(oldName));
 				dynamicQuery.add(primKeyProperty.eq(String.valueOf(primKeyId)));
 			});
 		actionableDynamicQuery.setPerformActionMethod(

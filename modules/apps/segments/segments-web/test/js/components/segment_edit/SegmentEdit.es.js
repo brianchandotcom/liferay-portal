@@ -95,10 +95,10 @@ describe(
 							'en_US': ''
 						}}
 						defaultLanguageId="en_US"
+						hasUpdatePermission={hasUpdatePermission}
 						initialSegmentName={{
 							'en_US': 'Segment title'
 						}}
-						hasUpdatePermission={hasUpdatePermission}
 						locale="en_US"
 						redirect="/test-url"
 					/>
@@ -119,10 +119,10 @@ describe(
 							'en_US': ''
 						}}
 						defaultLanguageId="en_US"
+						hasUpdatePermission={hasUpdatePermission}
 						initialSegmentName={{
 							'en_US': 'Segment title'
 						}}
-						hasUpdatePermission={hasUpdatePermission}
 						locale="en_US"
 						redirect="/test-url"
 					/>

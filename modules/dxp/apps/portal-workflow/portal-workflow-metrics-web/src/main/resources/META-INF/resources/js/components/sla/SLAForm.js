@@ -66,6 +66,42 @@ class SLAForm extends React.Component {
 		this.setState({}, callback);
 	}
 
+	handleErrors(responseErrors) {
+		if (Array.isArray(responseErrors)) {
+			const { errors } = this.state;
+
+			responseErrors.forEach(error => {
+				const errorKey = error.fieldName || ALERT_MESSAGE;
+
+				errors[errorKey] = error.message;
+			});
+
+			const fieldNames = responseErrors.map(error => error.fieldName);
+
+			if (
+				fieldNames.includes(PAUSE_NODE_KEYS) ||
+				fieldNames.includes(START_NODE_KEYS) ||
+				fieldNames.includes(STOP_NODE_KEYS)
+			) {
+				this.reloadNodes().then(() => {
+					slaStore.resetNodes();
+
+					this.setState({ errors });
+				});
+			}
+			else {
+				this.setState({ errors });
+			}
+		}
+		else {
+			openErrorToast({
+				message: Liferay.Language.get(
+					'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+				)
+			});
+		}
+	}
+
 	@autobind
 	handlePauseNodesChange(nodeKeys) {
 		const { errors } = this.state;
@@ -121,6 +157,7 @@ class SLAForm extends React.Component {
 		errors[DURATION] = validateDuration(days, hours);
 		errors[HOURS] = validateHours(hours);
 		errors[NAME] = validateName(name);
+		errors[PAUSE_NODE_KEYS] = '';
 		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys.nodeKeys);
 		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys.nodeKeys);
 
@@ -148,18 +185,7 @@ class SLAForm extends React.Component {
 						response: { data }
 					} = result;
 
-					if (data) {
-						data.forEach(error => {
-							const errorKey = error.fieldName || ALERT_MESSAGE;
-
-							errors[errorKey] = error.message;
-						});
-
-						this.setState({ errors });
-					}
-					else {
-						openErrorToast(result);
-					}
+					this.handleErrors(data);
 				});
 		}
 	}
@@ -244,6 +270,20 @@ class SLAForm extends React.Component {
 		errors[NAME] = validateName(name);
 
 		this.setState({ errors });
+	}
+
+	reloadNodes() {
+		const { processId } = this.props;
+
+		this.setState({
+			loading: true
+		});
+
+		return nodeStore.fetchNodes(processId).then(() => {
+			this.setState({
+				loading: false
+			});
+		});
 	}
 
 	render() {
@@ -447,11 +487,7 @@ class SLAForm extends React.Component {
 						</div>
 
 						<div className="row">
-							<div
-								className={`col col-sm-12 form-group ${
-									errors[PAUSE_NODE_KEYS] ? 'has-error' : ''
-								}`}
-							>
+							<div className="col col-sm-12 form-group">
 								<FieldLabel
 									fieldId="sla_time_pause"
 									text={Liferay.Language.get('pause')}
@@ -467,10 +503,6 @@ class SLAForm extends React.Component {
 									onChangeTags={this.handlePauseNodesChange}
 									selectedTagsId={pauseNodeTagIds}
 								/>
-
-								{errors[PAUSE_NODE_KEYS] && (
-									<FieldError error={errors[PAUSE_NODE_KEYS]} />
-								)}
 							</div>
 						</div>
 

@@ -92,6 +92,23 @@ class SLAStore {
 		});
 	}
 
+	resetNodes() {
+		this.setState({
+			pauseNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			},
+			startNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			},
+			stopNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			}
+		});
+	}
+
 	saveSLA(processId, slaId) {
 		const {
 			calendarKey = this.calendarStore.defaultCalendar.key,

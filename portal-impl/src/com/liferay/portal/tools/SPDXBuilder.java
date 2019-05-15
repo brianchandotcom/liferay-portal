@@ -108,12 +108,13 @@ public class SPDXBuilder {
 
 		String downloadLocation = packageElement.elementText(
 			_QNAME_DOWNLOAD_LOCATION);
-		String licenseConcluded = packageElement.elementText(
-			_QNAME_LICENSE_CONCLUDED);
 		String name = packageElement.elementText(_QNAME_NAME);
 		String versionInfo = packageElement.elementText(_QNAME_VERSION_INFO);
 
-		List<Element> fileElements = packageElement.elements(_QNAME_FILE);
+		Element hasFileElement = packageElement.element(_QNAME_HAS_FILE);
+
+		List<Element> fileElements = hasFileElement.elements(
+			_QNAME_FILE_UPPER_CASE);
 
 		for (Element fileElement : fileElements) {
 			String fileName = fileElement.elementText(_QNAME_FILE_NAME);
@@ -145,14 +146,16 @@ public class SPDXBuilder {
 				element.addText(name);
 			}
 
-			if ((licenseConcluded != null) && !licenseConcluded.isEmpty()) {
+			String licenseName = _getLicenseName(packageElement);
+
+			if (licenseName != null) {
 				Element licensesElement = libraryElement.addElement("licenses");
 
 				Element licenseElement = licensesElement.addElement("license");
 
 				Element element = licenseElement.addElement("license-name");
 
-				element.addText(licenseConcluded);
+				element.addText(licenseName);
 			}
 
 			Element commentsElement = libraryElement.addElement("comments");
@@ -204,12 +207,23 @@ public class SPDXBuilder {
 		Element spdxRootElement = spdxDocument.getRootElement();
 
 		Element spdxDocumentElement = spdxRootElement.element(
-			_QNAME_SPDX_DOCUMENT);
+			_QNAME_SPDX_DOCUMENT_UPPER_CASE);
 
-		List<Element> elements = spdxDocumentElement.elements(_QNAME_PACKAGE);
+		List<Element> elements = spdxDocumentElement.elements(
+			_QNAME_RELATIONSHIP);
 
 		for (Element element : elements) {
-			List<Element> libraryElements = _createLibraryElements(element);
+			Element relationshipElement = element.element(
+				_QNAME_RELATIONSHIP_UPPER_CASE);
+
+			Element relatedSPDXElement = relationshipElement.element(
+				_QNAME_RELATED_SPDX_ELEMENT);
+
+			Element packageElement = relatedSPDXElement.element(
+				_QNAME_PACKAGE_UPPER_CASE);
+
+			List<Element> libraryElements = _createLibraryElements(
+				packageElement);
 
 			for (Element libraryElement : libraryElements) {
 				String key = _getKey("spdx", libraryElement);
@@ -257,6 +271,28 @@ public class SPDXBuilder {
 		sb.append(versionNode.getText());
 
 		return sb.toString();
+	}
+
+	private String _getLicenseName(Element packageElement) {
+		Element licenseConcludedElement = packageElement.element(
+			_QNAME_LICENSE_CONCLUDED);
+
+		if (licenseConcludedElement == null) {
+			return null;
+		}
+
+		String resource = licenseConcludedElement.attributeValue(
+			_QNAME_RESOURCE);
+
+		if (resource.startsWith("http://spdx.org/licenses/")) {
+			return resource.substring(25);
+		}
+
+		if (resource.startsWith("LicenseRef-")) {
+			return resource.substring(11);
+		}
+
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -313,13 +349,17 @@ public class SPDXBuilder {
 		"downloadLocation", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
 		"spdx:downloadLocation");
 
-	private static final QName _QNAME_FILE = new QName(
-		"File", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
-		"spdx:File");
-
 	private static final QName _QNAME_FILE_NAME = new QName(
 		"fileName", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
 		"spdx:fileName");
+
+	private static final QName _QNAME_FILE_UPPER_CASE = new QName(
+		"File", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
+		"spdx:File");
+
+	private static final QName _QNAME_HAS_FILE = new QName(
+		"hasFile", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
+		"spdx:hasFile");
 
 	private static final QName _QNAME_LICENSE_CONCLUDED = new QName(
 		"licenseConcluded", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
@@ -329,11 +369,29 @@ public class SPDXBuilder {
 		"name", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
 		"spdx:name");
 
-	private static final QName _QNAME_PACKAGE = new QName(
+	private static final QName _QNAME_PACKAGE_UPPER_CASE = new QName(
 		"Package", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
 		"spdx:Package");
 
-	private static final QName _QNAME_SPDX_DOCUMENT = new QName(
+	private static final QName _QNAME_RELATED_SPDX_ELEMENT = new QName(
+		"relatedSpdxElement",
+		new Namespace("spdx", "http://spdx.org/rdf/terms#"),
+		"spdx:relatedSpdxElement");
+
+	private static final QName _QNAME_RELATIONSHIP = new QName(
+		"relationship", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
+		"spdx:relationship");
+
+	private static final QName _QNAME_RELATIONSHIP_UPPER_CASE = new QName(
+		"Relationship", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
+		"spdx:Relationship");
+
+	private static final QName _QNAME_RESOURCE = new QName(
+		"resource",
+		new Namespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
+		"rdf:resource");
+
+	private static final QName _QNAME_SPDX_DOCUMENT_UPPER_CASE = new QName(
 		"SpdxDocument", new Namespace("spdx", "http://spdx.org/rdf/terms#"),
 		"spdx:SpdxDocument");
 

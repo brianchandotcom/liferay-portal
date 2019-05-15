@@ -16,7 +16,7 @@ class FilterResultsItem extends React.Component {
 			location: { search }
 		} = this.props;
 
-		const filterQuery = removeItem(filter, item, search);
+		const filterQuery = removeItem(filter.key, item, search);
 
 		pushToHistory(filterQuery, this.props);
 	}

@@ -51,7 +51,6 @@ class InstanceListFilter extends React.Component {
 		if (this.showCompletedFilter(query)) {
 			filters.push({
 				...completionPeriodFilter,
-				defaultItem: timeRangeStore.defaultTimeRange,
 				items: [...timeRangeStore.getState().timeRanges],
 				multiple: false
 			});

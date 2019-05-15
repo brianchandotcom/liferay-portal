@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
+import { completionPeriodKeys } from './filterConstants';
+import { getRequestUrl } from '../../../shared/components/filter/util/filterUtil';
 import InstanceListFilter from './InstanceListFilter';
 import InstanceListTable from './InstanceListTable';
 import ListView from '../../../shared/components/list/ListView';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar';
-import { parse } from '../../../shared/components/router/queryString';
 import ReloadButton from '../../../shared/components/list/ReloadButton';
 
 class InstanceListCard extends React.Component {
@@ -28,39 +29,6 @@ class InstanceListCard extends React.Component {
 		this.loadInstances(nextProps);
 	}
 
-	getRequestUrl({ page, pageSize, processId, query } = this.props) {
-		const requestUrl = `/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`;
-
-		const filters = parse(query).filters;
-
-		if (typeof filters === 'object') {
-			const queryParams = Object.keys(filters).reduce((acc, cur) => {
-				const currentFilter = filters[cur];
-
-				if (!currentFilter) {
-					return acc;
-				}
-
-				let filterQuery;
-
-				if (Array.isArray(currentFilter)) {
-					filterQuery = currentFilter
-						.map(filter => `${cur}=${filter}`)
-						.join('&');
-				}
-				else {
-					filterQuery = `${cur}=${currentFilter}`;
-				}
-
-				return `${acc}&${filterQuery}`;
-			}, '');
-
-			return requestUrl + queryParams;
-		}
-
-		return requestUrl;
-	}
-
 	@autobind
 	handleRequestError() {
 		this.setState({
@@ -73,12 +41,17 @@ class InstanceListCard extends React.Component {
 
 	loadInstances(props = this.props) {
 		const { loading } = this.state;
+		const { page, pageSize, processId, query } = props;
 
 		if (loading) {
 			return;
 		}
 
-		const requestUrl = this.getRequestUrl(props);
+		const requestUrl = getRequestUrl(
+			query,
+			`/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`,
+			[completionPeriodKeys.allTime]
+		);
 
 		return this.requestData(requestUrl)
 			.then(({ items, totalCount }) => {

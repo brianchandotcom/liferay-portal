@@ -7,6 +7,16 @@ export function getFiltersParam(queryString) {
 	return queryParams.filters || {};
 }
 
+export function getFilterValues(filterKey, filtersParam) {
+	let filterValues = filtersParam[filterKey] || [];
+
+	if (!Array.isArray(filterValues)) {
+		filterValues = [filterValues];
+	}
+
+	return filterValues;
+}
+
 export function getSelectedItemsQuery(items, key, queryString) {
 	const queryParams = parse(queryString);
 
@@ -20,10 +30,30 @@ export function getSelectedItemsQuery(items, key, queryString) {
 	return stringify(queryParams);
 }
 
+export function getRequestUrl(queryString, requestUrl, excludedValues = []) {
+	const filtersParam = getFiltersParam(queryString);
+
+	const requestFilter = Object.keys(filtersParam).reduce(
+		(queryParams, filterKey) => {
+			const filterValues = getFilterValues(filterKey, filtersParam);
+
+			const filterQuery = filterValues
+				.filter(filterValue => !excludedValues.includes(filterValue))
+				.map(filterValue => `${filterKey}=${filterValue}`)
+				.join('&');
+
+			return `${queryParams}&${filterQuery}`;
+		},
+		''
+	);
+
+	return requestUrl + requestFilter;
+}
+
 export function isSelected(filterKey, itemKey, queryString) {
 	const filtersParam = getFiltersParam(queryString);
 
-	const filterValues = filtersParam[filterKey] || [];
+	const filterValues = getFilterValues(filterKey, filtersParam);
 
 	return filterValues.includes(itemKey);
 }
@@ -53,15 +83,15 @@ export function removeFilters(queryString) {
 	return stringify(queryParams);
 }
 
-export function removeItem(filter, itemToRemove, queryString) {
+export function removeItem(filterKey, itemToRemove, queryString) {
 	const queryParams = parse(queryString);
 
 	const filtersParam = queryParams.filters || {};
 
-	const currentFilter = filtersParam[filter.key] || [];
+	const filterValues = getFilterValues(filterKey, filtersParam);
 
-	filtersParam[filter.key] = currentFilter.filter(
-		itemKey => itemKey != itemToRemove.key
+	filtersParam[filterKey] = filterValues.filter(
+		filterValue => filterValue != itemToRemove.key
 	);
 
 	queryParams.filters = filtersParam;
@@ -70,15 +100,10 @@ export function removeItem(filter, itemToRemove, queryString) {
 }
 
 export function verifySelectedItems(filter, filtersParam) {
-	const filterValues = filtersParam[filter.key] || [];
+	const filterValues = getFilterValues(filter.key, filtersParam);
 
 	filter.items.forEach(item => {
-		if (Array.isArray(filterValues)) {
-			item.active = filterValues.includes(item.key);
-		}
-		else {
-			item.active = filterValues === item.key;
-		}
+		item.active = filterValues.includes(item.key);
 	});
 
 	return filter;

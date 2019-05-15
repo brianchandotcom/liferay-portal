@@ -1,4 +1,5 @@
 import client from '../../../shared/rest/fetch';
+import { completionPeriodKeys } from '../instance-list/filterConstants';
 import moment from 'moment';
 
 class TimeRangeStore {
@@ -26,8 +27,7 @@ class TimeRangeStore {
 			}));
 
 			timeRanges.push({
-				active: false,
-				key: 'all-time',
+				key: completionPeriodKeys.allTime,
 				name: Liferay.Language.get('all-time')
 			});
 
@@ -79,7 +79,7 @@ class TimeRangeStore {
 	get selectedTimeRange() {
 		const { timeRanges } = this.state;
 
-		if (!timeRanges) {
+		if (!timeRanges || !timeRanges.length) {
 			return null;
 		}
 

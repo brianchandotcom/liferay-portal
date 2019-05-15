@@ -42,6 +42,10 @@ public class TimeRangeUtil {
 
 		LocalDateTime localDateTime = _getEndLocalDateTime(id, timeZoneId);
 
+		localDateTime = localDateTime.withMinute(0);
+		localDateTime = localDateTime.withNano(0);
+		localDateTime = localDateTime.withSecond(0);
+
 		if (id == 1) {
 			return _toDate(localDateTime.minusHours(23), timeZoneId);
 		}
@@ -68,12 +72,7 @@ public class TimeRangeUtil {
 			return localDateTime.minusHours(1);
 		}
 
-		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of(timeZoneId));
-
-		localDateTime = localDateTime.withMinute(0);
-		localDateTime = localDateTime.withSecond(0);
-
-		return localDateTime.withNano(0);
+		return LocalDateTime.now(ZoneId.of(timeZoneId));
 	}
 
 	private static Date _toDate(

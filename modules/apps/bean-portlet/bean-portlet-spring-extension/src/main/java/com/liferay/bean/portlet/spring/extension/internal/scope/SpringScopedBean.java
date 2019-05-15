@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author Neil Griffin
  */
-public class SpringScopedBean implements ScopedBean, Serializable {
+public class SpringScopedBean implements ScopedBean<Object>, Serializable {
 
 	public SpringScopedBean(
 		Object containerCreatedInstance, Runnable destructionCallback,

@@ -155,10 +155,12 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
-			configurationName = "Languiage",
+			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "Spanish (Spain)");
+		PortalSettings.configureCurrentLanguagesCP(
+			currentPortalLanguages = "Spanish (Spain)",
+			defaultPortalLanguage = "Spanish (Spain)");
 
 		User.logoutPG();
 

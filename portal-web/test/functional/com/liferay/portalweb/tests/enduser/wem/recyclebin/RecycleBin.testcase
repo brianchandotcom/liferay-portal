@@ -219,8 +219,6 @@ definition {
 			threadBody = "MB Body",
 			threadSubject = "MB Subject");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -232,8 +230,6 @@ definition {
 			mbAttachmentFile = "Document_1.doc",
 			threadAttachmentRemove = "true",
 			threadBodyEdit = "MB Body Edit");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -249,8 +245,6 @@ definition {
 		PortletEntry.clickEditFromEllipsis();
 
 		MessageboardsThread.restoreMBAttachmentCP(mbAttachmentFile = "Document_1.doc");
-
-		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

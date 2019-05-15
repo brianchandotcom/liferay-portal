@@ -29,6 +29,24 @@ import org.osgi.service.metatype.AttributeDefinition;
  */
 public class AttributeDefinitionUtil {
 
+	public static String[] getDefaultValue(
+		AttributeDefinition attributeDefinition) {
+
+		String[] defaultValues = attributeDefinition.getDefaultValue();
+
+		if (ArrayUtil.isEmpty(defaultValues)) {
+			return new String[] {StringPool.BLANK};
+		}
+
+		if ((attributeDefinition.getCardinality() == 0) ||
+			(defaultValues.length > 1)) {
+
+			return defaultValues;
+		}
+
+		return StringUtil.split(defaultValues[0], StringPool.PIPE);
+	}
+
 	public static Object getPropertyObject(
 		AttributeDefinition attributeDefinition, Configuration configuration) {
 
@@ -57,24 +75,6 @@ public class AttributeDefinitionUtil {
 		Vector<?> vector = (Vector<?>)property;
 
 		return ArrayUtil.toStringArray(vector.toArray());
-	}
-
-	public static String[] getDefaultValue(
-		AttributeDefinition attributeDefinition) {
-
-		String[] defaultValues = attributeDefinition.getDefaultValue();
-
-		if (ArrayUtil.isEmpty(defaultValues)) {
-			return new String[] {StringPool.BLANK};
-		}
-
-		if ((attributeDefinition.getCardinality() == 0) ||
-			(defaultValues.length > 1)) {
-
-			return defaultValues;
-		}
-
-		return StringUtil.split(defaultValues[0], StringPool.PIPE);
 	}
 
 	public static String[] getPropertyStringArray(

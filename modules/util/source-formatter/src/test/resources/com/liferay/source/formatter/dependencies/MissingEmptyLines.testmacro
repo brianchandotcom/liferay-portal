@@ -1,5 +1,12 @@
 @component-name = "portal-acceptance"
 definition {
+	property custom.properties = "layout.parallel.render.enable=false";
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	}
 	@description = "This is the description for TestA."
 	@priority = "5"
 	test TestA

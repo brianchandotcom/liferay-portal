@@ -239,6 +239,8 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
+
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content 2",
 			assetTitle = "Web Content Title 2");

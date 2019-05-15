@@ -164,7 +164,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Mark All Notifications as Read");
+		NotificationsPortlet.configureNotificationPG(menuItem = "Mark All Notifications as Read");
 
 		Notifications.viewNoNotifications(activePanel = "Notifications");
 	}

@@ -186,9 +186,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.gotoNotifications();
-
-		NotificationsPortlet.gotoNotificationDelivery();
+		NotificationsPortlet.gotoNotificationDelivery(notificationPG = "true");
 
 		IFrame.selectConfigurationFrame();
 

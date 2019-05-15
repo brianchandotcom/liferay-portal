@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -29,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaLogParametersCheck extends BaseJavaTermCheck {
+public class JavaLogParametersCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isPortalCheck() {
@@ -38,10 +37,7 @@ public class JavaLogParametersCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
-
-		String content = javaTerm.getContent();
+		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _logPattern.matcher(content);
 
@@ -64,7 +60,7 @@ public class JavaLogParametersCheck extends BaseJavaTermCheck {
 			}
 
 			String variableTypeName = getVariableTypeName(
-				content, fileContent, firstParameter);
+				content, content, firstParameter);
 
 			if (variableTypeName == null) {
 				continue;
@@ -89,11 +85,6 @@ public class JavaLogParametersCheck extends BaseJavaTermCheck {
 		}
 
 		return content;
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
 	private static final Pattern _logPattern = Pattern.compile(

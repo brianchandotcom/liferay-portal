@@ -106,6 +106,19 @@ public abstract class BaseFieldQueryBuilderTestCase
 			});
 	}
 
+	protected void assertSearchCount(final String keywords, final int size)
+		throws Exception {
+
+		assertSearch(
+			indexingTestHelper -> {
+				prepareSearch(indexingTestHelper, keywords);
+
+				long count = indexingTestHelper.searchCount();
+
+				Assert.assertEquals(keywords, size, count);
+			});
+	}
+
 	protected void assertSearchNoHits(String keywords) throws Exception {
 		_assertCount(keywords, 0);
 	}
@@ -148,6 +161,10 @@ public abstract class BaseFieldQueryBuilderTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				prepareSearch(indexingTestHelper, keywords);
+
+				indexingTestHelper.defineRequest(
+					searchRequestBuilder -> searchRequestBuilder.size(
+						size + 1));
 
 				indexingTestHelper.search();
 

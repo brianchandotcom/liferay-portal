@@ -111,7 +111,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "Arabic (Saudi Arabia),Czech (Czech Republic),French (France)",
-			errorMessage = "Language cannot be removed because it is in use by the following site",
+			errorMessage = "Error: You cannot remove a language that is the current default language.",
 			failExpected = "true");
 	}
 

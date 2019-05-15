@@ -6,8 +6,6 @@ definition {
 	}
 
 	macro mapEditableTextToField {
-		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
-
 		Click(
 			key_fragmentName = "${fragmentName}",
 			key_id = "${id}",

@@ -15,6 +15,7 @@
 package com.liferay.portlet.configuration.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourcePrimKeyException;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -423,49 +425,88 @@ public class PortletConfigurationPermissionsDisplayContext {
 			teamGroupId = _group.getParentGroupId();
 		}
 
-		int count = 0;
-
 		RoleVisibilityConfiguration stricterRoleVisibilityConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				RoleVisibilityConfiguration.class, themeDisplay.getCompanyId());
 
-		if (stricterRoleVisibilityConfiguration.
-				restrictPermissionSelectorRoleVisibility()) {
+		boolean restrictPermissionSelectorRoleVisibility =
+			stricterRoleVisibilityConfiguration.
+				restrictPermissionSelectorRoleVisibility();
 
-			count = RoleServiceUtil.getGroupRolesAndTeamRolesCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-				teamGroupId);
+		if (Validator.isNull(searchTerms.getKeywords())) {
+			int count = 0;
+
+			if (restrictPermissionSelectorRoleVisibility) {
+				count = RoleServiceUtil.getGroupRolesAndTeamRolesCount(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId);
+			}
+			else {
+				count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId);
+			}
+
+			roleSearchContainer.setTotal(count);
+
+			List<Role> roles = null;
+
+			if (restrictPermissionSelectorRoleVisibility) {
+				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId, roleSearchContainer.getStart(),
+					roleSearchContainer.getResultEnd());
+			}
+			else {
+				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId, roleSearchContainer.getStart(),
+					roleSearchContainer.getResultEnd());
+			}
+
+			roleSearchContainer.setResults(roles);
 		}
 		else {
-			count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-				teamGroupId);
+			List<Role> roles = null;
+
+			if (restrictPermissionSelectorRoleVisibility) {
+				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			}
+			else {
+				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			}
+
+			List<Role> filteredRoles = ListUtil.filter(
+				roles,
+				role -> {
+					String roleName = StringUtil.toLowerCase(
+						role.getTitle(themeDisplay.getLocale()),
+						themeDisplay.getLocale());
+
+					return (roleName != null) &&
+						   roleName.contains(
+							   StringUtil.toLowerCase(
+								   searchTerms.getKeywords(),
+								   themeDisplay.getLocale()));
+				});
+
+			roleSearchContainer.setTotal(filteredRoles.size());
+
+			roleSearchContainer.setResults(
+				ListUtil.subList(
+					filteredRoles, roleSearchContainer.getStart(),
+					roleSearchContainer.getResultEnd()));
 		}
-
-		roleSearchContainer.setTotal(count);
-
-		List<Role> roles = null;
-
-		if (stricterRoleVisibilityConfiguration.
-				restrictPermissionSelectorRoleVisibility()) {
-
-			roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-				teamGroupId, roleSearchContainer.getStart(),
-				roleSearchContainer.getResultEnd());
-		}
-		else {
-			roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-				teamGroupId, roleSearchContainer.getStart(),
-				roleSearchContainer.getResultEnd());
-		}
-
-		roleSearchContainer.setResults(roles);
 
 		_roleSearchContainer = roleSearchContainer;
 

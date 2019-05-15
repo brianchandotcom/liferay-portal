@@ -35,12 +35,6 @@ public class CSSBuilderArgs {
 
 	public static final String DIR_NAME = "/";
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #BASE_DIR_NAME}
-	 */
-	@Deprecated
-	public static final String DOCROOT_DIR_NAME = BASE_DIR_NAME;
-
 	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
 
 	public static final int PRECISION = 9;
@@ -53,28 +47,12 @@ public class CSSBuilderArgs {
 		return _dirNames;
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #getBaseDir()}
-	 */
-	@Deprecated
-	public File getDocrootDir() {
-		return getBaseDir();
-	}
-
 	public File getImportDir() {
 		return _importDir;
 	}
 
 	public String getOutputDirName() {
 		return _outputDirName;
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #getImportDir()}
-	 */
-	@Deprecated
-	public File getPortalCommonPath() {
-		return getImportDir();
 	}
 
 	public int getPrecision() {
@@ -115,14 +93,6 @@ public class CSSBuilderArgs {
 		_dirNames = Arrays.asList(dirNames);
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setDocrootDir(File)}
-	 */
-	@Deprecated
-	public void setDocrootDir(File docrootDir) {
-		setBaseDir(docrootDir);
-	}
-
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_generateSourceMap = generateSourceMap;
 	}
@@ -133,14 +103,6 @@ public class CSSBuilderArgs {
 
 	public void setOutputDirName(String outputDirName) {
 		_outputDirName = outputDirName;
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
-	 */
-	@Deprecated
-	public void setPortalCommonPath(File portalCommonPath) {
-		setImportDir(portalCommonPath);
 	}
 
 	public void setPrecision(int precision) {

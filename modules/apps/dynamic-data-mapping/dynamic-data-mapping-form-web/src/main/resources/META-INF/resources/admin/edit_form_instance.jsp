@@ -206,7 +206,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							saved: <%= formInstance != null %>,
 							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 							spritemap: Liferay.DDM.FormSettings.spritemap,
-							strings: Liferay.DDM.FormSettings.strings
+							strings: Liferay.DDM.FormSettings.strings,
+							view: 'formBuilder'
 						},
 						'#<portlet:namespace />-container'
 					);

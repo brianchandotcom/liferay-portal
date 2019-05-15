@@ -146,94 +146,6 @@ definition {
 		}
 	}
 
-	test AssertAuthorizationPromptsScopeIsSameAsActualGranted {
-		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration-default.config";
-		property osgi.module.configurations = "include.bundle.symbolic.name=&quot;false&quot;${line.separator}osgi.jaxrs.name=&quot;Default&quot;${line.separator}separator=&quot;&quot;${line.separator}service.properties=&quot;&quot;";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Analytics Cloud");
-
-		WaitForSPARefresh();
-
-		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Analytics Cloud",
-			checkGlobalScope = "Everything");
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=com.liferay.oauth2.provider.sample.jar");
-
-		Pause(locator1 = "7000");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Analytics Cloud");
-
-		AssertClick(
-			key_navItem = "Scopes",
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Scopes");
-
-		OAuth2.expandResourcePanel(resourcePanel = "sample-app");
-
-		AssertChecked(
-			key_panel = "sample-app",
-			key_scopeName = "everything.read",
-			locator1 = "OAuth2#ADMIN_GLOBAL_RESOURCE_SCOPE_CHECKBOX");
-
-		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
-
-		AssertElementPresent(
-			key_applicationName = "Analytics Cloud",
-			locator1 = "OAuth2#AUTHORIZATION_REQUEST_APPLICATION_NAME");
-
-		AssertElementPresent(
-			key_resourceName = "Portal Services",
-			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
-
-		AssertElementNotPresent(
-			key_resourceName = "sample-app",
-			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Analytics Cloud");
-
-		AssertClick(
-			key_navItem = "Scopes",
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Scopes");
-
-		PortletEntry.save();
-
-		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
-
-		AssertElementPresent(
-			key_resourceName = "Portal Services",
-			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
-
-		AssertElementPresent(
-			key_resourceName = "sample-app",
-			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
-	}
-
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
@@ -431,5 +343,93 @@ definition {
 		OAuth2.revokeGrantedAuthViaUser(applicationName = "OAuth Application");
 
 		OAuth2.viewGrantedAuthViaUser(noAuthorizations = "true");
+	}
+
+	test ViewAuthPromptRequestedScopes {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration-default.config";
+		property osgi.module.configurations = "include.bundle.symbolic.name=&quot;false&quot;${line.separator}osgi.jaxrs.name=&quot;Default&quot;${line.separator}separator=&quot;&quot;${line.separator}service.properties=&quot;&quot;";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Analytics Cloud");
+
+		WaitForSPARefresh();
+
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "Analytics Cloud",
+			checkGlobalScope = "Everything");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=com.liferay.oauth2.provider.sample.jar");
+
+		Pause(locator1 = "7000");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Analytics Cloud");
+
+		AssertClick(
+			key_navItem = "Scopes",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Scopes");
+
+		OAuth2.expandResourcePanel(resourcePanel = "sample-app");
+
+		AssertChecked(
+			key_panel = "sample-app",
+			key_scopeName = "everything.read",
+			locator1 = "OAuth2#ADMIN_GLOBAL_RESOURCE_SCOPE_CHECKBOX");
+
+		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+
+		AssertElementPresent(
+			key_applicationName = "Analytics Cloud",
+			locator1 = "OAuth2#AUTHORIZATION_REQUEST_APPLICATION_NAME");
+
+		AssertElementPresent(
+			key_resourceName = "Portal Services",
+			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
+
+		AssertElementNotPresent(
+			key_resourceName = "sample-app",
+			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Analytics Cloud");
+
+		AssertClick(
+			key_navItem = "Scopes",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Scopes");
+
+		PortletEntry.save();
+
+		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
+
+		AssertElementPresent(
+			key_resourceName = "Portal Services",
+			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
+
+		AssertElementPresent(
+			key_resourceName = "sample-app",
+			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
 	}
 }

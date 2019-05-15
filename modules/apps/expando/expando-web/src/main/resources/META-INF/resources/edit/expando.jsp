@@ -111,6 +111,15 @@ else {
 }
 %>
 
+<liferay-ui:error exception="<%= ColumnNameException.MustValidate.class %>">
+
+	<%
+	String name = LanguageUtil.get(request, "field-name");
+	%>
+
+	<liferay-ui:message arguments='<%= new String[] {StringUtil.toLowerCase(name), ",.#/*_"} %>' key="the-x-cannot-contain-the-following-invalid-characters-x" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-a-valid-name" />
 <liferay-ui:error exception="<%= ColumnTypeException.class %>" message="please-select-a-valid-type" />
 <liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />

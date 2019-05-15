@@ -119,7 +119,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		if (!Field.validateFieldName(name)) {
-			throw new ColumnNameException();
+			throw new ColumnNameException.MustValidate();
 		}
 
 		expandoBridge.addAttribute(name, type);

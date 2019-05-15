@@ -42,6 +42,23 @@ definition {
 	}
 
 	@priority = "5"
+	test ServiceBuilderTemplateSmoke {
+		property portal.acceptance = "true";
+		property project.templates = "service-builder";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#ServiceBuilderTemplateSmoke";
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.viewModuleStatus(
+			moduleName = "foo-api",
+			moduleStatus = "Active");
+
+		GogoShell.viewModuleStatus(
+			moduleName = "foo-service",
+			moduleStatus = "Active");
+	}
+
+	@priority = "5"
 	test ThemeTemplateSmoke {
 		property portal.acceptance = "true";
 		property project.templates = "theme";

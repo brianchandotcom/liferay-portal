@@ -4,13 +4,14 @@ if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult")) {
 	state.slaStatusMap.compute(
 		instanceId,
 		(key, oldSLAStatus) -> {
-			if ((doc.elapsedTime.value == 0) ||
-				doc.status.value.equals("EXPIRED")) {
+			if (((oldSLAStatus == null) || oldSLAStatus.equals("untracked")) &&
+				((doc.elapsedTime.value == 0) ||
+				 doc.status.value.equals("EXPIRED"))) {
 
 				return "untracked";
 			}
 			else if (((oldSLAStatus == null) ||
-					  oldSLAStatus.equals("onTime")) &&
+					  !oldSLAStatus.equals("overdue")) &&
 					 doc.onTime.value) {
 
 				return "onTime";

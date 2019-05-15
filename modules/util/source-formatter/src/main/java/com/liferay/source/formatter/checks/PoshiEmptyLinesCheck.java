@@ -32,9 +32,10 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = content.replaceAll("(?<!\n)(\n\t\\w+ \\{)", "\n$1");
+		content = content.replaceAll(
+			"(?<!\n)(\n\t(?!if|else)\\w+ \\{)", "\n$1");
 		content = content.replaceFirst("(definition \\{\n)(?!\n)", "$1\n");
-		content = content.replaceFirst("(?<!\n)(\n\\})", "\n$1");
+		content = content.replaceFirst("(?<!\n)(\n\\})$", "\n$1");
 
 		content = _fixMissingEmptyLineBeforeCommand(content);
 

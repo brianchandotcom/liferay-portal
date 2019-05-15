@@ -153,10 +153,9 @@ definition {
 
 		Portlet.addPG(portletName = "Related Assets");
 
-		AssetPublisherPortlet.configureFilterByCategories(
+		AssetPublisherPortlet.configureCategoriesFilterPG(
 			categoryName = "Category Name",
-			portletName = "Related Assets",
-			vocabularyName = "Vocabulary Name");
+			portletName = "Related Assets");
 
 		Navigator.gotoPrivateStagedSitePage(
 			pageName = "Private Page Name",

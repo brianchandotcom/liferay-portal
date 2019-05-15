@@ -416,9 +416,18 @@
 				{if $descriptionTitle}
 					<h3>{$descriptionTitle}</h3>
 				{/if}
-				<div class="sheet-text" data-qa-id="description">
-					{$description}
-				</div>
+				{if strLen($description) > 134}
+					<div class="sheet-text" data-qa-id="description">
+						<span class="lfr-portal-tooltip line-clamp"
+							title="{$description}">
+							{$description}
+						</span>
+					</div>
+				{else}
+					<div class="sheet-text" data-qa-id="description">
+						{$description}
+					</div>
+				{/if}
 			</div>
 		{/if}
 

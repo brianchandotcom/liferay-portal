@@ -257,16 +257,16 @@ public class KBArticleStagedModelDataHandler
 			}
 		}
 		else {
-			if (resourcePrimaryKey != kbArticle.getResourcePrimKey()) {
+			if (resourcePrimaryKey == kbArticle.getResourcePrimKey()) {
+				importedKBArticle = _addKBArticle(
+					userId, parentResourcePrimKey, kbArticle, sections,
+					serviceContext);
+			}
+			else {
 				importedKBArticle = _updateKBArticle(
 					userId, resourcePrimaryKey,
 					kbArticle.getParentResourceClassNameId(),
 					parentResourcePrimKey, kbArticle, sections, serviceContext);
-			}
-			else {
-				importedKBArticle = _addKBArticle(
-					userId, parentResourcePrimKey, kbArticle, sections,
-					serviceContext);
 			}
 		}
 

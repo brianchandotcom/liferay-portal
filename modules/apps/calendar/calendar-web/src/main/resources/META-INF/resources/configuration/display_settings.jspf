@@ -33,6 +33,7 @@
 
 	<aui:fieldset>
 		<aui:select label="maximum-days-to-display" name="maxDaysDisplayed" value="<%= maxDaysDisplayed %>">
+			<aui:option label="0" value="<%= 0 %>" />
 			<aui:option label="1" value="<%= 1 %>" />
 			<aui:option label="2" value="<%= 2 %>" />
 			<aui:option label="3" value="<%= 3 %>" />

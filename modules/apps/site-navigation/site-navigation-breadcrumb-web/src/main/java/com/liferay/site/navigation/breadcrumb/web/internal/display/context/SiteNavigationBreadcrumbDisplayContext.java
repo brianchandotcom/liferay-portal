@@ -83,10 +83,6 @@ public class SiteNavigationBreadcrumbDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
-			_siteNavigationBreadcrumbPortletInstanceConfiguration.
-				displayStyleGroupId();
-
 		_displayStyleGroupId = ParamUtil.getLong(
 			_httpServletRequest, "displayStyleGroupId",
 			_siteNavigationBreadcrumbPortletInstanceConfiguration.

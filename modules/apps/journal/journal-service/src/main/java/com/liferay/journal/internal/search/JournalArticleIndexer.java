@@ -940,20 +940,18 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		Document document, Locale snippetLocale, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		String articleId = document.get(Field.ARTICLE_ID);
-		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-		double version = GetterUtil.getDouble(document.get(Field.VERSION));
-		PortletRequestModel portletRequestModel = new PortletRequestModel(
-			portletRequest, portletResponse);
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
-			groupId, articleId, version, null, Constants.VIEW,
-			LocaleUtil.toLanguageId(snippetLocale), 1, portletRequestModel,
-			themeDisplay);
+		String articleId = document.get(Field.ARTICLE_ID);
+		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+		double version = GetterUtil.getDouble(document.get(Field.VERSION));
 
-		return articleDisplay;
+		return _journalContent.getDisplay(
+			groupId, articleId, version, null, Constants.VIEW,
+			LocaleUtil.toLanguageId(snippetLocale), 1,
+			new PortletRequestModel(portletRequest, portletResponse),
+			themeDisplay);
 	}
 
 	private String _stripAndHighlight(String text) {

@@ -389,7 +389,10 @@ definition {
 			pageName = "Web Content Display Page1",
 			siteName = "Test Site Name");
 
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
+
 		WebContent.addPGViaWCD(
+			portletNameScoped = "Web Content Display (Web Content Display Page1)",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -400,6 +403,8 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.viewDefaultMessage();
+
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 

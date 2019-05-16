@@ -67,6 +67,7 @@ public class DataRuleFunctionTrackerImpl implements DataRuleFunctionTracker {
 	@Deactivate
 	protected void deactivate() {
 		_dataRuleFunctions.clear();
+		_dataRuleFunctionsByType.clear();
 	}
 
 	protected void removeDataRuleFunction(

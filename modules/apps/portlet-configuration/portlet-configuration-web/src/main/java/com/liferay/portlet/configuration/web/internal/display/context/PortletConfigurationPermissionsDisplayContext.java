@@ -447,7 +447,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, roleSearchContainer.getStart(),
-					roleSearchContainer.getResultEnd());
+					roleSearchContainer.getEnd());
 			}
 			else {
 				count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
@@ -459,7 +459,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, roleSearchContainer.getStart(),
-					roleSearchContainer.getResultEnd());
+					roleSearchContainer.getEnd());
 			}
 
 			roleSearchContainer.setResults(roles);
@@ -498,7 +498,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			roleSearchContainer.setResults(
 				ListUtil.subList(
 					filteredRoles, roleSearchContainer.getStart(),
-					roleSearchContainer.getResultEnd()));
+					roleSearchContainer.getEnd()));
 
 			roleSearchContainer.setTotal(filteredRoles.size());
 		}

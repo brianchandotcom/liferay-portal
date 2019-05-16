@@ -189,7 +189,7 @@ test('Should render component', () => {
 			{
 				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				dateCreated: new Date('2019', '01', '01'),
+				dateCreated: '2019-05-16T18:24:10.084Z',
 				id: 12351,
 				slaStatus: 'Untracked',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -215,7 +215,11 @@ test('Should render component', () => {
 
 test('Should render component with empty data', () => {
 	const data = {
-		items: null,
+		items: [
+			{
+				dateCreated: '2019-05-16T18:24:10.084Z'
+			}
+		],
 		totalCount: 0
 	};
 

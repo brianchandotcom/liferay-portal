@@ -144,7 +144,8 @@ public class ArrayCheck extends BaseFileCheck {
 			String variableName = matcher1.group(1);
 
 			Pattern pattern = Pattern.compile(
-				"^(new \\w+)\\s*\\[" + variableName + "\\.size\\(\\)\\]$");
+				"^(new .+)\\s*\\[" + variableName + "\\.size\\(\\)\\]$",
+				Pattern.DOTALL);
 
 			String parameter = parameterList.get(0);
 

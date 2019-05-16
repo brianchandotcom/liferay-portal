@@ -60,7 +60,7 @@ definition {
 
 	@priority = "5"
 	test RestTemplateSmoke {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property project.templates = "rest";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#RestTemplateSmoke";
 
@@ -89,7 +89,7 @@ definition {
 
 	@priority = "5"
 	test WarHookTemplateSmoke {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property project.templates = "war-hook";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#WarHookTemplateSmoke";
 

@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -58,17 +57,7 @@ public class FindPageAction extends FindStrutsAction {
 
 	@Override
 	protected PortletLayoutFinder getPortletLayoutFinder() {
-		return new BasePortletLayoutFinder() {
-
-			@Override
-			protected String[] getPortletIds() {
-				return new String[] {
-					WikiPortletKeys.WIKI_ADMIN, WikiPortletKeys.WIKI,
-					WikiPortletKeys.WIKI_DISPLAY
-				};
-			}
-
-		};
+		return _portletLayoutFinder;
 	}
 
 	@Override
@@ -119,6 +108,9 @@ public class FindPageAction extends FindStrutsAction {
 
 		return "/wiki_display/view";
 	}
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private PortletLayoutFinder _portletLayoutFinder;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;

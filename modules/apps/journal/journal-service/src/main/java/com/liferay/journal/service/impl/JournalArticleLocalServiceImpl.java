@@ -7197,7 +7197,11 @@ public class JournalArticleLocalServiceImpl
 					_log.debug("Expiring article " + article.getId());
 				}
 
-				if (isExpireAllArticleVersions(article.getCompanyId())) {
+				long companyId = article.getCompanyId();
+
+				indexableActionableDynamicQuery.setCompanyId(companyId);
+
+				if (isExpireAllArticleVersions(companyId)) {
 					List<JournalArticle> currentArticles =
 						journalArticlePersistence.findByG_A(
 							article.getGroupId(), article.getArticleId(),

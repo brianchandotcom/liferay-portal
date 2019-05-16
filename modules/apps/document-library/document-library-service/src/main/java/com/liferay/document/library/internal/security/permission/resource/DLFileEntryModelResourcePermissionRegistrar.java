@@ -52,6 +52,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Preston Crary
@@ -80,8 +82,10 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 						new DLFileEntryWorkflowedModelPermissionLogic(
 							modelResourcePermission));
 
-					_sharingModelResourcePermissionConfigurator.configure(
-						modelResourcePermission, consumer);
+					if (_sharingModelResourcePermissionConfigurator != null) {
+						_sharingModelResourcePermissionConfigurator.configure(
+							modelResourcePermission, consumer);
+					}
 
 					consumer.accept(
 						(permissionChecker, name, fileEntry, actionId) -> {
@@ -174,7 +178,10 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
 

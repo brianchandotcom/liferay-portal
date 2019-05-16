@@ -38,7 +38,7 @@ if (message != null) {
 
 <div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer"></div>
 
-<c:if test="<%= (deletedAttachmentsFileEntriesCount > 0) && trashHelper.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+<c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -46,7 +46,9 @@ if (message != null) {
 	</portlet:renderURL>
 
 	<div align="right">
-		<a href="javascript:;" id="view-removed-attachments-link"><liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;</a>
+		<a href="javascript:;" id="view-removed-attachments-link" style='display: <%= (deletedAttachmentsFileEntriesCount > 0) ? "initial" : "none" %>;'>
+			<liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;
+		</a>
 	</div>
 
 	<aui:script use="liferay-util-window">

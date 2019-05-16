@@ -162,6 +162,11 @@ class MBPortlet extends PortletBase {
 
 				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
 				searchContainer.updateDataStore();
+
+				const deletedAttachmentsElement = document.getElementById('view-removed-attachments-link');
+
+				deletedAttachmentsElement.style.display = 'initial';
+				deletedAttachmentsElement.innerHTML = Liferay.Language.get('view-recently-removed-attachments') + ' &raquo';
 			}
 		);
 	}

@@ -3998,6 +3998,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWorkspaceWith72() throws Exception {
+		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.2");
+
+		_testContains(
+			gradleWorkspaceProjectDir, "gradle.properties", true,
+			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.2.0-.*");
+
+		File gradlePropertiesFile = new File(
+			gradleWorkspaceProjectDir, "gradle.properties");
+
+		_testPropertyKeyExists(
+			gradlePropertiesFile, "liferay.workspace.bundle.url");
+
+		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
+			WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
+			"-DliferayVersion=7.2");
+
+		_testContains(
+			mavenWorkspaceProjectDir, "pom.xml",
+			"<liferay.workspace.bundle.url>", "liferay.com/portal/7.2.0-");
+	}
+
+	@Test
 	public void testBuildTemplateWorkspaceWithPortlet() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");

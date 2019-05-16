@@ -125,10 +125,10 @@ public class LiferayCiInitK8sClusterUtil {
 			}
 
 			if (gitRepositoryLocalArtifact.exists()) {
-				TGZUtil.unarchive(
-					gitRepositoryLocalArtifact, gitArtifactsLocalDir);
+				gitRepositoryLocalArtifact.delete();
 			}
-			else if (gitRepositoryClusterArtifact.exists()) {
+
+			if (gitRepositoryClusterArtifact.exists()) {
 				try {
 					JenkinsResultsParserUtil.copy(
 						gitRepositoryClusterArtifact,

@@ -299,7 +299,7 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div//div[contains(@data-field-name,'outputParameterType')]//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -309,12 +309,12 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]//div[contains(@class,'field-repeatable')]//button[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
 <tr>

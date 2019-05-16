@@ -916,14 +916,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				<#list javaMethodSignature.javaMethodParameters as parameter>
 					<#if parameter.parameterName?contains("filter")>
-						location = HttpUtil.addParameter(location, "filter", filterString);
+						if (filterString != null) {
+							location = HttpUtil.addParameter(location, "filter", filterString);
+						}
 					<#elseif parameter.parameterName?contains("pagination")>
-						location = HttpUtil.addParameter(location, "page", pagination.getPage());
-						location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
+						if (pagination != null) {
+							location = HttpUtil.addParameter(location, "page", pagination.getPage());
+							location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
+						}
 					<#elseif parameter.parameterName?contains("sorts")>
-						location = HttpUtil.addParameter(location, "sort", sortString);
+						if (sortString != null) {
+							location = HttpUtil.addParameter(location, "sort", sortString);
+						}
 					<#elseif freeMarkerTool.isQueryParameter(parameter, javaMethodSignature.operation)>
-						location = HttpUtil.addParameter(location, "${parameter.parameterName}", ${parameter.parameterName});
+						if (${parameter.parameterName} != null) {
+							location = HttpUtil.addParameter(location, "${parameter.parameterName}", ${parameter.parameterName});
+						}
 					</#if>
 				</#list>
 
@@ -985,16 +993,24 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				);
 
-				<#list javaMethodSignature.javaMethodParameters as parameter>
+					<#list javaMethodSignature.javaMethodParameters as parameter>
 					<#if parameter.parameterName?contains("filter")>
-						location = HttpUtil.addParameter(location, "filter", filterString);
+						if (filterString != null) {
+							location = HttpUtil.addParameter(location, "filter", filterString);
+						}
 					<#elseif parameter.parameterName?contains("pagination")>
-						location = HttpUtil.addParameter(location, "page", pagination.getPage());
-						location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
+						if (pagination != null) {
+							location = HttpUtil.addParameter(location, "page", pagination.getPage());
+							location = HttpUtil.addParameter(location, "pageSize", pagination.getPageSize());
+						}
 					<#elseif parameter.parameterName?contains("sorts")>
-						location = HttpUtil.addParameter(location, "sort", sortString);
+						if (sortString != null) {
+							location = HttpUtil.addParameter(location, "sort", sortString);
+						}
 					<#elseif freeMarkerTool.isQueryParameter(parameter, javaMethodSignature.operation)>
-						location = HttpUtil.addParameter(location, "${parameter.parameterName}", ${parameter.parameterName});
+						if (${parameter.parameterName} != null) {
+							location = HttpUtil.addParameter(location, "${parameter.parameterName}", ${parameter.parameterName});
+						}
 					</#if>
 				</#list>
 

@@ -57,6 +57,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		Pause(locator1 = "3000");
+
 		Navigator.gotoNavItem(navItem = "My Sites");
 
 		SiteSelector.selectSite(site = "${site}");

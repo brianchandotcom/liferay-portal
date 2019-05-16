@@ -343,7 +343,7 @@ public class StructureUtil {
 
 		Set<Map.Entry<String, LocalizedValue>> set = options.entrySet();
 
-		return set.toArray(new Map.Entry[set.size()]);
+		return set.toArray(new Map.Entry[0]);
 	}
 
 	private static String _toString(

@@ -291,7 +291,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 			proxiedIndexer = (Indexer<?>)ProxyUtil.newProxyInstance(
 				PortalClassLoaderUtil.getClassLoader(),
-				interfaces.toArray(new Class<?>[interfaces.size()]),
+				interfaces.toArray(new Class<?>[0]),
 				bufferedIndexerInvocationHandler);
 
 			_proxiedIndexers.put(indexer.getClassName(), proxiedIndexer);

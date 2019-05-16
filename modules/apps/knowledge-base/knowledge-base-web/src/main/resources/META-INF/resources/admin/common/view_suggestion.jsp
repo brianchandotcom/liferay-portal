@@ -92,6 +92,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 		<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
 			<c:if test="<%= previousStatus != KBCommentConstants.STATUS_NONE %>">
 				<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="previousStatusURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
 				</liferay-portlet:actionURL>
@@ -101,6 +102,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 
 			<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
 				<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="nextStatusURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
 				</liferay-portlet:actionURL>

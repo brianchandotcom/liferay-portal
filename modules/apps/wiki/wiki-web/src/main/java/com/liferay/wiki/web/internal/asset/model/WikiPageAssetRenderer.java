@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.asset.model;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinderRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
@@ -276,9 +280,34 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws Exception {
+
+		if (_assetDisplayPageFriendlyURLProvider != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					getClassName(), getClassPK(), themeDisplay);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				return friendlyURL;
+			}
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long groupId = _page.getGroupId();
+
+		if (!_hasViewInContextGroupLayout(groupId, themeDisplay)) {
+			return null;
+		}
 
 		return getURLViewInContext(
 			liferayPortletRequest, noSuchEntryRedirect, "/wiki/find_page",
@@ -337,9 +366,45 @@ public class WikiPageAssetRenderer
 		return true;
 	}
 
+	public void setAssetDisplayPageFriendlyURLProvider(
+		AssetDisplayPageFriendlyURLProvider
+			assetDisplayPageFriendlyURLProvider) {
+
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+	}
+
+	private boolean _hasViewInContextGroupLayout(
+		long groupId, ThemeDisplay themeDisplay) {
+
+		try {
+			PortletLayoutFinder portletLayoutFinder =
+				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
+					getClassName());
+
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
+				themeDisplay, groupId);
+
+			if ((result == null) || Validator.isNull(result.getPortletId())) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return false;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageAssetRenderer.class);
 
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final WikiPage _page;
 	private final TrashHelper _trashHelper;
 	private final WikiEngineRenderer _wikiEngineRenderer;

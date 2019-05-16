@@ -435,25 +435,14 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		if (Validator.isNull(searchTerms.getKeywords())) {
 			int count = 0;
+			List<Role> roles = null;
 
 			if (restrictPermissionSelectorRoleVisibility) {
 				count = RoleServiceUtil.getGroupRolesAndTeamRolesCount(
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId);
-			}
-			else {
-				count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-					teamGroupId);
-			}
 
-			roleSearchContainer.setTotal(count);
-
-			List<Role> roles = null;
-
-			if (restrictPermissionSelectorRoleVisibility) {
 				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
@@ -461,6 +450,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 					roleSearchContainer.getResultEnd());
 			}
 			else {
+				count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+					teamGroupId);
+
 				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
@@ -469,6 +463,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			}
 
 			roleSearchContainer.setResults(roles);
+			roleSearchContainer.setTotal(count);
 		}
 		else {
 			List<Role> roles = null;
@@ -500,12 +495,12 @@ public class PortletConfigurationPermissionsDisplayContext {
 								   themeDisplay.getLocale()));
 				});
 
-			roleSearchContainer.setTotal(filteredRoles.size());
-
 			roleSearchContainer.setResults(
 				ListUtil.subList(
 					filteredRoles, roleSearchContainer.getStart(),
 					roleSearchContainer.getResultEnd()));
+
+			roleSearchContainer.setTotal(filteredRoles.size());
 		}
 
 		_roleSearchContainer = roleSearchContainer;

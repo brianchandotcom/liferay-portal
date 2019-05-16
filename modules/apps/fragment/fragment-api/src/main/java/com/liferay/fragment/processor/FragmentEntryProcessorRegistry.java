@@ -43,7 +43,12 @@ public interface FragmentEntryProcessorRegistry {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		return fragmentEntryLink.getCss();
+		return processFragmentEntryLinkCSS(
+			fragmentEntryLink, fragmentEntryProcessorContext.getMode(),
+			fragmentEntryProcessorContext.getLocale(),
+			fragmentEntryProcessorContext.getSegmentsExperienceIds(),
+			fragmentEntryProcessorContext.getPreviewClassPK(),
+			fragmentEntryProcessorContext.getPreviewType());
 	}
 
 	public default String processFragmentEntryLinkCSS(

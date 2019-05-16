@@ -98,11 +98,11 @@ public class LiferayCiInitK8sClusterUtil {
 			JenkinsResultsParserUtil.isServerPortReachable(mirrorsHostName, 80);
 
 		if (!gitArtifactsClusterDir.exists()) {
-			gitArtifactsClusterDir.mkdir();
+			gitArtifactsClusterDir.mkdirs();
 		}
 
 		if (!gitArtifactsLocalDir.exists()) {
-			gitArtifactsLocalDir.mkdir();
+			gitArtifactsLocalDir.mkdirs();
 		}
 
 		for (String gitRepositoryName : gitRepositoryNames) {

@@ -84,7 +84,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			assetEntry.getClassName());
 
-		if ((trashHandler == null) ||
+		if ((trashHandler != null) &&
 			trashHandler.isInTrash(assetEntry.getClassPK())) {
 
 			return null;

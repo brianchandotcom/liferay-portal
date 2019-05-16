@@ -69,7 +69,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 							href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 							icon="download"
 							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-							title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+							title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
 						/>
 					</li>
 				</c:if>

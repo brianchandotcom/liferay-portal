@@ -125,7 +125,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 								elementClasses='<%= "btn-sm" %>'
 								href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 								label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-								title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+								title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
 							/>
 						</div>
 

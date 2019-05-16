@@ -92,9 +92,17 @@ exports[`Should render component 1`] = `
         <td
           className="lfr-title-column table-title"
         >
-          <strong>
-            12351
-          </strong>
+          <a
+            data-target="#instanceDetailModal"
+            data-toggle="modal"
+            href="javascript:;"
+            onClick={[Function]}
+            tabIndex="-1"
+          >
+            <strong>
+              12351
+            </strong>
+          </a>
         </td>
         <td>
           Process: Item Subject Test
@@ -134,9 +142,17 @@ exports[`Should render component 1`] = `
         <td
           className="lfr-title-column table-title"
         >
-          <strong>
-            12351
-          </strong>
+          <a
+            data-target="#instanceDetailModal"
+            data-toggle="modal"
+            href="javascript:;"
+            onClick={[Function]}
+            tabIndex="-1"
+          >
+            <strong>
+              12351
+            </strong>
+          </a>
         </td>
         <td>
           Process: Item Subject Test 2
@@ -176,9 +192,17 @@ exports[`Should render component 1`] = `
         <td
           className="lfr-title-column table-title"
         >
-          <strong>
-            12351
-          </strong>
+          <a
+            data-target="#instanceDetailModal"
+            data-toggle="modal"
+            href="javascript:;"
+            onClick={[Function]}
+            tabIndex="-1"
+          >
+            <strong>
+              12351
+            </strong>
+          </a>
         </td>
         <td>
           Process: Item Subject Test 3
@@ -200,9 +224,17 @@ exports[`Should render component 1`] = `
         <td
           className="lfr-title-column table-title"
         >
-          <strong>
-            12351
-          </strong>
+          <a
+            data-target="#instanceDetailModal"
+            data-toggle="modal"
+            href="javascript:;"
+            onClick={[Function]}
+            tabIndex="-1"
+          >
+            <strong>
+              12351
+            </strong>
+          </a>
         </td>
         <td>
           Process: Item Subject Test 4

@@ -898,6 +898,213 @@ exports[`Should component receive props 1`] = `
             </div>
           </ListView>
         </div>
+        <InstanceItemDetail
+          processId={12351}
+        >
+          <div
+            aria-labelledby="instanceDetailModalLabel"
+            className="fade modal"
+            id="instanceDetailModal"
+            role="dialog"
+            style={
+              Object {
+                "display": "none",
+              }
+            }
+            tabIndex="-1"
+          >
+            <div
+              className="modal-dialog modal-lg"
+            >
+              <div
+                className="modal-content"
+              >
+                <div
+                  className="modal-header"
+                >
+                  <div
+                    className="font-weight-medium modal-title"
+                    id="instanceDetailModalLabel"
+                  >
+                    <span
+                      className="modal-title-indicator text-secondary"
+                    >
+                      <Component>
+                        <Icon
+                          iconName="hr"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-hr"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                            />
+                          </svg>
+                        </Icon>
+                      </Component>
+                    </span>
+                    Item #undefined
+                  </div>
+                  <button
+                    aria-labelledby="Close"
+                    className="close"
+                    data-dismiss="modal"
+                    role="button"
+                    type="button"
+                  >
+                    <Icon
+                      iconName="times"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-times"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                        />
+                      </svg>
+                    </Icon>
+                  </button>
+                </div>
+                <div
+                  className="modal-body"
+                >
+                  <Component>
+                    <h4
+                      className=" font-weight-medium mb-4"
+                    >
+                      Due Date by SLA
+                    </h4>
+                  </Component>
+                  <p>
+                    <span
+                      className="font-weight-medium text-muted"
+                    >
+                      No SLA records for this item.
+                    </span>
+                  </p>
+                  <Component
+                    className="mt-5"
+                  >
+                    <h4
+                      className="mt-5 font-weight-medium mb-4"
+                    >
+                      Process Details
+                    </h4>
+                  </Component>
+                  <Component
+                    description="Process Status"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Process Status 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Created By"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Created By 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Type"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Type 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Title"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Title 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Current Step"
+                    detail=""
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Current Step 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <a
+                    className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+                    href="/group/control_panel/manage/-/workflow_instance/view/undefined"
+                    target="_blank"
+                  >
+                    Go to Submission Page
+                    <span
+                      className="inline-item inline-item-after"
+                    >
+                      <Icon
+                        iconName="shortcut"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-shortcut"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </InstanceItemDetail>
       </InstanceListCard>
     </Router>
   </MemoryRouter>
@@ -1795,6 +2002,211 @@ exports[`Should component shows empty state when items is undefined 1`] = `
             </div>
           </ListView>
         </div>
+        <InstanceItemDetail>
+          <div
+            aria-labelledby="instanceDetailModalLabel"
+            className="fade modal"
+            id="instanceDetailModal"
+            role="dialog"
+            style={
+              Object {
+                "display": "none",
+              }
+            }
+            tabIndex="-1"
+          >
+            <div
+              className="modal-dialog modal-lg"
+            >
+              <div
+                className="modal-content"
+              >
+                <div
+                  className="modal-header"
+                >
+                  <div
+                    className="font-weight-medium modal-title"
+                    id="instanceDetailModalLabel"
+                  >
+                    <span
+                      className="modal-title-indicator text-secondary"
+                    >
+                      <Component>
+                        <Icon
+                          iconName="hr"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-hr"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                            />
+                          </svg>
+                        </Icon>
+                      </Component>
+                    </span>
+                    Item #undefined
+                  </div>
+                  <button
+                    aria-labelledby="Close"
+                    className="close"
+                    data-dismiss="modal"
+                    role="button"
+                    type="button"
+                  >
+                    <Icon
+                      iconName="times"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-times"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                        />
+                      </svg>
+                    </Icon>
+                  </button>
+                </div>
+                <div
+                  className="modal-body"
+                >
+                  <Component>
+                    <h4
+                      className=" font-weight-medium mb-4"
+                    >
+                      Due Date by SLA
+                    </h4>
+                  </Component>
+                  <p>
+                    <span
+                      className="font-weight-medium text-muted"
+                    >
+                      No SLA records for this item.
+                    </span>
+                  </p>
+                  <Component
+                    className="mt-5"
+                  >
+                    <h4
+                      className="mt-5 font-weight-medium mb-4"
+                    >
+                      Process Details
+                    </h4>
+                  </Component>
+                  <Component
+                    description="Process Status"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Process Status 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Created By"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Created By 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Type"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Type 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Title"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Title 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Current Step"
+                    detail=""
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Current Step 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <a
+                    className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+                    href="/group/control_panel/manage/-/workflow_instance/view/undefined"
+                    target="_blank"
+                  >
+                    Go to Submission Page
+                    <span
+                      className="inline-item inline-item-after"
+                    >
+                      <Icon
+                        iconName="shortcut"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-shortcut"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </InstanceItemDetail>
       </InstanceListCard>
     </Router>
   </MemoryRouter>
@@ -2697,6 +3109,213 @@ exports[`Should render component 1`] = `
             </div>
           </ListView>
         </div>
+        <InstanceItemDetail
+          processId={12351}
+        >
+          <div
+            aria-labelledby="instanceDetailModalLabel"
+            className="fade modal"
+            id="instanceDetailModal"
+            role="dialog"
+            style={
+              Object {
+                "display": "none",
+              }
+            }
+            tabIndex="-1"
+          >
+            <div
+              className="modal-dialog modal-lg"
+            >
+              <div
+                className="modal-content"
+              >
+                <div
+                  className="modal-header"
+                >
+                  <div
+                    className="font-weight-medium modal-title"
+                    id="instanceDetailModalLabel"
+                  >
+                    <span
+                      className="modal-title-indicator text-secondary"
+                    >
+                      <Component>
+                        <Icon
+                          iconName="hr"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-hr"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                            />
+                          </svg>
+                        </Icon>
+                      </Component>
+                    </span>
+                    Item #undefined
+                  </div>
+                  <button
+                    aria-labelledby="Close"
+                    className="close"
+                    data-dismiss="modal"
+                    role="button"
+                    type="button"
+                  >
+                    <Icon
+                      iconName="times"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-times"
+                        focusable="false"
+                        role="presentation"
+                      >
+                        <use
+                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                        />
+                      </svg>
+                    </Icon>
+                  </button>
+                </div>
+                <div
+                  className="modal-body"
+                >
+                  <Component>
+                    <h4
+                      className=" font-weight-medium mb-4"
+                    >
+                      Due Date by SLA
+                    </h4>
+                  </Component>
+                  <p>
+                    <span
+                      className="font-weight-medium text-muted"
+                    >
+                      No SLA records for this item.
+                    </span>
+                  </p>
+                  <Component
+                    className="mt-5"
+                  >
+                    <h4
+                      className="mt-5 font-weight-medium mb-4"
+                    >
+                      Process Details
+                    </h4>
+                  </Component>
+                  <Component
+                    description="Process Status"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Process Status 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Created By"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Created By 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Type"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Type 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Asset Title"
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Asset Title 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <Component
+                    description="Current Step"
+                    detail=""
+                  >
+                    <p
+                      className="row"
+                    >
+                      <span
+                        className="col-2 font-weight-medium small text-secondary"
+                      >
+                        Current Step 
+                      </span>
+                      <span
+                        className="col small"
+                      />
+                    </p>
+                  </Component>
+                  <a
+                    className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+                    href="/group/control_panel/manage/-/workflow_instance/view/undefined"
+                    target="_blank"
+                  >
+                    Go to Submission Page
+                    <span
+                      className="inline-item inline-item-after"
+                    >
+                      <Icon
+                        iconName="shortcut"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-shortcut"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </InstanceItemDetail>
       </InstanceListCard>
     </Router>
   </MemoryRouter>
@@ -2975,6 +3594,170 @@ Array [
       </div>
     </div>
   </div>,
+  <div
+    aria-labelledby="instanceDetailModalLabel"
+    className="fade modal"
+    id="instanceDetailModal"
+    role="dialog"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog modal-lg"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header"
+        >
+          <div
+            className="font-weight-medium modal-title"
+            id="instanceDetailModalLabel"
+          >
+            <span
+              className="modal-title-indicator text-secondary"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-hr"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                />
+              </svg>
+            </span>
+            Item #undefined
+          </div>
+          <button
+            aria-labelledby="Close"
+            className="close"
+            data-dismiss="modal"
+            role="button"
+            type="button"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-times"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <h4
+            className=" font-weight-medium mb-4"
+          >
+            Due Date by SLA
+          </h4>
+          <p>
+            <span
+              className="font-weight-medium text-muted"
+            >
+              No SLA records for this item.
+            </span>
+          </p>
+          <h4
+            className="mt-5 font-weight-medium mb-4"
+          >
+            Process Details
+          </h4>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Process Status 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Created By 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Asset Type 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Asset Title 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Current Step 
+            </span>
+            <span
+              className="col small"
+            >
+              
+            </span>
+          </p>
+          <a
+            className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+            href="/group/control_panel/manage/-/workflow_instance/view/undefined"
+            target="_blank"
+          >
+            Go to Submission Page
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-shortcut"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>,
 ]
 `;
 
@@ -3247,6 +4030,170 @@ Array [
           aria-hidden="true"
           className="loading-animation"
         />
+      </div>
+    </div>
+  </div>,
+  <div
+    aria-labelledby="instanceDetailModalLabel"
+    className="fade modal"
+    id="instanceDetailModal"
+    role="dialog"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog modal-lg"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header"
+        >
+          <div
+            className="font-weight-medium modal-title"
+            id="instanceDetailModalLabel"
+          >
+            <span
+              className="modal-title-indicator text-secondary"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-hr"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                />
+              </svg>
+            </span>
+            Item #undefined
+          </div>
+          <button
+            aria-labelledby="Close"
+            className="close"
+            data-dismiss="modal"
+            role="button"
+            type="button"
+          >
+            <svg
+              className="lexicon-icon lexicon-icon-times"
+              focusable="false"
+              role="presentation"
+            >
+              <use
+                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <h4
+            className=" font-weight-medium mb-4"
+          >
+            Due Date by SLA
+          </h4>
+          <p>
+            <span
+              className="font-weight-medium text-muted"
+            >
+              No SLA records for this item.
+            </span>
+          </p>
+          <h4
+            className="mt-5 font-weight-medium mb-4"
+          >
+            Process Details
+          </h4>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Process Status 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Created By 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Asset Type 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Asset Title 
+            </span>
+            <span
+              className="col small"
+            />
+          </p>
+          <p
+            className="row"
+          >
+            <span
+              className="col-2 font-weight-medium small text-secondary"
+            >
+              Current Step 
+            </span>
+            <span
+              className="col small"
+            >
+              
+            </span>
+          </p>
+          <a
+            className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+            href="/group/control_panel/manage/-/workflow_instance/view/undefined"
+            target="_blank"
+          >
+            Go to Submission Page
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-shortcut"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>,

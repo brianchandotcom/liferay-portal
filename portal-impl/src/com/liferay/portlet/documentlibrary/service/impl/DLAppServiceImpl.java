@@ -25,6 +25,7 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1643,6 +1644,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
+	@ThreadLocalCachable
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long repositoryId, long folderId, int status,
 			boolean includeMountFolders)

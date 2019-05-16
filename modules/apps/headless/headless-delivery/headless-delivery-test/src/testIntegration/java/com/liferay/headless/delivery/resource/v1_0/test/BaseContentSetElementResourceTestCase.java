@@ -284,10 +284,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/content-sets/{contentSetId}/content-set-elements",
 					contentSetId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -312,10 +314,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/content-sets/{contentSetId}/content-set-elements",
 					contentSetId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -476,10 +480,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/sites/{siteId}/content-sets/by-key/{key}/content-set-elements",
 					siteId, key);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -505,10 +511,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/sites/{siteId}/content-sets/by-key/{key}/content-set-elements",
 					siteId, key);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -671,10 +679,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements",
 					siteId, uuid);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -700,10 +710,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 					"/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements",
 					siteId, uuid);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 

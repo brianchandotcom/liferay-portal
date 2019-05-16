@@ -270,10 +270,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/roles/{roleId}/workflow-tasks", roleId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -295,10 +297,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/roles/{roleId}/workflow-tasks", roleId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -321,10 +325,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/workflow-tasks/assigned-to-me");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -346,10 +352,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/workflow-tasks/assigned-to-me");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -372,10 +380,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/workflow-tasks/assigned-to-my-roles");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -397,10 +407,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/workflow-tasks/assigned-to-my-roles");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 

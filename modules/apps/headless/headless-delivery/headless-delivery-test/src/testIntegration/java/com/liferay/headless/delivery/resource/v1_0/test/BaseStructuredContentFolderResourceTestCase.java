@@ -475,14 +475,28 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			_resourceURL +
 				_toPath("/sites/{siteId}/structured-content-folders", siteId);
 
-		location = HttpUtil.addParameter(location, "flatten", flatten);
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
+		if (flatten != null) {
+			location = HttpUtil.addParameter(location, "flatten", flatten);
+		}
+
+		if (search != null) {
+			location = HttpUtil.addParameter(location, "search", search);
+		}
+
+		if (filterString != null) {
+			location = HttpUtil.addParameter(location, "filter", filterString);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
+
+		if (sortString != null) {
+			location = HttpUtil.addParameter(location, "sort", sortString);
+		}
 
 		options.setLocation(location);
 
@@ -506,14 +520,28 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			_resourceURL +
 				_toPath("/sites/{siteId}/structured-content-folders", siteId);
 
-		location = HttpUtil.addParameter(location, "flatten", flatten);
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
+		if (flatten != null) {
+			location = HttpUtil.addParameter(location, "flatten", flatten);
+		}
+
+		if (search != null) {
+			location = HttpUtil.addParameter(location, "search", search);
+		}
+
+		if (filterString != null) {
+			location = HttpUtil.addParameter(location, "filter", filterString);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
+
+		if (sortString != null) {
+			location = HttpUtil.addParameter(location, "sort", sortString);
+		}
 
 		options.setLocation(location);
 
@@ -942,13 +970,24 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders",
 					parentStructuredContentFolderId);
 
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
+		if (search != null) {
+			location = HttpUtil.addParameter(location, "search", search);
+		}
+
+		if (filterString != null) {
+			location = HttpUtil.addParameter(location, "filter", filterString);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
+
+		if (sortString != null) {
+			location = HttpUtil.addParameter(location, "sort", sortString);
+		}
 
 		options.setLocation(location);
 
@@ -975,13 +1014,24 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders",
 					parentStructuredContentFolderId);
 
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
+		if (search != null) {
+			location = HttpUtil.addParameter(location, "search", search);
+		}
+
+		if (filterString != null) {
+			location = HttpUtil.addParameter(location, "filter", filterString);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
+
+		if (sortString != null) {
+			location = HttpUtil.addParameter(location, "sort", sortString);
+		}
 
 		options.setLocation(location);
 

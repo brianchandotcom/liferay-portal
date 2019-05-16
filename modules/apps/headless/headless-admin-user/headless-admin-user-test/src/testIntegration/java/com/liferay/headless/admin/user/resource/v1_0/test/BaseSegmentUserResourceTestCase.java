@@ -267,10 +267,12 @@ public abstract class BaseSegmentUserResourceTestCase {
 			_resourceURL +
 				_toPath("/segments/{segmentId}/user-accounts", segmentId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -293,10 +295,12 @@ public abstract class BaseSegmentUserResourceTestCase {
 			_resourceURL +
 				_toPath("/segments/{segmentId}/user-accounts", segmentId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 

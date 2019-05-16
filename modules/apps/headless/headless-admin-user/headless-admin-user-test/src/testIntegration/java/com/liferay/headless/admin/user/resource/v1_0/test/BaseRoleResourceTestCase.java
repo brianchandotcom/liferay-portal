@@ -162,10 +162,12 @@ public abstract class BaseRoleResourceTestCase {
 
 		String location = _resourceURL + _toPath("/roles");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -185,10 +187,12 @@ public abstract class BaseRoleResourceTestCase {
 
 		String location = _resourceURL + _toPath("/roles");
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 

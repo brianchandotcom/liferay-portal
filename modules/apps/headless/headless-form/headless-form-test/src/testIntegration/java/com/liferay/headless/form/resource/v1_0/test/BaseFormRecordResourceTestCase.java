@@ -400,10 +400,12 @@ public abstract class BaseFormRecordResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -425,10 +427,12 @@ public abstract class BaseFormRecordResourceTestCase {
 		String location =
 			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 

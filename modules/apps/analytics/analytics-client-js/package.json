@@ -15,11 +15,6 @@
 	},
 	"description": "Javascript client to capture and send analytics data to LCS server",
 	"devDependencies": {
-		"babel-core": "^6.26.0",
-		"babel-eslint": "7.2.3",
-		"babel-loader": "^7.1.2",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.6.1",
 		"browserslist-config-clay-components": "^2.0.3",
 		"chai": "^4.1.2",
 		"eslint": "^4.11.0",

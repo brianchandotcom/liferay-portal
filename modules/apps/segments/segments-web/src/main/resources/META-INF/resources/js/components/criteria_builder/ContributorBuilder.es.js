@@ -94,6 +94,19 @@ class ContributorBuilder extends React.Component {
 
 		const {initialContributors, propertyGroups} = props;
 
+		const initialConjunction = initialContributors.map(
+			c => c.conjunctionId
+		).reduce(
+			(initialConjunction, currentConjunction) => {
+				if (currentConjunction == CONJUNCTIONS.OR) {
+					initialConjunction = currentConjunction;
+				}
+
+				return initialConjunction;
+			},
+			CONJUNCTIONS.AND
+		);
+
 		const contributors = initialContributors && initialContributors.map(
 			c => {
 				const propertyGroup = propertyGroups &&
@@ -102,7 +115,7 @@ class ContributorBuilder extends React.Component {
 					);
 
 				return {
-					conjunctionId: c.conjunctionId || CONJUNCTIONS.AND,
+					conjunctionId: c.conjunctionId || initialConjunction,
 					conjunctionInputId: c.conjunctionInputId,
 					criteriaMap: c.initialQuery ?
 						translateQueryToCriteria(c.initialQuery) :

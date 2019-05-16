@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.io.IOException;
-
 /**
  * @author Alan Huang
  */
@@ -23,8 +21,7 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+		String fileName, String absolutePath, String content) {
 
 		content = content.replaceAll(
 			"(?<!\n)(\n\t(?!if|else)\\w+ \\{)", "\n$1");

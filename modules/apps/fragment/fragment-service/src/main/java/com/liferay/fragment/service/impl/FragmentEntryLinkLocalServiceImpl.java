@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,9 +47,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	property = "model.class.name=com.liferay.fragment.model.FragmentEntryLink",
+	service = AopService.class
+)
 public class FragmentEntryLinkLocalServiceImpl
 	extends FragmentEntryLinkLocalServiceBaseImpl {
 
@@ -547,19 +554,19 @@ public class FragmentEntryLinkLocalServiceImpl
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
 
-	@ServiceReference(type = DLURLHelper.class)
+	@Reference
 	private DLURLHelper _dlURLHelper;
 
-	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
+	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
-	@ServiceReference(type = JSONFactory.class)
+	@Reference
 	private JSONFactory _jsonFactory;
 
-	@ServiceReference(type = LayoutLocalService.class)
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

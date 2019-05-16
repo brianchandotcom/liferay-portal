@@ -51,12 +51,12 @@
 <!--ALT_PAGINATION-->
 <tr>
 	<td>ALT_PAGINATION_PAGE</td>
-	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(.,'${key_page}')] | //div[contains(@class,'ddm-form-pagination')]//a[contains(text(),'${key_page}')]</td>
+	<td>//*[contains(@class,'ddm-pagination')]//*[contains(@class,'page-item')]//*[contains(text(),'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
-	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')] | //div[contains(@class,'ddm-form-pagination')]//a[contains(text(),'Success Page')]</td>
+	<td>//*[contains(@class,'ddm-pagination')]//*[contains(text(),'Success Page')]</td>
 	<td></td>
 </tr>
 <tr>

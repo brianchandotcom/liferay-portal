@@ -357,11 +357,15 @@ definition {
 			pageName = "Web Content Display Page1",
 			siteName = "Test Site Name");
 
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
+
 		WebContentDisplayPortlet.configureScopePG(scopeSelection = "Web Content Display Page1");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page1",
 			siteName = "Test Site Name");
+
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
 		WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Web Content Display Page1");
 
@@ -369,11 +373,15 @@ definition {
 			pageName = "Web Content Display Page2",
 			siteName = "Test Site Name");
 
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
+
 		WebContentDisplayPortlet.configureScopePG(scopeSelection = "Web Content Display Page1");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page2",
 			siteName = "Test Site Name");
+
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
 		WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Web Content Display Page1");
 

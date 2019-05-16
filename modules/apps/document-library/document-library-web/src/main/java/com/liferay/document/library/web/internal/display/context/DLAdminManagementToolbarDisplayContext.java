@@ -337,6 +337,11 @@ public class DLAdminManagementToolbarDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public String getComponentId() {
+		return _liferayPortletResponse.getNamespace() +
+			"entriesManagementToolbar";
+	}
+
 	public CreationMenu getCreationMenu() {
 		String portletName = _liferayPortletRequest.getPortletName();
 

@@ -19,6 +19,7 @@
 <clay:management-toolbar
 	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminManagementToolbarDisplayContext.getClearResultsURL() %>"
+	componentId="<%= dlAdminManagementToolbarDisplayContext.getComponentId() %>"
 	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	defaultEventHandler='<%= renderResponse.getNamespace() + "DocumentLibrary" %>'
 	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"

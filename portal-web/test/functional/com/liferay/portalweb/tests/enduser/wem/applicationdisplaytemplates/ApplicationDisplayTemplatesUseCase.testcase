@@ -192,6 +192,7 @@ definition {
 
 	@priority = "3"
 	test ADTAssetPublisher {
+		property osgi.app.includes = "social-bookmarks";
 		property testray.component.names = "Asset Publisher,Content and Application Templates";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");

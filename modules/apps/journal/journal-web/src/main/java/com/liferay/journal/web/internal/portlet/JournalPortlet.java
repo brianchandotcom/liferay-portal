@@ -978,12 +978,13 @@ public class JournalPortlet extends MVCPortlet {
 				portletPreferences.store();
 
 				updateContentSearch(
-					actionRequest, portletResource, article.getArticleId());
+					refererPlid, portletResource, article.getArticleId());
 			}
 
 			if (assetEntry != null) {
 				_updateAssetEntryUsage(
-					actionRequest, assetEntry, portletResource, serviceContext);
+					groupId, assetEntry, portletResource, refererPlid,
+					serviceContext);
 			}
 		}
 
@@ -1546,20 +1547,10 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	protected void updateContentSearch(
-			ActionRequest actionRequest, String portletResource,
-			String articleId)
+			long plid, String portletResource, String articleId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
-
-		if (refererPlid > 0) {
-			layout = _layoutLocalService.fetchLayout(refererPlid);
-		}
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		_journalContentSearchLocalService.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -1579,36 +1570,25 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private void _updateAssetEntryUsage(
-		ActionRequest actionRequest, AssetEntry assetEntry,
-		String portletResource, ServiceContext serviceContext) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
-
-		if (refererPlid > 0) {
-			layout = _layoutLocalService.fetchLayout(refererPlid);
-		}
+		long groupId, AssetEntry assetEntry, String portletResource, long plid,
+		ServiceContext serviceContext) {
 
 		AssetEntryUsage assetEntryUsage =
 			_assetEntryUsageLocalService.fetchAssetEntryUsage(
 				assetEntry.getEntryId(),
 				_portal.getClassNameId(
 					com.liferay.portal.kernel.model.Portlet.class),
-				portletResource, layout.getPlid());
+				portletResource, plid);
 
 		if (assetEntryUsage != null) {
 			return;
 		}
 
 		_assetEntryUsageLocalService.addAssetEntryUsage(
-			layout.getGroupId(), assetEntry.getEntryId(),
+			groupId, assetEntry.getEntryId(),
 			_portal.getClassNameId(
 				com.liferay.portal.kernel.model.Portlet.class),
-			portletResource, layout.getPlid(), serviceContext);
+			portletResource, plid, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);

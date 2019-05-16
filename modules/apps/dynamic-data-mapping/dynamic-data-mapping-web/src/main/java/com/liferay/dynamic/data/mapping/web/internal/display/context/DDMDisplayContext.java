@@ -504,6 +504,7 @@ public class DDMDisplayContext {
 						"classNameId", String.valueOf(getClassNameId()));
 					addTemplateURL.setParameter(
 						"classPK", String.valueOf(getClassPK()));
+					addTemplateURL.setParameter("mode", getTemplateMode());
 					addTemplateURL.setParameter(
 						"resourceClassNameId",
 						String.valueOf(getResourceClassNameId()));
@@ -541,8 +542,6 @@ public class DDMDisplayContext {
 							getCreationMenuDropdownItem(
 								addTemplateURL, message));
 					}
-
-					addTemplateURL.setParameter("mode", getTemplateMode());
 				}
 				else {
 					List<TemplateHandler> templateHandlers =

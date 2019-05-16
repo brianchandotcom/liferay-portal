@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.docker;
 
+import com.liferay.jenkins.results.parser.GitHubDevSyncUtil;
 import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
@@ -60,6 +61,40 @@ public class LiferayCiInitK8sClusterUtil {
 			Arrays.asList(gitRepositoryNamesString.split(",")));
 	}
 
+	private static boolean _cloneGitRepositoryFromGitHub(
+		File gitRepositoryLocalDir) {
+
+		try {
+			GitUtil.clone(
+				JenkinsResultsParserUtil.combine(
+					"git@github.com:liferay/", gitRepositoryLocalDir.getName()),
+				gitRepositoryLocalDir);
+
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
+	private static boolean _cloneGitRepositoryFromGitHubDev(
+		File gitRepositoryLocalDir) {
+
+		try {
+			GitHubDevSyncUtil.clone(
+				gitRepositoryLocalDir.getName(), gitRepositoryLocalDir);
+
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
 	private static void _configureLocalCoreSettings(
 		GitWorkingDirectory gitWorkingDirectory) {
 
@@ -85,6 +120,64 @@ public class LiferayCiInitK8sClusterUtil {
 		for (String remoteName : gitRemoteNames.split(",")) {
 			gitWorkingDirectory.addGitRemote(
 				true, remoteName, gitRemoteURL, true);
+		}
+	}
+
+	private static boolean _copyGitRepositoryFromClusterArtifactFile(
+		File gitArtifactsLocalDir, File gitRepositoryClusterArtifactFile,
+		File gitRepositoryLocalArtifactFile) {
+
+		if (!gitRepositoryClusterArtifactFile.exists()) {
+			return false;
+		}
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				gitRepositoryClusterArtifactFile,
+				gitRepositoryLocalArtifactFile);
+
+			TGZUtil.unarchive(
+				gitRepositoryClusterArtifactFile, gitArtifactsLocalDir);
+
+			return true;
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+
+			return false;
+		}
+	}
+
+	private static boolean _copyGitRepositoryFromMirrors(
+		File gitArtifactsLocalDir, File gitRepositoryLocalArtifactFile,
+		String gitRepositoryName) {
+
+		String mirrorsHostName = "mirrors.lax.liferay.com";
+
+		if (!JenkinsResultsParserUtil.isServerPortReachable(
+				mirrorsHostName, 80)) {
+
+			return false;
+		}
+
+		try {
+			URL gitArtifactURL = new URL(
+				JenkinsResultsParserUtil.combine(
+					"http://", mirrorsHostName, "/github.com/liferay/",
+					gitRepositoryName, ".tar.gz"));
+
+			JenkinsResultsParserUtil.toFile(
+				gitArtifactURL, gitRepositoryLocalArtifactFile);
+
+			TGZUtil.unarchive(
+				gitRepositoryLocalArtifactFile, gitArtifactsLocalDir);
+
+			return true;
+		}
+		catch (MalformedURLException murle) {
+			murle.printStackTrace();
+
+			return false;
 		}
 	}
 
@@ -128,41 +221,17 @@ public class LiferayCiInitK8sClusterUtil {
 				gitRepositoryLocalArtifact.delete();
 			}
 
-			if (gitRepositoryClusterArtifact.exists()) {
-				try {
-					JenkinsResultsParserUtil.copy(
-						gitRepositoryClusterArtifact,
-						gitRepositoryLocalArtifact);
+			if (!(_copyGitRepositoryFromClusterArtifactFile(
+					gitArtifactsLocalDir, gitRepositoryClusterArtifact,
+					gitRepositoryLocalArtifact) ||
+				  _copyGitRepositoryFromMirrors(
+					  gitArtifactsLocalDir, gitRepositoryClusterArtifact,
+					  gitRepositoryName) ||
+				  _cloneGitRepositoryFromGitHubDev(gitRepositoryLocalDir) ||
+				  _cloneGitRepositoryFromGitHub(gitRepositoryLocalDir))) {
 
-					TGZUtil.unarchive(
-						gitRepositoryLocalArtifact, gitArtifactsLocalDir);
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
-			}
-			else if (mirrorsAvailable) {
-				try {
-					URL gitArtifactURL = new URL(
-						JenkinsResultsParserUtil.combine(
-							"http://", mirrorsHostName, "/github.com/liferay/",
-							gitRepositoryName, ".tar.gz"));
-
-					JenkinsResultsParserUtil.toFile(
-						gitArtifactURL, gitRepositoryLocalArtifact);
-
-					TGZUtil.unarchive(
-						gitRepositoryLocalArtifact, gitArtifactsLocalDir);
-				}
-				catch (MalformedURLException murle) {
-					throw new RuntimeException(murle);
-				}
-			}
-			else {
-				String gitRemoteURL = JenkinsResultsParserUtil.combine(
-					"git@github.com:liferay/", gitRepositoryName, ".git");
-
-				GitUtil.clone(gitRemoteURL, gitRepositoryLocalDir);
+				throw new RuntimeException(
+					"Unable to copy or clone the git repository.");
 			}
 
 			GitWorkingDirectory gitWorkingDirectory =

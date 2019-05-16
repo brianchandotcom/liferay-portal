@@ -185,11 +185,6 @@ public class LiferayCiInitK8sClusterUtil {
 		File gitArtifactsClusterDir, File gitArtifactsLocalDir,
 		List<String> gitRepositoryNames) {
 
-		String mirrorsHostName = "mirrors.lax.liferay.com";
-
-		Boolean mirrorsAvailable =
-			JenkinsResultsParserUtil.isServerPortReachable(mirrorsHostName, 80);
-
 		if (!gitArtifactsClusterDir.exists()) {
 			gitArtifactsClusterDir.mkdirs();
 		}
@@ -231,7 +226,7 @@ public class LiferayCiInitK8sClusterUtil {
 				  _cloneGitRepositoryFromGitHub(gitRepositoryLocalDir))) {
 
 				throw new RuntimeException(
-					"Unable to copy or clone the git repository.");
+					"Unable to copy or clone the git repository");
 			}
 
 			GitWorkingDirectory gitWorkingDirectory =

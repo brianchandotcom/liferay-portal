@@ -1261,7 +1261,9 @@ definition {
 
 		Search.searchCP(searchTerm = "${siteName}");
 
-		LexiconEntry.openEntryMenu(rowEntry = "${siteName}");
+		Click(
+			key_tableEntry = "${siteName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		AssertTextEquals(
 			key_menuItem = "Add Child Site",

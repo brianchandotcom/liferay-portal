@@ -148,7 +148,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long groupId = serviceContext.getScopeGroupId();
 		urlTitle = normalizeUrlTitle(urlTitle);
 		double priority = getPriority(groupId, parentResourcePrimKey);
-		Date now = new Date();
 
 		validate(title, content, sourceURL);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
@@ -175,8 +174,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setCompanyId(user.getCompanyId());
 		kbArticle.setUserId(user.getUserId());
 		kbArticle.setUserName(user.getFullName());
-		kbArticle.setCreateDate(serviceContext.getCreateDate(now));
-		kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
 		kbArticle.setRootResourcePrimKey(rootResourcePrimKey);
 		kbArticle.setParentResourceClassNameId(parentResourceClassNameId);
 		kbArticle.setParentResourcePrimKey(parentResourcePrimKey);
@@ -1170,7 +1167,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 
-		kbArticle.setModifiedDate(serviceContext.getModifiedDate(null));
 		kbArticle.setTitle(title);
 		kbArticle.setContent(content);
 		kbArticle.setDescription(description);
@@ -1306,7 +1302,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.getParentResourceClassNameId(),
 			kbArticle.getParentResourcePrimKey(), status);
 
-		kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
 		kbArticle.setMain(main);
 		kbArticle.setStatus(status);
 		kbArticle.setStatusByUserId(user.getUserId());

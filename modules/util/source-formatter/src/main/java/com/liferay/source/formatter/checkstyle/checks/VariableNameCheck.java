@@ -70,7 +70,7 @@ public class VariableNameCheck extends BaseCheck {
 
 		String typeName = firstChildDetailAST.getText();
 
-		_checkTypeNameEnding(detailAST, name, typeName, "DetailAST");
+		_checkTypeName(detailAST, name, typeName, "DetailAST");
 		_checkTypo(detailAST, name, typeName);
 	}
 
@@ -137,7 +137,7 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkTypeNameEnding(
+	private void _checkTypeName(
 		DetailAST detailAST, String variableName, String typeName,
 		String... typeNames) {
 

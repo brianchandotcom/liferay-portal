@@ -40,16 +40,14 @@ body {
 			}
 		}
 
-		.user-avatar-link {
-			.panel-notifications-count {
-				right: calc(100% - 0.75rem);
-				top: -0.35rem;
-			}
-		}
-
 		.user-personal-bar {
 			.fieldset {
 				position: relative;
+			}
+
+			.user-avatar-link .panel-notifications-count {
+				right: calc(100% - 0.75rem);
+				top: -0.35rem;
 			}
 		}
 

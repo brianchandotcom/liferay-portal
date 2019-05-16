@@ -21,10 +21,11 @@ import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
 
 import org.elasticsearch.action.ShardOperationFailedException;
-import org.elasticsearch.action.admin.indices.refresh.RefreshAction;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
 import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
+import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.IndicesAdminClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,12 +77,12 @@ public class RefreshIndexRequestExecutorImpl
 
 		Client client = _elasticsearchClientResolver.getClient();
 
-		RefreshRequestBuilder refreshRequestBuilder =
-			RefreshAction.INSTANCE.newRequestBuilder(client);
+		AdminClient adminClient = client.admin();
 
-		refreshRequestBuilder.setIndices(refreshIndexRequest.getIndexNames());
+		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
-		return refreshRequestBuilder;
+		return indicesAdminClient.prepareRefresh(
+			refreshIndexRequest.getIndexNames());
 	}
 
 	@Reference(unbind = "-")

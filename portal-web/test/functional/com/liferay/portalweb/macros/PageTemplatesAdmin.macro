@@ -76,6 +76,10 @@ definition {
 		LexiconCard.delete(card = "${pageTemplateName}");
 	}
 
+	macro gotoPageTemplate {
+		LexiconCard.clickCardTitle(card = "${pageTemplateName}");
+	}
+
 	macro gotoPageTemplateEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = "${pageTemplateName}",

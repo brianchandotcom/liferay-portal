@@ -249,9 +249,7 @@ definition {
 		task ("Assert the content page template survived the import") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-2-staging");
 
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
-				pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
 			AssertVisible(
 				key_content = "Submit",

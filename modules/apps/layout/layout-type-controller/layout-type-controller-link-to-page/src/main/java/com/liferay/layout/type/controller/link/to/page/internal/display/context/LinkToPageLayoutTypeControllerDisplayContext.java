@@ -72,6 +72,7 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setEnableCurrentPage(false);
+		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		boolean privateLayout = ParamUtil.getBoolean(
 			_liferayPortletRequest, "privateLayout");

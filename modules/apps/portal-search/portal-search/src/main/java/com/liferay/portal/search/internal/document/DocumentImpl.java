@@ -14,11 +14,13 @@
 
 package com.liferay.portal.search.internal.document;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -160,11 +162,63 @@ public class DocumentImpl implements Document {
 	}
 
 	public void setFieldValues(String name, Collection<Object> values) {
-		_fields.put(name, new FieldImpl(name, values));
+		if ((values == null) || values.isEmpty()) {
+			removeField(name);
+		}
+		else {
+			putField(name, values);
+		}
 	}
 
 	public void unsetField(String name) {
-		_fields.remove(name);
+		removeField(name);
+	}
+
+	protected Field putField(String name, Collection<Object> values) {
+		return _fields.put(name, new FieldImpl(name, values));
+	}
+
+	protected Field removeField(String name) {
+		return _fields.remove(name);
+	}
+
+	protected void setFieldValue(String name, Object value) {
+		if (_isEmpty(value)) {
+			removeField(name);
+		}
+		else {
+			putField(name, Collections.singleton(value));
+		}
+	}
+
+	protected void setFieldValues(String name, Object[] values) {
+		setFieldValues(name, _toCollection(values));
+	}
+
+	private static Collection<Object> _toCollection(Object[] values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return null;
+		}
+
+		if ((values.length == 1) && (values[0] == null)) {
+			return null;
+		}
+
+		return Arrays.asList(values);
+	}
+
+	private boolean _isEmpty(Object value) {
+		if (value == null) {
+			return true;
+		}
+
+		if (value instanceof Collection) {
+			if (((Collection)value).isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final Map<String, Field> _fields;

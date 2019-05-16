@@ -92,6 +92,10 @@ definition {
 				value1 = "${workflowActivityComment}");
 		}
 
+		Workflow.confirmWorkflowAction();
+
+		Pause(locator1 = "1000");
+
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",
 			workflowAssetTitle = "${workflowAssetTitle}",

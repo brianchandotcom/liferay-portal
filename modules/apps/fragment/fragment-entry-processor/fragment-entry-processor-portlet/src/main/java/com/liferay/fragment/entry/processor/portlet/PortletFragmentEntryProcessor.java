@@ -57,6 +57,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -389,6 +390,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			_updateLayoutPortletSetup(
 				portletPreferencesList, jxPortletPreferences);
+		}
+
+		try {
+			jxPortletPreferences.setValue(
+				"portletSetupPortletDecoratorId", "barebone");
+		}
+		catch (ReadOnlyException roe) {
+			throw new PortalException(roe);
 		}
 
 		Document preferencesDocument = _getDocument(

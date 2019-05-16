@@ -170,11 +170,14 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
 			String instanceId)
-		throws PortalException {
+		throws Exception {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				httpServletRequest, portletId);
+
+		portletPreferences.setValue(
+			"portletSetupPortletDecoratorId", "barebone");
 
 		return _fragmentPortletRenderer.renderPortlet(
 			httpServletRequest, httpServletResponse, portletId, instanceId,

@@ -33,6 +33,7 @@ import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import java.io.File;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -83,6 +84,10 @@ public class ResolveTask extends DefaultTask {
 	@InputFile
 	public File getDistroFile() {
 		return _distroFileCollection.getSingleFile();
+	}
+
+	public List<String> getRunBundles() {
+		return _runBundles;
 	}
 
 	@Input
@@ -168,12 +173,12 @@ public class ResolveTask extends DefaultTask {
 					"Resolving bundles required for {}",
 					bndrun.getPropertiesFile());
 
-				List<String> runBundles = bndrun.resolve(
+				_runBundles = bndrun.resolve(
 					isFailOnChanges(), false, _runbundlesFormatter);
 
 				logger.lifecycle(
 					"{}:\n    {}", Constants.RUNBUNDLES,
-					runBundles.stream(
+					_runBundles.stream(
 					).collect(
 						Collectors.joining("\n    ")
 					));
@@ -276,6 +281,7 @@ public class ResolveTask extends DefaultTask {
 	private Object _failOnChanges = Boolean.FALSE;
 	private Object _offline;
 	private Object _reportOptional = Boolean.TRUE;
+	private List<String> _runBundles = Collections.emptyList();
 
 	private static class ProcessorWrapper extends Processor {
 

@@ -415,12 +415,12 @@ class SLAForm extends React.Component {
 								<input
 									autoFocus
 									className="form-control"
+									defaultValue={name}
 									id="sla_name"
 									maxLength={75}
 									name="name"
-									onChange={onChangeHandler(this.onNameChanged)}
+									onInput={onChangeHandler(this.onNameChanged)}
 									type="text"
-									value={name}
 								/>
 
 								{errors[NAME] && <FieldError error={errors[NAME]} />}
@@ -434,19 +434,19 @@ class SLAForm extends React.Component {
 
 								<input
 									className="form-control"
+									defaultValue={description}
 									id="sla_description"
 									name="description"
-									onChange={onChangeHandler()}
 									onFocus={this.hideDropLists}
+									onInput={onChangeHandler()}
 									type="text"
-									value={description}
 								/>
 							</div>
 						</div>
 
 						<h3 className="sheet-subtitle">
 							<FieldLabel
-								fieldId="sla_time_frame"
+								fieldId="sla_time_start"
 								text={Liferay.Language.get('time-frame').toUpperCase()}
 							/>
 						</h3>
@@ -537,7 +537,7 @@ class SLAForm extends React.Component {
 
 						<h3 className="sheet-subtitle">
 							<FieldLabel
-								fieldId="sla_description"
+								fieldId="sla_duration_days"
 								required
 								text={Liferay.Language.get('duration').toUpperCase()}
 							/>
@@ -564,13 +564,13 @@ class SLAForm extends React.Component {
 
 								<MaskedInput
 									className="form-control"
+									defaultValue={days}
 									id="sla_duration_days"
 									mask={daysMask}
 									maxLength={4}
 									name={DAYS}
-									onChange={onChangeHandler(this.onDurationChanged)}
 									onFocus={this.hideDropLists}
-									value={days}
+									onInput={onChangeHandler(this.onDurationChanged)}
 								/>
 
 								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
@@ -597,6 +597,7 @@ class SLAForm extends React.Component {
 									name={HOURS}
 									onBlur={this.onHoursBlurred}
 									onChange={onChangeHandler(this.onDurationChanged)}
+									onInput={onChangeHandler()}
 									placeholder="00:00"
 									value={hours}
 								/>

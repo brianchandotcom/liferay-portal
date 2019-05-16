@@ -59,6 +59,19 @@ definition {
 	}
 
 	@priority = "5"
+	test RestTemplateSmoke {
+		property portal.acceptance = "false";
+		property project.templates = "rest";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#RestTemplateSmoke";
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.viewModuleStatus(
+			moduleName = "samplerest",
+			moduleStatus = "Active");
+	}
+
+	@priority = "5"
 	test ThemeTemplateSmoke {
 		property portal.acceptance = "true";
 		property project.templates = "theme";

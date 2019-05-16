@@ -71,6 +71,9 @@ public class VariableNameCheck extends BaseCheck {
 		String typeName = firstChildDetailAST.getText();
 
 		_checkTypeName(detailAST, name, typeName, "DetailAST");
+		_checkTypeName(detailAST, name, typeName, "HttpServletRequest");
+		_checkTypeName(detailAST, name, typeName, "HttpServletResponse");
+
 		_checkTypo(detailAST, name, typeName);
 	}
 

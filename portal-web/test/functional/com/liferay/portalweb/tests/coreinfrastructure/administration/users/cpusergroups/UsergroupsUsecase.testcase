@@ -480,7 +480,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Profile");
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_2",
@@ -494,7 +494,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Dashboard");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(
@@ -520,7 +520,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Profile");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(
@@ -538,7 +538,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Dashboard");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(
@@ -579,7 +579,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Profile");
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_2",
@@ -593,7 +593,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Home#PAGE_1",
-			value1 = "Home");
+			value1 = "My Dashboard");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(

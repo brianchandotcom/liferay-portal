@@ -314,7 +314,8 @@ if (addPortletBreadcrumbEntries) {
 		if (openContextualSidebarButton) {
 			openContextualSidebarButton.addEventListener(
 				'click',
-				function() {
+				function(event) {
+					event.currentTarget.classList.toggle('active');
 					document.querySelector('#<portlet:namespace />FileEntry .contextual-sidebar')
 						.classList.toggle('contextual-sidebar-visible');
 				}

@@ -177,7 +177,9 @@ definition {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 		}
 		else {
-			fail("Please set 'groupName' to get groupId.");
+			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
+
+			var groupId = JSONUtil2._getScopeGroupId();
 		}
 
 		if (!(isSet(serviceContext))) {
@@ -224,10 +226,12 @@ definition {
 
 		if (isSet(groupName)) {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		} else {
+			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
+
+			var groupId = JSONUtil2._getScopeGroupId();
 		}
-		else {
-			fail("Please set 'groupName' to get groupId.");
-		}
+
 
 		if (!(isSet(title))) {
 			fail("Please set 'title.'");

@@ -86,11 +86,20 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 						const prevLayout = nextState.layoutData;
 						const prevSegmentsExperienceId = state.segmentsExperienceId || nextState.defaultSegmentsExperienceId;
 
-						const {layoutData} = nextState.layoutDataList.find(
-							segmentedLayout => {
-								return segmentedLayout.segmentsExperienceId === segmentsExperienceId;
-							}
-						);
+						let layoutData = {};
+
+						if (segmentsExperienceId === prevSegmentsExperienceId) {
+							layoutData = nextState.layoutData;
+						}
+						else {
+							const layoutDataItem = nextState.layoutDataList.find(
+								segmentedLayout => {
+									return segmentedLayout.segmentsExperienceId === segmentsExperienceId;
+								}
+							);
+
+							layoutData = layoutDataItem.layoutData;
+						}
 
 						nextState = setIn(
 							nextState,
@@ -506,27 +515,22 @@ function selectSegmentsExperienceReducer(state, action) {
 		(resolve, reject) => {
 			let nextState = state;
 			if (action.type === SELECT_SEGMENTS_EXPERIENCE) {
-				if (action.segmentsExperienceId === nextState.segmentsExperienceId) {
-					resolve(nextState);
-				}
-				else {
-					_switchLayoutDataList(nextState, action.segmentsExperienceId)
-						.then(
-							newState => {
-								let nextNewState = setIn(
-									newState,
-									['segmentsExperienceId'],
-									action.segmentsExperienceId,
-								);
-								resolve(nextNewState);
-							}
-						)
-						.catch(
-							e => {
-								reject(e);
-							}
-						);
-				}
+				_switchLayoutDataList(nextState, action.segmentsExperienceId)
+					.then(
+						newState => {
+							let nextNewState = setIn(
+								newState,
+								['segmentsExperienceId'],
+								action.segmentsExperienceId,
+							);
+							resolve(nextNewState);
+						}
+					)
+					.catch(
+						e => {
+							reject(e);
+						}
+					);
 			}
 			else {
 				resolve(nextState);

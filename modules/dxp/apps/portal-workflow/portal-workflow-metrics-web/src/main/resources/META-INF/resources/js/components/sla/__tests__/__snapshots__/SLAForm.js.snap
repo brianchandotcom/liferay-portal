@@ -121,12 +121,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -144,12 +144,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -157,11 +157,11 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -425,12 +425,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -476,24 +476,24 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -530,6 +530,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -548,6 +549,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -852,12 +854,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -875,12 +877,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -888,11 +890,11 @@ exports[`Should display error when the server returns a failure 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -1156,12 +1158,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -1207,24 +1209,24 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -1261,6 +1263,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -1279,6 +1282,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -1574,12 +1578,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -1597,12 +1601,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -1610,11 +1614,11 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -1878,12 +1882,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -1929,24 +1933,24 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -1983,6 +1987,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -2001,6 +2006,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -2296,12 +2302,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -2319,12 +2325,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -2332,11 +2338,11 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -2600,12 +2606,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -2651,24 +2657,24 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -2705,6 +2711,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -2723,6 +2730,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -3018,12 +3026,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -3041,12 +3049,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -3054,11 +3062,11 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -3322,12 +3330,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -3373,24 +3381,24 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -3427,6 +3435,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -3445,6 +3454,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -3740,12 +3750,12 @@ exports[`Should edit the SLA with valid values 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -3763,12 +3773,12 @@ exports[`Should edit the SLA with valid values 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -3776,11 +3786,11 @@ exports[`Should edit the SLA with valid values 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -4044,12 +4054,12 @@ exports[`Should edit the SLA with valid values 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -4095,24 +4105,24 @@ exports[`Should edit the SLA with valid values 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -4149,6 +4159,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -4167,6 +4178,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -4440,12 +4452,12 @@ exports[`Should redirect to SLA list 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -4463,12 +4475,12 @@ exports[`Should redirect to SLA list 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -4476,11 +4488,11 @@ exports[`Should redirect to SLA list 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -4744,12 +4756,12 @@ exports[`Should redirect to SLA list 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -4795,24 +4807,24 @@ exports[`Should redirect to SLA list 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -4849,6 +4861,7 @@ exports[`Should redirect to SLA list 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -4867,6 +4880,7 @@ exports[`Should redirect to SLA list 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -5088,12 +5102,12 @@ exports[`Should render component 1`] = `
           <input
             autoFocus={true}
             className="form-control"
+            defaultValue=""
             id="sla_name"
             maxLength={75}
             name="name"
-            onChange={[Function]}
+            onInput={[Function]}
             type="text"
-            value=""
           />
         </div>
         <div
@@ -5106,12 +5120,12 @@ exports[`Should render component 1`] = `
           </label>
           <input
             className="form-control"
+            defaultValue=""
             id="sla_description"
             name="description"
-            onChange={[Function]}
             onFocus={[Function]}
+            onInput={[Function]}
             type="text"
-            value=""
           />
         </div>
       </div>
@@ -5119,7 +5133,7 @@ exports[`Should render component 1`] = `
         className="sheet-subtitle"
       >
         <label
-          htmlFor="sla_time_frame"
+          htmlFor="sla_time_start"
         >
           TIME FRAME 
         </label>
@@ -5324,7 +5338,7 @@ exports[`Should render component 1`] = `
         className="sheet-subtitle"
       >
         <label
-          htmlFor="sla_description"
+          htmlFor="sla_duration_days"
         >
           DURATION 
           <span
@@ -5360,14 +5374,14 @@ exports[`Should render component 1`] = `
           </label>
           <input
             className="form-control"
+            defaultValue={null}
             id="sla_duration_days"
             mask={[Function]}
             maxLength={4}
             name="days"
-            onChange={[Function]}
             onFocus={[Function]}
+            onInput={[Function]}
             type="text"
-            value={null}
           />
           <div
             className="form-text"
@@ -5398,6 +5412,7 @@ exports[`Should render component 1`] = `
             name="hours"
             onBlur={[Function]}
             onChange={[Function]}
+            onInput={[Function]}
             placeholder="00:00"
             type="text"
             value=""
@@ -5571,12 +5586,12 @@ exports[`Should render component in edit mode 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
                 <div
@@ -5594,12 +5609,12 @@ exports[`Should render component in edit mode 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -5607,11 +5622,11 @@ exports[`Should render component in edit mode 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -5875,12 +5890,12 @@ exports[`Should render component in edit mode 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -5926,24 +5941,24 @@ exports[`Should render component in edit mode 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -5980,6 +5995,7 @@ exports[`Should render component in edit mode 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -5998,6 +6014,7 @@ exports[`Should render component in edit mode 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""
@@ -6293,12 +6310,12 @@ exports[`Should update state after input changes 1`] = `
                   <input
                     autoFocus={true}
                     className="form-control"
+                    defaultValue=""
                     id="sla_name"
                     maxLength={75}
                     name="name"
-                    onChange={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                   <FieldError
                     error="A name is required."
@@ -6346,12 +6363,12 @@ exports[`Should update state after input changes 1`] = `
                   </FieldLabel>
                   <input
                     className="form-control"
+                    defaultValue=""
                     id="sla_description"
                     name="description"
-                    onChange={[Function]}
                     onFocus={[Function]}
+                    onInput={[Function]}
                     type="text"
-                    value=""
                   />
                 </div>
               </div>
@@ -6359,11 +6376,11 @@ exports[`Should update state after input changes 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_time_frame"
+                  fieldId="sla_time_start"
                   text="TIME FRAME"
                 >
                   <label
-                    htmlFor="sla_time_frame"
+                    htmlFor="sla_time_start"
                   >
                     TIME FRAME 
                   </label>
@@ -6627,12 +6644,12 @@ exports[`Should update state after input changes 1`] = `
                 className="sheet-subtitle"
               >
                 <FieldLabel
-                  fieldId="sla_description"
+                  fieldId="sla_duration_days"
                   required={true}
                   text="DURATION"
                 >
                   <label
-                    htmlFor="sla_description"
+                    htmlFor="sla_duration_days"
                   >
                     DURATION 
                     <span
@@ -6678,24 +6695,24 @@ exports[`Should update state after input changes 1`] = `
                   </FieldLabel>
                   <reactTextMask
                     className="form-control"
+                    defaultValue={null}
                     id="sla_duration_days"
                     mask={[Function]}
                     maxLength={4}
                     name="days"
-                    onChange={[Function]}
                     onFocus={[Function]}
-                    value={null}
+                    onInput={[Function]}
                   >
                     <input
                       className="form-control"
+                      defaultValue={null}
                       id="sla_duration_days"
                       mask={[Function]}
                       maxLength={4}
                       name="days"
-                      onChange={[Function]}
                       onFocus={[Function]}
+                      onInput={[Function]}
                       type="text"
-                      value={null}
                     />
                   </reactTextMask>
                   <div
@@ -6732,6 +6749,7 @@ exports[`Should update state after input changes 1`] = `
                     name="hours"
                     onBlur={[Function]}
                     onChange={[Function]}
+                    onInput={[Function]}
                     placeholder="00:00"
                     value=""
                   >
@@ -6750,6 +6768,7 @@ exports[`Should update state after input changes 1`] = `
                       name="hours"
                       onBlur={[Function]}
                       onChange={[Function]}
+                      onInput={[Function]}
                       placeholder="00:00"
                       type="text"
                       value=""

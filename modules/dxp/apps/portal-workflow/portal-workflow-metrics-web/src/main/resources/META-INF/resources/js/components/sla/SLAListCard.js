@@ -9,6 +9,7 @@ import { REQUEST_ORIGIN_TYPE_FETCH } from './Constants';
 import SLAConfirmDialog from './SLAConfirmDialog';
 import SLAListCardContext from './SLAListCardContext';
 import SLAListTable from './SLAListTable';
+import Tooltip from '../../shared/components/Tooltip';
 
 class SLAListCard extends React.Component {
 	constructor(props) {
@@ -161,12 +162,18 @@ class SLAListCard extends React.Component {
 					<div className="container-fluid container-fluid-max-xl">
 						<ul className="navbar-nav autofit-row">
 							<li className="nav-item autofit-col-expand autofit-float-end">
-								<ChildLink
-									className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-									to={`/sla/new/${processId}`}
+								<Tooltip
+									message={Liferay.Language.get('new-sla')}
+									position="bottom"
+									width="85"
 								>
-									<Icon iconName="plus" />
-								</ChildLink>
+									<ChildLink
+										className="btn btn-primary nav-btn nav-btn-monospaced"
+										to={`/sla/new/${processId}`}
+									>
+										<Icon iconName="plus" />
+									</ChildLink>
+								</Tooltip>
 							</li>
 						</ul>
 					</div>

@@ -79,9 +79,10 @@ public class MBMessageUserLocalServiceWrapper extends UserLocalServiceWrapper {
 
 		if (GetterUtil.getBoolean(
 				PropsKeys.USERS_UPDATE_USER_NAME + MBMessage.class.getName()) &&
-			!oldFullName.equals(user.getFullName())) {
+			!oldFullName.equals(curUser.getFullName())) {
 
-			_mbMessageLocalService.updateUserName(userId, user.getFullName());
+			_mbMessageLocalService.updateUserName(
+				userId, curUser.getFullName());
 		}
 
 		return curUser;

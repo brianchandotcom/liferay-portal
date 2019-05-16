@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Set;
@@ -52,11 +53,13 @@ public class LanguageEntry {
 	}
 
 	public String getLongDisplayName() {
-		return LocaleUtil.getLongDisplayName(_locale, _duplicateLanguages);
+		return StringUtil.toLowerCase(
+			LocaleUtil.getLongDisplayName(_locale, _duplicateLanguages));
 	}
 
 	public String getShortDisplayName() {
-		return LocaleUtil.getShortDisplayName(_locale, _duplicateLanguages);
+		return StringUtil.toLowerCase(
+			LocaleUtil.getShortDisplayName(_locale, _duplicateLanguages));
 	}
 
 	public String getURL() {

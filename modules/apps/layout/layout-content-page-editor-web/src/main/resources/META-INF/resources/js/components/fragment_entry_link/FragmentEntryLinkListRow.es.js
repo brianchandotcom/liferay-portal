@@ -7,14 +7,15 @@ import '../floating_toolbar/background_image/FloatingToolbarBackgroundImagePanel
 import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 import './ColumnOverlayGrid.es';
 import './FragmentEntryLink.es';
-import {REMOVE_ROW, UPDATE_ROW_COLUMNS} from '../../actions/actions.es';
-import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {getItemMoveDirection, getItemPath, getRowIndex, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {moveRow, removeItem, setIn, updateRow} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
+import {FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {getItemMoveDirection, getItemPath, getRowIndex, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {moveRow, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {REMOVE_ROW} from '../../actions/actions.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
+import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
 
 /**
  * Defines the list of available panels.
@@ -384,13 +385,11 @@ class FragmentEntryLinkListRow extends Component {
 	 * @private
 	 */
 	_updateRowColumns(columns) {
-		updateRow(
-			this.store,
-			UPDATE_ROW_COLUMNS,
-			{
+		this.store.dispatch(
+			updateRowColumnsAction(
 				columns,
-				rowId: this.rowId
-			}
+				this.rowId
+			)
 		);
 	}
 }

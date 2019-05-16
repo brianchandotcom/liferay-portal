@@ -44,6 +44,8 @@ definition {
 
 	@priority = "5"
 	test PublishChangeList {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

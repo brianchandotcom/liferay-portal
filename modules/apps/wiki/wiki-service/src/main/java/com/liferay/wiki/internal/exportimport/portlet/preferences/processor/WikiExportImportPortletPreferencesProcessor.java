@@ -56,13 +56,20 @@ public class WikiExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(new Capability[] {_exportCapability});
+		return ListUtil.toList(
+			new Capability[] {
+				_exportCapability,
+				_wikiCommentsAndRatingsExporterImporterCapability
+			});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
-			new Capability[] {_importCapability, _capability});
+			new Capability[] {
+				_importCapability, _capability,
+				_wikiCommentsAndRatingsExporterImporterCapability
+			});
 	}
 
 	@Override
@@ -251,6 +258,10 @@ public class WikiExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
+
+	@Reference
+	private WikiCommentsAndRatingsExporterImporterCapability
+		_wikiCommentsAndRatingsExporterImporterCapability;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageLocalService _wikiPageLocalService;

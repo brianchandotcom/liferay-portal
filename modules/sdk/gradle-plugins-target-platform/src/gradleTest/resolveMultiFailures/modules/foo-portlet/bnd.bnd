@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Foo Portlet
-Bundle-SymbolicName: com.liferay.foo.portlet
-Bundle-Version: 1.0.0
-Export-Package: foo.portlet.constants

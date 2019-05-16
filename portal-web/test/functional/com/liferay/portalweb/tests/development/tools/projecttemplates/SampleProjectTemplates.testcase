@@ -87,4 +87,16 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "themeId=${themeName}");
 	}
 
+	@priority = "5"
+	test WarHookTemplateSmoke {
+		property portal.acceptance = "false";
+		property project.templates = "war-hook";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#WarHookTemplateSmoke";
+
+		SignOut.signOut();
+
+		SignIn.signIn();
+
+		AssertConsoleTextPresent(value1 = "${userFirstName} has logged in.");
+	}
 }

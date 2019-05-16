@@ -21,7 +21,8 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.elasticsearch.common.Strings;
 
@@ -50,12 +51,21 @@ public class DefaultElasticsearchDocumentFactoryTest {
 
 	@Test
 	public void testNull() throws Exception {
-		assertDocument(null, "{\"field\":null}");
+		assertDocumentSameAsLegacy(null, "{}");
 	}
 
 	@Test
-	public void testNullLegacy() throws Exception {
-		assertDocumentLegacy(null, "{}");
+	public void testNullValue() throws Exception {
+		assertDocument(
+			"{\"field\":[null]}",
+			builder().setValue(_FIELD, Collections.singleton(null)));
+	}
+
+	@Test
+	public void testNullValues() throws Exception {
+		assertDocument(
+			"{\"field\":[null,null]}",
+			builder().setValues(_FIELD, Arrays.asList(null, null)));
 	}
 
 	@Test
@@ -82,23 +92,23 @@ public class DefaultElasticsearchDocumentFactoryTest {
 		assertDocumentSameAsLegacy(StringPool.NULL, "{\"field\":\"null\"}");
 	}
 
-	protected void assertDocument(String value, String json)
-		throws IOException {
-
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
-
-		documentBuilder.setStrings(_FIELD, new String[] {value});
+	protected void assertDocument(
+		String expected, DocumentBuilder documentBuilder) {
 
 		Assert.assertEquals(
-			json,
+			expected,
 			Strings.toString(
 				_elasticsearchDocumentFactory.getElasticsearchDocument(
 					documentBuilder.build())));
 	}
 
-	protected void assertDocumentLegacy(String value, String json)
-		throws Exception {
+	protected void assertDocument(String value, String json) {
+		assertDocument(
+			json, builder().setStrings(_FIELD, new String[] {value}));
+	}
 
+	@SuppressWarnings("deprecation")
+	protected void assertDocumentLegacy(String value, String json) {
 		Document document = new DocumentImpl();
 
 		document.addText(_FIELD, new String[] {value});
@@ -108,11 +118,13 @@ public class DefaultElasticsearchDocumentFactoryTest {
 			_elasticsearchDocumentFactory.getElasticsearchDocument(document));
 	}
 
-	protected void assertDocumentSameAsLegacy(String value, String json)
-		throws Exception {
-
+	protected void assertDocumentSameAsLegacy(String value, String json) {
 		assertDocument(value, json);
 		assertDocumentLegacy(value, json);
+	}
+
+	protected DocumentBuilderImpl builder() {
+		return new DocumentBuilderImpl();
 	}
 
 	private static final String _FIELD = "field";

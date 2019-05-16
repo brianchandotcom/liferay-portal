@@ -16,12 +16,9 @@ package com.liferay.arquillian.extension.junit.bridge.connector;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-
 /**
  * @author Matthew Tambara
  */
-@ExtendedObjectClassDefinition(category = "module-container")
 @Meta.OCD(
 	id = "com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnectorConfiguration",
 	localization = "content/Language",
@@ -29,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ArquillianConnectorConfiguration {
 
-	@Meta.AD(deflt = "32763", name = "port", required = false)
+	@Meta.AD(name = "port", required = false)
 	public int port();
 
 	@Meta.AD(name = "passcode", required = false)

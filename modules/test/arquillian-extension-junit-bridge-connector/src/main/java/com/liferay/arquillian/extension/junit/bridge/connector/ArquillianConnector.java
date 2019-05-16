@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.connector;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -42,11 +41,13 @@ public class ArquillianConnector {
 	public void activate(
 		BundleContext bundleContext, Map<String, String> properties) {
 
-		ArquillianConnectorConfiguration arquillianConnectorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ArquillianConnectorConfiguration.class, properties);
+		int port = _DEFAULT_PORT;
 
-		int port = arquillianConnectorConfiguration.port();
+		String portString = properties.get("port");
+
+		if (portString != null) {
+			port = Integer.valueOf(portString);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Listening on port " + port);
@@ -54,8 +55,7 @@ public class ArquillianConnector {
 
 		try {
 			_arquillianConnectorThread = new ArquillianConnectorThread(
-				bundleContext, _inetAddress, port,
-				arquillianConnectorConfiguration.passcode());
+				bundleContext, _inetAddress, port, properties.get("passcode"));
 		}
 		catch (IOException ioe) {
 			_log.error(
@@ -76,6 +76,8 @@ public class ArquillianConnector {
 
 		_arquillianConnectorThread.join();
 	}
+
+	private static final int _DEFAULT_PORT = 32763;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ArquillianConnector.class);

@@ -13,15 +13,6 @@
 
 body {
 	header {
-		.portlet, .field-wrapper, .form-group {
-			margin-bottom: 0;
-		}
-
-		.text-default {
-			color: #6B6C7E;
-			font-weight: 600;
-		}
-
 		.field-wrapper {
 			position: absolute;
 			right: 4px;
@@ -32,12 +23,26 @@ body {
 			}
 		}
 
+		.field-wrapper, .form-group {
+			margin-bottom: 0;
+		}
+
 		.portlet {
 			margin-bottom: 0;
 
 			&:hover {
 				z-index: 1034;
 			}
+		}
+
+		.search-input {
+			font-size: 0.88rem;
+			padding: 0.28rem 2rem 0.28rem 1rem;
+		}
+
+		.text-default {
+			color: #6B6C7E;
+			font-weight: 600;
 		}
 
 		.user-personal-bar {
@@ -50,16 +55,18 @@ body {
 				top: -0.35rem;
 			}
 		}
-
-		.search-input {
-			font-size: 0.88rem;
-			padding: 0.28rem 2rem 0.28rem 1rem;
-		}
 	}
 
 	.user-avatar-link {
 		display: block;
 		position: relative;
+
+		.panel-notifications-count {
+			margin: 0;
+			position: absolute;
+			right: calc(100% - 0.7rem);
+			top: -0.4rem;
+		}
 
 		.text-default {
 			align-items: center;
@@ -72,13 +79,6 @@ body {
 					display: none;
 				}
 			}
-		}
-
-		.panel-notifications-count {
-			margin: 0;
-			position: absolute;
-			right: calc(100% - 0.7rem);
-			top: -0.4rem;
 		}
 	}
 }

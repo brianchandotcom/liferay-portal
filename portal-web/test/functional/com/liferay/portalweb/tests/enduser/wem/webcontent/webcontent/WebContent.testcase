@@ -23,30 +23,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test AddWebContentDraft {
-		property testray.component.names = "Web Content Administration";
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addDraft(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.viewStatus(
-			webContentContent = "WC WebContent Content",
-			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title");
-	}
-
 	@priority = "3"
 	test AddWebContentExpirationDate {
 		property testray.component.names = "Web Content Administration";
@@ -279,42 +255,6 @@ definition {
 			templateDescription = "Basic Web Content Description",
 			templateName = "Basic Web Content Edit",
 			templateScript = '''${Image.getData()}''');
-	}
-
-	@priority = "4"
-	test EditWCAddLocalization {
-		property testray.component.names = "Localization,Web Content Administration";
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		WebContent.addCP(
-			webContentContent = "WC Contenido de la web Contenido",
-			webContentTitle = "WC Contenido de la web Titulo");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		WebContent.viewCP(
-			webContentContent = "WC Contenido de la web Contenido",
-			webContentTitle = "WC Contenido de la web Titulo");
 	}
 
 	@priority = "5"

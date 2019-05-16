@@ -25,6 +25,32 @@ definition {
 		}
 	}
 
+	@description = "Test that the UI for saving a WC as a draft works."
+	@priority = "4"
+	test AddWebContentDraft {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addDraft(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "DRAFT",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Draft",
+			webContentTitle = "WC WebContent Title");
+	}
+
+	@description = "Test that the UI for adding a WC folder works."
 	@priority = "5"
 	test AddFolder {
 		property testray.component.names = "Training,Web Content Administration";
@@ -41,6 +67,7 @@ definition {
 			folderName = "WC Folder Name");
 	}
 
+	@description = "Test that the UI for adding a WC works."
 	@priority = "4"
 	test AddWebContent {
 		property testray.component.names = "Web Content Administration";
@@ -69,6 +96,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "Test that the UI for adding multiple WC works."
 	@priority = "3"
 	test AddWebContentMultiple {
 		property testray.component.names = "Web Content Administration";
@@ -162,5 +190,42 @@ definition {
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content 3",
 			webContentTitle = "WC WebContent Title 3");
+	}
+
+	@description = "Test that the UI for editing WC localization works."
+	@priority = "4"
+	test EditWCAddLocalization {
+		property testray.component.names = "Localization,Web Content Administration";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.addCP(
+			webContentContent = "WC Contenido de la web Contenido",
+			webContentTitle = "WC Contenido de la web Titulo");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC Contenido de la web Contenido",
+			webContentTitle = "WC Contenido de la web Titulo");
 	}
 }

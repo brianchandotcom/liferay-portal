@@ -236,7 +236,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.sql.indexes.file=indexes.sql" />
 			<arg value="service.sql.sequences.file=sequences.sql" />
 			<arg value="service.target.entity.name=${service.target.entity.name}" />
-			<arg value="service.test.dir=${basedir}/test/integration" />
+			<arg value="service.test.dir=${basedir}/../modules/test/persistence-test/src/testIntegration/java" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />

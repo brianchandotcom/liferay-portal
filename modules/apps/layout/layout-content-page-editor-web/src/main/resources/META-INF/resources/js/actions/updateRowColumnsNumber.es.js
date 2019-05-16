@@ -19,17 +19,19 @@ function _addColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 		layoutData,
 		['structure', rowIndex, 'columns'],
 		columns => {
-			columns.forEach(
-				(column, index) => {
-					column.size = _getColumnSize(numberOfColumns, columnsSize, index);
-				}
+			const newColumns = columns.map(
+				(column, index) => setIn(
+					column,
+					['size'],
+					_getColumnSize(numberOfColumns, columnsSize, index)
+				)
 			);
 
 			const numberOfNewColumns = numberOfColumns - columns.length;
 			const numberOfOldColumns = columns.length;
 
 			for (let i = 0; i < numberOfNewColumns; i++) {
-				columns.push(
+				newColumns.push(
 					{
 						columnId: `${nextColumnId}`,
 						fragmentEntryLinkIds: [],
@@ -40,11 +42,11 @@ function _addColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 				nextColumnId += 1;
 			}
 
-			return columns;
+			return newColumns;
 		}
 	);
 
-	nextData = setIn(layoutData, ['nextColumnId'], nextColumnId);
+	nextData = setIn(nextData, ['nextColumnId'], nextColumnId);
 
 	return nextData;
 }
@@ -85,15 +87,17 @@ function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 		layoutData,
 		['structure', rowIndex, 'columns'],
 		columns => {
-			columns = columns.slice(0, numberOfColumns);
+			let newColumns = columns.slice(0, numberOfColumns);
 
-			columns.forEach(
-				(column, index) => {
-					column.size = _getColumnSize(numberOfColumns, columnsSize, index);
-				}
+			newColumns = newColumns.map(
+				(column, index) => setIn(
+					column,
+					['size'],
+					_getColumnSize(numberOfColumns, columnsSize, index)
+				)
 			);
 
-			return columns;
+			return newColumns;
 		}
 	);
 

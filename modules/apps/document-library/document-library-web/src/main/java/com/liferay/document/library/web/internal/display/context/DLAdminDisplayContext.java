@@ -34,7 +34,6 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -299,8 +298,12 @@ public class DLAdminDisplayContext {
 			_folder = (Folder)_httpServletRequest.getAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-			_folderId = BeanPropertiesUtil.getLong(
-				_folder, "folderId", getRootFolderId());
+			if (_folder == null) {
+				_folderId = getRootFolderId();
+			}
+			else {
+				_folderId = _folder.getFolderId();
+			}
 
 			_defaultFolderView = false;
 

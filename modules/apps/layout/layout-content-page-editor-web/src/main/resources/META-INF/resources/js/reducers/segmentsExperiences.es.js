@@ -472,8 +472,8 @@ function deleteSegmentsExperienceReducer(state, action) {
 
 							resolve(nextState);
 						},
-						(error, {exception}) => {
-							reject(exception);
+						error => {
+							reject(error);
 						}
 					);
 				}

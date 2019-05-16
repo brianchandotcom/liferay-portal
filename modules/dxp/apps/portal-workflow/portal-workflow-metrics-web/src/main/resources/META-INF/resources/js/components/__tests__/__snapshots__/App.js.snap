@@ -61,7 +61,7 @@ Array [
         </div>
       </nav>
       <div
-        className="lfr-search-container-wrapper container-fluid-1280"
+        className="container-fluid-1280"
       >
         <div>
           <div
@@ -138,7 +138,7 @@ exports[`Should render default component without custom header 1`] = `
       </div>
     </nav>
     <div
-      className="lfr-search-container-wrapper container-fluid-1280"
+      className="container-fluid-1280"
     >
       <div>
         <div

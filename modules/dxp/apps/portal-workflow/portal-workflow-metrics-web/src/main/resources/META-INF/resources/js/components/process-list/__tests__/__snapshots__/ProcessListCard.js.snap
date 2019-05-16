@@ -56,7 +56,7 @@ exports[`Should render component 1`] = `
     </div>
   </nav>
   <div
-    className="lfr-search-container-wrapper container-fluid-1280"
+    className="container-fluid-1280"
   >
     <div>
       <div
@@ -128,7 +128,7 @@ exports[`Should render component with 4 records 1`] = `
     </div>
   </nav>
   <div
-    className="lfr-search-container-wrapper container-fluid-1280"
+    className="container-fluid-1280"
   >
     <div>
       <div
@@ -200,7 +200,7 @@ exports[`Should render component with 10 records 1`] = `
     </div>
   </nav>
   <div
-    className="lfr-search-container-wrapper container-fluid-1280"
+    className="container-fluid-1280"
   >
     <div>
       <div

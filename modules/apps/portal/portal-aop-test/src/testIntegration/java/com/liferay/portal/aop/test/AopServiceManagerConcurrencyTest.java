@@ -75,6 +75,18 @@ public class AopServiceManagerConcurrencyTest {
 
 		_executorService = Executors.newFixedThreadPool(
 			runtime.availableProcessors());
+
+		for (Bundle currentBundle : _bundleContext.getBundles()) {
+			String symbolicName = currentBundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.portal.aop.impl")) {
+				_aopImplBundle = currentBundle;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(_aopImplBundle);
 	}
 
 	@After
@@ -119,11 +131,15 @@ public class AopServiceManagerConcurrencyTest {
 									Constants.SERVICE_RANKING,
 									expectedMinServiceRanking));
 
+					_assertUsingBundles(transactionExecutorServiceRegistration);
+
 					ServiceRegistration<AopService>
 						aopServiceServiceRegistration =
 							_bundleContext.registerService(
 								AopService.class, aopService,
 								MapUtil.singletonDictionary("index", index));
+
+					_assertUsingBundles(aopServiceServiceRegistration);
 
 					ServiceReference<?>[] serviceReferences = null;
 
@@ -142,6 +158,41 @@ public class AopServiceManagerConcurrencyTest {
 					while (testService == null) {
 						testService = (TestService)_bundleContext.getService(
 							serviceReferences[0]);
+
+						if (testService == null) {
+							Assert.assertSame(
+								aopService,
+								_bundleContext.getService(
+									aopServiceServiceRegistration.
+										getReference()));
+
+							_bundleContext.ungetService(
+								aopServiceServiceRegistration.getReference());
+
+							_assertUsingBundles(aopServiceServiceRegistration);
+
+							Assert.assertSame(
+								testTransactionExecutor,
+								_bundleContext.getService(
+									transactionExecutorServiceRegistration.
+										getReference()));
+
+							_bundleContext.ungetService(
+								transactionExecutorServiceRegistration.
+									getReference());
+
+							_assertUsingBundles(
+								transactionExecutorServiceRegistration);
+
+							serviceReferences = null;
+
+							while (serviceReferences == null) {
+								serviceReferences =
+									_bundleContext.getServiceReferences(
+										TestService.class.getName(),
+										"(index=" + index + ")");
+							}
+						}
 					}
 
 					TestTransactionExecutor actualTestTransactionExecutor =
@@ -251,6 +302,23 @@ public class AopServiceManagerConcurrencyTest {
 		extends TestTransactionExecutor {
 	}
 
+	private void _assertUsingBundles(
+		ServiceRegistration<?> serviceRegistration) {
+
+		ServiceReference<?> serviceReference =
+			serviceRegistration.getReference();
+
+		Bundle[] usingBundles = serviceReference.getUsingBundles();
+
+		Assert.assertNotNull(usingBundles);
+
+		Assert.assertEquals(
+			Arrays.toString(usingBundles), 1, usingBundles.length);
+
+		Assert.assertSame(_aopImplBundle, usingBundles[0]);
+	}
+
+	private Bundle _aopImplBundle;
 	private BundleContext _bundleContext;
 	private ExecutorService _executorService;
 

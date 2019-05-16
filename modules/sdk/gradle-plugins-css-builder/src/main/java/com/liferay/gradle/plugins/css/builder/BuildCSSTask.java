@@ -360,34 +360,34 @@ public class BuildCSSTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add(
-			"sass.append.css.import.timestamps=" +
+			"--append-css-import-timestamps=" +
 				isAppendCssImportTimestamps());
 
-		args.add("sass.dir=" + _getDirNamesArg());
+		args.add("--dir-names=" + _getDirNamesArg());
 
 		String docrootDirName = FileUtil.getAbsolutePath(getBaseDir());
 
-		args.add("sass.docroot.dir=" + _removeTrailingSlash(docrootDirName));
+		args.add("--base-dir=" + _removeTrailingSlash(docrootDirName));
 
-		args.add("sass.generate.source.map=" + isGenerateSourceMap());
+		args.add("--generate-source-map=" + isGenerateSourceMap());
 
-		args.add("sass.output.dir=" + _addTrailingSlash(getOutputDirName()));
+		args.add("--output-dir=" + _addTrailingSlash(getOutputDirName()));
 
 		String importPath = FileUtil.getAbsolutePath(getImportPath());
 
-		args.add("sass.portal.common.path=" + importPath);
+		args.add("--import-paths=" + importPath);
 
-		args.add("sass.precision=" + getPrecision());
+		args.add("--precision=" + getPrecision());
 
 		String rtlExcludedPathRegexps = CollectionUtils.join(
 			",", getRtlExcludedPathRegexps());
 
-		args.add("sass.rtl.excluded.path.regexps=" + rtlExcludedPathRegexps);
+		args.add("--rtl-excluded-path-regexps=" + rtlExcludedPathRegexps);
 
 		String sassCompilerClassName = getSassCompilerClassName();
 
 		if (Validator.isNotNull(sassCompilerClassName)) {
-			args.add("sass.compiler.class.name=" + sassCompilerClassName);
+			args.add("--compiler=" + sassCompilerClassName);
 		}
 
 		return args;

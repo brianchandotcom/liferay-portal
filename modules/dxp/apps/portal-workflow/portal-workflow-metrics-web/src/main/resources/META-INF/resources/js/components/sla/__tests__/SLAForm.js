@@ -336,7 +336,7 @@ test('Should update state after input changes', () => {
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('change', { target: { name: 'name', value: 'New SLA' } })
+		.simulate('input', { target: { name: 'name', value: 'New SLA' } })
 		.simulate('blur');
 
 	const { name: filledName } = slaStore.getState();
@@ -346,7 +346,7 @@ test('Should update state after input changes', () => {
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('change', { target: { name: 'name' } })
+		.simulate('input', { target: { name: 'name' } })
 		.simulate('blur');
 
 	const { name: emptyName } = slaStore.getState();

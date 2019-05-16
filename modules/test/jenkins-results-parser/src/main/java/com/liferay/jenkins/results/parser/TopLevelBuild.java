@@ -760,9 +760,7 @@ public class TopLevelBuild extends BaseBuild {
 			"https://github.com/", companionUsername, "/",
 			companionGitRepositoryName, "/tree/", getCompanionBranchName());
 
-		String companionGitRepositorySHA = null;
-
-		companionGitRepositorySHA = getCompanionGitRepositorySHA();
+		String companionGitRepositorySHA = getCompanionGitRepositorySHA();
 
 		String companionGitRepositoryCommitURL =
 			JenkinsResultsParserUtil.combine(

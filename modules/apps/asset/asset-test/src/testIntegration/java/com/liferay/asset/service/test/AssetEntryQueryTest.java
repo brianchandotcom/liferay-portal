@@ -570,9 +570,7 @@ public class AssetEntryQueryTest {
 		}
 
 		if (assetTagNames != null) {
-			long[] assetTagIds = null;
-
-			assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
 				groupId, assetTagNames);
 
 			assetEntryQuery = buildAssetEntryQueryWithAssetTagIds(

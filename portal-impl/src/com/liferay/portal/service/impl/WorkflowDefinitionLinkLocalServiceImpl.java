@@ -121,9 +121,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return null;
 		}
 
-		WorkflowDefinitionLink workflowDefinitionLink = null;
-
-		workflowDefinitionLink =
+		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
 				StagingUtil.getLiveGroupId(groupId), companyId,
 				classNameLocalService.getClassNameId(className), classPK,

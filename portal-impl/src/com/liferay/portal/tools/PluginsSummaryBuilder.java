@@ -53,9 +53,7 @@ public class PluginsSummaryBuilder {
 	public PluginsSummaryBuilder(File pluginsDir) throws Exception {
 		_pluginsDir = pluginsDir;
 
-		String latestHASH = null;
-
-		latestHASH = _getLatestHASH(pluginsDir);
+		String latestHASH = _getLatestHASH(pluginsDir);
 
 		_latestHASH = latestHASH;
 

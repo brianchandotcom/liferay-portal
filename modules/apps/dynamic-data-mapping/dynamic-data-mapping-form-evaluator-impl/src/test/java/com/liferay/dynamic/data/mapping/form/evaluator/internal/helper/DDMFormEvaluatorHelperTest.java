@@ -970,10 +970,9 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			doEvaluate(ddmForm, ddmFormValues);
 
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
-			ddmFormFieldsPropertyChanges = null;
-
-		ddmFormFieldsPropertyChanges =
-			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges();
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
 
 		Assert.assertEquals(
 			ddmFormFieldsPropertyChanges.toString(), 2,

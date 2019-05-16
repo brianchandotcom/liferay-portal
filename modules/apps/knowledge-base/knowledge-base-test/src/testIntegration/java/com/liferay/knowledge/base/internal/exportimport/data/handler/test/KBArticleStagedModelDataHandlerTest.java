@@ -26,12 +26,15 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -40,6 +43,42 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KBArticleStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
+
+	@Test
+	public void testMovingKBArticleUpdatesParentResourcePrimKey()
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		exportImportStagedModel(stagedModel);
+
+		KBArticle kbArticle = (KBArticle)stagedModel;
+
+		KBArticleLocalServiceUtil.moveKBArticle(
+			TestPropsValues.getUserId(), kbArticle.getResourcePrimKey(),
+			ClassNameLocalServiceUtil.getClassNameId(
+				KBFolderConstants.getClassName()),
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			KBArticleConstants.DEFAULT_PRIORITY);
+
+		exportImportStagedModel(
+			getStagedModel(kbArticle.getUuid(), stagingGroup));
+
+		KBArticle importedKBArticle = (KBArticle)getStagedModel(
+			kbArticle.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			ClassNameLocalServiceUtil.getClassNameId(
+				KBFolderConstants.getClassName()),
+			importedKBArticle.getParentResourceClassNameId());
+		Assert.assertEquals(
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			importedKBArticle.getParentResourcePrimKey());
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

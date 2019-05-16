@@ -52,6 +52,7 @@ definition {
 
 	@priority = "4"
 	test AddPagesFullPageApplication {
+		property osgi.app.includes = "hello-soy";
 		property testray.component.names = "Site Pages Administration";
 
 		for (var portlet : list "Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Hello Soy Portlet,RSS Publisher,Application Authorization Request") {

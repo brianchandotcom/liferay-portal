@@ -162,7 +162,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
-					fixedHeader="true"
+					fixedHeader="<%= true %>"
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>

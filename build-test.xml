@@ -6070,6 +6070,32 @@ go</echo>
 					/>
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${project.templates}" arg2="theme" />
+				<then>
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
+
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme" task="assemble" />
+
+					<copy
+						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme/build/libs/sampletheme.war"
+						todir="${liferay.home}/deploy"
+					/>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${project.templates}" arg2="war-hook" />
+				<then>
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
+
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/samplewarhook" task="assemble" />
+
+					<copy
+						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/samplewarhook/build/libs/samplewarhook.war"
+						todir="${liferay.home}/deploy"
+					/>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

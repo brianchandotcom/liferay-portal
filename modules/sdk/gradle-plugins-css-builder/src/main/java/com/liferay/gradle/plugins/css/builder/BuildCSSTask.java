@@ -35,8 +35,6 @@ import java.util.Set;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
@@ -124,27 +122,10 @@ public class BuildCSSTask extends JavaExec {
 		return GradleUtil.toStringList(_dirNames);
 	}
 
-	@InputDirectory
+	@InputFiles
 	@Optional
-	public File getImportDir() {
-		return GradleUtil.toFile(getProject(), _importDir);
-	}
-
-	@InputFile
-	@Optional
-	public File getImportFile() {
-		return GradleUtil.toFile(getProject(), _importFile);
-	}
-
-	@Input
-	public File getImportPath() {
-		File importPath = getImportDir();
-
-		if (importPath == null) {
-			importPath = getImportFile();
-		}
-
-		return importPath;
+	public FileCollection getImportPath() {
+		return _importPath;
 	}
 
 	@Input
@@ -254,12 +235,8 @@ public class BuildCSSTask extends JavaExec {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setImportDir(Object importDir) {
-		_importDir = importDir;
-	}
-
-	public void setImportFile(Object importFile) {
-		_importFile = importFile;
+	public void setImportPath(FileCollection importPath) {
+		_importPath = importPath;
 	}
 
 	public void setOutputDirName(Object outputDirName) {
@@ -304,8 +281,7 @@ public class BuildCSSTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add(
-			"--append-css-import-timestamps=" +
-				isAppendCssImportTimestamps());
+			"--append-css-import-timestamps=" + isAppendCssImportTimestamps());
 
 		args.add("--dir-names=" + _getDirNamesArg());
 
@@ -317,9 +293,9 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("--output-dir=" + _addTrailingSlash(getOutputDirName()));
 
-		String importPath = FileUtil.getAbsolutePath(getImportPath());
+		FileCollection importPath = getImportPath();
 
-		args.add("--import-paths=" + importPath);
+		args.add("--import-paths=" + importPath.getAsPath());
 
 		args.add("--precision=" + getPrecision());
 
@@ -389,8 +365,7 @@ public class BuildCSSTask extends JavaExec {
 	private Object _baseDir;
 	private final Set<Object> _dirNames = new LinkedHashSet<>();
 	private boolean _generateSourceMap;
-	private Object _importDir;
-	private Object _importFile;
+	private FileCollection _importPath;
 	private Object _outputDirName = CSSBuilderArgs.OUTPUT_DIR_NAME;
 	private Object _precision = CSSBuilderArgs.PRECISION;
 	private final Set<Object> _rtlExcludedPathRegexps = new LinkedHashSet<>();

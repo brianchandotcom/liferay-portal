@@ -120,6 +120,10 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.frontend.css.common", "latest.release", false);
+
+		GradleUtil.addDependency(
+			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME, "org.webjars",
+			"font-awesome", "latest.release", false);
 	}
 
 	private BuildCSSTask _addTaskBuildCSS(Project project) {
@@ -196,18 +200,9 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBuildCSSImportFile(
-		BuildCSSTask buildCSSTask,
-		final Configuration portalCommonCSSConfiguration) {
+		BuildCSSTask buildCSSTask, Configuration portalCommonCSSConfiguration) {
 
-		buildCSSTask.setImportFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return portalCommonCSSConfiguration.getSingleFile();
-				}
-
-			});
+		buildCSSTask.setImportPath(portalCommonCSSConfiguration);
 	}
 
 	private void _configureTasksBuildCSS(

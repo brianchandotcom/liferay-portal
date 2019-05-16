@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,21 +42,40 @@ public class KBArticleStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Override
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<>();
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, KBArticle.class,
+			_addKBArticle(
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ClassNameLocalServiceUtil.getClassNameId(
+					KBFolderConstants.getClassName()),
+				_createServiceContext(group)));
+
+		return dependentStagedModelsMap;
+	}
+
+	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		ServiceContext serviceContext = _createServiceContext(group);
+		List<StagedModel> stagedModels = dependentStagedModelsMap.get(
+			KBArticle.class.getSimpleName());
 
-		return KBArticleLocalServiceUtil.addKBArticle(
-			serviceContext.getUserId(),
+		KBArticle kbArticle = (KBArticle)stagedModels.get(0);
+
+		return _addKBArticle(
+			kbArticle.getResourcePrimKey(),
 			ClassNameLocalServiceUtil.getClassNameId(
-				KBFolderConstants.getClassName()),
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			null, serviceContext);
+				KBArticleConstants.getClassName()),
+			_createServiceContext(group));
 	}
 
 	@Override
@@ -68,6 +89,18 @@ public class KBArticleStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return KBArticle.class;
+	}
+
+	private KBArticle _addKBArticle(
+			long parentResourcePrimKey, long parentResourceClassNameId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return KBArticleLocalServiceUtil.addKBArticle(
+			serviceContext.getUserId(), parentResourceClassNameId,
+			parentResourcePrimKey, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(Group group)

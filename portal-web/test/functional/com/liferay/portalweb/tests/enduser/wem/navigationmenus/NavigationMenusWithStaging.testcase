@@ -141,9 +141,13 @@ definition {
 		}
 
 		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page 1",
+				siteName = "Test Site Name");
 
-			Staging.publishCustomPublication();
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
 		}
 
 		task ("Navigate to navigation menus admin in the live site") {

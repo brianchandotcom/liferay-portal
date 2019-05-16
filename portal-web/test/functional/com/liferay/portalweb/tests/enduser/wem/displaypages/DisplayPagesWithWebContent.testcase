@@ -185,13 +185,9 @@ definition {
 		}
 
 		task ("Change the display page theme from Classic to Fjord") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplate.clickPencilItem(item = "Edit Display Page Template");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Configure");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			PageEditor.gotoTab(tabName = "Look and Feel");
 
 			Click(locator1 = "Radio#SPECIFIC_LOOK");
 
@@ -205,17 +201,7 @@ definition {
 
 			Button.clickSave();
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Edit");
-
 			Button.clickPublish();
-		}
-
-		task ("View the web content through the display page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
 		task ("Assert the display page is using the Fjord Theme") {

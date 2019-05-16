@@ -8521,7 +8521,7 @@ inquirer@^5.0.0:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-inquirer@^6.1.0, inquirer@^6.2.1:
+inquirer@^6.1.0:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.2.2.tgz#46941176f65c9eb20804627149b743a218f25406"
   integrity sha512-Z2rREiXA6cHRR9KBOarR3WuLlFzlIfAEIiB45ll5SSadMg7WqOh1MKEjjndfuH5ewXdixWCxqnVfGOQzPeiztA==
@@ -10542,7 +10542,6 @@ liferay-npm-bundler@2.7.1:
     cross-spawn "^6.0.5"
     deepmerge "^3.0.0"
     glob "^7.1.3"
-    inquirer "^6.2.1"
     jest "^24.5.0"
     liferay-jest-junit-reporter "1.0.1"
     liferay-npm-bridge-generator "2.7.1"

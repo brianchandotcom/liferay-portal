@@ -302,10 +302,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchWithSiteAdminPermission() throws Exception {
+		addStructure(_classNameId, StringUtil.randomString());
+
 		DDMStructure structure = addStructure(
 			_classNameId, StringUtil.randomString());
-
-		structure = addStructure(_classNameId, StringUtil.randomString());
 
 		String modelName = ResourceActionsUtil.getCompositeModelName(
 			PortalUtil.getClassName(_classNameId),
@@ -334,10 +334,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchWithSiteMemberPermission() throws Exception {
+		addStructure(_classNameId, StringUtil.randomString());
+
 		DDMStructure structure = addStructure(
 			_classNameId, StringUtil.randomString());
-
-		structure = addStructure(_classNameId, StringUtil.randomString());
 
 		String modelName = ResourceActionsUtil.getCompositeModelName(
 			PortalUtil.getClassName(_classNameId),

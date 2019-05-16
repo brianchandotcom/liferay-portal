@@ -124,14 +124,6 @@ public class BuildCSSTask extends JavaExec {
 		return GradleUtil.toStringList(_dirNames);
 	}
 
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #getBaseDir()}
-	 */
-	@Deprecated
-	public File getDocrootDir() {
-		return getBaseDir();
-	}
-
 	@InputDirectory
 	@Optional
 	public File getImportDir() {
@@ -177,30 +169,6 @@ public class BuildCSSTask extends JavaExec {
 		}
 
 		return project.files(outputDirs);
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #getImportDir()}
-	 */
-	@Deprecated
-	public File getPortalCommonDir() {
-		return getImportDir();
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #getImportFile()}
-	 */
-	@Deprecated
-	public File getPortalCommonFile() {
-		return getImportFile();
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #getImportPath()}
-	 */
-	@Deprecated
-	public File getPortalCommonPath() {
-		return getImportPath();
 	}
 
 	@Input

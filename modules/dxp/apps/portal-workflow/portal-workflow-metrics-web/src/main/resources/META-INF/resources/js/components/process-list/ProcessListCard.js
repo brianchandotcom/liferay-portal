@@ -97,7 +97,7 @@ class ProcessListCard extends React.Component {
 
 				{this.props.search && <ResultsBar totalCount={totalCount} />}
 
-				<div className="lfr-search-container-wrapper container-fluid-1280">
+				<div className="container-fluid-1280">
 					<ListView
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}

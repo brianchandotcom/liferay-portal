@@ -8,16 +8,10 @@ allprojects {
 	}
 }
 
-dependencies {
-	providedModules group: "com.google.guava", name: "guava", version: "23.0"
-}
-
 runGradleTest {
-	dependsOn resolve
+	dependsOn ":modules:foo-portlet:resolve"
 
 	doLast {
-		File bndrunFile = new File(buildDir, "tmp/resolve/resolve.bndrun")
-
-		assert bndrunFile.text.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert project(":modules:foo-portlet").resolve.runBundles.contains("com.liferay.foo.portlet;version='[1.0.0,1.0.1)'")
 	}
 }

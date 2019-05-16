@@ -250,14 +250,6 @@ public class BuildCSSTask extends JavaExec {
 		setDirNames(Arrays.asList(dirNames));
 	}
 
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #setBaseDir(Object)}
-	 */
-	@Deprecated
-	public void setDocrootDir(Object docrootDir) {
-		setBaseDir(docrootDir);
-	}
-
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_generateSourceMap = generateSourceMap;
 	}
@@ -272,22 +264,6 @@ public class BuildCSSTask extends JavaExec {
 
 	public void setOutputDirName(Object outputDirName) {
 		_outputDirName = outputDirName;
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #setImportDir(Object)}
-	 */
-	@Deprecated
-	public void setPortalCommonDir(Object portalCommonDir) {
-		setImportDir(portalCommonDir);
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, replaced by {@link #setImportFile(Object)}
-	 */
-	@Deprecated
-	public void setPortalCommonFile(Object portalCommonFile) {
-		setImportFile(portalCommonFile);
 	}
 
 	public void setPrecision(Object precision) {

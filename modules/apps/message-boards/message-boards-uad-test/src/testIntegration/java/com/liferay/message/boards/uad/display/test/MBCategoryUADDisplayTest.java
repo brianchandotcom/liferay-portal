@@ -120,6 +120,16 @@ public class MBCategoryUADDisplayTest
 			_getTopLevelContainer(
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, mbThread));
 
+		// A top-level thread should return null
+
+		MBThread topLevelMBThread = _addThread(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		Assert.assertNull(
+			_getTopLevelContainer(
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				topLevelMBThread));
+
 		// A category that is not a descendant of the given parent should return
 		// null
 

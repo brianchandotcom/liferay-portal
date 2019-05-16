@@ -56,12 +56,12 @@ public class FreeMarkerFragmentEntryProcessor
 		throws PortalException {
 
 		FreeMarkerFragmentEntryProcessorConfiguration
-			freemarkerFragmentEntryProcessorConfiguration =
+			freeMarkerFragmentEntryProcessorConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					FreeMarkerFragmentEntryProcessorConfiguration.class,
 					fragmentEntryLink.getCompanyId());
 
-		if (!freemarkerFragmentEntryProcessorConfiguration.enable()) {
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
 			return html;
 		}
 

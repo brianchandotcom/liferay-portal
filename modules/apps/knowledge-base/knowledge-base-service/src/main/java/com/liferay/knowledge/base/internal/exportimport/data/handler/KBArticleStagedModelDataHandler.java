@@ -465,34 +465,36 @@ public class KBArticleStagedModelDataHandler
 			resourcePrimaryKey, portletDataContext.getScopeGroupId(),
 			kbArticle.getVersion());
 
-		if (existingKBArticle == null) {
-			existingKBArticle = fetchStagedModelByUuidAndGroupId(
-				kbArticle.getUuid(), portletDataContext.getScopeGroupId());
+		if (existingKBArticle != null) {
+			return existingKBArticle;
 		}
 
-		if (existingKBArticle == null) {
-			serviceContext.setUuid(kbArticle.getUuid());
+		existingKBArticle = fetchStagedModelByUuidAndGroupId(
+			kbArticle.getUuid(), portletDataContext.getScopeGroupId());
 
-			existingKBArticle = _kbArticleLocalService.fetchLatestKBArticle(
-				resourcePrimaryKey, portletDataContext.getScopeGroupId());
+		if (existingKBArticle != null) {
+			return existingKBArticle;
 		}
 
-		if (existingKBArticle == null) {
-			Map<Long, Long> kbFolderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					KBFolder.class);
+		serviceContext.setUuid(kbArticle.getUuid());
 
-			long kbFolderId = MapUtil.getLong(
-				kbFolderIds, kbArticle.getKbFolderId(),
-				kbArticle.getKbFolderId());
+		existingKBArticle = _kbArticleLocalService.fetchLatestKBArticle(
+			resourcePrimaryKey, portletDataContext.getScopeGroupId());
 
-			existingKBArticle =
-				_kbArticleLocalService.fetchLatestKBArticleByUrlTitle(
-					portletDataContext.getScopeGroupId(), kbFolderId,
-					kbArticle.getUrlTitle(), WorkflowConstants.STATUS_ANY);
+		if (existingKBArticle != null) {
+			return existingKBArticle;
 		}
 
-		return existingKBArticle;
+		Map<Long, Long> kbFolderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				KBFolder.class);
+
+		long kbFolderId = MapUtil.getLong(
+			kbFolderIds, kbArticle.getKbFolderId(), kbArticle.getKbFolderId());
+
+		return _kbArticleLocalService.fetchLatestKBArticleByUrlTitle(
+			portletDataContext.getScopeGroupId(), kbFolderId,
+			kbArticle.getUrlTitle(), WorkflowConstants.STATUS_ANY);
 	}
 
 	private InputStream _getKBArticalAttachmentInputStream(

@@ -305,13 +305,11 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 	const defaultSegmentsExperienceKey = prefixSegmentsExperienceId(nextState.defaultSegmentsExperienceId);
 	const incomingExperienceKey = prefixSegmentsExperienceId(incomingExperienceId);
 
-	const listOfFragments = Object.entries(nextState.fragmentEntryLinks).reduce(
+	const newFragmentEntryLinks = Object.entries(nextState.fragmentEntryLinks).reduce(
 		(acc, entry) => {
-			const [
-				fragmentEntryLinkId,
-				fragmentEntryLink
-			] = entry;
+			const [fragmentEntryLinkId, fragmentEntryLink] = entry;
 			let newAcc = acc;
+
 			if (getFragmentRowIndex(nextState.layoutData.structure, fragmentEntryLinkId) !== -1) {
 				const newEditableValues = Object.assign(
 					{},
@@ -359,6 +357,7 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 						)
 					}
 				);
+
 				const newFragmentEntryLink = Object.assign(
 					{},
 					fragmentEntryLink,
@@ -384,7 +383,7 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 	return setIn(
 		nextState,
 		['fragmentEntryLinks'],
-		listOfFragments
+		newFragmentEntryLinks
 	);
 }
 

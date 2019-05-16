@@ -89,6 +89,8 @@ definition {
 
 		Search.searchCP(searchTerm = "${userScreenName}");
 
+		AssertTextPresent(value1 = "Results for ${userScreenName}");
+
 		AssertTextEquals(
 			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");

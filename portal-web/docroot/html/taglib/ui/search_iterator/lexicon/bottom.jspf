@@ -95,6 +95,7 @@
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
 			var fixedHeaderElement = document.getElementById('<%= namespace + id %>fixedHeader');
 			var scrollingContainer = window === Liferay.Util.getOpener() ? window : searchContainer.get('contentBox').ancestor('#main-content')._node;
+
 			var tableElement = fixedHeaderElement.parentElement;
 			var theadBoundingClientRectangle = fixedHeaderElement.previousElementSibling.getBoundingClientRect();
 

@@ -125,8 +125,10 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			else if (childObject instanceof MBThread) {
 				MBThread mbThread = (MBThread)childObject;
 
-				if (mbThread.getCategoryId() ==
-						MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
+				if ((mbThread.getCategoryId() ==
+						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
+					(mbThread.getCategoryId() ==
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
 					return null;
 				}

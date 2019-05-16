@@ -14,13 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.IOException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -37,26 +31,10 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 
 		content = content.replaceFirst("(definition \\{\n)(?!\n)", "$1\n");
 		content = content.replaceFirst("(?<!\n)(\n\\})$", "\n$1");
-
-		content = _fixMissingEmptyLineBeforeCommand(content);
-
-		return content;
-	}
-
-	private String _fixMissingEmptyLineBeforeCommand(String content) {
-		Matcher matcher = _missingEmptyLineBeforeCommandPattern.matcher(
-			content);
-
-		while (matcher.find()) {
-			if (content.charAt(matcher.start() - 1) != CharPool.NEW_LINE) {
-				return StringUtil.insert(content, "\n", matcher.start());
-			}
-		}
+		content = content.replaceFirst(
+			"(\n\t*[^@\\s].*\n)((\t@.+\n)*\t(function|macro|test) )", "$1\n$2");
 
 		return content;
 	}
-
-	private static final Pattern _missingEmptyLineBeforeCommandPattern =
-		Pattern.compile("\n(\t@.+?=.+?\n)*\t(function|macro|test) .*\n");
 
 }

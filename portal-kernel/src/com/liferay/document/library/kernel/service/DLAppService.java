@@ -15,6 +15,7 @@
 package com.liferay.document.library.kernel.service;
 
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -1077,6 +1078,7 @@ public interface DLAppService extends BaseService {
 	 shortcuts in the parent folder
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long repositoryId, long folderId, int status,

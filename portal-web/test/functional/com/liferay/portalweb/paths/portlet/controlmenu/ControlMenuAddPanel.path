@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_NEW_DROPDOWN</td>
-	<td>//a[contains(.,'Add New')]/span</td>
+	<td>//a[contains(.,'Add New')]</td>
 	<td></td>
 </tr>
 <tr>

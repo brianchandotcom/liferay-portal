@@ -38,7 +38,7 @@ public class DataRuleFunctionTrackerImpl implements DataRuleFunctionTracker {
 
 	@Override
 	public DataRuleFunction getDataRuleFunction(String name) {
-		return _dataRuleFunctions.get(name);
+		return _nameDataRuleFunctions.get(name);
 	}
 
 	@Reference(
@@ -52,22 +52,22 @@ public class DataRuleFunctionTrackerImpl implements DataRuleFunctionTracker {
 		String name = MapUtil.getString(
 			properties, "data.engine.rule.function.name");
 
-		_dataRuleFunctions.put(name, dataRuleFunction);
+		_nameDataRuleFunctions.put(name, dataRuleFunction);
 
 		List<DataRuleFunction> dataRuleFunctions =
-			_dataRuleFunctionsByType.getOrDefault(
+			_typeDataRuleFunctions.getOrDefault(
 				MapUtil.getString(properties, "data.engine.rule.function.type"),
 				new ArrayList<>());
 
 		dataRuleFunctions.add(dataRuleFunction);
 
-		_dataRuleFunctionsByType.put(name, dataRuleFunctions);
+		_typeDataRuleFunctions.put(name, dataRuleFunctions);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dataRuleFunctions.clear();
-		_dataRuleFunctionsByType.clear();
+		_nameDataRuleFunctions.clear();
+		_typeDataRuleFunctions.clear();
 	}
 
 	protected void removeDataRuleFunction(
@@ -76,21 +76,21 @@ public class DataRuleFunctionTrackerImpl implements DataRuleFunctionTracker {
 		String type = MapUtil.getString(
 			properties, "data.engine.rule.function.type");
 
-		List<DataRuleFunction> dataRuleFunctions = _dataRuleFunctionsByType.get(
+		List<DataRuleFunction> dataRuleFunctions = _typeDataRuleFunctions.get(
 			type);
 
 		if (dataRuleFunctions != null) {
 			dataRuleFunctions.remove(dataRuleFunction);
 
 			if (dataRuleFunctions.isEmpty()) {
-				_dataRuleFunctionsByType.remove(type);
+				_typeDataRuleFunctions.remove(type);
 			}
 		}
 	}
 
-	private final Map<String, DataRuleFunction> _dataRuleFunctions =
+	private final Map<String, DataRuleFunction> _nameDataRuleFunctions =
 		new TreeMap<>();
-	private final Map<String, List<DataRuleFunction>> _dataRuleFunctionsByType =
+	private final Map<String, List<DataRuleFunction>> _typeDataRuleFunctions =
 		new TreeMap<>();
 
 }

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -279,9 +280,17 @@ public class KBArticleStagedModelDataHandler
 						kbArticle.getDescription(), kbArticle.getSourceURL(),
 						sections, null, serviceContext);
 
-					_kbArticleLocalService.updatePriority(
-						importedKBArticle.getResourcePrimKey(),
-						kbArticle.getPriority());
+					ServiceContextThreadLocal.pushServiceContext(
+						serviceContext);
+
+					try {
+						_kbArticleLocalService.updatePriority(
+							importedKBArticle.getResourcePrimKey(),
+							kbArticle.getPriority());
+					}
+					finally {
+						ServiceContextThreadLocal.popServiceContext();
+					}
 				}
 				else {
 					_kbArticleLocalService.updateKBArticle(
@@ -290,10 +299,18 @@ public class KBArticleStagedModelDataHandler
 						kbArticle.getDescription(), kbArticle.getSourceURL(),
 						sections, null, null, serviceContext);
 
-					_kbArticleLocalService.moveKBArticle(
-						userId, existingKBArticle.getResourcePrimKey(),
-						existingKBArticle.getParentResourceClassNameId(),
-						parentResourcePrimKey, kbArticle.getPriority());
+					ServiceContextThreadLocal.pushServiceContext(
+						serviceContext);
+
+					try {
+						_kbArticleLocalService.moveKBArticle(
+							userId, existingKBArticle.getResourcePrimKey(),
+							existingKBArticle.getParentResourceClassNameId(),
+							parentResourcePrimKey, kbArticle.getPriority());
+					}
+					finally {
+						ServiceContextThreadLocal.popServiceContext();
+					}
 
 					importedKBArticle =
 						_kbArticleLocalService.getLatestKBArticle(
@@ -313,10 +330,17 @@ public class KBArticleStagedModelDataHandler
 					kbArticle.getSourceURL(), sections, null, null,
 					serviceContext);
 
-				_kbArticleLocalService.moveKBArticle(
-					userId, resourcePrimaryKey,
-					kbArticle.getParentResourceClassNameId(),
-					parentResourcePrimKey, kbArticle.getPriority());
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				try {
+					_kbArticleLocalService.moveKBArticle(
+						userId, resourcePrimaryKey,
+						kbArticle.getParentResourceClassNameId(),
+						parentResourcePrimKey, kbArticle.getPriority());
+				}
+				finally {
+					ServiceContextThreadLocal.popServiceContext();
+				}
 
 				importedKBArticle = _kbArticleLocalService.getLatestKBArticle(
 					resourcePrimaryKey, WorkflowConstants.STATUS_APPROVED);
@@ -329,9 +353,16 @@ public class KBArticleStagedModelDataHandler
 					kbArticle.getDescription(), kbArticle.getSourceURL(),
 					sections, null, serviceContext);
 
-				_kbArticleLocalService.updatePriority(
-					importedKBArticle.getResourcePrimKey(),
-					kbArticle.getPriority());
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				try {
+					_kbArticleLocalService.updatePriority(
+						importedKBArticle.getResourcePrimKey(),
+						kbArticle.getPriority());
+				}
+				finally {
+					ServiceContextThreadLocal.popServiceContext();
+				}
 			}
 		}
 

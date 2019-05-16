@@ -37,6 +37,38 @@ import java.util.regex.Pattern;
  */
 public class GitHubDevSyncUtil {
 
+	public static void clone(String repositoryName, File workingDirectory) {
+		List<String> usedGitHubDevRemoteHostnames = new ArrayList<>();
+
+		while (true) {
+			String gitHubDevRemoteHostname =
+				JenkinsResultsParserUtil.getRandomGitHubDevNodeHostname(
+					usedGitHubDevRemoteHostnames);
+
+			usedGitHubDevRemoteHostnames.add(gitHubDevRemoteHostname);
+
+			String gitHubDevRemoteURL = JenkinsResultsParserUtil.combine(
+				"git@", gitHubDevRemoteHostname, ":liferay/", repositoryName);
+
+			try {
+				GitUtil.clone(gitHubDevRemoteURL, workingDirectory);
+			}
+			catch (Exception e) {
+				String message = JenkinsResultsParserUtil.combine(
+					"Unable to clone ", repositoryName, " from ",
+					gitHubDevRemoteURL, ".");
+
+				if (usedGitHubDevRemoteHostnames.size() == 3) {
+					throw new RuntimeException(message, e);
+				}
+
+				System.out.println(message + " Retrying.");
+			}
+
+			return;
+		}
+	}
+
 	public static LocalGitBranch createCachedLocalGitBranch(
 		LocalGitRepository localGitRepository, LocalGitBranch localGitBranch,
 		boolean synchronize) {

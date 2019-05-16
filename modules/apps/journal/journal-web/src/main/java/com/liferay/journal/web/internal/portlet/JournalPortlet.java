@@ -21,6 +21,8 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -954,6 +956,9 @@ public class JournalPortlet extends MVCPortlet {
 		if (Validator.isNotNull(portletResource) && (refererPlid > 0)) {
 			Layout layout = _layoutLocalService.getLayout(refererPlid);
 
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
+
 			PortletPreferences portletPreferences =
 				PortletPreferencesFactoryUtil.getStrictPortletSetup(
 					layout, portletResource);
@@ -963,10 +968,6 @@ public class JournalPortlet extends MVCPortlet {
 					"groupId", String.valueOf(article.getGroupId()));
 				portletPreferences.setValue(
 					"articleId", article.getArticleId());
-
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
 
 				if (assetEntry != null) {
 					portletPreferences.setValue(
@@ -978,6 +979,11 @@ public class JournalPortlet extends MVCPortlet {
 
 				updateContentSearch(
 					actionRequest, portletResource, article.getArticleId());
+			}
+
+			if (assetEntry != null) {
+				_updateAssetEntryUsage(
+					actionRequest, assetEntry, portletResource, serviceContext);
 			}
 		}
 
@@ -1572,6 +1578,39 @@ public class JournalPortlet extends MVCPortlet {
 		return true;
 	}
 
+	private void _updateAssetEntryUsage(
+		ActionRequest actionRequest, AssetEntry assetEntry,
+		String portletResource, ServiceContext serviceContext) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
+
+		if (refererPlid > 0) {
+			layout = _layoutLocalService.fetchLayout(refererPlid);
+		}
+
+		AssetEntryUsage assetEntryUsage =
+			_assetEntryUsageLocalService.fetchAssetEntryUsage(
+				assetEntry.getEntryId(),
+				_portal.getClassNameId(
+					com.liferay.portal.kernel.model.Portlet.class),
+				portletResource, layout.getPlid());
+
+		if (assetEntryUsage != null) {
+			return;
+		}
+
+		_assetEntryUsageLocalService.addAssetEntryUsage(
+			layout.getGroupId(), assetEntry.getEntryId(),
+			_portal.getClassNameId(
+				com.liferay.portal.kernel.model.Portlet.class),
+			portletResource, layout.getPlid(), serviceContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
 
 	@Reference
@@ -1584,6 +1623,9 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

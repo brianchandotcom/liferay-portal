@@ -23,10 +23,6 @@ MBMessage message = messageDisplay.getMessage();
 
 MBThread thread = messageDisplay.getThread();
 
-if (layout.isTypeControlPanel()) {
-	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-}
-
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(MBMessage.class.getName(), message.getMessageId());
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);

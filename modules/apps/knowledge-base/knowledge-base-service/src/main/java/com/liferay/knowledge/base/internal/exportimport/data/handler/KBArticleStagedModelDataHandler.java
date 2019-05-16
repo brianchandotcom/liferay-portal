@@ -245,89 +245,28 @@ public class KBArticleStagedModelDataHandler
 				serviceContext);
 
 			if (existingKBArticle == null) {
-				importedKBArticle = _kbArticleLocalService.addKBArticle(
-					userId, kbArticle.getParentResourceClassNameId(),
-					parentResourcePrimKey, kbArticle.getTitle(),
-					kbArticle.getUrlTitle(), kbArticle.getContent(),
-					kbArticle.getDescription(), kbArticle.getSourceURL(),
-					sections, null, serviceContext);
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-				try {
-					_kbArticleLocalService.updatePriority(
-						importedKBArticle.getResourcePrimKey(),
-						kbArticle.getPriority());
-				}
-				finally {
-					ServiceContextThreadLocal.popServiceContext();
-				}
+				importedKBArticle = _addKBArticle(
+					userId, parentResourcePrimKey, kbArticle, sections,
+					serviceContext);
 			}
 			else {
-				_kbArticleLocalService.updateKBArticle(
+				importedKBArticle = _updateKBArticle(
 					userId, existingKBArticle.getResourcePrimKey(),
-					kbArticle.getTitle(), kbArticle.getContent(),
-					kbArticle.getDescription(), kbArticle.getSourceURL(),
-					sections, null, null, serviceContext);
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-				try {
-					_kbArticleLocalService.moveKBArticle(
-						userId, existingKBArticle.getResourcePrimKey(),
-						existingKBArticle.getParentResourceClassNameId(),
-						parentResourcePrimKey, kbArticle.getPriority());
-				}
-				finally {
-					ServiceContextThreadLocal.popServiceContext();
-				}
-
-				importedKBArticle = _kbArticleLocalService.getLatestKBArticle(
-					existingKBArticle.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED);
+					existingKBArticle.getParentResourceClassNameId(),
+					parentResourcePrimKey, kbArticle, sections, serviceContext);
 			}
 		}
 		else {
 			if (resourcePrimaryKey != kbArticle.getResourcePrimKey()) {
-				_kbArticleLocalService.updateKBArticle(
-					userId, resourcePrimaryKey, kbArticle.getTitle(),
-					kbArticle.getContent(), kbArticle.getDescription(),
-					kbArticle.getSourceURL(), sections, null, null,
-					serviceContext);
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-				try {
-					_kbArticleLocalService.moveKBArticle(
-						userId, resourcePrimaryKey,
-						kbArticle.getParentResourceClassNameId(),
-						parentResourcePrimKey, kbArticle.getPriority());
-				}
-				finally {
-					ServiceContextThreadLocal.popServiceContext();
-				}
-
-				importedKBArticle = _kbArticleLocalService.getLatestKBArticle(
-					resourcePrimaryKey, WorkflowConstants.STATUS_APPROVED);
+				importedKBArticle = _updateKBArticle(
+					userId, resourcePrimaryKey,
+					kbArticle.getParentResourceClassNameId(),
+					parentResourcePrimKey, kbArticle, sections, serviceContext);
 			}
 			else {
-				importedKBArticle = _kbArticleLocalService.addKBArticle(
-					userId, kbArticle.getParentResourceClassNameId(),
-					parentResourcePrimKey, kbArticle.getTitle(),
-					kbArticle.getUrlTitle(), kbArticle.getContent(),
-					kbArticle.getDescription(), kbArticle.getSourceURL(),
-					sections, null, serviceContext);
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-				try {
-					_kbArticleLocalService.updatePriority(
-						importedKBArticle.getResourcePrimKey(),
-						kbArticle.getPriority());
-				}
-				finally {
-					ServiceContextThreadLocal.popServiceContext();
-				}
+				importedKBArticle = _addKBArticle(
+					userId, parentResourcePrimKey, kbArticle, sections,
+					serviceContext);
 			}
 		}
 
@@ -457,6 +396,32 @@ public class KBArticleStagedModelDataHandler
 		}
 	}
 
+	private KBArticle _addKBArticle(
+			long userId, long parentResourcePrimKey, KBArticle kbArticle,
+			String[] sections, ServiceContext serviceContext)
+		throws PortalException {
+
+		KBArticle importedKBArticle = _kbArticleLocalService.addKBArticle(
+			userId, kbArticle.getParentResourceClassNameId(),
+			parentResourcePrimKey, kbArticle.getTitle(),
+			kbArticle.getUrlTitle(), kbArticle.getContent(),
+			kbArticle.getDescription(), kbArticle.getSourceURL(), sections,
+			null, serviceContext);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_kbArticleLocalService.updatePriority(
+				importedKBArticle.getResourcePrimKey(),
+				kbArticle.getPriority());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		return importedKBArticle;
+	}
+
 	private KBArticle _findExistingKBArticle(
 		PortletDataContext portletDataContext, long resourcePrimaryKey,
 		KBArticle kbArticle, ServiceContext serviceContext) {
@@ -521,6 +486,32 @@ public class KBArticleStagedModelDataHandler
 		}
 
 		return portletDataContext.getZipEntryAsInputStream(binPath);
+	}
+
+	private KBArticle _updateKBArticle(
+			long userId, long resourcePrimKey, long parentResourceClassNameId,
+			long parentResourcePrimKey, KBArticle kbArticle, String[] sections,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_kbArticleLocalService.updateKBArticle(
+			userId, resourcePrimKey, kbArticle.getTitle(),
+			kbArticle.getContent(), kbArticle.getDescription(),
+			kbArticle.getSourceURL(), sections, null, null, serviceContext);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_kbArticleLocalService.moveKBArticle(
+				userId, resourcePrimKey, parentResourceClassNameId,
+				parentResourcePrimKey, kbArticle.getPriority());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		return _kbArticleLocalService.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

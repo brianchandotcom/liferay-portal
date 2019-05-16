@@ -105,7 +105,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 	}
 
 	private BooleanQuery _createNodeBooleanQuery(
-		String currentProcessVersion, String latestProcessVersion) {
+		String currentProcessVersion, String latestProcessVersion,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -113,11 +114,17 @@ public class WorkflowMetricsSLADefinitionTransformer {
 
 		termsQuery.addValues(currentProcessVersion, latestProcessVersion);
 
-		return booleanQuery.addMustQueryClauses(termsQuery);
+		return booleanQuery.addMustQueryClauses(
+			_queries.term(
+				"companyId", workflowMetricsSLADefinition.getCompanyId()),
+			_queries.term(
+				"processId", workflowMetricsSLADefinition.getProcessId()),
+			termsQuery);
 	}
 
 	private Map<String, String> _getNodeIdMap(
-		String currentProcessVersion, String latestProcessVersion) {
+		String currentProcessVersion, String latestProcessVersion,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -145,7 +152,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
 		searchSearchRequest.setQuery(
 			_createNodeBooleanQuery(
-				currentProcessVersion, latestProcessVersion));
+				currentProcessVersion, latestProcessVersion,
+				workflowMetricsSLADefinition));
 		searchSearchRequest.setSize(0);
 
 		SearchSearchResponse searchSearchResponse =
@@ -191,7 +199,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 
 		Map<String, String> nodeIdMap = _getNodeIdMap(
-			currentProcessVersion, latestProcessVersion);
+			currentProcessVersion, latestProcessVersion,
+			workflowMetricsSLADefinition);
 
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(

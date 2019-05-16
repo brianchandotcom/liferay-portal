@@ -156,8 +156,6 @@ definition {
 	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test changes the theme."
 	@priority = "4"
 	test ConfigureDisplayPageTheme {
-		property test.run.environment = "CE";
-
 		task ("Add a web content that uses the display page") {
 			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 

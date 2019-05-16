@@ -23,6 +23,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 KBComment kbComment = (KBComment)row.getObject();
 
+KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
+
 int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 %>
@@ -44,7 +46,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 
 			<liferay-ui:icon
 				message="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>"
-				url="<%= previousStatusURL.toString() %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL) %>"
 			/>
 		</c:if>
 
@@ -57,7 +59,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 
 			<liferay-ui:icon
 				message="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>"
-				url="<%= nextStatusURL.toString() %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>"
 			/>
 		</c:if>
 
@@ -68,7 +70,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon-delete
-				url="<%= deleteURL.toString() %>"
+				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(deleteURL) %>"
 			/>
 		</c:if>
 	</liferay-ui:icon-menu>

@@ -45,7 +45,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.io.File;
@@ -435,59 +435,8 @@ public abstract class BaseDocumentResourceTestCase {
 			Pagination pagination, String sortString)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}/documents",
-					documentFolderId);
-
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetDocumentFolderDocumentsPageResponse(
-			Long documentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}/documents",
-					documentFolderId);
-
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
+		return _clientDocumentResource.getDocumentFolderDocumentsPage(
+			documentFolderId, search, filterString, pagination, sortString);
 	}
 
 	@Test
@@ -550,20 +499,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected void invokeDeleteDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
+		_clientDocumentResource.deleteDocument(documentId);
 	}
 
 	protected Http.Response invokeDeleteDocumentResponse(Long documentId)
@@ -599,29 +535,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Document invokeGetDocument(Long documentId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/documents/{documentId}", documentId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
+		return _clientDocumentResource.getDocument(documentId);
 	}
 
 	protected Http.Response invokeGetDocumentResponse(Long documentId)
@@ -1184,29 +1098,8 @@ public abstract class BaseDocumentResourceTestCase {
 			Pagination pagination, String sortString)
 		throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/documents", siteId);
-
-		location = HttpUtil.addParameter(location, "flatten", flatten);
-		location = HttpUtil.addParameter(location, "search", search);
-		location = HttpUtil.addParameter(location, "filter", filterString);
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
-		location = HttpUtil.addParameter(location, "sort", sortString);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentSerDes::toDTO);
+		return _clientDocumentResource.getSiteDocumentsPage(
+			siteId, flatten, search, filterString, pagination, sortString);
 	}
 
 	@Test

@@ -1518,7 +1518,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
 								/>
 							</delete>
 
@@ -1732,7 +1732,7 @@ log.sanitizer.enabled=false</echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
 								/>
 							</delete>
 
@@ -1965,7 +1965,7 @@ log.sanitizer.enabled=false</echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
 								/>
 							</delete>
 

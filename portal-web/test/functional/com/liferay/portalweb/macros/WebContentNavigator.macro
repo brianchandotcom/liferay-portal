@@ -37,6 +37,10 @@ definition {
 	macro gotoAddPGViaWCD {
 		var portletName = "Web Content Display";
 
+		if (isSet(portletNameScoped)) {
+			var portletName = "${portletNameScoped}";
+		}
+
 		if (isSet(portletNameTranslation)) {
 			var portletName = "${portletNameTranslation}";
 		}

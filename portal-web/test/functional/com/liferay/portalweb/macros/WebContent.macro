@@ -211,7 +211,7 @@ definition {
 	}
 
 	macro addPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD();
+		WebContentNavigator.gotoAddPGViaWCD(portletNameScoped = "${portletNameScoped}");
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",

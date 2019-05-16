@@ -168,8 +168,13 @@ public class IconTag extends BaseIconTag {
 				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
 				jspWriter.write(GetterUtil.getString(getImage()));
 				jspWriter.write(
-					"\" focusable=\"false\" role=\"presentation\" title=\"");
+					"\" focusable=\"false\" role=\"presentation\"");
+				jspWriter.write(
+					InlineUtil.buildDynamicAttributes(getDynamicAttributes()));
+				jspWriter.write(StringPool.GREATER_THAN);
+				jspWriter.write("<use data-href=\"");
 
+				String src = getSrc();
 				HttpServletRequest httpServletRequest =
 					(HttpServletRequest)pageContext.getRequest();
 
@@ -177,32 +182,6 @@ public class IconTag extends BaseIconTag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String title = GetterUtil.getString(getImage());
-
-				String label = getLabel();
-
-				if (label != null) {
-					ResourceBundle resourceBundle =
-						TagResourceBundleUtil.getResourceBundle(
-							request, themeDisplay.getLocale());
-
-					title = HtmlUtil.escapeAttribute(
-						LanguageUtil.get(resourceBundle, label));
-				}
-
-				if (title == null) {
-					title = "Icon";
-				}
-
-				jspWriter.write(title);
-
-				jspWriter.write("\" ");
-				jspWriter.write(
-					InlineUtil.buildDynamicAttributes(getDynamicAttributes()));
-				jspWriter.write(StringPool.GREATER_THAN);
-				jspWriter.write("<use data-href=\"");
-
-				String src = getSrc();
 
 				if (src == null) {
 					src =

@@ -106,6 +106,24 @@ class ManagementToolbar extends ClayComponent {
 		}
 	}
 
+	_handleCreationMenuMoreButtonClicked() {
+		const creationMenuPrimaryItemsCount = this.creationMenu.primaryItems ? this.creationMenu.primaryItems.length : 0;
+
+		const creationMenuFavoriteItems = this.creationMenu.secondaryItems && this.creationMenu.secondaryItems[0] ? this.creationMenu.secondaryItems[0].items : [];
+		const creationMenuRestItems = this.creationMenu.secondaryItems && this.creationMenu.secondaryItems[1] ? this.creationMenu.secondaryItems[1].items : [];
+
+		const creationMenuSecondaryItemsCount = creationMenuFavoriteItems.length + creationMenuRestItems.length;
+		const creationMenuTotalItemsCount = creationMenuPrimaryItemsCount + creationMenuSecondaryItemsCount;
+
+		this.creationMenu.maxPrimaryItems = creationMenuPrimaryItemsCount;
+		this.creationMenu.maxSecondaryItems = creationMenuSecondaryItemsCount;
+		this.creationMenu.maxTotalItems = creationMenuTotalItemsCount;
+
+		this.refs.managementToolbar.refs.creationMenuDropdown.maxPrimaryItems = creationMenuPrimaryItemsCount;
+		this.refs.managementToolbar.refs.creationMenuDropdown.maxSecondaryItems = creationMenuSecondaryItemsCount;
+		this.refs.managementToolbar.refs.creationMenuDropdown.maxTotalItems = creationMenuTotalItemsCount;
+	}
+
 	_handleFilterLabelCloseClicked(event) {
 		let removeLabelURL = event.data.label.data && event.data.label.data.removeLabelURL;
 

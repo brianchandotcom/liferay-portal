@@ -50,7 +50,9 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
-	handleCreationMenuMoreButtonClicked() {
+	handleCreationMenuMoreButtonClicked(event) {
+		event.preventDefault();
+
 		Liferay.Util.openWindow(
 			{
 				dialog: {

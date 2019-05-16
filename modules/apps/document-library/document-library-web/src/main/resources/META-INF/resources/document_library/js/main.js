@@ -170,6 +170,8 @@ AUI.add(
 					},
 
 					handleCreationMenuMoreButtonClicked: function(event) {
+						event.preventDefault();
+
 						var instance = this;
 
 						Liferay.Util.openWindow(

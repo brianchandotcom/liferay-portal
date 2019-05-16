@@ -85,6 +85,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
+		Pause(locator1 = "3000");
+
 		var key_userScreenName = "${userScreenName}";
 
 		Search.searchCP(searchTerm = "${userScreenName}");

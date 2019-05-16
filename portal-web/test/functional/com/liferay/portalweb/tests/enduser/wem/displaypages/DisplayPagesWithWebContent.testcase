@@ -201,7 +201,7 @@ definition {
 
 			Button.clickSave();
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Assert the display page is using the Fjord Theme") {

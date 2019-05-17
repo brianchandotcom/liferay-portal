@@ -91,6 +91,7 @@ List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 </liferay-ddm:template-renderer>
 
 <liferay-ui:search-paginator
+	markupView="lexicon"
 	searchContainer="<%= searchContainer %>"
 />
 

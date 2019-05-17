@@ -1,8 +1,8 @@
-$controlMenuHeight: 49px;
+$controlMenuHeight: 48px;
 $desktopControlMenuHeight: 56px;
 $desktopManagementBarHeight: 64px;
 $fragmentsEditorSpacing: 8px;
-$managementBarHeight: 64px;
+$managementBarHeight: 96px;
 $productMenuTransitionDuration: 0.5s;
 
 $dropTargetWidth: 5px;
@@ -22,6 +22,7 @@ $sidebarWidth: 320px;
 $portletBorderRadius: 3px;
 $portletBorderWidth: 1px;
 $sidebarLeftBorderWidth: 1px;
+$toolbarBorderWidth: 1px;
 $topperBorderRadius: 2px;
 $topperBorderWidth: 1px;
 $topperFocusedBorderWidth: 2px;
@@ -79,6 +80,7 @@ $sidebarCollapsiblePanelLineColor: #DFDFE9;
 $sidebarContentBackgroundColor: #F4F5F8;
 $sidebarLeftBorderColor: #E7E7ED;
 $sidebarTreeElementBackgroundColor: fade_out(#272833, 0.97);
+$toolbarBorderColor: fade_out(#DCDCDC, 0.5);
 $topperBackgroundColor: #0B5FFF;
 $topperBorderColor: #0B5FFF;
 $topperColor: #FFF;

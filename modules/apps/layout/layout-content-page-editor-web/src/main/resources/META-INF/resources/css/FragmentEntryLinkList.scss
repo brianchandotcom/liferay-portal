@@ -12,7 +12,11 @@
 	}
 
 	&--padded, &--padded.no-fragments-message {
-		margin-right: $sidebarWidth;
+		margin-right: $sidebarButtonsWidth;
+
+		@media (min-width: 768px) {
+			margin-right: $sidebarWidth;
+		}
 	}
 
 	&__container {

@@ -43,7 +43,7 @@ import org.gradle.util.GUtil;
  */
 public class TargetPlatformExtension {
 
-	public TargetPlatformExtension(Project project) {
+	public TargetPlatformExtension(final Project project) {
 		_project = project;
 
 		_subprojects.addAll(project.getSubprojects());
@@ -51,67 +51,85 @@ public class TargetPlatformExtension {
 		Logger logger = project.getLogger();
 
 		onlyIf(
-			p -> {
-				TaskContainer taskContainer = p.getTasks();
+			new Spec<Project>() {
 
-				Task jarTask = taskContainer.findByName(
-					JavaPlugin.JAR_TASK_NAME);
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					TaskContainer taskContainer = project.getTasks();
 
-				if (!(jarTask instanceof Jar)) {
-					if (logger.isInfoEnabled()) {
-						logger.info(
-							"Excluding {} because it is not a valid Java " +
-								"project",
-							p);
+					Task jarTask = taskContainer.findByName(
+						JavaPlugin.JAR_TASK_NAME);
+
+					if (!(jarTask instanceof Jar)) {
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Excluding {} because it is not a valid Java " +
+									"project",
+								project);
+						}
+
+						return false;
 					}
 
-					return false;
+					return true;
 				}
 
-				return true;
 			});
 
 		resolveOnlyIf(
-			p -> {
-				Project rootProject = p.getRootProject();
+			new Spec<Project>() {
 
-				File bndrunFile = rootProject.file(
-					TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME);
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					Project rootProject = project.getRootProject();
 
-				if (!bndrunFile.exists()) {
-					if (logger.isInfoEnabled()) {
-						logger.info(
-							"Explicitly excluding {} from resolution because " +
-								"there is no " +
-									TargetPlatformPlugin.
-										PLATFORM_BNDRUN_FILE_NAME +
-										" file at the root of the gradle " +
-											"workspace",
-							p);
+					File bndrunFile = rootProject.file(
+						TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME);
+
+					if (!bndrunFile.exists()) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Explicitly excluding ");
+						sb.append(project);
+						sb.append(" from resolution because there is no ");
+						sb.append(
+							TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME);
+						sb.append(" file at the root of the gradle workspace");
+
+						if (logger.isInfoEnabled()) {
+							logger.info(sb.toString());
+						}
+
+						return false;
 					}
 
-					return false;
+					return true;
 				}
 
-				return true;
 			});
 
 		resolveOnlyIf(
-			p -> {
-				PluginManager pluginManager = p.getPluginManager();
+			new Spec<Project>() {
 
-				if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
-					if (logger.isInfoEnabled()) {
-						logger.info(
-							"Explicitly excluding {} from resolution because " +
-								"it does not appear to be an OSGi bundle.",
-							p);
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					PluginManager pluginManager = project.getPluginManager();
+
+					if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Explicitly excluding {} from resolution " +
+									"because it does not appear to be an " +
+										"OSGi bundle",
+								project);
+						}
+
+						return false;
 					}
 
-					return false;
+					return true;
 				}
 
-				return true;
 			});
 	}
 

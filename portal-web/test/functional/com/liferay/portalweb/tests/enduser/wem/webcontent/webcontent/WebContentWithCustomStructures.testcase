@@ -62,9 +62,7 @@ definition {
 
 		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />''';
 
-		Type.typeAceEditor(
-			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-			value1 = "${templateScript}");
+		WebContentTemplates._inputScript(templateScript = "${templateScript}");
 
 		PortletEntry.save();
 
@@ -128,9 +126,7 @@ definition {
 
 		var templateScript = '''$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")''';
 
-		Type.typeAceEditor(
-			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-			value1 = "${templateScript}");
+		WebContentTemplates._inputScript(templateScript = "${templateScript}");
 
 		PortletEntry.save();
 

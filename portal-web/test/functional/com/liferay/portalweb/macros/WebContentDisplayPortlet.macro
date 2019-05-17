@@ -86,9 +86,7 @@ definition {
 			value1 = "Template Edit");
 
 		if (isSet(templateScript)) {
-			Type.typeAceEditor(
-				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-				value1 = "${templateScript}");
+			WebContentTemplates._inputScript(templateScript = "${templateScript}");
 		}
 
 		Button.clickSave();

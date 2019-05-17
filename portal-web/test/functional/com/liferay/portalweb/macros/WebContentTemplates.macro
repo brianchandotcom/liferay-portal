@@ -23,7 +23,7 @@ definition {
 	macro _inputScript {
 		if (isSet(templateScript)) {
 			Type.typeAceEditor(
-				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
+				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD",
 				value1 = "${templateScript}");
 		}
 	}

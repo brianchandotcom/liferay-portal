@@ -30,10 +30,13 @@ $portlet-content-border-width: $portlet-content-border-top-width $portlet-conten
 
 /* ---------- Portlet decorator ---------- */
 
+$portlet-borderless-padding: map-get($spacers, 3) !default;
+
 $portlet-decorate-bg: $body-bg !default;
 $portlet-decorate-border-color: $navbar-default-border !default;
 $portlet-decorate-border-style: solid !default;
 $portlet-decorate-border-width: $portlet-content-border-width !default;
+$portlet-decorate-padding: map-get($spacers, 3) !default;
 
 /* ---------- Portlet header ---------- */
 

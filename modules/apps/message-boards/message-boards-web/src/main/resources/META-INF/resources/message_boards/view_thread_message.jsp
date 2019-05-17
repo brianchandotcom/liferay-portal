@@ -190,7 +190,7 @@ if (message.isAnonymous()) {
 					if (!message.isRoot()) {
 						MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
 
-						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && (thread.isQuestion() || MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()));
+						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && thread.isQuestion();
 					}
 					%>
 

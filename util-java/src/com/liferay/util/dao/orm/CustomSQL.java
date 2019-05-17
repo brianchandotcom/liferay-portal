@@ -148,17 +148,18 @@ public class CustomSQL {
 		}
 
 		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-			sql = sql.replace(_STATUS_KEYWORD, _STATUS_CONDITION_EMPTY);
+			sql = StringUtil.replace(
+				sql, _STATUS_KEYWORD, _STATUS_CONDITION_EMPTY);
 		}
 		else {
 			if (queryDefinition.isExcludeStatus()) {
-				sql = sql.replace(
-					_STATUS_KEYWORD,
+				sql = StringUtil.replace(
+					sql, _STATUS_KEYWORD,
 					tableName.concat(_STATUS_CONDITION_INVERSE));
 			}
 			else {
-				sql = sql.replace(
-					_STATUS_KEYWORD,
+				sql = StringUtil.replace(
+					sql, _STATUS_KEYWORD,
 					tableName.concat(_STATUS_CONDITION_DEFAULT));
 			}
 		}
@@ -175,23 +176,28 @@ public class CustomSQL {
 				sb.append(_STATUS_CONDITION_INVERSE);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				sql = sql.replace(_OWNER_USER_ID_KEYWORD, sb.toString());
-
-				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " OR ");
+				sql = StringUtil.replace(
+					sql,
+					new String[] {
+						_OWNER_USER_ID_KEYWORD, _OWNER_USER_ID_AND_OR_CONNECTOR
+					},
+					new String[] {sb.toString(), " OR "});
 			}
 			else {
-				sql = sql.replace(
-					_OWNER_USER_ID_KEYWORD,
-					tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT));
-
-				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " AND ");
+				sql = StringUtil.replace(
+					sql,
+					new String[] {
+						_OWNER_USER_ID_KEYWORD, _OWNER_USER_ID_AND_OR_CONNECTOR
+					},
+					new String[] {
+						tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT),
+						" AND "
+					});
 			}
 		}
 		else {
-			sql = sql.replace(_OWNER_USER_ID_KEYWORD, StringPool.BLANK);
-
-			sql = sql.replace(
-				_OWNER_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
+			sql = StringUtil.removeSubstrings(
+				sql, _OWNER_USER_ID_KEYWORD, _OWNER_USER_ID_AND_OR_CONNECTOR);
 		}
 
 		return sql;

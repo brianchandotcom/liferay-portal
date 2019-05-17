@@ -21,6 +21,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * general way
  *
  * @author Gergely Mathe
+ * @review
  */
 @ProviderType
 public interface CTSettingsManager {
@@ -29,8 +30,8 @@ public interface CTSettingsManager {
 	 * Retrieves a global change tracking setting's value for a given company
 	 * and a key or <code>null</code> if it can not be determined.
 	 *
-	 * @param companyId the primary key of the company
-	 * @param key the key of the setting's value
+	 * @param  companyId the primary key of the company
+	 * @param  key the key of the setting's value
 	 * @return the global change tracking setting's value for the given company
 	 *         and key or <code>null</code> if it can not be determined
 	 */
@@ -40,10 +41,10 @@ public interface CTSettingsManager {
 	 * Retrieves a global change tracking setting's value for a given company
 	 * and a key or <code>defaultValue</code> if it can not be determined.
 	 *
-	 * @param companyId the primary key of the company
-	 * @param key the key of the setting's value
-	 * @param defaultValue the default value to return if the actual value can
-	 *        not be determined
+	 * @param  companyId the primary key of the company
+	 * @param  key the key of the setting's value
+	 * @param  defaultValue the default value to return if the actual value can
+	 *         not be determined
 	 * @return the global change tracking setting's value for the given company
 	 *         and key or <code>defaultValue</code> if it can not be determined
 	 */
@@ -55,8 +56,8 @@ public interface CTSettingsManager {
 	 * key. If it can not be determined, it looks for the same key as a global
 	 * setting. If it still can not be found it returns <code>null</code>.
 	 *
-	 * @param userId the primary key of the user
-	 * @param key the key of the setting's value
+	 * @param  userId the primary key of the user
+	 * @param  key the key of the setting's value
 	 * @return the user change tracking setting's value for the given user and
 	 *         key or the global change tracking setting's value for the given
 	 *         user and key or <code>null</code> if it can not be determined
@@ -69,10 +70,10 @@ public interface CTSettingsManager {
 	 * setting. If it still can not be found it returns
 	 * <code>defaultValue</code>.
 	 *
-	 * @param userId the primary key of the user
-	 * @param key the key of the setting's value
-	 * @param defaultValue the default value to return if the actual value can
-	 *        not be determined
+	 * @param  userId the primary key of the user
+	 * @param  key the key of the setting's value
+	 * @param  defaultValue the default value to return if the actual value can
+	 *         not be determined
 	 * @return the user change tracking setting's value for the given user and
 	 *         key or the global change tracking setting's value for the given
 	 *         user and key or <code>defaultValue</code> if it can not be

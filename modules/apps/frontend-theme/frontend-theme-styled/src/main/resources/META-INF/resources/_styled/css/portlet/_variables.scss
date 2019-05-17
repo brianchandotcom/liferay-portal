@@ -27,6 +27,7 @@ $portlet-content-border-left-width: 1px !default;
 $portlet-content-border-right-width: 1px !default;
 $portlet-content-border-top-width: 1px !default;
 $portlet-content-border-width: $portlet-content-border-top-width $portlet-content-border-right-width $portlet-content-border-bottom-width $portlet-content-border-left-width !default;
+$portlet-content-border-top-width: 1px !default;
 
 /* ---------- Portlet decorator ---------- */
 
@@ -34,6 +35,9 @@ $portlet-decorate-bg: $body-bg !default;
 $portlet-decorate-border-color: $navbar-default-border !default;
 $portlet-decorate-border-style: solid !default;
 $portlet-decorate-border-width: $portlet-content-border-width !default;
+$portlet-decorate-padding: map-get($spacers, 3) !default;
+
+$portlet-borderless-padding: map-get($spacers, 3) !default;
 
 /* ---------- Portlet header ---------- */
 

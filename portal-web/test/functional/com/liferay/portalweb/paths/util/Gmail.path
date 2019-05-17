@@ -85,8 +85,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_ACCOUNT_BUTTON</td>
-	<td>//a[contains(@id,'add-account') and contains(.,'Add account')] | //div[contains(@id,'identifierLink')]</td>
+	<td>USE_ANOTHER_ACCOUNT</td>
+	<td>//div[@role='link' and contains(.,'Use another account')]</td>
 	<td></td>
 </tr>
 <tr>

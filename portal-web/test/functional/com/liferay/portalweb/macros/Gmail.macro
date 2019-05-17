@@ -92,10 +92,10 @@ definition {
 		if (IsElementPresent(locator1 = "Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT")) {
 			Click(locator1 = "Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT");
 
-			Click(locator1 = "Gmail#ADD_ACCOUNT_BUTTON");
+			Click(locator1 = "Gmail#USE_ANOTHER_ACCOUNT");
 		}
-		else if (IsElementPresent(locator1 = "Gmail#ADD_ACCOUNT_BUTTON")) {
-			Click(locator1 = "Gmail#ADD_ACCOUNT_BUTTON");
+		else if (IsElementPresent(locator1 = "Gmail#USE_ANOTHER_ACCOUNT")) {
+			Click(locator1 = "Gmail#USE_ANOTHER_ACCOUNT");
 		}
 
 		Type(

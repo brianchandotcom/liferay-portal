@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//div[section/header/div[normalize-space()='${key_portletName}']]//input[contains(@name,'keywords')]</td>
+	<td>//div[*[normalize-space()='${key_portletName}']]//input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

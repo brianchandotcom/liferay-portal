@@ -169,6 +169,18 @@ SidebarLayoutsPanel.STATE = {
 			},
 			{
 				columns: [
+					'8',
+					'4'
+				]
+			},
+			{
+				columns: [
+					'4',
+					'8'
+				]
+			},
+			{
+				columns: [
 					'4',
 					'4',
 					'4'

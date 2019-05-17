@@ -169,7 +169,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, RESOLVE_TASK_NAME, ResolveTask.class);
 
 		resolveTask.setDescription(
-			"Checks whether the project and it is runtime dependencies will " +
+			"Checks whether the project and its runtime dependencies will " +
 				"have their requirements met when installed into the Liferay " +
 					"portal instance defined by the configured distro.");
 		resolveTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
@@ -225,7 +225,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		resolveTask.setBndrunFile(bndrunFile);
 		resolveTask.setDescription(
-			"Resolve a project against the Liferay distro");
+			"Resolve a project against the Liferay distro.");
 		resolveTask.setDistro(targetPlatformDistroConfiguration);
 		resolveTask.setFailOnChanges(false);
 		resolveTask.setGroup("verification");

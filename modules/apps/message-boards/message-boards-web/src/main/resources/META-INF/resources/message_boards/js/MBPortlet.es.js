@@ -181,16 +181,60 @@ class MBPortlet extends PortletBase {
 		fetch(
 			deleteURL
 		).then(
-			() => {
-				let searchContainer = this.searchContainer_;
+			() => this.updateRemovedAttachments_()
+		);
+	}
 
-				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
-				searchContainer.updateDataStore();
+	/**
+	 * Sends a request to retrieve the deleted attachments
+	 *
+	 * @protected
+	 */
+
+	updateRemovedAttachments_() {
+		let searchContainer = this.searchContainer_;
+
+		searchContainer.getData(true).forEach(
+			(id, i) => searchContainer.deleteRow(i, id)
+		);
+
+		fetch(
+			this.getAttachmentsURL
+		).then(
+			res => res.json()
+		).then(
+			(attachments) => {
+				if (attachments.active.length > 0) {
+					attachments.active.forEach(
+						attachment => {
+							searchContainer.addRow(
+								[
+									attachment.title,
+									attachment.size,
+									`<a class="delete-attachment" data-rowId="${attachment.id}" data-url="${attachment.deleteURL}" href="javascript:;">${Liferay.Language.get('move-to-recycle-bin')}</a>`
+								],
+								attachment.id
+							);
+						}
+					);
+				}
 
 				const deletedAttachmentsElement = document.getElementById('view-removed-attachments-link');
 
-				deletedAttachmentsElement.style.display = 'initial';
-				deletedAttachmentsElement.innerHTML = Liferay.Language.get('view-recently-removed-attachments') + ' &raquo';
+				if (attachments.deleted.length > 0) {
+					deletedAttachmentsElement.style.display = 'initial';
+					deletedAttachmentsElement.innerHTML = Liferay.Util.sub(
+						Liferay.Language.get(
+							attachments.deleted.length > 1 ?
+								'x-recently-removed-attachments' :
+								'x-recently-removed-attachment'
+						),
+						attachments.deleted.length
+					) + ' &raquo';
+				}
+				else {
+					deletedAttachmentsElement.style.display = 'none';
+				}
 			}
 		);
 	}
@@ -287,6 +331,17 @@ MBPortlet.STATE = {
 	 */
 
 	currentAction: {
+		validator: core.isString
+	},
+
+	/**
+	 * The URL to get deleted attachments from
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+
+	getAttachmentsURL: {
 		validator: core.isString
 	},
 

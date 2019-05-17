@@ -429,10 +429,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				RoleVisibilityConfiguration.class, themeDisplay.getCompanyId());
 
-		boolean restrictPermissionSelectorRoleVisibility =
-			stricterRoleVisibilityConfiguration.
-				restrictPermissionSelectorRoleVisibility();
-
 		if (Validator.isNull(searchTerms.getKeywords())) {
 			int count = 0;
 			List<Role> roles = null;

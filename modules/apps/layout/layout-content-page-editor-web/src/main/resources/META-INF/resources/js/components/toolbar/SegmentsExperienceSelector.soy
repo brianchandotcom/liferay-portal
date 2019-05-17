@@ -100,6 +100,23 @@
 					{/call}
 				{/if}
 
+				{let $experiencesWarning kind="text"}
+					{msg desc=""}experieces-changes-applied-inmediatly{/msg}
+				{/let}
+
+				{let $warning kind="text"}
+					{msg desc=""}warning{/msg}:
+				{/let}
+
+				{call ClayAlert.render}
+					{param elementClasses: 'mx-0 my-4' /}
+					{param closeable: false /}
+					{param message: $experiencesWarning /}
+					{param spritemap: $spritemap /}
+					{param style: 'warning' /}
+					{param title: $warning /}
+				{/call}
+
 				<ul class="list-unstyled mt-4">
 					{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
 

@@ -6,6 +6,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import java.util.concurrent.ConcurrentSkipListSet
 
+import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 
 import org.gradle.plugins.ide.api.XmlFileContentMerger
@@ -175,6 +176,17 @@ gradle.beforeProject {
 
 				rename "gitignore", ".gitignore"
 			}
+
+            jar {
+                doFirst {
+                    DirectoryScanner.defaultExcludes.each { DirectoryScanner.removeDefaultExclude it }
+                    DirectoryScanner.addDefaultExclude 'something has to be in here or everything gets excluded'
+                }
+
+                doLast {
+                    DirectoryScanner.resetDefaultExcludes()
+                }
+            }
 		}
 
 		pluginManager.withPlugin("com.liferay.ant.plugin") {

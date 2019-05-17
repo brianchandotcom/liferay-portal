@@ -6,12 +6,35 @@ import './SegmentsExperienceSelector.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorToolbar.soy';
 import {TOGGLE_SIDEBAR} from '../../actions/actions.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * FragmentsEditorToolbar
  * @review
  */
 class FragmentsEditorToolbar extends Component {
+
+	prepareStateForRender(state) {
+		const {lastSaveDate, savingChanges} = state;
+
+		let lastSaveText = '';
+
+		if (savingChanges) {
+			lastSaveText = Liferay.Language.get('saving-changes');
+		}
+		else if (lastSaveDate) {
+			let placeholder = Liferay.Language.get('draft-saved-at-x');
+
+			lastSaveText = placeholder.replace('{0}', lastSaveDate);
+		}
+
+		const nextState = setIn(
+			state,
+			['_lastSaveText'],
+			lastSaveText);
+
+		return nextState;
+	}
 
 	/**
 	 * Handles discard draft form submit action.

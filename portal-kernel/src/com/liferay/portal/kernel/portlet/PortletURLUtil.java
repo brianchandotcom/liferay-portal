@@ -174,7 +174,7 @@ public class PortletURLUtil {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		boolean includeParameters) {
 
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(36);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/portal/render_portlet?p_l_id=");
@@ -182,6 +182,17 @@ public class PortletURLUtil {
 		long plid = themeDisplay.getPlid();
 
 		sb.append(plid);
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		String layoutMode = ParamUtil.getString(
+			originalHttpServletRequest, "p_l_mode");
+
+		if (Validator.isNotNull(layoutMode)) {
+			sb.append("&p_l_mode=");
+			sb.append(layoutMode);
+		}
 
 		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.RENDER_PORTLET);

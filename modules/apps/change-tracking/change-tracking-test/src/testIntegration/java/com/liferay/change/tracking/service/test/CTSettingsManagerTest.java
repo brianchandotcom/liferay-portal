@@ -15,16 +15,24 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.settings.CTSettingsManager;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,16 +56,22 @@ public class CTSettingsManagerTest {
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
-		_user = UserTestUtil.addUser();
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addUser(_company);
 	}
 
 	@Test
-	public void testFallBackToGlobalSetting() {
+	public void testFallBackToGlobalSetting() throws Exception {
 		String key = RandomTestUtil.randomString();
 		String globalValue = RandomTestUtil.randomString();
 
-		_ctSettingsManager.setGlobalCTSetting(
-			_user.getCompanyId(), key, globalValue);
+		PortletPreferences portletPreferences = _prefsProps.getPreferences(
+			_company.getCompanyId());
+
+		portletPreferences.setValue(key, globalValue);
+
+		portletPreferences.store();
 
 		String userValue = _ctSettingsManager.getUserCTSetting(
 			_user.getUserId(), key);
@@ -67,11 +81,43 @@ public class CTSettingsManagerTest {
 	}
 
 	@Test
+	public void testFallBackToGlobalSettingWithDefaultValue() throws Exception {
+		String key = RandomTestUtil.randomString();
+		String globalValue = RandomTestUtil.randomString();
+
+		PortletPreferences portletPreferences = _prefsProps.getPreferences(
+			_company.getCompanyId());
+
+		portletPreferences.setValue(key, globalValue);
+
+		portletPreferences.store();
+
+		String userValue = _ctSettingsManager.getUserCTSetting(
+			_user.getUserId(), key, RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			"Value should be " + globalValue, userValue, globalValue);
+	}
+
+	@Test
+	public void testFallBackWithDefaultValue() {
+		String key = RandomTestUtil.randomString();
+		String defaultValue = RandomTestUtil.randomString();
+
+		String userValue = _ctSettingsManager.getUserCTSetting(
+			_user.getUserId(), key, defaultValue);
+
+		Assert.assertEquals(
+			"Value should be " + defaultValue, userValue, defaultValue);
+	}
+
+	@Test
 	public void testGetGlobalCTSettingWithDefaultValue() {
 		String defaultValue = RandomTestUtil.randomString();
 
 		String value = _ctSettingsManager.getGlobalCTSetting(
-			_user.getCompanyId(), RandomTestUtil.randomString(), defaultValue);
+			_company.getCompanyId(), RandomTestUtil.randomString(),
+			defaultValue);
 
 		Assert.assertEquals(
 			"Value should be " + defaultValue, value, defaultValue);
@@ -80,7 +126,7 @@ public class CTSettingsManagerTest {
 	@Test
 	public void testGetGlobalCTSettingWithoutDefaultValue() {
 		String value = _ctSettingsManager.getGlobalCTSetting(
-			_user.getCompanyId(), RandomTestUtil.randomString());
+			_company.getCompanyId(), RandomTestUtil.randomString());
 
 		Assert.assertNull("Value should be null", value);
 	}
@@ -110,20 +156,24 @@ public class CTSettingsManagerTest {
 		String value1 = RandomTestUtil.randomString();
 
 		_ctSettingsManager.setGlobalCTSetting(
-			_user.getCompanyId(), key, value1);
+			_company.getCompanyId(), key, value1);
 
-		String value = _ctSettingsManager.getGlobalCTSetting(
-			_user.getCompanyId(), key);
+		PortletPreferences portletPreferences = _prefsProps.getPreferences(
+			_company.getCompanyId());
+
+		String value = portletPreferences.getValue(key, null);
 
 		Assert.assertEquals("Value should be " + value1, value, value1);
 
 		String value2 = RandomTestUtil.randomString();
 
 		_ctSettingsManager.setGlobalCTSetting(
-			_user.getCompanyId(), key, value2);
+			_company.getCompanyId(), key, value2);
 
-		value = _ctSettingsManager.getGlobalCTSetting(
-			_user.getCompanyId(), key);
+		portletPreferences = _prefsProps.getPreferences(
+			_company.getCompanyId());
+
+		value = portletPreferences.getValue(key, null);
 
 		Assert.assertEquals("Value should be " + value2, value, value2);
 	}
@@ -135,8 +185,12 @@ public class CTSettingsManagerTest {
 
 		_ctSettingsManager.setUserCTSetting(_user.getUserId(), key, value1);
 
-		String value = _ctSettingsManager.getUserCTSetting(
-			_user.getUserId(), key);
+		PortalPreferences portalPreferences =
+			_portletPreferencesFactory.getPortalPreferences(
+				_user.getUserId(), !_user.isDefaultUser());
+
+		String value = portalPreferences.getValue(
+			CTPortletKeys.CHANGE_LISTS, key);
 
 		Assert.assertEquals("Value should be " + value1, value, value1);
 
@@ -144,13 +198,25 @@ public class CTSettingsManagerTest {
 
 		_ctSettingsManager.setUserCTSetting(_user.getUserId(), key, value2);
 
-		value = _ctSettingsManager.getUserCTSetting(_user.getUserId(), key);
+		portalPreferences = _portletPreferencesFactory.getPortalPreferences(
+			_user.getUserId(), !_user.isDefaultUser());
+
+		value = portalPreferences.getValue(CTPortletKeys.CHANGE_LISTS, key);
 
 		Assert.assertEquals("Value should be " + value2, value, value2);
 	}
 
+	@DeleteAfterTestRun
+	private Company _company;
+
 	@Inject
 	private CTSettingsManager _ctSettingsManager;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject
+	private PrefsProps _prefsProps;
 
 	@DeleteAfterTestRun
 	private User _user;

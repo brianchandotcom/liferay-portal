@@ -20,7 +20,7 @@ definition {
 
 	@priority = "5"
 	test RightToLeftSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RightToLeftSmoke";
 
 		ProductMenu.gotoPortlet(

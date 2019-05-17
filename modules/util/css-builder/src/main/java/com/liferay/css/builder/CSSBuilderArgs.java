@@ -37,6 +37,12 @@ public class CSSBuilderArgs {
 
 	public static final String DIR_NAME = "/";
 
+	public static final String[] EXCLUDES = {
+		"**/_diffs/**", "**/.sass-cache*/**", "**/.sass_cache_*/**",
+		"**/_sass_cache_*/**", "**/_styled/**", "**/_unstyled/**",
+		"**/css/aui/**", "**/css/clay/**", "**/tmp/**"
+	};
+
 	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
 
 	public static final int PRECISION = 9;
@@ -47,6 +53,10 @@ public class CSSBuilderArgs {
 
 	public List<String> getDirNames() {
 		return _dirNames;
+	}
+
+	public List<String> getExcludes() {
+		return _excludes;
 	}
 
 	public List<File> getImportPaths() {
@@ -93,6 +103,14 @@ public class CSSBuilderArgs {
 
 	public void setDirNames(String[] dirNames) {
 		_dirNames = Arrays.asList(dirNames);
+	}
+
+	public void setExcludes(String excludes) {
+		setExcludes(_split(excludes));
+	}
+
+	public void setExcludes(String[] excludes) {
+		_excludes = Arrays.asList(excludes);
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
@@ -150,6 +168,12 @@ public class CSSBuilderArgs {
 		names = "--dir-names"
 	)
 	private List<String> _dirNames = Arrays.asList(DIR_NAME);
+
+	@Parameter(
+		description = "The SCSS file patterns to exclude from compiling.",
+		names = "--excludes"
+	)
+	private List<String> _excludes = Arrays.asList(EXCLUDES);
 
 	@Parameter(
 		arity = 1,

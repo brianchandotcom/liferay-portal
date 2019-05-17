@@ -94,6 +94,10 @@ public class CSSBuilder implements AutoCloseable {
 
 		List<File> importPaths = _cssBuilderArgs.getImportPaths();
 
+		List<String> excludes = _cssBuilderArgs.getExcludes();
+
+		_excludes = excludes.toArray(new String[0]);
+
 		_temporaryImportPath = Files.createTempDirectory("portalCssImportPath");
 
 		if ((importPaths != null) && !importPaths.isEmpty()) {
@@ -267,7 +271,7 @@ public class CSSBuilder implements AutoCloseable {
 	private String[] _getScssFiles(String baseDir) throws IOException {
 		String[] includes = {"**/*.scss"};
 
-		String[] excludes = Arrays.copyOf(_EXCLUDES, _EXCLUDES.length + 1);
+		String[] excludes = Arrays.copyOf(_excludes, _excludes.length + 1);
 
 		excludes[excludes.length - 1] = "**/_*.scss";
 
@@ -277,7 +281,7 @@ public class CSSBuilder implements AutoCloseable {
 	private String[] _getScssFragments(String baseDir) throws IOException {
 		String[] includes = {"**/_*.scss"};
 
-		return FileUtil.getFilesFromDirectory(baseDir, includes, _EXCLUDES);
+		return FileUtil.getFilesFromDirectory(baseDir, includes, _excludes);
 	}
 
 	private void _initSassCompiler(String sassCompilerClassName)
@@ -490,15 +494,10 @@ public class CSSBuilder implements AutoCloseable {
 		outputFile.setLastModified(file.lastModified());
 	}
 
-	private static final String[] _EXCLUDES = {
-		"**/_diffs/**", "**/.sass-cache*/**", "**/.sass_cache_*/**",
-		"**/_sass_cache_*/**", "**/_styled/**", "**/_unstyled/**",
-		"**/css/aui/**", "**/css/clay/**", "**/tmp/**"
-	};
-
 	private static RTLCSSConverter _rtlCSSConverter;
 
 	private final CSSBuilderArgs _cssBuilderArgs;
+	private final String[] _excludes;
 	private final String _importDirName;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;

@@ -68,8 +68,10 @@
 	transition: margin ease $productMenuTransitionDuration;
 	will-change: margin;
 
-	&--padded, &--padded.no-fragments-message {
-		margin-right: $sidebarWidth;
+	@media (min-width: 768px) {
+		&--padded, &--padded.no-fragments-message {
+			margin-right: $sidebarWidth;
+		}
 	}
 }
 

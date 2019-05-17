@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,12 +45,6 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		super(liferayPortletResponse);
 
 		_liferayPortletResponse = liferayPortletResponse;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_permissionChecker = themeDisplay.getPermissionChecker();
 	}
 
 	@Override
@@ -194,6 +185,5 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		Folder.class.getSimpleName();
 
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final PermissionChecker _permissionChecker;
 
 }

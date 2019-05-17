@@ -83,7 +83,16 @@ class MBPortlet extends PortletBase {
 					{
 						id: this.namespace + 'openRemovedPageAttachments',
 						title: Liferay.Language.get('removed-attachments'),
-						uri: this.viewTrashAttachmentsURL
+						uri: this.viewTrashAttachmentsURL,
+						dialog: {
+							on: {
+								visibleChange: (event) => {
+									if (!event.newVal) {
+										this.updateRemovedAttachments_();
+									}
+								}
+							}
+						}
 					}
 				);
 			}

@@ -24,7 +24,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JournalChangeTrackingHelper {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public String getJournalArticleCTCollectionName(long userId, long classPK);
+
+	public String getJournalArticleCTCollectionName(
+		long companyId, long userId, long classPK);
 
 	public boolean hasActiveCTCollection(long companyId, long userId);
 

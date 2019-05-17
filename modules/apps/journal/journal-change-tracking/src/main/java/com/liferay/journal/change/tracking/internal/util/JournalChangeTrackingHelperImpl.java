@@ -39,14 +39,26 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalChangeTrackingHelperImpl
 	implements JournalChangeTrackingHelper {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
-	public String getJournalArticleCTCollectionName(long userId, long id) {
+	public String getJournalArticleCTCollectionName(long userId, long classPK) {
+		return getJournalArticleCTCollectionName(
+			CompanyThreadLocal.getCompanyId(), userId, classPK);
+	}
+
+	@Override
+	public String getJournalArticleCTCollectionName(
+		long companyId, long userId, long id) {
+
 		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				userId, classNameId, id);
+				companyId, userId, classNameId, id);
 
 		Stream<CTCollection> stream = ctEntryOptional.map(
 			CTEntry::getCtEntryId
@@ -85,9 +97,9 @@ public class JournalChangeTrackingHelperImpl
 	 */
 	@Deprecated
 	@Override
-	public boolean isJournalArticleInChangeList(long userId, long id) {
+	public boolean isJournalArticleInChangeList(long userId, long classPK) {
 		return isJournalArticleInChangeList(
-			CompanyThreadLocal.getCompanyId(), userId, id);
+			CompanyThreadLocal.getCompanyId(), userId, classPK);
 	}
 
 	@Override

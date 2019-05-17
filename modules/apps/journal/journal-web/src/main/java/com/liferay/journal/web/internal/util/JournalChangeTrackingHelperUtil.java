@@ -17,7 +17,6 @@ package com.liferay.journal.web.internal.util;
 import com.liferay.journal.util.JournalChangeTrackingHelper;
 import com.liferay.petra.string.StringPool;
 
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,14 +27,14 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalChangeTrackingHelperUtil {
 
 	public static String getJournalArticleCTCollectionName(
-		long userId, long classPK) {
+		long companyId, long userId, long classPK) {
 
 		if (_journalChangeTrackingHelper == null) {
 			return StringPool.BLANK;
 		}
 
 		return _journalChangeTrackingHelper.getJournalArticleCTCollectionName(
-			userId, classPK);
+			companyId, userId, classPK);
 	}
 
 	public static boolean hasActiveCTCollection(long companyId, long userId) {
@@ -45,21 +44,6 @@ public class JournalChangeTrackingHelperUtil {
 
 		return _journalChangeTrackingHelper.hasActiveCTCollection(
 			companyId, userId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public static boolean isJournalArticleInChangeList(
-		long userId, long classPK) {
-
-		if (_journalChangeTrackingHelper == null) {
-			return false;
-		}
-
-		return _journalChangeTrackingHelper.isJournalArticleInChangeList(
-			CompanyThreadLocal.getCompanyId(), userId, classPK);
 	}
 
 	public static boolean isJournalArticleInChangeList(

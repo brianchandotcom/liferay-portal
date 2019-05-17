@@ -102,7 +102,8 @@ public class CTJournalArticleServiceWrapper
 
 		if (journalArticleResource != null) {
 			List<CTEntry> ctEntries = _ctManager.getModelChangeCTEntries(
-				userId, journalArticleResource.getResourcePrimKey());
+				journalArticleResource.getCompanyId(), userId,
+				journalArticleResource.getResourcePrimKey());
 
 			Stream<CTEntry> ctEntryStream = ctEntries.stream();
 

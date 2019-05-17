@@ -257,7 +257,8 @@ public class JournalDisplayContext {
 	public String getChangeListName(JournalArticle journalArticle) {
 		return JournalChangeTrackingHelperUtil.
 			getJournalArticleCTCollectionName(
-				_themeDisplay.getUserId(), journalArticle.getId());
+				_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
+				journalArticle.getId());
 	}
 
 	public String[] getCharactersBlacklist() throws PortalException {

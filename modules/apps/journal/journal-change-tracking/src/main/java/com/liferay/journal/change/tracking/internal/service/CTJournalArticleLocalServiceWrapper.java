@@ -1886,7 +1886,7 @@ public class CTJournalArticleLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId());
 

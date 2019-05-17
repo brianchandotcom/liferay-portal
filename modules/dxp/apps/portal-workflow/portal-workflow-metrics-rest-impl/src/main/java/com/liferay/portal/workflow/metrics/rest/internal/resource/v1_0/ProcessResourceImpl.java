@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +30,8 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -38,6 +41,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -45,6 +49,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
@@ -59,6 +64,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -103,25 +109,11 @@ public class ProcessResourceImpl
 			document -> {
 				Process process = _createProcess(document);
 
-				TermsAggregationResult slaTermsAggregationResult =
-					_getSLATermsAggregationResult(
-						GetterUtil.getBoolean(completed), null, null,
-						Collections.singleton(processId));
+				Bucket bucket = _getProcessBucket(
+					GetterUtil.getBoolean(completed), processId, timeRange);
 
-				_populateProcessWithSLAMetrics(
-					slaTermsAggregationResult.getBucket(
-						String.valueOf(processId)),
-					process);
-
-				TermsAggregationResult instanceTermsAggregationResult =
-					_getInstanceTermsAggregationResult(
-						GetterUtil.getBoolean(completed), null, null,
-						Collections.singleton(processId));
-
-				_setInstanceCount(
-					instanceTermsAggregationResult.getBucket(
-						String.valueOf(processId)),
-					process);
+				_populateProcessWithSLAMetrics(bucket, process);
+				_setInstanceCount(bucket, process);
 
 				_setUntrackedInstanceCount(process);
 
@@ -184,6 +176,46 @@ public class ProcessResourceImpl
 			_queries.term("instanceId", 0));
 	}
 
+	private BooleanQuery _createBooleanQuery(
+		boolean completed, Set<Long> processIds) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
+
+		instancesBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-instances"));
+		instancesBooleanQuery.addMustNotQueryClauses(
+			_queries.term("instanceId", 0));
+		instancesBooleanQuery.addMustQueryClauses(
+			_createInstanceBooleanQuery(completed, processIds));
+
+		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
+
+		slaProcessResultsBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-sla-process-results"));
+		slaProcessResultsBooleanQuery.addMustNotQueryClauses(
+			_queries.term("slaDefinitionId", 0));
+		slaProcessResultsBooleanQuery.addMustQueryClauses(
+			_createSLAProcessResultsBooleanQuery(completed, processIds));
+
+		return booleanQuery.addShouldQueryClauses(
+			instancesBooleanQuery, slaProcessResultsBooleanQuery);
+	}
+
+	private BucketSelectorPipelineAggregation
+		_createBucketSelectorPipelineAggregation() {
+
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
+			_aggregations.bucketSelector(
+				"bucketSelector", _scripts.script("params.instanceCount > 0"));
+
+		bucketSelectorPipelineAggregation.addBucketPath(
+			"instanceCount", "instanceCount.value");
+
+		return bucketSelectorPipelineAggregation;
+	}
+
 	private BooleanQuery _createInstanceBooleanQuery(
 		boolean completed, Set<Long> processIds) {
 
@@ -200,6 +232,8 @@ public class ProcessResourceImpl
 			{
 				id = document.getLong("processId");
 				instanceCount = 0L;
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
 				title = document.getString(_getTitleFieldName());
 			}
 		};
@@ -312,6 +346,58 @@ public class ProcessResourceImpl
 			searchSearchResponse.getAggregationResultsMap();
 
 		return (TermsAggregationResult)aggregationResultsMap.get("processId");
+	}
+
+	private Bucket _getProcessBucket(
+		boolean completed, long processId, Integer timeRange) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"processId", "processId");
+
+		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
+			"onTime", _resourceHelper.createMustNotBooleanQuery());
+
+		onTimeFilterAggregation.addChildAggregation(
+			_resourceHelper.createOnTimeScriptedMetricAggregation());
+
+		FilterAggregation overdueFilterAggregation = _aggregations.filter(
+			"overdue", _resourceHelper.createMustNotBooleanQuery());
+
+		overdueFilterAggregation.addChildAggregation(
+			_resourceHelper.createOverdueScriptedMetricAggregation());
+
+		termsAggregation.addChildrenAggregations(
+			onTimeFilterAggregation, overdueFilterAggregation,
+			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
+				TimeRangeUtil.getEndDate(timeRange, _user.getTimeZoneId()),
+				Collections.emptyList(),
+				TimeRangeUtil.getStarDate(timeRange, _user.getTimeZoneId()),
+				Collections.emptyList(), Collections.emptyList()));
+
+		termsAggregation.addPipelineAggregations(
+			_createBucketSelectorPipelineAggregation());
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-instances",
+			"workflow-metrics-sla-process-results");
+
+		searchSearchRequest.setQuery(
+			_createBooleanQuery(completed, Collections.singleton(processId)));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("processId");
+
+		return termsAggregationResult.getBucket(String.valueOf(processId));
 	}
 
 	private Collection<Process> _getProcesses(
@@ -496,12 +582,24 @@ public class ProcessResourceImpl
 			(FilterAggregationResult)bucket.getChildAggregationResult(
 				"instanceCountFilter");
 
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				filterAggregationResult.getChildAggregationResult(
-					"instanceCount");
+		CardinalityAggregationResult cardinalityAggregationResult;
 
-		process.setInstanceCount(cardinalityAggregationResult.getValue());
+		if (filterAggregationResult != null) {
+			cardinalityAggregationResult =
+				(CardinalityAggregationResult)
+					filterAggregationResult.getChildAggregationResult(
+						"instanceCount");
+
+			process.setInstanceCount(cardinalityAggregationResult.getValue());
+		}
+		else {
+			ScriptedMetricAggregationResult scriptedMetricAggregationResult =
+				(ScriptedMetricAggregationResult)
+					bucket.getChildAggregationResult("instanceCount");
+
+			process.setInstanceCount(
+				GetterUtil.getLong(scriptedMetricAggregationResult.getValue()));
+		}
 	}
 
 	private void _setOnTimeInstanceCount(Bucket bucket, Process process) {
@@ -573,9 +671,15 @@ public class ProcessResourceImpl
 	private ResourceHelper _resourceHelper;
 
 	@Reference
+	private Scripts _scripts;
+
+	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
 	private Sorts _sorts;
+
+	@Context
+	private User _user;
 
 }

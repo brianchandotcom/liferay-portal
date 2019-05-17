@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -71,11 +72,6 @@ public class UserRolesManagementToolbarDisplayContext
 	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
-	}
-
-	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
 	}
 
 	@Override

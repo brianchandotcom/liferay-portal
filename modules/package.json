@@ -14,7 +14,7 @@
 		"liferay-npm-bridge-generator": "2.7.1",
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
-		"liferay-npm-scripts": "1.6.0",
+		"liferay-npm-scripts": "1.7.0",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2"
 	},
 	"private": true,

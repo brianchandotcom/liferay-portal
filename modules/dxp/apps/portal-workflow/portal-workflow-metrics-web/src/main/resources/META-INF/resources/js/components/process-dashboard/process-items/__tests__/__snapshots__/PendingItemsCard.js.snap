@@ -129,13 +129,14 @@ exports[`Should render component 1`] = `
                                 >
                                   <svg
                                     className="lexicon-icon lexicon-icon-question-circle-full"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                      }
+                                    }
                                     focusable="false"
                                     role="presentation"
-                                  >
-                                    <use
-                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                    />
-                                  </svg>
+                                  />
                                 </Icon>
                               </span>
                             </span>
@@ -300,13 +301,14 @@ exports[`Should render component with failure state 1`] = `
                                 >
                                   <svg
                                     className="lexicon-icon lexicon-icon-question-circle-full"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                      }
+                                    }
                                     focusable="false"
                                     role="presentation"
-                                  >
-                                    <use
-                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                    />
-                                  </svg>
+                                  />
                                 </Icon>
                               </span>
                             </span>

@@ -14,13 +14,14 @@ exports[`Should render component on container 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
     </span>
   </a>
 </li>

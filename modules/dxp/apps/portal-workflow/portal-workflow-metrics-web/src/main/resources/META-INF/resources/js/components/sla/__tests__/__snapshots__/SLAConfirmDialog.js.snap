@@ -369,13 +369,14 @@ exports[`Should cancel dialog through SLA List 1`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>
@@ -659,13 +660,14 @@ exports[`Should cancel dialog through SLA List 2`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>

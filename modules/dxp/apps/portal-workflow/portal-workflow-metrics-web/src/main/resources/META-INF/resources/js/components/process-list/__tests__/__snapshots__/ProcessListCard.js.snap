@@ -40,13 +40,14 @@ exports[`Should render component 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-search"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                    />
-                  </svg>
+                  />
                 </button>
               </span>
             </div>
@@ -112,13 +113,14 @@ exports[`Should render component with 4 records 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-search"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                    />
-                  </svg>
+                  />
                 </button>
               </span>
             </div>
@@ -184,13 +186,14 @@ exports[`Should render component with 10 records 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-search"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                    />
-                  </svg>
+                  />
                 </button>
               </span>
             </div>

@@ -109,13 +109,14 @@ exports[`Should expand tab items 1`] = `
               >
                 <svg
                   className="lexicon-icon lexicon-icon-caret-bottom"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                  />
-                </svg>
+                />
               </Icon>
             </button>
             <div
@@ -331,13 +332,14 @@ exports[`Should hide tab items 1`] = `
               >
                 <svg
                   className="lexicon-icon lexicon-icon-caret-bottom"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                  />
-                </svg>
+                />
               </Icon>
             </button>
             <div
@@ -460,13 +462,14 @@ exports[`Should render component 1`] = `
       pending
       <svg
         className="lexicon-icon lexicon-icon-caret-bottom"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-        />
-      </svg>
+      />
     </button>
     <div
       className="collapse navbar-collapse "

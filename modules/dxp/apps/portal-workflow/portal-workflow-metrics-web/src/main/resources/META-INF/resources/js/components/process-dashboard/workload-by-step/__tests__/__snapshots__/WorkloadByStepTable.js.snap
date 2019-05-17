@@ -33,13 +33,14 @@ exports[`Should display hyphen when the task has no count 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-exclamation-circle text-danger"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
-                    />
-                  </svg>
+                  />
                 </span>
               </span>
             </span>
@@ -55,13 +56,14 @@ exports[`Should display hyphen when the task has no count 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>
@@ -84,13 +86,14 @@ exports[`Should display hyphen when the task has no count 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-check-circle text-success"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
-                    />
-                  </svg>
+                  />
                 </span>
               </span>
             </span>
@@ -106,13 +109,14 @@ exports[`Should display hyphen when the task has no count 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>
@@ -136,13 +140,14 @@ exports[`Should display hyphen when the task has no count 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>
@@ -227,13 +232,14 @@ exports[`Should render component 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-exclamation-circle text-danger"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
-                    />
-                  </svg>
+                  />
                 </span>
               </span>
             </span>
@@ -249,13 +255,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>
@@ -278,13 +285,14 @@ exports[`Should render component 1`] = `
                 >
                   <svg
                     className="lexicon-icon lexicon-icon-check-circle text-success"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                      }
+                    }
                     focusable="false"
                     role="presentation"
-                  >
-                    <use
-                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
-                    />
-                  </svg>
+                  />
                 </span>
               </span>
             </span>
@@ -300,13 +308,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>
@@ -330,13 +339,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
+              />
             </span>
           </a>
         </th>

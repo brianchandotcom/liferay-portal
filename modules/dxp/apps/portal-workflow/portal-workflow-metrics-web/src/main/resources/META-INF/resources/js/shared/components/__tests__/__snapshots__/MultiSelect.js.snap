@@ -93,13 +93,14 @@ exports[`Should add a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -131,13 +132,14 @@ exports[`Should add a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -169,13 +171,14 @@ exports[`Should add a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -207,13 +210,14 @@ exports[`Should add a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -242,13 +246,14 @@ exports[`Should add a tag 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -348,13 +353,14 @@ exports[`Should hide the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -386,13 +392,14 @@ exports[`Should hide the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -424,13 +431,14 @@ exports[`Should hide the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -462,13 +470,14 @@ exports[`Should hide the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -497,13 +506,14 @@ exports[`Should hide the dropdown list 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -602,13 +612,14 @@ exports[`Should remove a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -640,13 +651,14 @@ exports[`Should remove a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -678,13 +690,14 @@ exports[`Should remove a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -716,13 +729,14 @@ exports[`Should remove a tag 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -751,13 +765,14 @@ exports[`Should remove a tag 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -856,13 +871,14 @@ exports[`Should search 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -894,13 +910,14 @@ exports[`Should search 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -932,13 +949,14 @@ exports[`Should search 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -967,13 +985,14 @@ exports[`Should search 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -1072,13 +1091,14 @@ exports[`Should show the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1110,13 +1130,14 @@ exports[`Should show the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1148,13 +1169,14 @@ exports[`Should show the dropdown list 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1183,13 +1205,14 @@ exports[`Should show the dropdown list 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -1288,13 +1311,14 @@ exports[`Should test component render 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1326,13 +1350,14 @@ exports[`Should test component render 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1364,13 +1389,14 @@ exports[`Should test component render 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1399,13 +1425,14 @@ exports[`Should test component render 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -1504,13 +1531,14 @@ exports[`Should test keydown press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1542,13 +1570,14 @@ exports[`Should test keydown press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1580,13 +1609,14 @@ exports[`Should test keydown press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1615,13 +1645,14 @@ exports[`Should test keydown press 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -1720,13 +1751,14 @@ exports[`Should test keyenter press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1758,13 +1790,14 @@ exports[`Should test keyenter press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1796,13 +1829,14 @@ exports[`Should test keyenter press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1831,13 +1865,14 @@ exports[`Should test keyenter press 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>
@@ -1936,13 +1971,14 @@ exports[`Should test keyup press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -1974,13 +2010,14 @@ exports[`Should test keyup press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -2012,13 +2049,14 @@ exports[`Should test keyup press 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-times"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
+              />
             </Icon>
           </button>
         </span>
@@ -2047,13 +2085,14 @@ exports[`Should test keyup press 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-caret-double"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-          />
-        </svg>
+        />
       </Icon>
     </div>
   </div>

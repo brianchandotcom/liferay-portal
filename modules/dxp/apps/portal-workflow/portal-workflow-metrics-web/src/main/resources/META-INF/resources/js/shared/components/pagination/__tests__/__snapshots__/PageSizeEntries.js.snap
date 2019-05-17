@@ -164,13 +164,14 @@ exports[`Should render with default deltas 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double-l"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l"
-                />
-              </svg>
+              />
             </Icon>
           </a>
           <div

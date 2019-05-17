@@ -271,13 +271,14 @@ exports[`Should render component 1`] = `
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-check-circle text-success"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                                  }
+                                }
                                 focusable="false"
                                 role="presentation"
-                              >
-                                <use
-                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
-                                />
-                              </svg>
+                              />
                             </Icon>
                           </span>
                         </span>
@@ -583,13 +584,14 @@ exports[`Should render component with disabled state 1`] = `
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-check-circle text-success"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                                  }
+                                }
                                 focusable="false"
                                 role="presentation"
-                              >
-                                <use
-                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
-                                />
-                              </svg>
+                              />
                             </Icon>
                           </span>
                         </span>

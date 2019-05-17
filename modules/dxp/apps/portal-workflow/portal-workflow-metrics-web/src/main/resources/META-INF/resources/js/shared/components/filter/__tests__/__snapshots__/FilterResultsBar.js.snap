@@ -63,13 +63,14 @@ exports[`Should render component 1`] = `
               >
                 <svg
                   className="lexicon-icon lexicon-icon-times"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                  />
-                </svg>
+                />
               </button>
             </span>
           </span>

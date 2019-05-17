@@ -236,13 +236,14 @@ exports[`Should component receive props 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -508,13 +509,14 @@ exports[`Should component receive props 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -715,13 +717,14 @@ exports[`Should component receive props 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -927,23 +930,22 @@ exports[`Should component receive props 1`] = `
                     id="instanceDetailModalLabel"
                   >
                     <span
-                      className="modal-title-indicator text-secondary"
+                      className="modal-title-indicator text-info"
                     >
-                      <Component>
-                        <Icon
-                          iconName="hr"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-hr"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
-                            />
-                          </svg>
-                        </Icon>
-                      </Component>
+                      <Icon
+                        iconName="hr"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-hr"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr\\" />",
+                            }
+                          }
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
                     </span>
                     Item #undefined
                   </div>
@@ -959,13 +961,14 @@ exports[`Should component receive props 1`] = `
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-times"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                        />
-                      </svg>
+                      />
                     </Icon>
                   </button>
                 </div>
@@ -1090,13 +1093,14 @@ exports[`Should component receive props 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-shortcut"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -1340,13 +1344,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -1612,13 +1617,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -1819,13 +1825,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -2029,23 +2036,22 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     id="instanceDetailModalLabel"
                   >
                     <span
-                      className="modal-title-indicator text-secondary"
+                      className="modal-title-indicator text-info"
                     >
-                      <Component>
-                        <Icon
-                          iconName="hr"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-hr"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
-                            />
-                          </svg>
-                        </Icon>
-                      </Component>
+                      <Icon
+                        iconName="hr"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-hr"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr\\" />",
+                            }
+                          }
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
                     </span>
                     Item #undefined
                   </div>
@@ -2061,13 +2067,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-times"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                        />
-                      </svg>
+                      />
                     </Icon>
                   </button>
                 </div>
@@ -2192,13 +2199,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-shortcut"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -2447,13 +2455,14 @@ exports[`Should render component 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -2719,13 +2728,14 @@ exports[`Should render component 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -2926,13 +2936,14 @@ exports[`Should render component 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-caret-bottom"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </button>
                         <div
@@ -3138,23 +3149,22 @@ exports[`Should render component 1`] = `
                     id="instanceDetailModalLabel"
                   >
                     <span
-                      className="modal-title-indicator text-secondary"
+                      className="modal-title-indicator text-info"
                     >
-                      <Component>
-                        <Icon
-                          iconName="hr"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-hr"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
-                            />
-                          </svg>
-                        </Icon>
-                      </Component>
+                      <Icon
+                        iconName="hr"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-hr"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr\\" />",
+                            }
+                          }
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
                     </span>
                     Item #undefined
                   </div>
@@ -3170,13 +3180,14 @@ exports[`Should render component 1`] = `
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-times"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                        />
-                      </svg>
+                      />
                     </Icon>
                   </button>
                 </div>
@@ -3301,13 +3312,14 @@ exports[`Should render component 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-shortcut"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -3359,13 +3371,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -3466,13 +3479,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -3549,13 +3563,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -3620,17 +3635,18 @@ Array [
             id="instanceDetailModalLabel"
           >
             <span
-              className="modal-title-indicator text-secondary"
+              className="modal-title-indicator text-info"
             >
               <svg
                 className="lexicon-icon lexicon-icon-hr"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
-                />
-              </svg>
+              />
             </span>
             Item #undefined
           </div>
@@ -3643,13 +3659,14 @@ Array [
           >
             <svg
               className="lexicon-icon lexicon-icon-times"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-              />
-            </svg>
+            />
           </button>
         </div>
         <div
@@ -3745,13 +3762,14 @@ Array [
             >
               <svg
                 className="lexicon-icon lexicon-icon-shortcut"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
-                />
-              </svg>
+              />
             </span>
           </a>
         </div>
@@ -3798,13 +3816,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -3905,13 +3924,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -3988,13 +4008,14 @@ Array [
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-              />
-            </svg>
+            />
           </button>
           <div
             className="dropdown-menu"
@@ -4059,17 +4080,18 @@ Array [
             id="instanceDetailModalLabel"
           >
             <span
-              className="modal-title-indicator text-secondary"
+              className="modal-title-indicator text-info"
             >
               <svg
                 className="lexicon-icon lexicon-icon-hr"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
-                />
-              </svg>
+              />
             </span>
             Item #undefined
           </div>
@@ -4082,13 +4104,14 @@ Array [
           >
             <svg
               className="lexicon-icon lexicon-icon-times"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-              />
-            </svg>
+            />
           </button>
         </div>
         <div
@@ -4184,13 +4207,14 @@ Array [
             >
               <svg
                 className="lexicon-icon lexicon-icon-shortcut"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#shortcut"
-                />
-              </svg>
+              />
             </span>
           </a>
         </div>

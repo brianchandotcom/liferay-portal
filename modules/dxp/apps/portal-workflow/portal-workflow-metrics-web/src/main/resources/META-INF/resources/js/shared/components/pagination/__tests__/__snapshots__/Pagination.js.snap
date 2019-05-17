@@ -167,13 +167,14 @@ exports[`Should change page 1`] = `
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-angle-left"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-                        />
-                      </svg>
+                      />
                     </Icon>
                     <span
                       className="sr-only"
@@ -372,13 +373,14 @@ exports[`Should change page 1`] = `
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-angle-right"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-                        />
-                      </svg>
+                      />
                     </Icon>
                     <span
                       className="sr-only"
@@ -410,13 +412,14 @@ exports[`Should render component 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -444,13 +447,14 @@ exports[`Should render component 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -474,13 +478,14 @@ exports[`Should render component at page 1 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -520,13 +525,14 @@ exports[`Should render component at page 1 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -551,13 +557,14 @@ exports[`Should render component at page 2 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -596,13 +603,14 @@ exports[`Should render component at page 2 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -627,13 +635,14 @@ exports[`Should render component at page 3 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -672,13 +681,14 @@ exports[`Should render component at page 3 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -703,13 +713,14 @@ exports[`Should render component at page 4 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -748,13 +759,14 @@ exports[`Should render component at page 4 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -779,13 +791,14 @@ exports[`Should render component at page 5 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-left"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -824,13 +837,14 @@ exports[`Should render component at page 5 1`] = `
     >
       <svg
         className="lexicon-icon lexicon-icon-angle-right"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-        />
-      </svg>
+      />
       <span
         className="sr-only"
       >
@@ -1019,13 +1033,14 @@ exports[`Should test build menu 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-angle-left"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-                          />
-                        </svg>
+                        />
                       </Icon>
                       <span
                         className="sr-only"
@@ -2388,13 +2403,14 @@ exports[`Should test build menu 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-angle-right"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-                          />
-                        </svg>
+                        />
                       </Icon>
                       <span
                         className="sr-only"
@@ -2593,13 +2609,14 @@ exports[`Should test build menu 2`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-angle-left"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-                            />
-                          </svg>
+                          />
                         </Icon>
                         <span
                           className="sr-only"
@@ -3426,13 +3443,14 @@ exports[`Should test build menu 2`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-angle-right"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-                          />
-                        </svg>
+                        />
                       </Icon>
                       <span
                         className="sr-only"
@@ -3620,13 +3638,14 @@ exports[`Should test build menu with page 1 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-angle-left"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-                          />
-                        </svg>
+                        />
                       </Icon>
                       <span
                         className="sr-only"
@@ -4263,13 +4282,14 @@ exports[`Should test build menu with page 1 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-angle-right"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-                            />
-                          </svg>
+                          />
                         </Icon>
                         <span
                           className="sr-only"
@@ -4452,13 +4472,14 @@ exports[`Should test build menu without parameters 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-angle-left"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-                          />
-                        </svg>
+                        />
                       </Icon>
                       <span
                         className="sr-only"
@@ -5095,13 +5116,14 @@ exports[`Should test build menu without parameters 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-angle-right"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-                            />
-                          </svg>
+                          />
                         </Icon>
                         <span
                           className="sr-only"

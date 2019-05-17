@@ -45,13 +45,14 @@ Array [
                     >
                       <svg
                         className="lexicon-icon lexicon-icon-search"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
+                          }
+                        }
                         focusable="false"
                         role="presentation"
-                      >
-                        <use
-                          href="//lexicon/icons.svg#search"
-                        />
-                      </svg>
+                      />
                     </button>
                   </span>
                 </div>
@@ -122,13 +123,14 @@ exports[`Should render default component without custom header 1`] = `
                   >
                     <svg
                       className="lexicon-icon lexicon-icon-search"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
+                        }
+                      }
                       focusable="false"
                       role="presentation"
-                    >
-                      <use
-                        href="//lexicon/icons.svg#search"
-                      />
-                    </svg>
+                    />
                   </button>
                 </span>
               </div>

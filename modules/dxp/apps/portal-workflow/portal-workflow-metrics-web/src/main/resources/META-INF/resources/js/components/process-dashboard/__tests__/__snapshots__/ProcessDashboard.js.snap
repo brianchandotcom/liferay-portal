@@ -106,7 +106,7 @@ exports[`Should render component with completed tab activated 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -156,7 +156,7 @@ exports[`Should render component with completed tab activated 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -200,13 +200,14 @@ exports[`Should render component with completed tab activated 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -506,13 +507,14 @@ exports[`Should render component with completed tab activated 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-caret-bottom"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </button>
                     <div
@@ -760,7 +762,7 @@ exports[`Should render component with default tab activated 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -810,7 +812,7 @@ exports[`Should render component with default tab activated 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -854,13 +856,14 @@ exports[`Should render component with default tab activated 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -1160,13 +1163,14 @@ exports[`Should render component with default tab activated 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-caret-bottom"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </button>
                     <div
@@ -1414,7 +1418,7 @@ exports[`Should render component with failure state 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -1464,7 +1468,7 @@ exports[`Should render component with failure state 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -1508,13 +1512,14 @@ exports[`Should render component with failure state 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -1815,13 +1820,14 @@ exports[`Should render component with failure state 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-caret-bottom"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </button>
                     <div
@@ -2094,13 +2100,14 @@ exports[`Should render dashboard route children 1`] = `
                                 >
                                   <svg
                                     className="lexicon-icon lexicon-icon-question-circle-full"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                      }
+                                    }
                                     focusable="false"
                                     role="presentation"
-                                  >
-                                    <use
-                                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                    />
-                                  </svg>
+                                  />
                                 </Icon>
                               </span>
                             </span>
@@ -2176,13 +2183,14 @@ exports[`Should render dashboard route children 1`] = `
                             >
                               <svg
                                 className="lexicon-icon lexicon-icon-question-circle-full"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                  }
+                                }
                                 focusable="false"
                                 role="presentation"
-                              >
-                                <use
-                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
-                                />
-                              </svg>
+                              />
                             </Icon>
                           </span>
                         </span>
@@ -2335,7 +2343,7 @@ exports[`Should render with blocked SLA 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -2385,7 +2393,7 @@ exports[`Should render with blocked SLA 1`] = `
                             role="presentation"
                           >
                             <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
                             />
                           </svg>
                         </span>
@@ -2429,13 +2437,14 @@ exports[`Should render with blocked SLA 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </a>
@@ -2736,13 +2745,14 @@ exports[`Should render with blocked SLA 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-caret-bottom"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </button>
                     <div

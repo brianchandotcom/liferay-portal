@@ -107,13 +107,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -195,13 +196,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -248,13 +250,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -319,13 +322,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -355,13 +359,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -408,13 +413,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -441,13 +447,14 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -840,13 +847,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -928,13 +936,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -981,13 +990,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1052,13 +1062,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1088,13 +1099,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -1141,13 +1153,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1174,13 +1187,14 @@ exports[`Should display error when the server returns a failure 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -1564,13 +1578,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -1652,13 +1667,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -1705,13 +1721,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1776,13 +1793,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1812,13 +1830,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -1865,13 +1884,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -1898,13 +1918,14 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -2288,13 +2309,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -2376,13 +2398,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -2429,13 +2452,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -2500,13 +2524,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -2536,13 +2561,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -2589,13 +2615,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -2622,13 +2649,14 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -3012,13 +3040,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -3100,13 +3129,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -3153,13 +3183,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -3224,13 +3255,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -3260,13 +3292,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -3313,13 +3346,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -3346,13 +3380,14 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -3736,13 +3771,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -3824,13 +3860,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -3877,13 +3914,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -3948,13 +3986,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -3984,13 +4023,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -4037,13 +4077,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -4070,13 +4111,14 @@ exports[`Should edit the SLA with valid values 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -4438,13 +4480,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -4526,13 +4569,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -4579,13 +4623,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -4650,13 +4695,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -4686,13 +4732,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -4739,13 +4786,14 @@ exports[`Should redirect to SLA list 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -4772,13 +4820,14 @@ exports[`Should redirect to SLA list 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -5090,13 +5139,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-asterisk"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                />
-              </svg>
+              />
             </span>
           </label>
           <input
@@ -5158,13 +5208,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-asterisk"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                />
-              </svg>
+              />
             </span>
           </label>
           <div
@@ -5200,13 +5251,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                />
-              </svg>
+              />
             </div>
           </div>
         </div>
@@ -5255,13 +5307,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                />
-              </svg>
+              />
             </div>
           </div>
         </div>
@@ -5281,13 +5334,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-asterisk"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                />
-              </svg>
+              />
             </span>
           </label>
           <div
@@ -5323,13 +5377,14 @@ exports[`Should render component 1`] = `
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                  }
+                }
                 focusable="false"
                 role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                />
-              </svg>
+              />
             </div>
           </div>
         </div>
@@ -5346,13 +5401,14 @@ exports[`Should render component 1`] = `
           >
             <svg
               className="lexicon-icon lexicon-icon-asterisk"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                }
+              }
               focusable="false"
               role="presentation"
-            >
-              <use
-                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-              />
-            </svg>
+            />
           </span>
         </label>
       </h3>
@@ -5572,13 +5628,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -5660,13 +5717,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -5713,13 +5771,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -5784,13 +5843,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -5820,13 +5880,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -5873,13 +5934,14 @@ exports[`Should render component in edit mode 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -5906,13 +5968,14 @@ exports[`Should render component in edit mode 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>
@@ -6296,13 +6359,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -6334,13 +6398,14 @@ exports[`Should update state after input changes 1`] = `
                           >
                             <svg
                               className="lexicon-icon lexicon-icon-exclamation-full"
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
+                                }
+                              }
                               focusable="false"
                               role="presentation"
-                            >
-                              <use
-                                href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full"
-                              />
-                            </svg>
+                            />
                           </Icon>
                         </span>
                         A name is required.
@@ -6414,13 +6479,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -6467,13 +6533,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -6538,13 +6605,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -6574,13 +6642,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-asterisk"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </span>
                     </label>
@@ -6627,13 +6696,14 @@ exports[`Should update state after input changes 1`] = `
                         >
                           <svg
                             className="lexicon-icon lexicon-icon-caret-double"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
+                              }
+                            }
                             focusable="false"
                             role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
+                          />
                         </Icon>
                       </div>
                     </div>
@@ -6660,13 +6730,14 @@ exports[`Should update state after input changes 1`] = `
                       >
                         <svg
                           className="lexicon-icon lexicon-icon-asterisk"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
+                            }
+                          }
                           focusable="false"
                           role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
+                        />
                       </Icon>
                     </span>
                   </label>

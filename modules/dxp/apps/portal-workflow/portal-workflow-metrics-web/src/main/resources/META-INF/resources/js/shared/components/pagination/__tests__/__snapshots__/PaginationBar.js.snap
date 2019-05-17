@@ -18,13 +18,14 @@ exports[`Should render component 1`] = `
       5 Entries
       <svg
         className="lexicon-icon lexicon-icon-caret-double-l"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l\\" />",
+          }
+        }
         focusable="false"
         role="presentation"
-      >
-        <use
-          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l"
-        />
-      </svg>
+      />
     </a>
     <div
       className="dropdown-menu dropdown-menu-top"
@@ -90,13 +91,14 @@ exports[`Should render component 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-angle-left"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-          />
-        </svg>
+        />
         <span
           className="sr-only"
         >
@@ -136,13 +138,14 @@ exports[`Should render component 1`] = `
       >
         <svg
           className="lexicon-icon lexicon-icon-angle-right"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+            }
+          }
           focusable="false"
           role="presentation"
-        >
-          <use
-            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-          />
-        </svg>
+        />
         <span
           className="sr-only"
         >

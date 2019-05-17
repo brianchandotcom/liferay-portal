@@ -240,13 +240,14 @@ exports[`Should remove a item 1`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>
@@ -319,13 +320,14 @@ Array [
               >
                 <svg
                   className="lexicon-icon lexicon-icon-plus"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                  />
-                </svg>
+                />
               </a>
             </span>
           </span>
@@ -379,13 +381,14 @@ Array [
               >
                 <svg
                   className="lexicon-icon lexicon-icon-plus"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                  />
-                </svg>
+                />
               </a>
             </span>
           </span>
@@ -650,13 +653,14 @@ exports[`Should render toast with SLA saved message 1`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>
@@ -940,13 +944,14 @@ exports[`Should render toast with SLA updated message 1`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>
@@ -1230,13 +1235,14 @@ exports[`Should test props change 1`] = `
                                   >
                                     <svg
                                       className="lexicon-icon lexicon-icon-plus"
+                                      dangerouslySetInnerHTML={
+                                        Object {
+                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                        }
+                                      }
                                       focusable="false"
                                       role="presentation"
-                                    >
-                                      <use
-                                        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
-                                      />
-                                    </svg>
+                                    />
                                   </Icon>
                                 </a>
                               </Link>

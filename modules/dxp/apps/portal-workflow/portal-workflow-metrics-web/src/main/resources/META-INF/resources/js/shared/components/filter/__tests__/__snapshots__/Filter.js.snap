@@ -18,13 +18,14 @@ exports[`Should render component 1`] = `
     </span>
     <svg
       className="lexicon-icon lexicon-icon-caret-bottom"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+        }
+      }
       focusable="false"
       role="presentation"
-    >
-      <use
-        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-      />
-    </svg>
+    />
   </button>
   <div
     className="dropdown-menu"
@@ -66,13 +67,14 @@ exports[`Should render component with search wrapper 1`] = `
     </span>
     <svg
       className="lexicon-icon lexicon-icon-caret-bottom"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+        }
+      }
       focusable="false"
       role="presentation"
-    >
-      <use
-        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
-      />
-    </svg>
+    />
   </button>
   <div
     className="dropdown-menu"
@@ -103,13 +105,14 @@ exports[`Should render component with search wrapper 1`] = `
               >
                 <svg
                   className="lexicon-icon lexicon-icon-search"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                    }
+                  }
                   focusable="false"
                   role="presentation"
-                >
-                  <use
-                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search"
-                  />
-                </svg>
+                />
               </button>
             </span>
           </div>

@@ -39,13 +39,14 @@ exports[`Should render component as type Next 1`] = `
   >
     <svg
       className="lexicon-icon lexicon-icon-angle-right"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+        }
+      }
       focusable="false"
       role="presentation"
-    >
-      <use
-        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
-      />
-    </svg>
+    />
     <span
       className="sr-only"
     >
@@ -66,13 +67,14 @@ exports[`Should render component as type Previous 1`] = `
   >
     <svg
       className="lexicon-icon lexicon-icon-angle-left"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+        }
+      }
       focusable="false"
       role="presentation"
-    >
-      <use
-        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
-      />
-    </svg>
+    />
     <span
       className="sr-only"
     >

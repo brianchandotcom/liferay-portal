@@ -33,6 +33,10 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = content.replaceAll(
+			"(?m)^(\t(function|macro|test))(?! \\w+ \\{)[\t ]+(\\w+)\\s*(\\{)",
+			"$1 $3 $4");
+
 		content = _formatWhitespace(content);
 
 		return super.doProcess(fileName, absolutePath, content);

@@ -25,31 +25,6 @@ definition {
 		}
 	}
 
-	@description = "Test that the UI for saving a WC as a draft works."
-	@priority = "4"
-	test AddWebContentDraft {
-		property testray.component.names = "Web Content Administration";
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addDraft(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.viewStatus(
-			webContentContent = "WC WebContent Content",
-			webContentStatus = "Draft",
-			webContentTitle = "WC WebContent Title");
-	}
-
 	@description = "Test that the UI for adding a WC folder works."
 	@priority = "5"
 	test AddFolder {
@@ -93,6 +68,31 @@ definition {
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+	}
+
+	@description = "Test that the UI for saving a WC as a draft works."
+	@priority = "4"
+	test AddWebContentDraft {
+		property testray.component.names = "Web Content Administration";
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addDraft(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "DRAFT",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewStatus(
+			webContentContent = "WC WebContent Content",
+			webContentStatus = "Draft",
 			webContentTitle = "WC WebContent Title");
 	}
 

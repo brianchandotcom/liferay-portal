@@ -232,7 +232,6 @@ definition {
 			var groupId = JSONUtil2._getScopeGroupId();
 		}
 
-
 		if (!(isSet(title))) {
 			fail("Please set 'title.'");
 		}

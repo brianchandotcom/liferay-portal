@@ -400,10 +400,10 @@ definition {
 		property testray.component.names = "Web Content Administration";
 
 		for (var i : list "1,2,3") {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title ${i}");
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
 
 		}
 

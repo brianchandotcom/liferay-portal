@@ -317,13 +317,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
 		message.setUuid(serviceContext.getUuid());
 		message.setGroupId(groupId);
 		message.setCompanyId(user.getCompanyId());
 		message.setUserId(user.getUserId());
 		message.setUserName(userName);
 		message.setCreateDate(serviceContext.getCreateDate(now));
-		message.setModifiedDate(serviceContext.getModifiedDate(now));
+		message.setModifiedDate(modifiedDate);
 
 		if (threadId > 0) {
 			message.setThreadId(threadId);
@@ -338,7 +340,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setStatus(WorkflowConstants.STATUS_DRAFT);
 		message.setStatusByUserId(user.getUserId());
 		message.setStatusByUserName(userName);
-		message.setStatusDate(serviceContext.getModifiedDate(now));
+		message.setStatusDate(modifiedDate);
 
 		// Thread
 
@@ -1871,7 +1873,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						publishDate = assetEntry.getPublishDate();
 					}
 					else {
-						publishDate = now;
+						publishDate = modifiedDate;
 
 						serviceContext.setCommand(Constants.ADD);
 					}
@@ -1917,8 +1919,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (!message.isDiscussion()) {
 			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId,
-				serviceContext.getModifiedDate(now));
+				message.getGroupId(), userId, modifiedDate);
 		}
 
 		return message;

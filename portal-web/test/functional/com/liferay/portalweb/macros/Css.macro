@@ -1,0 +1,22 @@
+definition {
+	macro getCssValue {
+		WaitForSPARefresh();
+
+		var cssClassSelector = '''document.querySelector('${cssClassSelector}')''';
+		var cssProperty = "${cssProperty}";
+
+		var javaScript = '''
+const style = getComputedStyle(${cssClassSelector});
+
+const cssValue = style.${cssProperty}
+
+return cssValue
+		''';
+
+		var cssValue = "";
+
+		var cssValue = selenium.getEval("${javaScript}");
+
+		return "${cssValue}";
+	}
+}

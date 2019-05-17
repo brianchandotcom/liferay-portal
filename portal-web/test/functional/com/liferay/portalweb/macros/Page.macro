@@ -823,10 +823,15 @@ definition {
 			locator2 = "right",
 			value1 = "0px");
 
+		var sideNavWidth = Css.getCssValue(
+			cssClassSelector = ".sidenav-menu",
+			cssProperty = "width"
+		);
+
 		AssertCssValue(
 			locator1 = "Home#SITE_WRAPPER",
 			locator2 = "padding-right",
-			value1 = "320px");
+			value1 = "${sideNavWidth}");
 	}
 
 	macro viewSelectedLayoutColumn {

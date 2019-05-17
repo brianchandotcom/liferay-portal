@@ -38,70 +38,70 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	message="<%= StringPool.BLANK %>"
 	showExpanded="<%= row == null %>"
 >
-	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
+	<c:if test="<%= !workflowTask.isCompleted() %>">
+		<c:if test="<%= workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 
-		<%
-		List<String> transitionNames = workflowTaskDisplayContext.getTransitionNames(workflowTask);
+			<%
+			List<String> transitionNames = workflowTaskDisplayContext.getTransitionNames(workflowTask);
 
-		for (String transitionName : transitionNames) {
-			String message = workflowTaskDisplayContext.getTransitionMessage(transitionName);
-		%>
+			for (String transitionName : transitionNames) {
+				String message = workflowTaskDisplayContext.getTransitionMessage(transitionName);
+			%>
 
-			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
-				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-				<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
-				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
-				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-				<portlet:param name="assigneeUserId" value="<%= StringUtil.valueOf(workflowTask.getAssigneeUserId()) %>" />
+				<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
+					<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
+					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+					<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
+					<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+					<portlet:param name="assigneeUserId" value="<%= StringUtil.valueOf(workflowTask.getAssigneeUserId()) %>" />
 
-				<c:if test="<%= transitionName != null %>">
-					<portlet:param name="transitionName" value="<%= transitionName %>" />
-				</c:if>
-			</liferay-portlet:actionURL>
+					<c:if test="<%= transitionName != null %>">
+						<portlet:param name="transitionName" value="<%= transitionName %>" />
+					</c:if>
+				</liferay-portlet:actionURL>
+
+				<liferay-ui:icon
+					cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
+					data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
+					id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
+					message="<%= HtmlUtil.escape(message) %>"
+					method="get"
+					url="<%= editURL %>"
+				/>
+
+			<%
+			}
+			%>
+
+		</c:if>
+
+		<c:if test="<%= !workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
+			<liferay-portlet:renderURL var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+				<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
+			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
-				data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-				id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
-				message="<%= HtmlUtil.escape(message) %>"
-				method="get"
-				url="<%= editURL %>"
+				message="assign-to-me"
+				onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssignToMe('" + assignToMeURL + "');" %>'
+				url="javascript:;"
 			/>
+		</c:if>
 
-		<%
-		}
-		%>
-
-	</c:if>
-
-	<c:if test="<%= !workflowTask.isCompleted() && !workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
-		<liferay-portlet:renderURL var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL var="assignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-			<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			message="assign-to-me"
-			onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssignToMe('" + assignToMeURL + "');" %>'
+			message="assign-to-..."
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssign('" + assignURL + "');" %>'
 			url="javascript:;"
 		/>
-	</c:if>
 
-	<liferay-portlet:renderURL var="assignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/workflow_task_assign.jsp" />
-		<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
-		<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-ui:icon
-		message="assign-to-..."
-		onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssign('" + assignURL + "');" %>'
-		url="javascript:;"
-	/>
-
-	<c:if test="<%= !workflowTask.isCompleted() %>">
 		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

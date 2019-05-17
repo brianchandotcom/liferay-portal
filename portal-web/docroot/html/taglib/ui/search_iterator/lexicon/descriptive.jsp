@@ -101,7 +101,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 					<div class="autofit-col">
 						<div class="checkbox">
 							<label>
-								<%= rowChecker.getRowCheckBox(request, rowIsChecked, rowChecker.isDisabled(row.getObject()), row.getPrimaryKey()) %>
+								<%= rowChecker.getRowCheckBox(request, row) %>
 							</label>
 						</div>
 					</div>

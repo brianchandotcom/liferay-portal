@@ -21,7 +21,7 @@
 		<liferay-util:buffer
 			var="checkboxInput"
 		>
-			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			<%= rowChecker.getRowCheckBox(request, resultRow) %>
 		</liferay-util:buffer>
 
 		<c:if test="<%= Validator.isNotNull(checkboxInput) %>">
@@ -69,7 +69,7 @@
 		<liferay-util:buffer
 			var="checkboxInput"
 		>
-			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			<%= rowChecker.getRowCheckBox(request, resultRow) %>
 		</liferay-util:buffer>
 
 		<c:if test="<%= Validator.isNotNull(checkboxInput) %>">

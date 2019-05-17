@@ -110,6 +110,14 @@ public class RowChecker {
 			StringPool.BLANK);
 	}
 
+	public String getRowCheckBox(
+		HttpServletRequest httpServletRequest, ResultRow resultRow) {
+
+		return getRowCheckBox(
+			httpServletRequest, isChecked(resultRow.getObject()),
+			isDisabled(resultRow.getObject()), resultRow.getPrimaryKey());
+	}
+
 	public String getRowId() {
 		return getRowIds();
 	}

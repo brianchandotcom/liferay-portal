@@ -12,6 +12,10 @@ repositories {
 	}
 }
 
+buildCSS {
+	excludes "**/excluded.scss"
+}
+
 runGradleTest {
 	dependsOn classes
 
@@ -29,5 +33,9 @@ runGradleTest {
 
 			assert matcher.count == 3
 		}
+
+		File excludedFile = new File(dir, "excluded.css")
+
+		assert !excludedFile.exists()
 	}
 }

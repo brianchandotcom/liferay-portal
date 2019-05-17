@@ -119,14 +119,11 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 				@SuppressWarnings("unused")
 				public void doCall(Project afterProject) {
-					if (afterProject.equals(project) && subprojects.isEmpty()) {
-						_configureAfterProject(
-							afterProject, project.getLogger(),
-							targetPlatformBomsConfiguration,
-							targetPlatformDistroConfiguration,
-							targetPlatformExtension);
-					}
-					else if (subprojects.contains(afterProject)) {
+					boolean hasSubprojects = !subprojects.isEmpty();
+
+					if ((afterProject.equals(project) && !hasSubprojects) ||
+						subprojects.contains(afterProject)) {
+
 						_configureAfterProject(
 							afterProject, project.getLogger(),
 							targetPlatformBomsConfiguration,

@@ -89,15 +89,13 @@ public class MBMessageIndexerIndexedFieldsTest {
 		MBMessage mbMessage = mbMessageFixture.createMBMessageWithCategory(
 			title, _user.getUserId());
 
-		String searchTerm = mbMessage.getSubject();
-
 		Document document = mbMessageIndexerFixture.searchOnlyOne(
-			searchTerm, locale);
+			title, locale);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(mbMessage), document, searchTerm);
+			_expectedFieldValues(mbMessage), document, title);
 	}
 
 	protected void setUpIndexedFieldsFixture() {

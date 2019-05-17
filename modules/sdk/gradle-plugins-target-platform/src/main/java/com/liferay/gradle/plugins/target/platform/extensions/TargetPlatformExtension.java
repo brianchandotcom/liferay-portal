@@ -79,12 +79,16 @@ public class TargetPlatformExtension {
 					TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME);
 
 				if (!bndrunFile.exists()) {
-					logger.info(
-						"Explicitly excluding {} from resolution because " +
-							"there is no " +
-								TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME +
-									" file at the root of the gradle workspace",
-						p);
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Explicitly excluding {} from resolution because " +
+								"there is no " +
+									TargetPlatformPlugin.
+										PLATFORM_BNDRUN_FILE_NAME +
+										" file at the root of the gradle " +
+											"workspace",
+							p);
+					}
 
 					return false;
 				}
@@ -97,10 +101,12 @@ public class TargetPlatformExtension {
 				PluginManager pluginManager = p.getPluginManager();
 
 				if (!pluginManager.hasPlugin("com.liferay.osgi.plugin")) {
-					logger.info(
-						"Explicitly excluding {} from resolution because it " +
-							"does not appear to be an OSGi bundle.",
-						p);
+					if (logger.isInfoEnabled()) {
+						logger.info(
+							"Explicitly excluding {} from resolution because " +
+								"it does not appear to be an OSGi bundle.",
+							p);
+					}
 
 					return false;
 				}

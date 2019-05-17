@@ -63,12 +63,8 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
-	 */
-	@Deprecated
-	public void setDocrootDir(File docrootDir) {
-		setBaseDir(docrootDir);
+	public void setExcludes(String excludes) {
+		_cssBuilderArgs.setExcludes(excludes);
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
@@ -81,14 +77,6 @@ public class BuildCSSTask extends Task {
 
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
-	 */
-	@Deprecated
-	public void setPortalCommonPath(File portalCommonPath) {
-		setImportDir(portalCommonPath);
 	}
 
 	public void setPrecision(int precision) {

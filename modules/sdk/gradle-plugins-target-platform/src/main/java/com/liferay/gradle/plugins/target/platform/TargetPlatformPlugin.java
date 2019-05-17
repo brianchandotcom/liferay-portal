@@ -223,14 +223,13 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		resolveTask.dependsOn(taskContainer.findByName("assemble"));
 
+		resolveTask.setBndrunFile(bndrunFile);
 		resolveTask.setDescription(
 			"Resolve a project against the Liferay distro");
-		resolveTask.setGroup("verification");
-		resolveTask.setBndrunFile(bndrunFile);
-		resolveTask.setFailOnChanges(false);
-		resolveTask.setReportOptional(false);
-
 		resolveTask.setDistro(targetPlatformDistroConfiguration);
+		resolveTask.setFailOnChanges(false);
+		resolveTask.setGroup("verification");
+		resolveTask.setReportOptional(false);
 	}
 
 	private static final Iterable<String> _configurationNames = Arrays.asList(

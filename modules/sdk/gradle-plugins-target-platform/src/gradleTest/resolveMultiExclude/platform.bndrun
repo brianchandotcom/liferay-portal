@@ -9,4 +9,4 @@
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle',\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\
     osgi.service;objectClass:List<String>='javax.servlet.ServletContext'
--runrequires: osgi.identity;filter:='(osgi.identity=${project.bundle.instructions.Bundle-SymbolicName})'
+-runrequires: osgi.identity;filter:='(osgi.identity=${project.bundle.Bundle-SymbolicName})'

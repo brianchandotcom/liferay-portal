@@ -113,6 +113,7 @@ public class ResolveTask extends DefaultTask {
 
 		try (Bndrun bndrun = Bndrun.createBndrun(null, bndrunFile)) {
 			Workspace workspace = bndrun.getWorkspace();
+
 			bndrun.setBase(temporaryDir);
 
 			workspace.setOffline(isOffline());

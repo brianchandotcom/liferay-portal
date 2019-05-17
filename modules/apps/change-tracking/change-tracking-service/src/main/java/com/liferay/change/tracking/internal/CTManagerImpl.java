@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -627,27 +625,6 @@ public class CTManagerImpl implements CTManager {
 				ctEntryAggregate.getCtEntryAggregateId()));
 
 		return ctEntryAggregateCopy;
-	}
-
-	private long _getCompanyId(long userId) {
-		long companyId;
-
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			companyId = CompanyThreadLocal.getCompanyId();
-		}
-		else {
-			companyId = user.getCompanyId();
-		}
-
-		if (companyId <= 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get company ID");
-			}
-		}
-
-		return companyId;
 	}
 
 	private CTEntry _getCTEntry(

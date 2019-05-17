@@ -356,15 +356,12 @@ definition {
 	@description = "This is a use case for LPS-80208."
 	@priority = "4"
 	test ExpireLastestVersion {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -402,18 +399,12 @@ definition {
 	test ExpireMultipleWebContent {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		for (var i : list "1,2,3") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title ${i}");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title ${i}");
-
-			PortletEntry.publish();
 		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -465,22 +456,15 @@ definition {
 	test MoveMultipleWebContentToFolder {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "${webContentTitle}");
-
-			PortletEntry.publish();
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
 		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -504,11 +488,9 @@ definition {
 	test MoveWebContentToFolder {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -739,13 +721,11 @@ definition {
 	test PublishDraftWebContent {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addDraft(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title",
+			workflowAction = "DRAFT");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1193,67 +1173,15 @@ definition {
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 1 Content",
-			webContentTitle = "WC WebContent 1 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 1 Title");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 2 Content",
-			webContentTitle = "WC WebContent 2 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 2 Title");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 3 Content",
-			webContentTitle = "WC WebContent 3 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 3 Title");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 4 Content",
-			webContentTitle = "WC WebContent 4 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 4 Title");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 5 Content",
-			webContentTitle = "WC WebContent 5 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 5 Title");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent 6 Content",
-			webContentTitle = "WC WebContent 6 Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent 6 Title");
+		for (var i : list "1,2,3,4,5,6") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				title = "WC WebContent ${i} Title");
+		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 6 Title");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent 3 Title");
 

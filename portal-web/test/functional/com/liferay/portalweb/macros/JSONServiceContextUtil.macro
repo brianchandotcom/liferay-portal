@@ -40,10 +40,18 @@ definition {
 			fail("Error, 'JSON' and 'workflowAction' must all be set.");
 		}
 
+		if ("${workflowAction}" == "DRAFT") {
+			var workflowActionNumber = "2";
+		} else if ("${workflowAction}" == "PUBLISH") {
+			var workflowActionNumber = "1";
+		} else {
+			fail("Invalid workflowAction: '${workflowAction}' specified. Allowed values are 'DRAFT' or 'PUBLISH'.");
+		}
+
 		var JSON = JSONUtil2._addJSONObject(
 			JSON = "${JSON}",
 			key = "workflowAction",
-			value = "${workflowAction}");
+			value = "${workflowActionNumber}");
 
 		return "${JSON}";
 	}

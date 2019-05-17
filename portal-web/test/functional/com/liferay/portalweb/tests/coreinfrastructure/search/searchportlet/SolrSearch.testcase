@@ -1414,7 +1414,7 @@ definition {
 
 	@priority = "5"
 	test ViewMultipleFacetURLs {
-		property osgi.app.includes = "bookmarks,portal-search-solr7";
+		property osgi.app.includes = "portal-search-solr7";
 		var searchPage = "Search Page";
 
 		JSONCategory.addVocabulary(
@@ -1536,24 +1536,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Bookmarks");
+			portlet = "Documents and Media");
 
-		Bookmark.addWithTagCP(
-			bookmarkName = "banana",
-			bookmarkURL = "https://www.liferay.com",
-			skipViewBookmark = "true",
-			tagNameList = "fresh,ripe,test");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Bookmarks");
-
-		Bookmark.addCategoryCP(
-			bookmarkName = "banana",
-			categoryName = "organic",
+		DMDocument.addCP(
+			categoryNameList = "organic",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "banana",
+			tagNameList = "fresh,ripe,test",
 			vocabularyName = "Fruit Vocabulary");
 
 		User.logoutPG();
@@ -1585,7 +1574,7 @@ definition {
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -1598,7 +1587,7 @@ definition {
 			resultsList = "apple/Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "type",
@@ -1610,7 +1599,7 @@ definition {
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Bookmarks,orange/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "type",
@@ -1622,7 +1611,7 @@ definition {
 			resultsList = "apple/Blogs Entry",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Bookmarks,orange/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = "${testSearchURL}");
 
@@ -1636,7 +1625,7 @@ definition {
 		AssertLocation(value1 = "${testSearchURL}");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks,orange/Web Content Article",
+			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
@@ -1647,7 +1636,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Web Content Article,banana/Bookmarks",
+			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
@@ -1659,7 +1648,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "banana/Bookmarks",
+			resultsList = "banana/Document",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
@@ -1671,7 +1660,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Web Content Article,banana/Bookmarks",
+			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
@@ -1698,7 +1687,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
+			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
@@ -1720,7 +1709,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Blogs Entry,banana/Bookmarks,orange/Web Content Article",
+			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
@@ -1733,7 +1722,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "banana/Bookmarks,orange/Web Content Article",
+			resultsList = "banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
@@ -1749,7 +1738,7 @@ definition {
 			resultsList = "orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "tag",
@@ -1761,7 +1750,7 @@ definition {
 			resultsList = "orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "folder",
@@ -1777,7 +1766,7 @@ definition {
 		);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Web Content Article,banana/Bookmarks",
+			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");

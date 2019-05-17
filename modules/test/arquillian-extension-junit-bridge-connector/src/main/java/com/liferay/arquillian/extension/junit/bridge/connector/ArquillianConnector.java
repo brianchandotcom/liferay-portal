@@ -14,9 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.connector;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.io.IOException;
 
 import java.net.InetAddress;
@@ -27,6 +24,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 /**
  * @author Matthew Tambara
@@ -49,20 +49,19 @@ public class ArquillianConnector {
 			port = Integer.valueOf(portString);
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Listening on port " + port);
-		}
+		Logger logger = _loggerFactory.getLogger(ArquillianConnector.class);
+
+		logger.info("Listening on port {}", port);
 
 		try {
 			_arquillianConnectorThread = new ArquillianConnectorThread(
-				bundleContext, _inetAddress, port, properties.get("passcode"));
+				bundleContext, _inetAddress, port, properties.get("passcode"),
+				logger);
 		}
 		catch (IOException ioe) {
-			_log.error(
-				"Encountered a problem while using " +
-					_inetAddress.getHostAddress() + ":" + port +
-						". Shutting down now.",
-				ioe);
+			logger.error(
+				"Encountered a problem while using {}:{}. Shutting down now.",
+				_inetAddress.getHostAddress(), port, ioe);
 
 			System.exit(-10);
 		}
@@ -79,12 +78,12 @@ public class ArquillianConnector {
 
 	private static final int _DEFAULT_PORT = 32763;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ArquillianConnector.class);
-
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
 
 	private ArquillianConnectorThread _arquillianConnectorThread;
+
+	@Reference
+	private LoggerFactory _loggerFactory;
 
 }

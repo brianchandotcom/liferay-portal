@@ -14,9 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.connector;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +25,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.service.log.Logger;
 
 /**
  * @author Matthew Tambara
@@ -36,11 +34,12 @@ public class ArquillianConnectorThread extends Thread {
 
 	public ArquillianConnectorThread(
 			BundleContext bundleContext, InetAddress inetAddress, int port,
-			String passcode)
+			String passcode, Logger logger)
 		throws IOException {
 
 		_bundleContext = bundleContext;
 		_passcode = passcode;
+		_logger = logger;
 
 		setName("Arquillian-Connector-Thread");
 		setDaemon(true);
@@ -66,11 +65,9 @@ public class ArquillianConnectorThread extends Thread {
 				String passcode = objectInputStream.readUTF();
 
 				if ((_passcode != null) && !_passcode.equals(passcode)) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Pass code mismatch, dropped connection from " +
-								socket.getRemoteSocketAddress());
-					}
+					_logger.warn(
+						"Pass code mismatch, dropped connection from {}",
+						socket.getRemoteSocketAddress());
 
 					continue;
 				}
@@ -98,18 +95,16 @@ public class ArquillianConnectorThread extends Thread {
 				break;
 			}
 			catch (Exception e) {
-				_log.error(
+				_logger.error(
 					"Dropped connection due to unrecoverable framework " +
-						"failure: ",
+						"failure.",
 					e);
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ArquillianConnectorThread.class);
-
 	private final BundleContext _bundleContext;
+	private final Logger _logger;
 	private final String _passcode;
 	private final ServerSocket _serverSocket;
 

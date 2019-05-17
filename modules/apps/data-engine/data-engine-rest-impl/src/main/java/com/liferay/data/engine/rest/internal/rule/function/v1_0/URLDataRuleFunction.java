@@ -43,7 +43,7 @@ public class URLDataRuleFunction implements DataRuleFunction {
 		SPIDataDefinitionField spiDataDefinitionField, Object value) {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
-			DataRuleFunctionResult.of(spiDataDefinitionField, "invalid-url");
+			DataRuleFunctionResult.of(spiDataDefinitionField, "url-is-invalid");
 
 		if (value == null) {
 			return dataRuleFunctionResult;

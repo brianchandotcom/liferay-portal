@@ -49,7 +49,7 @@ public class EmailAddressDataRuleFunction implements DataRuleFunction {
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionResult.of(
-				spiDataDefinitionField, "invalid-email-address");
+				spiDataDefinitionField, "email-address-is-invalid");
 
 		if (value == null) {
 			return dataRuleFunctionResult;

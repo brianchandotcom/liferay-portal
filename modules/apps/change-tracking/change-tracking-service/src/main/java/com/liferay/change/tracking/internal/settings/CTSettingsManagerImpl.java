@@ -74,10 +74,14 @@ public class CTSettingsManagerImpl implements CTSettingsManager {
 				userId, !user.isDefaultUser());
 
 		String value = portalPreferences.getValue(
-			CTPortletKeys.CHANGE_LISTS, key, defaultValue);
+			CTPortletKeys.CHANGE_LISTS, key);
 
 		if (Validator.isNull(value)) {
-			value = getGlobalCTSetting(user.getCompanyId(), key, defaultValue);
+			value = getGlobalCTSetting(user.getCompanyId(), key);
+		}
+
+		if (Validator.isNull(value)) {
+			return defaultValue;
 		}
 
 		return value;

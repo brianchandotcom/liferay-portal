@@ -326,6 +326,7 @@ class SLAForm extends React.Component {
 			stopNodeKeys: { nodeKeys: stopNodeKeys }
 		} = slaStore.getState();
 		const daysMask = createNumberMask({
+			allowLeadingZeroes: true,
 			includeThousandsSeparator: false,
 			prefix: ''
 		});

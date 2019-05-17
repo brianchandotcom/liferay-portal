@@ -463,6 +463,13 @@ if (portletTitleBasedNavigation) {
 				'CMD': '<%= Constants.CMD %>'
 			},
 			currentAction: '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
+
+			<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
+				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			</portlet:resourceURL>
+
+			getAttachmentsURL: '<%= getAttachmentsURL %>',
+
 			namespace: '<portlet:namespace />',
 			rootNode: '#<portlet:namespace />mbEditPageContainer',
 

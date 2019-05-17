@@ -62,7 +62,7 @@ definition {
 
 		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />''';
 
-		WebContentTemplates._inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 
 		PortletEntry.save();
 
@@ -126,7 +126,7 @@ definition {
 
 		var templateScript = '''$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")''';
 
-		WebContentTemplates._inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 
 		PortletEntry.save();
 

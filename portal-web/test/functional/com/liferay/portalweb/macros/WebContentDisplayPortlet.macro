@@ -86,7 +86,7 @@ definition {
 			value1 = "Template Edit");
 
 		if (isSet(templateScript)) {
-			WebContentTemplates._inputScript(templateScript = "${templateScript}");
+			WebContentTemplates.inputScript(templateScript = "${templateScript}");
 		}
 
 		Button.clickSave();

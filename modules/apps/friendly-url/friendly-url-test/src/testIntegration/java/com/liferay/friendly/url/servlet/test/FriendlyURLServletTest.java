@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -45,6 +48,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
+import java.io.IOException;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -53,8 +58,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
@@ -66,6 +76,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletConfig;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author László Csontos
@@ -214,6 +227,106 @@ public class FriendlyURLServletTest {
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
+	@Test
+	public void testServiceForward() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		final AtomicBoolean failOnForward = new AtomicBoolean();
+		final AtomicReference<String> forwardPathReference =
+			new AtomicReference<>();
+		final IOException ioException = new IOException("Unable to forward");
+
+		MockServletContext mockServletContext = new MockServletContext() {
+
+			@Override
+			public RequestDispatcher getRequestDispatcher(final String path) {
+				return new RequestDispatcher() {
+
+					@Override
+					public void forward(
+							ServletRequest servletRequest,
+							ServletResponse servletResponse)
+						throws IOException {
+
+						forwardPathReference.set(path);
+
+						if (failOnForward.get()) {
+							throw ioException;
+						}
+					}
+
+					@Override
+					public void include(
+						ServletRequest servletRequest,
+						ServletResponse servletResponse) {
+					}
+
+				};
+			}
+
+		};
+
+		mockServletContext.setContextPath("/");
+
+		_servlet.init(new MockServletConfig(mockServletContext));
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String requestURI =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				getPath(_group, _layout);
+
+		mockHttpServletRequest.setRequestURI(requestURI);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		String forwardedURL = forwardPathReference.get();
+
+		Assert.assertEquals(forwardedURL, getURL(_layout));
+	}
+
+	@Test
+	public void testServiceRedirect() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		_redirectLayout = LayoutTestUtil.addLayout(_group);
+
+		_redirectLayout.setType(LayoutConstants.TYPE_URL);
+
+		UnicodeProperties typeSettingsProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsProperties.put("url", _layout.getFriendlyURL());
+
+		_redirectLayout.setTypeSettingsProperties(typeSettingsProperties);
+
+		LayoutLocalServiceUtil.updateLayout(_redirectLayout);
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String requestURI =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				getPath(_group, _redirectLayout);
+
+		mockHttpServletRequest.setRequestURI(requestURI);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		String redirectURL = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertEquals(redirectURL, _layout.getFriendlyURL());
+
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+	}
+
 	protected String getI18nLanguageId(HttpServletRequest httpServletRequest) {
 		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
@@ -322,6 +435,10 @@ public class FriendlyURLServletTest {
 	private Layout _layout;
 	private Constructor<?> _redirectConstructor1;
 	private Constructor<?> _redirectConstructor2;
+
+	@DeleteAfterTestRun
+	private Layout _redirectLayout;
+
 	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 	private Servlet _servlet;
 

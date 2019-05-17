@@ -45,8 +45,6 @@ Liferay-JS-Resources-Top-Head:\
 	\
 	/liferay/aui_sandbox.js,\
 	\
-	/clay/collapsible-search.js,\
-	\
 	/misc/svg4everybody.js,\
 	\
 	/aui/arraylist-add/arraylist-add.js,\

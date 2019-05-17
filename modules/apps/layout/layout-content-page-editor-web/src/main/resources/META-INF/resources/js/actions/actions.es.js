@@ -8,8 +8,8 @@ export const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
 
 export const UPDATE_SELECTED_SIDEBAR_PANEL_ID = 'updateSelectedSidebarPanelId';
 
-export const UPDATE_LAST_SAVE_DATE = 'updateLastSaveDate';
-export const UPDATE_SAVING_CHANGES_STATUS = 'updateSavingChangesStatus';
+export const UPDATE_LAST_SAVE_DATE = 'UPDATE_LAST_SAVE_DATE';
+export const UPDATE_SAVING_CHANGES_STATUS = 'UPDATE_SAVING_CHANGES_STATUS';
 
 export const CHANGE_LANGUAGE_ID = 'languageId';
 export const SELECT_SEGMENTS_EXPERIENCE = 'selectSegmentsExperience';

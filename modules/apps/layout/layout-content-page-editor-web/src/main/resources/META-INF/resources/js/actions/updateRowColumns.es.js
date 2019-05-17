@@ -1,7 +1,8 @@
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
 import {getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS_SUCCESS} from './actions.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * @param {function} dispatch
@@ -19,15 +20,14 @@ function updateRowColumns(
 		segmentsExperienceId
 	).then(
 		() => {
-			dispatch(
-				updateRowColumnsSuccessAction()
-			);
+			dispatch(updateRowColumnsSuccessAction());
+			dispatch(disableSavingChangesStatusAction());
+			dispatch(updateLastSaveDateAction());
 		}
 	).catch(
 		() => {
-			dispatch(
-				updateRowColumnsErrorAction(previousData)
-			);
+			dispatch(updateRowColumnsErrorAction(previousData));
+			dispatch(disableSavingChangesStatusAction());
 		}
 	);
 }
@@ -63,9 +63,8 @@ function updateRowColumnsAction(columns, rowId) {
 			);
 		}
 
-		dispatch(
-			updateRowColumnsLoadingAction(nextData)
-		);
+		dispatch(updateRowColumnsLoadingAction(nextData));
+		dispatch(enableSavingChangesStatusAction());
 
 		updateRowColumns(
 			dispatch,

@@ -447,36 +447,17 @@ function updateEditableValueReducer(state, action) {
 	let nextState = state;
 
 	if (action.type === UPDATE_EDITABLE_VALUE_ERROR ||
-		action.type === UPDATE_EDITABLE_VALUE_LOADING ||
-		action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
+		action.type === UPDATE_EDITABLE_VALUE_LOADING) {
 
-		if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
-			nextState = setIn(nextState, ['savingChanges'], false);
-
-			nextState = setIn(
-				nextState,
-				['lastSaveDate'],
-				action.date.toLocaleTimeString(
-					Liferay.ThemeDisplay.getBCP47LanguageId()
-				)
-			);
-		}
-		else {
-			const editablesPath = [
+		nextState = setIn(
+			nextState,
+			[
 				'fragmentEntryLinks',
 				action.fragmentEntryLinkId,
 				'editableValues'
-			];
-
-			if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
-				nextState = setIn(nextState, ['savingChanges'], false);
-				nextState = setIn(nextState, editablesPath, action.editableValues);
-			}
-			else if (action.type === UPDATE_EDITABLE_VALUE_LOADING) {
-				nextState = setIn(nextState, ['savingChanges'], true);
-				nextState = setIn(nextState, editablesPath, action.editableValues);
-			}
-		}
+			],
+			action.editableValues
+		);
 	}
 
 	return nextState;

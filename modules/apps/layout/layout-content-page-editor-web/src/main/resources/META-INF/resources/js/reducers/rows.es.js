@@ -180,20 +180,9 @@ function updateRowColumnsReducer(state, action) {
 	let nextState = state;
 
 	if (action.type === UPDATE_ROW_COLUMNS_ERROR ||
-		action.type === UPDATE_ROW_COLUMNS_LOADING ||
-		action.type === UPDATE_ROW_COLUMNS_SUCCESS) {
+		action.type === UPDATE_ROW_COLUMNS_LOADING) {
 
-		if (action.type === UPDATE_ROW_COLUMNS_SUCCESS) {
-			nextState = setIn(nextState, ['savingChanges'], false);
-		}
-		else if (action.type === UPDATE_ROW_COLUMNS_ERROR) {
-			nextState = setIn(nextState, ['layoutData'], action.layoutData);
-			nextState = setIn(nextState, ['savingChanges'], false);
-		}
-		else if (action.type === UPDATE_ROW_COLUMNS_LOADING) {
-			nextState = setIn(nextState, ['layoutData'], action.layoutData);
-			nextState = setIn(nextState, ['savingChanges'], true);
-		}
+		nextState = setIn(nextState, ['layoutData'], action.layoutData);
 	}
 
 	return nextState;
@@ -211,29 +200,17 @@ function updateRowColumnsReducer(state, action) {
 function updateRowColumnsNumberReducer(state, action) {
 	let nextState = state;
 
-	if (action.type === UPDATE_ROW_COLUMNS_NUMBER_ERROR ||
-		action.type === UPDATE_ROW_COLUMNS_NUMBER_LOADING ||
-		action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
+	if (action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
+		nextState = setIn(nextState, ['layoutData'], action.layoutData);
 
-		if (action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
-			nextState = setIn(nextState, ['savingChanges'], false);
-			nextState = setIn(nextState, ['layoutData'], action.layoutData);
-
-			action.fragmentEntryLinkIdsToRemove.forEach(
-				fragmentEntryLinkId => {
-					nextState = updateWidgets(
-						nextState,
-						fragmentEntryLinkId
-					);
-				}
-			);
-		}
-		else if (action.type === UPDATE_ROW_COLUMNS_NUMBER_ERROR) {
-			nextState = setIn(nextState, ['savingChanges'], false);
-		}
-		else if (action.type === UPDATE_ROW_COLUMNS_NUMBER_LOADING) {
-			nextState = setIn(nextState, ['savingChanges'], true);
-		}
+		action.fragmentEntryLinkIdsToRemove.forEach(
+			fragmentEntryLinkId => {
+				nextState = updateWidgets(
+					nextState,
+					fragmentEntryLinkId
+				);
+			}
+		);
 	}
 
 	return nextState;

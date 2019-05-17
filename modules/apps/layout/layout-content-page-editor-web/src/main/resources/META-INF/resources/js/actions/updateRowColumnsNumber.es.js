@@ -1,3 +1,4 @@
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
 import {getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {MAX_COLUMNS} from '../utils/rowConstants';
 import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
@@ -34,12 +35,14 @@ function updateRowColumnsNumber(
 					layoutData
 				)
 			);
+
+			dispatch(updateLastSaveDateAction());
+			dispatch(disableSavingChangesStatusAction());
 		}
 	).catch(
 		() => {
-			dispatch(
-				updateRowColumnsNumberErrorAction()
-			);
+			dispatch(updateRowColumnsNumberErrorAction());
+			dispatch(disableSavingChangesStatusAction());
 		}
 	);
 }
@@ -88,9 +91,8 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 			}
 		);
 
-		dispatch(
-			updateRowColumnsNumberLoadingAction()
-		);
+		dispatch(updateRowColumnsNumberLoadingAction());
+		dispatch(enableSavingChangesStatusAction());
 
 		updateRowColumnsNumber(
 			dispatch,

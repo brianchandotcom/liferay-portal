@@ -41,13 +41,7 @@
 	},
 	"description": "",
 	"devDependencies": {
-		"@babel/cli": "^7.2.3",
-		"@babel/plugin-proposal-class-properties": "^7.4.0",
-		"@babel/preset-env": "^7.4.2",
 		"@babel/preset-react": "^7.0.0",
-		"babel-eslint": "^10.0.1",
-		"babel-loader": "^8.0.5",
-		"babel-plugin-module-resolver": "^3.2.0",
 		"check-source-formatting": "^2.0.14",
 		"clay-css": "2.14.2",
 		"css-loader": "^2.0.1",

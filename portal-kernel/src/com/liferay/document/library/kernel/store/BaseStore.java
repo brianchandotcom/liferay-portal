@@ -118,11 +118,12 @@ public abstract class BaseStore implements Store {
 		throws PortalException;
 
 	/**
-	 * Ensures company's root directory exists. Only implemented by {@link
-	 * JCRStore#checkRoot(long)}.
+	 * Ensures company's root directory exists.
 	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 * @param companyId the primary key of the company
 	 */
+	@Deprecated
 	@Override
 	public abstract void checkRoot(long companyId);
 
@@ -422,12 +423,13 @@ public abstract class BaseStore implements Store {
 		String versionLabel);
 
 	/**
-	 * Moves an existing directory. Only implemented by {@link
-	 * JCRStore#move(String, String)}.
+	 * Moves an existing directory.
 	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 * @param srcDir the original directory's name
 	 * @param destDir the new directory's name
 	 */
+	@Deprecated
 	@Override
 	public void move(String srcDir, String destDir) {
 	}

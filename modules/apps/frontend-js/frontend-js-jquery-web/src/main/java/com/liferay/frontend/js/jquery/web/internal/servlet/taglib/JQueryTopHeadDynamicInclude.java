@@ -123,7 +123,8 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String[] _FILE_NAMES = {
-		"/jquery/jquery.js", "/jquery/fm.js", "/jquery/form.js"
+		"/jquery/jquery.js", "/jquery/fm.js", "/jquery/form.js",
+		"/jquery/side-navigation.js"
 	};
 
 	@Reference

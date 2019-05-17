@@ -1250,6 +1250,12 @@ public class ProjectTemplatesTest {
 			"mvc-portlet", "test", "--liferayVersion", "7.0test");
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateLiferayVersionInvalid73() throws Exception {
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferayVersion", "7.3");
+	}
+
 	@Test
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(

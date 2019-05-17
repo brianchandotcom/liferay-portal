@@ -270,12 +270,17 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'trigger-label-item-close')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE</td>
 	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input | //div[@class='options']/div[${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
 	<td></td>
 </tr>
 <tr>

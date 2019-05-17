@@ -1,12 +1,27 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+task buildBootstrapJS(type: Copy)
 task buildJQuery(type: Copy)
+task buildPopperJS(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
+File jqueryDestinationDir = new File(jsDestinationDir, "jquery")
+
+buildBootstrapJS {
+	dependsOn buildJQuery
+
+	eachFile new StripPathSegmentsAction(3)
+
+	from "node_modules"
+
+	include "bootstrap/dist/js/bootstrap.bundle.min.js"
+	include "bootstrap/dist/js/bootstrap.bundle.min.js.map"
+
+	includeEmptyDirs = false
+	into jqueryDestinationDir
+}
 
 buildJQuery {
-	File jqueryDestinationDir = new File(jsDestinationDir, "jquery")
-
 	dependsOn npmInstall
 
 	doFirst {
@@ -16,13 +31,32 @@ buildJQuery {
 	eachFile new StripPathSegmentsAction(2)
 
 	from npmInstall.nodeModulesDir
-	include "jquery/dist/jquery.js"
+
+	include "jquery/dist/jquery.min.js"
+	include "jquery/dist/jquery.min.js.map"
+
+	includeEmptyDirs = false
+	into jqueryDestinationDir
+}
+
+buildPopperJS {
+	dependsOn buildJQuery
+
+	eachFile new StripPathSegmentsAction(3)
+
+	from npmInstall.nodeModulesDir
+
+	include "popper.js/dist/umd/popper.min.js"
+	include "popper.js/dist/umd/popper.min.js.map"
+
 	includeEmptyDirs = false
 	into jqueryDestinationDir
 }
 
 classes {
+	dependsOn buildBootstrapJS
 	dependsOn buildJQuery
+	dependsOn buildPopperJS
 }
 
 clean {

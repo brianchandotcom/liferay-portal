@@ -30,10 +30,6 @@ Liferay-JS-Resources-Top-Head-Authenticated:\
 	\
 	/liferay/deprecated.js
 Liferay-JS-Resources-Top-Head:\
-	/clay/popper.js,\
-	\
-	/clay/bootstrap.js,\
-	\
 	/loader/config.js,\
 	/loader/loader.js,\
 	\

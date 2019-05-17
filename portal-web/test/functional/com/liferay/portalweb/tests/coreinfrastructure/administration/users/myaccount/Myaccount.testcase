@@ -67,8 +67,8 @@ definition {
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
-			Organization.searchCP(
-				orgName = "Organization Name ${i}",
+			Search.searchPG(
+				portletName = "My Organizations",
 				searchTerm = "Organization Name ${i}");
 		}
 	}

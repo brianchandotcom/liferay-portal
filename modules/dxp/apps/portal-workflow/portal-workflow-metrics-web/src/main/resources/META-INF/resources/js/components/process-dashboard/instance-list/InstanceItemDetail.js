@@ -59,8 +59,20 @@ class InstanceItemDetail extends React.Component {
 		if (status === 'Pending' && slaStatus === 'OnTime') {
 			styleName = 'text-success';
 		}
-		else if (status === 'Completed' || empty) {
+		else if (status === 'Completed') {
 			styleName = 'text-secondary';
+		}
+		else if (empty) {
+			styleName = 'text-info';
+		}
+
+		let iconTitleName = 'check-circle';
+
+		if (empty) {
+			iconTitleName = 'hr';
+		}
+		else if (overdue) {
+			iconTitleName = 'exclamation-circle';
 		}
 
 		return (
@@ -80,13 +92,7 @@ class InstanceItemDetail extends React.Component {
 								id="instanceDetailModalLabel"
 							>
 								<span className={`modal-title-indicator ${styleName}`}>
-									{empty ? (
-										<InstanceItemDetail.EmptyIcon />
-									) : overdue ? (
-										<InstanceItemDetail.OverdueIcon />
-									) : (
-										<InstanceItemDetail.OnTimeIcon />
-									)}
+									<Icon iconName={iconTitleName} />
 								</span>
 
 								{`${Liferay.Language.get('item')} #${instanceId}`}
@@ -271,18 +277,6 @@ InstanceItemDetail.SectionAttribute = ({ description, detail }) => {
 			<span className="col small">{detail}</span>
 		</p>
 	);
-};
-
-InstanceItemDetail.OverdueIcon = () => {
-	return <Icon iconName="exclamation-circle" />;
-};
-
-InstanceItemDetail.OnTimeIcon = () => {
-	return <Icon iconName="check-circle" />;
-};
-
-InstanceItemDetail.EmptyIcon = () => {
-	return <Icon iconName="hr" />;
 };
 
 InstanceItemDetail.contextType = AppContext;

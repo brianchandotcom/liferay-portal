@@ -92,6 +92,7 @@
 						<div class="autofit-row widget-metadata">
 							<div class="autofit-col inline-item-before">
 								<@liferay_ui["user-portrait"]
+									size="lg"
 									userId=curBlogEntry.userId
 									userName=curBlogEntry.userName
 								/>

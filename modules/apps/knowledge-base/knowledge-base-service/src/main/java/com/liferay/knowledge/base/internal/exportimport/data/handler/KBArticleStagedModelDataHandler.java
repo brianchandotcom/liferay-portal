@@ -150,9 +150,6 @@ public class KBArticleStagedModelDataHandler
 			}
 		}
 
-		Element kbArticleElement = portletDataContext.getExportDataElement(
-			kbArticle);
-
 		exportKBArticleAttachments(portletDataContext, kbArticle);
 
 		String content =
@@ -162,6 +159,9 @@ public class KBArticleStagedModelDataHandler
 					true);
 
 		kbArticle.setContent(content);
+
+		Element kbArticleElement = portletDataContext.getExportDataElement(
+			kbArticle);
 
 		portletDataContext.addClassedModel(
 			kbArticleElement, ExportImportPathUtil.getModelPath(kbArticle),
@@ -179,15 +179,9 @@ public class KBArticleStagedModelDataHandler
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, kbArticle, KBFolder.class);
 
-		long userId = portletDataContext.getUserId(kbArticle.getUserUuid());
-
 		Map<Long, Long> kbArticleResourcePrimKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				KBArticle.class);
-
-		long resourcePrimaryKey = MapUtil.getLong(
-			kbArticleResourcePrimKeys, kbArticle.getResourcePrimKey(),
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long parentResourceClassNameId = _classNameLocalService.getClassNameId(
 			KBFolderConstants.getClassName());
@@ -224,8 +218,14 @@ public class KBArticleStagedModelDataHandler
 
 		kbArticle.setContent(content);
 
+		long resourcePrimaryKey = MapUtil.getLong(
+			kbArticleResourcePrimKeys, kbArticle.getResourcePrimKey(),
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			kbArticle);
+
+		long userId = portletDataContext.getUserId(kbArticle.getUserUuid());
 
 		KBArticle importedKBArticle = null;
 
@@ -275,10 +275,7 @@ public class KBArticleStagedModelDataHandler
 			PortletDataContext portletDataContext, KBArticle kbArticle)
 		throws Exception {
 
-		List<FileEntry> attachmentsFileEntries =
-			kbArticle.getAttachmentsFileEntries();
-
-		for (FileEntry fileEntry : attachmentsFileEntries) {
+		for (FileEntry fileEntry : kbArticle.getAttachmentsFileEntries()) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, kbArticle, fileEntry,
 				PortletDataContext.REFERENCE_TYPE_WEAK);

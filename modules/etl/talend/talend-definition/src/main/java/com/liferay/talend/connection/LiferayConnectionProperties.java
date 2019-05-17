@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.daikon.NamedThing;
+import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
@@ -65,57 +66,26 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public ValidationResult afterWebSiteProperty() {
+	public void afterWebSiteProperty() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Website ID: " + webSiteProperty.getValue());
 		}
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
-		validationResultMutable.setStatus(ValidationResult.Result.OK);
-
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-			liferaySourceOrSinkRuntime.initialize(
-				null, getReferencedConnectionProperties());
-
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
-
-			validationResultMutable.setMessage(validationResult.getMessage());
-			validationResultMutable.setStatus(validationResult.getStatus());
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				/*try {
-					webSiteName.setValue(
-						liferaySourceOrSinkRuntime.getActualWebSiteName(
-							webSiteProperty.getValue()));
-				}
-				catch (IOException ioe) {
-					validationResult =
-						ExceptionUtils.exceptionToValidationResult(ioe);
-
-					validationResultMutable.setMessage(
-						validationResult.getMessage());
-					validationResultMutable.setStatus(
-						validationResult.getStatus());
-				}*/
+		try {
+			webSiteName.setValue(
+				webSiteProperty.getPossibleValuesDisplayName(
+					webSiteProperty.getValue()));
+		}
+		catch (TalendRuntimeException tre) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to determine the Website name for the id: " +
+						webSiteProperty.getValue());
 			}
 		}
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
-
-		return validationResultMutable;
 	}
 
 	public ValidationResult beforeWebSiteProperty() {

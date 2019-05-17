@@ -729,18 +729,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.store.filesystem"
 		},
 		{
-			"dl.store.jcr.fetch.delay", "fetch.delay",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"dl.store.jcr.fetch.max.failures", "fetch.max.failures",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"dl.store.jcr.move.version.labels", "move.version.labels",
-			"com.liferay.portal.store.jcr"
-		},
-		{
 			"dl.store.s3.access.key", "access.key",
 			"com.liferay.portal.store.s3"
 		},
@@ -925,42 +913,6 @@ public class VerifyProperties extends VerifyProcess {
 			"iframe.hidden-variables", "hidden.variables",
 			"com.liferay.iframe.web"
 		},
-
-		// JCR
-
-		{
-			"jcr.initialize.on.startup", "initialize.on.startup",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.jackrabbit.config.file.path", "jackrabbit.config.file.path",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.jackrabbit.credentials.password",
-			"jackrabbit.credentials.password", "com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.jackrabbit.credentials.username",
-			"jackrabbit.credentials.username", "com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.jackrabbit.repository.home", "repository.home",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.jackrabbit.repository.root", "repository.root",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.node.documentlibrary", "node.documentlibrary",
-			"com.liferay.portal.store.jcr"
-		},
-		{
-			"jcr.workspace.name", "workspace.name",
-			"com.liferay.portal.store.jcr"
-		},
-		{"jcr.wrap.session", "wrap.session", "com.liferay.portal.store.jcr"},
 
 		// Journal
 
@@ -1702,7 +1654,9 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.read.count.enabled",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
 		"dl.file.extensions", "dl.file.max.size", "dl.file.rank.enabled",
-		"dl.folder.menu.visible", "dl.tabs.visible", "dockbar.add.portlets",
+		"dl.folder.menu.visible", "dl.store.jcr.fetch.delay",
+		"dl.store.jcr.fetch.max.failures", "dl.store.jcr.move.version.labels",
+		"dl.tabs.visible", "dockbar.add.portlets",
 		"dockbar.administrative.links.show.in.pop.up",
 		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",
@@ -1753,10 +1707,16 @@ public class VerifyProperties extends VerifyProcess {
 		"index.read.only", "invitation.email.max.recipients",
 		"invitation.email.message.body", "invitation.email.message.subject",
 		"invoker.filter.chain.cache.size", "javax.persistence.validation.mode",
-		"jbi.workflow.url", "json.deserializer.strict.mode",
-		"journal.article.form.add", "journal.article.form.default.values",
-		"journal.article.form.update", "journal.article.form.translate",
-		"journal.article.types", "journal.articles.page.delta.values",
+		"jbi.workflow.url", "jcr.initialize.on.startup",
+		"jcr.jackrabbit.config.file.path",
+		"jcr.jackrabbit.credentials.password",
+		"jcr.jackrabbit.credentials.username", "jcr.jackrabbit.repository.home",
+		"jcr.jackrabbit.repository.root", "jcr.node.documentlibrary",
+		"jcr.workspace.name", "jcr.wrap.session",
+		"json.deserializer.strict.mode", "journal.article.form.add",
+		"journal.article.form.default.values", "journal.article.form.update",
+		"journal.article.form.translate", "journal.article.types",
+		"journal.articles.page.delta.values",
 		"journal.browse.by.structures.sorted.by.name",
 		"journal.image.extensions", "journal.image.small.max.size",
 		"journal.template.language.parser[css]",

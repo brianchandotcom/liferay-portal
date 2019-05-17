@@ -24,14 +24,19 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,6 +50,8 @@ import javax.annotation.Generated;
 public class HttpInvoker {
 
 	public static HttpInvoker newHttpInvoker() {
+		_allowPatchForHttpURLConnection();
+
 		return new HttpInvoker();
 	}
 
@@ -161,6 +168,36 @@ public class HttpInvoker {
 	}
 
 	private HttpInvoker() {
+	}
+
+	private static void _allowPatchForHttpURLConnection() {
+		try {
+			Field methodsField = HttpURLConnection.class.getDeclaredField(
+				"methods");
+
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+			modifiersField.setAccessible(true);
+
+			modifiersField.setInt(
+				methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
+
+			methodsField.setAccessible(true);
+
+			String[] oldMethods = (String[])methodsField.get(null);
+
+			Set<String> methodsSet = new LinkedHashSet<>(
+				Arrays.asList(oldMethods));
+
+			methodsSet.add("PATCH");
+
+			String[] newMethods = methodsSet.toArray(new String[0]);
+
+			methodsField.set(null, newMethods);
+		}
+		catch (IllegalAccessException | NoSuchFieldException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	private void _appendPart(

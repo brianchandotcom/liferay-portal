@@ -76,13 +76,13 @@ public class TargetPlatformExtension {
 				Project rootProject = p.getRootProject();
 
 				File bndrunFile = rootProject.file(
-					TargetPlatformPlugin.PLATFORM_BNDRUN);
+					TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME);
 
 				if (!bndrunFile.exists()) {
 					logger.info(
 						"Explicitly excluding {} from resolution because " +
 							"there is no " +
-								TargetPlatformPlugin.PLATFORM_BNDRUN +
+								TargetPlatformPlugin.PLATFORM_BNDRUN_FILE_NAME +
 									" file at the root of the gradle workspace",
 						p);
 

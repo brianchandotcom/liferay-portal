@@ -47,7 +47,7 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
 
-	public static final String PLATFORM_BNDRUN = "platform.bndrun";
+	public static final String PLATFORM_BNDRUN_FILE_NAME = "platform.bndrun";
 
 	public static final String PLUGIN_NAME = "targetPlatform";
 
@@ -205,7 +205,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			Project rootProject = afterProject.getRootProject();
 
-			File bndrunFile = rootProject.file(PLATFORM_BNDRUN);
+			File bndrunFile = rootProject.file(PLATFORM_BNDRUN_FILE_NAME);
 
 			_configureTaskResolve(
 				afterProject, resolveTask, bndrunFile,

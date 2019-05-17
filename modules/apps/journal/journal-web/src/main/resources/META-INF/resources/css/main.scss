@@ -81,6 +81,11 @@ $productMenuWidth: 320px;
 			body.open & {
 				left: $productMenuWidth;
 				width: calc(100% - #{$productMenuWidth});
+
+				@media (max-width: 768px) {
+					left: 0;
+					width: 100%;
+				}
 			}
 
 			> .container-fluid {

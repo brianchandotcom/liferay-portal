@@ -5,34 +5,6 @@ import {UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS
 import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
- * @param {function} dispatch
- * @param {number} rowIndex
- * @review
- */
-function updateRowColumns(
-	dispatch,
-	layoutData,
-	previousData,
-	segmentsExperienceId
-) {
-	updatePageEditorLayoutData(
-		layoutData,
-		segmentsExperienceId
-	).then(
-		() => {
-			dispatch(updateRowColumnsSuccessAction());
-			dispatch(disableSavingChangesStatusAction());
-			dispatch(updateLastSaveDateAction());
-		}
-	).catch(
-		() => {
-			dispatch(updateRowColumnsErrorAction(previousData));
-			dispatch(disableSavingChangesStatusAction());
-		}
-	);
-}
-
-/**
  * @param {Array} columns
  * @param {string} rowId
  * @return {function}
@@ -66,11 +38,20 @@ function updateRowColumnsAction(columns, rowId) {
 		dispatch(updateRowColumnsLoadingAction(nextData));
 		dispatch(enableSavingChangesStatusAction());
 
-		updateRowColumns(
-			dispatch,
+		updatePageEditorLayoutData(
 			nextData,
-			previousData,
-			state.segmentsExperienceId,
+			state.segmentsExperienceId
+		).then(
+			() => {
+				dispatch(updateRowColumnsSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+			}
+		).catch(
+			() => {
+				dispatch(updateRowColumnsErrorAction(previousData));
+				dispatch(disableSavingChangesStatusAction());
+			}
 		);
 	};
 }

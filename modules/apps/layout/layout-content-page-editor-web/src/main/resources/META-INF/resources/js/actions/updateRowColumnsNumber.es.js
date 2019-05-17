@@ -6,48 +6,6 @@ import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
 
 /**
- * @param {function} dispatch
- * @param {Array} fragmentEntryLinkIdsToRemove
- * @param {object} layoutData
- * @param {string} segmentsExperienceId
- * @review
- */
-function updateRowColumnsNumber(
-	dispatch,
-	fragmentEntryLinkIdsToRemove,
-	layoutData,
-	segmentsExperienceId
-) {
-	updatePageEditorLayoutData(
-		layoutData,
-		segmentsExperienceId
-	).then(
-		() => removeFragmentEntryLinks(
-			layoutData,
-			fragmentEntryLinkIdsToRemove,
-			segmentsExperienceId
-		)
-	).then(
-		() => {
-			dispatch(
-				updateRowColumnsNumberSuccessAction(
-					fragmentEntryLinkIdsToRemove,
-					layoutData
-				)
-			);
-
-			dispatch(updateLastSaveDateAction());
-			dispatch(disableSavingChangesStatusAction());
-		}
-	).catch(
-		() => {
-			dispatch(updateRowColumnsNumberErrorAction());
-			dispatch(disableSavingChangesStatusAction());
-		}
-	);
-}
-
-/**
  * @param {number} numberOfColumns
  * @param {string} rowId
  * @return {function}
@@ -94,11 +52,32 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 		dispatch(updateRowColumnsNumberLoadingAction());
 		dispatch(enableSavingChangesStatusAction());
 
-		updateRowColumnsNumber(
-			dispatch,
-			fragmentEntryLinkIdsToRemove,
+		updatePageEditorLayoutData(
 			nextData,
-			state.segmentsExperienceId,
+			state.segmentsExperienceId
+		).then(
+			() => removeFragmentEntryLinks(
+				nextData,
+				fragmentEntryLinkIdsToRemove,
+				state.segmentsExperienceId
+			)
+		).then(
+			() => {
+				dispatch(
+					updateRowColumnsNumberSuccessAction(
+						fragmentEntryLinkIdsToRemove,
+						nextData
+					)
+				);
+
+				dispatch(updateLastSaveDateAction());
+				dispatch(disableSavingChangesStatusAction());
+			}
+		).catch(
+			() => {
+				dispatch(updateRowColumnsNumberErrorAction());
+				dispatch(disableSavingChangesStatusAction());
+			}
 		);
 	};
 }

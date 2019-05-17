@@ -41,8 +41,9 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			Path docrootDirPath, String dirName, boolean generateSourceMap,
-			Path portalCommonPath, String outputDirName, int precision,
+			Path docrootDirPath, String dirName, String[] excludes,
+			boolean generateSourceMap, Path portalCommonPath,
+			String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
@@ -50,6 +51,7 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 		args.add("--base-dir" + _separator + docrootDirPath.toAbsolutePath());
 		args.add("--dir-names" + _separator + dirName);
+		args.add("--excludes" + _separator + StringTestUtil.merge(excludes));
 		args.add("--generate-source-map" + _separator + generateSourceMap);
 		args.add("--output-dir" + _separator + outputDirName);
 		args.add(

@@ -8,6 +8,7 @@
 		<build-css
 			baseDir="${build.css.base.dir}"
 			dirNames="${build.css.dir.names}"
+			excludes="${build.css.excludes}"
 			generateSourceMap="${build.css.generate.source.maps}"
 			importDir="${build.css.import.dir}"
 			outputDirName="${build.css.output.dir.name}"

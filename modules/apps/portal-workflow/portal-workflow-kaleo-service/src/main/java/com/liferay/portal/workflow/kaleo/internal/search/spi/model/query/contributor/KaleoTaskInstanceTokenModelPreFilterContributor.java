@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
@@ -276,11 +277,16 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		}
 
 		if (searchByUserRoles) {
-			List<Long> roleIds = getSearchByUserRoleIds(
-				kaleoTaskInstanceTokenQuery.getUserId());
+			long userId = kaleoTaskInstanceTokenQuery.getUserId();
+
+			List<Long> roleIds = getSearchByUserRoleIds(userId);
 
 			Map<Long, Set<Long>> roleIdGroupIdsMap = getRoleIdGroupIdsMap(
 				kaleoTaskInstanceTokenQuery);
+
+			mapSiteMemberGroupId(
+				kaleoTaskInstanceTokenQuery.getCompanyId(), userId,
+				roleIdGroupIdsMap);
 
 			if (roleIds.isEmpty() && roleIdGroupIdsMap.isEmpty()) {
 				return;
@@ -509,6 +515,30 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		}
 
 		groupIds.add(groupId);
+	}
+
+	protected void mapSiteMemberGroupId(
+		long companyId, long userId, Map<Long, Set<Long>> roleIdGroupIdsMap) {
+
+		try {
+			Role siteMemberRole = roleLocalService.getRole(
+				companyId, RoleConstants.SITE_MEMBER);
+
+			Set<Long> groupIds = new TreeSet<>();
+
+			roleIdGroupIdsMap.put(siteMemberRole.getRoleId(), groupIds);
+
+			User user = userLocalService.getUserById(userId);
+
+			for (Long groupId : user.getGroupIds()) {
+				groupIds.add(groupId);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	@Reference

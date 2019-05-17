@@ -89,11 +89,12 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			});
 
-		Spec<Project> spec = targetPlatformExtension.getOnlyIf();
+		final Spec<Project> spec = targetPlatformExtension.getOnlyIf();
 
-		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
+		final Set<Project> subprojects =
+			targetPlatformExtension.getSubprojects();
 
-		for (Project subproject : subprojects) {
+		for (final Project subproject : subprojects) {
 			PluginContainer subprojectPluginContainer = subproject.getPlugins();
 
 			subprojectPluginContainer.withType(

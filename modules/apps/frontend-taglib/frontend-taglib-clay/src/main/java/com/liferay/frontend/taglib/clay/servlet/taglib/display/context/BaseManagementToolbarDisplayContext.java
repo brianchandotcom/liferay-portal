@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -112,6 +113,12 @@ public class BaseManagementToolbarDisplayContext
 		sortingURL.setParameter(
 			getOrderByTypeParam(),
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			sortingURL.setParameter(getOrderByColParam(), orderByCol);
+		}
 
 		return sortingURL.toString();
 	}

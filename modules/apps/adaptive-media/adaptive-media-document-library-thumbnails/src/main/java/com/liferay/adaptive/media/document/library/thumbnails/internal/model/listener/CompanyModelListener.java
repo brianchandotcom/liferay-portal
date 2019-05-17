@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.adaptive.media.document.library.thumbnails.internal.service;
+package com.liferay.adaptive.media.document.library.thumbnails.internal.model.listener;
 
 import com.liferay.adaptive.media.document.library.thumbnails.internal.util.AMCompanyThumbnailConfigurationInitializer;
 import com.liferay.adaptive.media.exception.AMImageConfigurationException;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalServiceWrapper;
-import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.model.ModelListener;
 
 import java.io.IOException;
 
@@ -30,31 +29,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Shuyang Zhou
  */
-@Component(immediate = true, service = ServiceWrapper.class)
-public class AMThumbnailsCompanyLocalServiceWrapper
-	extends CompanyLocalServiceWrapper {
-
-	public AMThumbnailsCompanyLocalServiceWrapper() {
-		super(null);
-	}
-
-	public AMThumbnailsCompanyLocalServiceWrapper(
-		CompanyLocalService companyLocalService) {
-
-		super(companyLocalService);
-	}
+@Component(immediate = true, service = ModelListener.class)
+public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
-	public Company addCompany(
-			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
-		throws PortalException {
-
-		Company company = super.addCompany(
-			webId, virtualHostname, mx, system, maxUsers, active);
-
+	public void onAfterCreate(Company company) throws ModelListenerException {
 		try {
 			_amCompanyThumbnailConfigurationInitializer.initializeCompany(
 				company);
@@ -67,12 +48,10 @@ public class AMThumbnailsCompanyLocalServiceWrapper
 					e);
 			}
 		}
-
-		return company;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AMThumbnailsCompanyLocalServiceWrapper.class);
+		CompanyModelListener.class);
 
 	@Reference
 	private AMCompanyThumbnailConfigurationInitializer

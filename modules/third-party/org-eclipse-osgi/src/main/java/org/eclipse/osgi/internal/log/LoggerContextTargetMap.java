@@ -129,6 +129,11 @@ public class LoggerContextTargetMap {
 		} else {
 			matching = qualifiedNameToTargets.get(loggerContext.getName());
 		}
+
+		if (matching == null) {
+			return;
+		}
+
 		for (Bundle bundle : matching) {
 			ExtendedLogServiceImpl logService = logServices.get(bundle);
 			if (logService != null) {
@@ -153,3 +158,4 @@ public class LoggerContextTargetMap {
 		return getRootLoggerContext();
 	}
 }
+/* @generated */

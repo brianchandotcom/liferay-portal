@@ -14,6 +14,7 @@
 
 package com.liferay.talend.utils;
 
+import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.exception.URIPathException;
 
@@ -46,7 +47,7 @@ public class URIUtils {
 				_log.debug("Query condition was empty!");
 			}
 
-			return getURI(resourceURL);
+			return toURI(resourceURL);
 		}
 
 		return updateWithQueryParameters(
@@ -71,7 +72,7 @@ public class URIUtils {
 	}
 
 	public static String getLastPathSegment(String url) {
-		URI uri = getURI(url);
+		URI uri = toURI(url);
 
 		String path = uri.getPath();
 
@@ -93,7 +94,23 @@ public class URIUtils {
 		return path.substring(pos + 1);
 	}
 
-	public static URI getURI(String url) {
+	public static URL getServerURL(
+		LiferayConnectionProperties liferayConnectionProperties) {
+
+		String apiSpecHref = liferayConnectionProperties.apiSpecURL.getValue();
+
+		URL apiSpecURL = toURL(apiSpecHref);
+
+		return extractServerURL(apiSpecURL);
+	}
+
+	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
+		return updateWithQueryParameters(
+			resourceURL,
+			Collections.singletonMap("pageSize", String.valueOf(limit)));
+	}
+
+	public static URI toURI(String url) {
 		try {
 			return new URI(url);
 		}
@@ -104,7 +121,7 @@ public class URIUtils {
 		}
 	}
 
-	public static URL getURL(String stringURL) {
+	public static URL toURL(String stringURL) {
 		URL url = null;
 
 		try {
@@ -117,17 +134,11 @@ public class URIUtils {
 		return url;
 	}
 
-	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
-		return updateWithQueryParameters(
-			resourceURL,
-			Collections.singletonMap("pageSize", String.valueOf(limit)));
-	}
-
 	public static URI updateWithQueryParameters(
 		String url, Map<String, String> queryParameters) {
 
 		if ((queryParameters == null) || queryParameters.isEmpty()) {
-			return getURI(url);
+			return toURI(url);
 		}
 
 		URI uri = null;

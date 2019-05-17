@@ -159,10 +159,7 @@ public class LiferaySourceOrSink
 
 	@Override
 	public List<NamedThing> getAvailableWebSites() throws IOException {
-		String webSitesEndpointURL = null;
-		List<NamedThing> webSitesList = new ArrayList<>();
-
-		URL serverURL = getServerURL();
+		URL serverURL = URIUtils.getServerURL(getEffectiveConnection(null));
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
 
@@ -174,6 +171,8 @@ public class LiferaySourceOrSink
 			myUserAccountURI.toASCIIString());
 
 		JsonNode siteBriefsJsonNode = myUserAccountJsonNode.path("siteBriefs");
+
+		List<NamedThing> webSitesList = new ArrayList<>();
 
 		if (!siteBriefsJsonNode.isArray() &&
 			(((ArrayNode)siteBriefsJsonNode).size() == 0)) {
@@ -398,17 +397,6 @@ public class LiferaySourceOrSink
 		}
 
 		return schemaNames;
-	}
-
-	public URL getServerURL() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveConnection(null);
-
-		String apiSpecHref = liferayConnectionProperties.apiSpecURL.getValue();
-
-		URL apiSpecURL = URIUtils.getURL(apiSpecHref);
-
-		return URIUtils.extractServerURL(apiSpecURL);
 	}
 
 	@Override

@@ -73,6 +73,21 @@ class MBPortlet extends PortletBase {
 				this.searchContainer_ = searchContainer;
 			}
 		);
+
+		let viewRemovedAttachmentsLink = document.getElementById('view-removed-attachments-link');
+
+		viewRemovedAttachmentsLink.addEventListener(
+			'click',
+			() => {
+				Liferay.Util.openWindow(
+					{
+						id: this.namespace + 'openRemovedPageAttachments',
+						title: Liferay.Language.get('removed-attachments'),
+						uri: this.viewTrashAttachmentsURL
+					}
+				);
+			}
+		);
 	}
 
 	/**
@@ -290,6 +305,17 @@ MBPortlet.STATE = {
 		value: {
 			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation')
 		}
+	},
+
+	/**
+	 * The URL to edit deleted attachments
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+
+	viewTrashAttachmentsURL: {
+		validator: core.isString
 	}
 };
 

@@ -44,4 +44,39 @@ definition {
 		);
 	}
 
+	test BB {
+		property test.run.environment = "B";
+	}
+
+	test  CC {
+		property test.run.environment = "C";
+	}
+
+	test DD  {
+		property test.run.environment = "D";
+	}
+
+	test EE{
+		property test.run.environment = "E";
+	}
+
+	test  FF{
+		property test.run.environment = "F";
+	}
+
+	test  GG
+	{
+		property test.run.environment = "G";
+	}
+
+	test HH
+	{
+		property test.run.environment = "H";
+	}
+
+	test	 II
+	{
+		property test.run.environment = "I";
+	}
+
 }

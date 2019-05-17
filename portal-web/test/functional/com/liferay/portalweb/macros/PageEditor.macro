@@ -44,9 +44,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "${portletName}");
+		AssertElementPresent(
+			key_fragmentName = "${portletName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
 	macro assertFragmentSidebarLoaded {

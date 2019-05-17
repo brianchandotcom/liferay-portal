@@ -101,7 +101,7 @@ definition {
 
 	@description = "This is a use case for LPS-95516."
 	@priority = "3"
-	test AssetWebContentNotBeDeletedOnLivingSite {
+	test AssetWebContentNotBeDeletedOnLiveViaSAP {
 		ProductMenu.gotoStagingSite();
 
 		ProductMenu.gotoPortlet(

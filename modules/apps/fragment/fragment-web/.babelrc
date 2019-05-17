@@ -1,5 +1,0 @@
-{
-    "ignore":[
-        "html2canvas**/flow-typed/myLibDef.js:"
-    ]
-}

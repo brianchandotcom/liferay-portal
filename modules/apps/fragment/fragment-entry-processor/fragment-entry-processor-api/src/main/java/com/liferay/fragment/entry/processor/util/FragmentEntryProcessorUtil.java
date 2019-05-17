@@ -30,7 +30,7 @@ public interface FragmentEntryProcessorUtil {
 
 	public Object getMappedValue(
 			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
 			Locale locale, long previewClassPK, int previewType)
 		throws PortalException;
 

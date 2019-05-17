@@ -64,7 +64,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 	@Override
 	public Object getMappedValue(
 			JSONObject jsonObject,
-			Map<Long, Map<String, Object>> assetEntriesFieldValues, String mode,
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues, String mode,
 			Locale locale, long previewClassPK, int previewType)
 		throws PortalException {
 
@@ -99,7 +99,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			return null;
 		}
 
-		Map<String, Object> fieldsValues = assetEntriesFieldValues.get(classPK);
+		Map<String, Object> fieldsValues = infoDisplaysFieldValues.get(classPK);
 
 		if (MapUtil.isEmpty(fieldsValues)) {
 			Object object = infoDisplayObjectProvider.getDisplayObject();
@@ -121,7 +121,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
 				object, locale);
 
-			assetEntriesFieldValues.put(classPK, fieldsValues);
+			infoDisplaysFieldValues.put(classPK, fieldsValues);
 		}
 
 		String fieldId = jsonObject.getString("fieldId");

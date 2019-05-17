@@ -151,7 +151,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		Map<Long, Map<String, Object>> assetEntriesFieldValues =
+		Map<Long, Map<String, Object>> infoDisplaysFieldValues =
 			new HashMap<>();
 
 		for (Element element : document.select("lfr-editable")) {
@@ -205,7 +205,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					editableValueJSONObject, assetEntriesFieldValues,
+					editableValueJSONObject, infoDisplaysFieldValues,
 					fragmentEntryProcessorContext.getMode(),
 					fragmentEntryProcessorContext.getLocale(),
 					fragmentEntryProcessorContext.getPreviewClassPK(),
@@ -265,7 +265,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element bodyElement = document.body();
 
-		if (!assetEntriesFieldValues.containsKey(
+		if (!infoDisplaysFieldValues.containsKey(
 				fragmentEntryProcessorContext.getPreviewClassPK())) {
 
 			return bodyElement.html();

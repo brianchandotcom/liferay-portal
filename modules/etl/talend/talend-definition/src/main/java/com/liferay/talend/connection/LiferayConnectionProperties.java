@@ -16,12 +16,9 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.properties.WebSiteProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.utils.PropertiesUtils;
-
-import java.io.IOException;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -42,6 +39,7 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
+import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -62,23 +60,14 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(FORM_WIZARD));
 	}
 
-	public void afterApiSpecURL() {
-		webSiteProperty.setHost(apiSpecURL.getValue());
-	}
-
 	public void afterReferencedComponent() {
-		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(Form.REFERENCE));
-	}
-
-	public void afterSiteFilter() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
 	public ValidationResult afterWebSiteProperty() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Website URL: " + webSiteProperty.getWebSiteURL());
+			_log.debug("Website ID: " + webSiteProperty.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -106,10 +95,10 @@ public class LiferayConnectionProperties
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.OK) {
 
-				try {
+				/*try {
 					webSiteName.setValue(
 						liferaySourceOrSinkRuntime.getActualWebSiteName(
-							webSiteProperty.getWebSiteURL()));
+							webSiteProperty.getValue()));
 				}
 				catch (IOException ioe) {
 					validationResult =
@@ -119,7 +108,7 @@ public class LiferayConnectionProperties
 						validationResult.getMessage());
 					validationResultMutable.setStatus(
 						validationResult.getStatus());
-				}
+				}*/
 			}
 		}
 
@@ -130,49 +119,41 @@ public class LiferayConnectionProperties
 	}
 
 	public ValidationResult beforeWebSiteProperty() {
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+		ValidatedSandboxRuntime validatedSandboxRuntime =
+			initializeSandboxedRuntime();
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		ValidationResultMutable validationResultMutable =
+			validatedSandboxRuntime.getValidationResultMutable();
 
-			liferaySourceOrSinkRuntime.initialize(
-				null, getReferencedConnectionProperties());
-
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable();
-
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
-
-			validationResultMutable.setStatus(validationResult.getStatus());
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-					List<NamedThing> webSites =
-						liferaySourceOrSinkRuntime.getAvailableWebSites();
-
-					if (webSites.isEmpty()) {
-						validationResultMutable.setMessage(
-							i18nMessages.getMessage(
-								"error.validation.websites"));
-						validationResultMutable.setStatus(
-							ValidationResult.Result.ERROR);
-					}
-
-					webSiteProperty.setPossibleNamedThingValues(webSites);
-				}
-				catch (Exception e) {
-					return ExceptionUtils.exceptionToValidationResult(e);
-				}
-			}
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
 			return validationResultMutable;
 		}
+
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+			validatedSandboxRuntime.getLiferaySourceOrSinkRuntime();
+
+		try {
+			List<NamedThing> webSites =
+				liferaySourceOrSinkRuntime.getAvailableWebSites();
+
+			if (webSites.isEmpty()) {
+				validationResultMutable.setMessage(
+					i18nMessages.getMessage("error.validation.websites"));
+				validationResultMutable.setStatus(
+					ValidationResult.Result.ERROR);
+			}
+
+			webSiteProperty.setPossibleNamedThingValues(webSites);
+		}
+		catch (Exception e) {
+			_log.error("Unable to fetch Websites", e);
+
+			return ExceptionUtils.exceptionToValidationResult(e);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -227,7 +208,6 @@ public class LiferayConnectionProperties
 		PropertiesUtils.setHidden(form, apiSpecURL, useOtherConnection);
 		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
 		PropertiesUtils.setHidden(form, password, useOtherConnection);
-		PropertiesUtils.setHidden(form, siteFilter, useOtherConnection);
 		PropertiesUtils.setHidden(form, userId, useOtherConnection);
 		PropertiesUtils.setHidden(form, webSiteName, useOtherConnection);
 		PropertiesUtils.setHidden(form, webSiteProperty, useOtherConnection);
@@ -235,11 +215,6 @@ public class LiferayConnectionProperties
 		if (!useOtherConnection && anonymousLogin.getValue()) {
 			PropertiesUtils.setHidden(form, userId, true);
 			PropertiesUtils.setHidden(form, password, true);
-		}
-
-		if (!useOtherConnection && !siteFilter.getValue()) {
-			PropertiesUtils.setHidden(form, webSiteName, true);
-			PropertiesUtils.setHidden(form, webSiteProperty, true);
 		}
 	}
 
@@ -299,8 +274,6 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(password);
 
-		mainForm.addRow(siteFilter);
-
 		Widget webSiteURLWidget = Widget.widget(webSiteProperty);
 
 		webSiteURLWidget.setCallAfter(true);
@@ -341,8 +314,6 @@ public class LiferayConnectionProperties
 		referenceForm.addRow(userId);
 
 		referenceForm.addRow(password);
-
-		referenceForm.addRow(siteFilter);
 
 		Widget webSitePropertyReferenceWidget = Widget.widget(webSiteProperty);
 
@@ -387,10 +358,8 @@ public class LiferayConnectionProperties
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.Basic);
 		password.setValue(_PASSWORD);
-		siteFilter.setValue(false);
 		userId.setValue(_USER_ID);
 		webSiteName.setValue("");
-		webSiteProperty.setHost(apiSpecURL.getValue());
 		webSiteProperty.setValue("");
 	}
 
@@ -453,14 +422,12 @@ public class LiferayConnectionProperties
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
-	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
-		"siteFilter");
 	public PresentationItem testConnection = new PresentationItem(
 		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
 	public Property<String> webSiteName = PropertyFactory.newString(
 		"webSiteName");
-	public WebSiteProperty webSiteProperty = new WebSiteProperty(
+	public StringProperty webSiteProperty = new StringProperty(
 		"webSiteProperty");
 
 	public enum LoginType {
@@ -479,9 +446,70 @@ public class LiferayConnectionProperties
 
 	}
 
+	public class ValidatedSandboxRuntime {
+
+		public ValidatedSandboxRuntime(
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
+			ValidationResultMutable validationResultMutable) {
+
+			if (validationResultMutable == null) {
+				throw new NullPointerException(
+					"validationResultMutable must not be null");
+			}
+
+			_liferaySourceOrSinkRuntime = liferaySourceOrSinkRuntime;
+			_validationResultMutable = validationResultMutable;
+		}
+
+		public LiferaySourceOrSinkRuntime getLiferaySourceOrSinkRuntime() {
+			return _liferaySourceOrSinkRuntime;
+		}
+
+		public ValidationResultMutable getValidationResultMutable() {
+			return _validationResultMutable;
+		}
+
+		private final LiferaySourceOrSinkRuntime _liferaySourceOrSinkRuntime;
+		private final ValidationResultMutable _validationResultMutable;
+
+	}
+
 	protected SandboxedInstance getRuntimeSandboxedInstance() {
 		return LiferayBaseComponentDefinition.getSandboxedInstance(
 			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
+	}
+
+	protected ValidatedSandboxRuntime initializeSandboxedRuntime() {
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable(
+					liferaySourceOrSinkRuntime.initialize(
+						null, getReferencedConnectionProperties()));
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.ERROR) {
+
+				return new ValidatedSandboxRuntime(
+					liferaySourceOrSinkRuntime, validationResultMutable);
+			}
+
+			validationResultMutable = new ValidationResultMutable(
+				liferaySourceOrSinkRuntime.validate(null));
+
+			return new ValidatedSandboxRuntime(
+				liferaySourceOrSinkRuntime, validationResultMutable);
+		}
+		catch (Exception e) {
+			return new ValidatedSandboxRuntime(
+				null, ExceptionUtils.exceptionToValidationResult(e));
+		}
 	}
 
 	protected static final I18nMessages i18nMessages;
@@ -496,7 +524,7 @@ public class LiferayConnectionProperties
 
 	private static final String _COMMERCE_CATALOG_OAS_URL =
 		"\"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
-			"/openapi.yaml\"";
+			"/openapi.json\"";
 
 	private static final int _CONNECT_TIMEOUT = 30;
 

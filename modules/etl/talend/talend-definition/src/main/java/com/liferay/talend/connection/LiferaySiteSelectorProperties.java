@@ -84,7 +84,6 @@ public class LiferaySiteSelectorProperties
 			if ((webSitePropertyStoredValues != null) &&
 				!webSitePropertyStoredValues.isEmpty()) {
 
-				connection.siteFilter.setValue(true);
 				SimpleNamedThing webSitePropertySimpleNamedThing =
 					webSitePropertyStoredValues.get(0);
 

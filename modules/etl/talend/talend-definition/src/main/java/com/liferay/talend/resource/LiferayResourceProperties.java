@@ -166,16 +166,8 @@ public class LiferayResourceProperties
 				try {
 					List<NamedThing> resourceNames = null;
 
-					if (liferayConnectionProperties.siteFilter.getValue()) {
-						resourceNames =
-							liferaySourceOrSinkRuntime.getResourceList(
-								liferayConnectionProperties.webSiteProperty.
-									getWebSiteURL());
-					}
-					else {
-						resourceNames =
-							liferaySourceOrSinkRuntime.getSchemaNames(null);
-					}
+					resourceNames = liferaySourceOrSinkRuntime.getResourceList(
+						liferayConnectionProperties.webSiteProperty.getValue());
 
 					if (resourceNames.isEmpty()) {
 						validationResultMutable.setMessage(
@@ -238,21 +230,11 @@ public class LiferayResourceProperties
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveLiferayConnectionProperties();
 
-		liferayConnectionProperties.webSiteProperty.setHost(
-			liferayConnectionProperties.apiSpecURL.getValue());
-
 		resourceProperty.setHost(
 			liferayConnectionProperties.apiSpecURL.getValue());
 
-		if (liferayConnectionProperties.siteFilter.getValue()) {
-			resourceProperty.setUriPrefix(
-				liferayConnectionProperties.webSiteProperty.getWebSiteURL());
-
-			return;
-		}
-
 		resourceProperty.setUriPrefix(
-			liferayConnectionProperties.apiSpecURL.getValue());
+			liferayConnectionProperties.webSiteProperty.getValue());
 	}
 
 	public ValidationResult validateValidateCondition() {

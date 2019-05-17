@@ -62,20 +62,20 @@ public class RESTClient {
 	}
 
 	public RESTClient(
-		String endpoint,
+		String target,
 		LiferayConnectionProperties liferayConnectionProperties) {
 
 		this(
-			endpoint, liferayConnectionProperties.password.getValue(),
+			target, liferayConnectionProperties.password.getValue(),
 			liferayConnectionProperties.userId.getValue(),
 			liferayConnectionProperties);
 	}
 
 	public Response executeDeleteRequest() {
-		WebTarget webTarget = _client.target(getEndpointURI());
+		WebTarget webTarget = _client.target(getTargetURI());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", getEndpoint());
+			_log.debug("Target: {}", getTarget());
 		}
 
 		Invocation.Builder builder = webTarget.request(
@@ -86,7 +86,7 @@ public class RESTClient {
 
 	public Response executeGetRequest() {
 		URI decoratedURI = URIUtils.updateWithQueryParameters(
-			getEndpointURI(), _getQueryParametersMap());
+			getTargetURI(), _getQueryParametersMap());
 
 		WebTarget webTarget = _client.target(decoratedURI);
 
@@ -100,11 +100,26 @@ public class RESTClient {
 		return _invokeBuilder(HttpMethod.GET, builder);
 	}
 
-	public Response executePostRequest(JsonNode jsonNode) {
-		WebTarget webTarget = _client.target(getEndpointURI());
+	public Response executePatchRequest(JsonNode jsonNode) {
+		WebTarget webTarget = _client.target(getTargetURI());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", getEndpoint());
+			_log.debug("Target: {}", getTarget());
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
+
+		return _invokeBuilder(HttpMethod.PATCH, builder, entity);
+	}
+
+	public Response executePostRequest(JsonNode jsonNode) {
+		WebTarget webTarget = _client.target(getTargetURI());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", getTarget());
 		}
 
 		Invocation.Builder builder = webTarget.request(
@@ -116,10 +131,10 @@ public class RESTClient {
 	}
 
 	public Response executePutRequest(JsonNode jsonNode) {
-		WebTarget webTarget = _client.target(getEndpointURI());
+		WebTarget webTarget = _client.target(getTargetURI());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", getEndpoint());
+			_log.debug("Target: {}", getTarget());
 		}
 
 		Invocation.Builder builder = webTarget.request(
@@ -130,22 +145,22 @@ public class RESTClient {
 		return _invokeBuilder(HttpMethod.PUT, builder, entity);
 	}
 
-	public String getEndpoint() {
+	public String getTarget() {
 		boolean forceHttps = _liferayConnectionProperties.forceHttps.getValue();
 
 		if (forceHttps) {
-			return _replaceHttpSchemeWithHttps(_endpoint);
+			return _replaceHttpSchemeWithHttps(_target);
 		}
 
-		return _endpoint;
+		return _target;
 	}
 
-	public URI getEndpointURI() {
+	public URI getTargetURI() {
 		try {
-			return new URI(getEndpoint());
+			return new URI(getTarget());
 		}
 		catch (URISyntaxException urise) {
-			_log.error("Unable to parse {} as a URI reference", getEndpoint());
+			_log.error("Unable to parse {} as a URI reference", getTarget());
 		}
 
 		return null;
@@ -153,7 +168,7 @@ public class RESTClient {
 
 	@Override
 	public String toString() {
-		return String.format("REST API Client [%s].", getEndpoint());
+		return String.format("REST API Client [%s].", getTarget());
 	}
 
 	protected static final String HTTP = "http://";
@@ -163,10 +178,10 @@ public class RESTClient {
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 
 	private RESTClient(
-		String endpoint, String password, String userId,
+		String target, String password, String userId,
 		LiferayConnectionProperties liferayConnectionProperties) {
 
-		_endpoint = endpoint;
+		_target = target;
 		_password = password;
 		_userId = userId;
 		_liferayConnectionProperties = liferayConnectionProperties;
@@ -278,14 +293,14 @@ public class RESTClient {
 
 		Response response = _handleResponse(httpMethod, builder, entity);
 
-		String messageEntity = response.readEntity(String.class);
-		int statusCode = response.getStatus();
-
 		Response.StatusType statusType = response.getStatusInfo();
 
 		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
 			return response;
 		}
+
+		String messageEntity = response.readEntity(String.class);
+		int statusCode = response.getStatus();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -344,9 +359,9 @@ public class RESTClient {
 		RESTClient.class);
 
 	private final Client _client;
-	private final String _endpoint;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
 	private final String _password;
+	private final String _target;
 	private final String _userId;
 
 }

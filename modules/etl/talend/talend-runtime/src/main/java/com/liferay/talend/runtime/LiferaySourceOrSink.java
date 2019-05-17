@@ -16,27 +16,30 @@ package com.liferay.talend.runtime;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
+import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
+
+import java.net.URI;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
 import org.apache.commons.lang3.StringUtils;
@@ -154,38 +157,38 @@ public class LiferaySourceOrSink
 		return webSiteNameJsonNode.asText();
 	}
 
-	public Map<String, String> getApioResourceEndpointsMap(
-		RuntimeContainer runtimeContainer) {
-
-		JsonNode jsonNode = doApioGetRequest(runtimeContainer);
-
-		if (jsonNode.size() == 0) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find any exposed resources");
-			}
-
-			return Collections.emptyMap();
-		}
-
-		return Collections.emptyMap();
-	}
-
 	@Override
 	public List<NamedThing> getAvailableWebSites() throws IOException {
 		String webSitesEndpointURL = null;
 		List<NamedThing> webSitesList = new ArrayList<>();
 
-		try {
-			webSitesEndpointURL = _getWebSitesEndpointURL();
-		}
-		catch (NoSuchElementException nsee) {
+		URL serverURL = getServerURL();
+
+		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
+
+		URI myUserAccountURI = uriBuilder.path(
+			"o/headless-admin-user/v1.0/my-user-account"
+		).build();
+
+		JsonNode myUserAccountJsonNode = doApioGetRequest(
+			myUserAccountURI.toASCIIString());
+
+		JsonNode siteBriefsJsonNode = myUserAccountJsonNode.path("siteBriefs");
+
+		if (!siteBriefsJsonNode.isArray() &&
+			(((ArrayNode)siteBriefsJsonNode).size() == 0)) {
+
 			return webSitesList;
 		}
 
-		JsonNode resourceCollectionJsonNode = doApioGetRequest(
-			webSitesEndpointURL);
+		for (JsonNode siteBriefJsonNode : siteBriefsJsonNode) {
+			JsonNode idJsonNode = siteBriefJsonNode.path("id");
+			JsonNode nameJsonNode = siteBriefJsonNode.path("name");
 
-		webSitesList.add(new SimpleNamedThing("siteID", "12345"));
+			webSitesList.add(
+				new SimpleNamedThing(
+					idJsonNode.asText(), nameJsonNode.asText()));
+		}
 
 		Comparator<NamedThing> comparator = Comparator.comparing(
 			NamedThing::getDisplayName);
@@ -330,14 +333,14 @@ public class LiferaySourceOrSink
 			restClient = new RESTClient(liferayConnectionProperties);
 		}
 		else {
-			String endpoint = restClient.getEndpoint();
+			String target = restClient.getTarget();
 
-			if (!endpoint.equals(
+			if (!target.equals(
 					liferayConnectionProperties.apiSpecURL.getValue())) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Endpoint has been changed, initialize a new " +
+						"Target URI has been changed, initialize a new " +
 							"RESTClient");
 				}
 
@@ -379,8 +382,8 @@ public class LiferaySourceOrSink
 
 		List<NamedThing> schemaNames = new ArrayList<>();
 
-		Map<String, String> resourceCollections = getApioResourceEndpointsMap(
-			runtimeContainer);
+		Map<String, String> resourceCollections = Collections.emptyMap();
+		//getApioResourceEndpointsMap(runtimeContainer);
 
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
@@ -397,18 +400,15 @@ public class LiferaySourceOrSink
 		return schemaNames;
 	}
 
-	@Override
-	public boolean hasWebSiteResource() {
-		Map<String, String> apioResourceEndpointsMap =
-			getApioResourceEndpointsMap(null);
+	public URL getServerURL() {
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
 
-		Set<Map.Entry<String, String>> resourceCollectionEntrySet =
-			apioResourceEndpointsMap.entrySet();
+		String apiSpecHref = liferayConnectionProperties.apiSpecURL.getValue();
 
-		Stream<Map.Entry<String, String>> stream =
-			resourceCollectionEntrySet.stream();
+		URL apiSpecURL = URIUtils.getURL(apiSpecHref);
 
-		return stream.anyMatch(entry -> true);
+		return URIUtils.extractServerURL(apiSpecURL);
 	}
 
 	@Override
@@ -424,11 +424,12 @@ public class LiferaySourceOrSink
 
 		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
-		getRestClient(runtimeContainer);
-
-		// TODO: Check against API spec
-
-		//validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+		try {
+			getRestClient(runtimeContainer);
+		}
+		catch (TalendRuntimeException tre) {
+			return ExceptionUtils.exceptionToValidationResult(tre);
+		}
 
 		return validationResultMutable;
 	}
@@ -440,7 +441,7 @@ public class LiferaySourceOrSink
 
 		boolean anonymousLogin =
 			liferayConnectionProperties.anonymousLogin.getValue();
-		String endpoint = liferayConnectionProperties.apiSpecURL.getValue();
+		String target = liferayConnectionProperties.apiSpecURL.getValue();
 		String password = liferayConnectionProperties.password.getValue();
 
 		String userId = liferayConnectionProperties.userId.getValue();
@@ -457,10 +458,10 @@ public class LiferaySourceOrSink
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		if ((endpoint == null) || endpoint.isEmpty()) {
+		if ((target == null) || target.isEmpty()) {
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage(
-					"error.validation.connection.endpoint"));
+					"error.validation.connection.apiSpecURL"));
 
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
@@ -509,6 +510,8 @@ public class LiferaySourceOrSink
 					"error.validation.connection.testconnection",
 					tre.getLocalizedMessage()));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			_log.error(tre.getMessage(), tre);
 		}
 		catch (ProcessingException pe) {
 			validationResultMutable.setMessage(
@@ -516,6 +519,17 @@ public class LiferaySourceOrSink
 					"error.validation.connection.testconnection.jersey",
 					pe.getLocalizedMessage()));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			_log.error(pe.getMessage(), pe);
+		}
+		catch (Throwable t) {
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
+					"error.validation.connection.testconnection.general",
+					t.getLocalizedMessage()));
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			_log.error(t.getMessage(), t);
 		}
 
 		return validationResultMutable;
@@ -537,25 +551,6 @@ public class LiferaySourceOrSink
 		liferayConnectionPropertiesProvider;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RESTClient restClient;
-
-	private String _getWebSitesEndpointURL() throws IOException {
-		Map<String, String> apioResourceEndpointsMap =
-			getApioResourceEndpointsMap(null);
-
-		Set<Map.Entry<String, String>> resourceCollectionEntrySet =
-			apioResourceEndpointsMap.entrySet();
-
-		Stream<Map.Entry<String, String>> stream =
-			resourceCollectionEntrySet.stream();
-
-		Optional<String> webSiteHrefOptional = stream.filter(
-			entry -> true
-		).map(
-			Map.Entry::getKey
-		).findFirst();
-
-		return webSiteHrefOptional.get();
-	}
 
 	private void _validateCredentials(
 		String userId, String password,

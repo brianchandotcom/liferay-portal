@@ -14,13 +14,17 @@
 
 package com.liferay.talend.utils;
 
+import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.exception.URIPathException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -47,6 +51,23 @@ public class URIUtils {
 
 		return updateWithQueryParameters(
 			resourceURL, Collections.singletonMap("filter", queryCondition));
+	}
+
+	public static URL extractServerURL(URL openAPISpecURL) {
+		String protocol = openAPISpecURL.getProtocol();
+		String host = openAPISpecURL.getHost();
+		int port = openAPISpecURL.getPort();
+
+		URL serverURL = null;
+
+		try {
+			serverURL = new URL(protocol, host, port, "");
+		}
+		catch (java.net.MalformedURLException murle) {
+			throw new MalformedURLException(murle);
+		}
+
+		return serverURL;
 	}
 
 	public static String getLastPathSegment(String url) {
@@ -81,6 +102,19 @@ public class URIUtils {
 
 			throw new RuntimeException(urise);
 		}
+	}
+
+	public static URL getURL(String stringURL) {
+		URL url = null;
+
+		try {
+			url = new URL(stringURL);
+		}
+		catch (java.net.MalformedURLException murle) {
+			throw new MalformedURLException(murle);
+		}
+
+		return url;
 	}
 
 	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
@@ -127,6 +161,77 @@ public class URIUtils {
 		return uri;
 	}
 
+	/**
+	 * Gets Liferay OpenAPI JSON specification location relative URL.
+	 *
+	 * Method strips protocol, hostname and port from URL that matches Liferay
+	 * REST service open API specification location pattern {@link
+	 * #_openAPISpecURLPattern}.
+	 *
+	 * @param  openAPISpecURL Liferay OpenAPI specification URL
+	 * @return endpoint location
+	 */
+	public String extractEndpointPathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		String serverInstanceURL = serverURLMatcher.group(1);
+
+		String endpoint = openAPISpecRef.substring(serverInstanceURL.length());
+
+		String endpointExtension = serverURLMatcher.group(7);
+
+		if (endpointExtension.equals("yaml")) {
+			endpoint = endpoint.replace(".yaml", ".json");
+		}
+
+		return endpoint;
+	}
+
+	public String extractJaxRSAppBasePathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		return serverURLMatcher.group(3);
+	}
+
+	public boolean isValidOpenAPISpecURL(String endpointURL) {
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
+
+		if (serverURLMatcher.matches()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void validateOpenAPISpecURL(String openAPISpecURL) {
+		if (!isValidOpenAPISpecURL(openAPISpecURL)) {
+			throw new MalformedURLException(
+				"Provided Open API Specification URL does not match pattern: " +
+					_openAPISpecURLPattern.pattern());
+		}
+	}
+
 	private static final Logger _log = LoggerFactory.getLogger(URIUtils.class);
+
+	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
+		"(https?://.+(:\\d+)?)(/o/(.+)/)(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
 
 }

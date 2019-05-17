@@ -46,8 +46,6 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 	public Schema getResourceSchemaByType(String resourceType)
 		throws IOException;
 
-	public boolean hasWebSiteResource();
-
 	public ValidationResult validateConnection(
 		LiferayConnectionPropertiesProvider
 			liferayConnectionPropertiesProvider);

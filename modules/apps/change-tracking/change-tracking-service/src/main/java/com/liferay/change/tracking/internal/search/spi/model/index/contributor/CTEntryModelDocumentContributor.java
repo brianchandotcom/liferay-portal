@@ -58,6 +58,8 @@ public class CTEntryModelDocumentContributor
 		document.addKeyword("modelClassPK", ctEntry.getModelClassPK());
 		document.addKeyword(
 			"modelResourcePrimKey", ctEntry.getModelResourcePrimKey());
+		document.addKeyword(
+			"originalCTCollectionId", ctEntry.getOriginalCTCollectionId());
 	}
 
 	private long[] _getCTCollectionIds(CTEntry ctEntry) {

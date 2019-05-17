@@ -17,12 +17,12 @@ package com.liferay.fragment.entry.processor.internal.util;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.VersionedAssetEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Iterator;
@@ -72,42 +73,55 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		}
 
 		long classNameId = jsonObject.getLong("classNameId");
+
+		String className = _portal.getClassName(classNameId);
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		if (infoDisplayContributor == null) {
+			return null;
+		}
+
 		long classPK = jsonObject.getLong("classPK");
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
-		if (assetEntry == null) {
+		if (infoDisplayObjectProvider == null) {
 			return null;
 		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
+			className);
 
-		if ((trashHandler != null) &&
-			trashHandler.isInTrash(assetEntry.getClassPK())) {
-
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
 			return null;
 		}
 
-		Map<String, Object> fieldsValues = assetEntriesFieldValues.get(
-			assetEntry.getEntryId());
+		Map<String, Object> fieldsValues = assetEntriesFieldValues.get(classPK);
 
 		if (MapUtil.isEmpty(fieldsValues)) {
-			InfoDisplayContributor infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					assetEntry.getClassName());
+			Object object = infoDisplayObjectProvider.getDisplayObject();
 
-			int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+			if (object instanceof AssetEntry) {
+				int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
-			if (previewClassPK == assetEntry.getEntryId()) {
-				versionType = previewType;
+				AssetEntry assetEntry = (AssetEntry)object;
+
+				if (previewClassPK == assetEntry.getEntryId()) {
+					versionType = previewType;
+
+					classPK = previewClassPK;
+				}
+
+				object = new VersionedAssetEntry(assetEntry, versionType);
 			}
 
 			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
-				new VersionedAssetEntry(assetEntry, versionType), locale);
+				object, locale);
 
-			assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
+			assetEntriesFieldValues.put(classPK, fieldsValues);
 		}
 
 		String fieldId = jsonObject.getString("fieldId");
@@ -235,9 +249,9 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		"segments-experience-id-";
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private Portal _portal;
 
 }

@@ -18,31 +18,23 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
-import com.liferay.document.library.opener.google.drive.web.internal.util.OAuth2Helper;
+import com.liferay.document.library.opener.google.drive.web.internal.util.GoogleDrivePortletRequestAuthorizationHelper;
 import com.liferay.document.library.opener.google.drive.web.internal.util.State;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,7 +63,8 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 					_portal.getHttpServletRequest(renderRequest)));
 
 			if (state == null) {
-				_performAuthorizationFlow(renderRequest, renderResponse);
+				_googleDrivePortletRequestAuthorizationHelper.
+					performAuthorizationFlow(renderRequest, renderResponse);
 			}
 			else {
 				renderRequest.setAttribute(
@@ -98,57 +91,15 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private String _getFailureURL(PortletRequest portletRequest)
-		throws PortalException {
-
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			portletRequest, _portal.getPortletId(portletRequest),
-			_portal.getControlPanelPlid(portletRequest),
-			PortletRequest.RENDER_PHASE);
-
-		return liferayPortletURL.toString();
-	}
-
-	private String _getSuccessURL(PortletRequest portletRequest) {
-		return _portal.getCurrentURL(
-			_portal.getHttpServletRequest(portletRequest));
-	}
-
-	private void _performAuthorizationFlow(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws IOException, PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String state = PwdGenerator.getPassword(5);
-
-		State.save(
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(portletRequest)),
-			themeDisplay.getUserId(), _getSuccessURL(portletRequest),
-			_getFailureURL(portletRequest), state);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(portletResponse);
-
-		httpServletResponse.sendRedirect(
-			_dlOpenerGoogleDriveManager.getAuthorizationURL(
-				themeDisplay.getCompanyId(), state,
-				_oAuth2Helper.getRedirectURI(portletRequest)));
-	}
-
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	@Reference
 	private DLOpenerGoogleDriveManager _googleDriveManager;
 
 	@Reference
-	private OAuth2Helper _oAuth2Helper;
+	private GoogleDrivePortletRequestAuthorizationHelper
+		_googleDrivePortletRequestAuthorizationHelper;
 
 	@Reference
 	private Portal _portal;

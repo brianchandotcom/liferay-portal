@@ -194,7 +194,8 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		List<Bundle> bundles = BundleManagerUtil.getBundles();
 
 		List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(
-			bundles, category, BundleStateConstants.getState(getState()));
+			bundles, category, BundleStateConstants.getState(getState()),
+			liferayPortletRequest.getLocale());
 
 		appDisplays = ListUtil.sort(
 			appDisplays, new AppDisplayComparator(getOrderByType()));

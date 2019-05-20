@@ -114,41 +114,34 @@ public class DLFileEntryAttachmentSearchTest {
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	private void _addPageWithAttachment(String name) throws Exception {
-		long userId = TestPropsValues.getUserId();
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), userId);
-
-		WikiNode node = WikiNodeLocalServiceUtil.addNode(
-			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), serviceContext);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
+
+		WikiNode node = WikiNodeLocalServiceUtil.addNode(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50), serviceContext);
 
 		String pageTitle = RandomTestUtil.randomString();
 
 		WikiPageLocalServiceUtil.addPage(
-			userId, node.getNodeId(), pageTitle, RandomTestUtil.randomString(),
-			"Summary", false, serviceContext);
+			serviceContext.getUserId(), node.getNodeId(), pageTitle,
+			RandomTestUtil.randomString(), "Summary", false, serviceContext);
 
 		File file = FileUtil.createTempFile(_CONTENT.getBytes());
 
-		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
-
 		WikiPageLocalServiceUtil.addPageAttachment(
-			userId, node.getNodeId(), pageTitle, name, file, mimeType);
+			serviceContext.getUserId(), node.getNodeId(), pageTitle, name, file,
+			MimeTypesUtil.getExtensionContentType("docx"));
 	}
 
 	private void _addFileEntry(String title) throws PortalException {
-		long userId = TestPropsValues.getUserId();
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLAppLocalServiceUtil.addFileEntry(
-			userId, _group.getGroupId(),
+			serviceContext.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(),

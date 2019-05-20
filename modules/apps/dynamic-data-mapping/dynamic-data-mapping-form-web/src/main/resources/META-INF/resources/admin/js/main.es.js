@@ -504,7 +504,6 @@ class Form extends Component {
 						/>
 					)}
 
-
 					<FormBuilder
 						fieldSetDefinitionURL={fieldSetDefinitionURL}
 						fieldSets={fieldSets}

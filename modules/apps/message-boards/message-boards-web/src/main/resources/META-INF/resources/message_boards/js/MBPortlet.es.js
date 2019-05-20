@@ -76,27 +76,29 @@ class MBPortlet extends PortletBase {
 
 		let viewRemovedAttachmentsLink = document.getElementById('view-removed-attachments-link');
 
-		viewRemovedAttachmentsLink.addEventListener(
-			'click',
-			() => {
-				Liferay.Util.openWindow(
-					{
-						id: this.namespace + 'openRemovedPageAttachments',
-						title: Liferay.Language.get('removed-attachments'),
-						uri: this.viewTrashAttachmentsURL,
-						dialog: {
-							on: {
-								visibleChange: (event) => {
-									if (!event.newVal) {
-										this.updateRemovedAttachments_();
+		if (viewRemovedAttachmentsLink) {
+			viewRemovedAttachmentsLink.addEventListener(
+				'click',
+				() => {
+					Liferay.Util.openWindow(
+						{
+							id: this.namespace + 'openRemovedPageAttachments',
+							title: Liferay.Language.get('removed-attachments'),
+							uri: this.viewTrashAttachmentsURL,
+							dialog: {
+								on: {
+									visibleChange: (event) => {
+										if (!event.newVal) {
+											this.updateRemovedAttachments_();
+										}
 									}
 								}
 							}
 						}
-					}
-				);
-			}
-		);
+					);
+				}
+			);
+		}
 	}
 
 	/**
@@ -179,9 +181,19 @@ class MBPortlet extends PortletBase {
 		let deleteURL = link.getAttribute('data-url');
 
 		fetch(
-			deleteURL
+			deleteURL,
+			{
+				credentials: 'include'
+			}
 		).then(
-			() => this.updateRemovedAttachments_()
+			() => {
+				let searchContainer = this.searchContainer_;
+
+				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
+				searchContainer.updateDataStore();
+
+				this.updateRemovedAttachments_();
+			}
 		);
 	}
 
@@ -192,12 +204,6 @@ class MBPortlet extends PortletBase {
 	 */
 
 	updateRemovedAttachments_() {
-		let searchContainer = this.searchContainer_;
-
-		searchContainer.getData(true).forEach(
-			(id, i) => searchContainer.deleteRow(i, id)
-		);
-
 		fetch(
 			this.getAttachmentsURL
 		).then(
@@ -205,16 +211,23 @@ class MBPortlet extends PortletBase {
 		).then(
 			(attachments) => {
 				if (attachments.active.length > 0) {
+					let searchContainer = this.searchContainer_;
+					let searchContainerData = searchContainer.getData();
+
 					attachments.active.forEach(
 						attachment => {
-							searchContainer.addRow(
-								[
-									attachment.title,
-									attachment.size,
-									`<a class="delete-attachment" data-rowId="${attachment.id}" data-url="${attachment.deleteURL}" href="javascript:;">${Liferay.Language.get('move-to-recycle-bin')}</a>`
-								],
-								attachment.id
-							);
+							if (searchContainerData.indexOf(attachment.id) == -1) {
+								searchContainer.addRow(
+									[
+										attachment.title,
+										attachment.size,
+										`<a class="delete-attachment" data-rowId="${attachment.id}" data-url="${attachment.deleteURL}" href="javascript:;">${Liferay.Language.get('move-to-recycle-bin')}</a>`
+									],
+									attachment.id
+								);
+
+								searchContainer.updateDataStore();
+							}
 						}
 					);
 				}

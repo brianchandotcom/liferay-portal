@@ -19,18 +19,21 @@ import com.liferay.frontend.image.editor.web.internal.constants.ImageEditorPortl
 import com.liferay.frontend.image.editor.web.internal.portlet.tracker.ImageEditorCapabilityTracker;
 import com.liferay.frontend.image.editor.web.internal.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityDescriptor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -153,6 +156,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(renderRequest.getLocale());
+
 		List<List<ImageEditorCapabilityDescriptor>>
 			imageEditorCapabilityDescriptorsList =
 				getImageEditorCapabilityDescriptorsList(
@@ -163,6 +169,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					imageEditorCapabilityDescriptorsList) {
 
 			Map<String, Object> context = new HashMap<>();
+
+			String category = StringPool.BLANK;
 
 			List<Map<String, Object>> controlContexts = new ArrayList<>();
 			String icon = StringPool.BLANK;
@@ -196,6 +204,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 				controlContext.put("variant", variant);
 
+				category = GetterUtil.getString(
+					properties.get(
+						"com.liferay.frontend.image.editor.capability." +
+							"category"));
+
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(renderRequest);
 
@@ -211,6 +224,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			context.put("controls", controlContexts);
 			context.put("icon", icon);
+			context.put("title", LanguageUtil.get(resourceBundle, category));
 
 			imageEditorToolsContexts.add(context);
 		}
@@ -227,5 +241,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

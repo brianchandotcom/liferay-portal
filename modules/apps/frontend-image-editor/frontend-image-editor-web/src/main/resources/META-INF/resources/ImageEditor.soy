@@ -44,19 +44,19 @@
 
 			<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
 				<div class="btn-group" role="group">
-					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;" title="{msg desc=""}undo{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link btn-monospaced {$history and $history.canReset ? '' : 'disabled'}" data-onclick="reset" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canReset ? '' : 'disabled'}" data-onclick="reset" href="javascript:;" title="{msg desc=""}restore{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link btn-monospaced {$history and $history.canRedo ? '' : 'disabled'}" data-onclick="redo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canRedo ? '' : 'disabled'}" data-onclick="redo" href="javascript:;" title="{msg desc=""}redo{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
 						</svg>
@@ -98,7 +98,7 @@
 	<div class="controls pt-2 text-center">
 		<ul class="d-flex justify-content-center list-inline">
 			{foreach $tool in $imageEditorCapabilities.tools}
-				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}">
+				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}" title="{$tool.title}">
 					{call .tool data="all"}
 						{param tool: $tool /}
 						{param toolIndex: index($tool) /}

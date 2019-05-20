@@ -46,8 +46,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -213,19 +213,19 @@ public class GroupFinderTest {
 
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		LayoutTestUtil.addLayout(parentGroup, false);
 
 		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.add(childGroup1);
+		_groups.addFirst(childGroup1);
 
 		LayoutTestUtil.addLayout(childGroup1, false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.add(childGroup2);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup2);
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 
@@ -251,19 +251,19 @@ public class GroupFinderTest {
 
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		LayoutTestUtil.addLayout(parentGroup, false);
 
 		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.add(childGroup1);
+		_groups.addFirst(childGroup1);
 
 		LayoutTestUtil.addLayout(childGroup1, false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.add(childGroup2);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup2);
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 
@@ -336,7 +336,7 @@ public class GroupFinderTest {
 	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<>();
+	private final LinkedList<Group> _groups = new LinkedList<>();
 
 	@DeleteAfterTestRun
 	private Organization _organization;

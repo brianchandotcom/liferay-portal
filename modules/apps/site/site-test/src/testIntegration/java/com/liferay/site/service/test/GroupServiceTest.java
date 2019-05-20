@@ -73,6 +73,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -127,11 +128,11 @@ public class GroupServiceTest {
 	public void testAddParentToStagedGroup() throws Exception {
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		Group childGroup = GroupTestUtil.addGroup();
 
-		_groups.add(childGroup);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup);
 
 		GroupTestUtil.enableLocalStaging(childGroup);
 
@@ -152,11 +153,11 @@ public class GroupServiceTest {
 	public void testAddStagedParentToStagedGroup() throws Exception {
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		Group childGroup = GroupTestUtil.addGroup();
 
-		_groups.add(childGroup);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup);
 
 		GroupTestUtil.enableLocalStaging(childGroup);
 
@@ -697,11 +698,11 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group);
+
 		Group scopeGroup = addScopeGroup(group);
 
-		_groups.add(scopeGroup);
-
-		_groups.add(group);
+		_groups.addFirst(scopeGroup);
 
 		themeDisplay.setPlid(scopeGroup.getClassPK());
 
@@ -772,13 +773,13 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group);
+
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
 		Group subgroup = GroupTestUtil.addGroup(group.getGroupId());
 
-		_groups.add(subgroup);
-
-		_groups.add(group);
+		_groups.addFirst(subgroup);
 
 		Assert.assertEquals("child-site", subgroup.getScopeLabel(themeDisplay));
 	}
@@ -818,11 +819,11 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group);
+
 		Group scopeGroup = addScopeGroup(group);
 
-		_groups.add(scopeGroup);
-
-		_groups.add(group);
+		_groups.addFirst(scopeGroup);
 
 		themeDisplay.setPlid(scopeGroup.getClassPK());
 
@@ -837,11 +838,11 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group);
+
 		Group subgroup = GroupTestUtil.addGroup(group.getGroupId());
 
-		_groups.add(subgroup);
-
-		_groups.add(group);
+		_groups.addFirst(subgroup);
 
 		themeDisplay.setScopeGroupId(subgroup.getGroupId());
 
@@ -904,11 +905,11 @@ public class GroupServiceTest {
 	public void testRemoveParentFromStagedGroup() throws Exception {
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		Group childGroup = GroupTestUtil.addGroup();
 
-		_groups.add(childGroup);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup);
 
 		GroupTestUtil.enableLocalStaging(childGroup);
 
@@ -937,11 +938,11 @@ public class GroupServiceTest {
 	public void testRemoveStagedParentFromStagedGroup() throws Exception {
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		_groups.addFirst(parentGroup);
+
 		Group childGroup = GroupTestUtil.addGroup();
 
-		_groups.add(childGroup);
-
-		_groups.add(parentGroup);
+		_groups.addFirst(childGroup);
 
 		GroupTestUtil.enableLocalStaging(childGroup);
 
@@ -972,6 +973,8 @@ public class GroupServiceTest {
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group);
+
 		Layout layout = LayoutTestUtil.addLayout(group);
 
 		Assert.assertFalse(layout.hasScopeGroup());
@@ -989,9 +992,7 @@ public class GroupServiceTest {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
 
-		_groups.add(scope);
-
-		_groups.add(group);
+		_groups.addFirst(scope);
 
 		Assert.assertFalse(scope.isRoot());
 		Assert.assertEquals(scope.getParentGroupId(), group.getGroupId());
@@ -1011,11 +1012,11 @@ public class GroupServiceTest {
 	public void testSelectFirstChildGroupAsParentSite() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group1);
+
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
-		_groups.add(group11);
-
-		_groups.add(group1);
+		_groups.addFirst(group11);
 
 		_groupService.updateGroup(
 			group1.getGroupId(), group11.getGroupId(), group1.getNameMap(),
@@ -1029,19 +1030,19 @@ public class GroupServiceTest {
 	public void testSelectLastChildGroupAsParentSite() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group1);
+
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		_groups.addFirst(group11);
 
 		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
 
+		_groups.addFirst(group111);
+
 		Group group1111 = GroupTestUtil.addGroup(group111.getGroupId());
 
-		_groups.add(group1111);
-
-		_groups.add(group111);
-
-		_groups.add(group11);
-
-		_groups.add(group1);
+		_groups.addFirst(group1111);
 
 		_groupService.updateGroup(
 			group1.getGroupId(), group1111.getGroupId(), group1.getNameMap(),
@@ -1087,15 +1088,15 @@ public class GroupServiceTest {
 	public void testSubsites() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
 
+		_groups.addFirst(group1);
+
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		_groups.addFirst(group11);
 
 		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
 
-		_groups.add(group111);
-
-		_groups.add(group11);
-
-		_groups.add(group1);
+		_groups.addFirst(group111);
 
 		Assert.assertTrue(group1.isRoot());
 		Assert.assertFalse(group11.isRoot());
@@ -1136,12 +1137,14 @@ public class GroupServiceTest {
 		throws Exception {
 
 		Group childGroup = GroupTestUtil.addGroup();
-		Group parentGroup1 = GroupTestUtil.addGroup();
-		Group parentGroup2 = GroupTestUtil.addGroup();
 
 		_groups.add(childGroup);
 
+		Group parentGroup1 = GroupTestUtil.addGroup();
+
 		_groups.add(parentGroup1);
+
+		Group parentGroup2 = GroupTestUtil.addGroup();
 
 		_groups.add(parentGroup2);
 
@@ -1318,7 +1321,7 @@ public class GroupServiceTest {
 	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<>();
+	private final LinkedList<Group> _groups = new LinkedList<>();
 
 	@Inject
 	private GroupService _groupService;

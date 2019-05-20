@@ -43,8 +43,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -72,14 +71,15 @@ public class GroupServicePermissionTest {
 	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
 
+		_groups.addFirst(_group1);
+
 		_group11 = GroupTestUtil.addGroup(_group1.getGroupId());
+
+		_groups.addFirst(_group11);
 
 		_group111 = GroupTestUtil.addGroup(_group11.getGroupId());
 
-		_groups.add(_group111);
-
-		_groups.add(_group11);
-		_groups.add(_group1);
+		_groups.addFirst(_group111);
 
 		setUpPrincipalThreadLocal();
 	}
@@ -344,7 +344,7 @@ public class GroupServicePermissionTest {
 	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<>();
+	private final LinkedList<Group> _groups = new LinkedList<>();
 
 	@Inject
 	private GroupService _groupService;

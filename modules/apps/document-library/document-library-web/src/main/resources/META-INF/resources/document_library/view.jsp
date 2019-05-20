@@ -105,7 +105,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 				<div class="sidenav-content">
 					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 						<c:if test='<%= !mvcRenderCommandName.equals("/document_library/search") %>'>
-							<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
+							<%@ include file="/document_library/breadcrumb.jspf" %>
 						</c:if>
 					</div>
 

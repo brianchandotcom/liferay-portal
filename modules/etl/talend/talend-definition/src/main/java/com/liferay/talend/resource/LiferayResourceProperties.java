@@ -167,7 +167,7 @@ public class LiferayResourceProperties
 					List<NamedThing> resourceNames = null;
 
 					resourceNames = liferaySourceOrSinkRuntime.getResourceList(
-						liferayConnectionProperties.webSiteProperty.getValue());
+						liferayConnectionProperties.siteId.getValue());
 
 					if (resourceNames.isEmpty()) {
 						validationResultMutable.setMessage(
@@ -234,7 +234,7 @@ public class LiferayResourceProperties
 			liferayConnectionProperties.apiSpecURL.getValue());
 
 		resourceProperty.setUriPrefix(
-			liferayConnectionProperties.webSiteProperty.getValue());
+			liferayConnectionProperties.siteId.getValue());
 	}
 
 	public ValidationResult validateValidateCondition() {

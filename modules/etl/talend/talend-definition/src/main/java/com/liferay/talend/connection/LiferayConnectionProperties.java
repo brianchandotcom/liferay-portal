@@ -66,21 +66,20 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public void afterWebSiteProperty() {
+	public void afterSiteId() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Website ID: " + webSiteProperty.getValue());
+			_log.debug("Site ID: " + siteId.getValue());
 		}
 
 		try {
-			webSiteName.setValue(
-				webSiteProperty.getPossibleValuesDisplayName(
-					webSiteProperty.getValue()));
+			siteName.setValue(
+				siteId.getPossibleValuesDisplayName(siteId.getValue()));
 		}
 		catch (TalendRuntimeException tre) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to determine the Website name for the id: " +
-						webSiteProperty.getValue());
+					"Unable to determine the Site name for the ID: " +
+						siteId.getValue());
 			}
 		}
 
@@ -88,7 +87,7 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public ValidationResult beforeWebSiteProperty() {
+	public ValidationResult beforeSiteId() {
 		ValidatedSandboxRuntime validatedSandboxRuntime =
 			initializeSandboxedRuntime();
 
@@ -110,15 +109,15 @@ public class LiferayConnectionProperties
 
 			if (webSites.isEmpty()) {
 				validationResultMutable.setMessage(
-					i18nMessages.getMessage("error.validation.websites"));
+					i18nMessages.getMessage("error.validation.sites"));
 				validationResultMutable.setStatus(
 					ValidationResult.Result.ERROR);
 			}
 
-			webSiteProperty.setPossibleNamedThingValues(webSites);
+			siteId.setPossibleNamedThingValues(webSites);
 		}
 		catch (Exception e) {
-			_log.error("Unable to fetch Websites", e);
+			_log.error("Unable to fetch Sites", e);
 
 			return ExceptionUtils.exceptionToValidationResult(e);
 		}
@@ -179,8 +178,8 @@ public class LiferayConnectionProperties
 		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
 		PropertiesUtils.setHidden(form, password, useOtherConnection);
 		PropertiesUtils.setHidden(form, userId, useOtherConnection);
-		PropertiesUtils.setHidden(form, webSiteName, useOtherConnection);
-		PropertiesUtils.setHidden(form, webSiteProperty, useOtherConnection);
+		PropertiesUtils.setHidden(form, siteName, useOtherConnection);
+		PropertiesUtils.setHidden(form, siteId, useOtherConnection);
 
 		if (!useOtherConnection && anonymousLogin.getValue()) {
 			PropertiesUtils.setHidden(form, userId, true);
@@ -242,22 +241,21 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(userId);
 
-		mainForm.addRow(password);
+		mainForm.addColumn(password);
 
-		Widget webSiteURLWidget = Widget.widget(webSiteProperty);
+		Widget siteIdWidget = Widget.widget(siteId);
 
-		webSiteURLWidget.setCallAfter(true);
-		webSiteURLWidget.setLongRunning(true);
-		webSiteURLWidget.setWidgetType(
-			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+		siteIdWidget.setCallAfter(true);
+		siteIdWidget.setLongRunning(true);
+		siteIdWidget.setWidgetType(Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		mainForm.addRow(webSiteURLWidget);
+		mainForm.addRow(siteIdWidget);
 
-		Widget webSiteNameWidget = Widget.widget(webSiteName);
+		Widget siteNameWidget = Widget.widget(siteName);
 
-		webSiteNameWidget.setReadonly(true);
+		siteNameWidget.setReadonly(true);
 
-		mainForm.addColumn(webSiteNameWidget);
+		mainForm.addColumn(siteNameWidget);
 
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
@@ -283,22 +281,22 @@ public class LiferayConnectionProperties
 
 		referenceForm.addRow(userId);
 
-		referenceForm.addRow(password);
+		referenceForm.addColumn(password);
 
-		Widget webSitePropertyReferenceWidget = Widget.widget(webSiteProperty);
+		Widget siteIdReferenceWidget = Widget.widget(siteId);
 
-		webSitePropertyReferenceWidget.setCallAfter(true);
-		webSitePropertyReferenceWidget.setLongRunning(true);
-		webSitePropertyReferenceWidget.setWidgetType(
+		siteIdReferenceWidget.setCallAfter(true);
+		siteIdReferenceWidget.setLongRunning(true);
+		siteIdReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		referenceForm.addRow(webSitePropertyReferenceWidget);
+		referenceForm.addRow(siteIdReferenceWidget);
 
-		Widget webSiteNameReferenceWidget = Widget.widget(webSiteName);
+		Widget siteNameReferenceWidget = Widget.widget(siteName);
 
-		webSiteNameReferenceWidget.setReadonly(true);
+		siteNameReferenceWidget.setReadonly(true);
 
-		referenceForm.addColumn(webSiteNameReferenceWidget);
+		referenceForm.addColumn(siteNameReferenceWidget);
 
 		refreshLayout(referenceForm);
 
@@ -329,8 +327,8 @@ public class LiferayConnectionProperties
 		loginType.setValue(LoginType.Basic);
 		password.setValue(_PASSWORD);
 		userId.setValue(_USER_ID);
-		webSiteName.setValue("");
-		webSiteProperty.setValue("");
+		siteName.setValue("");
+		siteId.setValue("");
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -392,13 +390,11 @@ public class LiferayConnectionProperties
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
+	public StringProperty siteId = new StringProperty("siteId");
+	public Property<String> siteName = PropertyFactory.newString("siteName");
 	public PresentationItem testConnection = new PresentationItem(
 		"testConnection");
 	public Property<String> userId = PropertyFactory.newString("userId");
-	public Property<String> webSiteName = PropertyFactory.newString(
-		"webSiteName");
-	public StringProperty webSiteProperty = new StringProperty(
-		"webSiteProperty");
 
 	public enum LoginType {
 

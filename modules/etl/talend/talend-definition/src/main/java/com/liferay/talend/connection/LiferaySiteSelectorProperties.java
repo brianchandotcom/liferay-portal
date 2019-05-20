@@ -16,7 +16,6 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.properties.WebSiteProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
+import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.properties.service.Repository;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
@@ -87,10 +87,10 @@ public class LiferaySiteSelectorProperties
 				SimpleNamedThing webSitePropertySimpleNamedThing =
 					webSitePropertyStoredValues.get(0);
 
-				connection.webSiteName.setValue(
+				connection.siteName.setValue(
 					webSitePropertySimpleNamedThing.getDisplayName());
 
-				connection.webSiteProperty.setValue(
+				connection.siteId.setValue(
 					webSitePropertySimpleNamedThing.getName());
 			}
 
@@ -146,8 +146,7 @@ public class LiferaySiteSelectorProperties
 					wizardWebSiteProperty.setPossibleNamedThingValues(
 						_webSites);
 
-					connection.webSiteProperty.setPossibleNamedThingValues(
-						_webSites);
+					connection.siteId.setPossibleNamedThingValues(_webSites);
 
 					Form form = getForm(Form.MAIN);
 
@@ -199,7 +198,7 @@ public class LiferaySiteSelectorProperties
 
 	public volatile LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
-	public WebSiteProperty wizardWebSiteProperty = new WebSiteProperty(
+	public StringProperty wizardWebSiteProperty = new StringProperty(
 		"wizardWebSiteProperty");
 
 	protected static final I18nMessages i18nMessages;

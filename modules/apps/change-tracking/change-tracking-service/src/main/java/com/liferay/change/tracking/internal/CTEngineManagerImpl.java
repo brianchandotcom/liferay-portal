@@ -18,7 +18,6 @@ import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
@@ -28,6 +27,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.change.tracking.settings.CTSettingsManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -106,7 +104,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					_updateRecentCTCollectionId(userId, ctCollectionId);
+					_ctSettingsManager.setUserCTSetting(
+						userId, _RECENT_CT_COLLECTION_ID,
+						String.valueOf(ctCollectionId));
 
 					return null;
 				});
@@ -191,6 +191,10 @@ public class CTEngineManagerImpl implements CTEngineManager {
 						companyId);
 
 					_productionCTCollections.remove(companyId);
+
+					_ctSettingsManager.setGlobalCTSetting(
+						companyId, _CHANGE_TRACKING_ENABLED,
+						String.valueOf(Boolean.FALSE));
 
 					return null;
 				});
@@ -350,24 +354,10 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public long getRecentCTCollectionId(long userId) {
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get user " + userId);
-			}
-
-			return 0L;
-		}
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				userId, !user.isDefaultUser());
-
 		Optional<CTCollection> ctCollectionOptional = getCTCollectionOptional(
 			GetterUtil.getLong(
-				portalPreferences.getValue(
-					CTPortletKeys.CHANGE_LISTS, _RECENT_CT_COLLECTION_ID)));
+				_ctSettingsManager.getUserCTSetting(
+					userId, _RECENT_CT_COLLECTION_ID)));
 
 		return ctCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -395,10 +385,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public boolean isChangeTrackingEnabled(long companyId) {
-		Optional<CTCollection> productionCTCollection =
-			getProductionCTCollectionOptional(companyId);
-
-		return productionCTCollection.isPresent();
+		return GetterUtil.getBoolean(
+			_ctSettingsManager.getGlobalCTSetting(
+				companyId, _CHANGE_TRACKING_ENABLED));
 	}
 
 	@Override
@@ -548,6 +537,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		_generateCTEntriesAndCTEntryAggregatesForAllCTConfigurations(
 			userId, productionCTCollection);
+
+		_ctSettingsManager.setGlobalCTSetting(
+			companyId, _CHANGE_TRACKING_ENABLED, String.valueOf(Boolean.TRUE));
 
 		checkoutCTCollection(
 			userId, productionCTCollection.getCtCollectionId());
@@ -805,29 +797,12 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return dynamicQuery;
 	}
 
-	private void _updateRecentCTCollectionId(long userId, long ctCollectionId) {
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get user " + userId);
-			}
-
-			return;
-		}
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				userId, !user.isDefaultUser());
-
-		portalPreferences.setValue(
-			CTPortletKeys.CHANGE_LISTS, _RECENT_CT_COLLECTION_ID,
-			String.valueOf(ctCollectionId));
-	}
-
 	private String _wildcard(String value) {
 		return CharPool.PERCENT + value + CharPool.PERCENT;
 	}
+
+	private static final String _CHANGE_TRACKING_ENABLED =
+		"changeTrackingEnabled";
 
 	private static final String _RECENT_CT_COLLECTION_ID =
 		"recentCTCollectionId";
@@ -849,6 +824,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private CTSettingsManager _ctSettingsManager;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

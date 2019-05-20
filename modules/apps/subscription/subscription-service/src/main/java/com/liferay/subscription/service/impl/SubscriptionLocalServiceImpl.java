@@ -440,6 +440,10 @@ public class SubscriptionLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
+		if (subscriptionPersistence.countByU_C(userId, classNameId) == 0) {
+			return false;
+		}
+
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			companyId, userId, classNameId, classPK);
 
@@ -466,6 +470,10 @@ public class SubscriptionLocalServiceImpl
 		long companyId, long userId, String className, long[] classPKs) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
+
+		if (subscriptionPersistence.countByU_C(userId, classNameId) == 0) {
+			return false;
+		}
 
 		int count = subscriptionPersistence.countByC_U_C_C(
 			companyId, userId, classNameId, classPKs);

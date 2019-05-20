@@ -67,7 +67,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			data.put("foldername", folderName);
 			%>
 
-			<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
+			<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-folder" />
 		</aui:button-row>
 
 		<%
@@ -135,13 +135,13 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="num-of-folders"
+					name="folders"
 					value="<%= String.valueOf(foldersCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="num-of-documents"
+					name="documents"
 					value="<%= String.valueOf(fileEntriesCount) %>"
 				/>
 
@@ -157,7 +157,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 						data.put("foldername", curFolder.getName());
 						%>
 
-						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+						<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
 					</c:if>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

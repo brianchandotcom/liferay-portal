@@ -54,6 +54,56 @@ public class URIUtils {
 			resourceURL, Collections.singletonMap("filter", queryCondition));
 	}
 
+	/**
+	 * Gets Liferay OpenAPI JSON specification location relative URL.
+	 *
+	 * Method strips protocol, hostname and port from URL that matches Liferay
+	 * REST service open API specification location pattern {@link
+	 * #_openAPISpecURLPattern}.
+	 *
+	 * @param  openAPISpecURL Liferay OpenAPI specification URL
+	 * @return endpoint location
+	 */
+	public static String extractEndpointPathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		String serverInstanceURL = serverURLMatcher.group(1);
+
+		String endpoint = openAPISpecRef.substring(serverInstanceURL.length());
+
+		String endpointExtension = serverURLMatcher.group(7);
+
+		if (endpointExtension.equals("yaml")) {
+			endpoint = endpoint.replace(".yaml", ".json");
+		}
+
+		return endpoint;
+	}
+
+	public static String extractJaxRSAppBasePathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		return serverURLMatcher.group(3);
+	}
+
 	public static URL extractServerURL(URL openAPISpecURL) {
 		String protocol = openAPISpecURL.getProtocol();
 		String host = openAPISpecURL.getHost();
@@ -102,6 +152,16 @@ public class URIUtils {
 		URL apiSpecURL = toURL(apiSpecHref);
 
 		return extractServerURL(apiSpecURL);
+	}
+
+	public static boolean isValidOpenAPISpecURL(String endpointURL) {
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
+
+		if (serverURLMatcher.matches()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static URI setPaginationLimitOnURL(String resourceURL, int limit) {
@@ -172,67 +232,7 @@ public class URIUtils {
 		return uri;
 	}
 
-	/**
-	 * Gets Liferay OpenAPI JSON specification location relative URL.
-	 *
-	 * Method strips protocol, hostname and port from URL that matches Liferay
-	 * REST service open API specification location pattern {@link
-	 * #_openAPISpecURLPattern}.
-	 *
-	 * @param  openAPISpecURL Liferay OpenAPI specification URL
-	 * @return endpoint location
-	 */
-	public String extractEndpointPathSegment(URL openAPISpecURL) {
-		String openAPISpecRef = openAPISpecURL.toExternalForm();
-
-		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
-			openAPISpecRef);
-
-		if (!serverURLMatcher.matches()) {
-			throw new MalformedURLException(
-				"Unable to extract Open API endpoint from URL " +
-					openAPISpecRef);
-		}
-
-		String serverInstanceURL = serverURLMatcher.group(1);
-
-		String endpoint = openAPISpecRef.substring(serverInstanceURL.length());
-
-		String endpointExtension = serverURLMatcher.group(7);
-
-		if (endpointExtension.equals("yaml")) {
-			endpoint = endpoint.replace(".yaml", ".json");
-		}
-
-		return endpoint;
-	}
-
-	public String extractJaxRSAppBasePathSegment(URL openAPISpecURL) {
-		String openAPISpecRef = openAPISpecURL.toExternalForm();
-
-		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
-			openAPISpecRef);
-
-		if (!serverURLMatcher.matches()) {
-			throw new MalformedURLException(
-				"Unable to extract Open API endpoint from URL " +
-					openAPISpecRef);
-		}
-
-		return serverURLMatcher.group(3);
-	}
-
-	public boolean isValidOpenAPISpecURL(String endpointURL) {
-		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
-
-		if (serverURLMatcher.matches()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public void validateOpenAPISpecURL(String openAPISpecURL) {
+	public static void validateOpenAPISpecURL(String openAPISpecURL) {
 		if (!isValidOpenAPISpecURL(openAPISpecURL)) {
 			throw new MalformedURLException(
 				"Provided Open API Specification URL does not match pattern: " +

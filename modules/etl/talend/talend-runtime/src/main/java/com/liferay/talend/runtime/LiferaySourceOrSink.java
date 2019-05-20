@@ -23,6 +23,7 @@ import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.utils.URIUtils;
 
@@ -418,6 +419,21 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
+		String apiSpecHref = liferayConnectionProperties.apiSpecURL.getValue();
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		try {
+			URIUtils.validateOpenAPISpecURL(apiSpecHref);
+		}
+		catch (MalformedURLException murle) {
+			validationResultMutable.setMessage(murle.getMessage());
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			return validationResultMutable;
+		}
+
 		boolean anonymousLogin =
 			liferayConnectionProperties.anonymousLogin.getValue();
 		String target = liferayConnectionProperties.apiSpecURL.getValue();
@@ -433,9 +449,6 @@ public class LiferaySourceOrSink
 				"Validate user ID: {}",
 				liferayConnectionProperties.userId.getValue());
 		}
-
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
 
 		if ((target == null) || target.isEmpty()) {
 			validationResultMutable.setMessage(

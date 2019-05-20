@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
@@ -48,7 +47,6 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.HashMap;
 
@@ -73,29 +71,27 @@ public class DLFileEntryAttachmentSearchTest {
 	public void testSearchIncludeAttachment() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 
-		WikiNode node = _addAttachment(keyword);
+		WikiNode node = _addPageWithAttachment(keyword);
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(keyword);
 
-		assertSearchIncludeAttachment(keyword);
+		_assertSearchIncludeAttachment(keyword);
 
 		WikiNodeLocalServiceUtil.deleteNode(node);
 
 		DLFileEntryLocalServiceUtil.deleteDLFileEntry(dlFileEntry);
 	}
 
-	protected void assertSearchIncludeAttachment(String keywords)
+	private void _assertSearchIncludeAttachment(String keywords)
 		throws Exception {
 
-		long groupId = TestPropsValues.getGroupId();
-
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			groupId);
+			TestPropsValues.getGroupId());
 
 		searchContext.setKeywords(keywords);
 
 		PermissionThreadLocal.setPermissionChecker(
-			permissionCheckerFactory.create(TestPropsValues.getUser()));
+			_permissionCheckerFactory.create(TestPropsValues.getUser()));
 
 		FacetedSearcher facetedSearcher =
 			_facetedSearcherManager.createFacetedSearcher();
@@ -112,12 +108,9 @@ public class DLFileEntryAttachmentSearchTest {
 	}
 
 	@Inject
-	protected IndexerRegistry indexerRegistry;
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
-	@Inject
-	protected PermissionCheckerFactory permissionCheckerFactory;
-
-	private WikiNode _addAttachment(String name) throws Exception {
+	private WikiNode _addPageWithAttachment(String name) throws Exception {
 		long groupId = TestPropsValues.getGroupId();
 		long userId = TestPropsValues.getUserId();
 
@@ -164,8 +157,7 @@ public class DLFileEntryAttachmentSearchTest {
 
 		return DLFileEntryLocalServiceUtil.updateStatus(
 			userId, dlFileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
-			new HashMap<String, Serializable>());
+			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
 	}
 
 	private static final String _CONTENT =

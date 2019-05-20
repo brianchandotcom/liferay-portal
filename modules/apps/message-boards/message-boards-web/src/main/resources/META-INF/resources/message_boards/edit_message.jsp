@@ -464,22 +464,24 @@ if (portletTitleBasedNavigation) {
 			},
 			currentAction: '<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
 
-			<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
-				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			</portlet:resourceURL>
+			<c:if test="<%= message != null %>">
+				<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
+					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+				</portlet:resourceURL>
 
-			getAttachmentsURL: '<%= getAttachmentsURL %>',
+				getAttachmentsURL: '<%= getAttachmentsURL %>',
+
+				<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+				</portlet:renderURL>
+
+				viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>',
+			</c:if>
 
 			namespace: '<portlet:namespace />',
-			rootNode: '#<portlet:namespace />mbEditPageContainer',
-
-			<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			</portlet:renderURL>
-
-			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>'
+			rootNode: '#<portlet:namespace />mbEditPageContainer'
 		}
 	);
 </aui:script>

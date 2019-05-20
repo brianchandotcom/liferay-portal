@@ -16,11 +16,12 @@ package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
@@ -38,17 +39,13 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-
-import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -73,13 +70,13 @@ public class DLFileEntryAttachmentSearchTest {
 
 		WikiNode node = _addPageWithAttachment(keyword);
 
-		DLFileEntry dlFileEntry = _addDLFileEntry(keyword);
+		FileEntry fileEntry = _addFileEntry(keyword);
 
 		_assertSearchIncludeAttachment(keyword);
 
 		WikiNodeLocalServiceUtil.deleteNode(node);
 
-		DLFileEntryLocalServiceUtil.deleteDLFileEntry(dlFileEntry);
+		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
 	private void _assertSearchIncludeAttachment(String keywords)
@@ -139,25 +136,18 @@ public class DLFileEntryAttachmentSearchTest {
 		return node;
 	}
 
-	private DLFileEntry _addDLFileEntry(String name) throws PortalException {
+	private FileEntry _addFileEntry(String title) throws PortalException {
 		long groupId = TestPropsValues.getGroupId();
 		long userId = TestPropsValues.getUserId();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			userId, groupId, groupId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, name,
-			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(_CONTENT.getBytes()), 0, serviceContext);
-
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
-
-		return DLFileEntryLocalServiceUtil.updateStatus(
-			userId, dlFileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
+		return DLAppLocalServiceUtil.addFileEntry(
+			userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(),
+			serviceContext);
 	}
 
 	private static final String _CONTENT =

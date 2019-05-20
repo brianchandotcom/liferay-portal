@@ -223,7 +223,7 @@ class MBPortlet extends PortletBase {
 										attachment.size,
 										`<a class="delete-attachment" data-rowId="${attachment.id}" data-url="${attachment.deleteURL}" href="javascript:;">${Liferay.Language.get('move-to-recycle-bin')}</a>`
 									],
-									attachment.id
+									attachment.id.toString()
 								);
 
 								searchContainer.updateDataStore();

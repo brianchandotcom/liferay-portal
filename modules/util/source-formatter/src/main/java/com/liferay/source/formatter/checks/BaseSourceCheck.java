@@ -125,7 +125,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				hasSubdirectoryAttributeValue = true;
 			}
 
-			if (!absolutePath.startsWith(fileLocation)) {
+			if (!absolutePath.startsWith(fileLocation) &&
+				!fileLocation.equals(baseDirNameAbsolutePath)) {
+
 				continue;
 			}
 

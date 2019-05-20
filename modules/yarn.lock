@@ -3802,7 +3802,7 @@ clay-list@2.15.0, clay-list@^2.15.0:
     metal-state "^2.16.0"
     metal-web-component "^2.16.0"
 
-clay-loading-indicator@^2.15.0:
+clay-loading-indicator@2.15.0, clay-loading-indicator@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/clay-loading-indicator/-/clay-loading-indicator-2.15.0.tgz#e9125fca760858dfc7c6d4d64c9578366a8fb914"
   integrity sha512-/XDljZG+z+xemTteDBHWDI/s7PjOiJ/UWHC7c7BNnC1fZEhY6AIRG7c2mmSPNu0Rw0MfmoJykInZa4jl8ZnY+A==
@@ -10450,10 +10450,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.7.0.tgz#4aa38294943a9a7a9270568f6d81c0febbb389d0"
-  integrity sha512-j+a5ba9eihPv/Wfp3oZ7DtC/JD63KPfnvfPwWiRCkc5TfYCQKQwpXDaYX1M+A6DseqHLZB/z2wFD2Zbe6u8iPQ==
+liferay-npm-scripts@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.7.1.tgz#4a5c0b781a21702b4d04a9aa2430348e1e405da6"
+  integrity sha512-dz+185QZsrYfGWmu0iAelsU9ydSwQSnb/9306m89SYZtq9zLbKm0sYW/B+av2HEbiPa1ltOcn8wKLVeIINECkQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"

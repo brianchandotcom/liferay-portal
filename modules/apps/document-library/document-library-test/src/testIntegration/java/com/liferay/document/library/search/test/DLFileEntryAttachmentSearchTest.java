@@ -46,14 +46,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+
+import java.io.File;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.File;
 
 /**
  * @author Istvan Sajtos
@@ -85,6 +86,41 @@ public class DLFileEntryAttachmentSearchTest {
 		_assertSearchIncludeAttachment(keyword);
 	}
 
+	private void _addFileEntry(String title) throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLAppLocalServiceUtil.addFileEntry(
+			serviceContext.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(),
+			serviceContext);
+	}
+
+	private void _addPageWithAttachment(String name) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setCommand(Constants.ADD);
+
+		WikiNode node = WikiNodeLocalServiceUtil.addNode(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50), serviceContext);
+
+		String pageTitle = RandomTestUtil.randomString();
+
+		WikiPageLocalServiceUtil.addPage(
+			serviceContext.getUserId(), node.getNodeId(), pageTitle,
+			RandomTestUtil.randomString(), "Summary", false, serviceContext);
+
+		File file = FileUtil.createTempFile(_CONTENT.getBytes());
+
+		WikiPageLocalServiceUtil.addPageAttachment(
+			serviceContext.getUserId(), node.getNodeId(), pageTitle, name, file,
+			MimeTypesUtil.getExtensionContentType("docx"));
+	}
+
 	private void _assertSearchIncludeAttachment(String keywords)
 		throws Exception {
 
@@ -110,44 +146,6 @@ public class DLFileEntryAttachmentSearchTest {
 		Assert.assertEquals(hits2.toString(), 2, hits2.getLength());
 	}
 
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	private void _addPageWithAttachment(String name) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-
-		WikiNode node = WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), serviceContext);
-
-		String pageTitle = RandomTestUtil.randomString();
-
-		WikiPageLocalServiceUtil.addPage(
-			serviceContext.getUserId(), node.getNodeId(), pageTitle,
-			RandomTestUtil.randomString(), "Summary", false, serviceContext);
-
-		File file = FileUtil.createTempFile(_CONTENT.getBytes());
-
-		WikiPageLocalServiceUtil.addPageAttachment(
-			serviceContext.getUserId(), node.getNodeId(), pageTitle, name, file,
-			MimeTypesUtil.getExtensionContentType("docx"));
-	}
-
-	private void _addFileEntry(String title) throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		DLAppLocalServiceUtil.addFileEntry(
-			serviceContext.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
-			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(),
-			serviceContext);
-	}
-
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
@@ -156,5 +154,8 @@ public class DLFileEntryAttachmentSearchTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

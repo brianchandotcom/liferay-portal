@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -41,6 +39,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
@@ -72,6 +71,8 @@ public class DLFileEntryAttachmentSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -79,11 +80,11 @@ public class DLFileEntryAttachmentSearchTest {
 	public void testSearchIncludeAttachment() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 
+		_addFileEntry(keyword);
 		_addPageWithAttachment(keyword);
 
-		_addFileEntry(keyword);
-
-		_assertSearchIncludeAttachment(keyword);
+		Assert.assertEquals(1, _searchCount(keyword, false));
+		Assert.assertEquals(2, _searchCount(keyword, true));
 	}
 
 	private void _addFileEntry(String title) throws PortalException {
@@ -121,29 +122,21 @@ public class DLFileEntryAttachmentSearchTest {
 			MimeTypesUtil.getExtensionContentType("docx"));
 	}
 
-	private void _assertSearchIncludeAttachment(String keywords)
+	private int _searchCount(String keywords, boolean includeAttachments)
 		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
 
+		searchContext.setIncludeAttachments(includeAttachments);
 		searchContext.setKeywords(keywords);
-
-		PermissionThreadLocal.setPermissionChecker(
-			_permissionCheckerFactory.create(TestPropsValues.getUser()));
 
 		FacetedSearcher facetedSearcher =
 			_facetedSearcherManager.createFacetedSearcher();
 
-		Hits hits1 = facetedSearcher.search(searchContext);
+		Hits hits = facetedSearcher.search(searchContext);
 
-		Assert.assertEquals(hits1.toString(), 1, hits1.getLength());
-
-		searchContext.setIncludeAttachments(true);
-
-		Hits hits2 = facetedSearcher.search(searchContext);
-
-		Assert.assertEquals(hits2.toString(), 2, hits2.getLength());
+		return hits.getLength();
 	}
 
 	private static final String _CONTENT =
@@ -154,8 +147,5 @@ public class DLFileEntryAttachmentSearchTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

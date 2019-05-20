@@ -36,6 +36,19 @@ public interface AsahFaroBackendClient {
 	public String getDataSourceId();
 
 	/**
+	 * Returns an {@link Individual} who contains the provided
+	 * <code>individualPK</code> for the data source
+	 * {@link #getDataSourceId()}.
+	 *
+	 * @param individualPK the individual PK
+	 * @return an {@link Individual} that matches the
+	 * {@link #getDataSourceId()}/<code>individualPK</code> otherwise a null
+	 * is returned
+	 * @review
+	 */
+	public Individual getIndividual(String individualPK);
+
+	/**
 	 * Returns a {@link Results} of {@link Individual} that are members of an
 	 * individual segment.
 	 *

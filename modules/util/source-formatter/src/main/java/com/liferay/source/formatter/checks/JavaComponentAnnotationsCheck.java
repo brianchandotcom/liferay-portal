@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -40,37 +39,19 @@ import java.util.regex.Pattern;
  */
 public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
-	public void setCheckConfigurationPolicyAttribute(
-		String checkConfigurationPolicyAttribute) {
-
-		_checkConfigurationPolicyAttribute = GetterUtil.getBoolean(
-			checkConfigurationPolicyAttribute);
-	}
-
-	public void setCheckMismatchedServiceAttribute(
-		String checkMismatchedServiceAttribute) {
-
-		_checkMismatchedServiceAttribute = GetterUtil.getBoolean(
-			checkMismatchedServiceAttribute);
-	}
-
-	public void setCheckSelfRegistration(String checkSelfRegistration) {
-		_checkSelfRegistration = GetterUtil.getBoolean(checkSelfRegistration);
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, (JavaClass)javaTerm);
+		return formatAnnotations(fileName, absolutePath, (JavaClass)javaTerm);
 	}
 
 	@Override
 	protected String formatAnnotation(
-		String fileName, JavaClass javaClass, String annotation,
-		String indent) {
+		String fileName, String absolutePath, JavaClass javaClass,
+		String annotation, String indent) {
 
 		if (!annotation.contains("@Component")) {
 			return annotation;
@@ -78,9 +59,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		annotation = _formatAnnotationParameterProperties(annotation);
 		annotation = _formatConfigurationAttributes(
-			fileName, javaClass, annotation);
+			fileName, absolutePath, javaClass, annotation);
 		annotation = _formatServiceAttribute(
-			fileName, javaClass.getName(), annotation,
+			fileName, absolutePath, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
 
 		return annotation;
@@ -203,7 +184,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatConfigurationAttributes(
-		String fileName, JavaClass javaClass, String annotation) {
+		String fileName, String absolutePath, JavaClass javaClass,
+		String annotation) {
 
 		if (_getAttributeValue(annotation, "configurationPid") != null) {
 			return annotation;
@@ -226,7 +208,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			}
 		}
 
-		if (!_checkConfigurationPolicyAttribute) {
+		if (!isAttributeValue(
+				"checkConfigurationPolicyAttribute", absolutePath)) {
+
 			return annotation;
 		}
 
@@ -258,8 +242,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatServiceAttribute(
-		String fileName, String className, String annotation,
-		List<String> implementedClassNames) {
+		String fileName, String absolutePath, String className,
+		String annotation, List<String> implementedClassNames) {
 
 		String expectedServiceAttributeValue =
 			_getExpectedServiceAttributeValue(implementedClassNames);
@@ -272,17 +256,22 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				annotation, "service", expectedServiceAttributeValue);
 		}
 
-		if (!_checkMismatchedServiceAttribute && !_checkSelfRegistration) {
+		boolean checkMismatchedServiceAttribute = isAttributeValue(
+			"checkMismatchedServiceAttribute", absolutePath);
+		boolean checkSelfRegistration = isAttributeValue(
+			"checkSelfRegistration", absolutePath);
+
+		if (!checkMismatchedServiceAttribute && !checkSelfRegistration) {
 			return annotation;
 		}
 
-		if (_checkMismatchedServiceAttribute &&
+		if (checkMismatchedServiceAttribute &&
 			!serviceAttributeValue.equals(expectedServiceAttributeValue)) {
 
 			addMessage(fileName, "Mismatched @Component 'service' attribute");
 		}
 
-		if (_checkSelfRegistration &&
+		if (checkSelfRegistration &&
 			serviceAttributeValue.matches(".*\\b" + className + "\\.class.*")) {
 
 			addMessage(
@@ -390,10 +379,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
-
-	private boolean _checkConfigurationPolicyAttribute;
-	private boolean _checkMismatchedServiceAttribute;
-	private boolean _checkSelfRegistration;
 
 	private class AnnotationParameterPropertyComparator
 		extends NaturalOrderStringComparator {

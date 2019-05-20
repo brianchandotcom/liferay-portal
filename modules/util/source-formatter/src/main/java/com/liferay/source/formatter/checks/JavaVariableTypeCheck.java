@@ -39,11 +39,6 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return true;
 	}
 
-	public void setImmutableFieldTypes(String immutableFieldTypes) {
-		_immutableFieldTypes = ListUtil.fromString(
-			immutableFieldTypes, StringPool.COMMA);
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
@@ -95,7 +90,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 			JavaClass parentJavaClass = javaClass.getParentJavaClass();
 
 			if ((parentJavaClass == null) && !javaVariable.isStatic() &&
-				(_isImmutableField(fieldType) ||
+				(_isImmutableField(fieldType, absolutePath) ||
 				 fieldType.matches("Pattern(\\[\\])*") ||
 				 (fieldType.equals("Log") &&
 				  !isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)))) {
@@ -338,8 +333,11 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return true;
 	}
 
-	private boolean _isImmutableField(String fieldType) {
-		for (String immutableFieldType : _immutableFieldTypes) {
+	private boolean _isImmutableField(String fieldType, String absolutePath) {
+		List<String> immutableFieldTypes = getAttributeValues(
+			"immutableFieldTypes", absolutePath);
+
+		for (String immutableFieldType : immutableFieldTypes) {
 			if (fieldType.equals(immutableFieldType) ||
 				fieldType.startsWith(immutableFieldType + "[]")) {
 
@@ -354,6 +352,5 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 	private List<String> _annotationsExclusions;
 	private Map<String, String> _defaultPrimitiveValues;
-	private List<String> _immutableFieldTypes = new ArrayList<>();
 
 }

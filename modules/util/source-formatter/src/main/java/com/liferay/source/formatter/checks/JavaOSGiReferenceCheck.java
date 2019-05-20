@@ -51,14 +51,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return true;
 	}
 
-	public void setServiceReferenceUtilClassNames(
-		String serviceReferenceUtilClassNames) {
-
-		Collections.addAll(
-			_serviceReferenceUtilClassNames,
-			StringUtil.split(serviceReferenceUtilClassNames));
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -94,8 +86,11 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			}
 		}
 
+		List<String> serviceReferenceUtilClassNames = getAttributeValues(
+			"serviceReferenceUtilClassNames", absolutePath);
+
 		for (String serviceReferenceUtilClassName :
-				_serviceReferenceUtilClassNames) {
+				serviceReferenceUtilClassNames) {
 
 			_checkUtilUsage(
 				fileName, content, serviceReferenceUtilClassName,
@@ -501,7 +496,5 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
 	private List<String> _serviceProxyFactoryUtilClassNames;
-	private final List<String> _serviceReferenceUtilClassNames =
-		new ArrayList<>();
 
 }

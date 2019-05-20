@@ -29,16 +29,12 @@ import java.io.IOException;
  */
 public class CopyrightCheck extends BaseFileCheck {
 
-	public void setCopyrightFileName(String copyrightFileName) {
-		_copyrightFileName = copyrightFileName;
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String copyright = _getCopyright();
+		String copyright = _getCopyright(absolutePath);
 
 		if (Validator.isNull(copyright)) {
 			return content;
@@ -121,13 +117,18 @@ public class CopyrightCheck extends BaseFileCheck {
 		return _commercialCopyright;
 	}
 
-	private synchronized String _getCopyright() throws IOException {
+	private synchronized String _getCopyright(String absolutePath)
+		throws IOException {
+
 		if (_copyright != null) {
 			return _copyright;
 		}
 
+		String copyRightFileName = getAttributeValue(
+			"copyrightFileName", absolutePath, "copyright.txt");
+
 		_copyright = getContent(
-			_copyrightFileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+			copyRightFileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (Validator.isNotNull(_copyright)) {
 			return _copyright;
@@ -171,6 +172,5 @@ public class CopyrightCheck extends BaseFileCheck {
 
 	private String _commercialCopyright;
 	private String _copyright;
-	private String _copyrightFileName = "copyright.txt";
 
 }

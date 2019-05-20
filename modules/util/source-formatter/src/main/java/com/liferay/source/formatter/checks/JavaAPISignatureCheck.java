@@ -29,8 +29,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,20 +44,6 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
-	}
-
-	public void setIllegalAPIParameterTypes(String illegalAPIParameterTypes) {
-		Collections.addAll(
-			_illegalAPIParameterTypes,
-			StringUtil.split(illegalAPIParameterTypes));
-	}
-
-	public void setIllegalAPIServiceParameterTypes(
-		String illegalAPIServiceParameterTypes) {
-
-		Collections.addAll(
-			_illegalAPIServiceParameterTypes,
-			StringUtil.split(illegalAPIServiceParameterTypes));
 	}
 
 	@Override
@@ -88,6 +72,11 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
+		List<String> illegalAPIParameterTypes = getAttributeValues(
+			"illegalAPIParameterTypes", absolutePath);
+		List<String> illegalAPIServiceParameterTypes = getAttributeValues(
+			"illegalAPIServiceParameterTypes", absolutePath);
+
 		String methodName = javaTerm.getName();
 
 		List<JavaParameter> parameters = signature.getParameters();
@@ -99,7 +88,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			if (_illegalAPIServiceParameterTypes.contains(parameterType) &&
+			if (illegalAPIServiceParameterTypes.contains(parameterType) &&
 				!absolutePath.contains("-service/") &&
 				!_matches(_SERVICE_PACKAGE_NAME_WHITELIST, packageName)) {
 
@@ -110,7 +99,7 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 					"api_method_signatures.markdown");
 			}
 
-			if (_illegalAPIParameterTypes.contains(parameterType) &&
+			if (illegalAPIParameterTypes.contains(parameterType) &&
 				!_matches(_CLASS_NAME_WHITELIST, className) &&
 				!_matches(_METHOD_NAME_WHITELIST, javaTerm.getName()) &&
 				!_matches(_PACKAGE_NAME_WHITELIST, packageName)) {
@@ -239,8 +228,5 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 
 	private List<String> _allFileNames;
 	private String[] _apiSignatureExceptions;
-	private final List<String> _illegalAPIParameterTypes = new ArrayList<>();
-	private final List<String> _illegalAPIServiceParameterTypes =
-		new ArrayList<>();
 
 }

@@ -45,21 +45,13 @@ import java.util.regex.Pattern;
  */
 public class GradleDependencyVersionCheck extends BaseFileCheck {
 
-	public void setEnforceConsistentVersionDependencyNames(
-		String enforceConsistentVersionDependencyNames) {
-
-		Collections.addAll(
-			_enforceConsistentVersionDependencyNames,
-			StringUtil.split(enforceConsistentVersionDependencyNames));
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		if (absolutePath.contains("/modules/apps/")) {
-			content = _formatInconsistentVersions(content);
+			content = _formatInconsistentVersions(absolutePath, content);
 		}
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
@@ -128,16 +120,22 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			StringUtil.trim(sb.toString()));
 	}
 
-	private String _formatInconsistentVersions(String content)
+	private String _formatInconsistentVersions(
+			String absolutePath, String content)
 		throws IOException {
 
-		Map<String, Version> latestVersionsMap = _getLatestVersionsMap();
+		Map<String, Version> latestVersionsMap = _getLatestVersionsMap(
+			absolutePath);
 
 		if (latestVersionsMap.isEmpty()) {
 			return content;
 		}
 
-		for (String dependencyName : _enforceConsistentVersionDependencyNames) {
+		List<String> enforceConsistentVersionDependencyNames =
+			getAttributeValues(
+				"enforceConsistentVersionDependencyNames", absolutePath);
+
+		for (String dependencyName : enforceConsistentVersionDependencyNames) {
 			Version latestVersion = latestVersionsMap.get(dependencyName);
 
 			if (latestVersion == null) {
@@ -238,7 +236,8 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private synchronized Map<String, Version> _getLatestVersionsMap()
+	private synchronized Map<String, Version> _getLatestVersionsMap(
+			String absolutePath)
 		throws IOException {
 
 		if (_latestVersionsMap != null) {
@@ -247,7 +246,11 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		_latestVersionsMap = new HashMap<>();
 
-		if (_enforceConsistentVersionDependencyNames.isEmpty()) {
+		List<String> enforceConsistentVersionDependencyNames =
+			getAttributeValues(
+				"enforceConsistentVersionDependencyNames", absolutePath);
+
+		if (enforceConsistentVersionDependencyNames.isEmpty()) {
 			return _latestVersionsMap;
 		}
 
@@ -262,7 +265,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 				new File(buildGradleFileName));
 
 			for (String dependencyName :
-					_enforceConsistentVersionDependencyNames) {
+					enforceConsistentVersionDependencyNames) {
 
 				Pattern pattern = Pattern.compile(
 					"compileOnly .*, name: \"" + dependencyName +
@@ -396,8 +399,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 	private static final Pattern _majorVersionPattern = Pattern.compile(
 		"^[0-9]+");
 
-	private final List<String> _enforceConsistentVersionDependencyNames =
-		new ArrayList<>();
 	private Map<String, Version> _latestVersionsMap;
 	private Map<String, Integer> _publishedMajorVersionsMap;
 

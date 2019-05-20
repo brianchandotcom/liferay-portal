@@ -14,13 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,11 +28,6 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 	@Override
 	public boolean isModulesCheck() {
 		return true;
-	}
-
-	public void setAllowedClassNames(String allowedClassNames) {
-		Collections.addAll(
-			_allowedClassNames, StringUtil.split(allowedClassNames));
 	}
 
 	@Override
@@ -49,7 +41,10 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 
 		String packageName = JavaSourceUtil.getPackageName(fileContent);
 
-		if (_allowedClassNames.contains(
+		List<String> allowedClassNames = getAttributeValues(
+			"allowedClassNames", absolutePath);
+
+		if (allowedClassNames.contains(
 				packageName + "." + javaTerm.getName())) {
 
 			return javaTerm.getContent();
@@ -87,7 +82,5 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
 	}
-
-	private final List<String> _allowedClassNames = new ArrayList<>();
 
 }

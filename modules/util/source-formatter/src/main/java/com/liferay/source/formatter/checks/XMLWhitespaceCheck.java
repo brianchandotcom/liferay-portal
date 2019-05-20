@@ -34,7 +34,9 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	@Override
-	protected boolean isAllowLeadingSpaces(String fileName) {
+	protected boolean isAllowLeadingSpaces(
+		String fileName, String absolutePath) {
+
 		if (fileName.startsWith(getBaseDirName() + "build") ||
 			fileName.contains("/build")) {
 

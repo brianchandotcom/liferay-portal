@@ -36,7 +36,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _formatWhitespace(fileName, content);
+		content = _formatWhitespace(fileName, absolutePath, content);
 
 		content = _formatDirectivesWhitespace(content);
 
@@ -106,7 +106,8 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		return line;
 	}
 
-	private String _formatWhitespace(String fileName, String content)
+	private String _formatWhitespace(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -120,7 +121,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (!fileName.endsWith("/jsonws/action.jsp")) {
-					line = trimLine(fileName, line);
+					line = trimLine(fileName, absolutePath, line);
 				}
 
 				String trimmedLine = StringUtil.trimLeading(line);

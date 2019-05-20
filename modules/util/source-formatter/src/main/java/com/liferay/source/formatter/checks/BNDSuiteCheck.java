@@ -21,19 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Peter Shin
  */
 public class BNDSuiteCheck extends BaseFileCheck {
-
-	public void setAllowedFileNames(String allowedFileNames) {
-		Collections.addAll(
-			_allowedFileNames, StringUtil.split(allowedFileNames));
-	}
 
 	@Override
 	protected String doProcess(
@@ -43,7 +36,10 @@ public class BNDSuiteCheck extends BaseFileCheck {
 			return content;
 		}
 
-		for (String allowedFileName : _allowedFileNames) {
+		List<String> allowedFileNames = getAttributeValues(
+			"allowedFileNames", absolutePath);
+
+		for (String allowedFileName : allowedFileNames) {
 			if (absolutePath.endsWith(allowedFileName)) {
 				return content;
 			}
@@ -109,7 +105,5 @@ public class BNDSuiteCheck extends BaseFileCheck {
 		"collaboration", "forms-and-workflow", "foundation", "static",
 		"web-experience"
 	};
-
-	private final List<String> _allowedFileNames = new ArrayList<>();
 
 }

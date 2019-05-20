@@ -40,13 +40,13 @@ public class JavaAnnotationDefaultAttributeCheck extends JavaAnnotationsCheck {
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, (JavaClass)javaTerm);
+		return formatAnnotations(fileName, absolutePath, (JavaClass)javaTerm);
 	}
 
 	@Override
 	protected String formatAnnotation(
-		String fileName, JavaClass javaClass, String annotation,
-		String indent) {
+		String fileName, String absolutePath, JavaClass javaClass,
+		String annotation, String indent) {
 
 		annotation = _formatDefaultAttribute(annotation);
 

@@ -26,8 +26,6 @@ import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,14 +34,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaPackagePathCheck extends BaseJavaTermCheck {
-
-	public void setAllowedInternalPackageDirNames(
-		String allowedInternalPackageDirNames) {
-
-		Collections.addAll(
-			_allowedInternalPackageDirNames,
-			StringUtil.split(allowedInternalPackageDirNames));
-	}
 
 	@Override
 	protected String doProcess(
@@ -152,8 +142,11 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				"package.markdown");
 		}
 
+		List<String> allowedInternalPackageDirNames = getAttributeValues(
+			"allowedInternalPackageDirNames", absolutePath);
+
 		for (String allowedInternalPackageDirName :
-				_allowedInternalPackageDirNames) {
+				allowedInternalPackageDirNames) {
 
 			if (absolutePath.contains(allowedInternalPackageDirName)) {
 				return;
@@ -234,8 +227,5 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 	private static final Pattern _internalPackagePattern = Pattern.compile(
 		"\\.(impl|internal)(\\.|\\Z)");
-
-	private final List<String> _allowedInternalPackageDirNames =
-		new ArrayList<>();
 
 }

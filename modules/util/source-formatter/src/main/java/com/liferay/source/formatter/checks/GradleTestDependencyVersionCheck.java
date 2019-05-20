@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,11 +34,6 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		return true;
 	}
 
-	public void setAllowedDependencyNames(String allowedDependencyNames) {
-		Collections.addAll(
-			_allowedDependencyNames, StringUtil.split(allowedDependencyNames));
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -51,14 +45,16 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		}
 
 		for (String dependencies : _getDependenciesBlocks(content)) {
-			content = _formatDependencies(fileName, content, dependencies);
+			content = _formatDependencies(
+				fileName, absolutePath, content, dependencies);
 		}
 
 		return content;
 	}
 
 	private String _formatDependencies(
-		String fileName, String content, String dependencies) {
+		String fileName, String absolutePath, String content,
+		String dependencies) {
 
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
@@ -66,6 +62,9 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		if (x == y) {
 			return content;
 		}
+
+		List<String> allowedDependencyNames = getAttributeValues(
+			"allowedDependencyNames", absolutePath);
 
 		dependencies = dependencies.substring(x, y + 1);
 
@@ -112,7 +111,7 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 
 			if (dependencyName.startsWith("com.liferay.") &&
 				!line.contains("project(\"") &&
-				!_allowedDependencyNames.contains(dependencyName)) {
+				!allowedDependencyNames.contains(dependencyName)) {
 
 				int lineNumber = getLineNumber(content, content.indexOf(line));
 
@@ -190,7 +189,5 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		".*, name: \"([^\"]*)\".*");
 	private static final Pattern _dependencyVersionPattern = Pattern.compile(
 		".*, version: \"([^\"]*)\".*");
-
-	private final List<String> _allowedDependencyNames = new ArrayList<>();
 
 }

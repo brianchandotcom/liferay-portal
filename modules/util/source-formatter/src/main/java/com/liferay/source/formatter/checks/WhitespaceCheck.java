@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
@@ -33,21 +32,12 @@ import java.util.regex.Pattern;
  */
 public class WhitespaceCheck extends BaseFileCheck {
 
-	public void setAllowLeadingSpaces(String allowLeadingSpaces) {
-		_allowLeadingSpaces = GetterUtil.getBoolean(allowLeadingSpaces);
-	}
-
-	public void setAllowTrailingDoubleSpace(String allowTrailingDoubleSpace) {
-		_allowTrailingDoubleSpace = GetterUtil.getBoolean(
-			allowTrailingDoubleSpace);
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _trimContent(fileName, content);
+		content = _trimContent(fileName, absolutePath, content);
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
 
@@ -256,8 +246,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
 	}
 
-	protected boolean isAllowLeadingSpaces(String fileName) {
-		return _allowLeadingSpaces;
+	protected boolean isAllowLeadingSpaces(
+		String fileName, String absolutePath) {
+
+		return isAttributeValue("allowLeadingSpaces", absolutePath);
 	}
 
 	protected boolean isAllowTrailingEmptyLines(String fileName) {
@@ -268,7 +260,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return false;
 	}
 
-	protected String trimLine(String fileName, String line) {
+	protected String trimLine(
+		String fileName, String absolutePath, String line) {
+
 		String trimmedLine = StringUtil.trim(line);
 
 		if (trimmedLine.length() == 0) {
@@ -276,13 +270,15 @@ public class WhitespaceCheck extends BaseFileCheck {
 		}
 
 		if (!isAllowTrailingSpaces(line) &&
-			(!_allowTrailingDoubleSpace ||
+			(!isAttributeValue("allowTrailingDoubleSpace", absolutePath) ||
 			 !line.endsWith(StringPool.DOUBLE_SPACE))) {
 
 			line = StringUtil.trimTrailing(line);
 		}
 
-		if (isAllowLeadingSpaces(fileName) || line.startsWith(" *")) {
+		if (isAllowLeadingSpaces(fileName, absolutePath) ||
+			line.startsWith(" *")) {
+
 			return line;
 		}
 
@@ -299,7 +295,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return line;
 	}
 
-	private String _trimContent(String fileName, String content)
+	private String _trimContent(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -310,7 +307,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(trimLine(fileName, line));
+				sb.append(trimLine(fileName, absolutePath, line));
 				sb.append("\n");
 			}
 		}
@@ -327,8 +324,5 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private boolean _allowLeadingSpaces;
-	private boolean _allowTrailingDoubleSpace;
 
 }

@@ -34,7 +34,6 @@
 
 	var TPL_LEXICON_ICON = '<svg class="lexicon-icon lexicon-icon-{0} {1}" focusable="false" role="image">' +
 			'<use data-href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#{0}" />' +
-			'<title>{2}</title>' +
 		'</svg>';
 
 	var Window = {
@@ -465,10 +464,10 @@
 			return $(instance.getLexiconIconTpl(icon, cssClass))[0];
 		},
 
-		getLexiconIconTpl: function(icon, cssClass, title) {
+		getLexiconIconTpl: function(icon, cssClass) {
 			var instance = this;
 
-			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '', title || icon);
+			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},
 
 		getOpener: function() {

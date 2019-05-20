@@ -31,14 +31,6 @@ if (searchRepositoryId == 0) {
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-
-Folder folder = null;
-
-if (searchFolderId > 0) {
-	folder = DLAppServiceUtil.getFolder(searchFolderId);
-}
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);

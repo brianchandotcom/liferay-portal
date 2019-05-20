@@ -5,6 +5,7 @@ import {PROPERTY_TYPES} from 'utils/constants.es';
 
 class DateInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		value: propTypes.string
 	};
@@ -61,6 +62,7 @@ class DateInput extends React.Component {
 	}
 
 	render() {
+		const {disabled} = this.props;
 		const {value} = this.state;
 
 		return (
@@ -68,6 +70,7 @@ class DateInput extends React.Component {
 				<input
 					className="form-control"
 					data-testid="date-input"
+					disabled={disabled}
 					onBlur={this._handleDateBlur}
 					onChange={this._handleDateChange}
 					type="date"

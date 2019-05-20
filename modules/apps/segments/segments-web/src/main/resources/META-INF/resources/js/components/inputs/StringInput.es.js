@@ -4,6 +4,7 @@ import React from 'react';
 
 class StringInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		options: propTypes.array,
 		value: propTypes.oneOfType(
@@ -23,12 +24,13 @@ class StringInput extends React.Component {
 	}
 
 	render() {
-		const {options, value} = this.props;
+		const {disabled, options, value} = this.props;
 
 		return (options.length === 0) ?
 			<input
 				className="criterion-input form-control"
 				data-testid="simple-string"
+				disabled={disabled}
 				onChange={this._handleChange}
 				type="text"
 				value={value}
@@ -36,6 +38,7 @@ class StringInput extends React.Component {
 			<ClaySelect
 				className="criterion-input form-control"
 				data-testid="options-string"
+				disabled={disabled}
 				onChange={this._handleChange}
 				options={options.map(
 					o => ({

@@ -27,7 +27,8 @@ class ClayButton extends Component {
 				'danger',
 				'dark',
 				'light',
-				'unstyled'
+				'unstyled',
+				'outline-danger'
 			]
 		),
 		type: PropTypes.string

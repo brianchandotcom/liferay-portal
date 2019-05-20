@@ -261,8 +261,8 @@ class CriteriaRow extends Component {
 			{
 				label: idSelected,
 				name: idSelected,
-				type: PROPERTY_TYPES.STRING,
-				notFound: true
+				notFound: true,
+				type: PROPERTY_TYPES.STRING
 			};
 	}
 
@@ -324,7 +324,7 @@ class CriteriaRow extends Component {
 		}
 	}
 
-	_renderValueInput = (selectedProperty, value) => {
+	_renderValueInput = (selectedProperty, value, disabled) => {
 		const inputComponentsMap = {
 			[PROPERTY_TYPES.BOOLEAN]: BooleanInput,
 			[PROPERTY_TYPES.COLLECTION]: CollectionInput,
@@ -341,6 +341,7 @@ class CriteriaRow extends Component {
 
 		return (
 			<InputComponent
+				disabled={disabled}
 				displayValue={this.props.criterion.displayValue || ''}
 				onChange={this._handleTypedInputChange}
 				options={selectedProperty.options}
@@ -366,19 +367,93 @@ class CriteriaRow extends Component {
 		);
 	}
 
+	_renderEditContainer(
+		{
+			error,
+			propertyLabel,
+			selectedOperator,
+			selectedProperty,
+			value
+		}
+	) {
+		const {connectDragSource, supportedOperators, supportedPropertyTypes} = this.props;
+
+		const propertyType = selectedProperty ? selectedProperty.type : '';
+
+		const filteredSupportedOperators = getSupportedOperatorsFromType(
+			supportedOperators,
+			supportedPropertyTypes,
+			propertyType
+		);
+
+		const disabledInput = !!error;
+
+		return (
+			<div className="edit-container">
+				{connectDragSource(
+					<div className="drag-icon">
+						<ClayIcon iconName="drag" />
+					</div>
+				)}
+
+				<span className="criterion-string">
+					<b>{propertyLabel}</b>
+				</span>
+
+				<ClaySelect
+					className="criterion-input operator-input form-control"
+					disabled={disabledInput}
+					onChange={this._handleInputChange(
+						'operatorName'
+					)}
+					options={filteredSupportedOperators.map(
+						({label, name}) => ({
+							label,
+							value: name
+						})
+					)}
+					selected={selectedOperator && selectedOperator.name}
+				/>
+
+				{this._renderValueInput(selectedProperty, value, disabledInput)}
+
+				{error ?
+					<ClayButton
+						label={Liferay.Language.get('delete')}
+						onClick={this._handleDelete}
+						style="outline-danger"
+					/> :
+					<React.Fragment>
+						<ClayButton
+							borderless
+							iconName="paste"
+							monospaced
+							onClick={this._handleDuplicate}
+						/>
+
+						<ClayButton
+							borderless
+							iconName="times-circle"
+							monospaced
+							onClick={this._handleDelete}
+						/>
+					</React.Fragment>
+				}
+			</div>
+		);
+	}
+
 	render() {
 		const {
 			canDrop,
 			connectDragPreview,
-			connectDragSource,
 			connectDropTarget,
 			criterion,
 			dragging,
 			editing,
 			hover,
 			supportedOperators,
-			supportedProperties,
-			supportedPropertyTypes
+			supportedProperties
 		} = this.props;
 
 		const selectedOperator = this._getSelectedItem(
@@ -391,26 +466,18 @@ class CriteriaRow extends Component {
 			criterion.propertyName
 		);
 
+		const errorOnProperty = selectedProperty.notFound;
 		const operatorLabel = selectedOperator ? selectedOperator.label : '';
 		const propertyLabel = selectedProperty ? selectedProperty.label : '';
-		const errorOnProperty = selectedProperty.notFound;
 
 		const value = criterion ? criterion.value : '';
-
-		const propertyType = selectedProperty ? selectedProperty.type : '';
-
-		const filteredSupportedOperators = getSupportedOperatorsFromType(
-			supportedOperators,
-			supportedPropertyTypes,
-			propertyType
-		);
 
 		const classes = getCN(
 			'criterion-row-root',
 			{
+				'criterion-row-root-error': errorOnProperty,
 				'dnd-drag': dragging,
-				'dnd-hover': hover && canDrop,
-				'criterion-row-root-error': errorOnProperty
+				'dnd-hover': hover && canDrop
 			}
 		);
 
@@ -422,57 +489,23 @@ class CriteriaRow extends Component {
 							<div
 								className={classes}
 							>
-								{editing ? (
-									<div className="edit-container">
-										{connectDragSource(
-											<div className="drag-icon">
-												<ClayIcon iconName="drag" />
-											</div>
-										)}
-
-										<span className="criterion-string">
-											<b>{propertyLabel}</b>
-										</span>
-
-										<ClaySelect
-											className="criterion-input operator-input form-control"
-											onChange={this._handleInputChange(
-												'operatorName'
-											)}
-											options={filteredSupportedOperators.map(
-												({label, name}) => ({
-													label,
-													value: name
-												})
-											)}
-											selected={selectedOperator && selectedOperator.name}
-										/>
-
-										{this._renderValueInput(selectedProperty, value)}
-
-										<ClayButton
-											borderless
-											iconName="paste"
-											monospaced
-											onClick={this._handleDuplicate}
-										/>
-
-										<ClayButton
-											borderless
-											iconName="times-circle"
-											monospaced
-											onClick={this._handleDelete}
-										/>
-									</div>
+								{editing ? this._renderEditContainer(
+									{
+										error: errorOnProperty,
+										propertyLabel,
+										selectedOperator,
+										selectedProperty,
+										value
+									}
 								) : (
 									<span className="criterion-string">
 										{this._getReadableCriteriaString(
 											{
-												propertyLabel,
+												error: errorOnProperty,
 												operatorLabel,
-												value: criterion.displayValue || value,
+												propertyLabel,
 												type: selectedProperty.type,
-												error: errorOnProperty
+												value: criterion.displayValue || value
 											}
 										)}
 									</span>

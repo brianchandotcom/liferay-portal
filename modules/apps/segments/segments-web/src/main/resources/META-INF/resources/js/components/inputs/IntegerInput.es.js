@@ -3,6 +3,7 @@ import React from 'react';
 
 class IntegerInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		value: propTypes.oneOfType(
 			[
@@ -21,13 +22,16 @@ class IntegerInput extends React.Component {
 	}
 
 	render() {
+		const {disabled, value} = this.props;
+
 		return (
 			<input
 				className="criterion-input form-control"
 				data-testid="integer-number"
+				disabled={disabled}
 				onChange={this._handleIntegerChange}
 				type="number"
-				value={this.props.value}
+				value={value}
 			/>
 		);
 	}

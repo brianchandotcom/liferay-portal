@@ -3,6 +3,7 @@ import React from 'react';
 
 class DecimalInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		value: propTypes.oneOfType(
 			[
@@ -23,15 +24,18 @@ class DecimalInput extends React.Component {
 	}
 
 	render() {
+		const {disabled, value} = this.props;
+
 		return (
 			<input
 				className="criterion-input form-control"
 				data-testid="decimal-number"
+				disabled={disabled}
 				onBlur={this._handleDecimalBlur}
 				onChange={this._handleDecimalChange}
 				step="0.01"
 				type="number"
-				value={this.props.value}
+				value={value}
 			/>
 		);
 	}

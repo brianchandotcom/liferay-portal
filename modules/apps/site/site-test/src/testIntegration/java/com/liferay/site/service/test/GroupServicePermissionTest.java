@@ -43,6 +43,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,19 +76,16 @@ public class GroupServicePermissionTest {
 
 		_group111 = GroupTestUtil.addGroup(_group11.getGroupId());
 
+		_groups.add(_group111);
+
+		_groups.add(_group11);
+		_groups.add(_group1);
+
 		setUpPrincipalThreadLocal();
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		_groupLocalService.deleteGroup(_group111);
-
-		_groupLocalService.deleteGroup(_group11);
-
-		_groupLocalService.deleteGroup(_group1);
-
-		_userLocalService.deleteUser(_user);
-
+	public void tearDown() {
 		PrincipalThreadLocal.setName(_name);
 	}
 
@@ -343,6 +343,9 @@ public class GroupServicePermissionTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
+
 	@Inject
 	private GroupService _groupService;
 
@@ -354,6 +357,7 @@ public class GroupServicePermissionTest {
 	@DeleteAfterTestRun
 	private Role _role;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

@@ -56,7 +56,8 @@ String backURL = (String)row.getParameter("backURL");
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-deactivate
+	<liferay-ui:icon
+		message="unpublish"
 		url="<%= deactivateWorkflowDefinition %>"
 	/>
 </liferay-ui:icon-menu>

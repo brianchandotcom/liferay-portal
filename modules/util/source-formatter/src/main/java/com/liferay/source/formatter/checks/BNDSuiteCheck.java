@@ -37,7 +37,7 @@ public class BNDSuiteCheck extends BaseFileCheck {
 		}
 
 		List<String> allowedFileNames = getAttributeValues(
-			"allowedFileNames", absolutePath);
+			_ALLOWED_FILE_NAMES_KEY, absolutePath);
 
 		for (String allowedFileName : allowedFileNames) {
 			if (absolutePath.endsWith(allowedFileName)) {
@@ -100,6 +100,8 @@ public class BNDSuiteCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOWED_FILE_NAMES_KEY = "allowedFileNames";
 
 	private static final String[] _SUITES = {
 		"collaboration", "forms-and-workflow", "foundation", "static",

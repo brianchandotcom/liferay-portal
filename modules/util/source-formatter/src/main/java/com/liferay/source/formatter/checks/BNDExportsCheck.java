@@ -72,7 +72,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		List<String> allowedExportPackageDirNames = getAttributeValues(
-			"allowedExportPackageDirNames", absolutePath);
+			_ALLOWED_EXPORT_PACKAGE_DIR_NAMES_KEY, absolutePath);
 
 		for (String allowedExportPackageDirName :
 				allowedExportPackageDirNames) {
@@ -238,6 +238,9 @@ public class BNDExportsCheck extends BaseFileCheck {
 				getLineNumber(content, matcher.start(2)) + i);
 		}
 	}
+
+	private static final String _ALLOWED_EXPORT_PACKAGE_DIR_NAMES_KEY =
+		"allowedExportPackageDirNames";
 
 	private static final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");

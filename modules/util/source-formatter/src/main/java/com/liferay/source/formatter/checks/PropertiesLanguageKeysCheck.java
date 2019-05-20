@@ -126,7 +126,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		String s = key.replaceAll("[^\\w.-]", StringPool.BLANK);
 
 		List<String> allowedLanguageKeys = getAttributeValues(
-			"allowedLanguageKeys", absolutePath);
+			_ALLOWED_LANGUAGE_KEYS_KEY, absolutePath);
 
 		for (String allowedLanguageKey : allowedLanguageKeys) {
 			if (s.equals(allowedLanguageKey)) {
@@ -137,10 +137,12 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		return false;
 	}
 
+	private static final String _ALLOWED_LANGUAGE_KEYS_KEY =
+		"allowedLanguageKeys";
+
 	private static final String _PORTAL_IMPL_LANGUAGE_PROPERTIES_FILE_NAME =
 		"portal-impl/src/content/Language.properties";
 
-	//private final List<String> _allowedLanguageKeys = new ArrayList<>();
 	private Properties _portalImplLanguageProperties;
 
 }

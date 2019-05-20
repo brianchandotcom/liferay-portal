@@ -60,7 +60,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			content = _formatDependencies(
 				content, SourceUtil.getIndent(dependenciesBlock), dependencies);
 
-			if (isAttributeValue("checkPetraDependencies", absolutePath) &&
+			if (isAttributeValue(_CHECK_PETRA_DEPENDENCIES_KEY, absolutePath) &&
 				absolutePath.contains("/modules/core/petra/")) {
 
 				_checkPetraDependencies(fileName, content, dependencies);
@@ -226,6 +226,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		return sb.toString();
 	}
+
+	private static final String _CHECK_PETRA_DEPENDENCIES_KEY =
+		"checkPetraDependencies";
 
 	private static final String _ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1 =
 		"compileOnly group: \"com.liferay\", name: \"org.eclipse.osgi\", " +

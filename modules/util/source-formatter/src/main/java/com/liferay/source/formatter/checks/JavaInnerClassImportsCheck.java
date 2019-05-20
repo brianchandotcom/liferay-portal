@@ -45,7 +45,7 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		String packageName = null;
 
 		List<String> upperCasePackageNames = getAttributeValues(
-			"upperCasePackageNames", absolutePath);
+			_UPPER_CASE_PACKAGE_NAMES_KEY, absolutePath);
 
 		Matcher matcher = _innerClassImportPattern.matcher(content);
 
@@ -259,6 +259,9 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _UPPER_CASE_PACKAGE_NAMES_KEY =
+		"upperCasePackageNames";
 
 	private static final Pattern _innerClassImportPattern = Pattern.compile(
 		"\nimport (([\\w.]+\\.([A-Z]\\w+))\\.([A-Z]\\w+));");

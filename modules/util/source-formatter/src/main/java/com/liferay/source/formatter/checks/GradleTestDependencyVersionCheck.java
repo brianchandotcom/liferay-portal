@@ -64,7 +64,7 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 		}
 
 		List<String> allowedDependencyNames = getAttributeValues(
-			"allowedDependencyNames", absolutePath);
+			_ALLOWED_DEPENDENCY_NAMES_KEY, absolutePath);
 
 		dependencies = dependencies.substring(x, y + 1);
 
@@ -182,6 +182,9 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 
 		return matcher.group(1);
 	}
+
+	private static final String _ALLOWED_DEPENDENCY_NAMES_KEY =
+		"allowedDependencyNames";
 
 	private static final Pattern _dependenciesPattern = Pattern.compile(
 		"(\n|\\A)(\t*)dependencies \\{\n");

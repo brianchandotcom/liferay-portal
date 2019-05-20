@@ -143,7 +143,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		}
 
 		List<String> allowedInternalPackageDirNames = getAttributeValues(
-			"allowedInternalPackageDirNames", absolutePath);
+			_ALLOWED_INTERNAL_PACKAGE_DIR_NAMES_KEY, absolutePath);
 
 		for (String allowedInternalPackageDirName :
 				allowedInternalPackageDirNames) {
@@ -224,6 +224,9 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				"Class '" + className + "' should be in 'internal' package");
 		}
 	}
+
+	private static final String _ALLOWED_INTERNAL_PACKAGE_DIR_NAMES_KEY =
+		"allowedInternalPackageDirNames";
 
 	private static final Pattern _internalPackagePattern = Pattern.compile(
 		"\\.(impl|internal)(\\.|\\Z)");

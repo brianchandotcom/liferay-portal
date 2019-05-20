@@ -335,7 +335,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 	private boolean _isImmutableField(String fieldType, String absolutePath) {
 		List<String> immutableFieldTypes = getAttributeValues(
-			"immutableFieldTypes", absolutePath);
+			_IMMUTABLE_FIELD_TYPES_KEY, absolutePath);
 
 		for (String immutableFieldType : immutableFieldTypes) {
 			if (fieldType.equals(immutableFieldType) ||
@@ -347,6 +347,9 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		return false;
 	}
+
+	private static final String _IMMUTABLE_FIELD_TYPES_KEY =
+		"immutableFieldTypes";
 
 	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";
 

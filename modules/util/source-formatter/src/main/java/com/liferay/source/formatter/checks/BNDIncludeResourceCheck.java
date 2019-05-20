@@ -42,7 +42,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		}
 
 		if (fileName.endsWith("-test/bnd.bnd") &&
-			isAttributeValue("checkTestIncludeResource", absolutePath)) {
+			isAttributeValue(_CHECK_TEST_INCLUDE_RESOURCE_KEY, absolutePath)) {
 
 			_checkIncludeResource(fileName, content);
 		}
@@ -180,6 +180,9 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _CHECK_TEST_INCLUDE_RESOURCE_KEY =
+		"checkTestIncludeResource";
 
 	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST = {
 		"classes", "META-INF/resources=src/main/resources/META-INF/resources",

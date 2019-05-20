@@ -40,7 +40,7 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 
 	private boolean _isNonemptyMarkerFileName(String absolutePath) {
 		List<String> nonemptyMarkerFileNames = getAttributeValues(
-			"nonemptyMarkerFileNames", absolutePath);
+			_NONEMPTY_MARKER_FILE_NAMES_KEY, absolutePath);
 
 		for (String nonemptyMarkerFileName : nonemptyMarkerFileNames) {
 			if (absolutePath.endsWith(nonemptyMarkerFileName)) {
@@ -50,5 +50,8 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String _NONEMPTY_MARKER_FILE_NAMES_KEY =
+		"nonemptyMarkerFileNames";
 
 }

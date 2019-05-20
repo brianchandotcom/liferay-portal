@@ -42,7 +42,7 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 		String packageName = JavaSourceUtil.getPackageName(fileContent);
 
 		List<String> allowedClassNames = getAttributeValues(
-			"allowedClassNames", absolutePath);
+			_ALLOWED_CLASS_NAMES_KEY, absolutePath);
 
 		if (allowedClassNames.contains(
 				packageName + "." + javaTerm.getName())) {
@@ -82,5 +82,7 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
 	}
+
+	private static final String _ALLOWED_CLASS_NAMES_KEY = "allowedClassNames";
 
 }

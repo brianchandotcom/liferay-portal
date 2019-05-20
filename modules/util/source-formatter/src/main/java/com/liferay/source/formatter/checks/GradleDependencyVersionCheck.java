@@ -133,7 +133,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		List<String> enforceConsistentVersionDependencyNames =
 			getAttributeValues(
-				"enforceConsistentVersionDependencyNames", absolutePath);
+				_ENFORCE_CONSISTENT_VERSION_DEPENDENCY_NAMES_KEY, absolutePath);
 
 		for (String dependencyName : enforceConsistentVersionDependencyNames) {
 			Version latestVersion = latestVersionsMap.get(dependencyName);
@@ -248,7 +248,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		List<String> enforceConsistentVersionDependencyNames =
 			getAttributeValues(
-				"enforceConsistentVersionDependencyNames", absolutePath);
+				_ENFORCE_CONSISTENT_VERSION_DEPENDENCY_NAMES_KEY, absolutePath);
 
 		if (enforceConsistentVersionDependencyNames.isEmpty()) {
 			return _latestVersionsMap;
@@ -386,6 +386,10 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String
+		_ENFORCE_CONSISTENT_VERSION_DEPENDENCY_NAMES_KEY =
+			"enforceConsistentVersionDependencyNames";
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";

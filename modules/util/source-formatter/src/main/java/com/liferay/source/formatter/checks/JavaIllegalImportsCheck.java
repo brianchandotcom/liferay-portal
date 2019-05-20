@@ -38,7 +38,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		if (isAttributeValue("enforceJavaUtilFunctionImports", absolutePath)) {
+		if (isAttributeValue(
+				_ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY, absolutePath)) {
+
 			content = StringUtil.replace(
 				content,
 				new String[] {
@@ -177,6 +179,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY =
+		"enforceJavaUtilFunctionImports";
 
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 

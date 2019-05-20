@@ -45,7 +45,8 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			!absolutePath.contains("/modules/core/portal-bootstrap") &&
 			!absolutePath.contains("/modules/core/registry-") &&
 			!absolutePath.contains("/modules/core/slim-runtime") &&
-			(isAttributeValue("checkRegistryInTestClasses", absolutePath) ||
+			(isAttributeValue(
+				_CHECK_REGISTRY_IN_TEST_CLASSES_KEY, absolutePath) ||
 			 (!absolutePath.contains("/test/") &&
 			  !absolutePath.contains("/testIntegration/")))) {
 
@@ -79,6 +80,9 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _CHECK_REGISTRY_IN_TEST_CLASSES_KEY =
+		"checkRegistryInTestClasses";
 
 	private static final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");

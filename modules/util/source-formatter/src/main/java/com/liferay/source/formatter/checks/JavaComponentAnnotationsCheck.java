@@ -209,7 +209,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		if (!isAttributeValue(
-				"checkConfigurationPolicyAttribute", absolutePath)) {
+				_CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY, absolutePath)) {
 
 			return annotation;
 		}
@@ -257,9 +257,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		boolean checkMismatchedServiceAttribute = isAttributeValue(
-			"checkMismatchedServiceAttribute", absolutePath);
+			_CHECK_MISMATCHED_SERVICE_ATTRIBUTE_KEY, absolutePath);
 		boolean checkSelfRegistration = isAttributeValue(
-			"checkSelfRegistration", absolutePath);
+			_CHECK_SELF_REGISTRATION_KEY, absolutePath);
 
 		if (!checkMismatchedServiceAttribute && !checkSelfRegistration) {
 			return annotation;
@@ -374,6 +374,15 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		return javaMethods;
 	}
+
+	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
+		"checkConfigurationPolicyAttribute";
+
+	private static final String _CHECK_MISMATCHED_SERVICE_ATTRIBUTE_KEY =
+		"checkMismatchedServiceAttribute";
+
+	private static final String _CHECK_SELF_REGISTRATION_KEY =
+		"checkSelfRegistration";
 
 	private static final Pattern _annotationParameterPropertyPattern =
 		Pattern.compile("\\s(\\w+) = \\{");

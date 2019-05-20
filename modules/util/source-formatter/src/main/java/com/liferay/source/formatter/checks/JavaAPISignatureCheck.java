@@ -73,9 +73,9 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		}
 
 		List<String> illegalAPIParameterTypes = getAttributeValues(
-			"illegalAPIParameterTypes", absolutePath);
+			_ILLEGAL_API_PARAMETER_TYPES_KEY, absolutePath);
 		List<String> illegalAPIServiceParameterTypes = getAttributeValues(
-			"illegalAPIServiceParameterTypes", absolutePath);
+			_ILLEGAL_API_SERVICE_PARAMETER_TYPES_KEY, absolutePath);
 
 		String methodName = javaTerm.getName();
 
@@ -200,6 +200,12 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		".*Session([A-Z].*)?", ".*Template([A-Z].*)?", ".*Theme([A-Z].*)?",
 		".*URL([A-Z].*)?"
 	};
+
+	private static final String _ILLEGAL_API_PARAMETER_TYPES_KEY =
+		"illegalAPIParameterTypes";
+
+	private static final String _ILLEGAL_API_SERVICE_PARAMETER_TYPES_KEY =
+		"illegalAPIServiceParameterTypes";
 
 	private static final String[] _METHOD_NAME_WHITELIST = {
 		".*JSP([A-Z].*)?", ".*PortletURL([A-Z].*)?", "include([A-Z].*)?",

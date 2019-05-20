@@ -37,7 +37,7 @@ public class BNDBundleCheck extends BaseFileCheck {
 		}
 
 		List<String> allowedFileNames = getAttributeValues(
-			"allowedFileNames", absolutePath);
+			_ALLOWED_FILE_NAMES_KEY, absolutePath);
 
 		for (String allowedFileName : allowedFileNames) {
 			if (absolutePath.endsWith(allowedFileName)) {
@@ -104,6 +104,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 
 		return TextFormatter.format(shortDirName, TextFormatter.J);
 	}
+
+	private static final String _ALLOWED_FILE_NAMES_KEY = "allowedFileNames";
 
 	private static final String[] _REQUIRED_INSTRUCTIONS = {
 		"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",

@@ -87,7 +87,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 
 		List<String> serviceReferenceUtilClassNames = getAttributeValues(
-			"serviceReferenceUtilClassNames", absolutePath);
+			_SERVICE_REFERENCE_UTIL_CLASS_NAMES_KEY, absolutePath);
 
 		for (String serviceReferenceUtilClassName :
 				serviceReferenceUtilClassNames) {
@@ -482,6 +482,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		return _serviceProxyFactoryUtilClassNames;
 	}
+
+	private static final String _SERVICE_REFERENCE_UTIL_CLASS_NAMES_KEY =
+		"serviceReferenceUtilClassNames";
 
 	private static final Pattern _referenceMethodContentPattern =
 		Pattern.compile("^(\\w+) =\\s+\\w+;$");

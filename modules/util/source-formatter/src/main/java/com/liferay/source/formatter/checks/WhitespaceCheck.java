@@ -249,7 +249,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 	protected boolean isAllowLeadingSpaces(
 		String fileName, String absolutePath) {
 
-		return isAttributeValue("allowLeadingSpaces", absolutePath);
+		return isAttributeValue(_ALLOW_LEADING_SPACES_KEY, absolutePath);
 	}
 
 	protected boolean isAllowTrailingEmptyLines(String fileName) {
@@ -270,7 +270,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 		}
 
 		if (!isAllowTrailingSpaces(line) &&
-			(!isAttributeValue("allowTrailingDoubleSpace", absolutePath) ||
+			(!isAttributeValue(
+				_ALLOW_TRAILING_DOUBLE_SPACE_KEY, absolutePath) ||
 			 !line.endsWith(StringPool.DOUBLE_SPACE))) {
 
 			line = StringUtil.trimTrailing(line);
@@ -324,5 +325,11 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOW_LEADING_SPACES_KEY =
+		"allowLeadingSpaces";
+
+	private static final String _ALLOW_TRAILING_DOUBLE_SPACE_KEY =
+		"allowTrailingDoubleSpace";
 
 }

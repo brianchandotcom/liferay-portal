@@ -178,7 +178,7 @@ public class CTCollectionResource {
 			CTJaxRsUtil.getUser(userId);
 
 			Optional<CTCollection> activeCTCollectionOptional =
-				_ctManager.getActiveCTCollectionOptional(userId);
+				_ctManager.getActiveCTCollectionOptional(companyId, userId);
 
 			activeCTCollectionOptional.ifPresent(ctCollections::add);
 		}

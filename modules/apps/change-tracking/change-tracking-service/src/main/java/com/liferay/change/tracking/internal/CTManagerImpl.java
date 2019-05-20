@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -67,22 +65,24 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long userId, CTEntry ownerCTEntry, CTEntry relatedCTEntry) {
+		long companyId, long userId, CTEntry ownerCTEntry,
+		CTEntry relatedCTEntry) {
 
-		return addRelatedCTEntry(userId, ownerCTEntry, relatedCTEntry, false);
+		return addRelatedCTEntry(
+			companyId, userId, ownerCTEntry, relatedCTEntry, false);
 	}
 
 	@Override
 	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long userId, CTEntry ownerCTEntry, CTEntry relatedCTEntry,
-		boolean force) {
+		long companyId, long userId, CTEntry ownerCTEntry,
+		CTEntry relatedCTEntry, boolean force) {
 
 		if ((ownerCTEntry == null) || (relatedCTEntry == null)) {
 			return Optional.empty();
 		}
 
 		Optional<CTCollection> activeCTCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(companyId, userId);
 
 		if (!activeCTCollectionOptional.isPresent()) {
 			return Optional.empty();
@@ -112,7 +112,8 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntryAggregate> addRelatedCTEntry(
-		long userId, long ownerCTEntryId, long relatedCTEntryId) {
+		long companyId, long userId, long ownerCTEntryId,
+		long relatedCTEntryId) {
 
 		CTEntry ownerCTEntry = _ctEntryLocalService.fetchCTEntry(
 			ownerCTEntryId);
@@ -120,7 +121,8 @@ public class CTManagerImpl implements CTManager {
 		CTEntry relatedCTEntry = _ctEntryLocalService.fetchCTEntry(
 			relatedCTEntryId);
 
-		return addRelatedCTEntry(userId, ownerCTEntry, relatedCTEntry, false);
+		return addRelatedCTEntry(
+			companyId, userId, ownerCTEntry, relatedCTEntry, false);
 	}
 
 	@Override
@@ -148,10 +150,10 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntry> getActiveCTCollectionCTEntryOptional(
-		long userId, long modelClassNameId, long modelClassPK) {
+		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
 		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(companyId, userId);
 
 		long ctCollectionId = ctCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -159,21 +161,15 @@ public class CTManagerImpl implements CTManager {
 			0L
 		);
 
-		long companyId = _getCompanyId(userId);
-
-		CTEntry ctEntry = _getCTentry(
+		CTEntry ctEntry = _getCTEntry(
 			companyId, ctCollectionId, modelClassNameId, modelClassPK);
 
 		return Optional.ofNullable(ctEntry);
 	}
 
 	@Override
-	public Optional<CTCollection> getActiveCTCollectionOptional(long userId) {
-		long companyId = _getCompanyId(userId);
-
-		if (companyId <= 0) {
-			return Optional.empty();
-		}
+	public Optional<CTCollection> getActiveCTCollectionOptional(
+		long companyId, long userId) {
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId)) {
 			return Optional.empty();
@@ -222,7 +218,7 @@ public class CTManagerImpl implements CTManager {
 
 		if (!includeActive) {
 			Optional<CTCollection> activeCTCollectionOptional =
-				getActiveCTCollectionOptional(userId);
+				getActiveCTCollectionOptional(companyId, userId);
 
 			CTCollection activeCTCollection = activeCTCollectionOptional.get();
 
@@ -261,13 +257,7 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntry> getLatestModelChangeCTEntryOptional(
-		long userId, long resourcePrimKey) {
-
-		long companyId = _getCompanyId(userId);
-
-		if (companyId <= 0) {
-			return Optional.empty();
-		}
+		long companyId, long userId, long resourcePrimKey) {
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId)) {
 			return Optional.empty();
@@ -280,7 +270,7 @@ public class CTManagerImpl implements CTManager {
 		queryDefinition.setStart(0);
 
 		List<CTEntry> ctEntries = getModelChangeCTEntries(
-			userId, resourcePrimKey, queryDefinition);
+			companyId, userId, resourcePrimKey, queryDefinition);
 
 		if (ListUtil.isEmpty(ctEntries)) {
 			return Optional.empty();
@@ -291,7 +281,7 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public List<CTEntry> getModelChangeCTEntries(
-		long userId, long resourcePrimKey) {
+		long companyId, long userId, long resourcePrimKey) {
 
 		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
 
@@ -299,16 +289,16 @@ public class CTManagerImpl implements CTManager {
 			new CTEntryCreateDateComparator(true));
 
 		return getModelChangeCTEntries(
-			userId, resourcePrimKey, queryDefinition);
+			companyId, userId, resourcePrimKey, queryDefinition);
 	}
 
 	@Override
 	public List<CTEntry> getModelChangeCTEntries(
-		long userId, long resourcePrimKey,
+		long companyId, long userId, long resourcePrimKey,
 		QueryDefinition<CTEntry> queryDefinition) {
 
 		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(companyId, userId);
 
 		long ctCollectionId = ctCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -322,17 +312,17 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntryAggregate> getModelChangeCTEntryAggregateOptional(
-		long userId, long modelClassNameId, long modelClassPK) {
+		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
 		Optional<CTEntry> ctEntryOptional = getModelChangeCTEntryOptional(
-			userId, modelClassNameId, modelClassPK);
+			companyId, userId, modelClassNameId, modelClassPK);
 
 		if (!ctEntryOptional.isPresent()) {
 			return Optional.empty();
 		}
 
 		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(companyId, userId);
 
 		long ctCollectionId = ctCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -370,29 +360,23 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntry> getModelChangeCTEntryOptional(
-		long userId, long modelClassNameId, long modelClassPK) {
+		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
 		Optional<CTEntry> ctEntryOptional =
 			getActiveCTCollectionCTEntryOptional(
-				userId, modelClassNameId, modelClassPK);
+				companyId, userId, modelClassNameId, modelClassPK);
 
 		if (ctEntryOptional.isPresent()) {
 			return ctEntryOptional;
 		}
 
 		return getProductionCTCollectionCTEntryOptional(
-			userId, modelClassNameId, modelClassPK);
+			companyId, modelClassNameId, modelClassPK);
 	}
 
 	@Override
 	public Optional<CTEntry> getProductionCTCollectionCTEntryOptional(
-		long userId, long modelClassNameId, long modelClassPK) {
-
-		long companyId = _getCompanyId(userId);
-
-		if (companyId <= 0) {
-			return Optional.empty();
-		}
+		long companyId, long modelClassNameId, long modelClassPK) {
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(companyId);
@@ -403,7 +387,7 @@ public class CTManagerImpl implements CTManager {
 			0L
 		);
 
-		CTEntry ctEntry = _getCTentry(
+		CTEntry ctEntry = _getCTEntry(
 			companyId, ctCollectionId, modelClassNameId, modelClassPK);
 
 		return Optional.ofNullable(ctEntry);
@@ -439,22 +423,21 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public Optional<CTEntry> registerModelChange(
-			long userId, long modelClassNameId, long modelClassPK,
-			long modelResourcePrimKey, int changeType)
+			long companyId, long userId, long modelClassNameId,
+			long modelClassPK, long modelResourcePrimKey, int changeType)
 		throws CTException {
 
 		return registerModelChange(
-			userId, modelClassNameId, modelClassPK, modelResourcePrimKey,
-			changeType, false);
+			companyId, userId, modelClassNameId, modelClassPK,
+			modelResourcePrimKey, changeType, false);
 	}
 
 	@Override
 	public Optional<CTEntry> registerModelChange(
-			long userId, long modelClassNameId, long modelClassPK,
-			long modelResourcePrimKey, int changeType, boolean force)
+			long companyId, long userId, long modelClassNameId,
+			long modelClassPK, long modelResourcePrimKey, int changeType,
+			boolean force)
 		throws CTException {
-
-		long companyId = _getCompanyId(userId);
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
 			!_ctEngineManager.isChangeTrackingSupported(
@@ -464,7 +447,7 @@ public class CTManagerImpl implements CTManager {
 		}
 
 		Optional<CTCollection> ctCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(companyId, userId);
 
 		if (!ctCollectionOptional.isPresent()) {
 			return Optional.empty();
@@ -478,9 +461,8 @@ public class CTManagerImpl implements CTManager {
 			ctEntryOptional = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _registerModelChange(
-					userId, modelClassNameId, modelClassPK,
-					modelResourcePrimKey, changeType, force, companyId,
-					ctCollection));
+					companyId, userId, modelClassNameId, modelClassPK,
+					modelResourcePrimKey, changeType, force, ctCollection));
 		}
 		catch (Throwable t) {
 			if (t instanceof CTException) {
@@ -495,17 +477,16 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public <V extends BaseModel> void registerRelatedChanges(
-		long userId, long classNameId, long classPK) {
+		long companyId, long userId, long classNameId, long classPK) {
 
-		registerRelatedChanges(userId, classNameId, classPK, false);
+		registerRelatedChanges(companyId, userId, classNameId, classPK, false);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <V extends BaseModel> void registerRelatedChanges(
-		long userId, long classNameId, long classPK, boolean force) {
-
-		long companyId = _getCompanyId(userId);
+		long companyId, long userId, long classNameId, long classPK,
+		boolean force) {
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
 			!_ctEngineManager.isChangeTrackingSupported(
@@ -536,19 +517,13 @@ public class CTManagerImpl implements CTManager {
 
 		relatedEntitiesFunctions.forEach(
 			relatedEntitiesFunction -> _registerRelatedChange(
-				userId, classNameId, classPK, versionEntity,
+				companyId, userId, classNameId, classPK, versionEntity,
 				relatedEntitiesFunction, force));
 	}
 
 	@Override
 	public Optional<CTEntry> unregisterModelChange(
-		long userId, long modelClassNameId, long modelClassPK) {
-
-		long companyId = _getCompanyId(userId);
-
-		if (companyId <= 0) {
-			return Optional.empty();
-		}
+		long companyId, long userId, long modelClassNameId, long modelClassPK) {
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
 			!_ctEngineManager.isChangeTrackingSupported(
@@ -558,7 +533,7 @@ public class CTManagerImpl implements CTManager {
 		}
 
 		Optional<CTEntry> ctEntryOptional = getModelChangeCTEntryOptional(
-			userId, modelClassNameId, modelClassPK);
+			companyId, userId, modelClassNameId, modelClassPK);
 
 		return ctEntryOptional.map(
 			ctEntry -> _ctEntryLocalService.deleteCTEntry(ctEntry));
@@ -630,7 +605,8 @@ public class CTManagerImpl implements CTManager {
 		long userId = PrincipalThreadLocal.getUserId();
 
 		Optional<CTCollection> activeCTCollectionOptional =
-			getActiveCTCollectionOptional(userId);
+			getActiveCTCollectionOptional(
+				ctEntryAggregate.getCompanyId(), userId);
 
 		long activeCTCollectionId = activeCTCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -651,28 +627,7 @@ public class CTManagerImpl implements CTManager {
 		return ctEntryAggregateCopy;
 	}
 
-	private long _getCompanyId(long userId) {
-		long companyId = 0;
-
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user == null) {
-			companyId = CompanyThreadLocal.getCompanyId();
-		}
-		else {
-			companyId = user.getCompanyId();
-		}
-
-		if (companyId <= 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get company ID");
-			}
-		}
-
-		return companyId;
-	}
-
-	private CTEntry _getCTentry(
+	private CTEntry _getCTEntry(
 		long companyId, long ctCollectionId, long modelClassNameId,
 		long modelClassPK) {
 
@@ -688,9 +643,9 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	private Optional<CTEntry> _registerModelChange(
-			long userId, long modelClassNameId, long modelClassPK,
-			long modelResourcePrimKey, int changeType, boolean force,
-			long companyId, CTCollection ctCollection)
+			long companyId, long userId, long modelClassNameId,
+			long modelClassPK, long modelResourcePrimKey, int changeType,
+			boolean force, CTCollection ctCollection)
 		throws CTException {
 
 		try {
@@ -700,7 +655,7 @@ public class CTManagerImpl implements CTManager {
 
 			Optional<CTEntry> previousModelChangeCTEntryOptional =
 				getLatestModelChangeCTEntryOptional(
-					userId, modelResourcePrimKey);
+					companyId, userId, modelResourcePrimKey);
 
 			// Creating a new change tracking entry
 
@@ -757,20 +712,20 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	private void _registerRelatedChange(
-		long userId, CTEntry versionEntityCTEntry, BaseModel relatedEntity,
-		boolean force) {
+		long companyId, long userId, CTEntry versionEntityCTEntry,
+		BaseModel relatedEntity, boolean force) {
 
 		long relatedEntityClassPK = (Long)relatedEntity.getPrimaryKeyObj();
 
 		Optional<CTEntry> relatedEntityCTEntryOptional =
 			getModelChangeCTEntryOptional(
-				userId,
+				companyId, userId,
 				_portal.getClassNameId(relatedEntity.getModelClassName()),
 				relatedEntityClassPK);
 
 		if (!relatedEntityCTEntryOptional.isPresent()) {
 			relatedEntityCTEntryOptional = getLatestModelChangeCTEntryOptional(
-				userId, relatedEntityClassPK);
+				companyId, userId, relatedEntityClassPK);
 		}
 
 		if (!relatedEntityCTEntryOptional.isPresent()) {
@@ -778,17 +733,19 @@ public class CTManagerImpl implements CTManager {
 		}
 
 		addRelatedCTEntry(
-			userId, versionEntityCTEntry, relatedEntityCTEntryOptional.get(),
-			force);
+			companyId, userId, versionEntityCTEntry,
+			relatedEntityCTEntryOptional.get(), force);
 	}
 
 	private <V extends BaseModel> void _registerRelatedChange(
-		long userId, long classNameId, long classPK, V versionEntity,
+		long companyId, long userId, long classNameId, long classPK,
+		V versionEntity,
 		Function<V, List<? extends BaseModel>> relatedEntitiesFunction,
 		boolean force) {
 
 		Optional<CTEntry> versionEntityCTEntryOptional =
-			getModelChangeCTEntryOptional(userId, classNameId, classPK);
+			getModelChangeCTEntryOptional(
+				companyId, userId, classNameId, classPK);
 
 		if (!versionEntityCTEntryOptional.isPresent()) {
 			return;
@@ -804,8 +761,8 @@ public class CTManagerImpl implements CTManager {
 			Objects::nonNull
 		).forEach(
 			relatedEntity -> _registerRelatedChange(
-				userId, versionEntityCTEntryOptional.get(), relatedEntity,
-				force)
+				companyId, userId, versionEntityCTEntryOptional.get(),
+				relatedEntity, force)
 		);
 	}
 

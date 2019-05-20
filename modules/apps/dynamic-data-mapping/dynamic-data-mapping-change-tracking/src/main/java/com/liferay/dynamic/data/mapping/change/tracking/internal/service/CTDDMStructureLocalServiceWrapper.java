@@ -141,7 +141,7 @@ public class CTDDMStructureLocalServiceWrapper
 			structure -> {
 				Optional<CTEntry> ctEntryOptional =
 					_ctManager.getLatestModelChangeCTEntryOptional(
-						PrincipalThreadLocal.getUserId(),
+						companyId, PrincipalThreadLocal.getUserId(),
 						structure.getStructureId());
 
 				return ctEntryOptional.isPresent();
@@ -182,6 +182,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 				Optional<CTEntry> ctEntryOptional =
 					_ctManager.getLatestModelChangeCTEntryOptional(
+						structure.getCompanyId(),
 						PrincipalThreadLocal.getUserId(),
 						structure.getStructureId());
 
@@ -269,7 +270,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				ddmStructure.getStructureId());
 
 		return ctEntryOptional.isPresent();
@@ -278,7 +279,7 @@ public class CTDDMStructureLocalServiceWrapper
 	private DDMStructure _populateDDMStructure(DDMStructure ddmStructure) {
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				ddmStructure.getStructureId());
 
 		if (!ctEntryOptional.isPresent()) {
@@ -335,6 +336,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 		try {
 			_ctManager.registerModelChange(
+				ddmStructureVersion.getCompanyId(),
 				PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(DDMStructureVersion.class.getName()),
 				ddmStructureVersion.getStructureVersionId(),

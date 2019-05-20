@@ -22,6 +22,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalChangeTrackingHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -38,14 +39,26 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalChangeTrackingHelperImpl
 	implements JournalChangeTrackingHelper {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
-	public String getJournalArticleCTCollectionName(long userId, long id) {
+	public String getJournalArticleCTCollectionName(long userId, long classPK) {
+		return getJournalArticleCTCollectionName(
+			CompanyThreadLocal.getCompanyId(), userId, classPK);
+	}
+
+	@Override
+	public String getJournalArticleCTCollectionName(
+		long companyId, long userId, long id) {
+
 		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				userId, classNameId, id);
+				companyId, userId, classNameId, id);
 
 		Stream<CTCollection> stream = ctEntryOptional.map(
 			CTEntry::getCtEntryId
@@ -70,7 +83,7 @@ public class JournalChangeTrackingHelperImpl
 	@Override
 	public boolean hasActiveCTCollection(long companyId, long userId) {
 		Optional<CTCollection> ctCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(userId);
+			_ctManager.getActiveCTCollectionOptional(companyId, userId);
 
 		return ctCollectionOptional.map(
 			ctCollection -> !ctCollection.isProduction()
@@ -79,16 +92,28 @@ public class JournalChangeTrackingHelperImpl
 		);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
-	public boolean isJournalArticleInChangeList(long userId, long id) {
+	public boolean isJournalArticleInChangeList(long userId, long classPK) {
+		return isJournalArticleInChangeList(
+			CompanyThreadLocal.getCompanyId(), userId, classPK);
+	}
+
+	@Override
+	public boolean isJournalArticleInChangeList(
+		long companyId, long userId, long id) {
+
 		long classNameId = _portal.getClassNameId(
 			JournalArticle.class.getName());
 
-		long activeCTCollectionId = _getActiveCTCollectionId(userId);
+		long activeCTCollectionId = _getActiveCTCollectionId(companyId, userId);
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				userId, classNameId, id);
+				companyId, userId, classNameId, id);
 
 		ctEntryOptional = ctEntryOptional.filter(
 			ctEntry ->
@@ -101,9 +126,9 @@ public class JournalChangeTrackingHelperImpl
 		return false;
 	}
 
-	private long _getActiveCTCollectionId(long userId) {
+	private long _getActiveCTCollectionId(long companyId, long userId) {
 		Optional<CTCollection> ctCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(userId);
+			_ctManager.getActiveCTCollectionOptional(companyId, userId);
 
 		return ctCollectionOptional.filter(
 			ctCollection -> !ctCollection.isProduction()

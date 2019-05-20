@@ -67,6 +67,7 @@ public class CTDDMStructureVersionLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
+				latestDDMStructureVersion.getCompanyId(),
 				PrincipalThreadLocal.getUserId(), structureId);
 
 		return ctEntryOptional.map(

@@ -461,7 +461,7 @@ public class CTLayoutLocalServiceWrapper extends LayoutLocalServiceWrapper {
 
 		try {
 			_ctManager.registerModelChange(
-				PrincipalThreadLocal.getUserId(),
+				layoutVersion.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(LayoutVersion.class.getName()),
 				layoutVersion.getLayoutVersionId(), layoutVersion.getPlid(),
 				changeType);

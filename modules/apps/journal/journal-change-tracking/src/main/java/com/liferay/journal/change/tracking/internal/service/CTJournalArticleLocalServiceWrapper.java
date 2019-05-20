@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1787,6 +1788,7 @@ public class CTJournalArticleLocalServiceWrapper
 	private DynamicQuery _getChangeTrackingAwareDynamicQuery() {
 		Optional<CTCollection> activeCTCollectionOptional =
 			_ctManager.getActiveCTCollectionOptional(
+				CompanyThreadLocal.getCompanyId(),
 				PrincipalThreadLocal.getUserId());
 
 		if (!activeCTCollectionOptional.isPresent()) {
@@ -1884,7 +1886,7 @@ public class CTJournalArticleLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId());
 
@@ -1907,13 +1909,13 @@ public class CTJournalArticleLocalServiceWrapper
 
 		try {
 			_ctManager.registerModelChange(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId(), journalArticle.getResourcePrimKey(),
 				changeType, force);
 
 			_ctManager.registerRelatedChanges(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId(), force);
 		}
@@ -1935,7 +1937,7 @@ public class CTJournalArticleLocalServiceWrapper
 		}
 
 		_ctManager.unregisterModelChange(
-			PrincipalThreadLocal.getUserId(),
+			journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			journalArticle.getId());
 	}

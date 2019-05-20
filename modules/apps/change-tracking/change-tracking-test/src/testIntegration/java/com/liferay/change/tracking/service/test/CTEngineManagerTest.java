@@ -419,7 +419,8 @@ public class CTEngineManagerTest {
 				)));
 
 		Optional<CTCollection> activeCTCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(_user.getUserId());
+			_ctManager.getActiveCTCollectionOptional(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
 		Assert.assertTrue(activeCTCollectionOptional.isPresent());
 		Assert.assertEquals(
@@ -444,7 +445,8 @@ public class CTEngineManagerTest {
 			String.valueOf(ctCollection.getCtCollectionId()));
 
 		Optional<CTCollection> activeCTCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(_user.getUserId());
+			_ctManager.getActiveCTCollectionOptional(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
 		Assert.assertFalse(
 			"Change tracking collection must be null",

@@ -171,7 +171,7 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				journalArticle.getResourcePrimKey());
 
 		return ctEntryOptional.isPresent();

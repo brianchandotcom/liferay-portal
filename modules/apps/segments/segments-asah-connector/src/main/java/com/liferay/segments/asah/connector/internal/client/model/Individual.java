@@ -48,6 +48,10 @@ public class Individual {
 		return _id;
 	}
 
+	public List<String> getIndividualSegmentIds() {
+		return _individualSegmentIds;
+	}
+
 	public void setDataSourceIndividualPKs(
 		List<DataSourceIndividualPK> dataSourceIndividualPKs) {
 
@@ -70,6 +74,10 @@ public class Individual {
 		_id = id;
 	}
 
+	public void setIndividualSegmentIds(List<String> individualSegmentIds) {
+		_individualSegmentIds = individualSegmentIds;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(11);
@@ -84,6 +92,8 @@ public class Individual {
 		sb.append(_demographics);
 		sb.append(", id=");
 		sb.append(_id);
+		sb.append(", individualSegmentIds=");
+		sb.append(_individualSegmentIds);
 		sb.append("}");
 
 		return sb.toString();
@@ -130,5 +140,6 @@ public class Individual {
 	private Date _dateModified;
 	private Map<String, List<Field>> _demographics = new HashMap<>();
 	private String _id;
+	private List<String> _individualSegmentIds = new ArrayList<>();
 
 }

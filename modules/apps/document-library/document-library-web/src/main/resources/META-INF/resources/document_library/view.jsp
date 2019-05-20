@@ -132,7 +132,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 						<div class="document-container">
 							<c:choose>
 								<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-									<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+									<%@ include file="/document_library/search_resources.jspf" %>
 								</c:when>
 								<c:otherwise>
 									<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />

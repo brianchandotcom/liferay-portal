@@ -63,7 +63,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<%@ include file="/document_library/navigation.jspf" %>
 
-		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
+		<%@ include file="/document_library/toolbar.jspf" %>
 
 		<%
 		BulkSelectionRunner bulkSelectionRunner = BulkSelectionRunnerUtil.getBulkSelectionRunner();

@@ -883,6 +883,7 @@ information.
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 						<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
 						<arg value="--no-daemon" />
+						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg value="--project-cache-dir=${project.dir}/.gradle" />
 						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
 						<arg value="--stacktrace" />
@@ -926,6 +927,7 @@ information.
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
 								<arg value="--no-daemon" />
+								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg value="--project-cache-dir=${project.dir}/.gradle" />
 								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
 								<arg value="--stacktrace" />

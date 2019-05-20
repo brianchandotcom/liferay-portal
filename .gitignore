@@ -57,6 +57,7 @@
 /portal-client/src
 /portal-impl/*.ipr
 /portal-impl/*.iws
+/portal-impl/build
 /portal-impl/classes
 /portal-impl/portal-impl*.asc
 /portal-impl/portal-impl*.jar
@@ -74,6 +75,7 @@
 /portal-impl/woven-classes
 /portal-kernel/*.ipr
 /portal-kernel/*.iws
+/portal-kernel/build
 /portal-kernel/classes
 /portal-kernel/portal-kernel*.asc
 /portal-kernel/portal-kernel*.jar
@@ -88,6 +90,7 @@
 /portal-test-integration/portal-test-integration*.jar
 /portal-test/*.ipr
 /portal-test/*.iws
+/portal-test/build
 /portal-test/classes
 /portal-test/portal-test*.asc
 /portal-test/portal-test*.jar
@@ -173,11 +176,13 @@
 /tunnel-web/tunnel-web.war
 /util-bridges/*.ipr
 /util-bridges/*.iws
+/util-bridges/build
 /util-bridges/classes
 /util-bridges/util-bridges*.asc
 /util-bridges/util-bridges*.jar
 /util-java/*.ipr
 /util-java/*.iws
+/util-java/build
 /util-java/classes
 /util-java/test-classes
 /util-java/test-coverage
@@ -186,6 +191,7 @@
 /util-java/util-java*.jar
 /util-slf4j/*.ipr
 /util-slf4j/*.iws
+/util-slf4j/build
 /util-slf4j/classes
 /util-slf4j/test-classes
 /util-slf4j/test-results
@@ -193,6 +199,7 @@
 /util-slf4j/util-slf4j*.jar
 /util-taglib/*.ipr
 /util-taglib/*.iws
+/util-taglib/build
 /util-taglib/classes
 /util-taglib/test-classes
 /util-taglib/test-coverage

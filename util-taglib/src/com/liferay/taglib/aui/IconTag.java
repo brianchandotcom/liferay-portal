@@ -171,6 +171,7 @@ public class IconTag extends BaseIconTag {
 				jspWriter.write("<use data-href=\"");
 
 				String src = getSrc();
+
 				HttpServletRequest httpServletRequest =
 					(HttpServletRequest)pageContext.getRequest();
 

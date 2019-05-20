@@ -18,7 +18,7 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;
-import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.utils.DebugUtils;
 import com.liferay.talend.utils.SchemaUtils;
 
@@ -50,7 +50,6 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
-import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -90,71 +89,54 @@ public class TLiferayOutputProperties
 			_log.debug("Endpoint: " + resource.endpoint.getValue());
 		}
 
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getEffectiveLiferayConnectionProperties());
+
 		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable(ValidationResult.Result.OK);
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+			return validationResultMutable;
+		}
 
-			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveLiferayConnectionProperties());
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			try {
 
-			setValidationResult(
-				liferaySourceOrSinkRuntime.validate(null),
-				validationResultMutable);
+				// TODO : Fix it
 
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
+				/*
+				Operation supportedOperation = _getSupportedOperation(
+				liferaySourceOrSinkRuntime);
 
-				//setValidationResult(validateOperations(),
-
-				// validationResultMutable);
-
-			}
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-
-					// TODO : Fix it
-
-					/*
-					Operation supportedOperation = _getSupportedOperation(
-					liferaySourceOrSinkRuntime);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Form for schema fields: " +
-							supportedOperation.getExpects());
-					}
-
-					Schema schema = _getOperationSchema(
-					liferaySourceOrSinkRuntime, supportedOperation);
-
-					resource.main.schema.setValue(schema);
-					temporaryMainSchema = schema;
-					*/
-					_updateOutputSchemas();
-
-					validationResultMutable.setMessage(
-						i18nMessages.getMessage("success.validation.schema"));
-				}
-				catch (UnsupportedOperationException uoe) {
-					setValidationResult(
-						ExceptionUtils.exceptionToValidationResult(uoe),
-						validationResultMutable);
-				}
-			}
-			else {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to determine supported operations");
+					_log.debug(
+						"Form for schema fields: " +
+						supportedOperation.getExpects());
 				}
+
+				Schema schema = _getOperationSchema(
+				liferaySourceOrSinkRuntime, supportedOperation);
+
+				resource.main.schema.setValue(schema);
+				temporaryMainSchema = schema;
+				*/
+				_updateOutputSchemas();
+
+				validationResultMutable.setMessage(
+					i18nMessages.getMessage("success.validation.schema"));
+			}
+			catch (UnsupportedOperationException uoe) {
+				setValidationResult(
+					ExceptionUtils.exceptionToValidationResult(uoe),
+					validationResultMutable);
+			}
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to determine supported operations");
 			}
 		}
 
@@ -271,7 +253,7 @@ public class TLiferayOutputProperties
 				new ValidationResultMutable(ValidationResult.Result.OK);
 
 			try (SandboxedInstance sandboxedInstance =
-					LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition._getSandboxedInstance(
 						LiferayBaseComponentDefinition.
 							RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
@@ -354,7 +336,7 @@ public class TLiferayOutputProperties
 			validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 			try (SandboxedInstance sandboxedInstance =
-					LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition._getSandboxedInstance(
 						LiferayBaseComponentDefinition.
 							RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 

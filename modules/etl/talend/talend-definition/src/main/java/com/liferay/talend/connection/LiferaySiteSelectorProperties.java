@@ -17,6 +17,7 @@ package com.liferay.talend.connection;
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,6 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.properties.service.Repository;
-import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -54,26 +54,17 @@ public class LiferaySiteSelectorProperties
 	public ValidationResult afterFormFinishMain(
 		Repository<Properties> repository) {
 
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-			liferaySourceOrSinkRuntime.initialize(null, this);
+		try {
+			ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+				LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+					getLiferayConnectionProperties());
 
 			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable();
+				validatedSoSSandboxRuntime.getValidationResultMutable();
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validateConnection(connection);
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.ERROR) {
 
-			validationResultMutable.setMessage(validationResult.getMessage());
-			validationResultMutable.setStatus(validationResult.getStatus());
-
-			if (validationResult.getStatus() != ValidationResult.Result.OK) {
 				return validationResultMutable;
 			}
 
@@ -109,55 +100,49 @@ public class LiferaySiteSelectorProperties
 		}
 	}
 
-	public void beforeFormPresentMain() throws Exception {
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+	public ValidationResult beforeFormPresentMain() throws Exception {
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getLiferayConnectionProperties());
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		ValidationResultMutable validationResultMutable =
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
-			liferaySourceOrSinkRuntime.initialize(null, connection);
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable();
+			return validationResultMutable;
+		}
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
-			validationResultMutable.setStatus(validationResult.getStatus());
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			try {
+				_webSites = liferaySourceOrSinkRuntime.getAvailableWebSites();
 
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-					_webSites =
-						liferaySourceOrSinkRuntime.getAvailableWebSites();
-
-					if (_webSites.isEmpty()) {
-						validationResultMutable.setMessage(
-							i18nMessages.getMessage(
-								"error.validation.websites"));
-						validationResultMutable.setStatus(
-							ValidationResult.Result.ERROR);
-					}
-
-					wizardWebSiteProperty.setPossibleNamedThingValues(
-						_webSites);
-
-					connection.siteId.setPossibleNamedThingValues(_webSites);
-
-					Form form = getForm(Form.MAIN);
-
-					form.setAllowBack(true);
-					form.setAllowFinish(true);
+				if (_webSites.isEmpty()) {
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage("error.validation.websites"));
+					validationResultMutable.setStatus(
+						ValidationResult.Result.ERROR);
 				}
-				catch (Exception e) {
-					throw new ComponentException(e);
-				}
+
+				wizardWebSiteProperty.setPossibleNamedThingValues(_webSites);
+
+				connection.siteId.setPossibleNamedThingValues(_webSites);
+
+				Form form = getForm(Form.MAIN);
+
+				form.setAllowBack(true);
+				form.setAllowFinish(true);
+			}
+			catch (Exception e) {
+				throw new ComponentException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override

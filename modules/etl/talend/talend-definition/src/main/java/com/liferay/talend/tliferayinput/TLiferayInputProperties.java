@@ -19,6 +19,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.utils.PropertiesUtils;
 import com.liferay.talend.utils.URIUtils;
 
@@ -37,9 +38,9 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
-import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -97,44 +98,41 @@ public class TLiferayInputProperties
 	}
 
 	public ValidationResult validateGuessSchema() {
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getEffectiveLiferayConnectionProperties());
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		ValidationResultMutable validationResultMutable =
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.initialize(
-					null, getEffectiveLiferayConnectionProperties());
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
-			if (validationResult.getStatus() == ValidationResult.Result.ERROR) {
-				return validationResult;
-			}
-
-			validationResult = liferaySourceOrSinkRuntime.validate(null);
-
-			if (validationResult.getStatus() == ValidationResult.Result.OK) {
-				try {
-					URI resourceURI = URIUtils.setPaginationLimitOnURL(
-						resource.endpoint.getValue(), 1);
-
-					String resourceCollectionType = "type";
-
-					Schema runtimeSchema =
-						liferaySourceOrSinkRuntime.getResourceSchemaByType(
-							resourceCollectionType);
-
-					resource.main.schema.setValue(runtimeSchema);
-				}
-				catch (IOException ioe) {
-					return ExceptionUtils.exceptionToValidationResult(ioe);
-				}
-			}
-
-			return validationResult;
+			return validationResultMutable;
 		}
+
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
+
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			try {
+				URI resourceURI = URIUtils.setPaginationLimitOnURL(
+					resource.endpoint.getValue(), 1);
+
+				String resourceCollectionType = "type";
+
+				Schema runtimeSchema =
+					liferaySourceOrSinkRuntime.getResourceSchemaByType(
+						resourceCollectionType);
+
+				resource.main.schema.setValue(runtimeSchema);
+			}
+			catch (IOException ioe) {
+				return ExceptionUtils.exceptionToValidationResult(ioe);
+			}
+		}
+
+		return validationResultMutable;
 	}
 
 	public transient PresentationItem guessSchema = new PresentationItem(

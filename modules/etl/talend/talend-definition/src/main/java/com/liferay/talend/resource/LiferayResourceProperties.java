@@ -19,9 +19,8 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.utils.URIUtils;
-
-import java.io.IOException;
 
 import java.net.URI;
 
@@ -48,7 +47,6 @@ import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
-import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -65,59 +63,40 @@ public class LiferayResourceProperties
 			_log.debug("Endpoint: " + endpoint.getValue());
 		}
 
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getEffectiveLiferayConnectionProperties());
+
 		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
-		validationResultMutable.setStatus(ValidationResult.Result.OK);
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+			return validationResultMutable;
+		}
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
-			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveLiferayConnectionProperties());
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			try {
+				URI resourceURI = URIUtils.setPaginationLimitOnURL(
+					endpoint.getValue(), 1);
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
+				String resourceCollectionType = "type";
 
-			validationResultMutable.setMessage(validationResult.getMessage());
-			validationResultMutable.setStatus(validationResult.getStatus());
+				Schema schema =
+					liferaySourceOrSinkRuntime.getResourceSchemaByType(
+						resourceCollectionType);
 
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-					URI resourceURI = URIUtils.setPaginationLimitOnURL(
-						endpoint.getValue(), 1);
-
-					String resourceCollectionType = "type";
-
-					Schema schema =
-						liferaySourceOrSinkRuntime.getResourceSchemaByType(
-							resourceCollectionType);
-
-					main.schema.setValue(schema);
-				}
-				catch (IOException ioe) {
-					validationResult =
-						ExceptionUtils.exceptionToValidationResult(ioe);
-
-					validationResultMutable.setMessage(
-						validationResult.getMessage());
-					validationResultMutable.setStatus(
-						validationResult.getStatus());
-				}
-				catch (NoSuchElementException nsee) {
-					validationResultMutable.setMessage(
-						i18nMessages.getMessage(
-							"error.validation.resourceType"));
-					validationResultMutable.setStatus(
-						ValidationResult.Result.ERROR);
-				}
+				main.schema.setValue(schema);
+			}
+			catch (NoSuchElementException nsee) {
+				validationResultMutable.setMessage(
+					i18nMessages.getMessage("error.validation.resourceType"));
+				validationResultMutable.setStatus(
+					ValidationResult.Result.ERROR);
 			}
 		}
 
@@ -134,54 +113,47 @@ public class LiferayResourceProperties
 	}
 
 	public ValidationResult beforeEndpoint() throws Exception {
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getEffectiveLiferayConnectionProperties());
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		ValidationResultMutable validationResultMutable =
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
-			liferaySourceOrSinkRuntime.initialize(
-				null, getEffectiveLiferayConnectionProperties());
-
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable();
-
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
-
-			validationResultMutable.setStatus(validationResult.getStatus());
-
-			LiferayConnectionProperties liferayConnectionProperties =
-				getEffectiveLiferayConnectionProperties();
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-					List<NamedThing> resourceNames = null;
-
-					resourceNames = liferaySourceOrSinkRuntime.getResourceList(
-						liferayConnectionProperties.siteId.getValue());
-
-					if (resourceNames.isEmpty()) {
-						validationResultMutable.setMessage(
-							i18nMessages.getMessage(
-								"error.validation.resources"));
-						validationResultMutable.setStatus(
-							ValidationResult.Result.ERROR);
-					}
-
-					endpoint.setPossibleNamedThingValues(resourceNames);
-				}
-				catch (Exception e) {
-					return ExceptionUtils.exceptionToValidationResult(e);
-				}
-			}
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
 
 			return validationResultMutable;
 		}
+
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveLiferayConnectionProperties();
+
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			try {
+				List<NamedThing> resourceNames = null;
+
+				resourceNames = liferaySourceOrSinkRuntime.getResourceList(
+					liferayConnectionProperties.siteId.getValue());
+
+				if (resourceNames.isEmpty()) {
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage("error.validation.resources"));
+					validationResultMutable.setStatus(
+						ValidationResult.Result.ERROR);
+				}
+
+				endpoint.setPossibleNamedThingValues(resourceNames);
+			}
+			catch (Exception e) {
+				return ExceptionUtils.exceptionToValidationResult(e);
+			}
+		}
+
+		return validationResultMutable;
 	}
 
 	@Override

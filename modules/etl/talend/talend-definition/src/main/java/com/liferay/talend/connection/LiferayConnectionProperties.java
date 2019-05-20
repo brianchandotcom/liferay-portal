@@ -17,6 +17,7 @@ package com.liferay.talend.connection;
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.utils.PropertiesUtils;
 
@@ -41,7 +42,6 @@ import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
-import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -88,11 +88,12 @@ public class LiferayConnectionProperties
 	}
 
 	public ValidationResult beforeSiteId() {
-		ValidatedSandboxRuntime validatedSandboxRuntime =
-			initializeSandboxedRuntime();
+		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getReferencedConnectionProperties());
 
 		ValidationResultMutable validationResultMutable =
-			validatedSandboxRuntime.getValidationResultMutable();
+			validatedSoSSandboxRuntime.getValidationResultMutable();
 
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
@@ -101,7 +102,7 @@ public class LiferayConnectionProperties
 		}
 
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-			validatedSandboxRuntime.getLiferaySourceOrSinkRuntime();
+			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
 		try {
 			List<NamedThing> webSites =
@@ -332,33 +333,24 @@ public class LiferayConnectionProperties
 	}
 
 	public ValidationResult validateTestConnection() {
-		try {
-			SandboxedInstance sandboxedInstance = getRuntimeSandboxedInstance();
+		ValidatedSoSSandboxRuntime sandboxRuntime =
+			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+				getReferencedConnectionProperties());
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+		ValidationResultMutable validationResultMutable =
+			sandboxRuntime.getValidationResultMutable();
 
-			liferaySourceOrSinkRuntime.initialize(null, this);
+		Form form = getForm(FORM_WIZARD);
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
-
-			Form form = getForm(FORM_WIZARD);
-
-			if (validationResult.getStatus() == ValidationResult.Result.OK) {
-				form.setAllowFinish(true);
-				form.setAllowForward(true);
-			}
-			else {
-				form.setAllowForward(false);
-			}
-
-			return validationResult;
+		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
+			form.setAllowFinish(true);
+			form.setAllowForward(true);
 		}
-		catch (Exception e) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR, e.getMessage());
+		else {
+			form.setAllowForward(false);
 		}
+
+		return validationResultMutable;
 	}
 
 	public PresentationItem advanced = new PresentationItem("advanced");
@@ -410,72 +402,6 @@ public class LiferayConnectionProperties
 
 		private final String _description;
 
-	}
-
-	public class ValidatedSandboxRuntime {
-
-		public ValidatedSandboxRuntime(
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-			ValidationResultMutable validationResultMutable) {
-
-			if (validationResultMutable == null) {
-				throw new NullPointerException(
-					"validationResultMutable must not be null");
-			}
-
-			_liferaySourceOrSinkRuntime = liferaySourceOrSinkRuntime;
-			_validationResultMutable = validationResultMutable;
-		}
-
-		public LiferaySourceOrSinkRuntime getLiferaySourceOrSinkRuntime() {
-			return _liferaySourceOrSinkRuntime;
-		}
-
-		public ValidationResultMutable getValidationResultMutable() {
-			return _validationResultMutable;
-		}
-
-		private final LiferaySourceOrSinkRuntime _liferaySourceOrSinkRuntime;
-		private final ValidationResultMutable _validationResultMutable;
-
-	}
-
-	protected SandboxedInstance getRuntimeSandboxedInstance() {
-		return LiferayBaseComponentDefinition.getSandboxedInstance(
-			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
-	}
-
-	protected ValidatedSandboxRuntime initializeSandboxedRuntime() {
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable(
-					liferaySourceOrSinkRuntime.initialize(
-						null, getReferencedConnectionProperties()));
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.ERROR) {
-
-				return new ValidatedSandboxRuntime(
-					liferaySourceOrSinkRuntime, validationResultMutable);
-			}
-
-			validationResultMutable = new ValidationResultMutable(
-				liferaySourceOrSinkRuntime.validate(null));
-
-			return new ValidatedSandboxRuntime(
-				liferaySourceOrSinkRuntime, validationResultMutable);
-		}
-		catch (Exception e) {
-			return new ValidatedSandboxRuntime(
-				null, ExceptionUtils.exceptionToValidationResult(e));
-		}
 	}
 
 	protected static final I18nMessages i18nMessages;

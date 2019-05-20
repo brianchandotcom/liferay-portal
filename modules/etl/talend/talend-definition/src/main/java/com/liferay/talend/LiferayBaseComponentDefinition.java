@@ -15,12 +15,17 @@
 package com.liferay.talend;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 
 import org.talend.components.api.component.AbstractComponentDefinition;
 import org.talend.components.api.component.runtime.DependenciesReader;
 import org.talend.components.api.component.runtime.ExecutionEngine;
 import org.talend.components.api.component.runtime.JarRuntimeInfo;
 import org.talend.components.api.properties.ComponentProperties;
+import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.runtime.RuntimeInfo;
 import org.talend.daikon.runtime.RuntimeUtil;
@@ -49,39 +54,37 @@ public abstract class LiferayBaseComponentDefinition
 			className);
 	}
 
-	public static SandboxedInstance getSandboxedInstance(
-		String runtimeClassName) {
+	public static ValidatedSoSSandboxRuntime initializeSandboxedRuntime(
+		LiferayConnectionProperties liferayConnectionProperties) {
 
-		return getSandboxedInstance(runtimeClassName, false);
-	}
+		try (SandboxedInstance sandboxedInstance = _getSandboxedInstance(
+				RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
-	public static SandboxedInstance getSandboxedInstance(
-		String runtimeClassName, boolean useCurrentJvmProperties) {
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
-		return _sandboxedInstanceProvider.getSandboxedInstance(
-			runtimeClassName, useCurrentJvmProperties);
-	}
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable(
+					liferaySourceOrSinkRuntime.initialize(
+						null, liferayConnectionProperties));
 
-	public static SandboxedInstanceProvider getSandboxedInstanceProvider() {
-		return _sandboxedInstanceProvider;
-	}
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.ERROR) {
 
-	/**
-	 * Set provider of SandboxedInstances.
-	 *
-	 * <p>
-	 * The method is intended for debug/test purposes only and should not be
-	 * used in production.
-	 * </p>
-	 *
-	 * @param sandboxedInstanceProvider provider to be set, can't be {@code
-	 *        null}
-	 * @review
-	 */
-	public static void setSandboxedInstanceProvider(
-		SandboxedInstanceProvider sandboxedInstanceProvider) {
+				return new ValidatedSoSSandboxRuntime(
+					liferaySourceOrSinkRuntime, validationResultMutable);
+			}
 
-		_sandboxedInstanceProvider = sandboxedInstanceProvider;
+			validationResultMutable = new ValidationResultMutable(
+				liferaySourceOrSinkRuntime.validate(null));
+
+			return new ValidatedSoSSandboxRuntime(
+				liferaySourceOrSinkRuntime, validationResultMutable);
+		}
+		catch (Exception e) {
+			return new ValidatedSoSSandboxRuntime(
+				null, ExceptionUtils.exceptionToValidationResult(e));
+		}
 	}
 
 	public LiferayBaseComponentDefinition(
@@ -171,6 +174,19 @@ public abstract class LiferayBaseComponentDefinition
 			return RuntimeUtil.createRuntimeClass(runtimeInfo, classLoader);
 		}
 
+	}
+
+	private static SandboxedInstance _getSandboxedInstance(
+		String runtimeClassName) {
+
+		return _getSandboxedInstance(runtimeClassName, false);
+	}
+
+	private static SandboxedInstance _getSandboxedInstance(
+		String runtimeClassName, boolean useCurrentJvmProperties) {
+
+		return _sandboxedInstanceProvider.getSandboxedInstance(
+			runtimeClassName, useCurrentJvmProperties);
 	}
 
 	private static final String _MAVEN_GROUP_ID = "com.liferay";

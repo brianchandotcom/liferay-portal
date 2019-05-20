@@ -151,11 +151,16 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @param {object} event The tooltip button click.
 	 */
 	_handleTooltipButtonClick(event) {
-		EditableBackgroundImageProcessor.init(
-			this._handleSelectBackgroundImage,
-			this.imageSelectorURL,
-			this.portletNamespace
-		);
+		if (event.buttonId === TOOLTIP_BUTTON_IDS.select) {
+			EditableBackgroundImageProcessor.init(
+				this._handleSelectBackgroundImage,
+				this.imageSelectorURL,
+				this.portletNamespace
+			);
+		}
+		else if (event.buttonId === TOOLTIP_BUTTON_IDS.remove) {
+			this._updateBackgroundImage('');
+		}
 	}
 
 	/**

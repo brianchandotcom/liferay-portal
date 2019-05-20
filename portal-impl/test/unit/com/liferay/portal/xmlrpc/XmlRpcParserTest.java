@@ -15,18 +15,18 @@
 package com.liferay.portal.xmlrpc;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.Success;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,10 +35,18 @@ import org.junit.Test;
  */
 public class XmlRpcParserTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() {
+		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
+			new SecureXMLFactoryProviderUtil();
+
+		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
+			new SecureXMLFactoryProviderImpl());
+
+		XmlRpcUtil xmlRpcUtil = new XmlRpcUtil();
+
+		xmlRpcUtil.setXmlRpc(new XmlRpcImpl());
+	}
 
 	@Test
 	public void testFaultResponseGenerator() throws Exception {
@@ -48,10 +56,10 @@ public class XmlRpcParserTest {
 
 		Assert.assertTrue(response instanceof Fault);
 
-		fault = (Fault)response;
+		Fault faultResponse = (Fault)response;
 
-		Assert.assertEquals("Fault", fault.getDescription());
-		Assert.assertEquals(1234, fault.getCode());
+		Assert.assertEquals("Fault", faultResponse.getDescription());
+		Assert.assertEquals(1234, faultResponse.getCode());
 	}
 
 	@Test
@@ -75,10 +83,10 @@ public class XmlRpcParserTest {
 
 		Tuple tuple = XmlRpcParser.parseMethod(xml);
 
-		String methodName = (String)tuple.getObject(0);
+		Assert.assertEquals("method.name", tuple.getObject(0));
+
 		Object[] arguments = (Object[])tuple.getObject(1);
 
-		Assert.assertEquals("method.name", methodName);
 		Assert.assertEquals(Arrays.toString(arguments), 2, arguments.length);
 		Assert.assertEquals("hello", arguments[0]);
 		Assert.assertEquals("world", arguments[1]);
@@ -86,26 +94,33 @@ public class XmlRpcParserTest {
 
 	@Test
 	public void testMethodParser() throws Exception {
-		Tuple tuple = XmlRpcParser.parseMethod(_PARAMETERIZED_METHOD);
+		Tuple parameterizedMethodTuple = XmlRpcParser.parseMethod(
+			_PARAMETERIZED_METHOD);
 
-		String methodName = (String)tuple.getObject(0);
-		Object[] arguments = (Object[])tuple.getObject(1);
+		Assert.assertEquals("params", parameterizedMethodTuple.getObject(0));
 
-		Assert.assertEquals("params", methodName);
-		Assert.assertEquals(Arrays.toString(arguments), 3, arguments.length);
-		Assert.assertEquals(1024, arguments[0]);
-		Assert.assertEquals("hello", arguments[1]);
-		Assert.assertEquals("world", arguments[2]);
+		Object[] parameterizedMethodArguments =
+			(Object[])parameterizedMethodTuple.getObject(1);
+
+		Assert.assertEquals(
+			Arrays.toString(parameterizedMethodArguments), 3,
+			parameterizedMethodArguments.length);
+		Assert.assertEquals(1024, parameterizedMethodArguments[0]);
+		Assert.assertEquals("hello", parameterizedMethodArguments[1]);
+		Assert.assertEquals("world", parameterizedMethodArguments[2]);
 
 		for (String xml : _NON_PARAMETERIZED_METHODS) {
-			tuple = XmlRpcParser.parseMethod(xml);
+			Tuple nonParameterizedMethodTuple = XmlRpcParser.parseMethod(xml);
 
-			methodName = (String)tuple.getObject(0);
-			arguments = (Object[])tuple.getObject(1);
-
-			Assert.assertEquals("noParams", methodName);
 			Assert.assertEquals(
-				Arrays.toString(arguments), 0, arguments.length);
+				"noParams", nonParameterizedMethodTuple.getObject(0));
+
+			Object[] nonParameterizedMethodArguments =
+				(Object[])nonParameterizedMethodTuple.getObject(1);
+
+			Assert.assertEquals(
+				Arrays.toString(nonParameterizedMethodArguments), 0,
+				nonParameterizedMethodArguments.length);
 		}
 	}
 
@@ -117,9 +132,9 @@ public class XmlRpcParserTest {
 
 		Assert.assertTrue(response instanceof Success);
 
-		success = (Success)response;
+		Success successResponse = (Success)response;
 
-		Assert.assertEquals("Success", success.getDescription());
+		Assert.assertEquals("Success", successResponse.getDescription());
 	}
 
 	@Test

@@ -413,9 +413,14 @@ message.
 				</gradle-execute>
 
 				<if>
-					<not>
-						<isset property="env.JENKINS_HOME" />
-					</not>
+					<or>
+						<not>
+							<available file="${project.dir}/modules/private" type="dir" />
+						</not>
+						<not>
+							<isset property="env.JENKINS_HOME" />
+						</not>
+					</or>
 					<then>
 						<gradle-execute dir="${project.dir}/modules" task="deploy">
 							<arg value="--parallel" />
@@ -531,9 +536,14 @@ message.
 					<equals arg1="${jsp.precompile.parallel}" arg2="on" />
 					<then>
 						<if>
-							<not>
-								<isset property="env.JENKINS_HOME" />
-							</not>
+							<or>
+								<not>
+									<available file="${project.dir}/modules/private" type="dir" />
+								</not>
+								<not>
+									<isset property="env.JENKINS_HOME" />
+								</not>
+							</or>
 							<then>
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
 									<arg value="--parallel" />

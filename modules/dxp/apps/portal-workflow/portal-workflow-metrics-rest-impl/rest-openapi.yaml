@@ -25,6 +25,9 @@ components:
                     type: string
                 assetType:
                     type: string
+                dateCompletion:
+                    format: date-time
+                    type: string
                 dateCreated:
                     format: date-time
                     type: string

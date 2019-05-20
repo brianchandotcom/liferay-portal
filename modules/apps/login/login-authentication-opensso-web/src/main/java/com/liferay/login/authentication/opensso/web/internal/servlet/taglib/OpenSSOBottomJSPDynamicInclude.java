@@ -50,11 +50,11 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		long companyId = _portal.getCompanyId(request);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		try {
 			OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
@@ -71,7 +71,7 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		}
 
 		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(request);
+			_portal.getOriginalServletRequest(httpServletRequest);
 
 		String error = (String)originalHttpServletRequest.getAttribute(
 			OpenSSOWebKeys.OPEN_SSO_ERROR);
@@ -84,10 +84,10 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			OpenSSOWebKeys.OPEN_SSO_ERROR);
 
 		if (ArrayUtil.contains(_ERRORS, error)) {
-			SessionMessages.add(request, error);
+			SessionMessages.add(httpServletRequest, error);
 		}
 
-		super.include(request, response, key);
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
 	@Override
@@ -129,7 +129,6 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		PrincipalException.MustBeAuthenticated.class.getSimpleName(),
 		StrangersNotAllowedException.class.getSimpleName(),
 		UserEmailAddressException.MustNotUseCompanyMx.class.getSimpleName()
-
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

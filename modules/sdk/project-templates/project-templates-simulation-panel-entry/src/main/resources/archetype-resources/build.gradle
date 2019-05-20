@@ -29,6 +29,7 @@ dependencies {
 #elseif (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.application.list.api", version: "4.0.2"
 #end
+	compileOnly group: "com.liferay", name: "com.liferay.product.navigation.simulation", version: "2.0.0"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.product.navigation.simulation.api", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.3.0"

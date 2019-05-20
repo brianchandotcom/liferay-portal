@@ -121,6 +121,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					name="folder"
 				>
 					<liferay-ui:icon
@@ -134,12 +135,14 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-column-text-end"
 					href="<%= rowURL %>"
 					name="folders"
 					value="<%= String.valueOf(foldersCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-column-text-end"
 					href="<%= rowURL %>"
 					name="documents"
 					value="<%= String.valueOf(fileEntriesCount) %>"

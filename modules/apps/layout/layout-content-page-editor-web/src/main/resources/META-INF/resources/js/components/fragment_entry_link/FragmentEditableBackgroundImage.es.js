@@ -9,6 +9,12 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
+const TOOLTIP_BUTTON_IDS = {
+	map: 'map',
+	remove: 'remove',
+	select: 'select'
+};
+
 /**
  * FragmentEditableBackgroundImage
  */
@@ -24,7 +30,7 @@ class FragmentEditableBackgroundImage extends Component {
 		const buttons = [
 			{
 				icon: 'pencil',
-				id: 'select',
+				id: TOOLTIP_BUTTON_IDS.select,
 				label: Liferay.Language.get('select-background')
 			}
 		];
@@ -33,7 +39,7 @@ class FragmentEditableBackgroundImage extends Component {
 			buttons.push(
 				{
 					icon: 'bolt',
-					id: 'map',
+					id: TOOLTIP_BUTTON_IDS.map,
 					label: Liferay.Language.get('map-background')
 				}
 			);

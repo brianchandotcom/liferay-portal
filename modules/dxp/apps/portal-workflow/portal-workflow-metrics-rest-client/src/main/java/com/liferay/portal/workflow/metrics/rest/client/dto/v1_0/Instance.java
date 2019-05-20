@@ -133,6 +133,27 @@ public class Instance {
 
 	protected String assetType;
 
+	public Date getDateCompletion() {
+		return dateCompletion;
+	}
+
+	public void setDateCompletion(Date dateCompletion) {
+		this.dateCompletion = dateCompletion;
+	}
+
+	public void setDateCompletion(
+		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
+
+		try {
+			dateCompletion = dateCompletionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCompletion;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

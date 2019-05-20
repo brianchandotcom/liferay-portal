@@ -89,6 +89,21 @@ public class InstanceSerDes {
 			sb.append("\"");
 		}
 
+		if (instance.getDateCompletion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCompletion\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(instance.getDateCompletion()));
+
+			sb.append("\"");
+		}
+
 		if (instance.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -246,6 +261,10 @@ public class InstanceSerDes {
 		}
 
 		map.put(
+			"dateCompletion",
+			liferayToJSONDateFormat.format(instance.getDateCompletion()));
+
+		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(instance.getDateCreated()));
 
@@ -361,6 +380,12 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assetType")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssetType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
+				if (jsonParserFieldValue != null) {
+					instance.setDateCompletion(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

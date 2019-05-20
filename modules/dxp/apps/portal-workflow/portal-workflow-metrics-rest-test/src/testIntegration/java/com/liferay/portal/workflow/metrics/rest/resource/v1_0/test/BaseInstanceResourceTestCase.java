@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
@@ -120,14 +118,6 @@ public abstract class BaseInstanceResourceTestCase {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -148,14 +138,6 @@ public abstract class BaseInstanceResourceTestCase {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				setDateFormat(new ISO8601DateFormat());
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
@@ -279,10 +261,29 @@ public abstract class BaseInstanceResourceTestCase {
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (slaStatuses != null) {
+			location = HttpUtil.addParameter(
+				location, "slaStatuses", slaStatuses);
+		}
+
+		if (statuses != null) {
+			location = HttpUtil.addParameter(location, "statuses", statuses);
+		}
+
+		if (taskKeys != null) {
+			location = HttpUtil.addParameter(location, "taskKeys", taskKeys);
+		}
+
+		if (timeRange != null) {
+			location = HttpUtil.addParameter(location, "timeRange", timeRange);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -306,10 +307,29 @@ public abstract class BaseInstanceResourceTestCase {
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
 
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
+		if (slaStatuses != null) {
+			location = HttpUtil.addParameter(
+				location, "slaStatuses", slaStatuses);
+		}
+
+		if (statuses != null) {
+			location = HttpUtil.addParameter(location, "statuses", statuses);
+		}
+
+		if (taskKeys != null) {
+			location = HttpUtil.addParameter(location, "taskKeys", taskKeys);
+		}
+
+		if (timeRange != null) {
+			location = HttpUtil.addParameter(location, "timeRange", timeRange);
+		}
+
+		if (pagination != null) {
+			location = HttpUtil.addParameter(
+				location, "page", pagination.getPage());
+			location = HttpUtil.addParameter(
+				location, "pageSize", pagination.getPageSize());
+		}
 
 		options.setLocation(location);
 
@@ -461,6 +481,14 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateCompletion", additionalAssertFieldName)) {
+				if (instance.getDateCompletion() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("processId", additionalAssertFieldName)) {
 				if (instance.getProcessId() == null) {
 					valid = false;
@@ -559,6 +587,17 @@ public abstract class BaseInstanceResourceTestCase {
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getAssetType(), instance2.getAssetType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCompletion", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getDateCompletion(),
+						instance2.getDateCompletion())) {
 
 					return false;
 				}
@@ -714,6 +753,38 @@ public abstract class BaseInstanceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("dateCompletion")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							instance.getDateCompletion(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(instance.getDateCompletion(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(instance.getDateCompletion()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -792,6 +863,7 @@ public abstract class BaseInstanceResourceTestCase {
 			{
 				assetTitle = RandomTestUtil.randomString();
 				assetType = RandomTestUtil.randomString();
+				dateCompletion = RandomTestUtil.nextDate();
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				processId = RandomTestUtil.randomLong();

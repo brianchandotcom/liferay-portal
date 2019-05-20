@@ -174,6 +174,34 @@ public class Instance {
 	protected String assetType;
 
 	@Schema
+	public Date getDateCompletion() {
+		return dateCompletion;
+	}
+
+	public void setDateCompletion(Date dateCompletion) {
+		this.dateCompletion = dateCompletion;
+	}
+
+	@JsonIgnore
+	public void setDateCompletion(
+		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
+
+		try {
+			dateCompletion = dateCompletionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateCompletion;
+
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -467,6 +495,20 @@ public class Instance {
 			sb.append("\"");
 
 			sb.append(_escape(assetType));
+
+			sb.append("\"");
+		}
+
+		if (dateCompletion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCompletion\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCompletion));
 
 			sb.append("\"");
 		}

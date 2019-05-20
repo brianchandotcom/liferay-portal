@@ -39,11 +39,15 @@ public class TaskResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-		httpInvoker.parameter(
-			"pageSize", String.valueOf(pagination.getPageSize()));
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
 
-		httpInvoker.parameter("sort", sortString);
+		if (sortString != null) {
+			httpInvoker.parameter("sort", sortString);
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",

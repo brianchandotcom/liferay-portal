@@ -131,6 +131,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter("type", template.getType(), false);
 		portletURL.setParameter(
 			"structureAvailableFields", structureAvailableFields, false);
+		portletURL.setParameter("mode", template.getMode(), false);
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

@@ -17,6 +17,10 @@ package com.liferay.source.formatter.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +61,9 @@ import java.util.regex.Pattern;
  */
 public class SourceFormatterUtil {
 
+	public static final String CONFIGURATION_FILE_LOCATION =
+		"configuration_file_location";
+
 	public static final String GIT_LIFERAY_PORTAL_BRANCH =
 		"git.liferay.portal.branch";
 
@@ -65,6 +72,52 @@ public class SourceFormatterUtil {
 
 	public static final String SOURCE_FORMATTER_TEST_PATH =
 		"/source/formatter/dependencies/";
+
+	public static JSONObject addPropertiesAttributes(
+		JSONObject attributesJSONObject, CheckType checkType, String checkName,
+		Map<String, Properties> propertiesMap) {
+
+		String keyPrefix = _getKeyPrefix(checkType, checkName);
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			JSONObject propertiesAttributesJSONObject = new JSONObjectImpl();
+
+			Properties properties = entry.getValue();
+
+			for (Object obj : properties.keySet()) {
+				String key = (String)obj;
+
+				if (!key.startsWith(keyPrefix)) {
+					continue;
+				}
+
+				String attributeName = StringUtil.replaceFirst(
+					key, keyPrefix, StringPool.BLANK);
+
+				JSONArray jsonArray =
+					propertiesAttributesJSONObject.getJSONArray(attributeName);
+
+				if (jsonArray == null) {
+					jsonArray = new JSONArrayImpl();
+				}
+
+				String value = properties.getProperty(key);
+
+				for (String s : StringUtil.split(value, StringPool.COMMA)) {
+					jsonArray.put(s);
+				}
+
+				propertiesAttributesJSONObject.put(attributeName, jsonArray);
+			}
+
+			if (propertiesAttributesJSONObject.length() != 0) {
+				attributesJSONObject.put(
+					entry.getKey(), propertiesAttributesJSONObject);
+			}
+		}
+
+		return attributesJSONObject;
+	}
 
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
@@ -179,22 +232,7 @@ public class SourceFormatterUtil {
 		CheckType checkType, String checkName,
 		Map<String, Properties> propertiesMap) {
 
-		checkName = checkName.replaceAll("([a-z])([A-Z])", "$1.$2");
-
-		checkName = checkName.replaceAll("([A-Z])([A-Z][a-z])", "$1.$2");
-
-		String keyPrefix = StringUtil.toLowerCase(checkName) + ".";
-
-		if (checkType != null) {
-			String checkTypeName = checkType.getValue();
-
-			checkTypeName = checkTypeName.replaceAll("([a-z])([A-Z])", "$1.$2");
-
-			checkTypeName = checkTypeName.replaceAll(
-				"([A-Z])([A-Z][a-z])", "$1.$2");
-
-			keyPrefix = StringUtil.toLowerCase(checkTypeName) + "." + keyPrefix;
-		}
+		String keyPrefix = _getKeyPrefix(checkType, checkName);
 
 		Set<String> attributeNames = new HashSet<>();
 
@@ -555,6 +593,23 @@ public class SourceFormatterUtil {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	private static String _getKeyPrefix(CheckType checkType, String checkName) {
+		checkName = checkName.replaceAll("([a-z])([A-Z])", "$1.$2");
+
+		checkName = checkName.replaceAll("([A-Z])([A-Z][a-z])", "$1.$2");
+
+		String keyPrefix = StringUtil.toLowerCase(checkName) + ".";
+
+		String checkTypeName = checkType.getValue();
+
+		checkTypeName = checkTypeName.replaceAll("([a-z])([A-Z])", "$1.$2");
+
+		checkTypeName = checkTypeName.replaceAll(
+			"([A-Z])([A-Z][a-z])", "$1.$2");
+
+		return StringUtil.toLowerCase(checkTypeName) + "." + keyPrefix;
 	}
 
 	private static PathMatchers _getPathMatchers(

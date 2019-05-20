@@ -17,6 +17,10 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,7 +45,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -62,6 +68,91 @@ import org.dom4j.Element;
 public abstract class BaseSourceCheck implements SourceCheck {
 
 	@Override
+	public String getAttributeValue(String attributeKey, String absolutePath) {
+		return getAttributeValue(attributeKey, absolutePath, null);
+	}
+
+	@Override
+	public String getAttributeValue(
+		String attributeKey, String absolutePath, String defaultValue) {
+
+		if (_attributesJSONObject == null) {
+			return defaultValue;
+		}
+
+		String closestPropertiesFileLocation = null;
+		String value = null;
+
+		Iterator<String> keys = _attributesJSONObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			if (fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				if (value == null) {
+					value = _getAttributeValue(
+						_attributesJSONObject.getJSONObject(fileLocation),
+						attributeKey);
+				}
+
+				continue;
+			}
+
+			if (!absolutePath.startsWith(fileLocation)) {
+				continue;
+			}
+
+			if ((closestPropertiesFileLocation == null) ||
+				(closestPropertiesFileLocation.length() <
+					fileLocation.length())) {
+
+				value = _getAttributeValue(
+					_attributesJSONObject.getJSONObject(fileLocation),
+					attributeKey);
+
+				closestPropertiesFileLocation = fileLocation;
+			}
+		}
+
+		if (value != null) {
+			return value;
+		}
+
+		return defaultValue;
+	}
+
+	@Override
+	public List<String> getAttributeValues(
+		String attributeKey, String absolutePath) {
+
+		List<String> attributeValues = new ArrayList<>();
+
+		if (_attributesJSONObject == null) {
+			return attributeValues;
+		}
+
+		Iterator<String> keys = _attributesJSONObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			if (fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION) ||
+				absolutePath.startsWith(fileLocation)) {
+
+				attributeValues.addAll(
+					_getAttributeValues(
+						_attributesJSONObject.getJSONObject(fileLocation),
+						attributeKey));
+			}
+		}
+
+		return attributeValues;
+	}
+
+	@Override
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName) {
 
@@ -73,8 +164,22 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public boolean isEnabled() {
-		return _enabled;
+	public boolean isAttributeValue(String attributeKey, String absolutePath) {
+		return GetterUtil.getBoolean(
+			getAttributeValue(attributeKey, absolutePath));
+	}
+
+	@Override
+	public boolean isAttributeValue(
+		String attributeKey, String absolutePath, boolean defaultValue) {
+
+		return GetterUtil.getBoolean(
+			getAttributeValue(attributeKey, absolutePath), defaultValue);
+	}
+
+	@Override
+	public boolean isEnabled(String absolutePath) {
+		return isAttributeValue("enabled", absolutePath, true);
 	}
 
 	@Override
@@ -92,6 +197,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setAttributes(String attributes) throws JSONException {
+		_attributesJSONObject = new JSONObjectImpl(attributes);
+	}
+
+	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
 	}
@@ -101,11 +211,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		Configuration checkstyleConfiguration) {
 
 		_checkstyleConfiguration = checkstyleConfiguration;
-	}
-
-	@Override
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
 	}
 
 	@Override
@@ -522,10 +627,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _projectPathPrefix;
 	}
 
-	protected Map<String, Properties> getPropertiesMap() {
-		return _propertiesMap;
-	}
-
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
 		return _sourceFormatterExcludes;
 	}
@@ -748,6 +849,34 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
+	private String _getAttributeValue(
+		JSONObject jsonObject, String attributeKey) {
+
+		JSONArray jsonArray = jsonObject.getJSONArray(attributeKey);
+
+		if ((jsonArray == null) || (jsonArray.length() != 1)) {
+			return null;
+		}
+
+		return jsonArray.getString(0);
+	}
+
+	private List<String> _getAttributeValues(
+		JSONObject jsonObject, String attributeKey) {
+
+		List<String> attributeValues = new ArrayList<>();
+
+		JSONArray jsonArray = jsonObject.getJSONArray(attributeKey);
+
+		if (jsonArray != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				attributeValues.add(jsonArray.getString(i));
+			}
+		}
+
+		return attributeValues;
+	}
+
 	private String _getPortalBranchName(
 		boolean excludePortalRootPropertiesFile) {
 
@@ -791,11 +920,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 	}
 
+	private JSONObject _attributesJSONObject;
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
 	private Configuration _checkstyleConfiguration;
-	private boolean _enabled = true;
 	private List<String> _fileExtensions;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

@@ -254,12 +254,6 @@ public class SourceFormatterUtil {
 		return ListUtil.fromCollection(attributeNames);
 	}
 
-	public static List<String> getAttributeNames(
-		String checkName, Map<String, Properties> propertiesMap) {
-
-		return getAttributeNames(null, checkName, propertiesMap);
-	}
-
 	public static File getFile(String baseDirName, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDirName + fileName);
@@ -352,13 +346,6 @@ public class SourceFormatterUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String getPropertyValue(
-		String attributeName, String checkName,
-		Map<String, Properties> propertiesMap) {
-
-		return getPropertyValue(attributeName, null, checkName, propertiesMap);
 	}
 
 	public static String getSimpleName(String name) {

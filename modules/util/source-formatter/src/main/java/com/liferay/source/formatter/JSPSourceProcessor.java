@@ -152,8 +152,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
 			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
 			sourceFormatterArgs);
-
-		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)

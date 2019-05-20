@@ -30,13 +30,9 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -280,13 +276,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setCheckstyleConfiguration(
-		Configuration checkstyleConfiguration) {
-
-		_checkstyleConfiguration = checkstyleConfiguration;
-	}
-
-	@Override
 	public void setFileExtensions(List<String> fileExtensions) {
 		_fileExtensions = fileExtensions;
 	}
@@ -406,21 +395,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			bndFileLocation = StringUtil.replaceLast(
 				bndFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
-	}
-
-	protected Map<String, String> getCheckstyleAttributesMap(String checkName)
-		throws CheckstyleException {
-
-		return CheckstyleUtil.getAttributesMap(
-			checkName, _checkstyleConfiguration);
-	}
-
-	protected String getCheckstyleAttributeValue(
-			String checkName, String attributeName)
-		throws CheckstyleException {
-
-		return CheckstyleUtil.getAttributeValue(
-			checkName, attributeName, _checkstyleConfiguration);
 	}
 
 	protected String getContent(String fileName, int level) throws IOException {
@@ -1001,7 +975,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
-	private Configuration _checkstyleConfiguration;
 	private List<String> _fileExtensions;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

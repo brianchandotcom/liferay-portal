@@ -586,12 +586,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, new SourceFormatterMessage(fileName, message, null, -1));
 	}
 
-	protected void setCheckstyleConfiguration(
-		Configuration checkstyleConfiguration) {
-
-		_checkstyleConfiguration = checkstyleConfiguration;
-	}
-
 	private void _checkUTF8(File file, String fileName) throws IOException {
 		byte[] bytes = FileUtil.getBytes(file);
 
@@ -682,7 +676,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private void _initSourceCheck(SourceCheck sourceCheck) {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(_sourceFormatterArgs.getBaseDirName());
-		sourceCheck.setCheckstyleConfiguration(_checkstyleConfiguration);
 		sourceCheck.setFileExtensions(_sourceFormatterArgs.getFileExtensions());
 		sourceCheck.setMaxLineLength(_sourceFormatterArgs.getMaxLineLength());
 		sourceCheck.setPluginsInsideModulesDirectoryNames(
@@ -794,7 +787,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private List<String> _allFileNames;
 	private boolean _browserStarted;
-	private Configuration _checkstyleConfiguration;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;

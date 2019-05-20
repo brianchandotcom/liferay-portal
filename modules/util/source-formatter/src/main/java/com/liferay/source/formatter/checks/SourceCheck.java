@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
-import com.puppycrawl.tools.checkstyle.api.Configuration;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -57,9 +55,6 @@ public interface SourceCheck {
 	public void setAttributes(String attributes) throws JSONException;
 
 	public void setBaseDirName(String baseDirName);
-
-	public void setCheckstyleConfiguration(
-		Configuration checkstyleConfiguration);
 
 	public void setFileExtensions(List<String> fileExtenstions);
 

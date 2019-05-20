@@ -159,6 +159,14 @@ public class SPDXBuilder {
 				Element element = licenseElement.addElement("license-name");
 
 				element.addText(licenseName);
+
+				String licenseURL = _getLicenseURL(packageElement);
+
+				if (licenseURL != null) {
+					element = licenseElement.addElement("license-url");
+
+					element.addText(licenseURL);
+				}
 			}
 
 			Element commentsElement = libraryElement.addElement("comments");
@@ -296,6 +304,20 @@ public class SPDXBuilder {
 		}
 
 		return null;
+	}
+
+	private String _getLicenseURL(Element packageElement) {
+		Element licenseConcludedElement = packageElement.element(
+			_getQName("licenseConcluded"));
+
+		String resource = licenseConcludedElement.attributeValue(
+			_getQName("resource"));
+
+		if (!resource.startsWith("http")) {
+			return null;
+		}
+
+		return resource;
 	}
 
 	private QName _getQName(String name) {

@@ -280,12 +280,6 @@ public class GroupFinderTest {
 		Assert.assertEquals(groups.toString(), 2, groups.size());
 	}
 
-	protected void addLayout(long groupId) throws Exception {
-		LayoutTestUtil.addLayout(groupId, false);
-
-		LayoutTestUtil.addLayout(groupId, true);
-	}
-
 	protected List<Group> findByC_C_N_D(
 			String actionId, String name, long roleId)
 		throws Exception {

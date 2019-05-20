@@ -62,9 +62,7 @@ public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		Group group = (Group)treeModel;
-
-		_groupLocalService.deleteGroup(group);
+		_groupLocalService.deleteGroup((Group)treeModel);
 	}
 
 	@Override

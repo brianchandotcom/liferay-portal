@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -185,20 +184,18 @@ public class GroupServicePermissionTest {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.MANAGE_SUBGROUPS);
 
-		long[] roleIds = {_role.getRoleId()};
-
 		_userGroupRoleLocalService.addUserGroupRoles(
-			_user.getUserId(), group.getGroupId(), roleIds);
+			_user.getUserId(), group.getGroupId(),
+			new long[] {_role.getRoleId()});
 	}
 
 	protected void giveSiteAdminRole(Group group) throws Exception {
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		long[] roleIds = {role.getRoleId()};
-
 		_userGroupRoleLocalService.addUserGroupRoles(
-			_user.getUserId(), group.getGroupId(), roleIds);
+			_user.getUserId(), group.getGroupId(),
+			new long[] {role.getRoleId()});
 	}
 
 	protected void setUpPrincipalThreadLocal() throws Exception {
@@ -213,10 +210,8 @@ public class GroupServicePermissionTest {
 			boolean hasManageSubsitePermisionOnGroup111)
 		throws Exception {
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(_user));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -294,10 +289,8 @@ public class GroupServicePermissionTest {
 			boolean hasManageSubsitePermisionOnGroup11)
 		throws Exception {
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(_user));
 
 		try {
 			_groupService.updateGroup(_group1.getGroupId(), "");

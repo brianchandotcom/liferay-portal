@@ -304,15 +304,14 @@ public class GroupFinderTest {
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		RolePermissions rolePermissions = new RolePermissions(
-			name, ResourceConstants.SCOPE_GROUP, actionId, roleId);
-
-		groupParams.put("rolePermissions", rolePermissions);
-
-		long[] classNameIds = {_portal.getClassNameId(Group.class)};
+		groupParams.put(
+			"rolePermissions",
+			new RolePermissions(
+				name, ResourceConstants.SCOPE_GROUP, actionId, roleId));
 
 		return _groupFinder.findByC_C_PG_N_D(
-			TestPropsValues.getCompanyId(), classNameIds,
+			TestPropsValues.getCompanyId(),
+			new long[] {_portal.getClassNameId(Group.class)},
 			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
 			new String[] {null}, groupParams, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);

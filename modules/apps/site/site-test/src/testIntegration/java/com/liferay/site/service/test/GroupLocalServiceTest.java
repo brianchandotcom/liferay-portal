@@ -62,7 +62,7 @@ public class GroupLocalServiceTest {
 	}
 
 	@Test
-	public void testGetDescendantGroups() throws Exception {
+	public void testGetDescendantGroups() {
 		_assertDescendantGroups(_group1, _group2, _group3, _group4);
 		_assertDescendantGroups(_group2, _group3);
 		_assertDescendantGroups(_group3);

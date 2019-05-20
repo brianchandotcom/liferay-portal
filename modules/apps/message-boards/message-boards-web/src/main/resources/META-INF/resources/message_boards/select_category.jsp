@@ -111,7 +111,7 @@ else {
 				<liferay-ui:search-container-column-text>
 
 					<%
-					Map<String, Object> data = new HashMap<String, Object>();
+					Map<String, Object> data = new HashMap<>();
 
 					data.put("categoryId", curCategory.getCategoryId());
 					data.put("name", curCategory.getName());
@@ -124,7 +124,7 @@ else {
 			<aui:button-row>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<>();
 
 				data.put("categoryId", categoryId);
 				data.put("name", categoryName);

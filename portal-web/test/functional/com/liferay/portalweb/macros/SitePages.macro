@@ -27,6 +27,10 @@ definition {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
+		AssertVisible(locator1 = "TextInput#NAME");
+
+		Pause(locator1 = "1000");
+
 		Alert.closeMessage(messageType = "SUCCESS");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");

@@ -105,7 +105,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "ImageEditor";
 	}
 
-	protected List<List<ImageEditorCapabilityDescriptor>>
+	protected Map<String, List<ImageEditorCapabilityDescriptor>>
 		getImageEditorCapabilityDescriptorsList(
 			List<ImageEditorCapabilityDescriptor>
 				imageEditorCapabilityDescriptors) {
@@ -136,7 +136,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				imageEditorCapabilityDescriptor);
 		}
 
-		return new ArrayList<>(imageEditorCapabilityDescriptorsMap.values());
+		return imageEditorCapabilityDescriptorsMap;
 	}
 
 	protected List<Map<String, Object>> getImageEditorToolsContexts(
@@ -159,25 +159,23 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			renderRequest.getLocale(), getClass());
 
-		List<List<ImageEditorCapabilityDescriptor>>
-			imageEditorCapabilityDescriptorsList =
+		Map<String, List<ImageEditorCapabilityDescriptor>>
+			imageEditorCapabilityDescriptorsMap =
 				getImageEditorCapabilityDescriptorsList(
 					toolImageEditorCapabilityDescriptors);
 
-		for (List<ImageEditorCapabilityDescriptor>
-				imageEditorCapabilityDescriptors :
-					imageEditorCapabilityDescriptorsList) {
+		for (Map.Entry<String, List<ImageEditorCapabilityDescriptor>>
+				imageEditorCapabilityDescriptorEntry :
+					imageEditorCapabilityDescriptorsMap.entrySet()) {
 
 			Map<String, Object> context = new HashMap<>();
-
-			String category = StringPool.BLANK;
 
 			List<Map<String, Object>> controlContexts = new ArrayList<>();
 			String icon = StringPool.BLANK;
 
 			for (ImageEditorCapabilityDescriptor
 					imageEditorCapabilityDescriptor :
-						imageEditorCapabilityDescriptors) {
+						imageEditorCapabilityDescriptorEntry.getValue()) {
 
 				Map<String, Object> controlContext = new HashMap<>();
 
@@ -204,11 +202,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 				controlContext.put("variant", variant);
 
-				category = GetterUtil.getString(
-					properties.get(
-						"com.liferay.frontend.image.editor.capability." +
-							"category"));
-
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(renderRequest);
 
@@ -224,6 +217,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			context.put("controls", controlContexts);
 			context.put("icon", icon);
+
+			String category = imageEditorCapabilityDescriptorEntry.getKey();
+
 			context.put("title", LanguageUtil.get(resourceBundle, category));
 
 			imageEditorToolsContexts.add(context);

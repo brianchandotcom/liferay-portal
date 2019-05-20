@@ -164,15 +164,15 @@ gradle.beforeProject {
 				main = "com.liferay.project.templates.ProjectTemplates"
 			}
 
-            jar {
-                doFirst {
-                    DirectoryScanner.removeDefaultExclude SelectorUtils.DEEP_TREE_MATCH + "/.gitignore"
-                }
+			jar {
+				doFirst {
+					DirectoryScanner.removeDefaultExclude SelectorUtils.DEEP_TREE_MATCH + "/.gitignore"
+				}
 
-                 doLast {
-                    DirectoryScanner.resetDefaultExcludes()
-                }
-            }
+				doLast {
+					DirectoryScanner.resetDefaultExcludes()
+				}
+			}
 
 			processResources {
 				exclude "**/.sass-cache/"

@@ -14,12 +14,6 @@
  */
 --%>
 
-<%@ include file="/document_library/init.jsp" %>
-
-<%
-long folderId = ParamUtil.getLong(request, "folderId");
-%>
-
 <c:if test="<%= folderId != rootFolderId %>">
 
 	<%
@@ -38,27 +32,11 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 				searchEverywhereURL.setParameter("mvcRenderCommandName", "/document_library/search");
 
-				long repositoryId = ParamUtil.getLong(request, "repositoryId");
-
-				if (repositoryId == 0) {
-					repositoryId = scopeGroupId;
-				}
-
-				searchEverywhereURL.setParameter("repositoryId", String.valueOf(repositoryId));
-
-				long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId");
-
-				if (searchRepositoryId == 0) {
-					searchRepositoryId = repositoryId;
-				}
-
 				searchEverywhereURL.setParameter("searchRepositoryId", String.valueOf(searchRepositoryId));
 
 				searchEverywhereURL.setParameter("folderId", String.valueOf(folderId));
 
 				searchEverywhereURL.setParameter("searchFolderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-				String keywords = ParamUtil.getString(request, "keywords");
 
 				searchEverywhereURL.setParameter("keywords", keywords);
 

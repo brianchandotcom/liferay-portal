@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.storage.internal.upgrade.v2_0_1.util;
+package com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.util;
 
 import java.sql.Types;
 

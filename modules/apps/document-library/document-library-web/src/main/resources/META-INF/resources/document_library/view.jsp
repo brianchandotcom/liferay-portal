@@ -30,6 +30,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<%
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
+		String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
 		String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 		boolean defaultFolderView = dlAdminDisplayContext.isDefaultFolderView();
@@ -135,7 +137,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 									<%@ include file="/document_library/search_resources.jspf" %>
 								</c:when>
 								<c:otherwise>
-									<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
+									<%@ include file="/document_library/view_entries.jspf" %>
 								</c:otherwise>
 							</c:choose>
 
@@ -197,7 +199,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<aui:script use="liferay-document-library">
 
 			<%
-			String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 			String[] escapedEntryColumns = new String[entryColumns.length];
 
 			for (int i = 0; i < entryColumns.length; i++) {

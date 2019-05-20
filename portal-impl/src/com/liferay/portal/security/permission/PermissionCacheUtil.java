@@ -16,7 +16,6 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -36,7 +35,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -341,9 +342,11 @@ public class PermissionCacheUtil {
 	private static final PortalCacheIndexer<Long, PermissionKey, Boolean>
 		_permissionPortalCacheGroupIdIndexer = new PortalCacheIndexer<>(
 			new PermissionKeyGroupIdIndexEncoder(), _permissionPortalCache);
-	private static final PortalCacheIndexer<String, PermissionKey, Boolean>
-		_permissionPortalCacheNamePrimKeyIndexer = new PortalCacheIndexer<>(
-			new PermissionKeyNamePrimKeyIndexEncoder(), _permissionPortalCache);
+	private static final PortalCacheIndexer
+		<Map.Entry<?, ?>, PermissionKey, Boolean>
+			_permissionPortalCacheNamePrimKeyIndexer = new PortalCacheIndexer<>(
+				new PermissionKeyNamePrimKeyIndexEncoder(),
+				_permissionPortalCache);
 	private static final PortalCache<Long, UserBag> _userBagPortalCache =
 		PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM, USER_BAG_CACHE_NAME,
@@ -441,18 +444,14 @@ public class PermissionCacheUtil {
 	}
 
 	private static class PermissionKeyNamePrimKeyIndexEncoder
-		implements IndexEncoder<String, PermissionKey> {
+		implements IndexEncoder<Map.Entry<?, ?>, PermissionKey> {
 
-		public static String encode(String name, String primKey) {
-			return name.concat(
-				StringPool.UNDERLINE
-			).concat(
-				primKey
-			);
+		public static Map.Entry<?, ?> encode(String name, String primKey) {
+			return new AbstractMap.SimpleImmutableEntry<>(name, primKey);
 		}
 
 		@Override
-		public String encode(PermissionKey permissionKey) {
+		public Map.Entry<?, ?> encode(PermissionKey permissionKey) {
 			return encode(permissionKey._name, permissionKey._primKey);
 		}
 

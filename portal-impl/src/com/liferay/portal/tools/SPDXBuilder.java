@@ -141,10 +141,12 @@ public class SPDXBuilder {
 
 			projectNameElement.addText(name);
 
-			if ((downloadLocation != null) && !downloadLocation.isEmpty()) {
+			if ((downloadLocation != null) &&
+				downloadLocation.startsWith("http")) {
+
 				Element element = libraryElement.addElement("project-url");
 
-				element.addText(name);
+				element.addText(downloadLocation);
 			}
 
 			String licenseName = _getLicenseName(packageElement);

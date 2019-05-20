@@ -22,6 +22,7 @@ import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
+import com.liferay.talend.constants.OpenApiConstants;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.runtime.client.RESTClient;
@@ -35,7 +36,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.ws.rs.ProcessingException;
@@ -43,7 +46,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
-import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,15 +149,6 @@ public class LiferaySourceOrSink
 
 	public JsonNode doApioPutRequest(String resourceURL, JsonNode apioForm) {
 		return doApioPutRequest(null, resourceURL, apioForm);
-	}
-
-	@Override
-	public String getActualWebSiteName(String webSiteURL) throws IOException {
-		JsonNode webSiteNameJsonNode = doApioGetRequest(webSiteURL);
-
-		webSiteNameJsonNode = webSiteNameJsonNode.path("name");
-
-		return webSiteNameJsonNode.asText();
 	}
 
 	@Override
@@ -263,10 +256,64 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public Schema getEndpointSchema(
-		RuntimeContainer runtimeContainer, String resourceURL) {
+	public List<NamedThing> getEndpointList(String method) {
+		List<NamedThing> endpointsNamedThing = new ArrayList<>();
 
-		JsonNode jsonNode = doApioGetRequest(resourceURL);
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		String apiSpecURLHref =
+			liferayConnectionProperties.apiSpecURL.getValue();
+
+		JsonNode apiSpecJsonNode = doApioGetRequest(apiSpecURLHref);
+
+		JsonNode paths = apiSpecJsonNode.path(OpenApiConstants.PATHS);
+
+		Iterator<Map.Entry<String, JsonNode>> fields = paths.fields();
+
+		while (fields.hasNext()) {
+			Map.Entry<String, JsonNode> endpoint = fields.next();
+
+			JsonNode endpointJsonNode = endpoint.getValue();
+
+			if (endpointJsonNode.has(method.toLowerCase(Locale.US))) {
+				boolean hasSchemaReference = endpointJsonNode.path(
+					method.toLowerCase(Locale.US)
+				).path(
+					OpenApiConstants.RESPONSES
+				).path(
+					OpenApiConstants.DEFAULT
+				).path(
+					OpenApiConstants.CONTENT
+				).path(
+					OpenApiConstants.APPLICATION_JSON
+				).path(
+					OpenApiConstants.SCHEMA
+				).has(
+					OpenApiConstants.REF
+				);
+
+				if (hasSchemaReference) {
+					endpointsNamedThing.add(
+						new SimpleNamedThing(
+							endpoint.getKey(), endpoint.getKey()));
+				}
+			}
+		}
+
+		Comparator<NamedThing> comparator = Comparator.comparing(
+			NamedThing::getName);
+
+		Collections.sort(endpointsNamedThing, comparator);
+
+		return endpointsNamedThing;
+	}
+
+	@Override
+	public Schema getEndpointSchema(
+		RuntimeContainer runtimeContainer, String endpoint) {
+
+		JsonNode jsonNode = doApioGetRequest(endpoint);
 
 		return getResourceSchemaByType("type");
 	}
@@ -275,34 +322,6 @@ public class LiferaySourceOrSink
 	public Schema getExpectedFormSchema(String endpoint) throws IOException {
 		return ExpectedFormSchemaInferrer.inferSchemaByFormOperation(
 			"operation", "endpoint");
-	}
-
-	@Override
-	public List<NamedThing> getResourceList(String webSiteURL)
-		throws IOException {
-
-		if (StringUtils.isEmpty(webSiteURL)) {
-			return getSchemaNames(null);
-		}
-
-		List<NamedThing> resourceNames = new ArrayList<>();
-
-		Map<String, String> resourceCollections = Collections.emptyMap();
-		//_getWebSiteResourceEndpointsMap(webSiteURL);
-
-		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"resource: {}, href: {} ", entry.getValue(),
-					entry.getKey());
-			}
-
-			resourceNames.add(
-				new SimpleNamedThing(
-					entry.getValue(), entry.getValue(), entry.getKey()));
-		}
-
-		return resourceNames;
 	}
 
 	@Override
@@ -370,28 +389,21 @@ public class LiferaySourceOrSink
 		return new RESTClient(resourceURL, liferayConnectionProperties);
 	}
 
+	/**
+	 * This method is not used in Liferay Component family
+	 * @deprecated As of Mueller (7.2.x), beginning, see {@link #getEndpointList(String)} for
+	 * implementation details
+	 *
+	 * @param runtimeContainer
+	 * @return
+	 * @throws IOException
+	 */
+	@Deprecated
 	@Override
 	public List<NamedThing> getSchemaNames(RuntimeContainer runtimeContainer)
 		throws IOException {
 
-		List<NamedThing> schemaNames = new ArrayList<>();
-
-		Map<String, String> resourceCollections = Collections.emptyMap();
-		//getApioResourceEndpointsMap(runtimeContainer);
-
-		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"resource: {}, href: {} ", entry.getValue(),
-					entry.getKey());
-			}
-
-			schemaNames.add(
-				new SimpleNamedThing(
-					entry.getValue(), entry.getValue(), entry.getKey()));
-		}
-
-		return schemaNames;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

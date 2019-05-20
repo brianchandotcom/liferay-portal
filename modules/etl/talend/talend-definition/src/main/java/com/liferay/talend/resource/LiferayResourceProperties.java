@@ -27,6 +27,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.ws.rs.HttpMethod;
+
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
@@ -129,31 +131,26 @@ public class LiferayResourceProperties
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveLiferayConnectionProperties();
+		try {
+			List<NamedThing> endpoints =
+				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.GET);
 
-		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
-			try {
-				List<NamedThing> resourceNames = null;
+			if (endpoints.isEmpty()) {
+				validationResultMutable.setMessage(
+					i18nMessages.getMessage("error.validation.resources"));
+				validationResultMutable.setStatus(
+					ValidationResult.Result.ERROR);
 
-				resourceNames = liferaySourceOrSinkRuntime.getResourceList(
-					liferayConnectionProperties.siteId.getValue());
-
-				if (resourceNames.isEmpty()) {
-					validationResultMutable.setMessage(
-						i18nMessages.getMessage("error.validation.resources"));
-					validationResultMutable.setStatus(
-						ValidationResult.Result.ERROR);
-				}
-
-				endpoint.setPossibleNamedThingValues(resourceNames);
+				return validationResultMutable;
 			}
-			catch (Exception e) {
-				return ExceptionUtils.exceptionToValidationResult(e);
-			}
+
+			endpoint.setPossibleNamedThingValues(endpoints);
+		}
+		catch (Exception e) {
+			return ExceptionUtils.exceptionToValidationResult(e);
 		}
 
-		return validationResultMutable;
+		return null;
 	}
 
 	@Override

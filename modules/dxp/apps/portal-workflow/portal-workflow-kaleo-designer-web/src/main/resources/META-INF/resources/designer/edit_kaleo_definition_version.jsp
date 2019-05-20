@@ -362,46 +362,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									Liferay.provide(
 										window,
-										'<portlet:namespace />getKaleoDefinitionVersion',
-										function(name, draftVersion, position, callback) {
-											var A = AUI();
-
-											var contentURL = Liferay.PortletURL.createResourceURL();
-
-											contentURL.setParameter('name', name);
-											contentURL.setParameter('draftVersion', draftVersion);
-											contentURL.setParameter('position', position);
-											contentURL.setPortletId('<%= portletDisplay.getId() %>');
-											contentURL.setResourceId('kaleoDefinitionVersions');
-
-											A.io.request(
-												contentURL.toString(),
-												{
-													dataType: 'JSON',
-													on: {
-														success: callback
-													}
-												}
-											);
-										},
-										['aui-base', 'liferay-portlet-url']
-									);
-
-									Liferay.provide(
-										window,
-										'<portlet:namespace />getLatestKaleoDefinitionVersion',
-										function(event) {
-											var button = event.target;
-
-											if (!button.get('disabled')) {
-												<portlet:namespace />navigateKaleoDefinitionVersion('latest');
-											}
-										},
-										['aui-base']
-									);
-
-									Liferay.provide(
-										window,
 										'<portlet:namespace />publishKaleoDefinitionVersion',
 										function() {
 											<portlet:namespace />updateContent();
@@ -417,19 +377,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									Liferay.provide(
 										window,
-										'<portlet:namespace />redoKaleoDefinitionVersion',
-										function(event) {
-											var button = event.target;
-
-											if (!button.get('disabled')) {
-												<portlet:namespace />navigateKaleoDefinitionVersion('next');
-											}
-										},
-										['aui-base']
-									);
-
-									Liferay.provide(
-										window,
 										'<portlet:namespace />saveKaleoDefinitionVersion',
 										function() {
 											<portlet:namespace />updateContent();
@@ -439,19 +386,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											<portlet:namespace />updateAction('<portlet:actionURL name="saveKaleoDefinitionVersion" />');
 
 											submitForm(document.<portlet:namespace />fm);
-										},
-										['aui-base']
-									);
-
-									Liferay.provide(
-										window,
-										'<portlet:namespace />undoKaleoDefinitionVersion',
-										function(event) {
-											var button = event.target;
-
-											if (!button.get('disabled')) {
-												<portlet:namespace />navigateKaleoDefinitionVersion('prev');
-											}
 										},
 										['aui-base']
 									);
@@ -641,15 +575,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										);
 									</c:if>
 
-									Liferay.on(
-										'<portlet:namespace />undoDefinition',
-										function(event) {
-											<portlet:namespace />kaleoDesigner.setEditorContent(previousContent);
-
-											Liferay.KaleoDesignerDialogs.showActionUndoneSuccessMessage('<portlet:namespace />');
-										}
-									);
-
 									<portlet:namespace />kaleoDesigner.contentTabView.after(
 										{
 											selectionChange: <portlet:namespace />afterTabViewChange
@@ -778,38 +703,27 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									if (dialog && !dialog._dialogAction) {
 										dialog._dialogAction = function(event) {
 											if (!event.newVal) {
-												<c:choose>
-													<c:when test="<%= (kaleoDefinition != null) && !kaleoDefinition.isActive() %>">
-														if (confirm('<liferay-ui:message key="do-you-want-to-publish-this-draft" />')) {
-															event.halt();
 
-															<portlet:namespace />publishKaleoDefinitionVersion();
-														}
-													</c:when>
-													<c:otherwise>
+												<%
+												boolean refreshOpenerOnClose = ParamUtil.getBoolean(request, "refreshOpenerOnClose");
+												%>
 
-														<%
-														boolean refreshOpenerOnClose = ParamUtil.getBoolean(request, "refreshOpenerOnClose");
-														%>
+												<c:if test="<%= Validator.isNotNull(portletResourceNamespace) && refreshOpenerOnClose %>">
 
-														<c:if test="<%= Validator.isNotNull(portletResourceNamespace) && refreshOpenerOnClose %>">
+													<%
+													String openerWindowName = ParamUtil.getString(request, "openerWindowName");
+													%>
 
-															<%
-															String openerWindowName = ParamUtil.getString(request, "openerWindowName");
-															%>
+													var openerWindow = Liferay.Util.getTop();
 
-															var openerWindow = Liferay.Util.getTop();
+													<c:if test="<%= Validator.isNotNull(openerWindowName) %>">
+														var openerDialog = Liferay.Util.getWindow('<%= HtmlUtil.escapeJS(openerWindowName) %>');
 
-															<c:if test="<%= Validator.isNotNull(openerWindowName) %>">
-																var openerDialog = Liferay.Util.getWindow('<%= HtmlUtil.escapeJS(openerWindowName) %>');
+														openerWindow = openerDialog.iframe.node.get('contentWindow').getDOM();
+													</c:if>
 
-																openerWindow = openerDialog.iframe.node.get('contentWindow').getDOM();
-															</c:if>
-
-															openerWindow.Liferay.Portlet.refresh('#p_p_id<%= HtmlUtil.escapeJS(portletResourceNamespace) %>');
-														</c:if>
-													</c:otherwise>
-												</c:choose>
+													openerWindow.Liferay.Portlet.refresh('#p_p_id<%= HtmlUtil.escapeJS(portletResourceNamespace) %>');
+												</c:if>
 											}
 										}
 

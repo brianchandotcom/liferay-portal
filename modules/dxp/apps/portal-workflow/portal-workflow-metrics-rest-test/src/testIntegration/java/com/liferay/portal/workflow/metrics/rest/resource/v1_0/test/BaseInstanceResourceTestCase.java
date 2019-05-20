@@ -261,19 +261,6 @@ public abstract class BaseInstanceResourceTestCase {
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
 
-		if (slaStatuses != null) {
-			location = HttpUtil.addParameter(
-				location, "slaStatuses", slaStatuses);
-		}
-
-		if (statuses != null) {
-			location = HttpUtil.addParameter(location, "statuses", statuses);
-		}
-
-		if (taskKeys != null) {
-			location = HttpUtil.addParameter(location, "taskKeys", taskKeys);
-		}
-
 		if (timeRange != null) {
 			location = HttpUtil.addParameter(location, "timeRange", timeRange);
 		}
@@ -306,19 +293,6 @@ public abstract class BaseInstanceResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
-
-		if (slaStatuses != null) {
-			location = HttpUtil.addParameter(
-				location, "slaStatuses", slaStatuses);
-		}
-
-		if (statuses != null) {
-			location = HttpUtil.addParameter(location, "statuses", statuses);
-		}
-
-		if (taskKeys != null) {
-			location = HttpUtil.addParameter(location, "taskKeys", taskKeys);
-		}
 
 		if (timeRange != null) {
 			location = HttpUtil.addParameter(location, "timeRange", timeRange);

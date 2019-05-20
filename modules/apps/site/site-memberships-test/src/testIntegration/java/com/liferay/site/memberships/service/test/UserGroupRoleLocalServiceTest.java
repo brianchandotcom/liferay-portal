@@ -21,14 +21,15 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -56,17 +57,17 @@ public class UserGroupRoleLocalServiceTest {
 
 		_user = UserTestUtil.addUser(null, _group.getGroupId());
 
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
 
 		Assert.assertNull(
-			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK));
+			_userGroupRoleLocalService.fetchUserGroupRole(userGroupRolePK));
 
 		List<UserGroupRole> userGroupRoles =
-			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			_userGroupRoleLocalService.addUserGroupRoles(
 				new long[] {_user.getUserId()}, _group.getGroupId(),
 				role.getRoleId());
 
@@ -77,13 +78,19 @@ public class UserGroupRoleLocalServiceTest {
 
 		Assert.assertEquals(
 			userGroupRoles.get(0),
-			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK));
+			_userGroupRoleLocalService.fetchUserGroupRole(userGroupRolePK));
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

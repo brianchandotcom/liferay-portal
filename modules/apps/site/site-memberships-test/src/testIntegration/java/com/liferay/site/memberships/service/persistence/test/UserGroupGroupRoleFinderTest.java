@@ -21,15 +21,16 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinderUtil;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -61,19 +62,19 @@ public class UserGroupGroupRoleFinderTest {
 		_user = UserTestUtil.addUser();
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
-		UserLocalServiceUtil.addUserGroupUser(
+		_userLocalService.addUserGroupUser(
 			_userGroup.getUserGroupId(), _user.getUserId());
 
 		long[] roleIds = {_role.getRoleId()};
 
-		UserGroupGroupRoleLocalServiceUtil.addUserGroupGroupRoles(
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
 			_userGroup.getUserGroupId(), _group.getGroupId(), roleIds);
 	}
 
 	@Test
 	public void testFindByUserGroupsUsers() {
 		List<UserGroupGroupRole> userGroupGroupRoles =
-			UserGroupGroupRoleFinderUtil.findByUserGroupsUsers(
+			_userGroupGroupRoleFinder.findByUserGroupsUsers(
 				_user.getUserId(), _group.getGroupId());
 
 		Assert.assertEquals(
@@ -99,5 +100,14 @@ public class UserGroupGroupRoleFinderTest {
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
+
+	@Inject
+	private UserGroupGroupRoleFinder _userGroupGroupRoleFinder;
+
+	@Inject
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

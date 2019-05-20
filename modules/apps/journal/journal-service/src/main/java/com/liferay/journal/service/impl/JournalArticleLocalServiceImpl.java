@@ -5454,13 +5454,13 @@ public class JournalArticleLocalServiceImpl
 					return;
 				}
 
+				indexableActionableDynamicQuery.setCompanyId(
+					article.getCompanyId());
+
 				com.liferay.portal.kernel.search.Document document =
 					indexer.getDocument(article);
 
 				indexableActionableDynamicQuery.addDocuments(document);
-
-				indexableActionableDynamicQuery.setCompanyId(
-					article.getCompanyId());
 			});
 
 		indexableActionableDynamicQuery.performActions();

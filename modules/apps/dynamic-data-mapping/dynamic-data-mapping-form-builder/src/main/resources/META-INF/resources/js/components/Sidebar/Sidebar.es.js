@@ -60,7 +60,7 @@ class Sidebar extends Component {
 		 * @type {?bool}
 		 */
 
-		open: Config.bool().valueFn('_openValueFn'),
+		open: Config.bool().internal().value(false),
 
 		/**
 		 * @default object
@@ -124,15 +124,6 @@ class Sidebar extends Component {
 		 */
 
 		focusedField: focusedFieldStructure.value({}),
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof Sidebar
-		 * @type {?bool}
-		 */
-
-		open: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -760,12 +751,6 @@ class Sidebar extends Component {
 				}
 			)
 		};
-	}
-
-	_openValueFn() {
-		const {open} = this.props;
-
-		return open;
 	}
 
 	_renderElementSets() {

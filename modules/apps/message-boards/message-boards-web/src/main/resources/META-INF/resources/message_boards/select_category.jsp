@@ -40,10 +40,6 @@ else {
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectCategoryFm">
-		<liferay-ui:header
-			title="home"
-		/>
-
 		<liferay-ui:breadcrumb
 			showGuestGroup="<%= false %>"
 			showLayout="<%= false %>"

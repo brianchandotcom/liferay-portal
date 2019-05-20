@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -156,8 +156,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(renderRequest.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			renderRequest.getLocale(), getClass());
 
 		List<List<ImageEditorCapabilityDescriptor>>
 			imageEditorCapabilityDescriptorsList =
@@ -241,10 +241,5 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

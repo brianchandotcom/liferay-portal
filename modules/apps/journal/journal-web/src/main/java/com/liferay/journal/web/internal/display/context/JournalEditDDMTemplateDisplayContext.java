@@ -23,6 +23,7 @@ import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.util.JournalChangeTrackingHelperUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -184,6 +185,10 @@ public class JournalEditDDMTemplateDisplayContext {
 
 		_redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(_httpServletRequest, "redirect"));
+
+		if (Validator.isNull(_redirect)) {
+			return StringPool.BLANK;
+		}
 
 		return _redirect;
 	}

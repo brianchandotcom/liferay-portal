@@ -125,6 +125,19 @@ public interface CTManager {
 		long companyId, long userId);
 
 	/**
+	 * Returns all the change tracking entries associated with the given
+	 * ctCollection and keywords.
+	 *
+	 * @param  ctCollection the containing change list
+	 * @param  keywords	the filtering keywords
+	 * @param  queryDefinition the settings regarding pagination, order
+	 * @return the change tracking entries
+	 */
+	public List<CTEntry> getCTCollectionCTEntries(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	/**
 	 * Returns the list change entries associated with the given change
 	 * collections and class name ID.
 	 *
@@ -137,6 +150,19 @@ public interface CTManager {
 	 */
 	public List<CTEntry> getCTCollectionCTEntries(
 		long companyId, long ctCollectionId, long classNameId);
+
+	/**
+	 * Returns the number of change tracking entries associated with the given
+	 * ctCollection and keywords.
+	 *
+	 * @param  ctCollection the containing change list
+	 * @param  keywords	the filtering keywords
+	 * @param  queryDefinition the settings
+	 * @return the number of change tracking entries
+	 */
+	public int getCTCollectionCTEntriesCount(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
 
 	/**
 	 * Returns change tracking collections associated with the given company,

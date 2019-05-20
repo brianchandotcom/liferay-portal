@@ -1,4 +1,4 @@
-import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS, UPDATE_ROW_COLUMNS_SUCCESS, UPDATE_ROW_CONFIG} from '../actions/actions.es';
+import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS, UPDATE_ROW_CONFIG} from '../actions/actions.es';
 import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';

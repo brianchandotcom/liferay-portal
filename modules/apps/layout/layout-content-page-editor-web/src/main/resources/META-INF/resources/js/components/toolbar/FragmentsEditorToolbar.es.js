@@ -31,7 +31,8 @@ class FragmentsEditorToolbar extends Component {
 		const nextState = setIn(
 			state,
 			['_lastSaveText'],
-			lastSaveText);
+			lastSaveText
+		);
 
 		return nextState;
 	}

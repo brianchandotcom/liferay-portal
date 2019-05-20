@@ -18,7 +18,6 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.properties.ResourceProperty;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.utils.URIUtils;
 
@@ -48,6 +47,7 @@ import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
+import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
@@ -60,9 +60,9 @@ public class LiferayResourceProperties
 		super(name);
 	}
 
-	public ValidationResult afterResourceProperty() throws Exception {
+	public ValidationResult afterEndpoint() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resourceProperty.getResourceURL());
+			_log.debug("Endpoint: " + endpoint.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -92,11 +92,9 @@ public class LiferayResourceProperties
 
 				try {
 					URI resourceURI = URIUtils.setPaginationLimitOnURL(
-						resourceProperty.getResourceURL(), 1);
+						endpoint.getValue(), 1);
 
-					String resourceCollectionType =
-						liferaySourceOrSinkRuntime.getResourceCollectionType(
-							resourceURI.toString());
+					String resourceCollectionType = "type";
 
 					Schema schema =
 						liferaySourceOrSinkRuntime.getResourceSchemaByType(
@@ -126,7 +124,7 @@ public class LiferayResourceProperties
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
 
-			resourceProperty.setValue(null);
+			endpoint.setValue(null);
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -135,9 +133,7 @@ public class LiferayResourceProperties
 		return validationResultMutable;
 	}
 
-	public ValidationResult beforeResourceProperty() throws Exception {
-		setupResourceURLPrefix();
-
+	public ValidationResult beforeEndpoint() throws Exception {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -177,7 +173,7 @@ public class LiferayResourceProperties
 							ValidationResult.Result.ERROR);
 					}
 
-					resourceProperty.setPossibleNamedThingValues(resourceNames);
+					endpoint.setPossibleNamedThingValues(resourceNames);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -193,13 +189,6 @@ public class LiferayResourceProperties
 		return connection;
 	}
 
-	@Override
-	public void refreshLayout(Form form) {
-		super.refreshLayout(form);
-
-		setupResourceURLPrefix();
-	}
-
 	public void setSchemaListener(ISchemaListener schemaListener) {
 		this.schemaListener = schemaListener;
 	}
@@ -210,7 +199,7 @@ public class LiferayResourceProperties
 
 		// Special property settings
 
-		resourceProperty.setRequired();
+		endpoint.setRequired();
 
 		// Forms
 
@@ -223,18 +212,7 @@ public class LiferayResourceProperties
 		super.setupProperties();
 
 		condition.setValue("");
-		resourceProperty.setValue(null);
-	}
-
-	public void setupResourceURLPrefix() {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveLiferayConnectionProperties();
-
-		resourceProperty.setHost(
-			liferayConnectionProperties.apiSpecURL.getValue());
-
-		resourceProperty.setUriPrefix(
-			liferayConnectionProperties.siteId.getValue());
+		endpoint.setValue(null);
 	}
 
 	public ValidationResult validateValidateCondition() {
@@ -260,6 +238,7 @@ public class LiferayResourceProperties
 
 	public Property<String> condition = PropertyFactory.newString("condition");
 	public LiferayConnectionProperties connection;
+	public StringProperty endpoint = new StringProperty("endpoint");
 
 	public SchemaProperties main = new SchemaProperties("main") {
 
@@ -272,8 +251,6 @@ public class LiferayResourceProperties
 
 	};
 
-	public ResourceProperty resourceProperty = new ResourceProperty(
-		"resourceProperty");
 	public ISchemaListener schemaListener;
 	public transient PresentationItem validateCondition = new PresentationItem(
 		"validateCondition");
@@ -329,40 +306,39 @@ public class LiferayResourceProperties
 	}
 
 	private void _setupMainForm() {
-		Form resourceSelectionForm = Form.create(this, Form.MAIN);
+		Form endpointSelectionForm = Form.create(this, Form.MAIN);
 
-		Widget resourcePropertyWidget = Widget.widget(resourceProperty);
+		Widget endpointPropertyWidget = Widget.widget(endpoint);
 
-		resourcePropertyWidget.setCallAfter(true);
-		resourcePropertyWidget.setWidgetType(
+		endpointPropertyWidget.setCallAfter(true);
+		endpointPropertyWidget.setWidgetType(
 			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
-		resourceSelectionForm.addRow(resourcePropertyWidget);
+		endpointSelectionForm.addRow(endpointPropertyWidget);
 
-		resourceSelectionForm.addRow(condition);
+		endpointSelectionForm.addRow(condition);
 
 		Widget validateConditionWidget = Widget.widget(validateCondition);
 
 		validateConditionWidget.setLongRunning(true);
 		validateConditionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
-		resourceSelectionForm.addColumn(validateConditionWidget);
+		endpointSelectionForm.addColumn(validateConditionWidget);
 
-		refreshLayout(resourceSelectionForm);
+		refreshLayout(endpointSelectionForm);
 	}
 
 	private void _setupReferenceForm() {
 		Form referenceForm = Form.create(this, Form.REFERENCE);
 
-		Widget resourcePropertyReferenceWidget = Widget.widget(
-			resourceProperty);
+		Widget endpointReferenceWidget = Widget.widget(endpoint);
 
-		resourcePropertyReferenceWidget.setCallAfter(true);
-		resourcePropertyReferenceWidget.setLongRunning(true);
-		resourcePropertyReferenceWidget.setWidgetType(
+		endpointReferenceWidget.setCallAfter(true);
+		endpointReferenceWidget.setLongRunning(true);
+		endpointReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		referenceForm.addRow(resourcePropertyReferenceWidget);
+		referenceForm.addRow(endpointReferenceWidget);
 
 		referenceForm.addRow(condition);
 

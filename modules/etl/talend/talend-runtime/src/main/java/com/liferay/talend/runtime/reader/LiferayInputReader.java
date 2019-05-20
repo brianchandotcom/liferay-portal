@@ -171,12 +171,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	public boolean start() throws IOException {
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		liferayConnectionResourceBaseProperties.resource.
-			setupResourceURLPrefix();
-
 		String resourceURL =
-			liferayConnectionResourceBaseProperties.resource.resourceProperty.
-				getResourceURL();
+			liferayConnectionResourceBaseProperties.resource.endpoint.
+				getValue();
 
 		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
 			resourceURL, _queryCondition);

@@ -87,8 +87,7 @@ public class TLiferayOutputProperties
 
 	public ValidationResult afterCalculateSchema() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Resource URL: " + resource.resourceProperty.getResourceURL());
+			_log.debug("Endpoint: " + resource.endpoint.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =

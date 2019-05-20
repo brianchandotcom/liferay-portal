@@ -105,8 +105,6 @@ public abstract class LiferayConnectionResourceBaseProperties
 		for (Form childForm : resource.getForms()) {
 			resource.refreshLayout(childForm);
 		}
-
-		resource.setupResourceURLPrefix();
 	}
 
 	@Override

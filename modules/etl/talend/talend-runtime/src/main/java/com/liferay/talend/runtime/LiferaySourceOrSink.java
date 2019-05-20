@@ -274,15 +274,6 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public String getResourceCollectionType(String resourceURL)
-		throws IOException {
-
-		JsonNode jsonNode = doApioGetRequest(resourceURL);
-
-		return "type";
-	}
-
-	@Override
 	public List<NamedThing> getResourceList(String webSiteURL)
 		throws IOException {
 

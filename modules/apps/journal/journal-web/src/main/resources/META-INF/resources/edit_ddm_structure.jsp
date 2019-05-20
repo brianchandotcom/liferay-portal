@@ -26,7 +26,7 @@ DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructu
 long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(PortalUtil.escapeRedirect(redirect));
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
 

@@ -15,13 +15,11 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
@@ -30,6 +28,10 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -44,46 +46,50 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-
-import java.io.File;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+
 /**
  * @author Istvan Sajtos
  */
 @RunWith(Arquillian.class)
+@Sync
 public class DLFileEntryAttachmentSearchTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
 
 	@Test
 	public void testSearchIncludeAttachment() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 
-		WikiNode node = _addPageWithAttachment(keyword);
+		_addPageWithAttachment(keyword);
 
-		FileEntry fileEntry = _addFileEntry(keyword);
+		_addFileEntry(keyword);
 
 		_assertSearchIncludeAttachment(keyword);
-
-		WikiNodeLocalServiceUtil.deleteNode(node);
-
-		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
 	private void _assertSearchIncludeAttachment(String keywords)
 		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			TestPropsValues.getGroupId());
+			_group.getGroupId());
 
 		searchContext.setKeywords(keywords);
 
@@ -107,12 +113,12 @@ public class DLFileEntryAttachmentSearchTest {
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
-	private WikiNode _addPageWithAttachment(String name) throws Exception {
-		long groupId = TestPropsValues.getGroupId();
+	private void _addPageWithAttachment(String name) throws Exception {
 		long userId = TestPropsValues.getUserId();
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), userId);
 
 		WikiNode node = WikiNodeLocalServiceUtil.addNode(
 			userId, RandomTestUtil.randomString(),
@@ -132,19 +138,18 @@ public class DLFileEntryAttachmentSearchTest {
 
 		WikiPageLocalServiceUtil.addPageAttachment(
 			userId, node.getNodeId(), pageTitle, name, file, mimeType);
-
-		return node;
 	}
 
-	private FileEntry _addFileEntry(String title) throws PortalException {
-		long groupId = TestPropsValues.getGroupId();
+	private void _addFileEntry(String title) throws PortalException {
 		long userId = TestPropsValues.getUserId();
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), userId);
 
-		return DLAppLocalServiceUtil.addFileEntry(
-			userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+		DLAppLocalServiceUtil.addFileEntry(
+			userId, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(),
 			serviceContext);
@@ -155,5 +160,8 @@ public class DLFileEntryAttachmentSearchTest {
 
 	@Inject
 	private static FacetedSearcherManager _facetedSearcherManager;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

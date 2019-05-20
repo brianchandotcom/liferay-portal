@@ -58,7 +58,7 @@ else {
 		%>
 
 		<liferay-ui:search-container
-			headerNames="category[message-board],num-of-categories,num-of-threads,num-of-posts,"
+			headerNames="category[message-board],categories,threads,posts,"
 			iteratorURL="<%= portletURL %>"
 			total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 		>
@@ -92,19 +92,19 @@ else {
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="num-of-categories"
+					name="categories"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="num-of-threads"
+					name="threads"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
-					name="num-of-posts"
+					name="posts"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
 				/>
 
@@ -117,7 +117,7 @@ else {
 					data.put("name", curCategory.getName());
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
@@ -130,7 +130,7 @@ else {
 				data.put("name", categoryName);
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-category" />
+				<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-category" />
 			</aui:button-row>
 
 			<liferay-ui:search-iterator />

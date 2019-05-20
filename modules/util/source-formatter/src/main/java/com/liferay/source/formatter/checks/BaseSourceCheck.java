@@ -69,7 +69,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	@Override
 	public String getAttributeValue(String attributeKey, String absolutePath) {
-		return getAttributeValue(attributeKey, absolutePath, null);
+		return getAttributeValue(attributeKey, absolutePath, StringPool.BLANK);
 	}
 
 	@Override
@@ -80,24 +80,49 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return defaultValue;
 		}
 
+		String value = _attributeValueMap.get(attributeKey);
+
+		if (value != null) {
+			return value;
+		}
+
+		value = _attributeValueMap.get(absolutePath + ":" + attributeKey);
+
+		if (value != null) {
+			return value;
+		}
+
 		String closestPropertiesFileLocation = null;
-		String value = null;
+		boolean hasSubdirectoryAttributeValue = false;
 
 		Iterator<String> keys = _attributesJSONObject.keys();
 
 		while (keys.hasNext()) {
 			String fileLocation = keys.next();
 
+			String curValue = _getAttributeValue(
+				_attributesJSONObject.getJSONObject(fileLocation),
+				attributeKey);
+
+			if (curValue == null) {
+				continue;
+			}
+
 			if (fileLocation.equals(
 					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
 
 				if (value == null) {
-					value = _getAttributeValue(
-						_attributesJSONObject.getJSONObject(fileLocation),
-						attributeKey);
+					value = curValue;
 				}
 
 				continue;
+			}
+
+			String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+				_baseDirName);
+
+			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+				hasSubdirectoryAttributeValue = true;
 			}
 
 			if (!absolutePath.startsWith(fileLocation)) {
@@ -108,45 +133,86 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				(closestPropertiesFileLocation.length() <
 					fileLocation.length())) {
 
-				value = _getAttributeValue(
-					_attributesJSONObject.getJSONObject(fileLocation),
-					attributeKey);
+				value = curValue;
 
 				closestPropertiesFileLocation = fileLocation;
 			}
 		}
 
-		if (value != null) {
-			return value;
+		if (value == null) {
+			value = defaultValue;
 		}
 
-		return defaultValue;
+		_attributeValueMap.put(absolutePath + ":" + attributeKey, value);
+
+		if (!hasSubdirectoryAttributeValue) {
+			_attributeValueMap.put(attributeKey, value);
+		}
+
+		return value;
 	}
 
 	@Override
 	public List<String> getAttributeValues(
 		String attributeKey, String absolutePath) {
 
-		List<String> attributeValues = new ArrayList<>();
-
 		if (_attributesJSONObject == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> attributeValues = _attributeValuesMap.get(attributeKey);
+
+		if (attributeValues != null) {
 			return attributeValues;
 		}
+
+		attributeValues = _attributeValuesMap.get(
+			absolutePath + ":" + attributeKey);
+
+		if (attributeValues != null) {
+			return attributeValues;
+		}
+
+		attributeValues = new ArrayList<>();
+
+		boolean hasSubdirectoryAttributeValues = false;
 
 		Iterator<String> keys = _attributesJSONObject.keys();
 
 		while (keys.hasNext()) {
 			String fileLocation = keys.next();
 
-			if (fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION) ||
-				absolutePath.startsWith(fileLocation)) {
+			List<String> curAttributeValues = _getAttributeValues(
+				_attributesJSONObject.getJSONObject(fileLocation),
+				attributeKey);
 
-				attributeValues.addAll(
-					_getAttributeValues(
-						_attributesJSONObject.getJSONObject(fileLocation),
-						attributeKey));
+			if (curAttributeValues.isEmpty()) {
+				continue;
 			}
+
+			if (!fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+					_baseDirName);
+
+				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+					hasSubdirectoryAttributeValues = true;
+				}
+
+				if (!absolutePath.startsWith(fileLocation)) {
+					continue;
+				}
+			}
+
+			attributeValues.addAll(curAttributeValues);
+		}
+
+		_attributeValuesMap.put(
+			absolutePath + ":" + attributeKey, attributeValues);
+
+		if (!hasSubdirectoryAttributeValues) {
+			_attributeValuesMap.put(attributeKey, attributeValues);
 		}
 
 		return attributeValues;
@@ -173,8 +239,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	public boolean isAttributeValue(
 		String attributeKey, String absolutePath, boolean defaultValue) {
 
-		return GetterUtil.getBoolean(
-			getAttributeValue(attributeKey, absolutePath), defaultValue);
+		String attributeValue = getAttributeValue(attributeKey, absolutePath);
+
+		if (Validator.isNull(attributeValue)) {
+			return defaultValue;
+		}
+
+		return GetterUtil.getBoolean(attributeValue);
 	}
 
 	@Override
@@ -921,6 +992,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	private JSONObject _attributesJSONObject;
+	private final Map<String, String> _attributeValueMap =
+		new ConcurrentHashMap<>();
+	private final Map<String, List<String>> _attributeValuesMap =
+		new ConcurrentHashMap<>();
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();

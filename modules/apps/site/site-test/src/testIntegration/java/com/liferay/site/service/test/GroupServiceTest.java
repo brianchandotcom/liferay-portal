@@ -453,42 +453,45 @@ public class GroupServiceTest {
 
 	@Test
 	public void testFriendlyURLDefaults() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		long companyId = _group.getCompanyId();
+		_groups.add(group1);
+
+		long companyId = group1.getCompanyId();
 
 		String defaultNewGroupFriendlyURL =
 			StringPool.SLASH +
 				_friendlyURLNormalizer.normalize(
-					_group.getName(LocaleUtil.getDefault()));
+					group1.getName(LocaleUtil.getDefault()));
 
 		Assert.assertNotNull(
 			_groupLocalService.fetchFriendlyURLGroup(
 				companyId, defaultNewGroupFriendlyURL));
 
-		_groupService.updateFriendlyURL(_group.getGroupId(), null);
+		_groupService.updateFriendlyURL(group1.getGroupId(), null);
 
 		Assert.assertNull(
 			_groupLocalService.fetchFriendlyURLGroup(
 				companyId, defaultNewGroupFriendlyURL));
 
-		String defaultFriendlyURL = "/group-" + _group.getGroupId();
+		String defaultFriendlyURL = "/group-" + group1.getGroupId();
 
 		Assert.assertNotNull(
 			_groupLocalService.fetchFriendlyURLGroup(
 				companyId, defaultFriendlyURL));
 
 		_groupService.updateFriendlyURL(
-			_group.getGroupId(),
+			group1.getGroupId(),
 			StringPool.SLASH + RandomTestUtil.randomString());
 
-		Group group = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		_groups.add(group);
+		_groups.add(group2);
 
-		_groupService.updateFriendlyURL(group.getGroupId(), defaultFriendlyURL);
+		_groupService.updateFriendlyURL(
+			group2.getGroupId(), defaultFriendlyURL);
 
-		_groupService.updateFriendlyURL(_group.getGroupId(), null);
+		_groupService.updateFriendlyURL(group1.getGroupId(), null);
 
 		Assert.assertNotNull(
 			_groupLocalService.fetchFriendlyURLGroup(
@@ -692,21 +695,23 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGroupHasCurrentPageScopeDescriptiveName() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.addFirst(group1);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		_groups.addFirst(group);
+		_groups.addFirst(group2);
 
-		Group scopeGroup = addScopeGroup(group);
+		Group scopeGroup = addScopeGroup(group2);
 
 		_groups.addFirst(scopeGroup);
 
 		themeDisplay.setPlid(scopeGroup.getClassPK());
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(group1.getGroupId());
 
 		String scopeDescriptiveName = scopeGroup.getScopeDescriptiveName(
 			themeDisplay);
@@ -734,19 +739,21 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGroupHasDefaultScopeDescriptiveName() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.add(group1);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		_groups.add(group);
+		_groups.add(group2);
 
-		group.setClassName(LayoutPrototype.class.getName());
+		group2.setClassName(LayoutPrototype.class.getName());
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(group1.getGroupId());
 
-		String scopeDescriptiveName = group.getScopeDescriptiveName(
+		String scopeDescriptiveName = group2.getScopeDescriptiveName(
 			themeDisplay);
 
 		Assert.assertTrue(
@@ -813,21 +820,23 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGroupIsPageScopeLabel() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.addFirst(group1);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		_groups.addFirst(group);
+		_groups.addFirst(group2);
 
-		Group scopeGroup = addScopeGroup(group);
+		Group scopeGroup = addScopeGroup(group2);
 
 		_groups.addFirst(scopeGroup);
 
 		themeDisplay.setPlid(scopeGroup.getClassPK());
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(group1.getGroupId());
 
 		Assert.assertEquals("page", scopeGroup.getScopeLabel(themeDisplay));
 	}
@@ -851,17 +860,19 @@ public class GroupServiceTest {
 
 	@Test
 	public void testGroupIsSiteScopeLabel() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.add(group1);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
 
-		_groups.add(group);
+		_groups.add(group2);
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(group1.getGroupId());
 
-		Assert.assertEquals("site", group.getScopeLabel(themeDisplay));
+		Assert.assertEquals("site", group2.getScopeLabel(themeDisplay));
 	}
 
 	@Test

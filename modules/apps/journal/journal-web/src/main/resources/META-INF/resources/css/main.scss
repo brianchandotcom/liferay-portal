@@ -137,6 +137,10 @@ $productMenuWidth: 320px;
 				}
 			}
 
+			.journal-article-button-row .btn-cancel {
+				border: 0;
+			}
+
 			@media (min-width: 768px) {
 				min-height: $toolbarDesktopHeight;
 				top: $controlMenuDesktopHeight;

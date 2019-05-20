@@ -45,6 +45,14 @@ class FragmentEditableBackgroundImage extends Component {
 			);
 		}
 
+		buttons.push(
+			{
+				icon: 'times-circle',
+				id: TOOLTIP_BUTTON_IDS.remove,
+				label: Liferay.Language.get('remove-background')
+			}
+		);
+
 		return buttons;
 	}
 

@@ -28,6 +28,7 @@ class InstanceItemDetail extends React.Component {
 		const {
 			assetTitle,
 			assetType,
+			dateCompletion,
 			dateCreated,
 			slaResults = [],
 			slaStatus,
@@ -41,20 +42,11 @@ class InstanceItemDetail extends React.Component {
 			['Running', 'Paused'].includes(status)
 		);
 
-		let currentStepText = Liferay.Language.get('current-step');
-
 		let styleName = 'text-danger';
 
+		const completed = status === 'Completed';
 		const empty = slaResults.length === 0;
 		const overdue = slaStatus === 'Overdue';
-
-		if (
-			slaStatus === 'Completed' &&
-			slaResolved.length > 1 &&
-			slaOpen.length === 0
-		) {
-			currentStepText = Liferay.Language.get('end-date');
-		}
 
 		if (status === 'Pending' && slaStatus === 'OnTime') {
 			styleName = 'text-success';
@@ -175,10 +167,19 @@ class InstanceItemDetail extends React.Component {
 								detail={assetTitle}
 							/>
 
-							<InstanceItemDetail.SectionAttribute
-								description={currentStepText}
-								detail={taskNames.join(', ')}
-							/>
+							{!completed && (
+								<InstanceItemDetail.SectionAttribute
+									description={Liferay.Language.get('current-step')}
+									detail={taskNames.join(', ')}
+								/>
+							)}
+
+							{completed && !!dateCompletion && (
+								<InstanceItemDetail.SectionAttribute
+									description={Liferay.Language.get('end-date')}
+									detail={moment(dateCompletion).format('MMM DD, LT')}
+								/>
+							)}
 
 							<a
 								className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"

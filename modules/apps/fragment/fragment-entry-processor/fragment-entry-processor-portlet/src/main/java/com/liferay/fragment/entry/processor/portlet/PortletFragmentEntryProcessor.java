@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.FragmentPortletSetupUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
@@ -393,11 +396,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		try {
-			jxPortletPreferences.setValue(
-				"portletSetupPortletDecoratorId", "barebone");
+			FragmentPortletSetupUtil.setPortletBareboneCSSClass(
+				jxPortletPreferences);
 		}
-		catch (ReadOnlyException roe) {
-			throw new PortalException(roe);
+		catch (Exception e) {
+			throw new PortalException(e);
 		}
 
 		Document preferencesDocument = _getDocument(

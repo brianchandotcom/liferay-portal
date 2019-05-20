@@ -541,6 +541,8 @@ definition {
 	}
 
 	macro viewFriendlyURLLanguageOptionsPG {
+		Pause(locator1 = "3000");
+
 		Click(
 			key_fieldName = "${fieldName}",
 			locator1 = "Button#LOCALIZATION");

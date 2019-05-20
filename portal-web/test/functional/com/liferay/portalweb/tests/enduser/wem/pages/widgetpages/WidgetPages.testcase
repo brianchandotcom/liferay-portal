@@ -103,7 +103,7 @@ definition {
 				pageName = "${portlet} Full Page Application",
 				siteName = "Test Site Name"
 			);
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals.assertText(
 				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
 				value1 = "${portlet}",
 				key_portletTitleName = "${portlet}"

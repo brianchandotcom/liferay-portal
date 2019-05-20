@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.internal.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
@@ -43,7 +44,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,13 +148,13 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(getCompanyId());
 
+		long[] classTypeIds = {};
+
 		if (!anyAssetType) {
 			long[] classNameIds = _getClassNameIds(
 				properties, availableClassNameIds);
 
 			assetEntryQuery.setClassNameIds(classNameIds);
-
-			long[] classTypeIds = {};
 
 			for (long classNameId : classNameIds) {
 				String className = PortalUtil.getClassName(classNameId);
@@ -163,6 +167,25 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		}
 		else {
 			assetEntryQuery.setClassNameIds(availableClassNameIds);
+		}
+
+		String ddmStructureFieldName = properties.getProperty(
+			"ddmStructureFieldName");
+
+		String ddmStructureFieldValue = properties.getProperty(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue) &&
+			(classTypeIds.length == 1)) {
+
+			assetEntryQuery.setAttribute(
+				"ddmStructureFieldName",
+				DDMIndexerUtil.encodeName(
+					classTypeIds[0], ddmStructureFieldName,
+					LocaleUtil.getMostRelevantLocale()));
+			assetEntryQuery.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
 
 		String orderByColumn1 = GetterUtil.getString(
@@ -442,6 +465,20 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
 		searchContext.setStart(assetEntryQuery.getStart());
+
+		String ddmStructureFieldName = GetterUtil.getString(
+			assetEntryQuery.getAttribute("ddmStructureFieldName"));
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
 
 		AssetHelper assetHelper = _serviceTracker.getService();
 

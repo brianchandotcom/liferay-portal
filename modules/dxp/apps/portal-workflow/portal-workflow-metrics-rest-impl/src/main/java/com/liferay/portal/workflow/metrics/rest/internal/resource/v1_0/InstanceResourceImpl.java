@@ -284,6 +284,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				assetTitle = document.getString(
 					_getLocalizedName("assetTitle"));
 				assetType = document.getString(_getLocalizedName("assetType"));
+				dateCompletion = _toDate(document.getDate("completionDate"));
 				dateCreated = _toDate(document.getDate("createDate"));
 				id = document.getLong("instanceId");
 				processId = document.getLong("processId");
@@ -301,6 +302,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					sourcesMap.get(_getLocalizedName("assetTitle")));
 				assetType = GetterUtil.getString(
 					sourcesMap.get(_getLocalizedName("assetType")));
+				dateCompletion = _toDate(
+					GetterUtil.getString(sourcesMap.get("completionDate")));
 				dateCreated = _toDate(
 					GetterUtil.getString(sourcesMap.get("createDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));

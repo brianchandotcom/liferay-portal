@@ -143,19 +143,7 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_handleSelectBackgroundImage(backgroundImageURL) {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
-
-		this.store.dispatch(
-			updateEditableValueAction(
-				this.fragmentEntryLinkId,
-				this.editableId,
-				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				backgroundImageURL,
-				segmentsExperienceId || defaultSegmentsExperienceId,
-				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-			)
-		);
+		this._updateBackgroundImage(backgroundImageURL);
 	}
 
 	/**
@@ -186,6 +174,30 @@ class FragmentEditableBackgroundImage extends Component {
 			segmentedValue[this.defaultLanguageId];
 
 		EditableBackgroundImageProcessor.render(this.element, translatedValue);
+	}
+
+	/**
+	 * Dispatches action to update editableValues with new background image url
+	 * @param {string} backgroundImageURL
+	 */
+	_updateBackgroundImage(backgroundImageURL) {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+			this.defaultSegmentsExperienceId
+		);
+		const segmentsExperienceId = prefixSegmentsExperienceId(
+			this.segmentsExperienceId
+		);
+
+		this.store.dispatch(
+			updateEditableValueAction(
+				this.fragmentEntryLinkId,
+				this.editableId,
+				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				backgroundImageURL,
+				segmentsExperienceId || defaultSegmentsExperienceId,
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			)
+		);
 	}
 
 }

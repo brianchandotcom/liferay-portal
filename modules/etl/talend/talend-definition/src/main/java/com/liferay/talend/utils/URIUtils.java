@@ -14,7 +14,6 @@
 
 package com.liferay.talend.utils;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.exception.URIPathException;
 
@@ -142,16 +141,6 @@ public class URIUtils {
 		}
 
 		return path.substring(pos + 1);
-	}
-
-	public static URL getServerURL(
-		LiferayConnectionProperties liferayConnectionProperties) {
-
-		String apiSpecHref = liferayConnectionProperties.apiSpecURL.getValue();
-
-		URL apiSpecURL = toURL(apiSpecHref);
-
-		return extractServerURL(apiSpecURL);
 	}
 
 	public static boolean isValidOpenAPISpecURL(String endpointURL) {

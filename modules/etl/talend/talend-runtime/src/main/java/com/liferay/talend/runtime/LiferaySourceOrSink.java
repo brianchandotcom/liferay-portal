@@ -160,7 +160,10 @@ public class LiferaySourceOrSink
 
 	@Override
 	public List<NamedThing> getAvailableWebSites() throws IOException {
-		URL serverURL = URIUtils.getServerURL(getEffectiveConnection(null));
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		URL serverURL = liferayConnectionProperties.getServerURL();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
 

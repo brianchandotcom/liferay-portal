@@ -20,6 +20,9 @@ import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.utils.PropertiesUtils;
+import com.liferay.talend.utils.URIUtils;
+
+import java.net.URL;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -126,6 +129,17 @@ public class LiferayConnectionProperties
 		return null;
 	}
 
+	public String getApplicationBaseHref() {
+		URL openAPISpecURL = URIUtils.toURL(apiSpecURL.getValue());
+		URL serverURL = getServerURL();
+		String jaxRSAppBase = URIUtils.extractJaxRSAppBasePathSegment(
+			openAPISpecURL);
+
+		String serverHref = serverURL.toExternalForm();
+
+		return serverHref.concat(jaxRSAppBase);
+	}
+
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return this;
@@ -157,6 +171,14 @@ public class LiferayConnectionProperties
 		}
 
 		return getLiferayConnectionProperties();
+	}
+
+	public URL getServerURL() {
+		String apiSpecHref = apiSpecURL.getValue();
+
+		URL apiSpecURL = URIUtils.toURL(apiSpecHref);
+
+		return URIUtils.extractServerURL(apiSpecURL);
 	}
 
 	@Override

@@ -74,6 +74,7 @@ else {
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= rowURL %>"
 					name="category[message-board]"
 				>
@@ -87,18 +88,21 @@ else {
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-column-text-end"
 					href="<%= rowURL %>"
 					name="categories"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-column-text-end"
 					href="<%= rowURL %>"
 					name="threads"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesThreadsCount(curCategory)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-column-text-end"
 					href="<%= rowURL %>"
 					name="posts"
 					value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
@@ -129,7 +133,9 @@ else {
 				<aui:button cssClass="selector-button" data="<%= data %>" value="select-this-category" />
 			</aui:button-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

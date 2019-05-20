@@ -31,7 +31,6 @@ import com.liferay.journal.web.internal.security.permission.resource.JournalArti
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.util.JournalChangeTrackingHelperUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -461,12 +460,7 @@ public class JournalEditArticleDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(_httpServletRequest, "redirect"));
-
-		if (Validator.isNull(_redirect)) {
-			return StringPool.BLANK;
-		}
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
 	}

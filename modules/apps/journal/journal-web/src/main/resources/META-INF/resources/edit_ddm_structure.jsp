@@ -61,20 +61,7 @@ if (ddmStructure != null) {
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-
-						<%
-						String cancelHref = PortalUtil.escapeRedirect(redirect);
-
-						if (cancelHref == null) {
-							cancelHref = StringPool.BLANK;
-						}
-
-						cancelHref = HtmlUtil.escapeAttribute(cancelHref);
-						%>
-
-						<a class="btn btn-secondary btn-sm mr-3" href="<%= cancelHref %>">
-							<liferay-ui:message key="cancel" />
-						</a>
+						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= HtmlUtil.escapeAttribute(redirect) %>" type="cancel" />
 
 						<aui:button cssClass="btn-sm mr-3" type="submit" value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>" />
 

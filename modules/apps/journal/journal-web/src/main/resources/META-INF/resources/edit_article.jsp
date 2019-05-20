@@ -81,9 +81,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= HtmlUtil.escapeAttribute(journalEditArticleDisplayContext.getRedirect()) %>">
-							<liferay-ui:message key="cancel" />
-						</a>
+						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= HtmlUtil.escapeAttribute(journalEditArticleDisplayContext.getRedirect()) %>" type="cancel" />
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">

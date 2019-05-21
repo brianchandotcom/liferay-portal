@@ -2550,9 +2550,6 @@ public class DLFileEntryLocalServiceImpl
 					userId, fileEntryId, fileEntryTypeId, serviceContext);
 			}
 		}
-		else if (!checkedOut) {
-			lockFileEntry(userId, fileEntryId);
-		}
 
 		if (!hasFileEntryLock(userId, fileEntryId)) {
 			lockFileEntry(userId, fileEntryId);

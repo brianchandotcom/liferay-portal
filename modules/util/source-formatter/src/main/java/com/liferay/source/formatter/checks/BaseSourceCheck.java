@@ -63,13 +63,11 @@ import org.dom4j.Element;
  */
 public abstract class BaseSourceCheck implements SourceCheck {
 
-	@Override
-	public String getAttributeValue(String attributeKey, String absolutePath) {
+	protected String getAttributeValue(String attributeKey, String absolutePath) {
 		return getAttributeValue(attributeKey, absolutePath, StringPool.BLANK);
 	}
 
-	@Override
-	public String getAttributeValue(
+	protected String getAttributeValue(
 		String attributeKey, String absolutePath, String defaultValue) {
 
 		if (_attributesJSONObject == null) {
@@ -150,8 +148,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return value;
 	}
 
-	@Override
-	public List<String> getAttributeValues(
+	protected List<String> getAttributeValues(
 		String attributeKey, String absolutePath) {
 
 		if (_attributesJSONObject == null) {
@@ -227,14 +224,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return Collections.emptySet();
 	}
 
-	@Override
-	public boolean isAttributeValue(String attributeKey, String absolutePath) {
+	protected boolean isAttributeValue(String attributeKey, String absolutePath) {
 		return GetterUtil.getBoolean(
 			getAttributeValue(attributeKey, absolutePath));
 	}
 
-	@Override
-	public boolean isAttributeValue(
+	protected boolean isAttributeValue(
 		String attributeKey, String absolutePath, boolean defaultValue) {
 
 		String attributeValue = getAttributeValue(attributeKey, absolutePath);

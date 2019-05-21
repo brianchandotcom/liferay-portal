@@ -28,21 +28,8 @@ import java.util.Set;
  */
 public interface SourceCheck {
 
-	public String getAttributeValue(String attributeKey, String absolutePath);
-
-	public String getAttributeValue(
-		String attributeKey, String absolutePath, String defaultValue);
-
-	public List<String> getAttributeValues(
-		String attributeKey, String absolutePath);
-
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
-
-	public boolean isAttributeValue(String attributeKey, String absolutePath);
-
-	public boolean isAttributeValue(
-		String attributeKey, String absolutePath, boolean defaultValue);
 
 	public boolean isEnabled(String absolutePath);
 

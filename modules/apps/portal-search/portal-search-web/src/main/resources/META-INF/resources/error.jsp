@@ -24,7 +24,7 @@ page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
 	title="error"
 />
 
-<c:if test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
 	<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
 </c:if>
 

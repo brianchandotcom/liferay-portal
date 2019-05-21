@@ -81,4 +81,5 @@ public class SearchOptionsPortlet extends MVCPortlet {
 
 	@Reference
 	protected PortletPermission portletPermission;
+
 }

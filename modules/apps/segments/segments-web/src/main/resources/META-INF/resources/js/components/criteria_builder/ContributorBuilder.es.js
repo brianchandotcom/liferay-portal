@@ -94,18 +94,9 @@ class ContributorBuilder extends React.Component {
 
 		const {initialContributors, propertyGroups} = props;
 
-		const initialConjunction = initialContributors.map(
+		const {conjunctionId: initialConjunction} = initialContributors.find(
 			c => c.conjunctionId
-		).reduce(
-			(initialConjunction, currentConjunction) => {
-				if (currentConjunction == CONJUNCTIONS.OR) {
-					initialConjunction = currentConjunction;
-				}
-
-				return initialConjunction;
-			},
-			CONJUNCTIONS.AND
-		);
+		) || {conjunctionId: CONJUNCTIONS.AND};
 
 		const contributors = initialContributors && initialContributors.map(
 			c => {

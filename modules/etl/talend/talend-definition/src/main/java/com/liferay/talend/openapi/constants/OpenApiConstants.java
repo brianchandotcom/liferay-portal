@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.constants;
+package com.liferay.talend.openapi.constants;
 
 /**
  * @author Zoltán Takács
@@ -21,17 +21,29 @@ public class OpenApiConstants {
 
 	public static final String APPLICATION_JSON = "application/json";
 
+	public static final String COMPONENTS = "components";
+
 	public static final String CONTENT = "content";
 
 	public static final String DEFAULT = "default";
 
+	public static final String ITEMS = "items";
+
+	public static final String PATH_SCHEMA_REFERENCE = "#/components/schemas/";
+
 	public static final String PATHS = "paths";
 
+	public static final String PROPERTIES = "properties";
+
 	public static final String REF = "$ref";
+
+	public static final String REQUIRED = "required";
 
 	public static final String RESPONSES = "responses";
 
 	public static final String SCHEMA = "schema";
+
+	public static final String SCHEMAS = "schemas";
 
 	private OpenApiConstants() {
 	}

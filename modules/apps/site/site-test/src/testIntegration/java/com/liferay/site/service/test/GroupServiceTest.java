@@ -778,17 +778,18 @@ public class GroupServiceTest {
 	public void testGroupIsChildSiteScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group parentGroup = GroupTestUtil.addGroup();
 
-		_groups.addFirst(group);
+		_groups.addFirst(parentGroup);
 
-		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setScopeGroupId(parentGroup.getGroupId());
 
-		Group subgroup = GroupTestUtil.addGroup(group.getGroupId());
+		Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.addFirst(subgroup);
+		_groups.addFirst(childGroup);
 
-		Assert.assertEquals("child-site", subgroup.getScopeLabel(themeDisplay));
+		Assert.assertEquals(
+			"child-site", childGroup.getScopeLabel(themeDisplay));
 	}
 
 	@Test
@@ -845,17 +846,18 @@ public class GroupServiceTest {
 	public void testGroupIsParentSiteScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = GroupTestUtil.addGroup();
+		Group parentGroup = GroupTestUtil.addGroup();
 
-		_groups.addFirst(group);
+		_groups.addFirst(parentGroup);
 
-		Group subgroup = GroupTestUtil.addGroup(group.getGroupId());
+		Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.addFirst(subgroup);
+		_groups.addFirst(childGroup);
 
-		themeDisplay.setScopeGroupId(subgroup.getGroupId());
+		themeDisplay.setScopeGroupId(childGroup.getGroupId());
 
-		Assert.assertEquals("parent-site", group.getScopeLabel(themeDisplay));
+		Assert.assertEquals(
+			"parent-site", parentGroup.getScopeLabel(themeDisplay));
 	}
 
 	@Test
@@ -995,7 +997,7 @@ public class GroupServiceTest {
 		nameMap.put(
 			LocaleUtil.getDefault(), layout.getName(LocaleUtil.getDefault()));
 
-		Group scope = _groupLocalService.addGroup(
+		Group scopeGroup = _groupLocalService.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
@@ -1003,10 +1005,10 @@ public class GroupServiceTest {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
 
-		_groups.addFirst(scope);
+		_groups.addFirst(scopeGroup);
 
-		Assert.assertFalse(scope.isRoot());
-		Assert.assertEquals(scope.getParentGroupId(), group.getGroupId());
+		Assert.assertFalse(scopeGroup.isRoot());
+		Assert.assertEquals(scopeGroup.getParentGroupId(), group.getGroupId());
 	}
 
 	@Test
@@ -1021,20 +1023,21 @@ public class GroupServiceTest {
 
 	@Test(expected = GroupParentException.MustNotHaveChildParent.class)
 	public void testSelectFirstChildGroupAsParentSite() throws Exception {
-		Group group1 = GroupTestUtil.addGroup();
+		Group parentGroup = GroupTestUtil.addGroup();
 
-		_groups.addFirst(group1);
+		_groups.addFirst(parentGroup);
 
-		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
+		Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		_groups.addFirst(group11);
+		_groups.addFirst(childGroup);
 
 		_groupService.updateGroup(
-			group1.getGroupId(), group11.getGroupId(), group1.getNameMap(),
-			group1.getDescriptionMap(), group1.getType(),
-			group1.isManualMembership(), group1.getMembershipRestriction(),
-			group1.getFriendlyURL(), group1.isInheritContent(),
-			group1.isActive(), ServiceContextTestUtil.getServiceContext());
+			parentGroup.getGroupId(), childGroup.getGroupId(),
+			parentGroup.getNameMap(), parentGroup.getDescriptionMap(),
+			parentGroup.getType(), parentGroup.isManualMembership(),
+			parentGroup.getMembershipRestriction(),
+			parentGroup.getFriendlyURL(), parentGroup.isInheritContent(),
+			parentGroup.isActive(), ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveChildParent.class)

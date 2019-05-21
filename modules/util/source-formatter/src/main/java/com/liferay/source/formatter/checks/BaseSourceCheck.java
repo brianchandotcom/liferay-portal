@@ -63,7 +63,133 @@ import org.dom4j.Element;
  */
 public abstract class BaseSourceCheck implements SourceCheck {
 
-	protected String getAttributeValue(String attributeKey, String absolutePath) {
+	@Override
+	public Set<SourceFormatterMessage> getSourceFormatterMessages(
+		String fileName) {
+
+		if (_sourceFormatterMessagesMap.containsKey(fileName)) {
+			return _sourceFormatterMessagesMap.get(fileName);
+		}
+
+		return Collections.emptySet();
+	}
+
+	@Override
+	public boolean isEnabled(String absolutePath) {
+		return isAttributeValue("enabled", absolutePath, true);
+	}
+
+	@Override
+	public boolean isModulesCheck() {
+		return false;
+	}
+
+	@Override
+	public boolean isPortalCheck() {
+		return false;
+	}
+
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+	}
+
+	@Override
+	public void setAttributes(String attributes) throws JSONException {
+		_attributesJSONObject = new JSONObjectImpl(attributes);
+	}
+
+	@Override
+	public void setBaseDirName(String baseDirName) {
+		_baseDirName = baseDirName;
+	}
+
+	@Override
+	public void setFileExtensions(List<String> fileExtensions) {
+		_fileExtensions = fileExtensions;
+	}
+
+	@Override
+	public void setMaxLineLength(int maxLineLength) {
+		_maxLineLength = maxLineLength;
+	}
+
+	@Override
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
+	}
+
+	@Override
+	public void setPortalSource(boolean portalSource) {
+		_portalSource = portalSource;
+	}
+
+	@Override
+	public void setProjectPathPrefix(String projectPathPrefix) {
+		_projectPathPrefix = projectPathPrefix;
+	}
+
+	@Override
+	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
+		_propertiesMap = propertiesMap;
+	}
+
+	@Override
+	public void setSourceFormatterExcludes(
+		SourceFormatterExcludes sourceFormatterExcludes) {
+
+		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
+	@Override
+	public void setSubrepository(boolean subrepository) {
+		_subrepository = subrepository;
+	}
+
+	protected void addMessage(String fileName, String message) {
+		addMessage(fileName, message, -1);
+	}
+
+	protected void addMessage(String fileName, String message, int lineNumber) {
+		addMessage(fileName, message, null, lineNumber);
+	}
+
+	protected void addMessage(
+		String fileName, String message, String markdownFileName) {
+
+		addMessage(fileName, message, markdownFileName, -1);
+	}
+
+	protected void addMessage(
+		String fileName, String message, String markdownFileName,
+		int lineNumber) {
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
+
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new TreeSet<>();
+		}
+
+		Class<?> clazz = getClass();
+
+		sourceFormatterMessages.add(
+			new SourceFormatterMessage(
+				fileName, message, CheckType.SOURCE_CHECK,
+				clazz.getSimpleName(), markdownFileName, lineNumber));
+
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
+	}
+
+	protected void clearSourceFormatterMessages(String fileName) {
+		_sourceFormatterMessagesMap.remove(fileName);
+	}
+
+	protected String getAttributeValue(
+		String attributeKey, String absolutePath) {
+
 		return getAttributeValue(attributeKey, absolutePath, StringPool.BLANK);
 	}
 
@@ -211,147 +337,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return attributeValues;
-	}
-
-	@Override
-	public Set<SourceFormatterMessage> getSourceFormatterMessages(
-		String fileName) {
-
-		if (_sourceFormatterMessagesMap.containsKey(fileName)) {
-			return _sourceFormatterMessagesMap.get(fileName);
-		}
-
-		return Collections.emptySet();
-	}
-
-	protected boolean isAttributeValue(String attributeKey, String absolutePath) {
-		return GetterUtil.getBoolean(
-			getAttributeValue(attributeKey, absolutePath));
-	}
-
-	protected boolean isAttributeValue(
-		String attributeKey, String absolutePath, boolean defaultValue) {
-
-		String attributeValue = getAttributeValue(attributeKey, absolutePath);
-
-		if (Validator.isNull(attributeValue)) {
-			return defaultValue;
-		}
-
-		return GetterUtil.getBoolean(attributeValue);
-	}
-
-	@Override
-	public boolean isEnabled(String absolutePath) {
-		return isAttributeValue("enabled", absolutePath, true);
-	}
-
-	@Override
-	public boolean isModulesCheck() {
-		return false;
-	}
-
-	@Override
-	public boolean isPortalCheck() {
-		return false;
-	}
-
-	@Override
-	public void setAllFileNames(List<String> allFileNames) {
-	}
-
-	@Override
-	public void setAttributes(String attributes) throws JSONException {
-		_attributesJSONObject = new JSONObjectImpl(attributes);
-	}
-
-	@Override
-	public void setBaseDirName(String baseDirName) {
-		_baseDirName = baseDirName;
-	}
-
-	@Override
-	public void setFileExtensions(List<String> fileExtensions) {
-		_fileExtensions = fileExtensions;
-	}
-
-	@Override
-	public void setMaxLineLength(int maxLineLength) {
-		_maxLineLength = maxLineLength;
-	}
-
-	@Override
-	public void setPluginsInsideModulesDirectoryNames(
-		List<String> pluginsInsideModulesDirectoryNames) {
-
-		_pluginsInsideModulesDirectoryNames =
-			pluginsInsideModulesDirectoryNames;
-	}
-
-	@Override
-	public void setPortalSource(boolean portalSource) {
-		_portalSource = portalSource;
-	}
-
-	@Override
-	public void setProjectPathPrefix(String projectPathPrefix) {
-		_projectPathPrefix = projectPathPrefix;
-	}
-
-	@Override
-	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
-		_propertiesMap = propertiesMap;
-	}
-
-	@Override
-	public void setSourceFormatterExcludes(
-		SourceFormatterExcludes sourceFormatterExcludes) {
-
-		_sourceFormatterExcludes = sourceFormatterExcludes;
-	}
-
-	@Override
-	public void setSubrepository(boolean subrepository) {
-		_subrepository = subrepository;
-	}
-
-	protected void addMessage(String fileName, String message) {
-		addMessage(fileName, message, -1);
-	}
-
-	protected void addMessage(String fileName, String message, int lineNumber) {
-		addMessage(fileName, message, null, lineNumber);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName) {
-
-		addMessage(fileName, message, markdownFileName, -1);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName,
-		int lineNumber) {
-
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			_sourceFormatterMessagesMap.get(fileName);
-
-		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new TreeSet<>();
-		}
-
-		Class<?> clazz = getClass();
-
-		sourceFormatterMessages.add(
-			new SourceFormatterMessage(
-				fileName, message, CheckType.SOURCE_CHECK,
-				clazz.getSimpleName(), markdownFileName, lineNumber));
-
-		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
-	}
-
-	protected void clearSourceFormatterMessages(String fileName) {
-		_sourceFormatterMessagesMap.remove(fileName);
 	}
 
 	protected String getBaseDirName() {
@@ -696,6 +681,25 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return null;
+	}
+
+	protected boolean isAttributeValue(
+		String attributeKey, String absolutePath) {
+
+		return GetterUtil.getBoolean(
+			getAttributeValue(attributeKey, absolutePath));
+	}
+
+	protected boolean isAttributeValue(
+		String attributeKey, String absolutePath, boolean defaultValue) {
+
+		String attributeValue = getAttributeValue(attributeKey, absolutePath);
+
+		if (Validator.isNull(attributeValue)) {
+			return defaultValue;
+		}
+
+		return GetterUtil.getBoolean(attributeValue);
 	}
 
 	protected boolean isExcludedPath(

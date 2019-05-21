@@ -1170,6 +1170,10 @@ definition {
 
 		User.logoutPG();
 
+		if ("${samlEnabled}" == "true") {
+			User.viewLoggedOutPG();
+		}
+
 		User.loginPG(
 			authenticationMethod = "${authenticationMethod}",
 			nodePort = "${nodePort}",
@@ -1180,6 +1184,10 @@ definition {
 			userScreenName = "${userScreenName}");
 
 		User.logoutPG();
+
+		if ("${samlEnabled}" == "true") {
+			User.viewLoggedOutPG();
+		}
 
 		User.loginPG(
 			authenticationMethod = "${authenticationMethod}",

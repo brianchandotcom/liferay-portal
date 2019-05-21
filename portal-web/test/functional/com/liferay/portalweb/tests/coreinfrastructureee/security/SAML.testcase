@@ -665,6 +665,7 @@ definition {
 		Navigator.gotoBack();
 
 		User.editPasswordCP(
+			samlEnabled = "true",
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userScreenName = "ldapusercn");
 

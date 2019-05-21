@@ -105,6 +105,13 @@ public class ChangeListsDisplayContext {
 				_themeDisplay.getCompanyId(), "&type=published-latest")
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
+		).put(
+			"urlUserSettings", 
+			StringBundler.concat(
+				_themeDisplay.getPortalURL(),
+				"/o/change-tracking/configurations/",
+				_themeDisplay.getCompanyId(), "/user/", 
+				_themeDisplay.getUserId())
 		);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

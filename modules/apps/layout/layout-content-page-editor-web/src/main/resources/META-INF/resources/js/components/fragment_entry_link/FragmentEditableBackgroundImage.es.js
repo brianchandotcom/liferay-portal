@@ -23,10 +23,11 @@ class FragmentEditableBackgroundImage extends Component {
 	/**
 	 * Returns the list of buttons to be shown inside the tooltip.
 	 * @param {boolean} showMapping
+	 * @param {boolean} showRemoveButton
 	 * @return {Array<{id: string, label: string}>}
 	 * @review
 	 */
-	static getButtons(showMapping) {
+	static getButtons(showMapping, showRemoveButton) {
 		const buttons = [
 			{
 				icon: 'pencil',
@@ -45,13 +46,15 @@ class FragmentEditableBackgroundImage extends Component {
 			);
 		}
 
-		buttons.push(
-			{
-				icon: 'times-circle',
-				id: TOOLTIP_BUTTON_IDS.remove,
-				label: Liferay.Language.get('remove-background')
-			}
-		);
+		if (showRemoveButton) {
+			buttons.push(
+				{
+					icon: 'times-circle',
+					id: TOOLTIP_BUTTON_IDS.remove,
+					label: Liferay.Language.get('remove-background')
+				}
+			);
+		}
 
 		return buttons;
 	}
@@ -137,7 +140,8 @@ class FragmentEditableBackgroundImage extends Component {
 				{
 					alignElement: this.element,
 					buttons: FragmentEditableBackgroundImage.getButtons(
-						this.showMapping
+						this.showMapping,
+						this._getBackgroundImageValue()
 					),
 					store: this.store
 				}

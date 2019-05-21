@@ -61,13 +61,13 @@ public abstract class BaseBeanPortletMethod implements BeanPortletMethod {
 			return true;
 		}
 
-		if (!(obj instanceof BaseBeanPortletMethod)) {
+		if (!(obj instanceof BeanPortletMethod)) {
 			return false;
 		}
 
-		BaseBeanPortletMethod beanMethod = (BaseBeanPortletMethod)obj;
+		BeanPortletMethod beanMethod = (BeanPortletMethod)obj;
 
-		if ((_ordinal == beanMethod._ordinal) &&
+		if ((_ordinal == beanMethod.getOrdinal()) &&
 			Objects.equals(_method, beanMethod.getMethod()) &&
 			(_beanPortletMethodType == beanMethod.getMethodType())) {
 

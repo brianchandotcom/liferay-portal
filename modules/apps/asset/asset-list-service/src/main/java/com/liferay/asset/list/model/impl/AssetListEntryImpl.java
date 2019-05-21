@@ -375,11 +375,9 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 		Class<?> clazz = assetRendererFactory.getClass();
 
-		String assetRendererFactoryClassName = clazz.getSimpleName();
-
 		boolean anyAssetType = GetterUtil.getBoolean(
 			properties.getProperty(
-				"anyClassType" + assetRendererFactoryClassName,
+				"anyClassType" + clazz.getSimpleName(),
 				Boolean.TRUE.toString()));
 
 		if (anyAssetType) {
@@ -388,7 +386,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 		long anyClassTypeId = GetterUtil.getLong(
 			properties.getProperty(
-				"anyClassType" + assetRendererFactoryClassName, null),
+				"anyClassType" + clazz.getSimpleName(), null),
 			-1);
 
 		if (anyClassTypeId > -1) {
@@ -397,7 +395,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 		long[] classTypeIds = StringUtil.split(
 			properties.getProperty(
-				"classTypeIds" + assetRendererFactoryClassName, null),
+				"classTypeIds" + clazz.getSimpleName(), null),
 			0L);
 
 		if (classTypeIds != null) {

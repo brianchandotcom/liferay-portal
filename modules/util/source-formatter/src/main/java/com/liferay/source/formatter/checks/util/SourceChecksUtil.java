@@ -193,6 +193,41 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
+	private static JSONObject _addPropertiesAttribute(
+		JSONObject attributesJSONObject, String key,
+		Map<String, Properties> propertiesMap) {
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			JSONObject propertiesAttributesJSONObject = new JSONObjectImpl();
+
+			Properties properties = entry.getValue();
+
+			for (Object obj : properties.keySet()) {
+				if (!key.equals((String)obj)) {
+					continue;
+				}
+
+				JSONArray jsonArray = new JSONArrayImpl();
+
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
+
+					jsonArray.put(value);
+				}
+
+				propertiesAttributesJSONObject.put(key, jsonArray);
+			}
+
+			if (propertiesAttributesJSONObject.length() != 0) {
+				attributesJSONObject.put(
+					entry.getKey(), propertiesAttributesJSONObject);
+			}
+		}
+
+		return attributesJSONObject;
+	}
+
 	private static JSONObject _getAttributesJSONObject(
 		Map<String, Properties> propertiesMap, String checkName,
 		SourceCheckConfiguration sourceCheckConfiguration) {

@@ -18,10 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Before;
@@ -52,7 +53,7 @@ public class ThemeServiceTest {
 	public void testGetTheme() throws Exception {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		Theme theme = ThemeLocalServiceUtil.getTheme(
+		Theme theme = _themeLocalService.getTheme(
 			_group.getCompanyId(), layoutSet.getThemeId());
 
 		Assert.notNull(theme);
@@ -60,5 +61,8 @@ public class ThemeServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ThemeLocalService _themeLocalService;
 
 }

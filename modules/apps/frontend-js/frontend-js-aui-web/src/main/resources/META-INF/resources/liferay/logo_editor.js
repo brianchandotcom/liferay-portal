@@ -273,12 +273,12 @@ AUI.add(
 						var instance = this;
 
 						var imageCropper = instance._imageCropper;
-						var portraitPreviewImg = instance._portraitPreviewImg;
+						var portraitPreviewImg = document.getElementById(instance.get('namespace') + 'portraitPreviewImg');
 
 						if (imageCropper && portraitPreviewImg) {
 							var region = imageCropper.get('region');
 
-							var cropRegion = instance._getCropRegion(portraitPreviewImg, region);
+							var cropRegion = Liferay.Util.getCropRegion(portraitPreviewImg, region);
 
 							instance._cropRegionNode.val(JSON.stringify(cropRegion));
 						}
@@ -314,6 +314,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-alert', 'liferay-crop-region', 'liferay-portlet-base', 'liferay-storage-formatter']
+		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-alert', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

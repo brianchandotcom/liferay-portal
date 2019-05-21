@@ -16,6 +16,8 @@ definition {
 	}
 
 	macro configureSetupPG {
+		Pause(locator1 = "3000");
+
 		if (isSet(userToolNameList)) {
 			SelectFrame(locator1 = "IFrame#DIALOG");
 

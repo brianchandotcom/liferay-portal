@@ -261,6 +261,27 @@ public abstract class BaseInstanceResourceTestCase {
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
 
+		if (slaStatuses != null) {
+			for (int i = 0; i < slaStatuses.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "slaStatuses", slaStatuses[i]);
+			}
+		}
+
+		if (statuses != null) {
+			for (int i = 0; i < statuses.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "statuses", statuses[i]);
+			}
+		}
+
+		if (taskKeys != null) {
+			for (int i = 0; i < taskKeys.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "taskKeys", taskKeys[i]);
+			}
+		}
+
 		if (timeRange != null) {
 			location = HttpUtil.addParameter(location, "timeRange", timeRange);
 		}
@@ -293,6 +314,27 @@ public abstract class BaseInstanceResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath("/processes/{processId}/instances", processId);
+
+		if (slaStatuses != null) {
+			for (int i = 0; i < slaStatuses.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "slaStatuses", slaStatuses[i]);
+			}
+		}
+
+		if (statuses != null) {
+			for (int i = 0; i < statuses.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "statuses", statuses[i]);
+			}
+		}
+
+		if (taskKeys != null) {
+			for (int i = 0; i < taskKeys.length; i++) {
+				location = HttpUtil.addParameter(
+					location, "taskKeys", taskKeys[i]);
+			}
+		}
 
 		if (timeRange != null) {
 			location = HttpUtil.addParameter(location, "timeRange", timeRange);

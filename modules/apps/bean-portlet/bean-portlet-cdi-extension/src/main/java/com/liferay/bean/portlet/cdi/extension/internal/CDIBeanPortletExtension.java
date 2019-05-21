@@ -15,6 +15,8 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ModifiedAnnotatedType;
+import com.liferay.bean.portlet.cdi.extension.internal.mvc.MvcExtension;
+import com.liferay.bean.portlet.cdi.extension.internal.mvc.ViewRendererMvcImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.JSR362CDIBeanProducer;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
@@ -98,6 +101,7 @@ import javax.portlet.annotations.WindowId;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
@@ -130,6 +134,10 @@ public class CDIBeanPortletExtension implements Extension {
 		beforeBeanDiscovery.addAnnotatedType(
 			beanManager.createAnnotatedType(ServletContextProducer.class),
 			null);
+
+		// MVC
+
+		MvcExtension.step1BeforeBeanDiscovery(beforeBeanDiscovery, beanManager);
 	}
 
 	public <T> void step2ProcessAnnotatedType(
@@ -222,6 +230,10 @@ public class CDIBeanPortletExtension implements Extension {
 		}
 
 		_discoveredClasses.add(discoveredClass);
+
+		// MVC
+
+		MvcExtension.step2ProcessAnnotatedType(processAnnotatedType);
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -230,6 +242,10 @@ public class CDIBeanPortletExtension implements Extension {
 		afterBeanDiscovery.addContext(new PortletRequestBeanContext());
 		afterBeanDiscovery.addContext(new PortletSessionBeanContext());
 		afterBeanDiscovery.addContext(new RenderStateBeanContext());
+
+		// MVC
+
+		MvcExtension.step3AfterBeanDiscovery(afterBeanDiscovery);
 	}
 
 	@SuppressWarnings({"serial", "unchecked"})
@@ -576,6 +592,39 @@ public class CDIBeanPortletExtension implements Extension {
 			beanFilterMethodInvoker,
 			new CDIBeanPortletMethodFactory(beanManager),
 			beanPortletMethodInvoker);
+
+		// MVC
+
+		Bean<?> bean = beanManager.resolve(
+			beanManager.getBeans(ViewRenderer.class));
+
+		if (bean == null) {
+			Bundle bundle = bundleContext.getBundle();
+
+			Dictionary<String, String> headers = bundle.getHeaders(_ENGLISH_EN);
+
+			String importPackageHeader = headers.get("Import-Package");
+
+			boolean importsMvcPackage = false;
+
+			if (importPackageHeader.contains("javax.mvc;")) {
+				importsMvcPackage = true;
+			}
+
+			boolean importsMvcBindingPackage = false;
+
+			if (importPackageHeader.contains("javax.mvc.binding;")) {
+				importsMvcBindingPackage = true;
+			}
+
+			_viewRenderer = new ViewRendererMvcImpl(
+				beanManager, importsMvcPackage, importsMvcBindingPackage);
+		}
+		else {
+			_viewRenderer = (ViewRenderer)beanManager.getReference(
+				bean, bean.getBeanClass(),
+				beanManager.createCreationalContext(bean));
+		}
 	}
 
 	public void step4ApplicationScopedInitializedSync(
@@ -626,6 +675,8 @@ public class CDIBeanPortletExtension implements Extension {
 
 		_beanPortletRegistrar.unregister((ServletContext)contextObject);
 	}
+
+	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CDIBeanPortletExtension.class);

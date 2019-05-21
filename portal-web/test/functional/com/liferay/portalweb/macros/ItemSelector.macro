@@ -11,7 +11,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
 
-		Type.typeAceEditor(
+		Type(
 			locator1 = "TextInput#URL",
 			value1 = "${imageSourceURL}");
 

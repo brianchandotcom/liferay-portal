@@ -60,7 +60,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_workflowMetricsRESTTestHelper.addProcess(_singleApproverDocument);
+		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
 
 		for (Process process : _processes) {
 			_workflowMetricsRESTTestHelper.deleteProcess(

@@ -61,7 +61,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_workflowMetricsRESTTestHelper.addProcess(_singleApproverDocument);
+		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
 
 		if (_process == null) {
 			return;

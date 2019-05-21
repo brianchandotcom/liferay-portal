@@ -108,10 +108,6 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 	}
 
-	public void addProcess(Document document) throws Exception {
-		_invokeAddDocument(_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
-	}
-
 	public Process addProcess(long companyId) throws Exception {
 		Process process = new Process() {
 			{
@@ -242,6 +238,12 @@ public class WorkflowMetricsRESTTestHelper {
 
 				return documents[0];
 			});
+	}
+
+	public void restoreProcess(Document document) throws Exception {
+		document.addKeyword("deleted", false);
+
+		_invokeAddDocument(_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
 	}
 
 	public void updateProcess(long companyId, long processId, String version)

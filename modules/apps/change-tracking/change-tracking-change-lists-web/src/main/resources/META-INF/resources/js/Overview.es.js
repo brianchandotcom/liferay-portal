@@ -8,6 +8,8 @@ import {PublishChangeList} from './PublishChangeList.es';
 
 import templates from './Overview.soy';
 
+const SPLIT_REGEX = /({\d+})/g;
+
 /**
  * Provides the component for the Overview configuration screen.
  */
@@ -46,7 +48,7 @@ class Overview extends PortletBase {
 			urls.map(
 				url => fetch(url, init)
 					.then(r => r.json())
-					.then(data => data[0])
+					.then(data => data)
 					.catch(
 						error => {
 							const message = typeof error === 'string' ?
@@ -177,66 +179,75 @@ class Overview extends PortletBase {
 	_handleClickRecentCollections(event) {
 		event.preventDefault();
 
-		let headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		headers.append('X-CSRF-Token', Liferay.authToken);
+		let ok = true;
 
-		let body = {
-			credentials: 'include',
-			headers,
-			method: 'POST'
-		};
+		if(this.checkoutConfirmationEnabled) {
+			const label = this._sub(Liferay.Language.get('do-you-want-to-switch-to-x-change-list'),[event.target.text]) + '\n' + Liferay.Language.get('you-can-disable-this-message-from-the-change-list-user-settings-tab');
+			ok = confirm(label);
+		}
 
-		let collectionId = event.target.getAttribute('data-collection-id');
+		if(ok) {
+			let headers = new Headers();
+			headers.append('Content-Type', 'application/json');
+			headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let production = event.target.getAttribute('data-production');
+			let body = {
+				credentials: 'include',
+				headers,
+				method: 'POST'
+			};
 
-		let url = this.urlCollectionsBase + '/' + collectionId + '/checkout?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId();
+			let collectionId = event.target.getAttribute('data-collection-id');
 
-		fetch(url, body)
-			.then(
-				response => {
-					if (response.status === 202) {
-						Liferay.fire('refreshChangeTrackingIndicator');
+			let production = event.target.getAttribute('data-production');
 
-						if (production) {
-							Liferay.Util.navigate(this.urlSelectProduction);
+			let url = this.urlCollectionsBase + '/' + collectionId + '/checkout?userId=' + Liferay.ThemeDisplay.getUserId();
+
+			fetch(url, body)
+				.then(
+					response => {
+						if (response.status === 202) {
+							Liferay.fire('refreshChangeTrackingIndicator');
+
+							if (production) {
+								Liferay.Util.navigate(this.urlSelectProduction);
+							}
+							else {
+								this._render();
+							}
 						}
-						else {
-							this._render();
+						else if (response.status === 400) {
+							response.json()
+								.then(
+									data => {
+										openToast(
+											{
+												message: Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out-x'), this.changeListName, data.message),
+												title: Liferay.Language.get('error'),
+												type: 'danger'
+											}
+										);
+									}
+								);
 						}
 					}
-					else if (response.status === 400) {
-						response.json()
-							.then(
-								data => {
-									openToast(
-										{
-											message: Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out-x'), this.changeListName, data.message),
-											title: Liferay.Language.get('error'),
-											type: 'danger'
-										}
-									);
-								}
-							);
-					}
-				}
-			)
-			.catch(
-				error => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out'), this.changeListName);
+				)
+				.catch(
+					error => {
+						const message = typeof error === 'string' ?
+							error :
+							Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out'), this.changeListName);
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+						openToast(
+							{
+								message,
+								title: Liferay.Language.get('error'),
+								type: 'danger'
+							}
+						);
+					}
+				);
+		}
 	}
 
 	_populateChangeEntries(changeEntriesResult) {
@@ -322,61 +333,64 @@ class Overview extends PortletBase {
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
+		let userSettings = requestResult[2];
 
-		let foundEntriesLink = activeCollection.links.find(
-			function(link) {
-				return link.rel === 'entries';
-			}
-		);
-
-		if (foundEntriesLink) {
-			this._fetchCollisions(foundEntriesLink.href + '?collision=true', foundEntriesLink.type);
-			this._fetchChangeEntries(foundEntriesLink.href, foundEntriesLink.type);
+		if (activeCollection !== undefined && activeCollection.length == 1) {
+			activeCollection = activeCollection[0];
 		}
 
-		this.urlActiveCollectionPublish = activeCollection.links.find(
-			function(link) {
-				return link.rel === 'publish';
+		if(activeCollection !== undefined) {
+			let foundEntriesLink = activeCollection.links.find(
+				function(link) {
+					return link.rel === 'entries';
+				}
+			);
+
+			if (foundEntriesLink) {
+				this._fetchCollisions(foundEntriesLink.href + '?collision=true', foundEntriesLink.type);
+				this._fetchChangeEntries(foundEntriesLink.href, foundEntriesLink.type);
 			}
-		);
 
-		// Changes
+			this.urlActiveCollectionPublish = activeCollection.links.find(
+				function(link) {
+					return link.rel === 'publish';
+				}
+			);
 
-		this.changes = {
-			added: activeCollection.additionCount,
-			deleted: activeCollection.deletionCount,
-			modified: activeCollection.modificationCount
-		};
+			// Changes
 
-		// Active Change List Description
+			this.changes = {
+				added: activeCollection.additionCount,
+				deleted: activeCollection.deletionCount,
+				modified: activeCollection.modificationCount
+			};
 
-		this.descriptionActiveChangeList = activeCollection.description;
+			// Active Change List Description
 
-		// Change Lists dropdown Menu
+			this.descriptionActiveChangeList = activeCollection.description;
+
+			// Change Lists dropdown Menu
 
 		let urlRecentCollections = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + '&limit=5&type=recent&sort=modifiedDate:desc';
 
-		this._fetchRecentCollections(urlRecentCollections, 'GET');
+			this._fetchRecentCollections(urlRecentCollections, 'GET');
 
-		// Active Change List Header Title
+			// Active Change List Header Title
 
-		this.headerTitleActiveChangeList = activeCollection.name;
+			this.headerTitleActiveChangeList = activeCollection.name;
 
-		// Initial Fetch
+			// Initial Fetch
 
-		this.initialFetch = true;
+			this.initialFetch = true;
+		}
+
+		if (productionInformation !== undefined && productionInformation.length == 1) {
+			productionInformation = productionInformation[0];
+		}
 
 		if ((productionInformation !== undefined) && (productionInformation.ctcollection !== undefined) && (productionInformation.ctcollection.name !== undefined)) {
-
-			// Production Information Description
-
 			this.descriptionProductionInformation = productionInformation.ctcollection.description;
-
-			// Production Information Header Title
-
 			this.headerTitleProductionInformation = productionInformation.ctcollection.name;
-
-			// Production Information Published By
 
 			let publishDate = new Date(productionInformation.date);
 
@@ -400,12 +414,16 @@ class Overview extends PortletBase {
 		else {
 			this.productionFound = false;
 		}
+
+		if(userSettings) {
+			this.checkoutConfirmationEnabled = userSettings.checkoutCTCollectionConfirmationEnabled;
+		}
 	}
 
 	_render() {
 		let urlActiveCollection = this.urlCollectionsBase + '?type=active&userId=' + Liferay.ThemeDisplay.getUserId();
 
-		let urls = [urlActiveCollection, this.urlProductionInformation];
+		let urls = [urlActiveCollection, this.urlProductionInformation, this.urlUserSettings];
 
 		this.initialFetch = false;
 
@@ -419,10 +437,7 @@ class Overview extends PortletBase {
 			method: 'GET'
 		};
 
-		this._fetchAll(
-			urls,
-			init
-		)
+		this._fetchAll(urls, init)
 			.then(result => this._populateFields(result))
 			.catch(
 				error => {
@@ -439,6 +454,26 @@ class Overview extends PortletBase {
 					);
 				}
 			);
+	}
+
+	_sub(langKey, args) {
+		const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);
+
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+
+			const indexKey = `{${i}}`;
+
+			let argIndex = keyArray.indexOf(indexKey);
+
+			while (argIndex >= 0) {
+				keyArray.splice(argIndex, 1, arg);
+
+				argIndex = keyArray.indexOf(indexKey);
+			}
+		}
+
+		return keyArray.join('');
 	}
 }
 
@@ -552,6 +587,17 @@ Overview.STATE = {
 			}
 		)
 	),
+
+
+	/**
+	 * Checkout confirmation is enabled.
+	 *
+	 * @default true
+	 * @instance
+	 * @memberOf Overview
+	 * @type {boolean}
+	 */
+	checkoutConfirmationEnabled: Config.bool().value(true),
 
 	/**
 	 * Number of collisions loaded (only stored if fetching is in progress).
@@ -687,6 +733,16 @@ Overview.STATE = {
 	 * @type {string}
 	 */
 	urlSelectProduction: Config.string(),
+
+	/**
+	 * URL for the REST service to the user settings.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	urlUserSettings: Config.string(),
 
 	/**
 	 * Path of the available icons.

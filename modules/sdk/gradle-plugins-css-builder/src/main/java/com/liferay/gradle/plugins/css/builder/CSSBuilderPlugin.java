@@ -200,9 +200,18 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBuildCSSImportFile(
-		BuildCSSTask buildCSSTask, Configuration portalCommonCSSConfiguration) {
+		BuildCSSTask buildCSSTask,
+		final Configuration portalCommonCSSConfiguration) {
 
-		buildCSSTask.setImportPath(portalCommonCSSConfiguration);
+		buildCSSTask.setImports(
+			new Callable<FileCollection>() {
+
+				@Override
+				public FileCollection call() throws Exception {
+					return portalCommonCSSConfiguration;
+				}
+
+			});
 	}
 
 	private void _configureTasksBuildCSS(

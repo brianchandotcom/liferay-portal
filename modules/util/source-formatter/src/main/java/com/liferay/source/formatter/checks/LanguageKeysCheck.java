@@ -78,7 +78,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			return;
 		}
 
-		Properties portalLanguageProperties = _getPortalLanguageProperties();
+		Properties portalLanguageProperties = _getPortalLanguageProperties(
+			absolutePath);
 
 		if (portalLanguageProperties.isEmpty()) {
 			return;
@@ -473,7 +474,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private synchronized Properties _getPortalLanguageProperties()
+	private synchronized Properties _getPortalLanguageProperties(
+			String absolutePath)
 		throws IOException {
 
 		if (_portalLanguageProperties != null) {
@@ -483,7 +485,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		_portalLanguageProperties = new Properties();
 
 		String portalLanguagePropertiesContent = getPortalContent(
-			"portal-impl/src/content/Language.properties");
+			"portal-impl/src/content/Language.properties", absolutePath);
 
 		if (portalLanguagePropertiesContent == null) {
 			return _portalLanguageProperties;

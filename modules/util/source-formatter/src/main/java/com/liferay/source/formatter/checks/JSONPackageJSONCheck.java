@@ -46,7 +46,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		JSONObject jsonObject = new JSONObject(content);
 
-		content = _fixDependencyVersions(content, jsonObject);
+		content = _fixDependencyVersions(absolutePath, content, jsonObject);
 
 		String dirName = absolutePath.substring(0, absolutePath.length() - 12);
 
@@ -117,7 +117,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _fixDependencyVersions(String content, JSONObject jsonObject)
+	private String _fixDependencyVersions(
+			String absolutePath, String content, JSONObject jsonObject)
 		throws IOException {
 
 		if (jsonObject.isNull("dependencies")) {
@@ -125,7 +126,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		}
 
 		Map<String, String> expectedDependencyVersionsMap =
-			_getExpectedDependencyVersionsMap();
+			_getExpectedDependencyVersionsMap(absolutePath);
 
 		JSONObject dependenciesJSONObject = jsonObject.getJSONObject(
 			"dependencies");
@@ -156,12 +157,12 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	}
 
 	private Map<String, String> _getDependencyVersionsMap(
-			String fileName, String regex)
+			String fileName, String absolutePath, String regex)
 		throws IOException {
 
 		Map<String, String> dependencyVersionsMap = new HashMap<>();
 
-		String content = getPortalContent(fileName);
+		String content = getPortalContent(fileName, absolutePath);
 
 		if (Validator.isNull(content)) {
 			return dependencyVersionsMap;
@@ -187,7 +188,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		return dependencyVersionsMap;
 	}
 
-	private synchronized Map<String, String> _getExpectedDependencyVersionsMap()
+	private synchronized Map<String, String> _getExpectedDependencyVersionsMap(
+			String absolutePath)
 		throws IOException {
 
 		if (_expectedDependencyVersionsMap != null) {
@@ -199,16 +201,16 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		_expectedDependencyVersionsMap.putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-metal-web/package.json",
-				"metal(-.*)?"));
+				absolutePath, "metal(-.*)?"));
 		_expectedDependencyVersionsMap.putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-spa-web/package.json",
-				"senna"));
+				absolutePath, "senna"));
 		_expectedDependencyVersionsMap.putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-taglib/frontend-taglib-clay" +
 					"/package.json",
-				"clay-.*"));
+				absolutePath, "clay-.*"));
 
 		return _expectedDependencyVersionsMap;
 	}

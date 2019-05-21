@@ -43,17 +43,21 @@ public class XMLWebFileCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (fileName.endsWith("portal-web/docroot/WEB-INF/web.xml")) {
-			content = _formatWebXML(content);
+			content = _formatWebXML(absolutePath, content);
 		}
 
 		return content;
 	}
 
-	private String _formatWebXML(String content) throws IOException {
+	private String _formatWebXML(String absolutePath, String content)
+		throws IOException {
+
 		Properties properties = new Properties();
 
 		PropertiesUtil.load(
-			properties, getPortalContent("portal-impl/src/portal.properties"));
+			properties,
+			getPortalContent(
+				"portal-impl/src/portal.properties", absolutePath));
 
 		String[] locales = StringUtil.split(
 			properties.getProperty(PropsKeys.LOCALES));

@@ -48,7 +48,8 @@ public class LocaleUtilCheck extends BaseFileCheck {
 		Matcher matcher = _localePattern.matcher(content);
 
 		while (matcher.find()) {
-			List<String> localeUtilTermNames = _getLocaleUtilTermNames();
+			List<String> localeUtilTermNames = _getLocaleUtilTermNames(
+				absolutePath);
 
 			if (localeUtilTermNames.contains(matcher.group(1))) {
 				addMessage(
@@ -60,7 +61,8 @@ public class LocaleUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private synchronized List<String> _getLocaleUtilTermNames()
+	private synchronized List<String> _getLocaleUtilTermNames(
+			String absolutePath)
 		throws IOException, ParseException {
 
 		if (_localeUtilTermNames != null) {
@@ -70,7 +72,7 @@ public class LocaleUtilCheck extends BaseFileCheck {
 		_localeUtilTermNames = new ArrayList<>();
 
 		String localeUtilClassContent = getPortalContent(
-			_LOCALE_UTIL_FILE_NAME);
+			_LOCALE_UTIL_FILE_NAME, absolutePath);
 
 		if (localeUtilClassContent == null) {
 			return _localeUtilTermNames;

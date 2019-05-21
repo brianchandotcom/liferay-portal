@@ -325,32 +325,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 	}
 
-	protected String getBranchContent(String fileName, String branchName)
-		throws IOException {
-
-		if (Validator.isNull(branchName)) {
-			String content = getContent(
-				fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-			if (Validator.isNotNull(content)) {
-				return content;
-			}
-		}
-
-		URL url = _getPortalGitURL(fileName, branchName);
-
-		if (url == null) {
-			return null;
-		}
-
-		try {
-			return StringUtil.read(url.openStream());
-		}
-		catch (IOException ioe) {
-			return null;
-		}
-	}
-
 	protected String getContent(String fileName, int level) throws IOException {
 		File file = getFile(fileName, level);
 
@@ -418,6 +392,23 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			baseDirName, excludes, includes, _sourceFormatterExcludes, true);
 	}
 
+	protected String getGitContent(String fileName, String branchName)
+		throws IOException {
+
+		URL url = _getPortalGitURL(fileName, branchName);
+
+		if (url == null) {
+			return null;
+		}
+
+		try {
+			return StringUtil.read(url.openStream());
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+	}
+
 	protected int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
@@ -476,20 +467,34 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
-	protected String getPortalContent(String fileName) throws IOException {
-		return getPortalContent(fileName, false);
+	protected String getPortalContent(String fileName, String absolutePath)
+		throws IOException {
+
+		return getPortalContent(fileName, absolutePath, false);
 	}
 
 	protected String getPortalContent(
-			String fileName, boolean forceRetrieveFromGit)
+			String fileName, String absolutePath, boolean forceRetrieveFromGit)
 		throws IOException {
 
-		String portalBranchName = _getPortalBranchName(!forceRetrieveFromGit);
+		String portalBranchName = getAttributeValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
 
-		return getBranchContent(fileName, portalBranchName);
+		if (forceRetrieveFromGit) {
+			return getGitContent(fileName, portalBranchName);
+		}
+
+		String content = getContent(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (Validator.isNotNull(content)) {
+			return content;
+		}
+
+		return getGitContent(fileName, portalBranchName);
 	}
 
-	protected synchronized Document getPortalCustomSQLDocument()
+	protected synchronized Document getPortalCustomSQLDocument(
+			String absolutePath)
 		throws DocumentException, IOException {
 
 		if (_portalCustomSQLDocument != null) {
@@ -503,7 +508,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		String portalCustomSQLDefaultContent = getPortalContent(
-			"portal-impl/src/custom-sql/default.xml");
+			"portal-impl/src/custom-sql/default.xml", absolutePath);
 
 		if (portalCustomSQLDefaultContent == null) {
 			return _portalCustomSQLDocument;
@@ -521,7 +526,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				(List<Element>)customSQLDefaultRootElement.elements("sql")) {
 
 			String customSQLFileContent = getPortalContent(
-				"portal-impl/src/" + sqlElement.attributeValue("file"));
+				"portal-impl/src/" + sqlElement.attributeValue("file"),
+				absolutePath);
 
 			if (customSQLFileContent == null) {
 				continue;
@@ -553,15 +559,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return portalImplDir.getParentFile();
 	}
 
-	protected InputStream getPortalInputStream(String fileName)
-		throws IOException {
-
-		return getPortalInputStream(fileName, _getPortalBranchName(true));
-	}
-
 	protected InputStream getPortalInputStream(
-			String fileName, String portalBranchName)
+			String fileName, String absolutePath)
 		throws IOException {
+
+		String portalBranchName = getAttributeValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
 
 		File file = getFile(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -857,33 +860,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return values;
-	}
-
-	private String _getPortalBranchName(
-		boolean excludePortalRootPropertiesFile) {
-
-		String portalRootLocation = null;
-
-		if (_portalSource && excludePortalRootPropertiesFile) {
-			portalRootLocation = SourceUtil.getAbsolutePath(
-				SourceFormatterUtil.getPortalDir(_baseDirName));
-		}
-
-		String value = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap,
-			portalRootLocation);
-
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
-		}
-
-		if (!value.contains(StringPool.COMMA)) {
-			return value;
-		}
-
-		String[] portalBranchNames = StringUtil.split(value);
-
-		return portalBranchNames[0];
 	}
 
 	private URL _getPortalGitURL(String fileName, String portalBranchName) {

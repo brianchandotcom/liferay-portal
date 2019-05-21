@@ -476,7 +476,8 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		// Retrieve from git. The content in tables.sql of the current branch
 		// could already contain the new column type.
 
-		String tablesSQLContent = getPortalContent(tablesSQLFileLocation, true);
+		String tablesSQLContent = getPortalContent(
+			tablesSQLFileLocation, absolutePath, true);
 
 		if (tablesSQLContent == null) {
 			return false;

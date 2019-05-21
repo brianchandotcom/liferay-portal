@@ -111,7 +111,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		Properties portalImplLanguageProperties = new Properties();
 
 		InputStream inputStream = getPortalInputStream(
-			_PORTAL_IMPL_LANGUAGE_PROPERTIES_FILE_NAME);
+			_PORTAL_IMPL_LANGUAGE_PROPERTIES_FILE_NAME, absolutePath);
 
 		if (inputStream != null) {
 			portalImplLanguageProperties.load(inputStream);

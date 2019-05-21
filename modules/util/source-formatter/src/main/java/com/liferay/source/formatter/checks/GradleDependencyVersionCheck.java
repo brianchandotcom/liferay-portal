@@ -66,14 +66,16 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		if (!moduleName.contains("test")) {
 			for (String dependencies : _getDependenciesBlocks(content)) {
-				content = _formatDependencies(content, dependencies);
+				content = _formatDependencies(
+					absolutePath, content, dependencies);
 			}
 		}
 
 		return content;
 	}
 
-	private String _formatDependencies(String content, String dependencies)
+	private String _formatDependencies(
+			String absolutePath, String content, String dependencies)
 		throws IOException {
 
 		int x = dependencies.indexOf("\n");
@@ -100,10 +102,11 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 				String dependencyVersion = _getDependencyVersion(line);
 
 				if (dependencyVersion.matches("^[0-9.]+") &&
-					!_isValidVersion(dependencyName, dependencyVersion)) {
+					!_isValidVersion(
+						absolutePath, dependencyName, dependencyVersion)) {
 
 					Map<String, Integer> publishedMajorVersionsMap =
-						_getPublishedMajorVersionsMap();
+						_getPublishedMajorVersionsMap(absolutePath);
 
 					line = StringUtil.replaceFirst(
 						line, dependencyVersion,
@@ -301,23 +304,27 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		return matcher.group();
 	}
 
-	private String _getModulesPropertiesContent() throws IOException {
+	private String _getModulesPropertiesContent(String absolutePath)
+		throws IOException {
+
 		if (!isPortalSource()) {
-			return getPortalContent(_MODULES_PROPERTIES_FILE_NAME);
+			return getPortalContent(
+				_MODULES_PROPERTIES_FILE_NAME, absolutePath);
 		}
 
 		return getContent(
 			_MODULES_PROPERTIES_FILE_NAME, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 	}
 
-	private synchronized Map<String, Integer> _getPublishedMajorVersionsMap()
+	private synchronized Map<String, Integer> _getPublishedMajorVersionsMap(
+			String absolutePath)
 		throws IOException {
 
 		if (_publishedMajorVersionsMap != null) {
 			return _publishedMajorVersionsMap;
 		}
 
-		String content = _getModulesPropertiesContent();
+		String content = _getModulesPropertiesContent(absolutePath);
 
 		if (Validator.isNull(content)) {
 			_publishedMajorVersionsMap = Collections.emptyMap();
@@ -364,11 +371,12 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 	}
 
 	private boolean _isValidVersion(
-			String dependencyName, String dependencyVersion)
+			String absolutePath, String dependencyName,
+			String dependencyVersion)
 		throws IOException {
 
 		Map<String, Integer> publishedMajorVersionsMap =
-			_getPublishedMajorVersionsMap();
+			_getPublishedMajorVersionsMap(absolutePath);
 
 		Set<String> bundleSymbolicNames = publishedMajorVersionsMap.keySet();
 

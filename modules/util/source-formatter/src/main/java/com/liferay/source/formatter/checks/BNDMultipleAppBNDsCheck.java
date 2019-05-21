@@ -41,7 +41,9 @@ public class BNDMultipleAppBNDsCheck extends BaseFileCheck {
 		String portalAppBNDFileName = StringUtil.replaceFirst(
 			absolutePath.substring(x + 1), "/private/", "/");
 
-		if (getPortalContent(portalAppBNDFileName, true) != null) {
+		if (getPortalContent(portalAppBNDFileName, absolutePath, true) !=
+				null) {
+
 			addMessage(
 				fileName,
 				"Redundant app.bnd. There is one already: '" +

@@ -341,14 +341,12 @@ public abstract class BaseIndexingTestCase {
 			return getAggregationResult(pipelineAggregation.getName());
 		}
 
-		@SuppressWarnings("unchecked")
 		public <AR extends AggregationResult> AR getChildAggregationResult(
 			Bucket bucket, Aggregation aggregation) {
 
 			return (AR)bucket.getChildAggregationResult(aggregation.getName());
 		}
 
-		@SuppressWarnings("unchecked")
 		public <AR extends AggregationResult> AR getChildAggregationResult(
 			HierarchicalAggregationResult aggregationResult,
 			Aggregation aggregation) {
@@ -423,7 +421,6 @@ public abstract class BaseIndexingTestCase {
 			searchResponseConsumer.accept(_searchResponse);
 		}
 
-		@SuppressWarnings("unchecked")
 		protected <AR extends AggregationResult> AR getAggregationResult(
 			String name) {
 

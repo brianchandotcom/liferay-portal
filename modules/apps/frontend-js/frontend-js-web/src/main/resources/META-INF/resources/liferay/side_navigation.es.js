@@ -976,7 +976,7 @@
 		var retVal = instance;
 		var methodCall = typeof options === 'string';
 		var returnInstance = options === 'instance';
-		var args = $.makeArray(arguments).slice(1);
+		var args = Array.from(arguments).slice(1);
 
 		if (methodCall) {
 			this.each(

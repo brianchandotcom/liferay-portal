@@ -203,7 +203,7 @@ public class BrowserModulesResolver {
 
 		if (!moduleName.equals(mappedModuleName)) {
 			browserModulesResolution.putMappedModuleName(
-				moduleName, mappedModuleName, false);
+				moduleName, mappedModuleName, true);
 		}
 
 		_processBrowserModule(

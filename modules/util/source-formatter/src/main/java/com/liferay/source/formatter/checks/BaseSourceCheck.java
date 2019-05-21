@@ -225,7 +225,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		while (keys.hasNext()) {
 			String fileLocation = keys.next();
 
-			String curValue = _getAttributeValue(
+			String curValue = _getJSONObjectValue(
 				_attributesJSONObject.getJSONObject(fileLocation),
 				attributeKey);
 
@@ -770,10 +770,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	private String _getAttributeValue(
-		JSONObject jsonObject, String attributeKey) {
-
-		JSONArray jsonArray = jsonObject.getJSONArray(attributeKey);
+	private String _getJSONObjectValue(JSONObject jsonObject, String key) {
+		JSONArray jsonArray = jsonObject.getJSONArray(key);
 
 		if ((jsonArray == null) || (jsonArray.length() != 1)) {
 			return null;
@@ -782,20 +780,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return jsonArray.getString(0);
 	}
 
-	private List<String> _getAttributeValues(
-		JSONObject jsonObject, String attributeKey) {
+	private List<String> _getJSONObjectValues(
+		JSONObject jsonObject, String key) {
 
-		List<String> attributeValues = new ArrayList<>();
+		List<String> values = new ArrayList<>();
 
-		JSONArray jsonArray = jsonObject.getJSONArray(attributeKey);
+		JSONArray jsonArray = jsonObject.getJSONArray(key);
 
 		if (jsonArray != null) {
 			for (int i = 0; i < jsonArray.length(); i++) {
-				attributeValues.add(jsonArray.getString(i));
+				values.add(jsonArray.getString(i));
 			}
 		}
 
-		return attributeValues;
+		return values;
 	}
 
 	private List<String> _getJSONObjectValues(
@@ -827,10 +825,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		while (keys.hasNext()) {
 			String fileLocation = keys.next();
 
-			List<String> curAttributeValues = _getAttributeValues(
+			List<String> curValues = _getJSONObjectValues(
 				jsonObject.getJSONObject(fileLocation), key);
 
-			if (curAttributeValues.isEmpty()) {
+			if (curValues.isEmpty()) {
 				continue;
 			}
 
@@ -849,7 +847,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				}
 			}
 
-			values.addAll(curAttributeValues);
+			values.addAll(curValues);
 		}
 
 		cashedValuesMap.put(absolutePath + ":" + key, values);

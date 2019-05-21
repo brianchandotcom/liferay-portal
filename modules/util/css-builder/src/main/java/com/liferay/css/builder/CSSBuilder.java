@@ -98,24 +98,24 @@ public class CSSBuilder implements AutoCloseable {
 
 		_excludes = excludes.toArray(new String[0]);
 
-		_temporaryImportPath = Files.createTempDirectory("portalCssImportPath");
+		_importPath = Files.createTempDirectory("portalCssImportPath");
 
 		if ((importPaths != null) && !importPaths.isEmpty()) {
-			StringBuilder paths = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			for (File importPath : importPaths) {
 				if (importPath.isFile()) {
 					importPath = _unzipImport(importPath);
 				}
 
-				paths.append(importPath);
-				paths.append(File.pathSeparator);
+				sb.append(importPath);
+				sb.append(File.pathSeparator);
 			}
 
-			_importDirName = paths.toString();
+			_importPathsString = sb.toString();
 		}
 		else {
-			_importDirName = null;
+			_importPathsString = null;
 		}
 
 		List<String> rtlExcludedPathRegexps =
@@ -133,7 +133,7 @@ public class CSSBuilder implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		FileUtil.deltree(_temporaryImportPath);
+		FileUtil.deltree(_importPath);
 
 		_sassCompiler.close();
 	}
@@ -383,7 +383,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		return _sassCompiler.compileFile(
-			filePath, _importDirName + File.pathSeparator + cssBasePath,
+			filePath, _importPathsString + File.pathSeparator + cssBasePath,
 			_cssBuilderArgs.isGenerateSourceMap(), filePath + ".map");
 	}
 
@@ -418,7 +418,7 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private File _unzipImport(File importFile) throws IOException {
-		Path outputPath = _temporaryImportPath.resolve(importFile.getName());
+		Path outputPath = _importPath.resolve(importFile.getName());
 
 		try (ZipFile zipFile = new ZipFile(importFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
@@ -498,9 +498,9 @@ public class CSSBuilder implements AutoCloseable {
 
 	private final CSSBuilderArgs _cssBuilderArgs;
 	private final String[] _excludes;
-	private final String _importDirName;
+	private final Path _importPath;
+	private final String _importPathsString;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
-	private final Path _temporaryImportPath;
 
 }

@@ -76,7 +76,7 @@ public abstract class BaseCSSBuilderTestCase {
 
 		Files.createDirectories(outputDirPath);
 
-		String[] excludes = Arrays.copyOf(_excludes, _excludes.length + 1);
+		String[] excludes = Arrays.copyOf(_EXCLUDES, _EXCLUDES.length + 1);
 
 		excludes[excludes.length - 1] = "**/test*.scss";
 
@@ -105,7 +105,7 @@ public abstract class BaseCSSBuilderTestCase {
 		Files.createDirectories(outputDirPath);
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", _excludes, false, _importDirPath,
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
 			String.valueOf(outputDirPath.toAbsolutePath()), 6, new String[0],
 			"jni");
 
@@ -124,7 +124,7 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "brown", "khaki");
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", _excludes, false, _importDirPath,
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
 			".sass-cache/", 6, new String[0], "jni");
 
 		Path cssPath = _baseDirPath.resolve(
@@ -135,7 +135,7 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "khaki", "brown");
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", _excludes, false, _importDirPath,
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
 			".sass-cache/", 6, new String[0], "jni");
 
 		css = FileTestUtil.read(cssPath);
@@ -192,7 +192,7 @@ public abstract class BaseCSSBuilderTestCase {
 		throws Exception {
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", _excludes, false, importDirPath,
+			_baseDirPath, "/css", _EXCLUDES, false, importDirPath,
 			".sass-cache/", 6, new String[0], sassCompilerClassName);
 
 		String expectedTestContent = FileTestUtil.read(
@@ -243,10 +243,11 @@ public abstract class BaseCSSBuilderTestCase {
 		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
 	}
 
+	private static final String[] _EXCLUDES = CSSBuilderArgs.EXCLUDES;
+
 	private static final Pattern _cssImportPattern = Pattern.compile(
 		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css\\?t=\\d+)['\"]?\\s*\\)\\s*;");
 	private static Path _dependenciesDirPath;
-	private static String[] _excludes = CSSBuilderArgs.EXCLUDES;
 	private static Path _importDirPath;
 	private static Path _importJarPath;
 

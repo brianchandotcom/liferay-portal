@@ -93,24 +93,27 @@ public class GroupFinderTest {
 			_arbitraryResourceAction.getName(),
 			String.valueOf(_group.getGroupId()), ResourceConstants.SCOPE_GROUP);
 
-		boolean exists = false;
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		List<Group> groups = findByC_C_N_D(
-			_arbitraryResourceAction.getActionId(),
-			_resourcePermission.getName(), _resourcePermission.getRoleId());
+		groupParams.put(
+			"rolePermissions",
+			new RolePermissions(
+				_resourcePermission.getName(), ResourceConstants.SCOPE_GROUP,
+				_arbitraryResourceAction.getActionId(),
+				_resourcePermission.getRoleId()));
 
-		for (Group group : groups) {
-			if (group.getGroupId() == _group.getGroupId()) {
-				exists = true;
-
-				break;
-			}
-		}
+		List<Group> groups = _groupFinder.findByC_C_PG_N_D(
+			TestPropsValues.getCompanyId(),
+			new long[] {_portal.getClassNameId(Group.class)},
+			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
+			new String[] {null}, groupParams, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(
 			"The method findByC_C_N_D should have returned the group " +
 				_group.getGroupId(),
-			exists);
+			groups.removeIf(
+				group -> group.getGroupId() == _group.getGroupId()));
 	}
 
 	@Test
@@ -278,25 +281,6 @@ public class GroupFinderTest {
 			new GroupNameComparator(true));
 
 		Assert.assertEquals(groups.toString(), 2, groups.size());
-	}
-
-	protected List<Group> findByC_C_N_D(
-			String actionId, String name, long roleId)
-		throws Exception {
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put(
-			"rolePermissions",
-			new RolePermissions(
-				name, ResourceConstants.SCOPE_GROUP, actionId, roleId));
-
-		return _groupFinder.findByC_C_PG_N_D(
-			TestPropsValues.getCompanyId(),
-			new long[] {_portal.getClassNameId(Group.class)},
-			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
-			new String[] {null}, groupParams, true, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
 	}
 
 	protected List<Group> findByLayouts(long parentGroupId) throws Exception {

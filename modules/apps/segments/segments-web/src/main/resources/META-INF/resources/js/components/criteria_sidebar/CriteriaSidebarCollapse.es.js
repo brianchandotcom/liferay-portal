@@ -118,7 +118,7 @@ class CriteriaSidebarCollapse extends Component {
 										</li>
 									}
 
-									{active && filteredProperties.length &&
+									{active && filteredProperties.length > 0 &&
 										filteredProperties.map(
 											({label, name, options, type}) => {
 												const defaultValue = getDefaultValue(

@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,12 +50,14 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -68,6 +72,20 @@ import org.osgi.service.component.annotations.Reference;
 	service = MessageListener.class
 )
 public class FlagsRequestMessageListener extends BaseMessageListener {
+
+	@Activate
+	public void activate() {
+		DefaultMessagingConfigurator defaultMessagingConfigurator =
+			new DefaultMessagingConfigurator();
+
+		defaultMessagingConfigurator.setDestinationConfigurations(
+			Collections.singleton(
+				new DestinationConfiguration(
+					DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+					DestinationNames.FLAGS)));
+
+		defaultMessagingConfigurator.afterPropertiesSet();
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {

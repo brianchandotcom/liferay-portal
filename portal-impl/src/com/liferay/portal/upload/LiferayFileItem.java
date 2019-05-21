@@ -148,6 +148,10 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		return headers;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public long getItemSize() {
 		long size = getSize();
 

@@ -8,6 +8,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -17,11 +19,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			WebContent.tearDownCP();
-
-			WebContentTemplates.tearDownCP();
-
-			WebContentStructures.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -30,12 +28,7 @@ definition {
 	test AddFolder {
 		property testray.component.names = "Training,Web Content Administration";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -47,12 +40,7 @@ definition {
 	test AddWebContent {
 		property testray.component.names = "Web Content Administration";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -101,12 +89,7 @@ definition {
 	test AddWebContentMultiple {
 		property testray.component.names = "Web Content Administration";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -118,13 +101,6 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title 1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
@@ -134,13 +110,6 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -152,25 +121,13 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title 3");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 1");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content 1",
 			webContentTitle = "WC WebContent Title 1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 2");
 
@@ -178,12 +135,7 @@ definition {
 			webContentContent = "WC WebContent Content 2",
 			webContentTitle = "WC WebContent Title 2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 3");
 

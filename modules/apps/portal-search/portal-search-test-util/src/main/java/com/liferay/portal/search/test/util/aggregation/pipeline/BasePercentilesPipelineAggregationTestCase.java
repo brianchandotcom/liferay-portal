@@ -15,8 +15,6 @@
 package com.liferay.portal.search.test.util.aggregation.pipeline;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregationResult;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -40,15 +38,6 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation =
-			aggregationFixture.newHistogramAggregation(
-				"histogram", Field.PRIORITY, 5.0, 1L);
-
-		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
-			"sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation =
 				aggregationFixture.newPercentilesBucketPipelineAggregation(
@@ -59,7 +48,8 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							percentilesBucketPipelineAggregation);
 					});
@@ -93,15 +83,6 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation =
-			aggregationFixture.newHistogramAggregation(
-				"histogram", Field.PRIORITY, 5.0, 1L);
-
-		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
-			"sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation =
 				aggregationFixture.newPercentilesBucketPipelineAggregation(
@@ -114,7 +95,8 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							percentilesBucketPipelineAggregation);
 					});

@@ -15,8 +15,6 @@
 package com.liferay.portal.search.test.util.aggregation.pipeline;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregationResult;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -38,15 +36,6 @@ public abstract class BaseStatsBucketPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation =
-			aggregationFixture.newHistogramAggregation(
-				"histogram", Field.PRIORITY, 5.0, 1L);
-
-		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
-			"sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		StatsBucketPipelineAggregation statsBucketPipelineAggregation =
 			aggregationFixture.newStatsBucketPipelineAggregation(
 				"stats_bucket", "histogram>sum");
@@ -56,7 +45,8 @@ public abstract class BaseStatsBucketPipelineAggregationTestCase
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							statsBucketPipelineAggregation);
 					});

@@ -214,6 +214,12 @@ class MBPortlet extends PortletBase {
 					let searchContainer = this.searchContainer_;
 					let searchContainerData = searchContainer.getData();
 
+					document.getElementById(
+						this.namespace + 'fileAttachments'
+					).classList.remove(
+						'hide'
+					);
+
 					attachments.active.forEach(
 						attachment => {
 							if (searchContainerData.indexOf(attachment.id) == -1) {

@@ -116,7 +116,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 					if (thread.getLastPostByUserId() != 0) {
 						messageUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
 
-						if(Validator.isNull(messageUserName)) {
+						if (Validator.isNull(messageUserName)) {
 							MBMessage lastThreadMessage = MBMessageLocalServiceUtil.getLastThreadMessage(thread.getThreadId(), thread.getStatus());
 
 							messageUserName = HtmlUtil.escape(PortalUtil.getUserName(lastThreadMessage.getUserId(), lastThreadMessage.getUserName()));

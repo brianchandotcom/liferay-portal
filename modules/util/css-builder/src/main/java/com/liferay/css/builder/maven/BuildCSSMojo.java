@@ -144,18 +144,10 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
 	 * @parameter
 	 */
-	@Deprecated
-	public void setDocrootDirName(String docrootDirName) {
-		File baseDir = new File(docrootDirName);
-
-		if (!baseDir.isAbsolute()) {
-			baseDir = new File(_projectBaseDir, docrootDirName);
-		}
-
-		setBaseDir(baseDir);
+	public void setExcludes(String excludes) {
+		_cssBuilderArgs.setExcludes(excludes);
 	}
 
 	/**
@@ -177,15 +169,6 @@ public class BuildCSSMojo extends AbstractMojo {
 	 */
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
-	 * @parameter
-	 */
-	@Deprecated
-	public void setPortalCommonPath(File portalCommonPath) {
-		setImportDir(portalCommonPath);
 	}
 
 	/**

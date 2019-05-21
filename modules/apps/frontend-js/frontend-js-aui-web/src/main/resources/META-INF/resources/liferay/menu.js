@@ -339,12 +339,16 @@ AUI.add(
 
 					var overlay = instance._overlay;
 
+					var align = overlay.get('align');
+
 					var listNode = menu.one('ul');
 
 					var listNodeHeight = listNode.get('offsetHeight');
 					var listNodeWidth = listNode.get('offsetWidth');
 
 					var modalMask = false;
+
+					align.points = instance._getAlignPoints(cssClass);
 
 					menu.addClass('lfr-icon-menu-open');
 
@@ -356,6 +360,7 @@ AUI.add(
 
 					overlay.setAttrs(
 						{
+							align: align,
 							centered: false,
 							height: listNodeHeight,
 							modal: modalMask,

@@ -71,7 +71,8 @@ public class ViewModulesManagementToolbarDisplayContext
 		}
 
 		if (appDisplay == null) {
-			appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, app);
+			appDisplay = AppDisplayFactoryUtil.getAppDisplay(
+				allBundles, app, request.getLocale());
 		}
 
 		return appDisplay;

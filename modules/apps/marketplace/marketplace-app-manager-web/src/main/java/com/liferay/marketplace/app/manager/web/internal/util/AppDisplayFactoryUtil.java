@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,7 +75,7 @@ public class AppDisplayFactoryUtil {
 	}
 
 	public static AppDisplay getAppDisplay(
-		List<Bundle> bundles, String appTitle) {
+		List<Bundle> bundles, String appTitle, Locale locale) {
 
 		AppDisplay appDisplay = null;
 
@@ -94,9 +95,13 @@ public class AppDisplayFactoryUtil {
 			}
 
 			if (appDisplay == null) {
+				Dictionary<String, String> localizedHeaders = bundle.getHeaders(
+					locale.getLanguage());
+
 				String appDescription = GetterUtil.getString(
-					headers.get(
+					localizedHeaders.get(
 						BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION));
+
 				Version appVersion = bundle.getVersion();
 
 				appDisplay = new SimpleAppDisplay(
@@ -116,7 +121,7 @@ public class AppDisplayFactoryUtil {
 	}
 
 	public static List<AppDisplay> getAppDisplays(
-		List<Bundle> bundles, String category, int state) {
+		List<Bundle> bundles, String category, int state, Locale locale) {
 
 		List<AppDisplay> appDisplays = new ArrayList<>();
 
@@ -125,7 +130,8 @@ public class AppDisplayFactoryUtil {
 		bundlesMap.load(bundles);
 
 		appDisplays.addAll(createMarketplaceAppDisplays(bundlesMap, category));
-		appDisplays.addAll(createPortalAppDisplays(bundlesMap, category));
+		appDisplays.addAll(
+			createPortalAppDisplays(bundlesMap, category, locale));
 
 		filterAppDisplays(appDisplays, state);
 
@@ -184,7 +190,7 @@ public class AppDisplayFactoryUtil {
 	}
 
 	protected static List<AppDisplay> createPortalAppDisplays(
-		BundlesMap bundlesMap, String category) {
+		BundlesMap bundlesMap, String category, Locale locale) {
 
 		Map<String, AppDisplay> appDisplaysMap = new HashMap<>();
 
@@ -209,9 +215,13 @@ public class AppDisplayFactoryUtil {
 			AppDisplay appDisplay = appDisplaysMap.get(appTitle);
 
 			if (appDisplay == null) {
+				Dictionary<String, String> localizedHeaders = bundle.getHeaders(
+					locale.getLanguage());
+
 				String appDescription = GetterUtil.getString(
-					headers.get(
+					localizedHeaders.get(
 						BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION));
+
 				Version appVersion = bundle.getVersion();
 
 				appDisplay = new SimpleAppDisplay(

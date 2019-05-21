@@ -23,6 +23,8 @@ import setFormValues from './util/form/set_form_values.es';
 import toCharCode from './util/to_char_code.es';
 import unescape from 'lodash.unescape';
 
+import './side_navigation.es';
+
 Liferay.component = component;
 Liferay.componentReady = componentReady;
 Liferay.destroyComponent = destroyComponent;

@@ -28,29 +28,29 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutBuilderTag extends BaseLayoutBuilderTag {
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
 
 		setNamespacedAttribute(
-			request, "availableLocales",
+			httpServletRequest, "availableLocales",
 			new Locale[] {LocaleThreadLocal.getThemeDisplayLocale()});
 
 		setNamespacedAttribute(
-			request, "dataLayout",
+			httpServletRequest, "dataLayout",
 			DataEngineTaglibUtil.getDataLayoutJSONObject(
 				getDataLayoutId(), LocaleThreadLocal.getThemeDisplayLocale(),
-				request));
+				httpServletRequest));
 
 		setNamespacedAttribute(
-			request, "fieldTypes",
-			DataEngineTaglibUtil.getFieldTypesJSONArray(request));
+			httpServletRequest, "fieldTypes",
+			DataEngineTaglibUtil.getFieldTypesJSONArray(httpServletRequest));
 
 		setNamespacedAttribute(
-			request, "fieldTypesModules",
+			httpServletRequest, "fieldTypesModules",
 			DataEngineTaglibUtil.resolveFieldTypesModules());
 
 		setNamespacedAttribute(
-			request, "layoutBuilderModule",
+			httpServletRequest, "layoutBuilderModule",
 			DataEngineTaglibUtil.resolveModule(
 				"data-engine-taglib/layout_builder/js/LayoutBuilder.es"));
 	}

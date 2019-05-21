@@ -71,18 +71,21 @@ import org.osgi.service.component.annotations.Reference;
 public class DataEngineTaglibUtil {
 
 	public static JSONObject getDataLayoutJSONObject(
-		long dataLayoutId, Locale locale, HttpServletRequest request) {
+		long dataLayoutId, Locale locale,
+		HttpServletRequest httpServletRequest) {
 
 		if (dataLayoutId == 0) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
 		return _instance._getDataLayoutJSONObject(
-			dataLayoutId, locale, request);
+			dataLayoutId, locale, httpServletRequest);
 	}
 
-	public static JSONArray getFieldTypesJSONArray(HttpServletRequest request) {
-		return _instance._getFieldTypesJSONArray(request);
+	public static JSONArray getFieldTypesJSONArray(
+		HttpServletRequest httpServletRequest) {
+
+		return _instance._getFieldTypesJSONArray(httpServletRequest);
 	}
 
 	public static String resolveFieldTypesModules() {
@@ -104,11 +107,11 @@ public class DataEngineTaglibUtil {
 	}
 
 	private JSONObject _createFieldContext(
-		Locale locale, HttpServletRequest request, String type) {
+		Locale locale, HttpServletRequest httpServletRequest, String type) {
 
 		try {
 			String portletNamespace = ParamUtil.getString(
-				request, "portletNamespace");
+				httpServletRequest, "portletNamespace");
 
 			Class<?> ddmFormFieldTypeSettings = _getDDMFormFieldTypeSettings(
 				type);
@@ -123,13 +126,13 @@ public class DataEngineTaglibUtil {
 				new DDMFormRenderingContext();
 
 			DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-				request, ddmFormFieldTypeSettingsDDMForm);
+				httpServletRequest, ddmFormFieldTypeSettingsDDMForm);
 
 			_setTypeDDMFormFieldValue(ddmFormValues, type);
 
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
-			ddmFormRenderingContext.setHttpServletRequest(request);
+			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
@@ -153,11 +156,12 @@ public class DataEngineTaglibUtil {
 	}
 
 	private JSONObject _getDataLayoutJSONObject(
-		long dataLayoutId, Locale locale, HttpServletRequest request) {
+		long dataLayoutId, Locale locale,
+		HttpServletRequest httpServletRequest) {
 
 		try {
 			String portletNamespace = ParamUtil.getString(
-				request, "portletNamespace");
+				httpServletRequest, "portletNamespace");
 
 			DDMStructureLayout ddmStructureLayout =
 				_ddmStructureLayoutLocalService.getDDMStructureLayout(
@@ -170,7 +174,7 @@ public class DataEngineTaglibUtil {
 			DDMFormRenderingContext ddmFormRenderingContext =
 				new DDMFormRenderingContext();
 
-			ddmFormRenderingContext.setHttpServletRequest(request);
+			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 			ddmFormRenderingContext.setContainerId("layoutBuilder");
 			ddmFormRenderingContext.setLocale(locale);
 			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
@@ -201,7 +205,7 @@ public class DataEngineTaglibUtil {
 	}
 
 	private JSONObject _getFieldTypeMetadataJSONObject(
-		FieldType fieldType, HttpServletRequest request) {
+		FieldType fieldType, HttpServletRequest httpServletRequest) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -238,14 +242,16 @@ public class DataEngineTaglibUtil {
 		).put(
 			"settingsContext",
 			_createFieldContext(
-				LocaleThreadLocal.getThemeDisplayLocale(), request,
+				LocaleThreadLocal.getThemeDisplayLocale(), httpServletRequest,
 				fieldType.getName())
 		);
 
 		return jsonObject;
 	}
 
-	private JSONArray _getFieldTypesJSONArray(HttpServletRequest request) {
+	private JSONArray _getFieldTypesJSONArray(
+		HttpServletRequest httpServletRequest) {
+
 		Collection<FieldType> fieldTypes = _fieldTypeTracker.getFieldTypes();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -254,7 +260,7 @@ public class DataEngineTaglibUtil {
 
 		stream.map(
 			fieldType -> _instance._getFieldTypeMetadataJSONObject(
-				fieldType, request)
+				fieldType, httpServletRequest)
 		).forEach(
 			jsonArray::put
 		);

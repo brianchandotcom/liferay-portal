@@ -243,9 +243,8 @@ definition {
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content 2",
-			assetTitle = "Web Content Title 2");
-
-		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 1");
+			assetTitle = "Web Content Title 2",
+			relatedAssetTitles = "Web Content Title 1");
 
 		Staging.gotoPublishToLive();
 
@@ -259,9 +258,8 @@ definition {
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "Web Content Content 2",
-			assetTitle = "Web Content Title 2");
-
-		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 1");
+			assetTitle = "Web Content Title 2",
+			relatedAssetTitles = "Web Content Title 1");
 	}
 
 	@priority = "3"

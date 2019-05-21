@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
@@ -67,6 +68,21 @@ import com.liferay.portal.search.sort.Sort;
  * @author Wade Cao
  */
 public class AggregationFixture {
+
+	public HistogramAggregation getDefaultHistogramAggregation() {
+		HistogramAggregation histogramAggregation = _aggregations.histogram(
+			"histogram", Field.PRIORITY);
+
+		histogramAggregation.setInterval(5.0);
+		histogramAggregation.setMinDocCount(1L);
+
+		SumAggregation sumAggregation = _aggregations.sum(
+			"sum", Field.PRIORITY);
+
+		histogramAggregation.addChildAggregation(sumAggregation);
+
+		return histogramAggregation;
+	}
 
 	public AvgAggregation newAvgAggregation(String name, String field) {
 		return _aggregations.avg(name, field);

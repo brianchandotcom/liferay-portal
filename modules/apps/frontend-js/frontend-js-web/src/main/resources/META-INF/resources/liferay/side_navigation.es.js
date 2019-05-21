@@ -109,7 +109,7 @@
 
 			var useDataAttribute = toggler.data('toggle') === 'sidenav';
 
-			options = $.extend({}, defaults, options);
+			options = Object.assign({}, defaults, options);
 
 			options.breakpoint = toInt(options.breakpoint);
 			options.container = options.container || toggler.data('target') || toggler.attr('href');

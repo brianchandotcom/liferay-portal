@@ -279,38 +279,38 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return value;
 	}
 
-	protected List<String> getAttributeValues(
-		String attributeKey, String absolutePath) {
+	private List<String> _getJSONObjectValues(
+		JSONObject jsonObject, String key,
+		Map<String, List<String>> cashedValuesMap, String absolutePath) {
 
-		if (_attributesJSONObject == null) {
+		if (jsonObject == null) {
 			return Collections.emptyList();
 		}
 
-		List<String> attributeValues = _attributeValuesMap.get(attributeKey);
+		List<String> values = cashedValuesMap.get(key);
 
-		if (attributeValues != null) {
-			return attributeValues;
+		if (values != null) {
+			return values;
 		}
 
-		attributeValues = _attributeValuesMap.get(
-			absolutePath + ":" + attributeKey);
+		values = cashedValuesMap.get(
+			absolutePath + ":" + key);
 
-		if (attributeValues != null) {
-			return attributeValues;
+		if (values != null) {
+			return values;
 		}
 
-		attributeValues = new ArrayList<>();
+		values = new ArrayList<>();
 
-		boolean hasSubdirectoryAttributeValues = false;
+		boolean hasSubdirectoryValues = false;
 
-		Iterator<String> keys = _attributesJSONObject.keys();
+		Iterator<String> keys = jsonObject.keys();
 
 		while (keys.hasNext()) {
 			String fileLocation = keys.next();
 
 			List<String> curAttributeValues = _getAttributeValues(
-				_attributesJSONObject.getJSONObject(fileLocation),
-				attributeKey);
+				jsonObject.getJSONObject(fileLocation), key);
 
 			if (curAttributeValues.isEmpty()) {
 				continue;
@@ -323,7 +323,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 					_baseDirName);
 
 				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-					hasSubdirectoryAttributeValues = true;
+					hasSubdirectoryValues = true;
 				}
 
 				if (!absolutePath.startsWith(fileLocation)) {
@@ -331,17 +331,25 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				}
 			}
 
-			attributeValues.addAll(curAttributeValues);
+			values.addAll(curAttributeValues);
 		}
 
-		_attributeValuesMap.put(
-			absolutePath + ":" + attributeKey, attributeValues);
+		cashedValuesMap.put(
+			absolutePath + ":" + key, values);
 
-		if (!hasSubdirectoryAttributeValues) {
-			_attributeValuesMap.put(attributeKey, attributeValues);
+		if (!hasSubdirectoryValues) {
+			cashedValuesMap.put(key, values);
 		}
 
-		return attributeValues;
+		return values;
+	}
+
+	protected List<String> getAttributeValues(
+		String attributeKey, String absolutePath) {
+
+		return _getJSONObjectValues(
+			_attributesJSONObject, attributeKey, _attributeValuesMap,
+			absolutePath);
 	}
 
 	protected String getBaseDirName() {

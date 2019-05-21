@@ -106,6 +106,25 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Get background image translated value
+	 * @private
+	 * @review
+	 */
+	_getBackgroundImageValue() {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
+		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
+
+		const segmentedValue = this.editableValues[segmentsExperienceId] ||
+			this.editableValues[defaultSegmentsExperienceId] ||
+			this.editableValues;
+
+		const translatedValue = segmentedValue[this.languageId] ||
+			segmentedValue[this.defaultLanguageId];
+
+		return translatedValue;
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -168,15 +187,7 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_renderBackgroundImage() {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
-
-		const segmentedValue = this.editableValues[segmentsExperienceId] ||
-			this.editableValues[defaultSegmentsExperienceId] ||
-			this.editableValues;
-
-		const translatedValue = segmentedValue[this.languageId] ||
-			segmentedValue[this.defaultLanguageId];
+		const translatedValue = this._getBackgroundImageValue();
 
 		EditableBackgroundImageProcessor.render(this.element, translatedValue);
 	}

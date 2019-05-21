@@ -109,7 +109,7 @@
 
 			var useDataAttribute = toggler.data('toggle') === 'sidenav';
 
-			options = $.extend({}, $.fn.sideNavigation.defaults, options);
+			options = $.extend({}, defaults, options);
 
 			options.breakpoint = toInt(options.breakpoint);
 			options.container = options.container || toggler.data('target') || toggler.attr('href');
@@ -1056,8 +1056,7 @@
 	 * @property {String|Object}  url          The URL or $.ajax config object to fetch the content to inject into .sidebar-body
 	 * @property {String|Number}  width        The width of the side navigation.
 	 */
-
-	Plugin.defaults = {
+	var defaults = {
 		breakpoint: 768,
 		content: '.sidenav-content',
 		equalHeight: true, // equalHeight option is deprecated, use heightType instead

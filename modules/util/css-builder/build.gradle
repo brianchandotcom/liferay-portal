@@ -62,6 +62,10 @@ formatSource {
 	mustRunAfter formatXML
 }
 
+javadoc {
+	options.tags = ["goal", "parameter", "required"]
+}
+
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.css.builder/lib"
 }

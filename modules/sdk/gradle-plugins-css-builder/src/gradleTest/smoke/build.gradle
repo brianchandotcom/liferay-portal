@@ -6,14 +6,14 @@ apply plugin: "java"
 
 task runGradleTest
 
+buildCSS {
+	excludes "**/excluded.scss"
+}
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
-}
-
-buildCSS {
-	excludes "**/excluded.scss"
 }
 
 runGradleTest {

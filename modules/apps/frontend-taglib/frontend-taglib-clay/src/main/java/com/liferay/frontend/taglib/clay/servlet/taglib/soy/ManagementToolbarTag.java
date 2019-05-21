@@ -483,7 +483,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	private static final String[] _CACHE_STATE = {
-		"checkboxStatus", "showSelectAllButton", "selectedItems", "totalItems"
+		"checkboxStatus", "showSelectAllButton", "selectedItems"
 	};
 
 	private static final String[] _NAMESPACED_PARAMS = {

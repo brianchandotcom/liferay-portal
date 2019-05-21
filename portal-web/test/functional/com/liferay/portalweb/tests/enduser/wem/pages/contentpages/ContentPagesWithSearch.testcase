@@ -105,6 +105,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-91405. Content page associated with category will not display after category deleted."
+	@priority = "3"
+	test SearchContentPagesWithDeletedCategory {
+		property portal.acceptance = "true";
+
+		task ("Add a a vocabulary with a category") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Categories");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+			Category.addCP(
+				categoryName = "New Category",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Modify page so that it contains created category") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+
+			Page.addCategory(
+				categoryName = "New Category",
+				vocabularyName = "Vocabulary Name");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the search page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+		}
+
+		task ("Search for created category") {
+			Search.searchCP(searchTerm = "New Category");
+		}
+
+		task ("Assert the content page appears in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
+
+		task ("Delete created vocabulary") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Categories");
+
+			Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Navigate to the search page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+		}
+
+		task ("Search for created category") {
+			Search.searchCP(searchTerm = "New Category");
+		}
+
+		task ("Assert the content page does not appear in the search results") {
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-78928. Editable text in content pages is searchable."
 	@priority = "5"
 	test SearchEditableText {

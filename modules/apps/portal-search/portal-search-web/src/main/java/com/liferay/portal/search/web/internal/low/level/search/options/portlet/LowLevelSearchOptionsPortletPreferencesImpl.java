@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.options.portlet;
+package com.liferay.portal.search.web.internal.low.level.search.options.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 import com.liferay.portal.search.web.internal.util.PortletPreferencesHelper;
 
 import java.util.Optional;
@@ -24,10 +25,10 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Wade Cao
  */
-public class SearchOptionsPortletPreferencesImpl
-	implements SearchOptionsPortletPreferences {
+public class LowLevelSearchOptionsPortletPreferencesImpl
+	implements LowLevelSearchOptionsPortletPreferences {
 
-	public SearchOptionsPortletPreferencesImpl(
+	public LowLevelSearchOptionsPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
 		_portletPreferencesHelper = new PortletPreferencesHelper(
@@ -47,18 +48,26 @@ public class SearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public boolean isAllowEmptySearches() {
-		return _portletPreferencesHelper.getBoolean(
-			SearchOptionsPortletPreferences.PREFERENCE_KEY_ALLOW_EMPTY_SEARCHES,
-			false);
+	public Optional<String> getFieldsToReturnOptional() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.
+				PREFERENCE_KEY_FIELDS_TO_RETURN);
 	}
 
 	@Override
-	public boolean isBasicFacetSelection() {
-		return _portletPreferencesHelper.getBoolean(
-			SearchOptionsPortletPreferences.
-				PREFERENCE_KEY_BASIC_FACET_SELECTION,
-			false);
+	public String getFieldsToReturnString() {
+		return getFieldsToReturnOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
+	public Optional<String> getIndexesOptional() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES);
+	}
+
+	@Override
+	public String getIndexesString() {
+		return getIndexesOptional().orElse(StringPool.BLANK);
 	}
 
 	private final PortletPreferencesHelper _portletPreferencesHelper;

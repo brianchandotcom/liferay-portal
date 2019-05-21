@@ -16,8 +16,8 @@ package com.liferay.portal.search.web.internal.low.level.search.options.portlet.
 
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
-import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
-import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.low.level.search.options.portlet.LowLevelSearchOptionsPortletPreferences;
+import com.liferay.portal.search.web.internal.low.level.search.options.portlet.LowLevelSearchOptionsPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
@@ -39,21 +39,24 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		SearchOptionsPortletPreferences searchOptionsPortletPreferences =
-			new SearchOptionsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+		LowLevelSearchOptionsPortletPreferences
+			lowLevelSearchOptionsPortletPreferences =
+				new LowLevelSearchOptionsPortletPreferencesImpl(
+					portletSharedSearchSettings.
+						getPortletPreferencesOptional());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				searchOptionsPortletPreferences.
+				lowLevelSearchOptionsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
 		searchRequestBuilder.fields(
 			SearchStringUtil.splitAndUnquote(
-				searchOptionsPortletPreferences.getFieldsToReturnOptional())
+				lowLevelSearchOptionsPortletPreferences.
+					getFieldsToReturnOptional())
 		).indexes(
 			SearchStringUtil.splitAndUnquote(
-				searchOptionsPortletPreferences.getIndexesOptional())
+				lowLevelSearchOptionsPortletPreferences.getIndexesOptional())
 		);
 	}
 

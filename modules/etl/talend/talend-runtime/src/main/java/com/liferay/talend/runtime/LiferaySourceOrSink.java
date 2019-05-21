@@ -18,13 +18,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
-import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
+import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.constants.OpenApiConstants;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.exception.MalformedURLException;
+import com.liferay.talend.openapi.constants.OpenApiConstants;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.utils.URIUtils;
 
@@ -256,7 +255,7 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public List<NamedThing> getEndpointList(String method) {
+	public List<NamedThing> getEndpointList(String operation) {
 		List<NamedThing> endpointsNamedThing = new ArrayList<>();
 
 		LiferayConnectionProperties liferayConnectionProperties =
@@ -267,18 +266,18 @@ public class LiferaySourceOrSink
 
 		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
 
-		JsonNode paths = apiSpecJsonNode.path(OpenApiConstants.PATHS);
+		JsonNode pathsJsonNode = apiSpecJsonNode.path(OpenApiConstants.PATHS);
 
-		Iterator<Map.Entry<String, JsonNode>> fields = paths.fields();
+		Iterator<Map.Entry<String, JsonNode>> fields = pathsJsonNode.fields();
 
 		while (fields.hasNext()) {
 			Map.Entry<String, JsonNode> endpoint = fields.next();
 
 			JsonNode endpointJsonNode = endpoint.getValue();
 
-			if (endpointJsonNode.has(method.toLowerCase(Locale.US))) {
+			if (endpointJsonNode.has(operation.toLowerCase(Locale.US))) {
 				boolean hasSchemaReference = endpointJsonNode.path(
-					method.toLowerCase(Locale.US)
+					operation.toLowerCase(Locale.US)
 				).path(
 					OpenApiConstants.RESPONSES
 				).path(
@@ -309,33 +308,39 @@ public class LiferaySourceOrSink
 		return endpointsNamedThing;
 	}
 
+	/**
+	 * This method is not used in Liferay Component family
+	 * @deprecated As of Mueller (7.2.x), beginning, see {@link #getEndpointSchema(String, String)} for
+	 * implementation details
+	 *
+	 * @param runtimeContainer
+	 * @param endpoint
+	 * @return
+	 * @throws IOException
+	 */
+	@Deprecated
 	@Override
 	public Schema getEndpointSchema(
-		RuntimeContainer runtimeContainer, String endpoint) {
+			RuntimeContainer runtimeContainer, String endpoint)
+		throws IOException {
 
-		JsonNode jsonNode = doGetRequest(endpoint);
-
-		return getResourceSchemaByType("type");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Schema getExpectedFormSchema(String endpoint) throws IOException {
-		return ExpectedFormSchemaInferrer.inferSchemaByFormOperation(
-			"operation", "endpoint");
-	}
+	public Schema getEndpointSchema(String endpoint, String operation)
+		throws IOException {
 
-	@Override
-	public Schema getResourceSchemaByType(String resourceType) {
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		String apiSpecURL = liferayConnectionProperties.apiSpecURL.getValue();
+		String apiSpecURLHref =
+			liferayConnectionProperties.apiSpecURL.getValue();
 
-		JsonNode apiDocumentationJsonNode = doGetRequest(
-			apiSpecURL.concat("/doc"));
+		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
 
-		return ResourceCollectionSchemaInferrer.inferSchemaByResourceType(
-			apiDocumentationJsonNode);
+		return EndpointSchemaInferrer.inferSchema(
+			endpoint, operation, apiSpecJsonNode);
 	}
 
 	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {

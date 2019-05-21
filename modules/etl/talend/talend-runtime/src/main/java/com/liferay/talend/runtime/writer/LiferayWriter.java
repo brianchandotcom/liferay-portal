@@ -187,7 +187,7 @@ public class LiferayWriter
 			else if (Action.Update == action) {
 				doUpdate(indexedRecord);
 			}
-			else if (Action.Upsert == action) {
+			else if (Action.Insert == action) {
 				doUpsert(indexedRecord);
 			}
 

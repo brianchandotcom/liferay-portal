@@ -33,11 +33,10 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public List<NamedThing> getAvailableWebSites() throws IOException;
 
-	public List<NamedThing> getEndpointList(String method) throws IOException;
+	public List<NamedThing> getEndpointList(String operation)
+		throws IOException;
 
-	public Schema getExpectedFormSchema(String endpoint) throws IOException;
-
-	public Schema getResourceSchemaByType(String resourceType)
+	public Schema getEndpointSchema(String endpoint, String operation)
 		throws IOException;
 
 	public ValidationResult validateConnection(

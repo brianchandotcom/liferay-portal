@@ -22,10 +22,9 @@ import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.utils.URIUtils;
 
-import java.net.URI;
+import java.io.IOException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.ws.rs.HttpMethod;
 
@@ -81,25 +80,19 @@ public class LiferayResourceProperties
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
-		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
-			try {
-				URI resourceURI = URIUtils.setPaginationLimitOnURL(
-					endpoint.getValue(), 1);
+		try {
+			Schema endpointSchema =
+				liferaySourceOrSinkRuntime.getEndpointSchema(
+					endpoint.getValue(), HttpMethod.GET);
 
-				String resourceCollectionType = "type";
+			main.schema.setValue(endpointSchema);
+		}
+		catch (IOException ioe) {
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage("error.validation.schema"));
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-				Schema schema =
-					liferaySourceOrSinkRuntime.getResourceSchemaByType(
-						resourceCollectionType);
-
-				main.schema.setValue(schema);
-			}
-			catch (NoSuchElementException nsee) {
-				validationResultMutable.setMessage(
-					i18nMessages.getMessage("error.validation.resourceType"));
-				validationResultMutable.setStatus(
-					ValidationResult.Result.ERROR);
-			}
+			_log.error("Unable to generate schema", ioe);
 		}
 
 		if (validationResultMutable.getStatus() ==
@@ -151,6 +144,12 @@ public class LiferayResourceProperties
 		}
 
 		return null;
+	}
+
+	public String getEndpointURL() {
+		String applicationBaseHref = connection.getApplicationBaseHref();
+
+		return applicationBaseHref.concat(endpoint.getValue());
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public interface TitleFieldQueryBuilderConfiguration {
 	@Meta.AD(deflt = "2.0", name = "exact-match-boost", required = false)
 	public float exactMatchBoost();
 
-	@Meta.AD(deflt = "300", name = "max-expansions", required = false)
+	@Meta.AD(deflt = "50", name = "max-expansions", required = false)
 	public int maxExpansions();
 
 }

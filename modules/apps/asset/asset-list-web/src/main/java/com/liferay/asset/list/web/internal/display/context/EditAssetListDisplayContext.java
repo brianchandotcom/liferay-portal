@@ -465,9 +465,22 @@ public class EditAssetListDisplayContext {
 			return _classTypeIds;
 		}
 
+		long[] classNameIds = getClassNameIds();
+
+		if (ArrayUtil.isEmpty(classNameIds) || (classNameIds.length > 1)) {
+			_classTypeIds = new long[0];
+
+			return _classTypeIds;
+		}
+
+		String className = getClassName(
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameIds[0]));
+
 		_classTypeIds = GetterUtil.getLongValues(
 			StringUtil.split(
-				_properties.getProperty("classTypeIds", StringPool.BLANK)));
+				_properties.getProperty(
+					"classTypeIds" + className, StringPool.BLANK)));
 
 		return _classTypeIds;
 	}
@@ -933,9 +946,22 @@ public class EditAssetListDisplayContext {
 			return _subtypeFieldsFilterEnabled;
 		}
 
+		long[] classNameIds = getClassNameIds();
+
+		if (ArrayUtil.isEmpty(classNameIds) || (classNameIds.length > 1)) {
+			_subtypeFieldsFilterEnabled = false;
+
+			return _subtypeFieldsFilterEnabled;
+		}
+
+		String className = getClassName(
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameIds[0]));
+
 		_subtypeFieldsFilterEnabled = GetterUtil.getBoolean(
 			_properties.getProperty(
-				"subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+				"subtypeFieldsFilterEnabled" + className,
+				Boolean.FALSE.toString()));
 
 		return _subtypeFieldsFilterEnabled;
 	}

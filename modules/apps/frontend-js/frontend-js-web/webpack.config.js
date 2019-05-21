@@ -4,6 +4,7 @@ const PUBLIC_PATH = '/o/frontend-js-web/liferay/';
 
 module.exports = {
 	context: path.resolve(__dirname),
+	devtool: 'source-map',
 	entry: './src/main/resources/META-INF/resources/liferay/global.es.js',
 	output: {
 		filename: 'global.bundle.js',
@@ -11,18 +12,16 @@ module.exports = {
 		path: path.resolve('./classes/META-INF/resources/liferay/'),
 		publicPath: PUBLIC_PATH
 	},
-	mode: 'none',
+	mode: 'production',
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
 				exclude: /node_modules/,
+				test: /\.js$/,
 				use: {
 					loader: 'babel-loader'
 				}
 			}
 		]
-	},
-	devtool: 'source-map',
-	mode: 'production',
+	}
 };

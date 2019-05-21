@@ -83,19 +83,19 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			return null;
 		}
 
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
 		long classPK = jsonObject.getLong("classPK");
+
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
+			return null;
+		}
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
 		if (infoDisplayObjectProvider == null) {
-			return null;
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
-
-		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
 			return null;
 		}
 

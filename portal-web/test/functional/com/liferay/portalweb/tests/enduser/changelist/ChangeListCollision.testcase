@@ -72,6 +72,7 @@ definition {
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.modifyTemplate(
+			changeListEnabled = "true",
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name Modified in The First Change List",
@@ -94,6 +95,7 @@ definition {
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.modifyTemplate(
+			changeListEnabled = "true",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name Modified in The Second Change List",
 			templatePreviousName = "WC Template Name");

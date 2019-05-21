@@ -9,6 +9,12 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
+const TOOLTIP_BUTTON_IDS = {
+	map: 'map',
+	remove: 'remove',
+	select: 'select'
+};
+
 /**
  * FragmentEditableBackgroundImage
  */
@@ -17,14 +23,15 @@ class FragmentEditableBackgroundImage extends Component {
 	/**
 	 * Returns the list of buttons to be shown inside the tooltip.
 	 * @param {boolean} showMapping
+	 * @param {boolean} showRemoveButton
 	 * @return {Array<{id: string, label: string}>}
 	 * @review
 	 */
-	static getButtons(showMapping) {
+	static getButtons(showMapping, showRemoveButton) {
 		const buttons = [
 			{
 				icon: 'pencil',
-				id: 'select',
+				id: TOOLTIP_BUTTON_IDS.select,
 				label: Liferay.Language.get('select-background')
 			}
 		];
@@ -33,8 +40,18 @@ class FragmentEditableBackgroundImage extends Component {
 			buttons.push(
 				{
 					icon: 'bolt',
-					id: 'map',
+					id: TOOLTIP_BUTTON_IDS.map,
 					label: Liferay.Language.get('map-background')
+				}
+			);
+		}
+
+		if (showRemoveButton) {
+			buttons.push(
+				{
+					icon: 'times-circle',
+					id: TOOLTIP_BUTTON_IDS.remove,
+					label: Liferay.Language.get('remove-background')
 				}
 			);
 		}
@@ -92,6 +109,25 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * Get background image translated value
+	 * @private
+	 * @review
+	 */
+	_getBackgroundImageValue() {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
+		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
+
+		const segmentedValue = this.editableValues[segmentsExperienceId] ||
+			this.editableValues[defaultSegmentsExperienceId] ||
+			this.editableValues;
+
+		const translatedValue = segmentedValue[this.languageId] ||
+			segmentedValue[this.defaultLanguageId];
+
+		return translatedValue;
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -104,7 +140,8 @@ class FragmentEditableBackgroundImage extends Component {
 				{
 					alignElement: this.element,
 					buttons: FragmentEditableBackgroundImage.getButtons(
-						this.showMapping
+						this.showMapping,
+						this._getBackgroundImageValue()
 					),
 					store: this.store
 				}
@@ -129,8 +166,47 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_handleSelectBackgroundImage(backgroundImageURL) {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
+		this._updateBackgroundImage(backgroundImageURL);
+	}
+
+	/**
+	 * Handles click events for tooltip buttons.
+	 * @param {object} event The tooltip button click.
+	 */
+	_handleTooltipButtonClick(event) {
+		if (event.buttonId === TOOLTIP_BUTTON_IDS.select) {
+			EditableBackgroundImageProcessor.init(
+				this._handleSelectBackgroundImage,
+				this.imageSelectorURL,
+				this.portletNamespace
+			);
+		}
+		else if (event.buttonId === TOOLTIP_BUTTON_IDS.remove) {
+			this._updateBackgroundImage('');
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_renderBackgroundImage() {
+		const translatedValue = this._getBackgroundImageValue();
+
+		EditableBackgroundImageProcessor.render(this.element, translatedValue);
+	}
+
+	/**
+	 * Dispatches action to update editableValues with new background image url
+	 * @param {string} backgroundImageURL
+	 */
+	_updateBackgroundImage(backgroundImageURL) {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+			this.defaultSegmentsExperienceId
+		);
+		const segmentsExperienceId = prefixSegmentsExperienceId(
+			this.segmentsExperienceId
+		);
 
 		this.store.dispatch(
 			updateEditableValueAction(
@@ -142,36 +218,6 @@ class FragmentEditableBackgroundImage extends Component {
 				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 			)
 		);
-	}
-
-	/**
-	 * Handles click events for tooltip buttons.
-	 * @param {object} event The tooltip button click.
-	 */
-	_handleTooltipButtonClick(event) {
-		EditableBackgroundImageProcessor.init(
-			this._handleSelectBackgroundImage,
-			this.imageSelectorURL,
-			this.portletNamespace
-		);
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_renderBackgroundImage() {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
-
-		const segmentedValue = this.editableValues[segmentsExperienceId] ||
-			this.editableValues[defaultSegmentsExperienceId] ||
-			this.editableValues;
-
-		const translatedValue = segmentedValue[this.languageId] ||
-			segmentedValue[this.defaultLanguageId];
-
-		EditableBackgroundImageProcessor.render(this.element, translatedValue);
 	}
 
 }

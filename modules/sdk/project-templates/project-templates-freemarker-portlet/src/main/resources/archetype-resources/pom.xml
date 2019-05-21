@@ -20,21 +20,6 @@
 			<version>2.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion.startsWith("7.1")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>3.0.0</version>
-			<scope>provided</scope>
-		</dependency>
-#elseif (${liferayVersion.startsWith("7.2")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>4.4.0</version>
-			<scope>provided</scope>
-		</dependency>
-#end
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.bridges</artifactId>
@@ -47,6 +32,45 @@
 			<version>2.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+#elseif (${liferayVersion.startsWith("7.1")})
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.util.bridges</artifactId>
+			<version>3.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.util.taglib</artifactId>
+			<version>3.1.2</version>
+			<scope>provided</scope>
+		</dependency>
+#elseif (${liferayVersion.startsWith("7.2")})
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>4.4.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.util.bridges</artifactId>
+			<version>6.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.util.taglib</artifactId>
+			<version>4.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+#end
 #if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>javax.portlet</groupId>

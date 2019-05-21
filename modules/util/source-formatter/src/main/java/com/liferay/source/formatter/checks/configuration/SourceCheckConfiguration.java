@@ -14,11 +14,12 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Hugo Huijser
@@ -30,30 +31,28 @@ public class SourceCheckConfiguration {
 	}
 
 	public void addAttribute(String name, String value) {
-		List<String> attributeValues = _attributesMap.get(name);
+		JSONArray jsonArray = _attributesJSONObject.getJSONArray(name);
 
-		if (attributeValues == null) {
-			attributeValues = new ArrayList<>();
+		if (jsonArray == null) {
+			jsonArray = new JSONArrayImpl();
 		}
 
-		attributeValues.add(value);
+		for (String s : StringUtil.split(value, StringPool.COMMA)) {
+			jsonArray.put(s);
+		}
 
-		_attributesMap.put(name, attributeValues);
+		_attributesJSONObject.put(name, jsonArray);
 	}
 
-	public Set<String> attributeNames() {
-		return _attributesMap.keySet();
-	}
-
-	public List<String> getAttributeValues(String name) {
-		return _attributesMap.get(name);
+	public JSONObject getAttributesJSONObject() {
+		return _attributesJSONObject;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	private final Map<String, List<String>> _attributesMap = new HashMap<>();
+	private final JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final String _name;
 
 }

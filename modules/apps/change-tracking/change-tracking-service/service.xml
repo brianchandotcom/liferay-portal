@@ -163,6 +163,7 @@
 		<reference entity="Company" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
+		<exception>CTCollectionDescription</exception>
 		<exception>CTCollectionName</exception>
 		<exception>DuplicateCTEntry</exception>
 	</exceptions>

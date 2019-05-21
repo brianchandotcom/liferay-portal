@@ -278,6 +278,18 @@ definition {
 
 		Navigator.openURL();
 
+		Pause(locator1 = "60000");
+
+		SAML.executeIdPInitiatedSSO(
+			autoLogin = "true",
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			samlEnabled = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openURL();
+
 		Pause(locator1 = "120000");
 
 		AssertTextEquals(

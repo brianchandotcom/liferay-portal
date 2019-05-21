@@ -66,24 +66,9 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
-
-				<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
-					<li class="tbar-item">
-						<div class="tbar-section">
-							<soy:component-renderer
-								context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
-								module="js/ChangeDefaultLanguage.es"
-								templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
-							/>
-						</div>
-					</li>
-				</c:if>
-
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<a class="btn btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>">
-							<liferay-ui:message key="cancel" />
-						</a>
+						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
@@ -280,8 +265,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		}
 	);
 
-	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 
 	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
 		contextualSidebarContainer.classList.add('contextual-sidebar-visible');

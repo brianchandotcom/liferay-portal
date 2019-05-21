@@ -24,7 +24,9 @@ exports[`CriteriaRow should render 1`] = `
       <span
         class="criterion-string"
       >
-        <b />
+        <b>
+          Test Property
+        </b>
       </span>
       <select
         class="form-control criterion-input operator-input form-control"
@@ -33,7 +35,7 @@ exports[`CriteriaRow should render 1`] = `
         class="criterion-input form-control"
         data-testid="simple-string"
         type="text"
-        value=""
+        value="test_val"
       />
       <button
         class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
@@ -64,6 +66,80 @@ exports[`CriteriaRow should render 1`] = `
         </svg>
       </button>
     </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CriteriaRow should render and inform there is an unknown property 1`] = `
+<DocumentFragment>
+  <div
+    class="criterion-row-root criterion-row-root-error"
+  >
+    <div
+      class="edit-container"
+    >
+      <div
+        class="drag-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="lexicon-icon lexicon-icon-drag"
+          viewBox="0 0 512 512"
+        >
+          <use
+            xlink:href="#drag"
+          />
+        </svg>
+      </div>
+      <span
+        class="criterion-string"
+      >
+        <b>
+          unknown_prop
+        </b>
+      </span>
+      <select
+        class="form-control criterion-input operator-input form-control"
+        disabled=""
+      />
+      <input
+        class="criterion-input form-control"
+        data-testid="simple-string"
+        disabled=""
+        type="text"
+        value="test_val"
+      />
+      <button
+        class="btn btn-outline-danger"
+        type="button"
+      >
+        delete
+      </button>
+    </div>
+  </div>
+  <div
+    class="alert alert-danger bg-transparent p-1 mt-1 border-0"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-check-circle-full"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="#exclamation-full"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      error:
+    </strong>
+    criteria-error-message-edit
   </div>
 </DocumentFragment>
 `;

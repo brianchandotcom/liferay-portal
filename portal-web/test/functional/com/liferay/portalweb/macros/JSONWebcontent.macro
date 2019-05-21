@@ -1,5 +1,35 @@
 definition {
 
+	@summary = "Helper function to add a WC Folder via JSON"
+	macro _addFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentFolderId=${parentFolderId} \
+				-d name=${folderName} \
+				-d description=''
+		''';
+
+		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
+
+		echo("## Create a 'Web Content Folder' with the following info using JSONWS:");
+
+		echo("## * Group Name: ${groupName}");
+
+		echo("## * Parent Folder Id: ${folderId}");
+
+		echo("## * Name: ${folderName}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Helper function to add a WC Article via JSON"
 	macro _addWebContent {
 		var portalURL = JSONCompany.getPortalURL();
@@ -12,7 +42,6 @@ definition {
 		}
 
 		if (isSet(description)) {
-
 			var descriptionMap = '''{"en_US":"${description}"}''';
 		}
 		else {
@@ -148,7 +177,16 @@ definition {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 		}
 		else {
-			fail("Please set 'groupName' to get groupId.");
+			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
+
+			var groupId = JSONUtil2._getScopeGroupId();
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
 		}
 
 		JSONWebcontent._addWebContent(
@@ -162,6 +200,24 @@ definition {
 			titleMap = "${titleMap}");
 	}
 
+	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
+	macro addFolder {
+		if (isSet(groupName)) {
+			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		}
+		else {
+			fail("Please set 'groupName' to get groupId.");
+		}
+
+		if (!(isSet(folderName))) {
+			fail("Please set 'folderName'.");
+		}
+
+		JSONWebcontent._addFolder(
+			folderName = "${folderName}",
+			groupId = "${groupId}");
+	}
+
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
 	macro addWebContent {
 		if (!(isSet(content))) {
@@ -170,13 +226,21 @@ definition {
 
 		if (isSet(groupName)) {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-		}
-		else {
-			fail("Please set 'groupName' to get groupId.");
+		} else {
+			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
+
+			var groupId = JSONUtil2._getScopeGroupId();
 		}
 
 		if (!(isSet(title))) {
 			fail("Please set 'title.'");
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
 		}
 
 		JSONWebcontent._addWebContent(

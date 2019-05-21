@@ -19,12 +19,12 @@
 
 	<div class="dropdown lfr-icon-menu" data-fragment-entry-links="{$fragmentEntryLinks}">
 		<button
-			class="btn btn-outline-light fragments-editor-toolbar__translation-status-button"
+			class="btn btn-sm btn-secondary fragments-editor-toolbar__translation-status-button"
 			data-toggle="dropdown"
 			type="button"
 		>
 			{if $availableLanguages and $languageId and $spritemap}
-				<span class="inline-item">
+				<span class="inline-item mb-1">
 					{call .lexiconIcon}
 						{param name: $availableLanguages[$languageId].languageIcon /}
 						{param spritemap: $spritemap /}

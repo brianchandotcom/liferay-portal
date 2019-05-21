@@ -48,6 +48,8 @@ public class EmbeddedElasticsearchNode extends Node {
 			PainlessPlugin.class, ReindexPlugin.class);
 
 		try {
+			LogConfigurator.registerErrorListener();
+
 			LogConfigurator.configure(environment);
 		}
 		catch (Exception e) {

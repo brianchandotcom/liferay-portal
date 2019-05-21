@@ -10,6 +10,7 @@ import React from 'react';
  */
 class CollectionInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		value: propTypes.string
 	};
@@ -60,6 +61,7 @@ class CollectionInput extends React.Component {
 	}
 
 	render() {
+		const {disabled} = this.props;
 		const {key, value} = this._stringToKeyValueObject(this.props.value);
 
 		return (
@@ -67,6 +69,7 @@ class CollectionInput extends React.Component {
 				<input
 					className="criterion-input form-control"
 					data-testid="collection-key-input"
+					disabled={disabled}
 					onChange={this._handleKeyChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('key')}
@@ -77,6 +80,7 @@ class CollectionInput extends React.Component {
 				<input
 					className="criterion-input form-control"
 					data-testid="collection-value-input"
+					disabled={disabled}
 					onChange={this._handleValueChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('value')}

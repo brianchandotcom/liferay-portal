@@ -146,11 +146,19 @@ definition {
 
 	@description = "Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	macro executeIdPInitiatedSSO {
-		User.loginPG(
-			password = "${password}",
-			samlEnabled = "true",
-			specificURL = "${idpInitiatedSSOURL}",
-			userEmailAddress = "${userEmailAddress}");
+
+		if ("${autoLogin}" == "true") {
+			Navigator.openSpecificURL(url = "${idpInitiatedSSOURL}");
+
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
+		else {
+			User.loginPG(
+				password = "${password}",
+				samlEnabled = "true",
+				specificURL = "${idpInitiatedSSOURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
 
 		Pause(locator1 = "2000");
 
@@ -159,13 +167,20 @@ definition {
 
 	@description = "Sign into portal by executing a SP initiated SSO login. In the SP, click on the Sign In button to."
 	macro executeSPInitiatedSSO {
-		User.loginPG(
-			idpName = "${idpName}",
-			password = "test",
-			rememberMeChecked = "${rememberMeChecked}",
-			samlMultiIdPs = "${samlMultiIdPs}",
-			specificURL = "${specificURL}",
-			userEmailAddress = "test@liferay.com");
+		if ("${autoLogin}" == "true") {
+			Navigator.openSpecificURL(url = "${specificURL}");
+
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
+		else {
+			User.loginPG(
+				idpName = "${idpName}",
+				password = "test",
+				rememberMeChecked = "${rememberMeChecked}",
+				samlMultiIdPs = "${samlMultiIdPs}",
+				specificURL = "${specificURL}",
+				userEmailAddress = "test@liferay.com");
+		}
 
 		Pause(locator1 = "2000");
 

@@ -26,5 +26,7 @@ patch {
 	}
 
 	fileNames "org/drools/base/ClassFieldAccessorCache.java"
+	fileNames "org/drools/xml/ExtensibleXmlParser.java"
+
 	originalLibModuleName = "drools-core"
 }

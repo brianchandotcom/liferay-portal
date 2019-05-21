@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
-Bundle-Version: 1.0.851
+Bundle-Version: 1.0.855
 Import-Package:\
 	!javax.portlet,\
 	\
@@ -27,6 +27,8 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.petra.reflect-[0-9]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/json/JSONArrayImpl.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/json/JSONObjectImpl.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\
@@ -55,6 +57,9 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONArray.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONException.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONObject.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONSerializable.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/language/Language.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/log/*,\

@@ -14,10 +14,10 @@
 
 package com.liferay.change.tracking.internal.background.task;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.exception.CTEntryCollisionException;
-import com.liferay.change.tracking.exception.CTException;
-import com.liferay.change.tracking.exception.CTProcessException;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.exception.CTEngineException;
+import com.liferay.change.tracking.engine.exception.CTEntryCollisionCTEngineException;
+import com.liferay.change.tracking.engine.exception.CTProcessCTEngineException;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.process.log.CTProcessLog;
 import com.liferay.change.tracking.internal.process.util.CTProcessMessageSenderUtil;
@@ -122,7 +122,7 @@ public class CTPublishBackgroundTaskExecutor
 		catch (Throwable t) {
 			CTProcessMessageSenderUtil.logCTProcessFailed();
 
-			throw new CTProcessException(
+			throw new CTProcessCTEngineException(
 				backgroundTask.getCompanyId(), ctProcessId,
 				"Unable to publish change tracking collection " +
 					ctCollectionId,
@@ -160,7 +160,7 @@ public class CTPublishBackgroundTaskExecutor
 
 	private void _checkExistingCollisions(
 			CTEntry ctEntry, boolean ignoreCollision)
-		throws CTEntryCollisionException {
+		throws CTEntryCollisionCTEngineException {
 
 		if (!ctEntry.isCollision()) {
 			return;
@@ -170,7 +170,7 @@ public class CTPublishBackgroundTaskExecutor
 			ctEntry, ignoreCollision);
 
 		if (!ignoreCollision) {
-			throw new CTEntryCollisionException(
+			throw new CTEntryCollisionCTEngineException(
 				ctEntry.getCompanyId(), ctEntry.getCtEntryId());
 		}
 	}
@@ -221,7 +221,7 @@ public class CTPublishBackgroundTaskExecutor
 		long productionCTCollectionId = productionCTCollectionOptional.map(
 			CTCollection::getCtCollectionId
 		).orElseThrow(
-			() -> new CTException(
+			() -> new CTEngineException(
 				user.getCompanyId(),
 				"Unable to find production the change tracking collection")
 		);
@@ -245,7 +245,7 @@ public class CTPublishBackgroundTaskExecutor
 			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
 
 		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
-			() -> new CTException(
+			() -> new CTEngineException(
 				user.getCompanyId(),
 				"Unable to find change tracking collection " + ctCollectionId));
 
@@ -267,7 +267,7 @@ public class CTPublishBackgroundTaskExecutor
 	private void _publishCTEntry(
 			CTEntry ctEntry, long productionCTCollectionId,
 			boolean ignoreCollision)
-		throws CTEntryCollisionException {
+		throws CTEntryCollisionCTEngineException {
 
 		_checkExistingCollisions(ctEntry, ignoreCollision);
 

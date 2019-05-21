@@ -14,8 +14,8 @@
 
 package com.liferay.journal.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalFolderService;
@@ -171,7 +171,7 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				journalArticle.getResourcePrimKey());
 
 		return ctEntryOptional.isPresent();

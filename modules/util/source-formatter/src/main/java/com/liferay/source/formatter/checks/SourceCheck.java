@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
@@ -29,10 +30,23 @@ import java.util.Set;
  */
 public interface SourceCheck {
 
+	public String getAttributeValue(String attributeKey, String absolutePath);
+
+	public String getAttributeValue(
+		String attributeKey, String absolutePath, String defaultValue);
+
+	public List<String> getAttributeValues(
+		String attributeKey, String absolutePath);
+
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
 
-	public boolean isEnabled();
+	public boolean isAttributeValue(String attributeKey, String absolutePath);
+
+	public boolean isAttributeValue(
+		String attributeKey, String absolutePath, boolean defaultValue);
+
+	public boolean isEnabled(String absolutePath);
 
 	public boolean isModulesCheck();
 
@@ -40,12 +54,12 @@ public interface SourceCheck {
 
 	public void setAllFileNames(List<String> allFileNames);
 
+	public void setAttributes(String attributes) throws JSONException;
+
 	public void setBaseDirName(String baseDirName);
 
 	public void setCheckstyleConfiguration(
 		Configuration checkstyleConfiguration);
-
-	public void setEnabled(boolean enabled);
 
 	public void setFileExtensions(List<String> fileExtenstions);
 

@@ -1,6 +1,6 @@
 @component-name = "portal-training"
 definition {
-	property liferay.training.dependency.jars = "tools/dummy-factory/liferay.dummy.factory-0.17.1.jar";
+	property liferay.training.dependency.jars = "tools/dummy-factory/liferay.dummy.factory-7.1.5.jar";
 	property portal.release = "false";
 	property portal.upstream = "false";
 	property testray.main.component.name = "Site Administration";

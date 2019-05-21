@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTEntryException;
-import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
+import com.liferay.change.tracking.engine.exception.CTEngineException;
+import com.liferay.change.tracking.engine.exception.CTEntryCTEngineException;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -141,7 +141,7 @@ public class CTDDMStructureLocalServiceWrapper
 			structure -> {
 				Optional<CTEntry> ctEntryOptional =
 					_ctManager.getLatestModelChangeCTEntryOptional(
-						PrincipalThreadLocal.getUserId(),
+						companyId, PrincipalThreadLocal.getUserId(),
 						structure.getStructureId());
 
 				return ctEntryOptional.isPresent();
@@ -182,6 +182,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 				Optional<CTEntry> ctEntryOptional =
 					_ctManager.getLatestModelChangeCTEntryOptional(
+						structure.getCompanyId(),
 						PrincipalThreadLocal.getUserId(),
 						structure.getStructureId());
 
@@ -269,7 +270,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				ddmStructure.getStructureId());
 
 		return ctEntryOptional.isPresent();
@@ -278,7 +279,7 @@ public class CTDDMStructureLocalServiceWrapper
 	private DDMStructure _populateDDMStructure(DDMStructure ddmStructure) {
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				ddmStructure.getStructureId());
 
 		if (!ctEntryOptional.isPresent()) {
@@ -319,7 +320,7 @@ public class CTDDMStructureLocalServiceWrapper
 
 	private void _registerChange(
 			DDMStructureVersion ddmStructureVersion, int changeType)
-		throws CTException {
+		throws CTEngineException {
 
 		_registerChange(ddmStructureVersion, changeType, false);
 	}
@@ -327,7 +328,7 @@ public class CTDDMStructureLocalServiceWrapper
 	private void _registerChange(
 			DDMStructureVersion ddmStructureVersion, int changeType,
 			boolean force)
-		throws CTException {
+		throws CTEngineException {
 
 		if (ddmStructureVersion == null) {
 			return;
@@ -335,19 +336,20 @@ public class CTDDMStructureLocalServiceWrapper
 
 		try {
 			_ctManager.registerModelChange(
+				ddmStructureVersion.getCompanyId(),
 				PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(DDMStructureVersion.class.getName()),
 				ddmStructureVersion.getStructureVersionId(),
 				ddmStructureVersion.getStructureId(), changeType, force);
 		}
-		catch (CTException cte) {
-			if (cte instanceof CTEntryException) {
+		catch (CTEngineException ctee) {
+			if (ctee instanceof CTEntryCTEngineException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(cte.getMessage());
+					_log.warn(ctee.getMessage());
 				}
 			}
 			else {
-				throw cte;
+				throw ctee;
 			}
 		}
 	}

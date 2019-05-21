@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.change.lists.history.web.internal.display.context;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTWebKeys;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;

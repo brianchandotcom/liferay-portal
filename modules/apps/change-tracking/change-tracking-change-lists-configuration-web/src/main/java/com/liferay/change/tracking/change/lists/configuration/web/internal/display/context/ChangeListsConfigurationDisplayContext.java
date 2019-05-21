@@ -15,8 +15,11 @@
 package com.liferay.change.tracking.change.lists.configuration.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -46,6 +49,27 @@ public class ChangeListsConfigurationDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
+			"navigationItems",
+			JSONUtil.put(
+				JSONUtil.put(
+					"active", true
+				).put(
+					"href", "#1"
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "global-settings")
+				)
+			).put(
+				JSONUtil.put(
+					"active", false
+				).put(
+					"href", "#2"
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "user-settings")
+				)
+			)
+		).put(
 			"portalURL", _themeDisplay.getPortalURL()
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
@@ -57,6 +81,9 @@ public class ChangeListsConfigurationDisplayContext {
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking/configurations/" +
 					_themeDisplay.getCompanyId()
+		).put(
+			"urlChangeTrackingUserConfiguration",
+			_getUserConfigurationURL(_themeDisplay)
 		);
 
 		PortletURL configurationPortletURL = PortletURLFactoryUtil.create(
@@ -74,6 +101,18 @@ public class ChangeListsConfigurationDisplayContext {
 		soyContext.put("urlOverview", overviewPortletURL.toString());
 
 		return soyContext;
+	}
+
+	private String _getUserConfigurationURL(ThemeDisplay themeDisplay) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append("/o/change-tracking/configurations/");
+		sb.append(themeDisplay.getCompanyId());
+		sb.append("/user/");
+		sb.append(themeDisplay.getUserId());
+
+		return sb.toString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

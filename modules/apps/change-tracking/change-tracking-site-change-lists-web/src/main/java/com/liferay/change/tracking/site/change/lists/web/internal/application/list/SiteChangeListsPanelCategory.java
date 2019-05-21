@@ -17,8 +17,8 @@ package com.liferay.change.tracking.site.change.lists.web.internal.application.l
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.constants.CTPanelCategoryKeys;
+import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;

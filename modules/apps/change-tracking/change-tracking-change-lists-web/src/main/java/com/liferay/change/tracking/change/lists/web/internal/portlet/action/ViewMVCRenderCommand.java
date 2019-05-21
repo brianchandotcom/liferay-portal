@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -59,7 +59,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.THEME_DISPLAY);
 
 		Optional<CTCollection> activeCTCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(themeDisplay.getUserId());
+			_ctManager.getActiveCTCollectionOptional(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
 		if (!activeCTCollectionOptional.isPresent()) {
 			return "/view.jsp";

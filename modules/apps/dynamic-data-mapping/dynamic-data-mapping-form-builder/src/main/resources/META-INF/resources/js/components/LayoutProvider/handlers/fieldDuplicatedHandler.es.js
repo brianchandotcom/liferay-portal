@@ -1,15 +1,19 @@
 import * as FormSupport from '../../Form/FormSupport.es';
-import {generateFieldName} from '../util/fields.es';
+import {generateFieldName, getFieldLocalizedValue} from '../util/fields.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 import {sub} from '../../../util/strings.es';
 
 const handleFieldDuplicated = (state, editingLanguageId, event) => {
-	const {columnIndex, pageIndex, rowIndex} = event;
+	const {columnIndex, pageIndex, rowIndex} = event.indexes;
 	const {pages} = state;
+
 	const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+
+	const localizedLabel = getFieldLocalizedValue(field.settingsContext.pages, 'label', editingLanguageId);
+
 	const label = sub(
 		Liferay.Language.get('copy-of-x'),
-		[field.label]
+		[localizedLabel]
 	);
 	const newFieldName = generateFieldName(pages, label);
 	const visitor = new PagesVisitor(field.settingsContext.pages);

@@ -49,7 +49,7 @@ definition {
 
 		BlogsEntry.saveAsDraft();
 
-		Click(locator1 = "BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON");
+		Click(locator1 = "Icon#DELETE");
 
 		Click.pauseClickAt(
 			key_editor = "content",

@@ -25,6 +25,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -172,6 +173,12 @@ public class BrowserModulesResolver {
 					browserModulesMap, dependencyBrowserModule,
 					browserModulesResolution);
 			}
+			else {
+				browserModulesResolution.addResolvedModuleName(
+					StringBundler.concat(
+						":ERROR:Missing dependency '", dependencyModuleName,
+						"' of '", moduleName, "'"));
+			}
 		}
 
 		browserModulesResolution.dedentExplanation();
@@ -203,7 +210,7 @@ public class BrowserModulesResolver {
 
 		if (!moduleName.equals(mappedModuleName)) {
 			browserModulesResolution.putMappedModuleName(
-				moduleName, mappedModuleName, false);
+				moduleName, mappedModuleName, true);
 		}
 
 		_processBrowserModule(

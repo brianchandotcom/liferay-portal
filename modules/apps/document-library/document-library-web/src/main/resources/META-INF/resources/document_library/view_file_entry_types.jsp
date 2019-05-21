@@ -17,10 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLViewFileEntryTypesDisplayContext(renderRequest, renderResponse, request);
 %>
 
-<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
+<%@ include file="/document_library/navigation.jspf" %>
 
 <clay:management-toolbar
 	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"

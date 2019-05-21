@@ -412,13 +412,60 @@ message.
 					<arg value="-Dbuild.profile=portal-pre" />
 				</gradle-execute>
 
-				<gradle-execute dir="${project.dir}/modules" task="deploy">
-					<arg value="--parallel" />
-					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-					<arg value="-Dbuild.profile=${build.profile}" />
-					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-				</gradle-execute>
+				<if>
+					<or>
+						<not>
+							<available file="${project.dir}/modules/private" type="dir" />
+						</not>
+						<not>
+							<isset property="env.JENKINS_HOME" />
+						</not>
+					</or>
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task="deploy">
+							<arg value="--parallel" />
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+							<arg value="-Dbuild.profile=${build.profile}" />
+							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+						</gradle-execute>
+					</then>
+					<else>
+						<gradle-execute dir="${project.dir}/modules/private" task="deploy">
+							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+							<arg value="-Dbuild.profile=${build.profile}" />
+							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+						</gradle-execute>
+
+						<if>
+							<and>
+								<isset property="build.exclude.dirs" />
+								<not>
+									<equals arg1="${build.exclude.dirs}" arg2="" />
+								</not>
+							</and>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.exclude.dirs=private,${build.exclude.dirs}" />
+									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+									<arg value="-Dbuild.profile=${build.profile}" />
+									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+								</gradle-execute>
+							</then>
+							<else>
+								<gradle-execute dir="${project.dir}/modules" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.exclude.dirs=private" />
+									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+									<arg value="-Dbuild.profile=${build.profile}" />
+									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+								</gradle-execute>
+							</else>
+						</if>
+					</else>
+				</if>
 
 				<if>
 					<equals arg1="${marker.files.lfrbuild.ci.enabled}" arg2="true" />
@@ -488,12 +535,56 @@ message.
 				<if>
 					<equals arg1="${jsp.precompile.parallel}" arg2="on" />
 					<then>
-						<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-							<arg value="--parallel" />
-							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-							<arg value="-Dbuild.profile=${build.profile}" />
-						</gradle-execute>
+						<if>
+							<or>
+								<not>
+									<available file="${project.dir}/modules/private" type="dir" />
+								</not>
+								<not>
+									<isset property="env.JENKINS_HOME" />
+								</not>
+							</or>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+									<arg value="-Dbuild.profile=${build.profile}" />
+								</gradle-execute>
+							</then>
+							<else>
+								<gradle-execute dir="${project.dir}/modules/private" task="compileJSP">
+									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+									<arg value="-Dbuild.profile=${build.profile}" />
+								</gradle-execute>
+
+								<if>
+									<and>
+										<isset property="build.exclude.dirs" />
+										<not>
+											<equals arg1="${build.exclude.dirs}" arg2="" />
+										</not>
+									</and>
+									<then>
+										<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+											<arg value="--parallel" />
+											<arg value="-Dbuild.exclude.dirs=private,${build.exclude.dirs}" />
+											<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+											<arg value="-Dbuild.profile=${build.profile}" />
+										</gradle-execute>
+									</then>
+									<else>
+										<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+											<arg value="--parallel" />
+											<arg value="-Dbuild.exclude.dirs=private" />
+											<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+											<arg value="-Dbuild.profile=${build.profile}" />
+										</gradle-execute>
+									</else>
+								</if>
+							</else>
+						</if>
 					</then>
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="compileJSP">

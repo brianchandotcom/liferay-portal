@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
-import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.rest.internal.model.entry.CTEntryModel;

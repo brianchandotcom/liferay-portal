@@ -12,18 +12,6 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
-
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),Spanish (Spain),Portuguese (Brazil)",
-			defaultSiteLanguage = "Portuguese (Brazil)",
-			displaySettings = "Display Settings");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Dynamic Data Lists");

@@ -59,6 +59,8 @@ definition {
 	@description = "Enable Change List and go to Overview"
 	@priority = "5"
 	test EnableChangeListAndGoToOverview {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",

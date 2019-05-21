@@ -175,18 +175,18 @@ public class HttpInvoker {
 
 			methodsField.setAccessible(true);
 
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+			modifiersField.setAccessible(true);
+			modifiersField.setInt(
+				methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
+
 			Set<String> methodsFieldValue = new LinkedHashSet<>(
 				Arrays.asList((String[])methodsField.get(null)));
 
 			if (methodsFieldValue.contains("PATCH")) {
 				return;
 			}
-
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-			modifiersField.setAccessible(true);
-			modifiersField.setInt(
-				methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
 
 			methodsFieldValue.add("PATCH");
 

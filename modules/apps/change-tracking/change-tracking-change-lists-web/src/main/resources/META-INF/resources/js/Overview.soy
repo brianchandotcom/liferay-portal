@@ -585,9 +585,7 @@
 			</span>
 		{else}
 			{if $collisionsCount > 0}
-				<span class="change-lists-helper float-right lfr-portal-tooltip"
-					  	data-qa-id="collision-detected"
-					  		title="{$collisionsTooltip}">
+				<span class="change-lists-helper float-right lfr-portal-tooltip" data-qa-id="collision-detected" title="{$collisionsTooltip}">
 					{call ClayIcon.render}
 						{param spritemap: $spritemap /}
 						{param symbol: 'exclamation-circle' /}

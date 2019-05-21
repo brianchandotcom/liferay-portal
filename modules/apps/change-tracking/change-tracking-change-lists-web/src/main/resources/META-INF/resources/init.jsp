@@ -29,6 +29,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext" %><%@
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
 page import="com.liferay.change.tracking.constants.CTPortletKeys" %><%@
+page import="com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException" %><%@
+page import="com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.service.CTCollectionLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

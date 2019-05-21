@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
-import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.rest.internal.exception.CTJaxRsEngineException;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationModel;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationUpdateModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
@@ -67,7 +67,7 @@ public class CTConfigurationResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CTConfigurationModel getCtConfigurationModel(
 			@PathParam("companyId") long companyId, @Context User user)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		CTJaxRsUtil.checkCompany(companyId);
 
@@ -97,7 +97,7 @@ public class CTConfigurationResource {
 	public CTConfigurationModel updateCtConfiguration(
 			@PathParam("companyId") long companyId, @Context User user,
 			CTConfigurationUpdateModel ctConfigurationUpdateModel)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		CTJaxRsUtil.checkCompany(companyId);
 

@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.rest.internal.util;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
-import com.liferay.change.tracking.rest.internal.exception.ChangeTrackingNotEnabledException;
-import com.liferay.change.tracking.rest.internal.exception.NoSuchCompanyException;
-import com.liferay.change.tracking.rest.internal.exception.NoSuchUserException;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.rest.internal.exception.CTJaxRsEngineException;
+import com.liferay.change.tracking.rest.internal.exception.ChangeTrackingNotEnabledEngineException;
+import com.liferay.change.tracking.rest.internal.exception.NoSuchCompanyEngineException;
+import com.liferay.change.tracking.rest.internal.exception.NoSuchUserEngineException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -38,22 +38,24 @@ public class CTJaxRsUtil {
 
 	public static void checkChangeTrackingEnabled(
 			long companyId, CTEngineManager ctEngineManager)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		if (!ctEngineManager.isChangeTrackingEnabled(companyId)) {
-			throw new ChangeTrackingNotEnabledException(
+			throw new ChangeTrackingNotEnabledEngineException(
 				companyId,
 				"Unble to create change tracking collection, change tracking " +
 					"is disabled in the company");
 		}
 	}
 
-	public static void checkCompany(long companyId) throws CTJaxRsException {
+	public static void checkCompany(long companyId)
+		throws CTJaxRsEngineException {
+
 		try {
 			CompanyLocalServiceUtil.getCompany(companyId);
 		}
 		catch (PortalException pe) {
-			throw new NoSuchCompanyException(companyId, pe.getMessage());
+			throw new NoSuchCompanyEngineException(companyId, pe.getMessage());
 		}
 	}
 
@@ -83,11 +85,11 @@ public class CTJaxRsUtil {
 		).toArray();
 	}
 
-	public static User getUser(long userId) throws CTJaxRsException {
+	public static User getUser(long userId) throws CTJaxRsEngineException {
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
 		if (user == null) {
-			throw new NoSuchUserException(
+			throw new NoSuchUserEngineException(
 				0, "No user is found with ID " + userId);
 		}
 

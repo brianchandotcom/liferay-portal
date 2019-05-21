@@ -98,7 +98,7 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 		List<Bundle> bundles = BundleManagerUtil.getBundles();
 
 		List<Object> results = MarketplaceAppManagerSearchUtil.getResults(
-			bundles, getKeywords());
+			bundles, getKeywords(), request.getLocale());
 
 		results = ListUtil.sort(
 			results, new MarketplaceAppManagerComparator(getOrderByType()));

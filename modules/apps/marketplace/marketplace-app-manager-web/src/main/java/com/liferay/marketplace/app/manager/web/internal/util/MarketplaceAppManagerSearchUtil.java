@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +34,7 @@ import org.osgi.framework.Constants;
 public class MarketplaceAppManagerSearchUtil {
 
 	public static List<Object> getResults(
-		List<Bundle> bundles, String keywords) {
+		List<Bundle> bundles, String keywords, Locale locale) {
 
 		List<Object> results = new ArrayList<>();
 
@@ -42,7 +43,7 @@ public class MarketplaceAppManagerSearchUtil {
 		// App display
 
 		List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(
-			bundles, StringPool.BLANK, BundleStateConstants.ANY);
+			bundles, StringPool.BLANK, BundleStateConstants.ANY, locale);
 
 		for (AppDisplay appDisplay : appDisplays) {
 			if (hasAppDisplayKeywordsMatch(appDisplay, keywordsRegex)) {

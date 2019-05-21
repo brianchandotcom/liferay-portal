@@ -4,10 +4,16 @@
 	<import file="build-test.xml" />
 
 	<target name="run-jboss">
+		<lstopwatch action="start" name="run.jboss" />
+
 		<antcall target="run-simple-server" />
+
+		<lstopwatch action="total" name="run.jboss" />
 	</target>
 
 	<target name="run-selenium-jboss">
+		<lstopwatch action="start" name="run.selenium.jboss" />
+
 		<app-server-properties-update>
 			app.server.type=jboss
 		</app-server-properties-update>
@@ -28,5 +34,7 @@
 		<antcall inheritAll="false" target="run-jboss">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
+
+		<lstopwatch action="total" name="run.selenium.jboss" />
 	</target>
 </project>

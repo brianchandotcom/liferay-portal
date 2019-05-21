@@ -29,6 +29,20 @@ function containsFragmentEntryLinkId(
 		);
 }
 
+/**
+ * Utility to get a layoutData object
+ *
+ * @returns {object}
+ */
+function getEmptyLayoutData() {
+	return {
+		nextColumnId: 0,
+		nextRowId: 0,
+		structure: []
+	};
+}
+
 export {
-	containsFragmentEntryLinkId
+	containsFragmentEntryLinkId,
+	getEmptyLayoutData
 };

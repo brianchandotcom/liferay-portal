@@ -27,14 +27,14 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalChangeTrackingHelperUtil {
 
 	public static String getJournalArticleCTCollectionName(
-		long userId, long classPK) {
+		long companyId, long userId, long classPK) {
 
 		if (_journalChangeTrackingHelper == null) {
 			return StringPool.BLANK;
 		}
 
 		return _journalChangeTrackingHelper.getJournalArticleCTCollectionName(
-			userId, classPK);
+			companyId, userId, classPK);
 	}
 
 	public static boolean hasActiveCTCollection(long companyId, long userId) {
@@ -47,14 +47,14 @@ public class JournalChangeTrackingHelperUtil {
 	}
 
 	public static boolean isJournalArticleInChangeList(
-		long userId, long classPK) {
+		long companyId, long userId, long classPK) {
 
 		if (_journalChangeTrackingHelper == null) {
 			return false;
 		}
 
 		return _journalChangeTrackingHelper.isJournalArticleInChangeList(
-			userId, classPK);
+			companyId, userId, classPK);
 	}
 
 	@Reference(unbind = "-")

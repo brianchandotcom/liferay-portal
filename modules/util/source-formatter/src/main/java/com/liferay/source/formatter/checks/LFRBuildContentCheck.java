@@ -17,8 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,17 +24,11 @@ import java.util.List;
  */
 public class LFRBuildContentCheck extends BaseFileCheck {
 
-	public void setNonemptyMarkerFileNames(String nonemptyMarkerFileNames) {
-		Collections.addAll(
-			_nonemptyMarkerFileNames,
-			StringUtil.split(nonemptyMarkerFileNames));
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (_isNonemptyMarkerFileName(fileName)) {
+		if (_isNonemptyMarkerFileName(absolutePath)) {
 			content = StringUtil.trim(content);
 		}
 		else {
@@ -46,9 +38,12 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _isNonemptyMarkerFileName(String fileName) {
-		for (String nonemptyMarkerFileName : _nonemptyMarkerFileNames) {
-			if (fileName.endsWith(nonemptyMarkerFileName)) {
+	private boolean _isNonemptyMarkerFileName(String absolutePath) {
+		List<String> nonemptyMarkerFileNames = getAttributeValues(
+			_NONEMPTY_MARKER_FILE_NAMES_KEY, absolutePath);
+
+		for (String nonemptyMarkerFileName : nonemptyMarkerFileNames) {
+			if (absolutePath.endsWith(nonemptyMarkerFileName)) {
 				return true;
 			}
 		}
@@ -56,6 +51,7 @@ public class LFRBuildContentCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final List<String> _nonemptyMarkerFileNames = new ArrayList<>();
+	private static final String _NONEMPTY_MARKER_FILE_NAMES_KEY =
+		"nonemptyMarkerFileNames";
 
 }

@@ -4,6 +4,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-weblogic">
+		<lstopwatch action="start" name="run.selenium.weblogic" />
+
 		<app-server-properties-update>
 			app.server.type=weblogic
 		</app-server-properties-update>
@@ -28,9 +30,15 @@
 		<antcall inheritAll="false" target="run-weblogic">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
+
+		<lstopwatch action="total" name="run.selenium.weblogic" />
 	</target>
 
 	<target name="run-weblogic">
+		<lstopwatch action="start" name="run.weblogic" />
+
 		<antcall target="run-simple-server" />
+
+		<lstopwatch action="total" name="run.weblogic" />
 	</target>
 </project>

@@ -28,7 +28,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,14 +40,6 @@ public class BNDExportsCheck extends BaseFileCheck {
 	@Override
 	public boolean isModulesCheck() {
 		return true;
-	}
-
-	public void setAllowedExportPackageDirNames(
-		String allowedExportPackageDirNames) {
-
-		Collections.addAll(
-			_allowedExportPackageDirNames,
-			StringUtil.split(allowedExportPackageDirNames));
 	}
 
 	@Override
@@ -80,8 +71,11 @@ public class BNDExportsCheck extends BaseFileCheck {
 	private void _checkExportPackage(
 		String fileName, String absolutePath, String content) {
 
+		List<String> allowedExportPackageDirNames = getAttributeValues(
+			_ALLOWED_EXPORT_PACKAGE_DIR_NAMES_KEY, absolutePath);
+
 		for (String allowedExportPackageDirName :
-				_allowedExportPackageDirNames) {
+				allowedExportPackageDirNames) {
 
 			if (absolutePath.contains(allowedExportPackageDirName)) {
 				return;
@@ -245,6 +239,9 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 	}
 
+	private static final String _ALLOWED_EXPORT_PACKAGE_DIR_NAMES_KEY =
+		"allowedExportPackageDirNames";
+
 	private static final Pattern _apiOrServiceBundleSymbolicNamePattern =
 		Pattern.compile("\\.(api|service)$");
 	private static final Pattern _exportContentsPattern = Pattern.compile(
@@ -253,8 +250,5 @@ public class BNDExportsCheck extends BaseFileCheck {
 	private static final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-
-	private final List<String> _allowedExportPackageDirNames =
-		new ArrayList<>();
 
 }

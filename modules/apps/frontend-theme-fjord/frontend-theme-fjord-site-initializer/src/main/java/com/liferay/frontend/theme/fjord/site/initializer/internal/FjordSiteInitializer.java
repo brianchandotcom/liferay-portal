@@ -147,7 +147,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 				_PATH + "/fragments/common/header", serviceContext);
 
 			FragmentEntry headerFullscreenFragmentEntry = _getFragmentEntry(
-				headerFragmentEntries, "Header-fullscreen");
+				headerFragmentEntries, "Header");
 
 			downloadFragmentEntries.add(0, headerFullscreenFragmentEntry);
 			featuresFragmentEntries.add(0, headerFullscreenFragmentEntry);

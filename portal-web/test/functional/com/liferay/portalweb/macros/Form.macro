@@ -122,7 +122,7 @@ definition {
 	macro editDescription {
 		Click(locator1 = "Form#DESCRIPTION_FIELD");
 
-		Type.typeAceEditor(
+		Type(
 			locator1 = "Form#DESCRIPTION_FIELD",
 			value1 = "${formDescription}");
 	}

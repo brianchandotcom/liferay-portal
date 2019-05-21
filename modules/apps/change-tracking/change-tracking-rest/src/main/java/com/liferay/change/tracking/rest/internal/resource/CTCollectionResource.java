@@ -14,22 +14,26 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
+import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException;
+import com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
-import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionException;
-import com.liferay.change.tracking.rest.internal.exception.CannotDeleteCTCollectionException;
-import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCollectionException;
+import com.liferay.change.tracking.rest.internal.exception.CTJaxRsEngineException;
+import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionEngineException;
+import com.liferay.change.tracking.rest.internal.exception.CannotDeleteCTCollectionEngineException;
+import com.liferay.change.tracking.rest.internal.exception.NoSuchProductionCTCollectionEngineException;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionModel;
 import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionUpdateModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -39,6 +43,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -93,32 +98,68 @@ public class CTCollectionResource {
 			@QueryParam("companyId") long companyId,
 			@QueryParam("userId") long userId,
 			CTCollectionUpdateModel ctCollectionUpdateModel)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		CTJaxRsUtil.checkCompany(companyId);
 
 		User user = CTJaxRsUtil.getUser(userId);
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", user.getLocale(), getClass());
+
 		CTJaxRsUtil.checkChangeTrackingEnabled(companyId, _ctEngineManager);
 
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.createCTCollection(
-				user.getUserId(), ctCollectionUpdateModel.getName(),
-				ctCollectionUpdateModel.getDescription());
+		try {
+			Optional<CTCollection> ctCollectionOptional =
+				_ctEngineManager.createCTCollection(
+					user.getUserId(), ctCollectionUpdateModel.getName(),
+					ctCollectionUpdateModel.getDescription());
 
-		return ctCollectionOptional.map(
-			this::_getCTCollectionModel
-		).orElseThrow(
-			() -> new CannotCreateCTCollectionException(
-				companyId, "Cannot create Change Tracking Collection")
-		);
+			return ctCollectionOptional.map(
+				this::_getCTCollectionModel
+			).orElseThrow(
+				() -> new CannotCreateCTCollectionEngineException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "unable-to-create-change-list"))
+			);
+		}
+		catch (PortalException pe) {
+			if (pe instanceof CTCollectionDescriptionCTEngineException) {
+				throw new CannotCreateCTCollectionEngineException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle,
+						"the-change-list-description-is-too-long"));
+			}
+			else if (pe instanceof CTCollectionNameCTEngineException) {
+				if (Validator.isNull(pe.getMessage())) {
+					throw new CannotCreateCTCollectionEngineException(
+						companyId,
+						LanguageUtil.get(
+							resourceBundle,
+							"the-change-list-name-is-too-short"));
+				}
+
+				throw new CannotCreateCTCollectionEngineException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "the-change-list-name-is-too-long"));
+			}
+			else {
+				throw new CannotCreateCTCollectionEngineException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "unable-to-create-change-list"));
+			}
+		}
 	}
 
 	@DELETE
 	@Path("/{ctCollectionId}")
 	public Response deleteCTCollection(
 			@PathParam("ctCollectionId") long ctCollectionId)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
@@ -135,7 +176,7 @@ public class CTCollectionResource {
 			ctCollectionId);
 
 		if (ctCollectionOptional.isPresent()) {
-			throw new CannotDeleteCTCollectionException(
+			throw new CannotDeleteCTCollectionEngineException(
 				ctCollectionOptional.map(
 					CTCollection::getCompanyId
 				).get(),
@@ -170,7 +211,7 @@ public class CTCollectionResource {
 			@QueryParam("userId") long userId,
 			@DefaultValue(_TYPE_ALL) @QueryParam("type") String type,
 			@QueryParam("limit") int limit, @QueryParam("sort") String sort)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		List<CTCollection> ctCollections = new ArrayList<>();
 
@@ -178,7 +219,7 @@ public class CTCollectionResource {
 			CTJaxRsUtil.getUser(userId);
 
 			Optional<CTCollection> activeCTCollectionOptional =
-				_ctManager.getActiveCTCollectionOptional(userId);
+				_ctManager.getActiveCTCollectionOptional(companyId, userId);
 
 			activeCTCollectionOptional.ifPresent(ctCollections::add);
 		}
@@ -190,7 +231,7 @@ public class CTCollectionResource {
 
 			CTCollection ctCollection =
 				productionCTCollectionOptional.orElseThrow(
-					() -> new NoSuchProductionCTCollectionException(
+					() -> new NoSuchProductionCTCollectionEngineException(
 						companyId,
 						"Unable to get production change tracking collection"));
 
@@ -237,7 +278,7 @@ public class CTCollectionResource {
 			@PathParam("ctCollectionId") long ctCollectionId,
 			@QueryParam("userId") long userId,
 			@QueryParam("ignoreCollision") boolean ignoreCollision)
-		throws CTJaxRsException {
+		throws CTJaxRsEngineException {
 
 		User user = CTJaxRsUtil.getUser(userId);
 

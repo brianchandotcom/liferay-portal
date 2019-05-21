@@ -17,22 +17,32 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.base.FragmentCollectionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = {
+		"json.web.service.context.name=fragment",
+		"json.web.service.context.path=FragmentCollection"
+	},
+	service = AopService.class
+)
 public class FragmentCollectionServiceImpl
 	extends FragmentCollectionServiceBaseImpl {
 
@@ -168,7 +178,7 @@ public class FragmentCollectionServiceImpl
 			getPermissionChecker(), groupId,
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
-		return fragmentEntryLocalService.getTempFileNames(
+		return _fragmentEntryLocalService.getTempFileNames(
 			getUserId(), groupId, folderName);
 	}
 
@@ -189,13 +199,15 @@ public class FragmentCollectionServiceImpl
 			fragmentCollectionId, name, description);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				FragmentCollectionServiceImpl.class,
-				"_portletResourcePermission", FragmentConstants.RESOURCE_NAME);
-
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference(
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

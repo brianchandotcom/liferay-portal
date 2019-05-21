@@ -18,6 +18,8 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys;
+import com.liferay.document.library.opener.google.drive.web.internal.util.GoogleDrivePortletRequestAuthorizationHelper;
+import com.liferay.document.library.opener.google.drive.web.internal.util.State;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -56,20 +58,31 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				DLOpenerGoogleDriveWebKeys.
-					DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE,
-				_googleDriveManager.requestEditAccess(
-					_portal.getUserId(renderRequest),
-					_dlAppService.getFileEntry(
-						ParamUtil.getLong(renderRequest, "fileEntryId"))));
+			State state = State.get(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)));
 
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/open_google_docs.jsp");
+			if (state == null) {
+				_googleDrivePortletRequestAuthorizationHelper.
+					performAuthorizationFlow(renderRequest, renderResponse);
+			}
+			else {
+				renderRequest.setAttribute(
+					DLOpenerGoogleDriveWebKeys.
+						DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE,
+					_googleDriveManager.requestEditAccess(
+						_portal.getUserId(renderRequest),
+						_dlAppService.getFileEntry(
+							ParamUtil.getLong(renderRequest, "fileEntryId"))));
 
-			requestDispatcher.include(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher(
+						"/open_google_docs.jsp");
+
+				requestDispatcher.include(
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletResponse(renderResponse));
+			}
 
 			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 		}
@@ -83,6 +96,10 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLOpenerGoogleDriveManager _googleDriveManager;
+
+	@Reference
+	private GoogleDrivePortletRequestAuthorizationHelper
+		_googleDrivePortletRequestAuthorizationHelper;
 
 	@Reference
 	private Portal _portal;

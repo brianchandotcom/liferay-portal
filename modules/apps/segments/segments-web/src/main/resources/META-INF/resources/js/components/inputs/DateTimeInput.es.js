@@ -7,6 +7,7 @@ const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
 class DateTimeInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		value: propTypes.string
 	};
@@ -70,12 +71,14 @@ class DateTimeInput extends React.Component {
 
 	render() {
 		const {value} = this.state;
+		const {disabled} = this.props;
 
 		return (
 			<div className="criterion-input date-input">
 				<input
 					className="form-control"
 					data-testid="date-input"
+					disabled={disabled}
 					onBlur={this._handleDateBlur}
 					onChange={this._handleDateChange}
 					type="date"

@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -67,6 +67,7 @@ public class CTDDMStructureVersionLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
+				latestDDMStructureVersion.getCompanyId(),
 				PrincipalThreadLocal.getUserId(), structureId);
 
 		return ctEntryOptional.map(

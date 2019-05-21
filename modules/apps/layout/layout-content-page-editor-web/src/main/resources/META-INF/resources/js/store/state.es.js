@@ -2,6 +2,7 @@ import {Config} from 'metal-state';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {getEmptyLayoutData} from '../utils/LayoutDataList.es';
 
 const LayoutDataShape = Config.shapeOf(
 	{
@@ -495,11 +496,7 @@ const INITIAL_STATE = {
 	 */
 	layoutData: LayoutDataShape
 		.value(
-			{
-				nextColumnId: 0,
-				nextRowId: 0,
-				structure: []
-			}
+			getEmptyLayoutData()
 		),
 
 	/**

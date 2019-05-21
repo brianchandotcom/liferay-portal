@@ -18,9 +18,6 @@ import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -33,11 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DLAdminDisplayContextProvider {
 
 	public DLAdminDisplayContext getDLAdminDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(
-			httpServletRequest);
+		DLRequestHelper dlRequestHelper) {
 
 		return new DLAdminDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
@@ -46,17 +39,14 @@ public class DLAdminDisplayContextProvider {
 
 	public DLAdminManagementToolbarDisplayContext
 			getDLAdminManagementToolbarDisplayContext(
-				HttpServletRequest httpServletRequest,
-				HttpServletResponse httpServletResponse)
+				DLRequestHelper dlRequestHelper,
+				DLAdminDisplayContext dlAdminDisplayContext)
 		throws PortalException {
-
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(
-			httpServletRequest);
 
 		return new DLAdminManagementToolbarDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse(), httpServletRequest,
-			getDLAdminDisplayContext(httpServletRequest, httpServletResponse));
+			dlRequestHelper.getLiferayPortletResponse(), dlRequestHelper,
+			dlAdminDisplayContext);
 	}
 
 	@Reference(

@@ -16,7 +16,9 @@ package com.liferay.fragment.service.persistence.impl;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class FragmentEntryLinkFinderBaseImpl
+public abstract class FragmentEntryLinkFinderBaseImpl
 	extends BasePersistenceImpl<FragmentEntryLink> {
 
 	public FragmentEntryLinkFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class FragmentEntryLinkFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getFragmentEntryLinkPersistence().getBadColumnNames();
+		return fragmentEntryLinkPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the fragment entry link persistence.
-	 *
-	 * @return the fragment entry link persistence
-	 */
-	public FragmentEntryLinkPersistence getFragmentEntryLinkPersistence() {
-		return fragmentEntryLinkPersistence;
+	@Override
+	@Reference(
+		target = FragmentPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the fragment entry link persistence.
-	 *
-	 * @param fragmentEntryLinkPersistence the fragment entry link persistence
-	 */
-	public void setFragmentEntryLinkPersistence(
-		FragmentEntryLinkPersistence fragmentEntryLinkPersistence) {
-
-		this.fragmentEntryLinkPersistence = fragmentEntryLinkPersistence;
+	@Override
+	@Reference(
+		target = FragmentPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = FragmentEntryLinkPersistence.class)
+	@Override
+	@Reference(
+		target = FragmentPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

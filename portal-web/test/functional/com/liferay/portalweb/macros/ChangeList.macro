@@ -197,7 +197,7 @@ definition {
 	}
 
 	macro workOnProduction {
-		if (IsTextEqual(locator1 = "ChangeList#OVERVIEW_PAGE_TITLE", value1 = "Change Lists")) {
+		if (IsTextEqual(locator1 = "ChangeList#OVERVIEW_PAGE_TITLE", value1 = "Overview")) {
 			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
 			Click(

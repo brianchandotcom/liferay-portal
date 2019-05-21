@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -29,11 +27,6 @@ import java.util.regex.Pattern;
  * @author Peter Shin
  */
 public class BNDBundleCheck extends BaseFileCheck {
-
-	public void setAllowedFileNames(String allowedFileNames) {
-		Collections.addAll(
-			_allowedFileNames, StringUtil.split(allowedFileNames));
-	}
 
 	@Override
 	protected String doProcess(
@@ -43,7 +36,10 @@ public class BNDBundleCheck extends BaseFileCheck {
 			return content;
 		}
 
-		for (String allowedFileName : _allowedFileNames) {
+		List<String> allowedFileNames = getAttributeValues(
+			_ALLOWED_FILE_NAMES_KEY, absolutePath);
+
+		for (String allowedFileName : allowedFileNames) {
 			if (absolutePath.endsWith(allowedFileName)) {
 				return content;
 			}
@@ -109,6 +105,8 @@ public class BNDBundleCheck extends BaseFileCheck {
 		return TextFormatter.format(shortDirName, TextFormatter.J);
 	}
 
+	private static final String _ALLOWED_FILE_NAMES_KEY = "allowedFileNames";
+
 	private static final String[] _REQUIRED_INSTRUCTIONS = {
 		"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
 		"Liferay-Releng-Bundle", "Liferay-Releng-Category",
@@ -118,7 +116,5 @@ public class BNDBundleCheck extends BaseFileCheck {
 		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
 		"Liferay-Releng-Support-Url", "Liferay-Releng-Supported"
 	};
-
-	private final List<String> _allowedFileNames = new ArrayList<>();
 
 }

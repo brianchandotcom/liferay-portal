@@ -16,8 +16,9 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
@@ -95,7 +96,9 @@ public class SourceChecksUtil {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
-			if (sourceCheck.isModulesCheck() && !modulesFile) {
+			if (!sourceCheck.isEnabled(absolutePath) ||
+				(sourceCheck.isModulesCheck() && !modulesFile)) {
+
 				continue;
 			}
 
@@ -188,6 +191,26 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
+	private static JSONObject _getAttributesJSONObject(
+		Map<String, Properties> propertiesMap, String checkName,
+		SourceCheckConfiguration sourceCheckConfiguration) {
+
+		JSONObject attributesJSONObject = new JSONObjectImpl();
+
+		JSONObject configurationAttributesJSONObject =
+			sourceCheckConfiguration.getAttributesJSONObject();
+
+		if (configurationAttributesJSONObject.length() != 0) {
+			attributesJSONObject.put(
+				SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
+				configurationAttributesJSONObject);
+		}
+
+		return SourceFormatterUtil.addPropertiesAttributes(
+			attributesJSONObject, CheckType.SOURCE_CHECK, checkName,
+			propertiesMap);
+	}
+
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
@@ -257,33 +280,15 @@ public class SourceChecksUtil {
 				continue;
 			}
 
-			for (String attributeName :
-					sourceCheckConfiguration.attributeNames()) {
+			JSONObject attributesJSONObject = _getAttributesJSONObject(
+				propertiesMap, clazz.getSimpleName(), sourceCheckConfiguration);
 
-				List<String> values =
-					sourceCheckConfiguration.getAttributeValues(attributeName);
-
-				for (String value : values) {
-					BeanUtils.setProperty(sourceCheck, attributeName, value);
-				}
+			if (attributesJSONObject.length() != 0) {
+				BeanUtils.setProperty(
+					sourceCheck, "attributes", attributesJSONObject.toString());
 			}
 
-			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
-				CheckType.SOURCE_CHECK, clazz.getSimpleName(), propertiesMap);
-
-			for (String attributeName : attributeNames) {
-				String value = SourceFormatterUtil.getPropertyValue(
-					attributeName, CheckType.SOURCE_CHECK,
-					clazz.getSimpleName(), propertiesMap);
-
-				if (Validator.isNotNull(value)) {
-					BeanUtils.setProperty(sourceCheck, attributeName, value);
-				}
-			}
-
-			if (sourceCheck.isEnabled()) {
-				sourceChecks.add(sourceCheck);
-			}
+			sourceChecks.add(sourceCheck);
 		}
 
 		return sourceChecks;

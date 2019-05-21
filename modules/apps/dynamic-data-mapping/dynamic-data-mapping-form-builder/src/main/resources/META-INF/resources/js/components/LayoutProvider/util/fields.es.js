@@ -92,6 +92,12 @@ export const getField = (pages, fieldName) => {
 	return field;
 };
 
+export const getFieldLocalizedValue = (pages, fieldName, locale) => {
+	const fieldLocalizedValue = getFieldProperty(pages, fieldName, 'localizedValue');
+
+	return fieldLocalizedValue[locale];
+};
+
 export const updateFieldValidationProperty = (pages, fieldName, propertyName, propertyValue) => {
 	const visitor = new PagesVisitor(pages);
 

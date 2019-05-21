@@ -3,7 +3,7 @@ import {deepClone, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.e
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {removeExperience, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {getRowFragmentEntryLinkIds} from '../utils/FragmentsEditorGetUtils.es';
-import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {containsFragmentEntryLinkId, getEmptyLayoutData} from '../utils/LayoutDataList.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 
@@ -98,7 +98,9 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 								}
 							);
 
-							layoutData = layoutDataItem.layoutData;
+							layoutData = layoutDataItem ?
+								layoutDataItem.layoutData :
+								getEmptyLayoutData();
 						}
 
 						nextState = setIn(

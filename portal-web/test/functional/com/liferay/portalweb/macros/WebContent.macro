@@ -741,8 +741,11 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			PortletEntry.publish();
-
+			if("${changeListEnabled}" == "true") {
+				Button.clickPublishToChangeList();
+			} else {
+				PortletEntry.publish();
+			}
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			var key_webContentTitle = "${webContentTitleEdit}";

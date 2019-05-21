@@ -141,7 +141,7 @@ definition {
 	}
 
 	macro saveCP {
-		DDLDataDefinition.save();
+		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
 
 		if (isSet(addRoleViewPermissions)) {
 			LexiconEntry.gotoEntryMenuItem(

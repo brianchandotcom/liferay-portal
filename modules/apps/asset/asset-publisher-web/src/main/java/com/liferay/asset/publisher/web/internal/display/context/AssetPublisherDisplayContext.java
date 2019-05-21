@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -44,6 +45,7 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.provider.DefaultInfoListProviderContext;
 import com.liferay.info.provider.InfoListProvider;
 import com.liferay.info.provider.InfoListProviderTracker;
@@ -284,10 +286,12 @@ public class AssetPublisherDisplayContext {
 				new DefaultInfoListProviderContext(
 					_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
 
-			AssetEntry assetEntry = (AssetEntry)_portletRequest.getAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY);
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				(InfoDisplayObjectProvider)_portletRequest.getAttribute(
+					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 
-			defaultInfoListProviderContext.setAssetEntry(assetEntry);
+			defaultInfoListProviderContext.setInfoDisplayObjectProvider(
+				infoDisplayObjectProvider);
 
 			defaultInfoListProviderContext.setLayout(_themeDisplay.getLayout());
 

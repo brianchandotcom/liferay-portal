@@ -22,15 +22,18 @@ public class SessionClicks_IW {
 		return _instance;
 	}
 
-	public java.lang.String get(javax.servlet.http.HttpServletRequest request,
+	public java.lang.String get(
+		javax.servlet.http.HttpServletRequest httpServletRequest,
 		java.lang.String key, java.lang.String defaultValue) {
-		return SessionClicks.get(request, key, defaultValue);
+		return SessionClicks.get(httpServletRequest, key, defaultValue);
 	}
 
-	public java.lang.String get(javax.servlet.http.HttpServletRequest request,
+	public java.lang.String get(
+		javax.servlet.http.HttpServletRequest httpServletRequest,
 		java.lang.String namespace, java.lang.String key,
 		java.lang.String defaultValue) {
-		return SessionClicks.get(request, namespace, key, defaultValue);
+		return SessionClicks.get(httpServletRequest, namespace, key,
+			defaultValue);
 	}
 
 	public java.lang.String get(javax.servlet.http.HttpSession session,
@@ -44,14 +47,14 @@ public class SessionClicks_IW {
 		return SessionClicks.get(session, namespace, key, defaultValue);
 	}
 
-	public void put(javax.servlet.http.HttpServletRequest request,
+	public void put(javax.servlet.http.HttpServletRequest httpServletRequest,
 		java.lang.String key, java.lang.String value) {
-		SessionClicks.put(request, key, value);
+		SessionClicks.put(httpServletRequest, key, value);
 	}
 
-	public void put(javax.servlet.http.HttpServletRequest request,
+	public void put(javax.servlet.http.HttpServletRequest httpServletRequest,
 		java.lang.String namespace, java.lang.String key, java.lang.String value) {
-		SessionClicks.put(request, namespace, key, value);
+		SessionClicks.put(httpServletRequest, namespace, key, value);
 	}
 
 	public void put(javax.servlet.http.HttpSession session,

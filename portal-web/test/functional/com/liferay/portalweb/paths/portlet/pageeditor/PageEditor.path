@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>AUTOSAVE_MESSAGE</td>
-	<td>//div[contains(@class,'management-bar')]//span[@class='navbar-text']</td>
+	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'navbar-text')]</td>
 	<td></td>
 </tr>
 <tr>

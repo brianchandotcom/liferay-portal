@@ -54,10 +54,8 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = UserTestUtil.addGroupAdminUser(testGroup);
-
-		_userGroup = UserTestUtil.addGroupUser(
-			testGroup, RoleConstants.POWER_USER);
+		_adminUser = UserTestUtil.addGroupAdminUser(testGroup);
+		_user = UserTestUtil.addGroupUser(testGroup, RoleConstants.POWER_USER);
 	}
 
 	@Test
@@ -65,8 +63,7 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 		throws Exception {
 
 		testUserNameAndPassword =
-			_userGroup.getEmailAddress() + ":" +
-				_userGroup.getPasswordUnencrypted();
+			_user.getEmailAddress() + ":" + _user.getPasswordUnencrypted();
 
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 
@@ -91,8 +88,7 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 		throws Exception {
 
 		testUserNameAndPassword =
-			_userGroup.getEmailAddress() + ":" +
-				_userGroup.getPasswordUnencrypted();
+			_user.getEmailAddress() + ":" + _user.getPasswordUnencrypted();
 
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 
@@ -138,7 +134,7 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 					).put(
 						"filterString",
 						String.format(
-							"(firstName eq '%s')", _userGroup.getFirstName())
+							"(firstName eq '%s')", _user.getFirstName())
 					).put(
 						"typeValue", "model"
 					))
@@ -166,14 +162,15 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 
 	@Override
 	protected Long testGetSiteUserAccountSegmentsPage_getUserAccountId() {
-		return _userGroup.getUserId();
+		return _user.getUserId();
 	}
 
 	private Segment _addSegment(Long siteId, Segment segment)
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(siteId, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				siteId, _adminUser.getUserId());
 
 		return _toSegment(
 			SegmentsTestUtil.addSegmentsEntry(
@@ -199,9 +196,9 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	}
 
 	@DeleteAfterTestRun
-	private User _user;
+	private User _adminUser;
 
 	@DeleteAfterTestRun
-	private User _userGroup;
+	private User _user;
 
 }

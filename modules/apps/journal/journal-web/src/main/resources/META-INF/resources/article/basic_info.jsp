@@ -27,6 +27,14 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 <aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 <aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
 
+<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
+	<soy:component-renderer
+		context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
+		module="js/ChangeDefaultLanguage.es"
+		templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
+	/>
+</c:if>
+
 <p class="article-structure">
 	<b><liferay-ui:message key="structure" /></b>: <%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 </p>

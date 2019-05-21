@@ -65,7 +65,7 @@ definition {
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
-		DDLDataDefinition.save();
+		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
 	}
 
 	@summary = "Attempt to add a blank template"
@@ -204,7 +204,7 @@ definition {
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
-		DDLDataDefinition.save();
+		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
 	}
 
 	@summary = "Teardown templates in the guest site"

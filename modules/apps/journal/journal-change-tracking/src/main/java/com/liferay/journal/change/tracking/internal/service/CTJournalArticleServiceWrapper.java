@@ -14,7 +14,7 @@
 
 package com.liferay.journal.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTManager;
+import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -102,7 +102,8 @@ public class CTJournalArticleServiceWrapper
 
 		if (journalArticleResource != null) {
 			List<CTEntry> ctEntries = _ctManager.getModelChangeCTEntries(
-				userId, journalArticleResource.getResourcePrimKey());
+				journalArticleResource.getCompanyId(), userId,
+				journalArticleResource.getResourcePrimKey());
 
 			Stream<CTEntry> ctEntryStream = ctEntries.stream();
 

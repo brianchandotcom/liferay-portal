@@ -52,9 +52,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">
-						<a class="btn btn-secondary btn-sm mr-3" href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>">
-							<liferay-ui:message key="cancel" />
-						</a>
+						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
 
 						<%
 						String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
@@ -118,8 +116,8 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		}
 	);
 
-	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 
 	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
 		contextualSidebarContainer.classList.add('contextual-sidebar-visible');

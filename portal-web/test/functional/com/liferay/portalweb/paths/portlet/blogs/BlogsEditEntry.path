@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>DELETE_COVER_IMAGE_BUTTON</td>
-	<td>//button/i[contains(@class,'icon-trash')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STATUS_READING_TIME</td>
 	<td>//div[@class='status']//small/time[contains(@id,'readingTime') and contains (.,'${key_readingTime}')]</td>
 	<td></td>

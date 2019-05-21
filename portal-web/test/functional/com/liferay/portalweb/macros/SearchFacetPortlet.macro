@@ -181,8 +181,8 @@ definition {
 			var facetValueFound = "true";
 		}
 
-		if (contains("${facetTypeValueName}", "Bookmarks")) {
-			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
+		if (contains("${facetTypeValueName}", "Document")) {
+			var facetTypeValue = "com.liferay.document.library.kernel.model.DLFileEntry";
 			var facetValueFound = "true";
 		}
 

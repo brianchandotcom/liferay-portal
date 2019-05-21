@@ -80,6 +80,32 @@ function addRow(
 }
 
 /**
+ * Removes the last key in keyPath from the given object and returns a new one
+ * @param {Array|Object} object Original object that will be copied
+ * @param {Array<string>} keyPath Array of strings used for reaching the deep property
+ * @return {Array|Object} Copy of the original object without the last key in keyPath
+ * @review
+ */
+function deleteIn(object, keyPath) {
+	const lastKey = keyPath.slice(-1);
+	const newKeyPath = keyPath.slice(0, keyPath.length - 1);
+
+	return updateIn(
+		object,
+		newKeyPath,
+		(lastItem) => {
+			const newLastItem = lastItem instanceof Array ?
+				[...lastItem] :
+				Object.assign({}, lastItem);
+
+			delete newLastItem[lastKey];
+
+			return newLastItem;
+		}
+	);
+}
+
+/**
  * Dispatches necessary actions to move an item to another position
  * @param {!Object} store Store instance that dispatches the actions
  * @param {!string} moveItemAction
@@ -325,6 +351,7 @@ function updateWidgets(state, fragmentEntryLinkId) {
 export {
 	add,
 	addRow,
+	deleteIn,
 	moveItem,
 	moveRow,
 	remove,

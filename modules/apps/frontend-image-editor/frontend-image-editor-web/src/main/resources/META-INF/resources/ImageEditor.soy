@@ -44,19 +44,19 @@
 
 			<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
 				<div class="btn-group" role="group">
-					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;" title="{msg desc=""}undo{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link btn-monospaced {$history and $history.canReset ? '' : 'disabled'}" data-onclick="reset" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canReset ? '' : 'disabled'}" data-onclick="reset" href="javascript:;" title="{msg desc=""}restore{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
 						</svg>
 					</a>
 
-					<a class="btn btn-link btn-monospaced {$history and $history.canRedo ? '' : 'disabled'}" data-onclick="redo" href="javascript:;">
+					<a class="btn btn-link btn-monospaced {$history and $history.canRedo ? '' : 'disabled'}" data-onclick="redo" href="javascript:;" title="{msg desc=""}redo{/msg}">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
 						</svg>
@@ -126,7 +126,7 @@
 	{else}
 		{let $control : $tool.controls[0] /}
 
-		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEditFilters" data-tool="tool-{$toolIndex}" href="javascript:;">
+		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEditFilters" data-tool="tool-{$toolIndex}" href="javascript:;" title="{$tool.title}">
 			<svg class="lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
@@ -160,6 +160,7 @@
 		{param preferredAlign: 'TopCenter' /}
 		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
 		{param style: 'link' /}
+		{param triggerTitle: $tool.title/}
 		{param triggerClasses: 'btn btn-monospaced' /}
 	{/call}
 

@@ -49,9 +49,9 @@ AUI.add(
 
 		var TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
 
-		var TPL_EDIT_ICON = '<a class="lfr-item-viewer-icon-info-link" href="{editItemURL}" style="right: 60px;"><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('pencil') + '</span></a>';
+		var TPL_EDIT_ICON = '<a class="lfr-item-viewer-icon-info-link" href="{editItemURL}" style="right: 60px;" title="' + Liferay.Language.get('edit-image') + '"><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('pencil', '') + '</span></a>';
 
-		var TPL_INFO_ICON = '<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="sidenav" data-type="fixed-push" href=""><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('info-circle') + '</span></a>';
+		var TPL_INFO_ICON = '<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="sidenav" data-type="fixed-push" href="" title="' + Liferay.Language.get('image-info') + '" ><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('info-circle', '') + '</span></a>';
 
 		var TPL_INFO_TAB_BODY = '<div class="{className} fade in tab-pane" id="{tabId}">{content}</div>';
 

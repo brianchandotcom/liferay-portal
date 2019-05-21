@@ -83,8 +83,8 @@ definition {
 		}
 
 		AssertTextEquals(
-			key_relatedAssetTitle = "${relatedAssetTitle}",
-			locator1 = "AssetRelatedAssets#ASSET_TITLE",
+			key_assetTitle = "${relatedAssetTitle}",
+			locator1 = "Relatedassets#ASSET_TITLE",
 			value1 = "${relatedAssetTitle}");
 	}
 }

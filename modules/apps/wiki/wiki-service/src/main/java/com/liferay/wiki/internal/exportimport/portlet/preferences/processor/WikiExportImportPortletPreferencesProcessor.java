@@ -58,7 +58,7 @@ public class WikiExportImportPortletPreferencesProcessor
 	public List<Capability> getExportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_exportCapability,
+				_portletDisplayTemplateExporter,
 				_wikiCommentsAndRatingsExporterImporterCapability
 			});
 	}
@@ -67,8 +67,8 @@ public class WikiExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_importCapability, _capability,
-				_wikiCommentsAndRatingsExporterImporterCapability
+				_wikiCommentsAndRatingsExporterImporterCapability,
+				_referencedStagedModelImporter, _portletDisplayTemplateImporter
 			});
 	}
 
@@ -248,16 +248,16 @@ public class WikiExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiExportImportPortletPreferencesProcessor.class);
 
-	@Reference(target = "(name=ReferencedStagedModelImporter)")
-	private Capability _capability;
-
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
-	private Capability _exportCapability;
-
 	private GroupLocalService _groupLocalService;
 
+	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	private Capability _portletDisplayTemplateExporter;
+
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
-	private Capability _importCapability;
+	private Capability _portletDisplayTemplateImporter;
+
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _referencedStagedModelImporter;
 
 	@Reference
 	private WikiCommentsAndRatingsExporterImporterCapability

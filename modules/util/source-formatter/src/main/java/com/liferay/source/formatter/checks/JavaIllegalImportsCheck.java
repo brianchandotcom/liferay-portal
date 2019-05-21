@@ -14,20 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Hugo Huijser
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
-
-	public void setEnforceJavaUtilFunctionImports(
-		String enforceJavaUtilFunctionImports) {
-
-		_enforceJavaUtilFunctionImports = GetterUtil.getBoolean(
-			enforceJavaUtilFunctionImports);
-	}
 
 	@Override
 	protected String doProcess(
@@ -46,7 +38,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
 
-		if (_enforceJavaUtilFunctionImports) {
+		if (isAttributeValue(
+				_ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY, absolutePath)) {
+
 			content = StringUtil.replace(
 				content,
 				new String[] {
@@ -186,11 +180,12 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY =
+		"enforceJavaUtilFunctionImports";
+
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";
-
-	private boolean _enforceJavaUtilFunctionImports;
 
 }

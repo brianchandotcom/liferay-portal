@@ -9,15 +9,12 @@ checkApi {
 	dependsOn ":modules:foo-api:resolve"
 
 	doLast {
-		Project fooApiProject = project(":modules:foo-api")
+		List<String> runBundles = project(":modules:foo-api").resolve.runBundles
 
-		File bndrunFile = new File(fooApiProject.resolve.temporaryDir, "resolve.bndrun")
-
-		String bndrun = bndrunFile.text
-
-		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
-		assert !bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
-		assert !bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+		assert runBundles.size() > 0
+		assert runBundles.contains("com.liferay.foo.api;version='[1.0.0,1.0.1)'")
+		assert !runBundles.contains("com.liferay.foo.portlet;version='[1.0.0,1.0.1)'")
+		assert !runBundles.contains("com.liferay.foo.service;version='[1.0.0,1.0.1)'")
 	}
 }
 
@@ -25,15 +22,12 @@ checkPortlet {
 	dependsOn ":modules:foo-portlet:resolve"
 
 	doLast {
-		Project fooPortletProject = project(":modules:foo-portlet")
+		List<String> runBundles = project(":modules:foo-portlet").resolve.runBundles
 
-		File bndrunFile = new File(fooPortletProject.resolve.temporaryDir, "resolve.bndrun")
-
-		String bndrun = bndrunFile.text
-
-		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
-		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
-		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+		assert runBundles.size() > 0
+		assert runBundles.contains("com.liferay.foo.api;version='[1.0.0,1.0.1)'")
+		assert runBundles.contains("com.liferay.foo.portlet;version='[1.0.0,1.0.1)'")
+		assert runBundles.contains("com.liferay.foo.service;version='[1.0.0,1.0.1)'")
 	}
 }
 
@@ -41,23 +35,21 @@ checkService {
 	dependsOn ":modules:foo-service:resolve"
 
 	doLast {
-		Project fooServiceProject = project(":modules:foo-service")
+		List<String> runBundles = project(":modules:foo-service").resolve.runBundles
 
-		File bndrunFile = new File(fooServiceProject.resolve.temporaryDir, "resolve.bndrun")
-
-		String bndrun = bndrunFile.text
-
-		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
-		assert !bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
-		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+		assert runBundles.size() > 0
+		assert runBundles.contains("com.liferay.foo.api;version='[1.0.0,1.0.1)'")
+		assert !runBundles.contains("com.liferay.foo.portlet;version='[1.0.0,1.0.1)'")
+		assert runBundles.contains("com.liferay.foo.service;version='[1.0.0,1.0.1)'")
 	}
 }
 
 dependencies {
-	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
-	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.1.3"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.1.3"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.third.party", version: "7.1.3"
 
-	targetPlatformDistro files("../../repo/distro.jar")
+	targetPlatformDistro group: "com.liferay.portal", name: "release.portal.distro", version: "7.1.3"
 }
 
 runGradleTest {

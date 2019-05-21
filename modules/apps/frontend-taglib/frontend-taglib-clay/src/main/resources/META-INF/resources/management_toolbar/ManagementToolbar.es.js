@@ -35,6 +35,18 @@ class ManagementToolbar extends ClayComponent {
 				];
 
 				this._searchContainer = searchContainer;
+
+				const select = searchContainer.select;
+				const bulkSelection = this.supportsBulkActions && select.get('bulkSelection');
+
+				this._setActiveStatus(
+					{
+						allSelectedElements: select.getAllSelectedElements(),
+						currentPageElements: select.getCurrentPageElements(),
+						currentPageSelectedElements: select.getCurrentPageSelectedElements()
+					},
+					bulkSelection
+				);
 			}
 		);
 
@@ -187,26 +199,10 @@ class ManagementToolbar extends ClayComponent {
 	 */
 
 	_handleSearchContainerRowToggled(event) {
-		var elements = event.elements;
-
-		const currentPageElements = elements.currentPageElements.size();
-		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
-
-		const currentPageSelected = currentPageElements === currentPageSelectedElements;
-
+		const actions = event.actions;
 		const bulkSelection = this.supportsBulkActions && this._searchContainer.select.get('bulkSelection');
 
-		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
-
-		this.checkboxStatus = 'unchecked';
-
-		if (this.selectedItems !== 0) {
-			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
-		}
-
-		if (this.supportsBulkActions) {
-			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
-		}
+		this._setActiveStatus(event.elements, bulkSelection);
 
 		if (this.actionItems) {
 			this.actionItems = this.actionItems.map(
@@ -214,11 +210,40 @@ class ManagementToolbar extends ClayComponent {
 					return Object.assign(
 						actionItem,
 						{
-							disabled: event.actions && event.actions.indexOf(actionItem.data.action) === -1 && (!bulkSelection || !actionItem.data.enableOnBulk)
+							disabled: actions && actions.indexOf(actionItem.data.action) === -1 && (!bulkSelection || !actionItem.data.enableOnBulk)
 						}
 					);
 				}
 			);
+		}
+	}
+
+	/**
+	 * Updates management toolbar ative status checkbox.
+	 * @param {object} elements lists of elements
+	 * @param {bool} bulkSelection if bulk selection is enabled
+	 * @private
+	 * @review
+	 */
+
+	_setActiveStatus(elements, bulkSelection) {
+		const currentPageElements = elements.currentPageElements.size();
+		const currentPageSelectedElements = elements.currentPageSelectedElements.size();
+
+		const currentPageSelected = currentPageElements === currentPageSelectedElements;
+
+		this.selectedItems = bulkSelection ? this.totalItems : elements.allSelectedElements.filter(':enabled').size();
+		this.active = this.selectedItems > 0;
+
+		if (currentPageSelectedElements > 0) {
+			this.checkboxStatus = currentPageSelected ? 'checked' : 'indeterminate';
+		}
+		else {
+			this.checkboxStatus = 'unchecked';
+		}
+
+		if (this.supportsBulkActions) {
+			this.showSelectAllButton = currentPageSelected && this.totalItems > this.selectedItems && !this._searchContainer.select.get('bulkSelection');
 		}
 	}
 }

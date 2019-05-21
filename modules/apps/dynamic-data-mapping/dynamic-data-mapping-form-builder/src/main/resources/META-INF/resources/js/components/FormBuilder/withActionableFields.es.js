@@ -53,7 +53,12 @@ class Actions extends Component {
 			dom.closest(event.target, '.col-ddm')
 		);
 
-		this.emit('fieldDuplicated', indexes);
+		this.emit(
+			'fieldDuplicated',
+			{
+				indexes
+			}
+		);
 	}
 }
 

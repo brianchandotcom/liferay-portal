@@ -16,6 +16,7 @@ package com.liferay.asset.list.internal.exportimport.data.handler;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -33,6 +34,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo García
@@ -88,6 +91,15 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 				portletDataContext, assetListEntrySegmentsEntryRel,
 				segmentsEntry, PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
+
+		String typeSettings =
+			_assetListEntryExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, assetListEntrySegmentsEntryRel,
+					assetListEntrySegmentsEntryRel.getTypeSettings(), false,
+					false);
+
+		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
 
 		portletDataContext.addClassedModel(
 			entryElement,
@@ -158,6 +170,14 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 				assetListEntrySegmentsEntryRel.getUuid(),
 				portletDataContext.getScopeGroupId());
 
+		String typeSettings =
+			_assetListEntryExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, importedAssetListEntrySegmentsEntryRel,
+					importedAssetListEntrySegmentsEntryRel.getTypeSettings());
+
+		importedAssetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
+
 		if ((existingAssetListEntrySegmentsEntryRel == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
@@ -185,6 +205,14 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
+	)
+	private volatile ExportImportContentProcessor<String>
+		_assetListEntryExportImportContentProcessor;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

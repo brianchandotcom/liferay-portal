@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -46,9 +47,11 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -59,7 +62,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
-	property = "key=servlet.service.events.pre", service = LifecycleAction.class
+	service = {}
 )
 public class SegmentsServicePreAction extends Action {
 
@@ -78,10 +81,26 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_segmentsServiceConfiguration = ConfigurableUtil.createConfigurable(
-			SegmentsServiceConfiguration.class, properties);
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		SegmentsServiceConfiguration segmentsServiceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsServiceConfiguration.class, properties);
+
+		if (segmentsServiceConfiguration.segmentationEnabled()) {
+			_serviceRegistration = bundleContext.registerService(
+				LifecycleAction.class, this,
+				MapUtil.singletonDictionary(
+					"key", "servlet.service.events.pre"));
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	protected void doRun(HttpServletRequest httpServletRequest) {
@@ -97,9 +116,7 @@ public class SegmentsServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (_segmentsServiceConfiguration.segmentationEnabled() &&
-			!layout.isTypeControlPanel()) {
-
+		if (!layout.isTypeControlPanel()) {
 			segmentsEntryIds = _getSegmentsEntryIds(
 				httpServletRequest, themeDisplay.getScopeGroupId(),
 				themeDisplay.getUserId());
@@ -186,6 +203,6 @@ public class SegmentsServicePreAction extends Action {
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
-	private SegmentsServiceConfiguration _segmentsServiceConfiguration;
+	private ServiceRegistration<LifecycleAction> _serviceRegistration;
 
 }

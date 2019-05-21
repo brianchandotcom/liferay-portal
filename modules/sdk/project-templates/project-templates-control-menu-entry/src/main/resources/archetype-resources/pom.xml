@@ -13,13 +13,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+#if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.product.navigation.control.menu.api</artifactId>
 			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
@@ -28,12 +28,24 @@
 		</dependency>
 #elseif (${liferayVersion.startsWith("7.1")})
 		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.product.navigation.control.menu.api</artifactId>
+			<version>4.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
 			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 #elseif (${liferayVersion.startsWith("7.2")})
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.product.navigation.control.menu.api</artifactId>
+			<version>5.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>

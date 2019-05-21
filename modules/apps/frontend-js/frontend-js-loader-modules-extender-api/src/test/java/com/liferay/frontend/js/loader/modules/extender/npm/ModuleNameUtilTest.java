@@ -45,6 +45,12 @@ public class ModuleNameUtilTest {
 			"a-dir/dep",
 			ModuleNameUtil.getDependencyPath(
 				"a-dir/other-dir/a-module", "../dep"));
+		Assert.assertEquals(
+			"a-dir/other-dir",
+			ModuleNameUtil.getDependencyPath("a-dir/other-dir/a-module", "."));
+		Assert.assertEquals(
+			"a-dir",
+			ModuleNameUtil.getDependencyPath("a-dir/other-dir/a-module", ".."));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

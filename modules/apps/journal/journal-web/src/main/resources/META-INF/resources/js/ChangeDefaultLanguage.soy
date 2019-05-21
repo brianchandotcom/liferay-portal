@@ -11,13 +11,9 @@
 
 	{@param? _itemClicked: any}
 
-	<div class="default-language mb-3 text-info">
-		{call ClayIcon.render}
-			{param spritemap: $spritemap /}
-			{param symbol: 'info-circle' /}
-		{/call}
-
-		{sp}{$strings[$defaultLanguage]}{sp}
+	<div class="article-default-language">
+		<b>{msg desc=""}web-content-default-language{/msg}</b>:
+		{sp}{$strings[$defaultLanguage]}
 
 		{let $label kind="html"}
 			<strong>{$strings['change']}</strong>
@@ -25,14 +21,14 @@
 
 		{call ClayDropdown.render}
 			{param contentRenderer: 'item' /}
-			{param elementClasses: 'd-md-inline' /}
+			{param elementClasses: 'mt-2' /}
 			{param events: [
 				'itemClicked': $_itemClicked
 			] /}
 			{param items: $languages /}
 			{param label: $label /}
 			{param spritemap: $spritemap /}
-			{param triggerClasses: 'text-primary' /}
+			{param style: 'secondary' /}
 		{/call}
 	</div>
 {/template}

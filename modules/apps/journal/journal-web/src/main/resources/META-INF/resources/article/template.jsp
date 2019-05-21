@@ -136,7 +136,9 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 				uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + newDDMTemplateId, uri);
 
-				Liferay.Util.navigate(uri);
+				document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = newDDMTemplateId;
+
+				submitForm(document.<portlet:namespace />fm1, uri, false, false);
 			}
 		}
 	}

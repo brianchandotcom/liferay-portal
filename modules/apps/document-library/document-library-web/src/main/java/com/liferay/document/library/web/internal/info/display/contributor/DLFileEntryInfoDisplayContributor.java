@@ -25,8 +25,6 @@ import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
@@ -119,20 +117,15 @@ public class DLFileEntryInfoDisplayContributor
 
 			@Override
 			public long getClassTypeId() {
-				try {
-					InfoDisplayObjectProvider infoDisplayObjectProvider =
-						_dlFileEntryAssetInfoDisplayContributor.
-							getInfoDisplayObjectProvider(classPK);
+				InfoDisplayObjectProvider infoDisplayObjectProvider =
+					_dlFileEntryAssetInfoDisplayContributor.
+						getInfoDisplayObjectProvider(classPK);
 
+				if (infoDisplayObjectProvider != null) {
 					return infoDisplayObjectProvider.getClassTypeId();
 				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
-					}
 
-					return 0;
-				}
+				return 0;
 			}
 
 			@Override
@@ -152,20 +145,15 @@ public class DLFileEntryInfoDisplayContributor
 
 			@Override
 			public String getKeywords(Locale locale) {
-				try {
-					InfoDisplayObjectProvider infoDisplayObjectProvider =
-						_dlFileEntryAssetInfoDisplayContributor.
-							getInfoDisplayObjectProvider(classPK);
+				InfoDisplayObjectProvider infoDisplayObjectProvider =
+					_dlFileEntryAssetInfoDisplayContributor.
+						getInfoDisplayObjectProvider(classPK);
 
+				if (infoDisplayObjectProvider != null) {
 					return infoDisplayObjectProvider.getKeywords(locale);
 				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
-					}
 
-					return StringPool.BLANK;
-				}
+				return StringPool.BLANK;
 			}
 
 			@Override
@@ -221,9 +209,6 @@ public class DLFileEntryInfoDisplayContributor
 
 		return assetEntry;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryInfoDisplayContributor.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -177,7 +177,12 @@ definition {
 	}
 
 	macro save {
-		Button.clickSave();
+		if("${changeListEnabled}" == "true") {
+			Button.clickPublishToChangeList();
+		}
+		else {
+			Button.clickSave();
+		}
 
 		Alert.viewSuccessMessage();
 	}

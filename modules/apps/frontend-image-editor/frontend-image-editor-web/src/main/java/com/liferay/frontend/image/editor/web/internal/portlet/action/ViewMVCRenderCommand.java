@@ -19,18 +19,21 @@ import com.liferay.frontend.image.editor.web.internal.constants.ImageEditorPortl
 import com.liferay.frontend.image.editor.web.internal.portlet.tracker.ImageEditorCapabilityTracker;
 import com.liferay.frontend.image.editor.web.internal.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityDescriptor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -102,7 +105,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "ImageEditor";
 	}
 
-	protected List<List<ImageEditorCapabilityDescriptor>>
+	protected Map<String, List<ImageEditorCapabilityDescriptor>>
 		getImageEditorCapabilityDescriptorsList(
 			List<ImageEditorCapabilityDescriptor>
 				imageEditorCapabilityDescriptors) {
@@ -133,7 +136,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				imageEditorCapabilityDescriptor);
 		}
 
-		return new ArrayList<>(imageEditorCapabilityDescriptorsMap.values());
+		return imageEditorCapabilityDescriptorsMap;
 	}
 
 	protected List<Map<String, Object>> getImageEditorToolsContexts(
@@ -153,14 +156,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<List<ImageEditorCapabilityDescriptor>>
-			imageEditorCapabilityDescriptorsList =
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			renderRequest.getLocale(), getClass());
+
+		Map<String, List<ImageEditorCapabilityDescriptor>>
+			imageEditorCapabilityDescriptorsMap =
 				getImageEditorCapabilityDescriptorsList(
 					toolImageEditorCapabilityDescriptors);
 
-		for (List<ImageEditorCapabilityDescriptor>
-				imageEditorCapabilityDescriptors :
-					imageEditorCapabilityDescriptorsList) {
+		for (Map.Entry<String, List<ImageEditorCapabilityDescriptor>> entry :
+				imageEditorCapabilityDescriptorsMap.entrySet()) {
 
 			Map<String, Object> context = new HashMap<>();
 
@@ -168,8 +173,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			String icon = StringPool.BLANK;
 
 			for (ImageEditorCapabilityDescriptor
-					imageEditorCapabilityDescriptor :
-						imageEditorCapabilityDescriptors) {
+					imageEditorCapabilityDescriptor : entry.getValue()) {
 
 				Map<String, Object> controlContext = new HashMap<>();
 
@@ -211,6 +215,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			context.put("controls", controlContexts);
 			context.put("icon", icon);
+
+			String category = entry.getKey();
+
+			context.put("title", LanguageUtil.get(resourceBundle, category));
 
 			imageEditorToolsContexts.add(context);
 		}

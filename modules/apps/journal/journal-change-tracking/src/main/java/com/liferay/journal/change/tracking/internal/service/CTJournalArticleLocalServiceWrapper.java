@@ -14,11 +14,11 @@
 
 package com.liferay.journal.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTEngineManager;
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTEntryException;
-import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.CTManager;
+import com.liferay.change.tracking.engine.exception.CTEngineException;
+import com.liferay.change.tracking.engine.exception.CTEntryCTEngineException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1787,6 +1788,7 @@ public class CTJournalArticleLocalServiceWrapper
 	private DynamicQuery _getChangeTrackingAwareDynamicQuery() {
 		Optional<CTCollection> activeCTCollectionOptional =
 			_ctManager.getActiveCTCollectionOptional(
+				CompanyThreadLocal.getCompanyId(),
 				PrincipalThreadLocal.getUserId());
 
 		if (!activeCTCollectionOptional.isPresent()) {
@@ -1884,7 +1886,7 @@ public class CTJournalArticleLocalServiceWrapper
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId());
 
@@ -1892,14 +1894,14 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	private void _registerChange(JournalArticle journalArticle, int changeType)
-		throws CTException {
+		throws CTEngineException {
 
 		_registerChange(journalArticle, changeType, false);
 	}
 
 	private void _registerChange(
 			JournalArticle journalArticle, int changeType, boolean force)
-		throws CTException {
+		throws CTEngineException {
 
 		if (journalArticle == null) {
 			return;
@@ -1907,24 +1909,24 @@ public class CTJournalArticleLocalServiceWrapper
 
 		try {
 			_ctManager.registerModelChange(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId(), journalArticle.getResourcePrimKey(),
 				changeType, force);
 
 			_ctManager.registerRelatedChanges(
-				PrincipalThreadLocal.getUserId(),
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getId(), force);
 		}
-		catch (CTException cte) {
-			if (cte instanceof CTEntryException) {
+		catch (CTEngineException ctee) {
+			if (ctee instanceof CTEntryCTEngineException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(cte.getMessage());
+					_log.warn(ctee.getMessage());
 				}
 			}
 			else {
-				throw cte;
+				throw ctee;
 			}
 		}
 	}
@@ -1935,7 +1937,7 @@ public class CTJournalArticleLocalServiceWrapper
 		}
 
 		_ctManager.unregisterModelChange(
-			PrincipalThreadLocal.getUserId(),
+			journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			journalArticle.getId());
 	}

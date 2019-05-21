@@ -155,6 +155,7 @@
 						"template_en" : {
 							"mapping" : {
 								"analyzer" : "english",
+								"search_analyzer" : "liferay_analyzer_en",
 								"store" : true,
 								"term_vector" : "with_positions_offsets",
 								"type" : "text"
@@ -168,6 +169,7 @@
 						"template_es" : {
 							"mapping" : {
 								"analyzer" : "spanish",
+								"search_analyzer" : "liferay_analyzer_es",
 								"store" : true,
 								"term_vector" : "with_positions_offsets",
 								"type" : "text"
@@ -554,7 +556,6 @@
 						"store" : true,
 						"type" : "date"
 					},
-
 					"dataRepositoryId" : {
 						"store" : true,
 						"type" : "keyword"

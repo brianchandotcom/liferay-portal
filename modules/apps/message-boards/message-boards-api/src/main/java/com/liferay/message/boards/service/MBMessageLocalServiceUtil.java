@@ -596,6 +596,12 @@ public class MBMessageLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.message.boards.model.MBMessage getLastThreadMessage(
+		long threadId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLastThreadMessage(threadId, status);
+	}
+
 	/**
 	 * Returns the message-boards message with the primary key.
 	 *

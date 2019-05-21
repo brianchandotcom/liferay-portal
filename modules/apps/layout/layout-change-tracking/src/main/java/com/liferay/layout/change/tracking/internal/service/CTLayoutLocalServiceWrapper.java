@@ -14,10 +14,10 @@
 
 package com.liferay.layout.change.tracking.internal.service;
 
-import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTEntryException;
-import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.engine.CTManager;
+import com.liferay.change.tracking.engine.exception.CTEngineException;
+import com.liferay.change.tracking.engine.exception.CTEntryCTEngineException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -453,7 +453,7 @@ public class CTLayoutLocalServiceWrapper extends LayoutLocalServiceWrapper {
 	}
 
 	private void _registerChange(LayoutVersion layoutVersion, int changeType)
-		throws CTException {
+		throws CTEngineException {
 
 		if (layoutVersion == null) {
 			return;
@@ -461,19 +461,19 @@ public class CTLayoutLocalServiceWrapper extends LayoutLocalServiceWrapper {
 
 		try {
 			_ctManager.registerModelChange(
-				PrincipalThreadLocal.getUserId(),
+				layoutVersion.getCompanyId(), PrincipalThreadLocal.getUserId(),
 				_portal.getClassNameId(LayoutVersion.class.getName()),
 				layoutVersion.getLayoutVersionId(), layoutVersion.getPlid(),
 				changeType);
 		}
-		catch (CTException cte) {
-			if (cte instanceof CTEntryException) {
+		catch (CTEngineException ctee) {
+			if (ctee instanceof CTEntryCTEngineException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(cte.getMessage());
+					_log.warn(ctee.getMessage());
 				}
 			}
 			else {
-				throw cte;
+				throw ctee;
 			}
 		}
 	}

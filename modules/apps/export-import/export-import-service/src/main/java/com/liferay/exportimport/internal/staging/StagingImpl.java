@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.internal.staging;
 
-import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;

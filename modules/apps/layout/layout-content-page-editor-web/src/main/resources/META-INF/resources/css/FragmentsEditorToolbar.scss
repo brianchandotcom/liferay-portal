@@ -122,8 +122,7 @@
 		top: $desktopControlMenuHeight;
 
 		& > .container-fluid {
-			flex-direction: row;
-			flex-wrap: nowrap;
+			flex-flow: row nowrap;
 			padding: 10px 1.25rem;
 			padding-right: $sidebarButtonsWidth;
 		}

@@ -4,4 +4,4 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.portal.upgrade.registry,\
 	com.liferay.portal.upgrade.release,\
-	com.liferay.portal.upgrade.util
+	com.liferay.portal.upgrade.step.util

@@ -21,6 +21,7 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.FragmentPortletSetupUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -176,8 +177,8 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				httpServletRequest, portletId);
 
-		portletPreferences.setValue(
-			"portletSetupPortletDecoratorId", "barebone");
+		FragmentPortletSetupUtil.setPortletBareboneCSSClassName(
+			portletPreferences);
 
 		return _fragmentPortletRenderer.renderPortlet(
 			httpServletRequest, httpServletResponse, portletId, instanceId,

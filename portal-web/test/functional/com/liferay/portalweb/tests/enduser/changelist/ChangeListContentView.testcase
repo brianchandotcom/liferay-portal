@@ -79,7 +79,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Second Web Content");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -119,7 +119,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

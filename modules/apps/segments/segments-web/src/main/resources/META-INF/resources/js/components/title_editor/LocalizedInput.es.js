@@ -100,7 +100,10 @@ export default class LocalizedInput extends React.Component {
 
 	_validateValues(values) {
 		const {defaultLang} = this.props;
-		return !!values[defaultLang];
+
+		const parsedValue = values[defaultLang] && values[defaultLang].replace(/\s/g, '');
+
+		return !!parsedValue;
 	}
 
 	render() {

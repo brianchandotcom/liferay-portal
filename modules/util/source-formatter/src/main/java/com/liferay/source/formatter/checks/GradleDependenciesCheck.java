@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -41,10 +40,6 @@ import java.util.regex.Pattern;
  */
 public class GradleDependenciesCheck extends BaseFileCheck {
 
-	public void setCheckPetraDependencies(String checkPetraDependencies) {
-		_checkPetraDependencies = GetterUtil.getBoolean(checkPetraDependencies);
-	}
-
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -65,7 +60,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			content = _formatDependencies(
 				content, SourceUtil.getIndent(dependenciesBlock), dependencies);
 
-			if (_checkPetraDependencies &&
+			if (isAttributeValue(_CHECK_PETRA_DEPENDENCIES_KEY, absolutePath) &&
 				absolutePath.contains("/modules/core/petra/")) {
 
 				_checkPetraDependencies(fileName, content, dependencies);
@@ -232,6 +227,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
+	private static final String _CHECK_PETRA_DEPENDENCIES_KEY =
+		"checkPetraDependencies";
+
 	private static final String _ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1 =
 		"compileOnly group: \"com.liferay\", name: \"org.eclipse.osgi\", " +
 			"version: \"3.13.0.LIFERAY-PATCHED-1\"";
@@ -254,8 +252,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			Pattern.DOTALL);
 	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
-
-	private boolean _checkPetraDependencies;
 
 	private class GradleDependencyComparator
 		implements Comparator<String>, Serializable {

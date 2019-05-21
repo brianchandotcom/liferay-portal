@@ -1,0 +1,22 @@
+diff --git a/org/eclipse/osgi/internal/log/LoggerContextTargetMap.java b/org/eclipse/osgi/internal/log/LoggerContextTargetMap.java
+index 46a2ece..1556b7c 100644
+--- a/org/eclipse/osgi/internal/log/LoggerContextTargetMap.java
++++ b/org/eclipse/osgi/internal/log/LoggerContextTargetMap.java
+@@ -129,6 +129,11 @@ public class LoggerContextTargetMap {
+ 		} else {
+ 			matching = qualifiedNameToTargets.get(loggerContext.getName());
+ 		}
++
++		if (matching == null) {
++			return;
++		}
++
+ 		for (Bundle bundle : matching) {
+ 			ExtendedLogServiceImpl logService = logServices.get(bundle);
+ 			if (logService != null) {
+@@ -153,3 +158,4 @@ public class LoggerContextTargetMap {
+ 		return getRootLoggerContext();
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

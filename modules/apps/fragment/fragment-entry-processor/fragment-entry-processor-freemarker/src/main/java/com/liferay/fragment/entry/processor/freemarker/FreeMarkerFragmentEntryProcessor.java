@@ -131,6 +131,23 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
+			new StringTemplateResource("template_id", "[#ftl]\n" + html),
+			false);
+
+		try {
+			template.processTemplate(new UnsyncStringWriter());
+		}
+		catch (TemplateException te) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			String message = LanguageUtil.get(
+				resourceBundle, "freemarker-syntax-is-invalid");
+
+			throw new FragmentEntryContentException(message, te);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

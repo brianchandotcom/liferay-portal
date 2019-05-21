@@ -137,6 +137,10 @@ $productMenuWidth: 320px;
 				}
 			}
 
+			.journal-article-button-row .btn-cancel {
+				border: 0;
+			}
+
 			@media (min-width: 768px) {
 				min-height: $toolbarDesktopHeight;
 				top: $controlMenuDesktopHeight;
@@ -218,12 +222,16 @@ $productMenuWidth: 320px;
 
 		.sidebar-body .panel-body {
 			padding: 0;
+
+			.article-default-language {
+				margin-bottom: 1rem;
+			}
 		}
 	}
 
 	.check-circle-center {
 		.green {
-			color: green;
+			color: #008000;
 		}
 	}
 }

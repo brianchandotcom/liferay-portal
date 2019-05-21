@@ -43,12 +43,12 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, (JavaClass)javaTerm);
+		return formatAnnotations(fileName, absolutePath, (JavaClass)javaTerm);
 	}
 
 	protected String formatAnnotation(
-		String fileName, JavaClass javaClass, String annotation,
-		String indent) {
+		String fileName, String absolutePath, JavaClass javaClass,
+		String annotation, String indent) {
 
 		if (!annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 			return annotation;
@@ -60,7 +60,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		return annotation;
 	}
 
-	protected String formatAnnotations(String fileName, JavaClass javaClass)
+	protected String formatAnnotations(
+			String fileName, String absolutePath, JavaClass javaClass)
 		throws IOException {
 
 		String content = javaClass.getContent();
@@ -75,7 +76,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			String indent = _getIndent(annotationsBlock);
 
 			String newAnnotationsBlock = _formatAnnotations(
-				fileName, javaClass, annotationsBlock, indent);
+				fileName, absolutePath, javaClass, annotationsBlock, indent);
 
 			content = StringUtil.replace(
 				content, "\n" + annotationsBlock, "\n" + newAnnotationsBlock);
@@ -159,19 +160,20 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatAnnotations(
-			String fileName, JavaClass javaClass, String annotationsBlock,
-			String indent)
+			String fileName, String absolutePath, JavaClass javaClass,
+			String annotationsBlock, String indent)
 		throws IOException {
 
 		List<String> annotations = _splitAnnotations(annotationsBlock, indent);
 
 		for (String annotation : annotations) {
 			String newAnnotation = formatAnnotation(
-				fileName, javaClass, annotation, indent);
+				fileName, absolutePath, javaClass, annotation, indent);
 
 			if (newAnnotation.contains(StringPool.OPEN_PARENTHESIS)) {
 				newAnnotation = _formatAnnotations(
-					fileName, javaClass, newAnnotation, indent + "\t\t");
+					fileName, absolutePath, javaClass, newAnnotation,
+					indent + "\t\t");
 			}
 
 			annotationsBlock = StringUtil.replace(

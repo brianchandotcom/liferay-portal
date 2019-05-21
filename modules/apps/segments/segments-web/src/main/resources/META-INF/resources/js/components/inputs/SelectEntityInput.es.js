@@ -4,6 +4,7 @@ import React from 'react';
 
 class SelectEntityInput extends React.Component {
 	static propTypes = {
+		disabled: propTypes.bool,
 		displayValue: propTypes.oneOfType(
 			[
 				propTypes.string,
@@ -99,19 +100,25 @@ class SelectEntityInput extends React.Component {
 	};
 
 	render() {
-		const {displayValue, value} = this.props;
+		const {
+			disabled,
+			displayValue,
+			value
+		} = this.props;
 
 		return (
 			<div className="criterion-input input-group select-entity-input">
 				<div className="input-group-item input-group-prepend">
 					<input
 						data-testid="entity-select-input"
+						disabled={disabled}
 						type="hidden"
 						value={value}
 					/>
 
 					<input
 						className="form-control"
+						disabled={disabled}
 						readOnly
 						value={displayValue}
 					/>
@@ -119,6 +126,7 @@ class SelectEntityInput extends React.Component {
 
 				<span className="input-group-append input-group-item input-group-item-shrink">
 					<ClayButton
+						disabled={disabled}
 						label={Liferay.Language.get('select')}
 						onClick={this._handleSelectEntity}
 					/>

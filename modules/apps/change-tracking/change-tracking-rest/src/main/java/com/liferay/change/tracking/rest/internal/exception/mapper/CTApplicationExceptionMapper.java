@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.exception.mapper;
 
-import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
+import com.liferay.change.tracking.rest.internal.exception.CTJaxRsEngineException;
 import com.liferay.change.tracking.rest.internal.model.GenericErrorModel;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -40,10 +40,11 @@ public class CTApplicationExceptionMapper
 	public Response toResponse(Exception exception) {
 		Response.Status status = Response.Status.BAD_REQUEST;
 
-		if (exception instanceof CTJaxRsException) {
-			CTJaxRsException ctJaxRsException = (CTJaxRsException)exception;
+		if (exception instanceof CTJaxRsEngineException) {
+			CTJaxRsEngineException ctJaxRsEngineException =
+				(CTJaxRsEngineException)exception;
 
-			status = ctJaxRsException.getResponseStatus();
+			status = ctJaxRsEngineException.getResponseStatus();
 		}
 		else if (exception instanceof SystemException) {
 			status = Response.Status.INTERNAL_SERVER_ERROR;

@@ -148,7 +148,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 			if (Validator.isNotNull(previewURL)) {
 				printWriter.format(
-					"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
+					"<iframe frameborder=\"0\" height=\"664px\" src=\"%s\" " +
 						"width=\"100%%\"></iframe>",
 					previewURL);
 

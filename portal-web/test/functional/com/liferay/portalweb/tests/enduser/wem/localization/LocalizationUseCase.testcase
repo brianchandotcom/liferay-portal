@@ -121,7 +121,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		LanguagePortlet.viewDisplayTemplateShortText(languageKey = "HU");
+		LanguagePortlet.viewDisplayTemplateShortText(languageKey = "hu");
 	}
 
 	@priority = "4"

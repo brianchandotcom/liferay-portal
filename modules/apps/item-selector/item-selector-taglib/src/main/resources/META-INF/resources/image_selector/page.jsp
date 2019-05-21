@@ -115,6 +115,7 @@ if (fileEntryId != 0) {
 			icon="picture"
 			monospaced="<%= true %>"
 			style="secondary"
+			title='<%= LanguageUtil.get(resourceBundle, "change-image") %>'
 		/>
 
 		<clay:button
@@ -122,6 +123,7 @@ if (fileEntryId != 0) {
 			icon="trash"
 			id='<%= randomNamespace + "removeImage" %>'
 			style="secondary"
+			title='<%= LanguageUtil.get(resourceBundle, "remove-image") %>'
 		/>
 	</div>
 </div>

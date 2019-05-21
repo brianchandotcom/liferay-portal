@@ -73,6 +73,32 @@ class MBPortlet extends PortletBase {
 				this.searchContainer_ = searchContainer;
 			}
 		);
+
+		let viewRemovedAttachmentsLink = document.getElementById('view-removed-attachments-link');
+
+		if (viewRemovedAttachmentsLink) {
+			viewRemovedAttachmentsLink.addEventListener(
+				'click',
+				() => {
+					Liferay.Util.openWindow(
+						{
+							id: this.namespace + 'openRemovedPageAttachments',
+							title: Liferay.Language.get('removed-attachments'),
+							uri: this.viewTrashAttachmentsURL,
+							dialog: {
+								on: {
+									visibleChange: (event) => {
+										if (!event.newVal) {
+											this.updateRemovedAttachments_();
+										}
+									}
+								}
+							}
+						}
+					);
+				}
+			);
+		}
 	}
 
 	/**
@@ -155,13 +181,79 @@ class MBPortlet extends PortletBase {
 		let deleteURL = link.getAttribute('data-url');
 
 		fetch(
-			deleteURL
+			deleteURL,
+			{
+				credentials: 'include'
+			}
 		).then(
 			() => {
 				let searchContainer = this.searchContainer_;
 
 				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowid'));
 				searchContainer.updateDataStore();
+
+				this.updateRemovedAttachments_();
+			}
+		);
+	}
+
+	/**
+	 * Sends a request to retrieve the deleted attachments
+	 *
+	 * @protected
+	 */
+
+	updateRemovedAttachments_() {
+		fetch(
+			this.getAttachmentsURL
+		).then(
+			res => res.json()
+		).then(
+			(attachments) => {
+				if (attachments.active.length > 0) {
+					let searchContainer = this.searchContainer_;
+					let searchContainerData = searchContainer.getData();
+
+					document.getElementById(
+						this.namespace + 'fileAttachments'
+					).classList.remove(
+						'hide'
+					);
+
+					attachments.active.forEach(
+						attachment => {
+							if (searchContainerData.indexOf(attachment.id) == -1) {
+								searchContainer.addRow(
+									[
+										attachment.title,
+										attachment.size,
+										`<a class="delete-attachment" data-rowId="${attachment.id}" data-url="${attachment.deleteURL}" href="javascript:;">${Liferay.Language.get('move-to-recycle-bin')}</a>`
+									],
+									attachment.id.toString()
+								);
+
+								searchContainer.updateDataStore();
+							}
+						}
+					);
+				}
+
+				const deletedAttachmentsElement = document.getElementById('view-removed-attachments-link');
+
+				if (attachments.deleted.length > 0) {
+					deletedAttachmentsElement.style.display = 'initial';
+					deletedAttachmentsElement.innerHTML = Liferay.Util.sub(
+						Liferay.Language.get(
+							attachments.deleted.length > 1 ?
+								'x-recently-removed-attachments' :
+								'x-recently-removed-attachment'
+						),
+						attachments.deleted.length
+					) + ' &raquo';
+				}
+				else {
+					deletedAttachmentsElement.style.display = 'none';
+				}
 			}
 		);
 	}
@@ -262,6 +354,17 @@ MBPortlet.STATE = {
 	},
 
 	/**
+	 * The URL to get deleted attachments from
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+
+	getAttachmentsURL: {
+		validator: core.isString
+	},
+
+	/**
 	 * The id of the message that
 	 * you are replying to
 	 * @instance
@@ -285,6 +388,17 @@ MBPortlet.STATE = {
 		value: {
 			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation')
 		}
+	},
+
+	/**
+	 * The URL to edit deleted attachments
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+
+	viewTrashAttachmentsURL: {
+		validator: core.isString
 	}
 };
 

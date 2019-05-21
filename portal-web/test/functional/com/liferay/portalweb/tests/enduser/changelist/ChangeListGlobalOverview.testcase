@@ -50,7 +50,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "First Web Content");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -83,7 +83,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Second Web Content");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -113,7 +113,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -135,6 +135,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
+			changeListEnabled = "true",
 			webContentContentEdit = "WC WebContent Content Edit",
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit");
@@ -199,7 +200,9 @@ definition {
 			fieldFieldLabel = "Web Content",
 			fieldName = "WebContent");
 
-		WebContentStructures.saveCP(structureName = "My Structure");
+		WebContentStructures.saveCP(
+			changeListEnabled = "true",
+			structureName = "My Structure");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -225,6 +228,7 @@ definition {
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.addCP(
+			changeListEnabled = "true",
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");

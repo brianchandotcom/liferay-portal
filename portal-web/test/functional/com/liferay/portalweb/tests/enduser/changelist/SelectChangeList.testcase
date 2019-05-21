@@ -68,7 +68,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -87,6 +87,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
+			changeListEnabled = "true",
 			webContentContentEdit = "WC WebContent Content Edit",
 			webContentTitle = "Web Content Title",
 			webContentTitleEdit = "Web Content Title Edit");
@@ -149,7 +150,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublishToChangeList();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",

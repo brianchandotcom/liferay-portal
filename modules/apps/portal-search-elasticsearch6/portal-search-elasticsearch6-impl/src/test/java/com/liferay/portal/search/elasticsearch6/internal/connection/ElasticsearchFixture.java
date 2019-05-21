@@ -44,6 +44,7 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.common.unit.TimeValue;
 
 import org.mockito.Mockito;
@@ -168,6 +169,20 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 
 	public void tearDown() throws Exception {
 		destroyNode();
+	}
+
+	public void waitForElasticsearchToStart() {
+		getClusterHealthResponse(
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(0);
+					setActiveShards(0);
+					setNumberOfDataNodes(1);
+					setNumberOfNodes(1);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
 	}
 
 	protected static String getSimpleName(Class clazz) {

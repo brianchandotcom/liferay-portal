@@ -58,7 +58,7 @@
 			</label>
 
 			<button
-				class="btn btn-sm btn-outline-light mr-2 text-left truncate-text"
+				class="btn btn-sm btn-secondary form-control-select mr-2 text-left truncate-text"
 				data-onclick="{$_handleDropdownButtonClick}"
 				data-onblur="{$_handleDropdownBlur}"
 				type="button"
@@ -73,20 +73,33 @@
 				data-onblur="{$_handleDropdownBlur}"
 				tabindex="-1"
 			>
-				<div class="align-items-start d-flex justify-content-between">
-					<h5>{msg desc=""}select-experience{/msg}</h5>
+				<div class="align-items-end d-flex justify-content-between mb-4">
+					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
+					{let $disabledExperienceButton: not ($availableSegmentsEntries != null and length($availableSegmentsEntries) > 0) /}
 
-					{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openCreateModal}" ref="newExperienceBtn" type="button" >
-							{msg desc=""}new-experience{/msg}
-						</button>
-					{/if}
+					{let $newExperience kind="text"}
+						{msg desc=""}new-experience{/msg}
+					{/let}
+
+					{call ClayButton.render}
+						{param ariaLabel: $newExperience /}
+						{param label: $newExperience /}
+						{param disabled: $disabledExperienceButton /}
+						{param events: [
+							'click': $_openCreateModal,
+						] /}
+						{param ref: 'newExperienceBtn' /}
+						{param size: 'sm' /}
+						{param spritemap: $spritemap /}
+						{param style: 'secondary' /}
+					{/call}
 				</div>
 
 				{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.deletion }
 					{let $errorMessage kind="text"}
 						{msg desc=""}an-unexpected-error-occurred-while-deleting-the-experience{/msg}
 					{/let}
+
 					{call ClayAlert.render}
 						{param elementClasses: 'p-3 pr-5' /}
 						{param closeable: true /}
@@ -100,141 +113,189 @@
 					{/call}
 				{/if}
 
-				<ul class="list-unstyled mt-3">
-					{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
+				{let $experiencesHelpMessage kind="text"}
+					{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
+						{msg desc=""}experience-help-message-empty-state{/msg}
+					{else}
+						{msg desc=""}experience-help-message-started-state{/msg}
+					{/if}
+				{/let}
 
-					{foreach $experience in $availableSegmentsExperiences}
-						{let $experienceClasses kind="text"}
-							d-flex
-							{sp}dropdown-menu__experience
+				<p class="mb-4 text-secondary">
+					{$experiencesHelpMessage}
+				</p>
 
-							{if $experience.segmentsExperienceId == $segmentsExperienceId }
-								{sp}dropdown-menu__experience--active
-							{/if}
+				{let $experiencesWarning kind="text"}
+					{msg desc=""}changes-to-experiences-are-applied-immediately{/msg}
+				{/let}
+
+				{let $warning kind="text"}
+					{msg desc=""}warning{/msg}:
+				{/let}
+
+				{call ClayAlert.render}
+					{param elementClasses: 'mx-0  mt-4' /}
+					{param closeable: false /}
+					{param message: $experiencesWarning /}
+					{param spritemap: $spritemap /}
+					{param style: 'warning' /}
+					{param title: $warning /}
+				{/call}
+
+				{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
+				{if length($availableSegmentsExperiences) > 1}
+					<ul class="list-unstyled mt-4">
+						{foreach $experience in $availableSegmentsExperiences}
+							{let $experienceClasses kind="text"}
+								d-flex
+								{sp}dropdown-menu__experience
+
+								{if $experience.segmentsExperienceId == $segmentsExperienceId }
+									{sp}dropdown-menu__experience--active
+								{/if}
+							{/let}
+
+							<li class="{$experienceClasses}" key="{$experience.segmentsExperienceId}">
+								<span class="overflow-hidden p-2 w-100">
+									<button
+										class="title p-1 w-100 btn btn-unstyled d-flex justify-content-between align-items-baseline text-dark"
+										data-onclick="{$_handleSegmentsExperienceClick}"
+										data-segments-experience-id="{$experience.segmentsExperienceId}"
+										ref="selectExperienceButton{$experience.segmentsExperienceId}"
+										tabindex="0"
+										type="button"
+									>
+										<span class="d-flex flex-column flex-grow-1 truncate-text">
+											<strong class="truncate-text">{$experience.name}</strong>
+
+											<span class="audience d-block truncate-text">
+												<span class="text-secondary">
+													{msg desc=""}audience{/msg}
+													{sp}-{sp}
+												</span>
+
+												{$experience.segmentsEntryName}
+											</span>
+										</span>
+									</button>
+								</span>
+
+								{if $defaultSegmentsExperienceId != $experience.segmentsExperienceId }
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
+										{let $disbledMoveUp: (isFirst($experience)) /}
+										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
+										{let $priorityUpButtonRef: 'buttonPriorityUp' + $experience.segmentsExperienceId /}
+										{let $priorityDownButtonRef: 'buttonPriorityDown' + $experience.segmentsExperienceId /}
+
+										{let $prioritizeLabel kind="text"}
+											{msg desc=""}prioritize-experience{/msg}
+										{/let}
+
+										{call ClayButton.render}
+											{param ariaLabel: $prioritizeLabel /}
+											{param disabled: $disbledMoveUp /}
+											{param data: [
+												'priority': $experience.priority,
+												'segmentsExperienceId': $experience.segmentsExperienceId
+											]/}
+											{param elementClasses: 'btn-borderless ml-2 mr-0 text-dark' /}
+											{param events: [
+												'click': $_handleMoveExperienceUpButtonClick,
+											] /}
+											{param icon: 'angle-up' /}
+											{param monospaced: true /}
+											{param ref: $priorityUpButtonRef /}
+											{param size: 'sm' /}
+											{param spritemap: $spritemap /}
+											{param style: 'unstyled' /}
+										{/call}
+
+										{let $deprioritizeLabel kind="text"}
+											{msg desc=""}deprioritize-experience{/msg}
+										{/let}
+
+										{call ClayButton.render}
+											{param ariaLabel: $deprioritizeLabel /}
+											{param disabled: $disbledMoveDown /}
+											{param data: [
+												'priority': $experience.priority,
+												'segmentsExperienceId': $experience.segmentsExperienceId
+											]/}
+											{param elementClasses: 'btn-borderless ml-0 mr-2 text-dark' /}
+											{param events: [
+												'click': $_handleMoveExperienceDownButtonClick
+											] /}
+											{param icon: 'angle-down' /}
+											{param monospaced: true /}
+											{param ref: $priorityDownButtonRef /}
+											{param size: 'sm' /}
+											{param spritemap: $spritemap /}
+											{param style: 'unstyled' /}
+										{/call}
+
+										{let $editLabel kind="text"}
+											{msg desc=""}edit-experience{/msg}
+										{/let}
+
+										{call ClayButton.render}
+											{param ariaLabel: $editLabel /}
+											{param data: [
+												'segmentsExperienceId': $experience.segmentsExperienceId,
+												'name': $experience.name,
+												'segmentsEntryId': $experience.segmentsEntryId
+											]/}
+											{param elementClasses: 'btn-borderless mx-2 text-dark' /}
+											{param events: [
+												'click': $_handleEditButtonClick,
+											] /}
+											{param icon: 'pencil' /}
+											{param monospaced: true /}
+											{param spritemap: $spritemap /}
+											{param style: 'unstyled' /}
+										{/call}
+
+										{let $deleteLabel kind="text"}
+											{msg desc=""}delete-experience{/msg}
+										{/let}
+
+										{call ClayButton.render}
+											{param ariaLabel: $deleteLabel /}
+											{param data: [
+												'segmentsExperienceId': $experience.segmentsExperienceId
+											]/}
+											{param elementClasses: 'btn-borderless mx-2 text-dark' /}
+											{param events: [
+												'click': $_handleDeleteButtonClick,
+											] /}
+											{param icon: 'times-circle' /}
+											{param monospaced: true /}
+											{param spritemap: $spritemap /}
+											{param style: 'unstyled' /}
+										{/call}
+									</div>
+								{/if}
+							</li>
+						{/foreach}
+					</ul>
+				{else}
+					{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1}
+						{let $experiencesEmptyInfo kind="text"}
+							{msg desc=""}experiences-requirements-info{/msg}
 						{/let}
 
-						<li class="{$experienceClasses}" key="{$experience.segmentsExperienceId}">
-							<span class="overflow-hidden p-2 w-100">
-								<button
-									class="title p-1 w-100 btn btn-unstyled d-flex justify-content-between align-items-baseline text-dark"
-									data-onclick="{$_handleSegmentsExperienceClick}"
-									data-segments-experience-id="{$experience.segmentsExperienceId}"
-									ref="selectExperienceButton{$experience.segmentsExperienceId}"
-									tabindex="0"
-									type="button"
-								>
-									<span class="d-flex flex-column flex-grow-1 truncate-text">
-										<strong class="truncate-text">{$experience.name}</strong>
-
-										<span class="audience d-block truncate-text">
-											<span class="text-secondary">
-												{msg desc=""}audience{/msg}
-												{sp}-{sp}
-											</span>
-
-											{$experience.segmentsEntryName}
-										</span>
-									</span>
-								</button>
-							</span>
-
-							{if $defaultSegmentsExperienceId != $experience.segmentsExperienceId }
-								<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
-									{let $disbledMoveUp: (isFirst($experience)) /}
-									{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
-									{let $priorityUpButtonRef: 'buttonPriorityUp' + $experience.segmentsExperienceId /}
-									{let $priorityDownButtonRef: 'buttonPriorityDown' + $experience.segmentsExperienceId /}
-
-									{let $prioritizeLabel kind="text"}
-										{msg desc=""}prioritize-experience{/msg}
-									{/let}
-
-									{call ClayButton.render}
-										{param ariaLabel: $prioritizeLabel /}
-										{param disabled: $disbledMoveUp /}
-										{param data: [
-											'priority': $experience.priority,
-											'segmentsExperienceId': $experience.segmentsExperienceId
-										]/}
-										{param elementClasses: 'btn-borderless ml-2 mr-0 text-dark' /}
-										{param events: [
-											'click': $_handleMoveExperienceUpButtonClick,
-										] /}
-										{param icon: 'angle-up' /}
-										{param monospaced: true /}
-										{param ref: $priorityUpButtonRef /}
-										{param size: 'sm' /}
-										{param spritemap: $spritemap /}
-										{param style: 'unstyled' /}
-									{/call}
-
-									{let $deprioritizeLabel kind="text"}
-										{msg desc=""}deprioritize-experience{/msg}
-									{/let}
-
-									{call ClayButton.render}
-										{param ariaLabel: $deprioritizeLabel /}
-										{param disabled: $disbledMoveDown /}
-										{param data: [
-											'priority': $experience.priority,
-											'segmentsExperienceId': $experience.segmentsExperienceId
-										]/}
-										{param elementClasses: 'btn-borderless ml-0 mr-2 text-dark' /}
-										{param events: [
-											'click': $_handleMoveExperienceDownButtonClick
-										] /}
-										{param icon: 'angle-down' /}
-										{param monospaced: true /}
-										{param ref: $priorityDownButtonRef /}
-										{param size: 'sm' /}
-										{param spritemap: $spritemap /}
-										{param style: 'unstyled' /}
-									{/call}
-
-									{let $editLabel kind="text"}
-										{msg desc=""}edit-experience{/msg}
-									{/let}
-
-									{call ClayButton.render}
-										{param ariaLabel: $editLabel /}
-										{param data: [
-											'segmentsExperienceId': $experience.segmentsExperienceId,
-											'name': $experience.name,
-											'segmentsEntryId': $experience.segmentsEntryId
-										]/}
-										{param elementClasses: 'btn-borderless mx-2 text-dark' /}
-										{param events: [
-											'click': $_handleEditButtonClick,
-										] /}
-										{param icon: 'pencil' /}
-										{param monospaced: true /}
-										{param spritemap: $spritemap /}
-										{param style: 'unstyled' /}
-									{/call}
-
-									{let $deleteLabel kind="text"}
-										{msg desc=""}delete-experience{/msg}
-									{/let}
-
-									{call ClayButton.render}
-										{param ariaLabel: $deleteLabel /}
-										{param data: [
-											'segmentsExperienceId': $experience.segmentsExperienceId
-										]/}
-										{param elementClasses: 'btn-borderless mx-2 text-dark' /}
-										{param events: [
-											'click': $_handleDeleteButtonClick,
-										] /}
-										{param icon: 'times-circle' /}
-										{param monospaced: true /}
-										{param spritemap: $spritemap /}
-										{param style: 'unstyled' /}
-									{/call}
-								</div>
-							{/if}
-						</li>
-					{/foreach}
-				</ul>
+						{let $info kind="text"}
+							{msg desc=""}info{/msg}:
+						{/let}
+						{call ClayAlert.render}
+							{param elementClasses: 'mx-0 mt-4' /}
+							{param closeable: false /}
+							{param message: $experiencesEmptyInfo /}
+							{param spritemap: $spritemap /}
+							{param style: 'info' /}
+							{param title: $info /}
+						{/call}
+					{/if}
+				{/if}
 			</div>
 		</div>
 

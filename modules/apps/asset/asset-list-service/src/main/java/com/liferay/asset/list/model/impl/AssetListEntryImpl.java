@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
@@ -43,7 +44,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,17 +144,15 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			properties.getProperty("anyAssetType", null), true);
-
 		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(getCompanyId());
+		long[] classTypeIds = {};
 
 		if (!anyAssetType) {
 			long[] classNameIds = _getClassNameIds(
 				properties, availableClassNameIds);
 
 			assetEntryQuery.setClassNameIds(classNameIds);
-
-			long[] classTypeIds = {};
 
 			for (long classNameId : classNameIds) {
 				String className = PortalUtil.getClassName(classNameId);
@@ -163,6 +165,25 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		}
 		else {
 			assetEntryQuery.setClassNameIds(availableClassNameIds);
+		}
+
+		String ddmStructureFieldName = properties.getProperty(
+			"ddmStructureFieldName");
+
+		String ddmStructureFieldValue = properties.getProperty(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue) &&
+			(classTypeIds.length == 1)) {
+
+			assetEntryQuery.setAttribute(
+				"ddmStructureFieldName",
+				DDMIndexerUtil.encodeName(
+					classTypeIds[0], ddmStructureFieldName,
+					LocaleUtil.getMostRelevantLocale()));
+			assetEntryQuery.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
 
 		String orderByColumn1 = GetterUtil.getString(
@@ -320,7 +341,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	private long[] _getClassTypeIds(
 		UnicodeProperties properties, String className) {
 
-		long[] availableClassTypeIds = null;
+		long[] availableClassTypeIds = {};
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -350,23 +371,30 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			}
 		}
 
+		Class<?> clazz = assetRendererFactory.getClass();
+
 		boolean anyAssetType = GetterUtil.getBoolean(
 			properties.getProperty(
-				"anyClassType" + className, Boolean.TRUE.toString()));
+				"anyClassType" + clazz.getSimpleName(),
+				Boolean.TRUE.toString()));
 
 		if (anyAssetType) {
 			return availableClassTypeIds;
 		}
 
 		long anyClassTypeId = GetterUtil.getLong(
-			properties.getProperty("anyClassType" + className, null), -1);
+			properties.getProperty(
+				"anyClassType" + clazz.getSimpleName(), null),
+			-1);
 
 		if (anyClassTypeId > -1) {
 			return new long[] {anyClassTypeId};
 		}
 
 		long[] classTypeIds = StringUtil.split(
-			properties.getProperty("classTypeIds" + className, null), 0L);
+			properties.getProperty(
+				"classTypeIds" + clazz.getSimpleName(), null),
+			0L);
 
 		if (classTypeIds != null) {
 			return classTypeIds;
@@ -428,6 +456,20 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		long companyId, AssetEntryQuery assetEntryQuery) {
 
 		SearchContext searchContext = new SearchContext();
+
+		String ddmStructureFieldName = GetterUtil.getString(
+			assetEntryQuery.getAttribute("ddmStructureFieldName"));
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
 
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setCompanyId(companyId);

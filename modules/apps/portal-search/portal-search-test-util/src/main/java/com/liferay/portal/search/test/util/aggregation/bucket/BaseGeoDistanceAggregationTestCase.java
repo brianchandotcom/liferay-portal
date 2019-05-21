@@ -56,7 +56,7 @@ public abstract class BaseGeoDistanceAggregationTestCase
 				Field.GEO_LOCATION, 48.860000, 2.327000));
 
 		GeoDistanceAggregation geoDistanceAggregation =
-			aggregationFixture.newGeoDistanceAggregation(
+			aggregations.geoDistance(
 				"geo_distance", Field.GEO_LOCATION,
 				geoBuilders.geoLocationPoint(52.3760, 4.894));
 

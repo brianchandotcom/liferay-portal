@@ -48,8 +48,7 @@ public abstract class BaseBucketSelectorPipelineAggregationTestCase
 		Script script = scripts.script("params.sum > 40");
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
-			aggregationFixture.newBucketSelectorPipelineAggregation(
-				"bucket_selector", script);
+			aggregations.bucketSelector("bucket_selector", script);
 
 		bucketSelectorPipelineAggregation.addBucketPath("sum", "sum");
 

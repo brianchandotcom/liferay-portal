@@ -51,9 +51,8 @@ public abstract class BaseGeoCentroidAggregationTestCase
 			DocumentCreationHelpers.singleGeoLocation(
 				Field.GEO_LOCATION, 48.860000, 2.327000));
 
-		GeoCentroidAggregation geoBoundsAggregation =
-			aggregationFixture.newGeoCentroidAggregation(
-				"geoCentroid", Field.GEO_LOCATION);
+		GeoCentroidAggregation geoBoundsAggregation = aggregations.geoCentroid(
+			"geoCentroid", Field.GEO_LOCATION);
 
 		assertSearch(
 			indexingTestHelper -> {

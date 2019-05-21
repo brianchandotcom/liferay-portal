@@ -48,8 +48,7 @@ public abstract class BaseCumulativeSumPipelineAggregationTestCase
 			aggregationFixture.getDefaultHistogramAggregation();
 
 		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation =
-			aggregationFixture.newCumulativeSumPipelineAggregation(
-				"cumulative_sum", "sum");
+			aggregations.cumulativeSum("cumulative_sum", "sum");
 
 		histogramAggregation.addPipelineAggregation(
 			cumulativeSumPipelineAggregation);

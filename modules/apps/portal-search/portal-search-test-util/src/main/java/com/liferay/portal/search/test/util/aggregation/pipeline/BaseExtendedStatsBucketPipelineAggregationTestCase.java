@@ -37,7 +37,7 @@ public abstract class BaseExtendedStatsBucketPipelineAggregationTestCase
 		}
 
 		PipelineAggregation pipelineAggregation =
-			aggregationFixture.newExtendedStatsBucketPipelineAggregation(
+			aggregations.extendedStatsBucket(
 				"extended_stats_bucket", "histogram>sum");
 
 		assertSearch(

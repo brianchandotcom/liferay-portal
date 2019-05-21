@@ -48,8 +48,7 @@ public abstract class BaseDerivativePipelineAggregationTestCase
 			aggregationFixture.getDefaultHistogramAggregation();
 
 		DerivativePipelineAggregation derivativePipelineAggregation =
-			aggregationFixture.newDerivativePipelineAggregation(
-				"derivative", "sum");
+			aggregations.derivative("derivative", "sum");
 
 		histogramAggregation.addPipelineAggregation(
 			derivativePipelineAggregation);

@@ -51,8 +51,7 @@ public abstract class BaseBucketScriptPipelineAggregationTestCase
 		Script script = scripts.script("params.sum * 50");
 
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
-			aggregationFixture.newBucketScriptPipelineAggregation(
-				"bucket_script", script);
+			aggregations.bucketScript("bucket_script", script);
 
 		bucketScriptPipelineAggregation.addBucketPath("sum", "sum");
 

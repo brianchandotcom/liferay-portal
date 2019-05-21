@@ -38,7 +38,7 @@ public abstract class BaseWeightedAvgAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
 		WeightedAvgAggregation weightedAvgAggregation =
-			aggregationFixture.newWeightedAvgAggregation(
+			aggregations.weightedAvg(
 				"weighted_avg", Field.PRIORITY, Field.PRIORITY);
 
 		assertSearch(

@@ -49,8 +49,7 @@ public abstract class BaseMovingFunctionPipelineAggregationTestCase
 		Script script = scripts.script("MovingFunctions.unweightedAvg(values)");
 
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation =
-			aggregationFixture.newMovingFunctionPipelineAggregation(
-				"moving_fn", script, "sum", 5);
+			aggregations.movingFunction("moving_fn", script, "sum", 5);
 
 		histogramAggregation.addPipelineAggregation(
 			movingFunctionPipelineAggregation);

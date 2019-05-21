@@ -53,8 +53,9 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 			aggregationFixture.getDefaultHistogramAggregation();
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			aggregationFixture.newBucketSortPipelineAggregation(
-				"bucket_sort", fieldSort, null);
+			aggregations.bucketSort("bucket_sort");
+
+		bucketSortPipelineAggregation.addSortFields(fieldSort);
 
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
@@ -96,8 +97,10 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 			aggregationFixture.getDefaultHistogramAggregation();
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			aggregationFixture.newBucketSortPipelineAggregation(
-				"bucket_sort", fieldSort, 3);
+			aggregations.bucketSort("bucket_sort");
+
+		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		bucketSortPipelineAggregation.setSize(3);
 
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);

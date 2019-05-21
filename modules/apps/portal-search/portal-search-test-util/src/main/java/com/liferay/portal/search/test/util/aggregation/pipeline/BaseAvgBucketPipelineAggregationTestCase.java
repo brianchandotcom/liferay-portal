@@ -36,10 +36,8 @@ public abstract class BaseAvgBucketPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-
-		PipelineAggregation pipelineAggregation =
-			aggregationFixture.newPipelineAggregation(
-				"avg_bucket", "histogram>sum");
+		PipelineAggregation pipelineAggregation = aggregations.avgBucket(
+			"avg_bucket", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {

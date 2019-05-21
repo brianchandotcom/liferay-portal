@@ -33,8 +33,7 @@ public abstract class BaseMinAggregationTestCase extends BaseIndexingTestCase {
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 1));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
-		MinAggregation minAggregation = aggregationFixture.newMinAggregation(
-			"min", Field.PRIORITY);
+		MinAggregation minAggregation = aggregations.min("min", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

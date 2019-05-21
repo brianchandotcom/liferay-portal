@@ -37,8 +37,7 @@ public abstract class BaseSumBucketPipelineAggregationTestCase
 		}
 
 		SumBucketPipelineAggregation sumBucketPipelineAggregation =
-			aggregationFixture.newSumBucketPipelineAggregation(
-				"sum_bucket", "histogram>sum");
+			aggregations.sumBucket("sum_bucket", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {

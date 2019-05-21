@@ -37,8 +37,7 @@ public abstract class BaseMinBucketPipelineAggregationTestCase
 		}
 
 		MinBucketPipelineAggregation minBucketPipelineAggregation =
-			aggregationFixture.newMinBucketPipelineAggregation(
-				"min_bucket", "histogram>sum");
+			aggregations.minBucket("min_bucket", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {

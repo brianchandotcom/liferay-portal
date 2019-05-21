@@ -37,8 +37,7 @@ public abstract class BaseMaxBucketPipelineAggregationTestCase
 		}
 
 		MaxBucketPipelineAggregation maxBucketPipelineAggregation =
-			aggregationFixture.newMaxBucketPipelineAggregation(
-				"max_bucket", "histogram>sum");
+			aggregations.maxBucket("max_bucket", "histogram>sum");
 
 		assertSearch(
 			indexingTestHelper -> {

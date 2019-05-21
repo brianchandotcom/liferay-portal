@@ -52,8 +52,10 @@ public abstract class BasePercentileRanksAggregationTestCase
 		PercentilesMethod percentilesMethod, double[] values, String expected) {
 
 		PercentileRanksAggregation percentileRanksAggregation =
-			aggregationFixture.newPercentileRanksAggregation(
-				"percentileRanks", Field.PRIORITY, percentilesMethod, values);
+			aggregations.percentileRanks(
+				"percentileRanks", Field.PRIORITY, values);
+
+		percentileRanksAggregation.setPercentilesMethod(percentilesMethod);
 
 		assertSearch(
 			indexingTestHelper -> {

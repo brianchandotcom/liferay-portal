@@ -55,8 +55,9 @@ public abstract class BaseGeoHashGridAggregationTestCase
 				Field.GEO_LOCATION, 48.860000, 2.327000));
 
 		GeoHashGridAggregation geoHashGridAggregation =
-			aggregationFixture.newGeoHashGridAggregation(
-				"geoHash", Field.GEO_LOCATION, 3);
+			aggregations.geoHashGrid("geoHash", Field.GEO_LOCATION);
+
+		geoHashGridAggregation.setPrecision(3);
 
 		assertSearch(
 			indexingTestHelper -> {

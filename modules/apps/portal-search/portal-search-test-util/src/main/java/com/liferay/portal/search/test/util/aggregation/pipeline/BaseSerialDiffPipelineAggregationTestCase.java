@@ -48,8 +48,7 @@ public abstract class BaseSerialDiffPipelineAggregationTestCase
 			aggregationFixture.getDefaultHistogramAggregation();
 
 		SerialDiffPipelineAggregation serialDiffPipelineAggregation =
-			aggregationFixture.newSerialDiffPipelineAggregation(
-				"serial_diff", "sum");
+			aggregations.serialDiff("serial_diff", "sum");
 
 		serialDiffPipelineAggregation.setLag(2);
 

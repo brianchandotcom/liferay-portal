@@ -44,8 +44,8 @@ public abstract class BaseFiltersAggregationTestCase
 		index("SomeUser2", 6);
 		index("SomeUser2", 7);
 
-		FiltersAggregation filtersAggregation =
-			aggregationFixture.newFiltersAggregation("filter", Field.USER_NAME);
+		FiltersAggregation filtersAggregation = aggregations.filters(
+			"filter", Field.USER_NAME);
 
 		filtersAggregation.addKeyedQuery(
 			"SomeUser1", queries.term(Field.USER_NAME, "SomeUser1"));
@@ -53,8 +53,7 @@ public abstract class BaseFiltersAggregationTestCase
 		filtersAggregation.addKeyedQuery(
 			"SomeUser2", queries.term(Field.USER_NAME, "SomeUser2"));
 
-		SumAggregation sumAggregation = aggregationFixture.newSumAggregation(
-			"sum", Field.PRIORITY);
+		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
 
 		filtersAggregation.addChildAggregation(sumAggregation);
 

@@ -33,8 +33,7 @@ public abstract class BaseMaxAggregationTestCase extends BaseIndexingTestCase {
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 1));
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
-		MaxAggregation maxAggregation = aggregationFixture.newMaxAggregation(
-			"max", Field.PRIORITY);
+		MaxAggregation maxAggregation = aggregations.max("max", Field.PRIORITY);
 
 		assertSearch(
 			indexingTestHelper -> {

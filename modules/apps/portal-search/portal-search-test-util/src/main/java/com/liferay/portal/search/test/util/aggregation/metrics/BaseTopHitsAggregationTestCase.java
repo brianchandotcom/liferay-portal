@@ -73,12 +73,14 @@ public abstract class BaseTopHitsAggregationTestCase
 				document.addNumber(Field.PRIORITY, 5);
 			});
 
-		TermsAggregation termsAggregation =
-			aggregationFixture.newTermsAggregation("terms", Field.USER_NAME);
+		TermsAggregation termsAggregation = aggregations.terms(
+			"terms", Field.USER_NAME);
 
-		TopHitsAggregation topHitsAggregation =
-			aggregationFixture.newTopHitsAggregation(
-				"topHits", 1, sorts.field(Field.PRIORITY, SortOrder.DESC));
+		TopHitsAggregation topHitsAggregation = aggregations.topHits("topHits");
+
+		topHitsAggregation.addSortFields(
+			sorts.field(Field.PRIORITY, SortOrder.DESC));
+		topHitsAggregation.setSize(1);
 
 		termsAggregation.addChildAggregation(topHitsAggregation);
 

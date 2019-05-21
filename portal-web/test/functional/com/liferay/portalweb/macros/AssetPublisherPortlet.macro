@@ -251,7 +251,7 @@ definition {
 		if ("${displayPage}" == "true") {
 			var key_portletName = "${portletName}";
 
-			Click(locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
+			Click.clickNoWaitForVisible(locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 		}

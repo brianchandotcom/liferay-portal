@@ -353,7 +353,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		boolean hasLock = dlFileEntryLocalService.hasFileEntryLock(
-			userId, fileEntry.getFileEntryId());
+			userId, fileEntry.getFileEntryId(), fileEntry.getFolderId());
 
 		if (!hasLock) {
 			dlFileEntryLocalService.lockFileEntry(
@@ -384,7 +384,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		boolean hasLock = dlFileEntryLocalService.hasFileEntryLock(
-			userId, fileEntry.getFileEntryId());
+			userId, fileEntry.getFileEntryId(), fileEntry.getFolderId());
 
 		if (!hasLock) {
 			dlFileEntryLocalService.lockFileEntry(

@@ -325,6 +325,32 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 	}
 
+	protected String getBranchContent(String fileName, String branchName)
+		throws IOException {
+
+		if (Validator.isNull(branchName)) {
+			String content = getContent(
+				fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
+		URL url = _getPortalGitURL(fileName, branchName);
+
+		if (url == null) {
+			return null;
+		}
+
+		try {
+			return StringUtil.read(url.openStream());
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+	}
+
 	protected String getContent(String fileName, int level) throws IOException {
 		File file = getFile(fileName, level);
 
@@ -461,32 +487,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String portalBranchName = _getPortalBranchName(!forceRetrieveFromGit);
 
 		return getBranchContent(fileName, portalBranchName);
-	}
-
-	protected String getBranchContent(String fileName, String branchName)
-		throws IOException {
-
-		if (Validator.isNull(branchName)) {
-			String content = getContent(
-				fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-			if (Validator.isNotNull(content)) {
-				return content;
-			}
-		}
-
-		URL url = _getPortalGitURL(fileName, branchName);
-
-		if (url == null) {
-			return null;
-		}
-
-		try {
-			return StringUtil.read(url.openStream());
-		}
-		catch (IOException ioe) {
-			return null;
-		}
 	}
 
 	protected synchronized Document getPortalCustomSQLDocument()

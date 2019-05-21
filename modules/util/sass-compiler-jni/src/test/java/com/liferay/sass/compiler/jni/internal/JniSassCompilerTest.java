@@ -74,7 +74,7 @@ public class JniSassCompilerTest {
 			String actualOutput = sassCompiler.compileFile(
 				inputFile.getCanonicalPath(), "", true);
 
-			Assert.assertNotNull("Testing" + fileName, actualOutput);
+			Assert.assertNotNull("Testing: " + fileName, actualOutput);
 
 			String expectedOutputFileName = fileName.replace("scss", "css");
 
@@ -85,7 +85,7 @@ public class JniSassCompilerTest {
 				String expectedOutput = read(expectedOutputFile.toPath());
 
 				Assert.assertEquals(
-					"Testing" + fileName, stripNewLines(expectedOutput),
+					"Testing: " + fileName, stripNewLines(expectedOutput),
 					stripNewLines(actualOutput));
 			}
 		}
@@ -113,14 +113,14 @@ public class JniSassCompilerTest {
 			String actualOutput = sassCompiler.compileFile(
 				inputFile.getCanonicalPath(), "", false);
 
-			Assert.assertNotNull("Testing " + dirName, actualOutput);
+			Assert.assertNotNull("Testing: " + dirName, actualOutput);
 
 			File expectedOutputFile = new File(testDir, "expected_output.css");
 
 			String expectedOutput = read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				"Testing " + dirName, stripNewLines(expectedOutput),
+				"Testing: " + dirName, stripNewLines(expectedOutput),
 				stripNewLines(actualOutput));
 		}
 	}

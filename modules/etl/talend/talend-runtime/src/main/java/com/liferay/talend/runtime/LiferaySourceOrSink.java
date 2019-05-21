@@ -70,11 +70,11 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
-	public JsonNode doApioDeleteRequest(RuntimeContainer runtimeContainer) {
-		return doApioDeleteRequest(runtimeContainer, null);
+	public JsonNode doDeleteRequest(RuntimeContainer runtimeContainer) {
+		return doDeleteRequest(runtimeContainer, null);
 	}
 
-	public JsonNode doApioDeleteRequest(
+	public JsonNode doDeleteRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
@@ -84,15 +84,15 @@ public class LiferaySourceOrSink
 		return response.readEntity(JsonNode.class);
 	}
 
-	public JsonNode doApioDeleteRequest(String resourceURL) {
-		return doApioDeleteRequest(null, resourceURL);
+	public JsonNode doDeleteRequest(String resourceURL) {
+		return doDeleteRequest(null, resourceURL);
 	}
 
-	public JsonNode doApioGetRequest(RuntimeContainer runtimeContainer) {
-		return doApioGetRequest(runtimeContainer, null);
+	public JsonNode doGetRequest(RuntimeContainer runtimeContainer) {
+		return doGetRequest(runtimeContainer, null);
 	}
 
-	public JsonNode doApioGetRequest(
+	public JsonNode doGetRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
@@ -102,53 +102,53 @@ public class LiferaySourceOrSink
 		return response.readEntity(JsonNode.class);
 	}
 
-	public JsonNode doApioGetRequest(String resourceURL) {
-		return doApioGetRequest(null, resourceURL);
+	public JsonNode doGetRequest(String resourceURL) {
+		return doGetRequest(null, resourceURL);
 	}
 
-	public JsonNode doApioPostRequest(
-		RuntimeContainer runtimeContainer, JsonNode apioForm) {
+	public JsonNode doPatchRequest(
+			RuntimeContainer runtimeContainer, JsonNode jsonNode)
+		throws IOException {
 
-		return doApioPostRequest(runtimeContainer, null, apioForm);
+		return doPatchRequest(runtimeContainer, null, jsonNode);
 	}
 
-	public JsonNode doApioPostRequest(
+	public JsonNode doPatchRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonNode apioForm) {
+		JsonNode jsonNode) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePostRequest(apioForm);
+		Response response = restClient.executePatchRequest(jsonNode);
 
 		return response.readEntity(JsonNode.class);
 	}
 
-	public JsonNode doApioPostRequest(String resourceURL, JsonNode apioForm)
-		throws IOException {
-
-		return doApioPostRequest(null, resourceURL, apioForm);
+	public JsonNode doPatchRequest(String resourceURL, JsonNode jsonNode) {
+		return doPatchRequest(null, resourceURL, jsonNode);
 	}
 
-	public JsonNode doApioPutRequest(
-			RuntimeContainer runtimeContainer, JsonNode apioForm)
-		throws IOException {
+	public JsonNode doPostRequest(
+		RuntimeContainer runtimeContainer, JsonNode jsonNode) {
 
-		return doApioPutRequest(runtimeContainer, null, apioForm);
+		return doPostRequest(runtimeContainer, null, jsonNode);
 	}
 
-	public JsonNode doApioPutRequest(
+	public JsonNode doPostRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonNode apioForm) {
+		JsonNode jsonNode) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePutRequest(apioForm);
+		Response response = restClient.executePostRequest(jsonNode);
 
 		return response.readEntity(JsonNode.class);
 	}
 
-	public JsonNode doApioPutRequest(String resourceURL, JsonNode apioForm) {
-		return doApioPutRequest(null, resourceURL, apioForm);
+	public JsonNode doPostRequest(String resourceURL, JsonNode jsonNode)
+		throws IOException {
+
+		return doPostRequest(null, resourceURL, jsonNode);
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class LiferaySourceOrSink
 			"o/headless-admin-user/v1.0/my-user-account"
 		).build();
 
-		JsonNode myUserAccountJsonNode = doApioGetRequest(
+		JsonNode myUserAccountJsonNode = doGetRequest(
 			myUserAccountURI.toASCIIString());
 
 		JsonNode siteBriefsJsonNode = myUserAccountJsonNode.path("siteBriefs");
@@ -265,7 +265,7 @@ public class LiferaySourceOrSink
 		String apiSpecURLHref =
 			liferayConnectionProperties.apiSpecURL.getValue();
 
-		JsonNode apiSpecJsonNode = doApioGetRequest(apiSpecURLHref);
+		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
 
 		JsonNode paths = apiSpecJsonNode.path(OpenApiConstants.PATHS);
 
@@ -313,7 +313,7 @@ public class LiferaySourceOrSink
 	public Schema getEndpointSchema(
 		RuntimeContainer runtimeContainer, String endpoint) {
 
-		JsonNode jsonNode = doApioGetRequest(endpoint);
+		JsonNode jsonNode = doGetRequest(endpoint);
 
 		return getResourceSchemaByType("type");
 	}
@@ -331,7 +331,7 @@ public class LiferaySourceOrSink
 
 		String apiSpecURL = liferayConnectionProperties.apiSpecURL.getValue();
 
-		JsonNode apiDocumentationJsonNode = doApioGetRequest(
+		JsonNode apiDocumentationJsonNode = doGetRequest(
 			apiSpecURL.concat("/doc"));
 
 		return ResourceCollectionSchemaInferrer.inferSchemaByResourceType(
@@ -506,7 +506,7 @@ public class LiferaySourceOrSink
 				(LiferayConnectionProperties)
 					liferayConnectionPropertiesProvider);
 
-			doApioGetRequest((RuntimeContainer)null);
+			doGetRequest((RuntimeContainer)null);
 
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage("success.validation.connection"));

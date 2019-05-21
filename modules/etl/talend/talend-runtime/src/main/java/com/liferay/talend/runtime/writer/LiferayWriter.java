@@ -104,7 +104,7 @@ public class LiferayWriter
 			resourceId
 		);
 
-		_liferaySink.doApioDeleteRequest(
+		_liferaySink.doDeleteRequest(
 			_runtimeContainer, singleResourceUri.toASCIIString());
 	}
 
@@ -123,7 +123,7 @@ public class LiferayWriter
 			resourceId
 		);
 
-		_liferaySink.doApioPutRequest(
+		_liferaySink.doPatchRequest(
 			_runtimeContainer, singleResourceUri.toASCIIString(), objectNode);
 	}
 
@@ -133,8 +133,7 @@ public class LiferayWriter
 		String resourceURL =
 			_tLiferayOutputProperties.resource.endpoint.getValue();
 
-		_liferaySink.doApioPostRequest(
-			_runtimeContainer, resourceURL, objectNode);
+		_liferaySink.doPostRequest(_runtimeContainer, resourceURL, objectNode);
 	}
 
 	@Override

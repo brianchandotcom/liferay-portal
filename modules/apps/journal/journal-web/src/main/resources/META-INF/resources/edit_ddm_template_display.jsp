@@ -89,6 +89,16 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		%>
 
 		<div class="lfr-editor-container <%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
+			<clay:alert
+				closeable="true"
+				componentId="cacheableMessageContainer"
+				destroyOnHide="true"
+				elementClasses='<%= journalEditDDMTemplateDisplayContext.isCacheable() ? "mb-3" : "hide mb-3" %>'
+				message='<%= LanguageUtil.get(request, "this-template-is-marked-as-cacheable.-avoid-using-code-that-uses-request-handling,-the-cms-query-api,-taglibs,-or-other-dynamic-features.-uncheck-the-cacheable-property-if-dynamic-behavior-is-needed") %>'
+				style="warning"
+				title='<%= LanguageUtil.get(request, "warning") %>'
+			/>
+
 			<div class="lfr-rich-editor" id="<portlet:namespace />richEditor"></div>
 
 			<aui:input label="script-file" name="script" type="file" wrapperCssClass="mt-4" />
@@ -418,4 +428,6 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 			submitForm(form, null, null, false);
 		}
 	);
+
+	Liferay.Util.toggleBoxes('<portlet:namespace />cacheable', 'cacheableMessageContainer');
 </aui:script>

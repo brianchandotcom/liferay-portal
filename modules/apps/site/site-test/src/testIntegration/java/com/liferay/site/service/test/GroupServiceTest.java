@@ -559,60 +559,54 @@ public class GroupServiceTest {
 	@Test
 	public void testGetGroupsLikeName() throws Exception {
 		List<Group> allChildGroups = new ArrayList<>();
+
 		Group parentGroup = GroupTestUtil.addGroup();
+
+		_groups.addFirst(parentGroup);
 
 		List<Group> allGroups = new ArrayList<>(
 			_groupLocalService.getGroups(
 				TestPropsValues.getCompanyId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, true));
 
-		try {
-			String name = RandomTestUtil.randomString(10);
+		String name = RandomTestUtil.randomString(10);
 
-			long parentGroupId = parentGroup.getGroupId();
+		long parentGroupId = parentGroup.getGroupId();
 
-			List<Group> likeNameChildGroups = new ArrayList<>();
+		List<Group> likeNameChildGroups = new ArrayList<>();
 
-			for (int i = 0; i < 10; i++) {
-				Group group = GroupTestUtil.addGroup(parentGroupId);
+		for (int i = 0; i < 10; i++) {
+			Group group = GroupTestUtil.addGroup(parentGroupId);
 
-				group.setName(name + i);
+			group.setName(name + i);
 
-				group = _groupLocalService.updateGroup(group);
+			group = _groupLocalService.updateGroup(group);
 
-				likeNameChildGroups.add(group);
-			}
-
-			allChildGroups.addAll(likeNameChildGroups);
-			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
-			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
-			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
-
-			allGroups.addAll(allChildGroups);
-
-			assertExpectedGroups(
-				likeNameChildGroups, parentGroupId, name + "%");
-			assertExpectedGroups(
-				likeNameChildGroups, parentGroupId,
-				StringUtil.toLowerCase(name) + "%");
-			assertExpectedGroups(
-				likeNameChildGroups, parentGroupId,
-				StringUtil.toUpperCase(name) + "%");
-			assertExpectedGroups(
-				likeNameChildGroups, GroupConstants.ANY_PARENT_GROUP_ID,
-				name + "%");
-			assertExpectedGroups(allChildGroups, parentGroupId, null);
-			assertExpectedGroups(allChildGroups, parentGroupId, "");
-			assertExpectedGroups(
-				allGroups, GroupConstants.ANY_PARENT_GROUP_ID, "");
+			likeNameChildGroups.add(group);
 		}
-		finally {
-			for (Group childGroup : allChildGroups) {
-				GroupTestUtil.deleteGroup(childGroup);
-			}
 
-			GroupTestUtil.deleteGroup(parentGroup);
-		}
+		allChildGroups.addAll(likeNameChildGroups);
+		allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+		allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+		allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
+
+		allGroups.addAll(allChildGroups);
+
+		_groups.addAll(0, allChildGroups);
+
+		assertExpectedGroups(likeNameChildGroups, parentGroupId, name + "%");
+		assertExpectedGroups(
+			likeNameChildGroups, parentGroupId,
+			StringUtil.toLowerCase(name) + "%");
+		assertExpectedGroups(
+			likeNameChildGroups, parentGroupId,
+			StringUtil.toUpperCase(name) + "%");
+		assertExpectedGroups(
+			likeNameChildGroups, GroupConstants.ANY_PARENT_GROUP_ID,
+			name + "%");
+		assertExpectedGroups(allChildGroups, parentGroupId, null);
+		assertExpectedGroups(allChildGroups, parentGroupId, "");
+		assertExpectedGroups(allGroups, GroupConstants.ANY_PARENT_GROUP_ID, "");
 	}
 
 	@Test

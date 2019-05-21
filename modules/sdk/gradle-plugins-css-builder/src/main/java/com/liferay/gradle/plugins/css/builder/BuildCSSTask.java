@@ -140,8 +140,10 @@ public class BuildCSSTask extends JavaExec {
 
 	@InputFiles
 	@Optional
-	public FileCollection getImportPath() {
-		return _importPath;
+	public FileCollection getImports() {
+		Project project = getProject();
+
+		return project.files(_imports);
 	}
 
 	@Input
@@ -203,6 +205,16 @@ public class BuildCSSTask extends JavaExec {
 		return project.files(sourceMapFiles);
 	}
 
+	public BuildCSSTask imports(Iterable<Object> imports) {
+		GUtil.addToCollection(_imports, imports);
+
+		return this;
+	}
+
+	public BuildCSSTask imports(Object... imports) {
+		return imports(Arrays.asList(imports));
+	}
+
 	@Input
 	public boolean isAppendCssImportTimestamps() {
 		return _appendCssImportTimestamps;
@@ -261,8 +273,14 @@ public class BuildCSSTask extends JavaExec {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setImportPath(FileCollection importPath) {
-		_importPath = importPath;
+	public void setImports(Iterable<Object> imports) {
+		_imports.clear();
+
+		imports(imports);
+	}
+
+	public void setImports(Object... imports) {
+		setImports(Arrays.asList(imports));
 	}
 
 	public void setOutputDirName(Object outputDirName) {
@@ -327,9 +345,9 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("--generate-source-map=" + isGenerateSourceMap());
 
-		FileCollection importPath = getImportPath();
+		FileCollection imports = getImports();
 
-		args.add("--import-paths=" + importPath.getAsPath());
+		args.add("--import-paths=" + imports.getAsPath());
 
 		args.add("--output-dir=" + _addTrailingSlash(getOutputDirName()));
 
@@ -397,7 +415,7 @@ public class BuildCSSTask extends JavaExec {
 	private final Set<Object> _excludes = new LinkedHashSet<>(
 		Arrays.asList(CSSBuilderArgs.EXCLUDES));
 	private boolean _generateSourceMap;
-	private FileCollection _importPath;
+	private final List<Object> _imports = new ArrayList<>();
 	private Object _outputDirName = CSSBuilderArgs.OUTPUT_DIR_NAME;
 	private Object _precision = CSSBuilderArgs.PRECISION;
 	private final Set<Object> _rtlExcludedPathRegexps = new LinkedHashSet<>();

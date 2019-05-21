@@ -114,7 +114,6 @@
 			options.breakpoint = toInt(options.breakpoint);
 			options.container = options.container || toggler.data('target') || toggler.attr('href');
 			options.gutter = toInt(options.gutter);
-			options.heightType = options.heightType || (options.equalHeight ? 'equalHeight' : false);
 			options.rtl = doc.attr('dir') === 'rtl';
 			options.width = toInt(options.width);
 			options.widthOriginal = options.width;
@@ -124,7 +123,6 @@
 			if (useDataAttribute) {
 				options.closedClass = toggler.data('closed-class') || 'closed';
 				options.content = toggler.data('content');
-				options.equalHeight = false; // equalHeight option is deprecated
 				options.loadingIndicatorTPL = toggler.data('loading-indicator-tpl') || options.loadingIndicatorTPL;
 				options.openClass = toggler.data('open-class') || 'open';
 				options.toggler = toggler;
@@ -268,7 +266,7 @@
 			}
 		},
 
-		setEqualHeight: function() {
+		setHeight: function() {
 			var instance = this;
 
 			var options = instance.options;
@@ -297,51 +295,6 @@
 					'min-height': tallest,
 					'height': '100%'
 				});
-			}
-		},
-
-		setFullHeight: function() {
-			var instance = this;
-
-			var options = instance.options;
-
-			var container = $(options.container);
-			var navigation = options.navigation;
-
-			var type = instance.mobile ? options.typeMobile : options.type;
-
-			if (type === 'relative') {
-				var navNode = container.find(navigation).first();
-				var sidenavMenuNode = container.find('.sidenav-menu').first();
-
-				var minHeight = doc.innerHeight() - navNode.offset().top;
-
-				if (sidenavMenuNode.innerHeight() + navNode.offset().top > doc.innerHeight()) {
-					minHeight = sidenavMenuNode.innerHeight();
-				}
-
-				navNode.css({
-					'min-height': minHeight,
-					'height': '100%'
-				});
-
-				sidenavMenuNode.css({
-					'min-height': minHeight,
-					'height': '100%'
-				});
-			}
-		},
-
-		setHeight: function() {
-			var instance = this;
-
-			var options = instance.options;
-
-			if (options.heightType === 'equalHeight') {
-				instance.setEqualHeight();
-			}
-			else if (options.heightType === 'fullHeight') {
-				instance.setFullHeight();
 			}
 		},
 
@@ -999,8 +952,6 @@
 	 * @property {String}         content      The class or ID of the content container.
 	 * @property {String}         container    The class or ID of the sidenav container.
 	 * @property {String|Number}  gutter       The space between the sidenav-slider and the sidenav-content.
-	 * @property {String|Boolean} equalHeight  The height of content and navigation should be equal. This is deprecated.
-	 * @property {String}         heightType   Calculates the height of sidenav when type is relative. Possible values: `fullHeight`, `equalHeight`
 	 * @property {String}         navigation   The class or ID of the navigation container.
 	 * @property {String}         position     The position of the sidenav-slider. Possible values: left, right
 	 * @property {String}         type         The type of sidenav in desktop. Possible values: relative, fixed, fixed-push
@@ -1011,9 +962,7 @@
 	var defaults = {
 		breakpoint: 768,
 		content: '.sidenav-content',
-		equalHeight: true, // equalHeight option is deprecated, use heightType instead
 		gutter: '15px',
-		heightType: null,
 		loadingIndicatorTPL: '<div class="loading-animation loading-animation-md"></div>',
 		navigation: '.sidenav-menu-slider',
 		position: 'left',

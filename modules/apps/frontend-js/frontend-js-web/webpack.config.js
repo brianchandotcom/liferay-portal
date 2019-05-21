@@ -11,7 +11,6 @@ module.exports = {
 		path: path.resolve('./classes/META-INF/resources/liferay/'),
 		publicPath: PUBLIC_PATH
 	},
-	mode: 'none',
 	module: {
 		rules: [
 			{

@@ -106,6 +106,16 @@ public class ModuleNameUtil {
 
 		List<String> moduleDirNameParts = _getDirNameParts(moduleName);
 
+		if (dependency.equals(StringPool.PERIOD)) {
+			return String.join(StringPool.SLASH, moduleDirNameParts);
+		}
+
+		if (dependency.equals("..")) {
+			return String.join(
+				StringPool.SLASH,
+				moduleDirNameParts.subList(0, moduleDirNameParts.size() - 1));
+		}
+
 		List<String> dependencyDirNameParts = _getDirNameParts(dependency);
 
 		for (String dependencyDirNamePart : dependencyDirNameParts) {
@@ -246,7 +256,9 @@ public class ModuleNameUtil {
 	}
 
 	public static boolean isLocalModuleName(String moduleName) {
-		if (moduleName.startsWith("./") || moduleName.startsWith("../")) {
+		if (moduleName.equals(StringPool.PERIOD) || moduleName.equals("..") ||
+			moduleName.startsWith("./") || moduleName.startsWith("../")) {
+
 			return true;
 		}
 

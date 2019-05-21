@@ -84,10 +84,11 @@ public class SegmentsServicePreAction extends Action {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_segmentsServiceConfiguration = ConfigurableUtil.createConfigurable(
-			SegmentsServiceConfiguration.class, properties);
+		SegmentsServiceConfiguration segmentsServiceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsServiceConfiguration.class, properties);
 
-		if (_segmentsServiceConfiguration.segmentationEnabled()) {
+		if (segmentsServiceConfiguration.segmentationEnabled()) {
 			_serviceRegistration = bundleContext.registerService(
 				LifecycleAction.class, this,
 				MapUtil.singletonDictionary(
@@ -115,9 +116,7 @@ public class SegmentsServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (_segmentsServiceConfiguration.segmentationEnabled() &&
-			!layout.isTypeControlPanel()) {
-
+		if (!layout.isTypeControlPanel()) {
 			segmentsEntryIds = _getSegmentsEntryIds(
 				httpServletRequest, themeDisplay.getScopeGroupId(),
 				themeDisplay.getUserId());
@@ -204,7 +203,6 @@ public class SegmentsServicePreAction extends Action {
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
-	private SegmentsServiceConfiguration _segmentsServiceConfiguration;
 	private ServiceRegistration<LifecycleAction> _serviceRegistration;
 
 }

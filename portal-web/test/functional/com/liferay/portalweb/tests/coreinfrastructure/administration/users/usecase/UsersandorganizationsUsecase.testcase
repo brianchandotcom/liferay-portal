@@ -117,7 +117,7 @@ definition {
 
 	@priority = "5"
 	test AssignImportedUserGroupToSuborganizationSites {
-		property liferay.training.dependency.jars = "02-content-management/exercise-src/01-engaging-users-with-content/com.liferay.training.contentloader.jar";
+		property liferay.training.dependency.jars = "01-liferay-fundamentals/modules/02-manage-user-accounts/exercise-src/com.liferay.training.contentloader.jar";
 		property portal.release = "false";
 		property portal.upstream = "false";
 		property testray.component.names = "Training";

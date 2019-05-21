@@ -563,14 +563,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			String fileName, String absolutePath)
 		throws IOException {
 
-		String portalBranchName = getAttributeValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
-
 		File file = getFile(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (file != null) {
 			return new FileInputStream(file);
 		}
+
+		String portalBranchName = getAttributeValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
 
 		URL url = _getPortalGitURL(fileName, portalBranchName);
 

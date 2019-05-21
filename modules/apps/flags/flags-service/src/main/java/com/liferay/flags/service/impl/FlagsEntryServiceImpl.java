@@ -16,6 +16,7 @@ package com.liferay.flags.service.impl;
 
 import com.liferay.flags.internal.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -23,9 +24,18 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  */
+@Component(
+	property = {
+		"json.web.service.context.name=flags",
+		"json.web.service.context.path=FlagsEntry"
+	},
+	service = AopService.class
+)
 public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
 	@Override

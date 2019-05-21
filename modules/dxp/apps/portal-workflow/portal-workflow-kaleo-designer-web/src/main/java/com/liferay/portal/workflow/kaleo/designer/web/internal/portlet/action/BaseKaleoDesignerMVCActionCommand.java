@@ -180,14 +180,14 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		portletURL.setParameter(
 			"mvcPath", "/designer/edit_kaleo_definition_version.jsp");
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect, false);
+
 		String closeRedirect = ParamUtil.getString(
 			actionRequest, "closeRedirect");
 
 		portletURL.setParameter("closeRedirect", closeRedirect, false);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect, false);
 
 		portletURL.setParameter(
 			"name", kaleoDefinitionVersion.getName(), false);

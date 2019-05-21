@@ -70,6 +70,8 @@ downloadGems {
 				gemNames << it.name
 			}
 
+			gemNames.sort()
+
 			gemNames.each {
 				if (it != gemNames.last()) {
 					bufferedWriter.writeLine("- `" + it + "`")

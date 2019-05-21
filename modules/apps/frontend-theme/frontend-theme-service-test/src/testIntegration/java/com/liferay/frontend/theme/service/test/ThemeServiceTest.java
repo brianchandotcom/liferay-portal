@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,13 +43,10 @@ public class ThemeServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-	}
-
 	@Test
 	public void testGetTheme() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		Theme theme = _themeLocalService.getTheme(

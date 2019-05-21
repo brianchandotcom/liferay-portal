@@ -795,19 +795,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private List<String> _getJSONObjectValues(
 		JSONObject jsonObject, String key,
-		Map<String, List<String>> cashedValuesMap, String absolutePath) {
+		Map<String, List<String>> cachedValuesMap, String absolutePath) {
 
 		if (jsonObject == null) {
 			return Collections.emptyList();
 		}
 
-		List<String> values = cashedValuesMap.get(key);
+		List<String> values = cachedValuesMap.get(key);
 
 		if (values != null) {
 			return values;
 		}
 
-		values = cashedValuesMap.get(absolutePath + ":" + key);
+		values = cachedValuesMap.get(absolutePath + ":" + key);
 
 		if (values != null) {
 			return values;
@@ -847,10 +847,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			values.addAll(curValues);
 		}
 
-		cashedValuesMap.put(absolutePath + ":" + key, values);
+		cachedValuesMap.put(absolutePath + ":" + key, values);
 
 		if (!hasSubdirectoryValues) {
-			cashedValuesMap.put(key, values);
+			cachedValuesMap.put(key, values);
 		}
 
 		return values;

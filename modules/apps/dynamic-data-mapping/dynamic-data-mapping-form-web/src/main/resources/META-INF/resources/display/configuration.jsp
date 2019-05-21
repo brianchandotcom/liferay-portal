@@ -97,17 +97,11 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								/>
 
 								<liferay-ui:search-container-column-text
-									buffer="buffer"
 									href="<%= rowURL %>"
 									name="description"
 									orderable="<%= false %>"
-								>
-
-									<%
-									buffer.append(StringUtil.shorten(HtmlUtil.escape(formInstance.getDescription(locale), 100)));
-									%>
-
-								</liferay-ui:search-container-column-text>
+									value="<%= StringUtil.shorten(HtmlUtil.escape(formInstance.getDescription(locale), 100)) %>"
+								/>
 
 								<liferay-ui:search-container-column-date
 									href="<%= rowURL %>"

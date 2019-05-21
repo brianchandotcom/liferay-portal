@@ -321,6 +321,10 @@ public class SelectAssetDisplayPageDisplayContext {
 			InfoDisplayObjectProvider infoDisplayObjectProvider =
 				infoDisplayContributor.getInfoDisplayObjectProvider(_classPK);
 
+			if (infoDisplayObjectProvider == null) {
+				return false;
+			}
+
 			if (!AssetDisplayPageHelper.hasAssetDisplayPage(
 					themeDisplay.getScopeGroupId(),
 					infoDisplayObjectProvider.getClassNameId(),

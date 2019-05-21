@@ -94,17 +94,13 @@ public class SourceFormatterUtil {
 				String attributeName = StringUtil.replaceFirst(
 					key, keyPrefix, StringPool.BLANK);
 
-				JSONArray jsonArray =
-					propertiesAttributesJSONObject.getJSONArray(attributeName);
+				JSONArray jsonArray = new JSONArrayImpl();
 
-				if (jsonArray == null) {
-					jsonArray = new JSONArrayImpl();
-				}
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
 
-				String value = properties.getProperty(key);
-
-				for (String s : StringUtil.split(value, StringPool.COMMA)) {
-					jsonArray.put(s);
+					jsonArray.put(value);
 				}
 
 				propertiesAttributesJSONObject.put(attributeName, jsonArray);

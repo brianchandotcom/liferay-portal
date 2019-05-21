@@ -279,71 +279,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return value;
 	}
 
-	private List<String> _getJSONObjectValues(
-		JSONObject jsonObject, String key,
-		Map<String, List<String>> cashedValuesMap, String absolutePath) {
-
-		if (jsonObject == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> values = cashedValuesMap.get(key);
-
-		if (values != null) {
-			return values;
-		}
-
-		values = cashedValuesMap.get(
-			absolutePath + ":" + key);
-
-		if (values != null) {
-			return values;
-		}
-
-		values = new ArrayList<>();
-
-		boolean hasSubdirectoryValues = false;
-
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String fileLocation = keys.next();
-
-			List<String> curAttributeValues = _getAttributeValues(
-				jsonObject.getJSONObject(fileLocation), key);
-
-			if (curAttributeValues.isEmpty()) {
-				continue;
-			}
-
-			if (!fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
-				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
-					_baseDirName);
-
-				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-					hasSubdirectoryValues = true;
-				}
-
-				if (!absolutePath.startsWith(fileLocation)) {
-					continue;
-				}
-			}
-
-			values.addAll(curAttributeValues);
-		}
-
-		cashedValuesMap.put(
-			absolutePath + ":" + key, values);
-
-		if (!hasSubdirectoryValues) {
-			cashedValuesMap.put(key, values);
-		}
-
-		return values;
-	}
-
 	protected List<String> getAttributeValues(
 		String attributeKey, String absolutePath) {
 
@@ -861,6 +796,69 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return attributeValues;
+	}
+
+	private List<String> _getJSONObjectValues(
+		JSONObject jsonObject, String key,
+		Map<String, List<String>> cashedValuesMap, String absolutePath) {
+
+		if (jsonObject == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> values = cashedValuesMap.get(key);
+
+		if (values != null) {
+			return values;
+		}
+
+		values = cashedValuesMap.get(absolutePath + ":" + key);
+
+		if (values != null) {
+			return values;
+		}
+
+		values = new ArrayList<>();
+
+		boolean hasSubdirectoryValues = false;
+
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			List<String> curAttributeValues = _getAttributeValues(
+				jsonObject.getJSONObject(fileLocation), key);
+
+			if (curAttributeValues.isEmpty()) {
+				continue;
+			}
+
+			if (!fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+					_baseDirName);
+
+				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+					hasSubdirectoryValues = true;
+				}
+
+				if (!absolutePath.startsWith(fileLocation)) {
+					continue;
+				}
+			}
+
+			values.addAll(curAttributeValues);
+		}
+
+		cashedValuesMap.put(absolutePath + ":" + key, values);
+
+		if (!hasSubdirectoryValues) {
+			cashedValuesMap.put(key, values);
+		}
+
+		return values;
 	}
 
 	private String _getPortalBranchName(

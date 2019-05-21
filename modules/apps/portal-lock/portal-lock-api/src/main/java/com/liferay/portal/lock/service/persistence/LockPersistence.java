@@ -339,6 +339,148 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the locks where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @return the matching locks
+	 */
+	public java.util.List<Lock> findByC(String className);
+
+	/**
+	 * Returns a range of all the locks where className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @return the range of matching locks
+	 */
+	public java.util.List<Lock> findByC(String className, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the locks where className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching locks
+	 */
+	public java.util.List<Lock> findByC(
+		String className, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lock>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the locks where className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching locks
+	 */
+	public java.util.List<Lock> findByC(
+		String className, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lock>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first lock in the ordered set where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lock
+	 * @throws NoSuchLockException if a matching lock could not be found
+	 */
+	public Lock findByC_First(
+			String className,
+			com.liferay.portal.kernel.util.OrderByComparator<Lock>
+				orderByComparator)
+		throws NoSuchLockException;
+
+	/**
+	 * Returns the first lock in the ordered set where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	 */
+	public Lock fetchByC_First(
+		String className,
+		com.liferay.portal.kernel.util.OrderByComparator<Lock>
+			orderByComparator);
+
+	/**
+	 * Returns the last lock in the ordered set where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lock
+	 * @throws NoSuchLockException if a matching lock could not be found
+	 */
+	public Lock findByC_Last(
+			String className,
+			com.liferay.portal.kernel.util.OrderByComparator<Lock>
+				orderByComparator)
+		throws NoSuchLockException;
+
+	/**
+	 * Returns the last lock in the ordered set where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	 */
+	public Lock fetchByC_Last(
+		String className,
+		com.liferay.portal.kernel.util.OrderByComparator<Lock>
+			orderByComparator);
+
+	/**
+	 * Returns the locks before and after the current lock in the ordered set where className = &#63;.
+	 *
+	 * @param lockId the primary key of the current lock
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lock
+	 * @throws NoSuchLockException if a lock with the primary key could not be found
+	 */
+	public Lock[] findByC_PrevAndNext(
+			long lockId, String className,
+			com.liferay.portal.kernel.util.OrderByComparator<Lock>
+				orderByComparator)
+		throws NoSuchLockException;
+
+	/**
+	 * Removes all the locks where className = &#63; from the database.
+	 *
+	 * @param className the class name
+	 */
+	public void removeByC(String className);
+
+	/**
+	 * Returns the number of locks where className = &#63;.
+	 *
+	 * @param className the class name
+	 * @return the number of matching locks
+	 */
+	public int countByC(String className);
+
+	/**
 	 * Returns all the locks where expirationDate &lt; &#63;.
 	 *
 	 * @param expirationDate the expiration date

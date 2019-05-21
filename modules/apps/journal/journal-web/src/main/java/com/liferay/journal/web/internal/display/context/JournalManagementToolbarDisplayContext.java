@@ -190,6 +190,7 @@ public class JournalManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
+		clearResultsURL.setParameter("ddmStructureKey", StringPool.BLANK);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 		clearResultsURL.setParameter("navigation", StringPool.BLANK);
 		clearResultsURL.setParameter(

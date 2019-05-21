@@ -21,14 +21,18 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,6 +52,9 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_process = _workflowMetricsRESTTestHelper.addProcess(
+			testGroup.getCompanyId());
 
 		_singleApproverDocument =
 			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
@@ -78,12 +85,72 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		_nodes = new ArrayList<>();
 	}
 
+	@Test
+	public void testGetProcessNodesPageLatestVersion() throws Exception {
+		_nodes.add(
+			_workflowMetricsRESTTestHelper.addNode(
+				testGroup.getCompanyId(), _process.getId(), "1.0",
+				new Node() {
+					{
+						id = 1L;
+						name = "A";
+					}
+				}));
+		_nodes.add(
+			_workflowMetricsRESTTestHelper.addNode(
+				testGroup.getCompanyId(), _process.getId(), "1.0",
+				new Node() {
+					{
+						id = 2L;
+						name = "B";
+					}
+				}));
+
+		_workflowMetricsRESTTestHelper.updateProcess(
+			testGroup.getCompanyId(), _process.getId(), "2.0");
+
+		Node node1 = new Node() {
+			{
+				id = 3L;
+				name = "A";
+			}
+		};
+
+		_nodes.add(
+			_workflowMetricsRESTTestHelper.addNode(
+				testGroup.getCompanyId(), _process.getId(), "2.0", node1));
+
+		Node node2 = new Node() {
+			{
+				id = 4L;
+				name = "B";
+			}
+		};
+
+		_nodes.add(
+			_workflowMetricsRESTTestHelper.addNode(
+				testGroup.getCompanyId(), _process.getId(), "2.0", node2));
+
+		Page<Node> page = invokeGetProcessNodesPage(_process.getId());
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(node1, node2), (List<Node>)page.getItems());
+		assertValid(page);
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"id", "name"};
+	}
+
 	@Override
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
 		node = _workflowMetricsRESTTestHelper.addNode(
-			testGroup.getCompanyId(), processId, node);
+			testGroup.getCompanyId(), processId, "1.0", node);
 
 		_nodes.add(node);
 
@@ -92,9 +159,6 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	@Override
 	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
-		_process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
-
 		return _process.getId();
 	}
 

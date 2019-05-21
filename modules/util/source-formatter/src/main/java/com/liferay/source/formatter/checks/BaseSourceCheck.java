@@ -903,12 +903,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	private boolean _isExcludedPath(
-		Properties properties, String key, String path, int lineNumber,
-		String parameter) {
+		String key, String path, int lineNumber, String parameter) {
 
-		List<String> excludes = ListUtil.fromString(
-			GetterUtil.getString(properties.getProperty(key)),
-			StringPool.COMMA);
+		List<String> excludes = _getJSONObjectValues(
+			_excludesJSONObject, key, _excludesValuesMap, path);
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;
@@ -958,23 +956,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return false;
 	}
 
-	private boolean _isExcludedPath(
-		String key, String path, int lineNumber, String parameter) {
-
-		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
-			String propertiesFileLocation = entry.getKey();
-
-			if (path.startsWith(propertiesFileLocation) &&
-				_isExcludedPath(
-					entry.getValue(), key, path, lineNumber, parameter)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private JSONObject _attributesJSONObject;
 	private final Map<String, String> _attributeValueMap =
 		new ConcurrentHashMap<>();
@@ -984,6 +965,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
 	private JSONObject _excludesJSONObject;
+	private final Map<String, List<String>> _excludesValuesMap =
+		new ConcurrentHashMap<>();
 	private List<String> _fileExtensions;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

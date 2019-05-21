@@ -1723,7 +1723,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
 			value1 = "${dmDocumentTitle}");
 
-		Click(locator1 = "Icon#INFO");
+		DMDocument.expandInfo();
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",

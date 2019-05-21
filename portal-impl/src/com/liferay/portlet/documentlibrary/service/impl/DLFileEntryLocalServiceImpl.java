@@ -1592,11 +1592,6 @@ public class DLFileEntryLocalServiceImpl
 	public Lock lockFileEntry(long userId, long fileEntryId)
 		throws PortalException {
 
-		if (hasFileEntryLock(userId, fileEntryId)) {
-			return LockManagerUtil.getLock(
-				DLFileEntry.class.getName(), fileEntryId);
-		}
-
 		return LockManagerUtil.lock(
 			userId, DLFileEntry.class.getName(), fileEntryId, null, false,
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME);

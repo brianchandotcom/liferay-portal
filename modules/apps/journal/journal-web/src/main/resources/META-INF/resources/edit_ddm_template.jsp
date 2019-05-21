@@ -116,8 +116,8 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		}
 	);
 
-	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 	var contextualSidebarButton = document.getElementById('<portlet:namespace />contextualSidebarButton');
+	var contextualSidebarContainer = document.getElementById('<portlet:namespace />contextualSidebarContainer');
 
 	if (contextualSidebarContainer && (window.innerWidth > Liferay.BREAKPOINTS.PHONE)) {
 		contextualSidebarContainer.classList.add('contextual-sidebar-visible');

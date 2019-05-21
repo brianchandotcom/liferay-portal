@@ -107,7 +107,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var getContentValue = function() {
 		var content;
 
-		if (formEditor && !isViewTabActive()) {
+		if (formEditor && !checkViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
 		}
 		else {
@@ -133,18 +133,18 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		return formEditor;
 	};
 
-	var isViewTabActive = function() {
+	var checkViewTabActive = function() {
 		var formBuilderTab = A.one('#<portlet:namespace />formBuilderTab');
 
-		var isViewTabActive = false;
+		var viewTabActive = false;
 
 		if (formBuilderTab) {
 			var ancestor = formBuilderTab.ancestor();
 
-			isViewTabActive = !ancestor.hasClass('hide');
+			viewTabActive = !ancestor.hasClass('hide');
 		}
 
-		return isViewTabActive;
+		return viewTabActive;
 	};
 
 	var reloadFormBuilderData = function(content) {
@@ -176,7 +176,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	};
 
 	var setEditorSize = function() {
-		if (!isViewTabActive()) {
+		if (!checkViewTabActive()) {
 			getFormEditor().set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
 		}
 	};
@@ -242,7 +242,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	}
 
 	var afterShowTab = function(event) {
-		if (isViewTabActive()) {
+		if (checkViewTabActive()) {
 			switchToView();
 		}
 		else {

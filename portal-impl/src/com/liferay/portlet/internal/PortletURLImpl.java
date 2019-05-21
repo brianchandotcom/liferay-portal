@@ -424,6 +424,15 @@ public class PortletURLImpl
 
 		if (Validator.isNull(paramName)) {
 			paramName = portletSerializableClass.getSimpleName();
+
+			// If RenderURL.setBeanParameter(PortletSerializable) is called from
+			// within a CDI bean portlet, then the parameter name will have
+			// "$Proxy$_$$_WeldClientProxy" as a suffix.
+			int pos = paramName.indexOf("$Proxy$_$$_WeldClientProxy");
+
+			if (pos > 0) {
+				paramName = paramName.substring(0, pos);
+			}
 		}
 
 		MutableRenderParameters mutableRenderParameters = getRenderParameters();

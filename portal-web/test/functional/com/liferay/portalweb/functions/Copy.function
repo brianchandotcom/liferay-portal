@@ -1,5 +1,6 @@
 @default = "copy"
 definition {
+
 	function copy {
 		WaitForSPARefresh();
 
@@ -38,4 +39,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

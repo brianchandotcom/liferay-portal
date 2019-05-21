@@ -1,4 +1,5 @@
 definition {
+
 	var userEmailAddress = "test@liferay.com";
 	var userPassword = "test";
 	var userPasswordReminderAnswer = "test";
@@ -133,4 +134,5 @@ definition {
 			SignIn.setPasswordReminder();
 		}
 	}
+
 }

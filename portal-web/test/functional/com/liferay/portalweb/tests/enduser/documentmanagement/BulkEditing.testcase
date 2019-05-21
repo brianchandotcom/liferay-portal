@@ -1,5 +1,6 @@
 @component-name = "portal-document-management"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Bulk Editing";
@@ -225,4 +226,5 @@ definition {
 			dmDocumentDescription = "Document_2.doc",
 			dmDocumentTitle = "Document_2.doc");
 	}
+
 }

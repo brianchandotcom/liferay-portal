@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Permissions";
@@ -80,4 +81,5 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "You do not have the roles required to access this portlet.");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	var siteName = "Liferay";
 
 	macro _selectCalendarSettingsIframe {
@@ -244,4 +245,5 @@ definition {
 
 		Pause(locator1 = "3000");
 	}
+
 }

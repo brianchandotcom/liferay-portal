@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Staging";
@@ -1263,4 +1264,5 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title Edit");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro closeProductMenu {
 		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
 			Click(locator1 = "ProductMenu#TOGGLE");
@@ -66,4 +67,5 @@ definition {
 
 		AssertElementNotPresent(locator1 = "ProductMenu#SITE");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	var rowNumber = "1";
 
 	macro addRepeatableField {
@@ -805,4 +806,5 @@ definition {
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldLabel}");
 	}
+
 }

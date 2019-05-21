@@ -1,5 +1,6 @@
 @component-name = "portal-tags"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Tags";
@@ -231,4 +232,5 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 5 of 25 entries.");
 	}
+
 }

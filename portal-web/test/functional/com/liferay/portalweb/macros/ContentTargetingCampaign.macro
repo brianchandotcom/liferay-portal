@@ -1,4 +1,5 @@
 definition {
+
 	macro addCP {
 		Navigator.gotoNavItem(navItem = "Campaigns");
 
@@ -530,4 +531,5 @@ definition {
 
 		PortletEntry.save();
 	}
+
 }

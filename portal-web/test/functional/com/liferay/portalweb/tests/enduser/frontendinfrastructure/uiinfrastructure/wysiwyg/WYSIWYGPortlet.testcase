@@ -1,5 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
+
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "User Interface";
@@ -47,4 +48,5 @@ definition {
 			locator1 = "Portlet#PORTLET_CONTENT",
 			value1 = "WYSIWYG Test Content");
 	}
+
 }

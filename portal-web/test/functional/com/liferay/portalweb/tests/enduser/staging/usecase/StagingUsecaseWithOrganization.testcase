@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Users and Organizations,Staging";
@@ -139,4 +140,5 @@ definition {
 
 		Staging.viewPageVariationPG(pageVariationName = "Page Variation Name");
 	}
+
 }

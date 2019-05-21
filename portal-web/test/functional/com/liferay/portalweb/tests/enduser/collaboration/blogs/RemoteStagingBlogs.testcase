@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Blogs";
@@ -178,4 +179,5 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	var password = "test";
 	var userEmailAddress = "test@liferay.com";
 
@@ -90,4 +91,5 @@ definition {
 		var pAuth = Api.getPAuth();
 		Navigator.openSpecificURL(url = "${url}${pAuth}");
 	}
+
 }

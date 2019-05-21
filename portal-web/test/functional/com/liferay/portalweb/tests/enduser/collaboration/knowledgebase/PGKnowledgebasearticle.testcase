@@ -1,5 +1,6 @@
 @component-name = "portal-knowledge-base"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -83,4 +84,5 @@ definition {
 
 		KBArticle.viewDefaultCP();
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Administration";
@@ -1047,4 +1048,5 @@ definition {
 			locator1 = "ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS",
 			value1 = "Users");
 	}
+
 }

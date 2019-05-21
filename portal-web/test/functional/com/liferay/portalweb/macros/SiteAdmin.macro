@@ -1,4 +1,5 @@
 definition {
+
 	macro gotoPortletConfiguration {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 
@@ -15,4 +16,5 @@ definition {
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "${portletTitle}");
 	}
+
 }

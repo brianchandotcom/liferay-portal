@@ -1,5 +1,6 @@
 @component-name = "portal-util-misc"
 definition {
+
 	property osgi.app.includes = "network-utilities";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -38,4 +39,5 @@ definition {
 			dnsDomain = "",
 			networkDomain = "localhost");
 	}
+
 }

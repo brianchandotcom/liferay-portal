@@ -1,5 +1,6 @@
 @component-name = "portal-workflow"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Wiki";
@@ -283,4 +284,5 @@ definition {
 			wikiPageTitle = "Wiki Page Title",
 			wikiPageUsername = "Test Test");
 	}
+
 }

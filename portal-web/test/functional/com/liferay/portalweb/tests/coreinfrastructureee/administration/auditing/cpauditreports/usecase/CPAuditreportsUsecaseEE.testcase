@@ -1,5 +1,6 @@
 @component-name = "portal-core-infrastructure-portal-services-ee"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
@@ -251,4 +252,5 @@ definition {
 			locator1 = "xpath=(//tr[contains(.,'ASSIGN') and contains(.,'User')]/td[5])[2]",
 			value1 = "ASSIGN");
 	}
+
 }

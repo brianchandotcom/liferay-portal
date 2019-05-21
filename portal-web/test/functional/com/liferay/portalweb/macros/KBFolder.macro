@@ -1,4 +1,5 @@
 definition {
+
 	macro addCP {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Folder");
 
@@ -130,4 +131,5 @@ definition {
 			locator1 = "KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME",
 			value1 = "${kbFolderName}");
 	}
+
 }

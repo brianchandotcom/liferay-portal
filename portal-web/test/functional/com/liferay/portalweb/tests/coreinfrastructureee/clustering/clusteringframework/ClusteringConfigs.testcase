@@ -1,5 +1,6 @@
 @component-name = "portal-clustering"
 definition {
+
 	property app.server.bundles.size = "1";
 	property cluster.enabled = "true";
 	property portal.release = "true";
@@ -49,4 +50,5 @@ definition {
 
 		echo("Successfully logged in to both nodes on JDBC_PING");
 	}
+
 }

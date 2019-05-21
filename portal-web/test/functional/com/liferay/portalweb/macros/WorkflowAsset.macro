@@ -1,4 +1,5 @@
 definition {
+
 	macro createNewUserAccount {
 		User.createAccount(
 			userEmailAddress = "${userEmailAddress}",
@@ -86,4 +87,5 @@ definition {
 			locator1 = "WorkflowSubmissionsTask#PREVIEW_USER",
 			value1 = "${userEmailAddress}");
 	}
+
 }

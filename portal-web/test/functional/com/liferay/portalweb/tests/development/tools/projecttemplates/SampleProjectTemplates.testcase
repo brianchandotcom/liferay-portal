@@ -1,5 +1,6 @@
 @component-name = "portal-project-template"
 definition {
+
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Project Templates";
@@ -55,4 +56,5 @@ definition {
 
 		AssertHTMLSourceTextPresent(value1 = "themeId=${themeName}");
 	}
+
 }

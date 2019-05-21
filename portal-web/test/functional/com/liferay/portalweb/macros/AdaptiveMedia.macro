@@ -1,4 +1,5 @@
 definition {
+
 	macro adaptAllImages {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Adapt All Images");
 
@@ -284,4 +285,5 @@ definition {
 
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");
 	}
+
 }

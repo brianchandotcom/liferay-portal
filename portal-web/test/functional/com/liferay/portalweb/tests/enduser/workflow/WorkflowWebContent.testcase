@@ -1,5 +1,6 @@
 @component-name = "portal-workflow"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Workflow";
@@ -177,4 +178,5 @@ definition {
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property portal.upstream = "true";
 	property testray.main.component.name = "OAuth 2";
 
@@ -432,4 +433,5 @@ definition {
 			key_resourceName = "sample-app",
 			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
 	}
+
 }

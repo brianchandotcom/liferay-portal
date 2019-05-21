@@ -1,4 +1,5 @@
 definition {
+
 	macro configureSetupPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
@@ -107,4 +108,5 @@ definition {
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
 			value1 = "${childSiteName3}");
 	}
+
 }

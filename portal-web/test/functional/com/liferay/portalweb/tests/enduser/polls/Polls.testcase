@@ -1,5 +1,6 @@
 @component-name = "portal-polls"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Polls";
@@ -361,4 +362,5 @@ definition {
 
 		User.loginPG();
 	}
+
 }

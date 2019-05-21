@@ -1,4 +1,5 @@
 definition {
+
 	macro addFieldSet {
 		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
 			KaleoFormsNavigator.gotoManageFieldSets();
@@ -849,4 +850,5 @@ definition {
 			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
 			value1 = "Unpublished");
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
@@ -90,4 +91,5 @@ definition {
 			entryContent = "Edited Microblogs Content",
 			userName = "Test Test");
 	}
+
 }

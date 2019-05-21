@@ -1,4 +1,5 @@
 definition {
+
 	@summary = "Helper function to add fields '${templateFieldNames}' to the template"
 	macro _addFields {
 		if (isSet(templateFieldNames)) {
@@ -345,4 +346,5 @@ definition {
 				value1 = "${templateDescription}");
 		}
 	}
+
 }

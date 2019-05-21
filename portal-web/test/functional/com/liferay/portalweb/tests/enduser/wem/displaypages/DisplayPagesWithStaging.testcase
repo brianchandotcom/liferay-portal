@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Display Pages";
@@ -72,4 +73,5 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "PortletDataException");
 	}
+
 }

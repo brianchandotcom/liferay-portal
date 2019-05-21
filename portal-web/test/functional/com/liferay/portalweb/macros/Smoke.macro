@@ -1,4 +1,5 @@
 definition {
+
 	var userFirstName = "Test";
 	var userLastName = "Test";
 
@@ -100,4 +101,5 @@ definition {
 			locator1 = "HelloWorld#PORTLET_CONTENT",
 			value1 = "Welcome to Liferay");
 	}
+
 }

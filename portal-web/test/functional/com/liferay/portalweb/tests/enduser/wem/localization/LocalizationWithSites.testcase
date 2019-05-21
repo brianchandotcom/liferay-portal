@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Localization";
@@ -929,4 +930,5 @@ definition {
 			fieldName = "Nombre",
 			unavailableLanguageList = "en_US");
 	}
+
 }

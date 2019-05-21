@@ -1,4 +1,5 @@
 definition {
+
 	macro addTask {
 		if (IsElementNotPresent(locator1 = "Tasks#TASK_DESCRIPTION")) {
 			AssertTextEquals(
@@ -134,4 +135,5 @@ definition {
 
 		Navigator.openURL();
 	}
+
 }

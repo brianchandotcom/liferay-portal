@@ -1,6 +1,7 @@
 @default = "assertClickNoError"
 @summary = "Click on '${locator1}' that should have a value of '${value1}'"
 definition {
+
 	function assertClickNoError {
 		WaitForSPARefresh();
 
@@ -49,4 +50,5 @@ definition {
 
 		selenium.click();
 	}
+
 }

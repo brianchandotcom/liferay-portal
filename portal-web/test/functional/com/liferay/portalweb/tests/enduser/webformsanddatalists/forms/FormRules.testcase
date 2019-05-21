@@ -1,5 +1,6 @@
 @component-name = "portal-web-forms-and-data-lists"
 definition {
+
 	property custom.properties = "minifier.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -1100,4 +1101,5 @@ definition {
 			fieldLabel = "Date Field",
 			fieldName = "DateField");
 	}
+
 }

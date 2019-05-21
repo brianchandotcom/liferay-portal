@@ -1,4 +1,5 @@
 definition {
+
 	macro chooseMenu {
 		Click(locator1 = "Radio#CHOOSE_MENU");
 
@@ -34,4 +35,5 @@ definition {
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
 			value1 = "${menuType}");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Bookmarks Folder";
 
 	macro addCP {
@@ -350,4 +351,5 @@ definition {
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION",
 			value1 = "${folderDescription}");
 	}
+
 }

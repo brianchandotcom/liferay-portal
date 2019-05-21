@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Administration";
@@ -176,4 +177,5 @@ definition {
 			locator1 = "Message#ERROR_1_COLUMN_2",
 			value1 = "You do not have the roles required to access this portlet.");
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "waitForSPARefresh"
 definition {
+
 	function waitForSPARefresh {
 		selenium.waitForElementNotPresent("//html[contains(@class,'lfr-spa-loading')]");
 
@@ -15,4 +16,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

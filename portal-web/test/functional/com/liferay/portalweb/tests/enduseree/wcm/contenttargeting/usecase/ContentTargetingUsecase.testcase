@@ -1,5 +1,6 @@
 @component-name = "extra-apps-content-targeting"
 definition {
+
 	property custom.properties = "layout.parallel.render.enable=false";
 	property extraapps.plugins.includes = "content-targeting";
 	property ignore.errors = "IX_DC6100CC";
@@ -3961,4 +3962,5 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title");
 	}
+
 }

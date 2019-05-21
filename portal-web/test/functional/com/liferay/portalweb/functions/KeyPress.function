@@ -1,5 +1,6 @@
 @default = "keyPress"
 definition {
+
 	function keyDown {
 		WaitForSPARefresh();
 
@@ -43,4 +44,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

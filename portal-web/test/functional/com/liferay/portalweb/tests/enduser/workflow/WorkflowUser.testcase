@@ -1,5 +1,6 @@
 @component-name = "portal-workflow"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Users and Organizations";
@@ -128,4 +129,5 @@ definition {
 
 		WorkflowAsset.viewUserDetails(userEmailAddress = "user@liferay.com");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	@summary = "Navigate to the Live site"
 	macro gotoLiveSite {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
@@ -102,4 +103,5 @@ definition {
 
 		ProductMenuHelper.viewNoSite(site = "${site}");
 	}
+
 }

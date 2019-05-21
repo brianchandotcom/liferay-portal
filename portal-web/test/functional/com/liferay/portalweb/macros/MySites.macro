@@ -1,4 +1,5 @@
 definition {
+
 	macro gotoPagesPG {
 		LexiconList.clickEllipsisItem(
 			item = "${item}",
@@ -33,4 +34,5 @@ definition {
 			locator1 = "Tags#VIEW_TAGS_VIA_MY_SITES",
 			value1 = "${tagName}");
 	}
+
 }

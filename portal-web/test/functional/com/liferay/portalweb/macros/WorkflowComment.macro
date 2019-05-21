@@ -1,4 +1,5 @@
 definition {
+
 	macro _openComments {
 		if (IsElementNotPresent.isNotVisible(locator1 = "Comments#COMMENT_FIELD")) {
 			AssertClick(
@@ -38,4 +39,5 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_BODY");
 	}
+
 }

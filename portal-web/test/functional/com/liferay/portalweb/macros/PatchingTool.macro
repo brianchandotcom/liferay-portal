@@ -1,4 +1,5 @@
 definition {
+
 	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipURL}"
 	macro installPatch {
 		AntCommand(
@@ -42,4 +43,5 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "update-osgi-module-configuration -Dupdate.configuration=&quot;${updateConfiguration}&quot; -Dinstall.patch.cluster.node.index=${bundleIndex}");
 	}
+
 }

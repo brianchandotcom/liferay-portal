@@ -1,5 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
+
 	property custom.properties = "organizations.types=organization,location";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
@@ -124,4 +125,5 @@ definition {
 
 		Upgrade.addUserAndSuborganization();
 	}
+
 }

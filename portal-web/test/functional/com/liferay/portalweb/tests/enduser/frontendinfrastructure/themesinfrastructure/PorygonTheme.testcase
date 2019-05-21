@@ -1,5 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Theme";
@@ -59,4 +60,5 @@ definition {
 			AppManager.viewAppCP(appName = "porygon-theme");
 		}
 	}
+
 }

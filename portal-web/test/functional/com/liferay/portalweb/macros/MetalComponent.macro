@@ -1,4 +1,5 @@
 definition {
+
 	macro waitForCard {
 		AssertVisible(locator1 = "//div[contains(@class,'card')][contains(.,'${card}')]");
 
@@ -41,4 +42,5 @@ else {
 			Pause(locator1 = "1000");
 		}
 	}
+
 }

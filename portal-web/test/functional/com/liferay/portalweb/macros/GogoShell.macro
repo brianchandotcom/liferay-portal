@@ -1,4 +1,5 @@
 definition {
+
 	macro executeCommand {
 		Type(
 			locator1 = "GogoShell#COMMAND_FIELD",
@@ -69,4 +70,5 @@ definition {
 			locator1 = "GogoShell#OUTPUT_FIELD",
 			value1 = "${outputContent}");
 	}
+
 }

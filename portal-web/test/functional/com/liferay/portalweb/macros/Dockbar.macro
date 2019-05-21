@@ -1,4 +1,5 @@
 definition {
+
 	macro viewAddTabsWithNoAddPagePermission {
 		Click(locator1 = "ControlMenu#ADD");
 
@@ -6,4 +7,5 @@ definition {
 			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
 			value1 = "Widgets");
 	}
+
 }

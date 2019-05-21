@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property osgi.app.includes = "oauth2-provider";
 	property portal.release = "true";
 	property testray.main.component.name = "OAuth 2";
@@ -296,4 +297,5 @@ definition {
 
 		OAuth2.viewGrantedAuthViaUser(noAuthorizations = "true");
 	}
+
 }

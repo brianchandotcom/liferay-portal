@@ -1,5 +1,6 @@
 @default = "isNotChecked"
 definition {
+
 	function isNotChecked {
 		WaitForSPARefresh();
 
@@ -17,4 +18,5 @@ definition {
 
 		selenium.isNotChecked();
 	}
+
 }

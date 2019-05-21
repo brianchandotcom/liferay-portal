@@ -1,5 +1,6 @@
 @component-name = "portal-clustering"
 definition {
+
 	property app.server.bundles.size = "1";
 	property cluster.enabled = "true";
 	property portal.release = "true";
@@ -418,4 +419,5 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro clickEllipsis {
 		Click(
 			key_listEntry = "${listEntry}",
@@ -53,4 +54,5 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${listEntry}");
 	}
+
 }

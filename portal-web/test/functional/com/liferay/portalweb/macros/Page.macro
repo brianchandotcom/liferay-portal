@@ -1,4 +1,5 @@
 definition {
+
 	macro _addPageTypeEmbedded {
 		Type(
 			locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
@@ -905,4 +906,5 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Home#PAGE");
 	}
+
 }

@@ -707,85 +707,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return GetterUtil.getBoolean(attributeValue);
 	}
 
-	private boolean _isExcludedPath(
-		Properties properties, String key, String path, int lineNumber,
-		String parameter) {
-
-		List<String> excludes = ListUtil.fromString(
-			GetterUtil.getString(properties.getProperty(key)),
-			StringPool.COMMA);
-
-		if (ListUtil.isEmpty(excludes)) {
-			return false;
-		}
-
-		String pathWithParameter = null;
-
-		if (Validator.isNotNull(parameter)) {
-			pathWithParameter = path + StringPool.AT + parameter;
-		}
-
-		String pathWithLineNumber = null;
-
-		if (lineNumber > 0) {
-			pathWithLineNumber = path + StringPool.AT + lineNumber;
-		}
-
-		for (String exclude : excludes) {
-			if (Validator.isNull(exclude)) {
-				continue;
-			}
-
-			if (exclude.startsWith("**")) {
-				exclude = exclude.substring(2);
-			}
-
-			if (exclude.endsWith("**")) {
-				exclude = exclude.substring(0, exclude.length() - 2);
-
-				if (path.contains(exclude)) {
-					return true;
-				}
-
-				continue;
-			}
-
-			if (path.endsWith(exclude) ||
-				((pathWithParameter != null) &&
-				 pathWithParameter.endsWith(exclude)) ||
-				((pathWithLineNumber != null) &&
-				 pathWithLineNumber.endsWith(exclude))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isExcludedPath(String key, String path) {
 		return isExcludedPath(key, path, -1);
 	}
 
 	protected boolean isExcludedPath(String key, String path, int lineNumber) {
 		return _isExcludedPath(key, path, lineNumber, null);
-	}
-
-	private boolean _isExcludedPath(
-		String key, String path, int lineNumber, String parameter) {
-
-		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
-			String propertiesFileLocation = entry.getKey();
-
-			if (path.startsWith(propertiesFileLocation) &&
-				_isExcludedPath(
-					entry.getValue(), key, path, lineNumber, parameter)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isExcludedPath(
@@ -969,6 +896,79 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	private boolean _isExcludedPath(
+		Properties properties, String key, String path, int lineNumber,
+		String parameter) {
+
+		List<String> excludes = ListUtil.fromString(
+			GetterUtil.getString(properties.getProperty(key)),
+			StringPool.COMMA);
+
+		if (ListUtil.isEmpty(excludes)) {
+			return false;
+		}
+
+		String pathWithParameter = null;
+
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
+		}
+
+		String pathWithLineNumber = null;
+
+		if (lineNumber > 0) {
+			pathWithLineNumber = path + StringPool.AT + lineNumber;
+		}
+
+		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
+				((pathWithLineNumber != null) &&
+				 pathWithLineNumber.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isExcludedPath(
+		String key, String path, int lineNumber, String parameter) {
+
+		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
+			String propertiesFileLocation = entry.getKey();
+
+			if (path.startsWith(propertiesFileLocation) &&
+				_isExcludedPath(
+					entry.getValue(), key, path, lineNumber, parameter)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private JSONObject _attributesJSONObject;

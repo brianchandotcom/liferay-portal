@@ -120,7 +120,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.frontend.css.common", "latest.release", false);
-
 		GradleUtil.addDependency(
 			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME, "org.webjars",
 			"font-awesome", "latest.release", false);

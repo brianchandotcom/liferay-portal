@@ -8,6 +8,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
 	}
 
 	tearDown {
@@ -16,25 +18,18 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 	}
 
 	@priority = "4"
 	test AssertRelatedAssetsDisplayWithCategory {
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Display Page");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -62,14 +57,7 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -79,14 +67,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -167,19 +148,9 @@ definition {
 	@description = "This is a use case for LPS-72472."
 	@priority = "4"
 	test AssertRelatedAssetsWithGlobalWebContent {
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -192,12 +163,7 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		ProductMenu.gotoSite(site = "Global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "global");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -207,14 +173,7 @@ definition {
 
 		PortletEntry.publish();
 
-		ProductMenu.gotoSite(site = "Site Name");
-
-		ProductMenu.gotoStagingSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -267,21 +226,13 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Related Assets";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 1");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page 1");
-
-		SitePages.addPublicPage(pageName = "Test Page 2");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 2");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 1",

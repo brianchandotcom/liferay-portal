@@ -183,7 +183,7 @@ public class CSSBuilder implements AutoCloseable {
 		return false;
 	}
 
-	private static void _printHelp(JCommander jCommander) throws Exception {
+	private static void _printHelp(JCommander jCommander) {
 		jCommander.usage();
 	}
 
@@ -249,7 +249,7 @@ public class CSSBuilder implements AutoCloseable {
 		);
 	}
 
-	private String _getRtlCss(String fileName, String css) throws Exception {
+	private String _getRtlCss(String fileName, String css) {
 		String rtlCss = css;
 
 		try {
@@ -324,9 +324,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 	}
 
-	private boolean _isModified(String dirName, String[] fileNames)
-		throws Exception {
-
+	private boolean _isModified(String dirName, String[] fileNames) {
 		for (String fileName : fileNames) {
 			if (fileName.contains("_rtl")) {
 				continue;

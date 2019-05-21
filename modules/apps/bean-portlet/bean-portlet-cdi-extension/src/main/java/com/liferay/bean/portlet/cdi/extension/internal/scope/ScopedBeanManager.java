@@ -14,6 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.bean.portlet.extension.ScopedBean;
+
 import java.util.Enumeration;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -69,7 +71,7 @@ public class ScopedBeanManager {
 
 				ScopedBean<?> scopedBean = (ScopedBean<?>)attributeValue;
 
-				Object beanInstance = scopedBean.getBeanInstance();
+				Object beanInstance = scopedBean.getContainerCreatedInstance();
 
 				if (!(beanInstance instanceof PortletSerializable)) {
 					continue;
@@ -137,14 +139,14 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
+			scopedBean = new CDIScopedBean<>(
 				name, bean, creationalContext,
 				PortletRequestScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	public PortletResponse getPortletResponse() {
@@ -167,14 +169,14 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
+			scopedBean = new CDIScopedBean<>(
 				name, bean, creationalContext,
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	public <T> T getRenderStateScopedBean(
@@ -191,12 +193,12 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
+			scopedBean = new CDIScopedBean<>(
 				name, bean, creationalContext,
 				RenderStateScoped.class.getSimpleName());
 
 			PortletSerializable portletSerializable =
-				(PortletSerializable)scopedBean.getBeanInstance();
+				(PortletSerializable)scopedBean.getContainerCreatedInstance();
 
 			String parameterName = _getParameterName(portletSerializable);
 
@@ -215,7 +217,7 @@ public class ScopedBeanManager {
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	private static String _getAttributeName(Bean<?> bean) {

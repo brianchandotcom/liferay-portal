@@ -43,6 +43,8 @@ public interface SourceCheck {
 
 	public void setBaseDirName(String baseDirName);
 
+	public void setExcludes(String excludes) throws JSONException;
+
 	public void setFileExtensions(List<String> fileExtenstions);
 
 	public void setMaxLineLength(int maxLineLength);

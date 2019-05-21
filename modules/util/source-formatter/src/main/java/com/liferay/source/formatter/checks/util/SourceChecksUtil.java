@@ -16,9 +16,13 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
@@ -209,6 +213,44 @@ public class SourceChecksUtil {
 			propertiesMap);
 	}
 
+	private static JSONObject _getExcludesJSONObject(
+		Map<String, Properties> propertiesMap) {
+
+		JSONObject excludesJSONObject = new JSONObjectImpl();
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			JSONObject propertiesExcludesJSONObject = new JSONObjectImpl();
+
+			Properties properties = entry.getValue();
+
+			for (Object obj : properties.keySet()) {
+				String key = (String)obj;
+
+				if (!key.endsWith(".excludes")) {
+					continue;
+				}
+
+				JSONArray jsonArray = new JSONArrayImpl();
+
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
+
+					jsonArray.put(value);
+				}
+
+				propertiesExcludesJSONObject.put(key, jsonArray);
+			}
+
+			if (propertiesExcludesJSONObject.length() != 0) {
+				excludesJSONObject.put(
+					entry.getKey(), propertiesExcludesJSONObject);
+			}
+		}
+
+		return excludesJSONObject;
+	}
+
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
@@ -226,6 +268,8 @@ public class SourceChecksUtil {
 		if (sourceCheckConfigurations == null) {
 			return sourceChecks;
 		}
+
+		JSONObject excludesJSONObject = _getExcludesJSONObject(propertiesMap);
 
 		for (SourceCheckConfiguration sourceCheckConfiguration :
 				sourceCheckConfigurations) {
@@ -276,6 +320,10 @@ public class SourceChecksUtil {
 
 			if (skipCheckNames.contains(clazz.getSimpleName())) {
 				continue;
+			}
+
+			if (excludesJSONObject.length() != 0) {
+				sourceCheck.setExcludes(excludesJSONObject.toString());
 			}
 
 			JSONObject attributesJSONObject = _getAttributesJSONObject(

@@ -104,6 +104,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public void setExcludes(String excludes) throws JSONException {
+		_excludesJSONObject = new JSONObjectImpl(excludes);
+	}
+
+	@Override
 	public void setFileExtensions(List<String> fileExtensions) {
 		_fileExtensions = fileExtensions;
 	}
@@ -974,6 +979,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
+	private JSONObject _excludesJSONObject;
 	private List<String> _fileExtensions;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

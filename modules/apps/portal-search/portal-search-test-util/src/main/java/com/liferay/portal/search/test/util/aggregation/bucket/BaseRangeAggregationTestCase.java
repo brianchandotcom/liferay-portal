@@ -41,10 +41,12 @@ public abstract class BaseRangeAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		RangeAggregation rangeAggregation = getAggregation(true);
+		RangeAggregation rangeAggregation = getAggregation();
 
 		rangeAggregation.addRange(new Range(11.0, null));
 		rangeAggregation.addRange(new Range(0.0, 11.0));
+
+		rangeAggregation.setKeyed(true);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -74,7 +76,7 @@ public abstract class BaseRangeAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		RangeAggregation rangeAggregation = getAggregation(null);
+		RangeAggregation rangeAggregation = getAggregation();
 
 		rangeAggregation.addRange(new Range("< 6", null, 6.0));
 		rangeAggregation.addRange(new Range(">=6, <=10", 6.0, 11.0));
@@ -109,9 +111,8 @@ public abstract class BaseRangeAggregationTestCase
 		Assert.assertEquals(expectedCount, bucket.getDocCount());
 	}
 
-	protected RangeAggregation getAggregation(Boolean keyed) {
-		return aggregationFixture.newRangeAggregation(
-			"range", Field.PRIORITY, keyed);
+	protected RangeAggregation getAggregation() {
+		return aggregations.range("range", Field.PRIORITY);
 	}
 
 }

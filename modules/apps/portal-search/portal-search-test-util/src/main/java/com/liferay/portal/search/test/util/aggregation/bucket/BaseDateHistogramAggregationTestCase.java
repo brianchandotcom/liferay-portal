@@ -48,9 +48,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-02-03T00:00:00"));
 		addDocument(getDate("2017-02-05T00:00:00"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1d", 1L, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1d");
+
+		dateHistogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -89,9 +90,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-02-01T16:48:00"));
 		addDocument(getDate("2017-02-01T16:59:00"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1h", 1L, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1h");
+
+		dateHistogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -127,9 +129,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-02-01T09:16:04"));
 		addDocument(getDate("2017-02-01T09:16:42"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1m", 1L, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1m");
+
+		dateHistogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -163,9 +166,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-03-05T00:00:00"));
 		addDocument(getDate("2017-03-06T00:00:00"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1M", null, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1M");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -199,9 +201,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-02-01T00:00:37"));
 		addDocument(getDate("2017-02-01T00:00:37"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1s", 1L, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1s");
+
+		dateHistogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -234,9 +237,8 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2016-03-04T00:00:00"));
 		addDocument(getDate("2017-12-31T00:00:00"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1y", null, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1y");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -269,9 +271,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2017-02-01T00:00:13"));
 		addDocument(getDate("2017-02-01T00:00:21"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "5s", 0L, null);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"5s");
+
+		dateHistogramAggregation.setMinDocCount(0L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -307,9 +310,10 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2018-02-11T00:00:00"));
 		addDocument(getDate("2018-02-13T00:00:00"));
 
-		DateHistogramAggregation dateHistogramAggregation =
-			aggregationFixture.newDateHistogramAggregation(
-				_NAME, Field.EXPIRATION_DATE, "1w", null, -86400000L);
+		DateHistogramAggregation dateHistogramAggregation = getAggregation(
+			"1w");
+
+		dateHistogramAggregation.setOffset(-86400000L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -335,8 +339,7 @@ public abstract class BaseDateHistogramAggregationTestCase
 	}
 
 	protected void addDocument(Date date) throws Exception {
-		addDocument(
-			DocumentCreationHelpers.singleDate(Field.EXPIRATION_DATE, date));
+		addDocument(DocumentCreationHelpers.singleDate(_FIELD, date));
 	}
 
 	protected void assertBucket(
@@ -344,6 +347,18 @@ public abstract class BaseDateHistogramAggregationTestCase
 
 		Assert.assertEquals(expectedKey, bucket.getKey());
 		Assert.assertEquals(expectedCount, bucket.getDocCount());
+	}
+
+	protected DateHistogramAggregation getAggregation(
+		String dateHistogramInterval) {
+
+		DateHistogramAggregation dateHistogramAggregation =
+			aggregations.dateHistogram("date_histogram", _FIELD);
+
+		dateHistogramAggregation.setDateHistogramInterval(
+			dateHistogramInterval);
+
+		return dateHistogramAggregation;
 	}
 
 	protected Date getDate(String date) {
@@ -355,6 +370,6 @@ public abstract class BaseDateHistogramAggregationTestCase
 		return Date.from(zonedDateTime.toInstant());
 	}
 
-	private static final String _NAME = "date_histogram";
+	private static final String _FIELD = Field.EXPIRATION_DATE;
 
 }

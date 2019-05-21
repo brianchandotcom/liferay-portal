@@ -39,9 +39,7 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 		}
 
 		PercentilesBucketPipelineAggregation
-			percentilesBucketPipelineAggregation =
-				aggregationFixture.newPercentilesBucketPipelineAggregation(
-					"percentiles", "histogram>sum");
+			percentilesBucketPipelineAggregation = getAggregation();
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -84,9 +82,7 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 		}
 
 		PercentilesBucketPipelineAggregation
-			percentilesBucketPipelineAggregation =
-				aggregationFixture.newPercentilesBucketPipelineAggregation(
-					"percentiles", "histogram>sum");
+			percentilesBucketPipelineAggregation = getAggregation();
 
 		percentilesBucketPipelineAggregation.setPercents(25.0, 50.0, 75.0);
 
@@ -117,6 +113,10 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				Assert.assertEquals("50%", 35, percentiles.get(50.0), 0);
 				Assert.assertEquals("75%", 60, percentiles.get(75.0), 0);
 			});
+	}
+
+	protected PercentilesBucketPipelineAggregation getAggregation() {
+		return aggregations.percentilesBucket("percentiles", "histogram>sum");
 	}
 
 }

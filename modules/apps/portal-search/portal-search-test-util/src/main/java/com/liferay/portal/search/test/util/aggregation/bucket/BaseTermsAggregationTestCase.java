@@ -60,7 +60,9 @@ public abstract class BaseTermsAggregationTestCase
 
 	@Test
 	public void testTermsWithOrder() throws Exception {
-		TermsAggregation termsAggregation = getAggregation(Order.key(true));
+		TermsAggregation termsAggregation = getAggregation();
+
+		termsAggregation.addOrders(Order.key(true));
 
 		assertBuckets(
 			termsAggregation, "[SomeUser1=4, SomeUser2=5, SomeUser3=2]");
@@ -81,9 +83,8 @@ public abstract class BaseTermsAggregationTestCase
 			});
 	}
 
-	protected TermsAggregation getAggregation(Order... orders) {
-		return aggregationFixture.newTermsAggregation(
-			"terms", Field.USER_NAME, orders);
+	protected TermsAggregation getAggregation() {
+		return aggregations.terms("terms", Field.USER_NAME);
 	}
 
 	protected void index(int priority, String userName) {

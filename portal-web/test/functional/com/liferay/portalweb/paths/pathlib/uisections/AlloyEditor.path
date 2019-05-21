@@ -57,7 +57,7 @@
 <!--TEXT_FORMATTING-->
 <tr>
 	<td>TEXT_FORMATTING_STYLE</td>
-	<td>//button[contains(@class,'ae-toolbar-element')]//span[contains(@class,'ae-container-dropdown')]</td>
+	<td>//button[contains(@class,'ae-toolbar-element')]//span[contains(@class,'selected-item')]</td>
 	<td></td>
 </tr>
 <tr>

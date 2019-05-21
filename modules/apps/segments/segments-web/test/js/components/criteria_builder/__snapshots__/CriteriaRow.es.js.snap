@@ -24,7 +24,9 @@ exports[`CriteriaRow should render 1`] = `
       <span
         class="criterion-string"
       >
-        <b />
+        <b>
+          Test Property
+        </b>
       </span>
       <select
         class="form-control criterion-input operator-input form-control"
@@ -33,7 +35,7 @@ exports[`CriteriaRow should render 1`] = `
         class="criterion-input form-control"
         data-testid="simple-string"
         type="text"
-        value=""
+        value="test_val"
       />
       <button
         class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"

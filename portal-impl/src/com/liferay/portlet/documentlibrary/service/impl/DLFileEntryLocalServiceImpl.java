@@ -1548,14 +1548,14 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public boolean isFileEntryCheckedOut(long fileEntryId) {
-		DLFileVersion dlFileVersion = dlFileVersionPersistence.fetchByF_V(
-			fileEntryId, DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+		if (dlFileVersionPersistence.countByF_V(
+				fileEntryId,
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION) > 0) {
 
-		if (dlFileVersion == null) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**

@@ -3,7 +3,7 @@ import com.liferay.gradle.util.OSDetector
 
 task downloadGems
 
-String compassVersion = "1.0.1"
+String compassVersion = "1.0.3"
 
 String compassUrl = "https://rubygems.org/gems/compass-${compassVersion}.gem"
 

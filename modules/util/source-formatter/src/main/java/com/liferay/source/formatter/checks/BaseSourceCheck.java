@@ -707,7 +707,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return GetterUtil.getBoolean(attributeValue);
 	}
 
-	protected boolean isExcludedPath(
+	private boolean _isExcludedPath(
 		Properties properties, String key, String path, int lineNumber,
 		String parameter) {
 
@@ -768,17 +768,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isExcludedPath(String key, String path, int lineNumber) {
-		return isExcludedPath(key, path, lineNumber, null);
+		return _isExcludedPath(key, path, lineNumber, null);
 	}
 
-	protected boolean isExcludedPath(
+	private boolean _isExcludedPath(
 		String key, String path, int lineNumber, String parameter) {
 
 		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
 			String propertiesFileLocation = entry.getKey();
 
 			if (path.startsWith(propertiesFileLocation) &&
-				isExcludedPath(
+				_isExcludedPath(
 					entry.getValue(), key, path, lineNumber, parameter)) {
 
 				return true;
@@ -791,7 +791,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected boolean isExcludedPath(
 		String key, String path, String parameter) {
 
-		return isExcludedPath(key, path, -1, parameter);
+		return _isExcludedPath(key, path, -1, parameter);
 	}
 
 	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {

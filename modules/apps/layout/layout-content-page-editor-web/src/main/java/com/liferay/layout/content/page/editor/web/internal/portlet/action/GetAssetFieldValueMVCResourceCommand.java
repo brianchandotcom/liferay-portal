@@ -74,6 +74,10 @@ public class GetAssetFieldValueMVCResourceCommand
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
+		if (infoDisplayObjectProvider == null) {
+			return;
+		}
+
 		Object object = infoDisplayObjectProvider.getDisplayObject();
 
 		if (object == null) {

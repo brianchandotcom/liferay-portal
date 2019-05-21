@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
-	compileInclude group: "commons-collections", name: "commons-collections", version: "3.2.1"
+	compileInclude group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileInclude group: "commons-io", name: "commons-io", version: "2.4"
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
 	compileInclude group: "commons-pool", name: "commons-pool", version: "1.6"

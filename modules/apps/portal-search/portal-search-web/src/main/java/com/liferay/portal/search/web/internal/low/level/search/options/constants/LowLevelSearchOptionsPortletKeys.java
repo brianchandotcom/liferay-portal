@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.options.constants;
+package com.liferay.portal.search.web.internal.low.level.search.options.constants;
 
 /**
- * @author Wade Cao
+ * @author Bryan Engler
  */
-public class SearchOptionsPortletKeys {
+public class LowLevelSearchOptionsPortletKeys {
 
-	public static final String SEARCH_OPTIONS =
-		"com_liferay_portal_search_web_search_options_portlet_" +
-			"SearchOptionsPortlet";
+	public static final String LOW_LEVEL_SEARCH_OPTIONS =
+		"com_liferay_portal_search_web_low_level_search_options_portlet_" +
+			"LowLevelSearchOptionsPortlet";
 
 }

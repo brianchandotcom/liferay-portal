@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
+import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchPortletPermissionUtil;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/search/options/view.jsp",
-		"javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
+		"javax.portlet.name=" + LowLevelSearchOptionsPortletKeys.LOW_LEVEL_SEARCH_OPTIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

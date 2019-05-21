@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.search.options.portlet.shared.search;
 
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
+import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
+	property = "javax.portlet.name=" + LowLevelSearchOptionsPortletKeys.LOW_LEVEL_SEARCH_OPTIONS,
 	service = PortletSharedSearchContributor.class
 )
 public class LowLevelSearchOptionsPortletSharedSearchContributor

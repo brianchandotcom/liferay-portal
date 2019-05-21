@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
+import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + SearchOptionsPortletKeys.SEARCH_OPTIONS_LOW_LEVEL,
+	property = "javax.portlet.name=" + LowLevelSearchOptionsPortletKeys.LOW_LEVEL_SEARCH_OPTIONS,
 	service = ConfigurationAction.class
 )
 public class LowLevelSearchOptionsConfigurationAction

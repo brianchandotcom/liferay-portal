@@ -81,7 +81,9 @@ public class GroupServicePermissionTest {
 
 		_groups.addFirst(_group111);
 
-		setUpPrincipalThreadLocal();
+		_name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	@After
@@ -196,12 +198,6 @@ public class GroupServicePermissionTest {
 		_userGroupRoleLocalService.addUserGroupRoles(
 			_user.getUserId(), group.getGroupId(),
 			new long[] {role.getRoleId()});
-	}
-
-	protected void setUpPrincipalThreadLocal() throws Exception {
-		_name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	protected void testAddGroup(

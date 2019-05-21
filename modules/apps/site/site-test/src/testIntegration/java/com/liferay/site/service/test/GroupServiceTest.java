@@ -269,27 +269,31 @@ public class GroupServiceTest {
 
 		User user = UserTestUtil.addOrganizationOwnerUser(organization);
 
-		_userLocalService.addGroupUser(
-			organizationSite.getGroupId(), user.getUserId());
-		_userLocalService.addOrganizationUsers(
-			organization.getOrganizationId(), new long[] {user.getUserId()});
+		try {
+			_userLocalService.addGroupUser(
+				organizationSite.getGroupId(), user.getUserId());
+			_userLocalService.addOrganizationUsers(
+				organization.getOrganizationId(),
+				new long[] {user.getUserId()});
 
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+			_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		_userGroupRoleLocalService.addUserGroupRoles(
-			user.getUserId(), organizationSite.getGroupId(),
-			new long[] {_role.getRoleId()});
+			_userGroupRoleLocalService.addUserGroupRoles(
+				user.getUserId(), organizationSite.getGroupId(),
+				new long[] {_role.getRoleId()});
 
-		_groupService.deleteGroup(organizationSite.getGroupId());
+			_groupService.deleteGroup(organizationSite.getGroupId());
 
-		Assert.assertEquals(
-			1,
-			_userGroupRoleLocalService.getUserGroupRolesCount(
-				user.getUserId(), organizationSite.getGroupId()));
+			Assert.assertEquals(
+				1,
+				_userGroupRoleLocalService.getUserGroupRolesCount(
+					user.getUserId(), organizationSite.getGroupId()));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
 
-		_userLocalService.deleteUser(user);
-
-		_organizationLocalService.deleteOrganization(organization);
+			_organizationLocalService.deleteOrganization(organization);
+		}
 	}
 
 	@Test

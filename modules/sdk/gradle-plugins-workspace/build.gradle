@@ -77,7 +77,6 @@ gradleTest {
 	if (System.getenv("JENKINS_HOME")) {
 		expectFailure "buildDockerImage"
 		expectFailure "createDockerContainer"
-		expectFailure "themesJavaBuild"
 	}
 
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"

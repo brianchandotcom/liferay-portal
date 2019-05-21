@@ -329,7 +329,7 @@ public class GroupServiceTest {
 			1,
 			_groupService.searchCount(
 				TestPropsValues.getCompanyId(), null,
-				_group.getDescription(getLocale()),
+				_group.getDescription(_getLocale()),
 				new String[] {
 					"manualMembership:true:boolean", "site:true:boolean"
 				}));
@@ -349,7 +349,7 @@ public class GroupServiceTest {
 			1,
 			_groupService.searchCount(
 				TestPropsValues.getCompanyId(), null,
-				_group.getDescription(getLocale()),
+				_group.getDescription(_getLocale()),
 				new String[] {
 					"manualMembership:true:boolean", "site:true:boolean"
 				}));
@@ -362,7 +362,7 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			_groupService.searchCount(
-				TestPropsValues.getCompanyId(), _group.getName(getLocale()),
+				TestPropsValues.getCompanyId(), _group.getName(_getLocale()),
 				null,
 				new String[] {
 					"manualMembership:true:boolean", "site:true:boolean"
@@ -382,7 +382,7 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			_groupService.searchCount(
-				TestPropsValues.getCompanyId(), _group.getName(getLocale()),
+				TestPropsValues.getCompanyId(), _group.getName(_getLocale()),
 				null,
 				new String[] {
 					"manualMembership:true:boolean", "site:true:boolean"
@@ -598,19 +598,20 @@ public class GroupServiceTest {
 
 		_groups.addAll(0, allChildGroups);
 
-		assertExpectedGroups(likeNameChildGroups, parentGroupId, name + "%");
-		assertExpectedGroups(
+		_assertExpectedGroups(likeNameChildGroups, parentGroupId, name + "%");
+		_assertExpectedGroups(
 			likeNameChildGroups, parentGroupId,
 			StringUtil.toLowerCase(name) + "%");
-		assertExpectedGroups(
+		_assertExpectedGroups(
 			likeNameChildGroups, parentGroupId,
 			StringUtil.toUpperCase(name) + "%");
-		assertExpectedGroups(
+		_assertExpectedGroups(
 			likeNameChildGroups, GroupConstants.ANY_PARENT_GROUP_ID,
 			name + "%");
-		assertExpectedGroups(allChildGroups, parentGroupId, null);
-		assertExpectedGroups(allChildGroups, parentGroupId, "");
-		assertExpectedGroups(allGroups, GroupConstants.ANY_PARENT_GROUP_ID, "");
+		_assertExpectedGroups(allChildGroups, parentGroupId, null);
+		_assertExpectedGroups(allChildGroups, parentGroupId, "");
+		_assertExpectedGroups(
+			allGroups, GroupConstants.ANY_PARENT_GROUP_ID, "");
 	}
 
 	@Test
@@ -703,7 +704,7 @@ public class GroupServiceTest {
 
 		_groups.addFirst(group2);
 
-		Group scopeGroup = addScopeGroup(group2);
+		Group scopeGroup = _addScopeGroup(group2);
 
 		_groups.addFirst(scopeGroup);
 
@@ -829,7 +830,7 @@ public class GroupServiceTest {
 
 		_groups.addFirst(group2);
 
-		Group scopeGroup = addScopeGroup(group2);
+		Group scopeGroup = _addScopeGroup(group2);
 
 		_groups.addFirst(scopeGroup);
 
@@ -899,14 +900,14 @@ public class GroupServiceTest {
 
 	@Test
 	public void testInvalidChangeAvailableLanguageIds() throws Exception {
-		testUpdateDisplaySettings(
+		_testUpdateDisplaySettings(
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US),
 			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.US), null, true);
 	}
 
 	@Test
 	public void testInvalidChangeDefaultLanguageId() throws Exception {
-		testUpdateDisplaySettings(
+		_testUpdateDisplaySettings(
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US), LocaleUtil.GERMANY,
 			true);
@@ -1010,12 +1011,12 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectableParentSites() throws Exception {
-		testSelectableParentSites(false);
+		_testSelectableParentSites(false);
 	}
 
 	@Test
 	public void testSelectableParentSitesStaging() throws Exception {
-		testSelectableParentSites(true);
+		_testSelectableParentSites(true);
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveChildParent.class)
@@ -1186,20 +1187,20 @@ public class GroupServiceTest {
 
 	@Test
 	public void testValidChangeAvailableLanguageIds() throws Exception {
-		testUpdateDisplaySettings(
+		_testUpdateDisplaySettings(
 			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US), null, false);
 	}
 
 	@Test
 	public void testValidChangeDefaultLanguageId() throws Exception {
-		testUpdateDisplaySettings(
+		_testUpdateDisplaySettings(
 			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.GERMANY, false);
 	}
 
-	protected Group addScopeGroup(Group group) throws Exception {
+	private Group _addScopeGroup(Group group) throws Exception {
 		Layout scopeLayout = LayoutTestUtil.addLayout(group);
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -1214,7 +1215,7 @@ public class GroupServiceTest {
 			null);
 	}
 
-	protected void assertExpectedGroups(
+	private void _assertExpectedGroups(
 			List<Group> expectedGroups, long parentGroupId, String nameSearch)
 		throws Exception {
 
@@ -1235,13 +1236,13 @@ public class GroupServiceTest {
 				true));
 	}
 
-	protected Locale getLocale() {
+	private Locale _getLocale() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		return themeDisplay.getLocale();
 	}
 
-	protected void testSelectableParentSites(boolean staging) throws Exception {
+	private void _testSelectableParentSites(boolean staging) throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		Assert.assertTrue(_group.isRoot());
@@ -1285,7 +1286,7 @@ public class GroupServiceTest {
 		}
 	}
 
-	protected void testUpdateDisplaySettings(
+	private void _testUpdateDisplaySettings(
 			Collection<Locale> portalAvailableLocales,
 			Collection<Locale> groupAvailableLocales, Locale groupDefaultLocale,
 			boolean expectFailure)

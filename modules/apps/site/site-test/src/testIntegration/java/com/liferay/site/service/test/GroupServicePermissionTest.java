@@ -95,91 +95,89 @@ public class GroupServicePermissionTest {
 	public void testAddPermissionsCustomRole() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		givePermissionToManageSubsites(_group1);
+		_givePermissionToManageSubsites(_group1);
 
-		testAddGroup(false, true, true, true);
+		_testAddGroup(false, true, true, true);
 	}
 
 	@Test
 	public void testAddPermissionsCustomRoleInSubsite() throws Exception {
 		_user = UserTestUtil.addUser(null, _group11.getGroupId());
 
-		givePermissionToManageSubsites(_group11);
+		_givePermissionToManageSubsites(_group11);
 
-		testAddGroup(false, false, true, true);
+		_testAddGroup(false, false, true, true);
 	}
 
 	@Test
 	public void testAddPermissionsRegularUser() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		testAddGroup(false, false, false, false);
+		_testAddGroup(false, false, false, false);
 	}
 
 	@Test
 	public void testAddPermissionsSiteAdmin() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		giveSiteAdminRole(_group1);
+		_giveSiteAdminRole(_group1);
 
-		testAddGroup(true, true, true, true);
+		_testAddGroup(true, true, true, true);
 	}
 
 	@Test
 	public void testAddPermissionsSubsiteAdmin() throws Exception {
 		_user = UserTestUtil.addUser(null, _group11.getGroupId());
 
-		giveSiteAdminRole(_group11);
+		_giveSiteAdminRole(_group11);
 
-		testAddGroup(false, false, true, true);
+		_testAddGroup(false, false, true, true);
 	}
 
 	@Test
 	public void testUpdatePermissionsCustomRole() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		givePermissionToManageSubsites(_group1);
+		_givePermissionToManageSubsites(_group1);
 
-		testUpdateGroup(false, false, true, true);
+		_testUpdateGroup(false, false, true, true);
 	}
 
 	@Test
 	public void testUpdatePermissionsCustomRoleInSubsite() throws Exception {
 		_user = UserTestUtil.addUser(null, _group11.getGroupId());
 
-		givePermissionToManageSubsites(_group11);
+		_givePermissionToManageSubsites(_group11);
 
-		testUpdateGroup(false, false, false, true);
+		_testUpdateGroup(false, false, false, true);
 	}
 
 	@Test
 	public void testUpdatePermissionsRegularUser() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		testUpdateGroup(false, false, false, false);
+		_testUpdateGroup(false, false, false, false);
 	}
 
 	@Test
 	public void testUpdatePermissionsSiteAdmin() throws Exception {
 		_user = UserTestUtil.addUser(null, _group1.getGroupId());
 
-		giveSiteAdminRole(_group1);
+		_giveSiteAdminRole(_group1);
 
-		testUpdateGroup(true, false, true, true);
+		_testUpdateGroup(true, false, true, true);
 	}
 
 	@Test
 	public void testUpdatePermissionsSubsiteAdmin() throws Exception {
 		_user = UserTestUtil.addUser(null, _group11.getGroupId());
 
-		giveSiteAdminRole(_group11);
+		_giveSiteAdminRole(_group11);
 
-		testUpdateGroup(false, true, false, true);
+		_testUpdateGroup(false, true, false, true);
 	}
 
-	protected void givePermissionToManageSubsites(Group group)
-		throws Exception {
-
+	private void _givePermissionToManageSubsites(Group group) throws Exception {
 		_role = RoleTestUtil.addRole(
 			"Subsites Admin", RoleConstants.TYPE_SITE, Group.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
@@ -191,7 +189,7 @@ public class GroupServicePermissionTest {
 			new long[] {_role.getRoleId()});
 	}
 
-	protected void giveSiteAdminRole(Group group) throws Exception {
+	private void _giveSiteAdminRole(Group group) throws Exception {
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
@@ -200,7 +198,7 @@ public class GroupServicePermissionTest {
 			new long[] {role.getRoleId()});
 	}
 
-	protected void testAddGroup(
+	private void _testAddGroup(
 			boolean hasManageSite1, boolean hasManageSubsitePermisionOnGroup1,
 			boolean hasManageSubsitePermisionOnGroup11,
 			boolean hasManageSubsitePermisionOnGroup111)
@@ -279,7 +277,7 @@ public class GroupServicePermissionTest {
 		}
 	}
 
-	protected void testUpdateGroup(
+	private void _testUpdateGroup(
 			boolean hasManageSite1, boolean hasManageSite11,
 			boolean hasManageSubsitePermisionOnGroup1,
 			boolean hasManageSubsitePermisionOnGroup11)

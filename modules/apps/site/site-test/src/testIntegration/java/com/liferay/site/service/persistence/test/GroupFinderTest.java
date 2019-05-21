@@ -197,7 +197,7 @@ public class GroupFinderTest {
 
 	@Test
 	public void testFindByLayouts1() throws Exception {
-		List<Group> groups = findByLayouts(
+		List<Group> groups = _findByLayouts(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		int initialGroupCount = groups.size();
@@ -220,16 +220,16 @@ public class GroupFinderTest {
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 
-		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		groups = _findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		Assert.assertEquals(
 			groups.toString(), initialGroupCount + 1, groups.size());
 
-		groups = findByLayouts(parentGroup.getGroupId());
+		groups = _findByLayouts(parentGroup.getGroupId());
 
 		Assert.assertEquals(groups.toString(), 2, groups.size());
 
-		groups = findByLayouts(childGroup1.getGroupId());
+		groups = _findByLayouts(childGroup1.getGroupId());
 
 		Assert.assertTrue(groups.toString(), groups.isEmpty());
 	}
@@ -283,7 +283,7 @@ public class GroupFinderTest {
 		Assert.assertEquals(groups.toString(), 2, groups.size());
 	}
 
-	protected List<Group> findByLayouts(long parentGroupId) throws Exception {
+	private List<Group> _findByLayouts(long parentGroupId) throws Exception {
 		return _groupFinder.findByLayouts(
 			TestPropsValues.getCompanyId(), parentGroupId, true,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,

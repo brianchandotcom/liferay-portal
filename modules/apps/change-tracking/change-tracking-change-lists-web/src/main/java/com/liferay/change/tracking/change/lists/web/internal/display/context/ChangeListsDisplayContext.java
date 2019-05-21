@@ -106,11 +106,11 @@ public class ChangeListsDisplayContext {
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
 		).put(
-			"urlUserSettings", 
+			"urlUserSettings",
 			StringBundler.concat(
 				_themeDisplay.getPortalURL(),
 				"/o/change-tracking/configurations/",
-				_themeDisplay.getCompanyId(), "/user/", 
+				_themeDisplay.getCompanyId(), "/user/",
 				_themeDisplay.getUserId())
 		);
 

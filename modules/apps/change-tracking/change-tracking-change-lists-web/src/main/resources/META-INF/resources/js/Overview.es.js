@@ -181,12 +181,12 @@ class Overview extends PortletBase {
 
 		let ok = true;
 
-		if(this.checkoutConfirmationEnabled) {
-			const label = this._sub(Liferay.Language.get('do-you-want-to-switch-to-x-change-list'),[event.target.text]) + '\n' + Liferay.Language.get('you-can-disable-this-message-from-the-change-list-user-settings-tab');
+		if (this.checkoutConfirmationEnabled) {
+			const label = this._sub(Liferay.Language.get('do-you-want-to-switch-to-x-change-list'), [event.target.text]) + '\n' + Liferay.Language.get('you-can-disable-this-message-from-the-change-list-user-settings-tab');
 			ok = confirm(label);
 		}
 
-		if(ok) {
+		if (ok) {
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
 			headers.append('X-CSRF-Token', Liferay.authToken);
@@ -201,7 +201,7 @@ class Overview extends PortletBase {
 
 			let production = event.target.getAttribute('data-production');
 
-			let url = this.urlCollectionsBase + '/' + collectionId + '/checkout?userId=' + Liferay.ThemeDisplay.getUserId();
+			let url = this.urlCollectionsBase + '/' + collectionId + '/checkout?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId();
 
 			fetch(url, body)
 				.then(
@@ -339,7 +339,7 @@ class Overview extends PortletBase {
 			activeCollection = activeCollection[0];
 		}
 
-		if(activeCollection !== undefined) {
+		if (activeCollection !== undefined) {
 			let foundEntriesLink = activeCollection.links.find(
 				function(link) {
 					return link.rel === 'entries';
@@ -371,7 +371,7 @@ class Overview extends PortletBase {
 
 			// Change Lists dropdown Menu
 
-		let urlRecentCollections = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + '&limit=5&type=recent&sort=modifiedDate:desc';
+			let urlRecentCollections = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + '&limit=5&type=recent&sort=modifiedDate:desc';
 
 			this._fetchRecentCollections(urlRecentCollections, 'GET');
 
@@ -415,7 +415,7 @@ class Overview extends PortletBase {
 			this.productionFound = false;
 		}
 
-		if(userSettings) {
+		if (userSettings) {
 			this.checkoutConfirmationEnabled = userSettings.checkoutCTCollectionConfirmationEnabled;
 		}
 	}
@@ -587,7 +587,6 @@ Overview.STATE = {
 			}
 		)
 	),
-
 
 	/**
 	 * Checkout confirmation is enabled.

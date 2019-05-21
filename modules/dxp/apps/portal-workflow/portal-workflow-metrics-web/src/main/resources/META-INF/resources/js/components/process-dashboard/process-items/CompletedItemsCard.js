@@ -28,7 +28,7 @@ class CompletedItemsCard extends React.Component {
 	get filter() {
 		const { timeRanges } = timeRangeStore.getState();
 
-		if (timeRanges === []) {
+		if (!timeRanges.length) {
 			return null;
 		}
 

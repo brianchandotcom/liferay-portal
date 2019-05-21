@@ -243,6 +243,10 @@ public class SourceChecksUtil {
 				configurationAttributesJSONObject);
 		}
 
+		attributesJSONObject = _addPropertiesAttribute(
+			attributesJSONObject, SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH,
+			propertiesMap);
+
 		return SourceFormatterUtil.addPropertiesAttributes(
 			attributesJSONObject, CheckType.SOURCE_CHECK, checkName,
 			propertiesMap);

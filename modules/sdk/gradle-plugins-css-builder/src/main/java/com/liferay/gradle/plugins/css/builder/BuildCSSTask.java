@@ -53,7 +53,6 @@ public class BuildCSSTask extends JavaExec {
 	public BuildCSSTask() {
 		setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		setDirNames("/");
-		setExcludes(CSSBuilderArgs.EXCLUDES);
 		setMain("com.liferay.css.builder.CSSBuilder");
 		systemProperty("sass.compiler.jni.clean.temp.dir", true);
 	}
@@ -395,7 +394,8 @@ public class BuildCSSTask extends JavaExec {
 		CSSBuilderArgs.APPEND_CSS_IMPORT_TIMESTAMPS;
 	private Object _baseDir;
 	private final Set<Object> _dirNames = new LinkedHashSet<>();
-	private final Set<Object> _excludes = new LinkedHashSet<>();
+	private final Set<Object> _excludes = new LinkedHashSet<>(
+		Arrays.asList(CSSBuilderArgs.EXCLUDES));
 	private boolean _generateSourceMap;
 	private FileCollection _importPath;
 	private Object _outputDirName = CSSBuilderArgs.OUTPUT_DIR_NAME;

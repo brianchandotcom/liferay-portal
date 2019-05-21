@@ -50,8 +50,6 @@ public abstract class BaseCSSBuilderTestCase {
 
 		Assert.assertTrue(Files.isDirectory(_dependenciesDirPath));
 
-		_excludes = CSSBuilderArgs.EXCLUDES;
-
 		_importDirPath = Paths.get("build/portal-common-css");
 
 		Assert.assertTrue(Files.isDirectory(_importDirPath));
@@ -248,7 +246,7 @@ public abstract class BaseCSSBuilderTestCase {
 	private static final Pattern _cssImportPattern = Pattern.compile(
 		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css\\?t=\\d+)['\"]?\\s*\\)\\s*;");
 	private static Path _dependenciesDirPath;
-	private static String[] _excludes;
+	private static String[] _excludes = CSSBuilderArgs.EXCLUDES;
 	private static Path _importDirPath;
 	private static Path _importJarPath;
 

@@ -468,13 +468,4 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			}
 		);
 	}
-
-	var sidenavSlider = $('#<portlet:namespace />infoPanelId');
-
-	sidenavSlider.on(
-		'open.lexicon.sidenav',
-		function(event) {
-			Liferay.fire('screenChange.lexicon.sidenav');
-		}
-	);
 </aui:script>

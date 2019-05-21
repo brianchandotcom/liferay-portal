@@ -14,10 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -36,13 +38,22 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import org.junit.Assert;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Inácio Nery
@@ -533,6 +544,85 @@ public class WorkflowMetricsRESTTestHelper {
 		return DigestUtils.sha256Hex(sb.toString());
 	}
 
+	private Object _getIndexer(String className) throws Exception {
+		if (_indexers.containsKey(className)) {
+			return _indexers.get(className);
+		}
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			WorkflowMetricsRESTTestHelper.class);
+
+		BundleContext _bundleContext = bundle.getBundleContext();
+
+		int count = 0;
+
+		ServiceReference<?> serviceReference = null;
+
+		do {
+			ServiceReference<?>[] serviceReferences =
+				_bundleContext.getServiceReferences(
+					className, "(objectClass=" + className + ")");
+
+			if (ArrayUtil.isEmpty(serviceReferences)) {
+				count++;
+
+				if (count >= 5) {
+					throw new IllegalStateException(
+						"Unable to get reference to " + className);
+				}
+
+				Thread.sleep(500);
+			}
+
+			serviceReference = serviceReferences[0];
+		}
+		while (serviceReference == null);
+
+		Object indexer = _bundleContext.getService(serviceReference);
+
+		_indexers.put(className, indexer);
+
+		return indexer;
+	}
+
+	private void _invokeAddDocument(Object indexer, Document document)
+		throws Exception {
+
+		_invokeMethod(indexer, "addDocument", document);
+	}
+
+	private void _invokeDeleteDocument(Object indexer, Document document)
+		throws Exception {
+
+		_invokeMethod(indexer, "deleteDocument", document);
+	}
+
+	private void _invokeMethod(
+			Object indexer, String methodName, Document document)
+		throws Exception {
+
+		Class<?> indexerClass = indexer.getClass();
+
+		Method method = null;
+
+		try {
+			method = ReflectionUtil.getDeclaredMethod(
+				indexerClass, methodName, Document.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			method = ReflectionUtil.getDeclaredMethod(
+				indexerClass.getSuperclass(), methodName, Document.class);
+		}
+
+		method.invoke(indexer, document);
+	}
+
+	private void _invokeUpdateDocument(Object indexer, Document document)
+		throws Exception {
+
+		_invokeMethod(indexer, "updateDocument", document);
+	}
+
 	private void _retryAssertCount(String indexName, String field, Object value)
 		throws Exception {
 
@@ -553,6 +643,8 @@ public class WorkflowMetricsRESTTestHelper {
 				return null;
 			});
 	}
+
+	private static Map<String, Object> _indexers = new HashMap<>();
 
 	private final Queries _queries;
 	private final SearchEngineAdapter _searchEngineAdapter;

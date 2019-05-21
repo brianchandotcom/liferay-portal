@@ -10450,10 +10450,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.7.1.tgz#4a5c0b781a21702b4d04a9aa2430348e1e405da6"
-  integrity sha512-dz+185QZsrYfGWmu0iAelsU9ydSwQSnb/9306m89SYZtq9zLbKm0sYW/B+av2HEbiPa1ltOcn8wKLVeIINECkQ==
+liferay-npm-scripts@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.7.2.tgz#a7424c21b326beb89f3af2ed77b44bf264c3f22d"
+  integrity sha512-5ryiEdhHxcNR2Phy+iU29hQHOYZ99hh2N5rLPVgY9Lg+1RxiA2Dw8IA/Q+B6qEAs/h/X5hL+p5ZKce/rKQLCrQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"

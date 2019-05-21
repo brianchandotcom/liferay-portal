@@ -221,6 +221,7 @@ definition {
 	@priority = "4"
 	test ValidateDDMNavigation {
 		property testray.component.names = "Web Content Administration";
+		property test.name.skip.portal.instance = "WebContentStructures#ValidateDDMNavigation"
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

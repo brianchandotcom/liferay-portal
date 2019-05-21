@@ -60,11 +60,10 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 				PORTLET_FRAGMENT_ENTRY_PROCESSOR_DISPLAY_CONTEXT,
 			portletFragmentEntryProcessorDisplayContext);
 
-		_jspRenderer.setServletContext(_servletContext);
-
 		try {
 			_jspRenderer.renderJSP(
-				httpServletRequest, pipingServletResponse, "/portlet.jsp");
+				_servletContext, httpServletRequest, pipingServletResponse,
+				"/portlet.jsp");
 		}
 		catch (IOException ioe) {
 			throw new FragmentEntryContentException(ioe);

@@ -847,10 +847,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			values.addAll(curValues);
 		}
 
-		cachedValuesMap.put(absolutePath + ":" + key, values);
-
 		if (!hasSubdirectoryValues) {
 			cachedValuesMap.put(key, values);
+		}
+		else {
+			cachedValuesMap.put(absolutePath + ":" + key, values);
 		}
 
 		return values;

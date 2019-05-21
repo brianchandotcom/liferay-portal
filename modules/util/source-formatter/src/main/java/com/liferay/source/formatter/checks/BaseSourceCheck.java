@@ -460,13 +460,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		String portalBranchName = _getPortalBranchName(!forceRetrieveFromGit);
 
-		return getPortalContent(fileName, portalBranchName);
+		return getBranchContent(fileName, portalBranchName);
 	}
 
-	protected String getPortalContent(String fileName, String portalBranchName)
+	protected String getBranchContent(String fileName, String branchName)
 		throws IOException {
 
-		if (Validator.isNull(portalBranchName)) {
+		if (Validator.isNull(branchName)) {
 			String content = getContent(
 				fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -475,7 +475,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			}
 		}
 
-		URL url = _getPortalGitURL(fileName, portalBranchName);
+		URL url = _getPortalGitURL(fileName, branchName);
 
 		if (url == null) {
 			return null;

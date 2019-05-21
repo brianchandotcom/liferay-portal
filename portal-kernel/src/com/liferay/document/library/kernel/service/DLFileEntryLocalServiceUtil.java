@@ -976,6 +976,12 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().hasFileEntryLock(userId, fileEntryId);
 	}
 
+	public static boolean hasFileEntryLock(
+		long userId, long fileEntryId, long folderId) {
+
+		return getService().hasFileEntryLock(userId, fileEntryId, folderId);
+	}
+
 	public static void incrementViewCounter(
 		com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry,
 		int increment) {

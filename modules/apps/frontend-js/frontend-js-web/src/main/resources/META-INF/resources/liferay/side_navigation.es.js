@@ -6,6 +6,58 @@
 * MIT license
 */
 +function($) {
+	/**
+	 * Utility function that strips off a possible jQuery and Metal
+	 * component wrappers from a DOM element.
+	 */
+	function getElement(element) {
+		// Remove jQuery wrapper, if any.
+		if (element.jquery) {
+			if (element.length > 1) {
+				throw new Error(
+					`getElement(): Expected at most one element, got ${element.length}`
+				);
+			}
+			element = element.get(0);
+		}
+
+		// Remove Metal wrapper, if any.
+		if (element && !(element instanceof HTMLElement)) {
+			element = element.element;
+		}
+
+		return element;
+	}
+
+	function addClass(element, className) {
+		setClasses(element, {
+			[className]: true,
+		});
+	}
+
+	function removeClass(element, className) {
+		setClasses(element, {
+			[className]: false,
+		});
+	}
+
+	function setClasses(element, classes) {
+		element = getElement(element);
+
+		if (element) {
+			// One at a time because IE 11: https://caniuse.com/#feat=classlist
+			Object.entries(classes).forEach(([className, present]) => {
+				className.split(/\s+/).forEach(name => {
+					if (present) {
+						element.classList.add(name);
+					} else {
+						element.classList.remove(name);
+					}
+				});
+			});
+		}
+	}
+
 	var $doc = $(document);
 
 	var listenerAdded = false;
@@ -243,8 +295,8 @@
 				});
 
 				instance._onSidenavTransitionEnd($content, function() {
-					$sidenav.removeClass('sidenav-transition');
-					$toggler.removeClass('sidenav-transition');
+					removeClass($sidenav, 'sidenav-transition');
+					removeClass($toggler, 'sidenav-transition');
 
 					$sidenav.trigger({
 						toggler: $(instance.togglerSelector),
@@ -253,16 +305,29 @@
 				});
 
 				if ($content.hasClass(openClass)) {
-					$content.addClass('sidenav-transition').addClass(closedClass).removeClass(openClass);
+					setClasses($content, {
+						'sidenav-transition': true,
+						[closedClass]: true,
+						[openClass]: false,
+					});
 				}
 
-				$sidenav.addClass('sidenav-transition');
-				$toggler.addClass('sidenav-transition');
+				addClass($sidenav, 'sidenav-transition');
+				addClass($toggler, 'sidenav-transition');
 
-				$sidenav.addClass(closedClass).removeClass(openClass);
+				setClasses($sidenav, {
+					[closedClass]: true,
+					[openClass]: false,
+				});
 
-				$('[data-target="' + target + '"]').removeClass(openClass).removeClass('active');
-				$('[href="' + target + '"]').removeClass(openClass).removeClass('active');
+				setClasses($('[data-target="' + target + '"]'), {
+					[openClass]: false,
+					active: false,
+				});
+				setClasses($('[href="' + target + '"]'), {
+					[openClass]: false,
+					active: false,
+				});
 			}
 		},
 
@@ -401,8 +466,8 @@
 				});
 
 				instance._onSidenavTransitionEnd($content, function() {
-					$sidenav.removeClass('sidenav-transition');
-					$toggler.removeClass('sidenav-transition');
+					removeClass($sidenav, 'sidenav-transition');
+					removeClass($toggler, 'sidenav-transition');
 
 					$sidenav.trigger({
 						toggler: $(instance.togglerSelector),
@@ -410,12 +475,21 @@
 					});
 				});
 
-				$content.addClass('sidenav-transition').addClass(openClass).removeClass(closedClass);
-				$sidenav.addClass('sidenav-transition');
-				$toggler.addClass('sidenav-transition');
-
-				$sidenav.addClass(openClass).removeClass(closedClass);
-				$toggler.addClass('active').addClass(openClass);
+				setClasses($content, {
+					'sidenav-transition': true,
+					[openClass]: true,
+					[closedClass]: false,
+				});
+				setClasses($sidenav, {
+					'sidenav-transition': true,
+					[openClass]: true,
+					[closedClass]: false,
+				});
+				setClasses($toggler, {
+					'sidenav-transition': true,
+					active: true,
+					[openClass]: true,
+				});
 			}
 		},
 
@@ -464,7 +538,10 @@
 				if ($container.hasClass('closed')) {
 					instance.clearStyle(['min-height', 'height']);
 
-					$toggler.removeClass('open').removeClass('sidenav-transition');
+					setClasses($toggler, {
+						open: false,
+						'sidenav-transition': false,
+					});
 
 					$container.trigger({
 						toggler: $toggler,
@@ -472,7 +549,10 @@
 					});
 				}
 				else {
-					$toggler.addClass('open').removeClass('sidenav-transition');
+					setClasses($toggler, {
+						open: true,
+						'sidenav-transition': false,
+					});
 
 					$container.trigger({
 						toggler: $toggler,
@@ -497,13 +577,19 @@
 				}
 			}
 
-			$container.addClass('sidenav-transition');
-			$toggler.addClass('sidenav-transition');
+			addClass($container, 'sidenav-transition');
+			addClass($toggler, 'sidenav-transition');
 
 			instance[widthMethod]($container);
 
-			$container.toggleClass('closed', !closed).toggleClass('open', closed);
-			$toggler.toggleClass('active', closed).toggleClass('open', closed);
+			setClasses($container, {
+				closed: !closed,
+				open: closed,
+			});
+			setClasses($toggler, {
+				active: closed,
+				open: closed,
+			});
 		},
 
 		toggleSimpleSidenav: function() {
@@ -722,15 +808,23 @@
 
 				var positionDirection = options.rtl ? 'left' : 'right';
 
-				$container.toggleClass('sidenav-fixed', fixedMenu);
+				setClasses($container, {
+					'sidenav-fixed': fixedMenu,
+				});
 
 				if ((!desktop && screenStartDesktop) || (desktop && !screenStartDesktop)) {
 					instance.hideSidenav();
 
 					instance.clearStyle([ 'min-height', 'height' ]);
 
-					$container.addClass('closed').removeClass('open');
-					$toggler.removeClass('active').removeClass('open');
+					setClasses($container, {
+						closed: true,
+						open: false,
+					});
+					setClasses($toggler, {
+						active: false,
+						open: false,
+					});
 
 					screenStartDesktop = false;
 
@@ -778,7 +872,7 @@
 			var transitionEnd = 'bsTransitionEnd';
 
 			var complete = function() {
-				$el.removeClass('sidenav-transition');
+				removeClass($el, 'sidenav-transition');
 
 				if (fn) {
 					fn();
@@ -837,16 +931,22 @@
 
 			if (!instance.useDataAttribute) {
 				if (mobile) {
-					$container.addClass('closed').removeClass('open');
-					$toggler.removeClass('active').removeClass('open');
+					setClasses($container, {
+						closed: true,
+						open: false,
+					});
+					setClasses($toggler, {
+						active: false,
+						open: false,
+					});
 				}
 
 				if (options.position === 'right') {
-					$container.addClass('sidenav-right');
+					addClass($container, 'sidenav-right');
 				}
 
 				if (type !== 'relative') {
-					$container.addClass('sidenav-fixed');
+					addClass($container, 'sidenav-fixed');
 				}
 
 				instance._renderNav();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.portal.upgrade.step.util;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;

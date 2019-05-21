@@ -33,7 +33,8 @@ public class DocumentLibraryAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_head.jsp#post");
 	}
 
 	@Override

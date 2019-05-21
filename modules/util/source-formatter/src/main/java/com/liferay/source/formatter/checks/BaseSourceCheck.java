@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -134,11 +133,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setProjectPathPrefix(String projectPathPrefix) {
 		_projectPathPrefix = projectPathPrefix;
-	}
-
-	@Override
-	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
-		_propertiesMap = propertiesMap;
 	}
 
 	@Override
@@ -950,7 +944,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private boolean _portalSource;
 	private String _projectName;
 	private String _projectPathPrefix;
-	private Map<String, Properties> _propertiesMap;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();

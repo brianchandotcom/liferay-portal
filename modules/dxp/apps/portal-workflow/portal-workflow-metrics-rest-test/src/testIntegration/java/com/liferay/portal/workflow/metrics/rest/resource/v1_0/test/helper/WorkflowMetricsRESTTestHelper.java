@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -70,17 +67,10 @@ public class WorkflowMetricsRESTTestHelper {
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			"workflow-metrics-instances",
+		_invokeAddDocument(
+			_getIndexer(_INSTANCE_INDEXER_CLASS_NAME),
 			_createWorkflowMetricsInstanceDocument(
-				companyId, instance.getId(), instance.getProcessId())) {
-
-			{
-				setType("WorkflowMetricsInstanceType");
-			}
-		};
-
-		_searchEngineAdapter.execute(indexDocumentRequest);
+				companyId, instance.getId(), instance.getProcessId()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "instanceId", instance.getId());
@@ -95,20 +85,15 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 	}
 
-	public Node addNode(long companyId, long processId, Node node)
+	public Node addNode(
+			long companyId, long processId, String version, Node node)
 		throws Exception {
 
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			"workflow-metrics-nodes",
+		_invokeAddDocument(
+			_getIndexer(_NODE_INDEXER_CLASS_NAME),
 			_createWorkflowMetricsNodeDocument(
-				companyId, node.getId(), node.getName(), processId, "STATE")) {
-
-			{
-				setType("WorkflowMetricsNodeType");
-			}
-		};
-
-		_searchEngineAdapter.execute(indexDocumentRequest);
+				companyId, node.getId(), node.getName(), processId, "STATE",
+				version));
 
 		_retryAssertCount("workflow-metrics-nodes", "nodeId", node.getId());
 
@@ -124,15 +109,7 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public void addProcess(Document document) throws Exception {
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			"workflow-metrics-processes", document) {
-
-			{
-				setType("WorkflowMetricsProcessType");
-			}
-		};
-
-		_searchEngineAdapter.execute(indexDocumentRequest);
+		_invokeAddDocument(_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
 	}
 
 	public Process addProcess(long companyId) throws Exception {
@@ -149,40 +126,10 @@ public class WorkflowMetricsRESTTestHelper {
 	public Process addProcess(long companyId, Process process)
 		throws Exception {
 
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-instances",
-				_createWorkflowMetricsInstanceDocument(
-					companyId, 0, process.getId())) {
-
-				{
-					setType("WorkflowMetricsInstanceType");
-				}
-			});
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-sla-process-results",
-				_creatWorkflowMetricsSLAProcessResultDocument(
-					companyId, process.getId())) {
-
-				{
-					setType("WorkflowMetricsSLAProcessResultType");
-				}
-			});
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-processes",
-				_createWorkflowMetricsProcessDocument(
-					companyId, process.getId())) {
-
-				{
-					setType("WorkflowMetricsProcessType");
-				}
-			});
-
-		_searchEngineAdapter.execute(bulkDocumentRequest);
+		_invokeAddDocument(
+			_getIndexer(_PROCESS_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsProcessDocument(
+				companyId, process.getId(), "1.0"));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "processId", process.getId());
@@ -209,40 +156,10 @@ public class WorkflowMetricsRESTTestHelper {
 
 		long taskId = RandomTestUtil.randomLong();
 
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-sla-task-results",
-				_creatWorkflowMetricsSLATaskResultDocument(
-					companyId, processId, taskId, task.getName())) {
-
-				{
-					setType("WorkflowMetricsSLATaskResultType");
-				}
-			});
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-tokens",
-				_createWorkflowMetricsTokenDocument(
-					companyId, processId, taskId, task.getName())) {
-
-				{
-					setType("WorkflowMetricsTokenType");
-				}
-			});
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				"workflow-metrics-nodes",
-				_createWorkflowMetricsNodeDocument(
-					companyId, taskId, task.getName(), processId, "TASK")) {
-
-				{
-					setType("WorkflowMetricsNodeType");
-				}
-			});
-
-		_searchEngineAdapter.execute(bulkDocumentRequest);
+		_invokeAddDocument(
+			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsNodeDocument(
+				companyId, taskId, task.getName(), processId, "TASK", "1.0"));
 
 		_retryAssertCount("workflow-metrics-nodes", "nodeId", taskId);
 		_retryAssertCount(
@@ -260,135 +177,41 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 	}
 
-	public void deleteInstance(
-		long companyId, long instanceId, long processId) {
+	public void deleteInstance(long companyId, long instanceId, long processId)
+		throws Exception {
 
-		Document instanceDocument = _createWorkflowMetricsInstanceDocument(
-			companyId, instanceId, processId);
-
-		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			"workflow-metrics-instances", instanceDocument.getUID()) {
-
-			{
-				setType("WorkflowMetricsInstanceType");
-			}
-		};
-
-		_searchEngineAdapter.execute(deleteDocumentRequest);
+		_invokeDeleteDocument(
+			_getIndexer(_INSTANCE_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsInstanceDocument(
+				companyId, instanceId, processId));
 	}
 
-	public void deleteNode(long companyId, long processId, String name) {
-		Document nodeDocument = _createWorkflowMetricsNodeDocument(
-			companyId, 0, name, processId, "STATE");
+	public void deleteNode(long companyId, long processId, String name)
+		throws Exception {
 
-		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			"workflow-metrics-nodes", nodeDocument.getUID()) {
-
-			{
-				setType("WorkflowMetricsNodeType");
-			}
-		};
-
-		_searchEngineAdapter.execute(deleteDocumentRequest);
+		_invokeDeleteDocument(
+			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsNodeDocument(
+				companyId, 0, name, processId, "STATE", "1.0"));
 	}
 
-	public void deleteProcess(Document document) {
-		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			"workflow-metrics-processes", document.getUID()) {
-
-			{
-				setType("WorkflowMetricsProcessType");
-			}
-		};
-
-		_searchEngineAdapter.execute(deleteDocumentRequest);
+	public void deleteProcess(Document document) throws Exception {
+		_invokeDeleteDocument(
+			_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
 	}
 
-	public void deleteProcess(long companyId, long processId) {
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		Document instanceDocument = _createWorkflowMetricsInstanceDocument(
-			companyId, 0, processId);
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-instances", instanceDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsInstanceType");
-				}
-			});
-
-		Document slaProcessResultDocument =
-			_creatWorkflowMetricsSLAProcessResultDocument(companyId, processId);
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-sla-process-results",
-				slaProcessResultDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsSLAProcessResultType");
-				}
-			});
-
-		Document processDocument = _createWorkflowMetricsProcessDocument(
-			companyId, processId);
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-processes", processDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsProcessType");
-				}
-			});
-
-		_searchEngineAdapter.execute(bulkDocumentRequest);
+	public void deleteProcess(long companyId, long processId) throws Exception {
+		deleteProcess(
+			_createWorkflowMetricsProcessDocument(companyId, processId, "1.0"));
 	}
 
-	public void deleteTask(long companyId, long processId, String taskName) {
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+	public void deleteTask(long companyId, long processId, String taskName)
+		throws Exception {
 
-		Document slaTaskResultDocument =
-			_creatWorkflowMetricsSLATaskResultDocument(
-				companyId, processId, 0, taskName);
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-sla-task-results",
-				slaTaskResultDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsSLATaskResultType");
-				}
-			});
-
-		Document tokenDocument = _createWorkflowMetricsTokenDocument(
-			companyId, processId, 0, taskName);
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-tokens", tokenDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsTokenType");
-				}
-			});
-
-		Document nodeDocument = _createWorkflowMetricsNodeDocument(
-			companyId, 0, taskName, processId, "TASK");
-
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new DeleteDocumentRequest(
-				"workflow-metrics-nodes", nodeDocument.getUID()) {
-
-				{
-					setType("WorkflowMetricsNodeType");
-				}
-			});
-
-		_searchEngineAdapter.execute(bulkDocumentRequest);
+		_invokeDeleteDocument(
+			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsNodeDocument(
+				companyId, 0, taskName, processId, "TASK", "1.0"));
 	}
 
 	public Document getSingleApproverDocument(long companyId) throws Exception {
@@ -421,6 +244,17 @@ public class WorkflowMetricsRESTTestHelper {
 			});
 	}
 
+	public void updateProcess(long companyId, long processId, String version)
+		throws Exception {
+
+		_invokeUpdateDocument(
+			_getIndexer(_PROCESS_INDEXER_CLASS_NAME),
+			_createWorkflowMetricsProcessDocument(
+				companyId, processId, version));
+
+		_retryAssertCount("workflow-metrics-processes", "processId", processId);
+	}
+
 	private Document _createWorkflowMetricsInstanceDocument(
 		long companyId, long instanceId, long processId) {
 
@@ -441,7 +275,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _createWorkflowMetricsNodeDocument(
-		long companyId, long nodeId, String name, long processId, String type) {
+		long companyId, long nodeId, String name, long processId, String type,
+		String version) {
 
 		Document document = new DocumentImpl();
 
@@ -455,13 +290,13 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("processId", processId);
 		document.addKeyword("terminal", false);
 		document.addKeyword("type", type);
-		document.addKeyword("version", "1.0");
+		document.addKeyword("version", version);
 
 		return document;
 	}
 
 	private Document _createWorkflowMetricsProcessDocument(
-		long companyId, long processId) {
+		long companyId, long processId, String version) {
 
 		Document document = new DocumentImpl();
 
@@ -472,64 +307,7 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("deleted", false);
 		document.addKeyword("name", RandomTestUtil.randomString());
 		document.addKeyword("processId", processId);
-		document.addKeyword("version", "1.0");
-
-		return document;
-	}
-
-	private Document _createWorkflowMetricsTokenDocument(
-		long companyId, long processId, long taskId, String taskName) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsToken",
-			_digest(companyId, processId, 0, taskName, 0));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", false);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("processId", processId);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
-		document.addKeyword("tokenId", 0);
-		document.addKeyword("version", "1.0");
-
-		return document;
-	}
-
-	private Document _creatWorkflowMetricsSLAProcessResultDocument(
-		long companyId, long processId) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsSLAProcessResult",
-			_digest(companyId, 0, processId, 0));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("processId", processId);
-		document.addKeyword("slaDefinitionId", 0);
-
-		return document;
-	}
-
-	private Document _creatWorkflowMetricsSLATaskResultDocument(
-		long companyId, long processId, long taskId, String taskName) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsSLATaskResult",
-			_digest(companyId, 0, processId, 0, taskName));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("processId", processId);
-		document.addKeyword("slaDefinitionId", 0);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
+		document.addKeyword("version", version);
 
 		return document;
 	}
@@ -643,6 +421,18 @@ public class WorkflowMetricsRESTTestHelper {
 				return null;
 			});
 	}
+
+	private static final String _INSTANCE_INDEXER_CLASS_NAME =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"InstanceWorkflowMetricsIndexer";
+
+	private static final String _NODE_INDEXER_CLASS_NAME =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"NodeWorkflowMetricsIndexer";
+
+	private static final String _PROCESS_INDEXER_CLASS_NAME =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"ProcessWorkflowMetricsIndexer";
 
 	private static Map<String, Object> _indexers = new HashMap<>();
 

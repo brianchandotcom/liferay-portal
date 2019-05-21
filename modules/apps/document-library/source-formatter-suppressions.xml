@@ -8,4 +8,7 @@
 		<suppress checks="SubnameCheck" files="modules/apps/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
 		<suppress checks="TestClassCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="HTMLEmptyLinesCheck" files="modules/apps/document-library/document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
+	</source-check>
 </suppressions>

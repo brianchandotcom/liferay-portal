@@ -48,8 +48,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 /**
  * @author Hugo Huijser
  */
@@ -284,8 +282,7 @@ public class SourceChecksUtil {
 				propertiesMap, clazz.getSimpleName(), sourceCheckConfiguration);
 
 			if (attributesJSONObject.length() != 0) {
-				BeanUtils.setProperty(
-					sourceCheck, "attributes", attributesJSONObject.toString());
+				sourceCheck.setAttributes(attributesJSONObject.toString());
 			}
 
 			sourceChecks.add(sourceCheck);

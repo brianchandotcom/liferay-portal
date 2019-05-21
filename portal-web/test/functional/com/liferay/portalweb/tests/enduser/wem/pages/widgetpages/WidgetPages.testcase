@@ -92,26 +92,22 @@ definition {
 
 			SitePages.addPublicPage(
 				pageName = "${portlet} Full Page Application",
-				sitePageType = "Full Page Application"
-			);
+				sitePageType = "Full Page Application");
 
 			SitePages.configurePage(
 				pageName = "${portlet} Full Page Application",
 				portlet = "${portlet}",
 				privacy = "Public Pages",
-				sitePageType = "Full Page Application"
-			);
+				sitePageType = "Full Page Application");
 
 			Navigator.gotoSitePage(
 				pageName = "${portlet} Full Page Application",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 
 			AssertTextEquals.assertText(
+				key_portletTitleName = "${portlet}",
 				locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-				value1 = "${portlet}",
-				key_portletTitleName = "${portlet}"
-			);
+				value1 = "${portlet}");
 
 			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 		}

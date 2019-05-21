@@ -98,7 +98,7 @@
 	<div class="controls pt-2 text-center">
 		<ul class="d-flex justify-content-center list-inline">
 			{foreach $tool in $imageEditorCapabilities.tools}
-				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}" title="{$tool.title}">
+				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}">
 					{call .tool data="all"}
 						{param tool: $tool /}
 						{param toolIndex: index($tool) /}
@@ -126,7 +126,7 @@
 	{else}
 		{let $control : $tool.controls[0] /}
 
-		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEditFilters" data-tool="tool-{$toolIndex}" href="javascript:;">
+		<a class="btn btn-monospaced" data-control="{$control.variant}" data-onclick="requestImageEditorEditFilters" data-tool="tool-{$toolIndex}" href="javascript:;" title="{$tool.title}">
 			<svg class="lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
@@ -160,6 +160,7 @@
 		{param preferredAlign: 'TopCenter' /}
 		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
 		{param style: 'link' /}
+		{param triggerTitle: $tool.title/}
 		{param triggerClasses: 'btn btn-monospaced' /}
 	{/call}
 

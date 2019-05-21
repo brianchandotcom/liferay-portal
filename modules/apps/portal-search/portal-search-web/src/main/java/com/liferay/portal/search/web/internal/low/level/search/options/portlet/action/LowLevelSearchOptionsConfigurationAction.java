@@ -49,7 +49,7 @@ public class LowLevelSearchOptionsConfigurationAction
 			return "/error.jsp";
 		}
 
-		return "/search/options/configuration_low_level.jsp";
+		return "/low/level/search/options/configuration.jsp";
 	}
 
 }

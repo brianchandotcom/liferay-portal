@@ -26,6 +26,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="C" return-type="Collection">
+			<finder-column name="className" />
+		</finder>
 		<finder name="LtExpirationDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="expirationDate" />
 		</finder>

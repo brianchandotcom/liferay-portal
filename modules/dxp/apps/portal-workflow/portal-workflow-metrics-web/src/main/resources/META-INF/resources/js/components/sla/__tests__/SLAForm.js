@@ -1,6 +1,7 @@
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
 import nodeStore from '../store/nodeStore';
+import { PAUSE_NODE_KEYS } from '../Constants';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
@@ -431,4 +432,74 @@ test('Should redirect to SLA list with blocked nodes', () => {
 			}
 		);
 	});
+});
+
+test('Should test handler erros', () => {
+	const component = mount(
+		<Router>
+			<SLAForm processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.handleErrors([]);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should test handler erros at start node keys', () => {
+	const component = mount(
+		<Router>
+			<SLAForm processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.handleErrors([
+		{
+			fieldName: 'test',
+			message: 'test'
+		},
+		{
+			message: 'test'
+		},
+		{
+			fieldName: PAUSE_NODE_KEYS,
+			message: 'test'
+		}
+	]);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should test handler no array erros', () => {
+	const component = mount(
+		<Router>
+			<SLAForm processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.handleErrors(null);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should test load data callback', () => {
+	const component = mount(
+		<Router>
+			<SLAForm processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	instance.loadDataCallback('123');
+
+	instance.loadDataCallback();
+
+	expect(component).toMatchSnapshot();
 });

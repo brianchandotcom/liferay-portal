@@ -3,6 +3,7 @@ import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
 import React from 'react';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import timeRangeStore from '../../store/timeRangeStore';
 
 test('Should render component', () => {
 	const data = {
@@ -30,4 +31,46 @@ test('Should render component with failure state', () => {
 	);
 
 	expect(component).toMatchSnapshot();
+});
+
+test('Should test filter', () => {
+	const dataTime = {
+		items: [
+			{
+				dateEnd: new Date(2019, 5, 13),
+				dateStart: new Date(2019, 5, 12),
+				defaultTimeRange: true,
+				id: 0,
+				key: 'today',
+				name: 'Today'
+			},
+			{
+				defaultTimeRange: false,
+				key: 'all-time',
+				name: 'All Time'
+			}
+		]
+	};
+
+	timeRangeStore.client = fetch(dataTime);
+
+	timeRangeStore.setState({ timeRanges: [] });
+
+	const data = {
+		getTitle: () => 'Single Approver',
+		id: 35315,
+		instanceCount: 30,
+		onTimeInstanceCount: 20,
+		overdueInstanceCount: 10
+	};
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<CompletedItemsCard processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(CompletedItemsCard).instance();
+
+	expect(instance.filter).toEqual(null);
 });

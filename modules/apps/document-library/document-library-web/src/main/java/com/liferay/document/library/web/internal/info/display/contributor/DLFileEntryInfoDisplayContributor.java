@@ -25,8 +25,6 @@ import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
@@ -123,7 +121,11 @@ public class DLFileEntryInfoDisplayContributor
 					_dlFileEntryAssetInfoDisplayContributor.
 						getInfoDisplayObjectProvider(classPK);
 
-				return infoDisplayObjectProvider.getClassTypeId();
+				if (infoDisplayObjectProvider != null) {
+					return infoDisplayObjectProvider.getClassTypeId();
+				}
+
+				return 0;
 			}
 
 			@Override
@@ -147,7 +149,11 @@ public class DLFileEntryInfoDisplayContributor
 					_dlFileEntryAssetInfoDisplayContributor.
 						getInfoDisplayObjectProvider(classPK);
 
-				return infoDisplayObjectProvider.getKeywords(locale);
+				if (infoDisplayObjectProvider != null) {
+					return infoDisplayObjectProvider.getKeywords(locale);
+				}
+
+				return StringPool.BLANK;
 			}
 
 			@Override
@@ -203,9 +209,6 @@ public class DLFileEntryInfoDisplayContributor
 
 		return assetEntry;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryInfoDisplayContributor.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

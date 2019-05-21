@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.web.internal.display.context;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.portlet.shared.search.NullPortletURL;
 
-import java.util.AbstractMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -38,7 +35,6 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 		PortletRequest portletRequest, MimeResponse mimeResponse) {
 
 		_portletRequest = portletRequest;
-		_mimeResponse = mimeResponse;
 	}
 
 	@Override
@@ -47,114 +43,29 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 
 			@Override
 			public void setParameter(String name, String value) {
-				setParameter(name, new String[] {value});
-			}
+				_url = (String)_portletRequest.getAttribute(
+					WebKeys.CURRENT_COMPLETE_URL);
 
-			@Override
-			public void setParameter(String name, String[] values) {
-				String[] oldValues = _nullPortletURLParameterMap.get(name);
+				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+					_url);
 
-				if (oldValues == null) {
-					_nullPortletURLParameterMap.put(name, values);
-				}
-				else {
-					String[] newValues = ArrayUtil.append(oldValues, values);
+				String[] values = parameterMap.get(name);
 
-					_nullPortletURLParameterMap.put(name, newValues);
+				if (!ArrayUtil.contains(values, value)) {
+					_url = HttpUtil.addParameter(_url, name, value);
 				}
 			}
 
 			@Override
 			public String toString() {
-				_nullPortletURLParameterMap.forEach(
-					(paramName, paramValues) -> {
-						_setURL(paramName, paramValues);
-					});
-
 				return _url;
 			}
 
-			final class NullPortletURLParameterMap
-				extends AbstractMap<String, String[]> {
-
-				@Override
-				public Set<Entry<String, String[]>> entrySet() {
-					if (_entrySet == null) {
-						_entrySet = new LinkedHashSet<>();
-					}
-
-					return _entrySet;
-				}
-
-				@Override
-				public String[] put(String key, String[] value) {
-					Set<Map.Entry<String, String[]>> entrySet = entrySet();
-
-					for (Map.Entry<String, String[]> entry : entrySet) {
-						String entryKey = entry.getKey();
-
-						if (entryKey.equals(key)) {
-							String[] oldValues = entry.getValue();
-
-							entry.setValue(value);
-
-							return oldValues;
-						}
-					}
-
-					entrySet.add(new SimpleEntry<>(key, value));
-
-					return null;
-				}
-
-				private Set<Map.Entry<String, String[]>> _entrySet;
-
-			}
-
-			private String _getCurrentCompleteURL() {
-				PortletRequest portletRequest = _getPortletRequest();
-
-				return (String)portletRequest.getAttribute(
-					"CURRENT_COMPLETE_URL");
-			}
-
-			private void _setURL(String paramName, String[] paramValues) {
-				String currentCompleteURL = _getCurrentCompleteURL();
-
-				StringBundler urlSB = null;
-
-				for (String paramValue : paramValues) {
-					if (!currentCompleteURL.contains(paramValue)) {
-						urlSB = new StringBundler(5);
-
-						urlSB.append(currentCompleteURL);
-						urlSB.append(StringPool.AMPERSAND);
-						urlSB.append(paramName);
-						urlSB.append(StringPool.EQUAL);
-						urlSB.append(paramValue);
-					}
-					else {
-						urlSB = new StringBundler(1);
-
-						urlSB.append(currentCompleteURL);
-					}
-				}
-
-				_url = urlSB.toString();
-			}
-
-			private final Map<String, String[]> _nullPortletURLParameterMap =
-				new NullPortletURLParameterMap();
 			private String _url;
 
 		};
 	}
 
-	private PortletRequest _getPortletRequest() {
-		return _portletRequest;
-	}
-
-	private final MimeResponse _mimeResponse;
 	private final PortletRequest _portletRequest;
 
 }

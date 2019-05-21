@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Metrics Web
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.web
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.metrics.lang)";\

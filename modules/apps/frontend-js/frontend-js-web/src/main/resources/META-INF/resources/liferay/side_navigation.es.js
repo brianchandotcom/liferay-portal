@@ -954,8 +954,6 @@
 		}
 	};
 
-	var old = $.fn.sideNavigation;
-
 	var initialize = function(toggler, options, selector) {
 		var data = toggler.data('lexicon.sidenav');
 
@@ -1032,12 +1030,6 @@
 		}
 
 		return retVal;
-	};
-
-	Plugin.noConflict = function() {
-		$.fn.sideNavigation = old;
-
-		return this;
 	};
 
 	/**

@@ -25,12 +25,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.util.Assert;
 
 /**
  * @author Manuel de la Peña
@@ -52,7 +51,7 @@ public class ThemeServiceTest {
 		Theme theme = _themeLocalService.getTheme(
 			_group.getCompanyId(), layoutSet.getThemeId());
 
-		Assert.notNull(theme);
+		Assert.assertNotNull(theme);
 	}
 
 	@DeleteAfterTestRun

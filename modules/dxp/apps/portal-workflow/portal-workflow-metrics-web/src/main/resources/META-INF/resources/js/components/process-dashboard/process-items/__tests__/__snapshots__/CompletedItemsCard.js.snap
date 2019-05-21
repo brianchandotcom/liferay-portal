@@ -79,16 +79,7 @@ exports[`Should render component 1`] = `
         <ProcessItemsCard
           completed={true}
           description="Completed workflow items are counted and categorized by their SLA status."
-          filter={
-            Object {
-              "defaultItem": null,
-              "hideControl": true,
-              "items": Array [],
-              "key": "timeRange",
-              "multiple": false,
-              "name": "Completion Period",
-            }
-          }
+          filter={null}
           processId="35315"
           timeRange={null}
           title="Completed Items"
@@ -104,12 +95,12 @@ exports[`Should render component 1`] = `
                   elementClasses={
                     Array [
                       "dashboard-panel-header",
-                      "pb-0",
+                      null,
                     ]
                   }
                 >
                   <div
-                    className="panel-header dashboard-panel-header pb-0"
+                    className="panel-header dashboard-panel-header"
                   >
                     <div>
                       <div
@@ -153,157 +144,6 @@ exports[`Should render component 1`] = `
                               </span>
                             </span>
                           </Tooltip>
-                        </div>
-                        <div
-                          className="autofit-col m-0 management-bar management-bar-light navbar"
-                        >
-                          <ul
-                            className="navbar-nav"
-                          >
-                            <withRouter(Filter)
-                              defaultItem={null}
-                              filterKey="timeRange"
-                              hideControl={true}
-                              items={Array []}
-                              key="timeRange"
-                              multiple={false}
-                              name="Completion Period"
-                              position="right"
-                            >
-                              <Route>
-                                <Filter
-                                  defaultItem={null}
-                                  filterKey="timeRange"
-                                  hideControl={true}
-                                  history={
-                                    Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/processes/1/10/title%3Aasc",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/processes/1/10/title%3Aasc",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
-                                    }
-                                  }
-                                  items={Array []}
-                                  location={
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    }
-                                  }
-                                  match={
-                                    Object {
-                                      "isExact": false,
-                                      "params": Object {},
-                                      "path": "/",
-                                      "url": "/",
-                                    }
-                                  }
-                                  multiple={false}
-                                  name="Completion Period"
-                                  position="right"
-                                >
-                                  <li
-                                    className="dropdown nav-item"
-                                  >
-                                    <button
-                                      aria-expanded={false}
-                                      aria-haspopup="true"
-                                      className="dropdown-toggle nav-link"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <span
-                                        className="mr-2 navbar-text-truncate"
-                                      >
-                                        Completion Period
-                                      </span>
-                                      <Icon
-                                        iconName="caret-bottom"
-                                      >
-                                        <svg
-                                          className="lexicon-icon lexicon-icon-caret-bottom"
-                                          dangerouslySetInnerHTML={
-                                            Object {
-                                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                            }
-                                          }
-                                          focusable="false"
-                                          role="presentation"
-                                        />
-                                      </Icon>
-                                    </button>
-                                    <div
-                                      className="dropdown-menu dropdown-menu-right"
-                                      role="menu"
-                                    >
-                                      <FilterSearch
-                                        filteredItems={Array []}
-                                        onChange={[Function]}
-                                        totalCount={0}
-                                      >
-                                        <ul
-                                          className="list-unstyled"
-                                        >
-                                          <li>
-                                            <span
-                                              className="disabled dropdown-item"
-                                            >
-                                              No results were found.
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <ul
-                                          className="list-unstyled"
-                                        />
-                                      </FilterSearch>
-                                    </div>
-                                  </li>
-                                </Filter>
-                              </Route>
-                            </withRouter(Filter)>
-                          </ul>
                         </div>
                       </div>
                     </div>
@@ -414,16 +254,7 @@ exports[`Should render component with failure state 1`] = `
         <ProcessItemsCard
           completed={true}
           description="Completed workflow items are counted and categorized by their SLA status."
-          filter={
-            Object {
-              "defaultItem": null,
-              "hideControl": true,
-              "items": Array [],
-              "key": "timeRange",
-              "multiple": false,
-              "name": "Completion Period",
-            }
-          }
+          filter={null}
           processId="35315"
           timeRange={null}
           title="Completed Items"
@@ -439,12 +270,12 @@ exports[`Should render component with failure state 1`] = `
                   elementClasses={
                     Array [
                       "dashboard-panel-header",
-                      "pb-0",
+                      null,
                     ]
                   }
                 >
                   <div
-                    className="panel-header dashboard-panel-header pb-0"
+                    className="panel-header dashboard-panel-header"
                   >
                     <div>
                       <div
@@ -488,157 +319,6 @@ exports[`Should render component with failure state 1`] = `
                               </span>
                             </span>
                           </Tooltip>
-                        </div>
-                        <div
-                          className="autofit-col m-0 management-bar management-bar-light navbar"
-                        >
-                          <ul
-                            className="navbar-nav"
-                          >
-                            <withRouter(Filter)
-                              defaultItem={null}
-                              filterKey="timeRange"
-                              hideControl={true}
-                              items={Array []}
-                              key="timeRange"
-                              multiple={false}
-                              name="Completion Period"
-                              position="right"
-                            >
-                              <Route>
-                                <Filter
-                                  defaultItem={null}
-                                  filterKey="timeRange"
-                                  hideControl={true}
-                                  history={
-                                    Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/processes/1/10/title%3Aasc",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/processes/1/10/title%3Aasc",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
-                                    }
-                                  }
-                                  items={Array []}
-                                  location={
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    }
-                                  }
-                                  match={
-                                    Object {
-                                      "isExact": false,
-                                      "params": Object {},
-                                      "path": "/",
-                                      "url": "/",
-                                    }
-                                  }
-                                  multiple={false}
-                                  name="Completion Period"
-                                  position="right"
-                                >
-                                  <li
-                                    className="dropdown nav-item"
-                                  >
-                                    <button
-                                      aria-expanded={false}
-                                      aria-haspopup="true"
-                                      className="dropdown-toggle nav-link"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <span
-                                        className="mr-2 navbar-text-truncate"
-                                      >
-                                        Completion Period
-                                      </span>
-                                      <Icon
-                                        iconName="caret-bottom"
-                                      >
-                                        <svg
-                                          className="lexicon-icon lexicon-icon-caret-bottom"
-                                          dangerouslySetInnerHTML={
-                                            Object {
-                                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                            }
-                                          }
-                                          focusable="false"
-                                          role="presentation"
-                                        />
-                                      </Icon>
-                                    </button>
-                                    <div
-                                      className="dropdown-menu dropdown-menu-right"
-                                      role="menu"
-                                    >
-                                      <FilterSearch
-                                        filteredItems={Array []}
-                                        onChange={[Function]}
-                                        totalCount={0}
-                                      >
-                                        <ul
-                                          className="list-unstyled"
-                                        >
-                                          <li>
-                                            <span
-                                              className="disabled dropdown-item"
-                                            >
-                                              No results were found.
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        <ul
-                                          className="list-unstyled"
-                                        />
-                                      </FilterSearch>
-                                    </div>
-                                  </li>
-                                </Filter>
-                              </Route>
-                            </withRouter(Filter)>
-                          </ul>
                         </div>
                       </div>
                     </div>

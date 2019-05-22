@@ -101,6 +101,10 @@ public class BlogPostingImageResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+		if (search != null) {
+			httpInvoker.parameter("search", String.valueOf(search));
+		}
+
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);
 		}

@@ -93,24 +93,30 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<div class="col-lg-9">
 			<div class="sheet">
 				<h2 class="sheet-title">
-					<c:choose>
-						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
+					<div class="autofit-row autofit-row-center">
+						<div class="autofit-col autofit-col-expand">
+							<span class="text-uppercase">
+								<c:choose>
+									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 
-							<%
-							LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId());
-							%>
+										<%
+										LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId());
+										%>
 
-							<c:if test="<%= layoutPageTemplateCollection != null %>">
-								<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
-							</c:if>
-						</c:when>
-						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
-							<liferay-ui:message key="basic-pages" />
-						</c:when>
-						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
-							<liferay-ui:message key="global-templates" />
-						</c:when>
-					</c:choose>
+										<c:if test="<%= layoutPageTemplateCollection != null %>">
+											<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
+										</c:if>
+									</c:when>
+									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
+										<liferay-ui:message key="basic-pages" />
+									</c:when>
+									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
+										<liferay-ui:message key="global-templates" />
+									</c:when>
+								</c:choose>
+							</span>
+						</div>
+					</div>
 				</h2>
 
 				<c:choose>

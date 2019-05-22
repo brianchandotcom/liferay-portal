@@ -577,13 +577,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected boolean isExcludedPath(String key, String path, int lineNumber) {
-		return _isExcludedPath(key, path, lineNumber, null);
+		return SourceFormatterCheckUtil.isExcludedPath(
+			_excludesJSONObject, _excludesValuesMap, key, path, lineNumber,
+			null, _baseDirName);
 	}
 
 	protected boolean isExcludedPath(
 		String key, String path, String parameter) {
 
-		return _isExcludedPath(key, path, -1, parameter);
+		return SourceFormatterCheckUtil.isExcludedPath(
+			_excludesJSONObject, _excludesValuesMap, key, path, -1, parameter,
+			_baseDirName);
 	}
 
 	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
@@ -706,60 +710,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		catch (Exception e) {
 			return null;
 		}
-	}
-
-	private boolean _isExcludedPath(
-		String key, String path, int lineNumber, String parameter) {
-
-		List<String> excludes = SourceFormatterCheckUtil.getJSONObjectValues(
-			_excludesJSONObject, key, _excludesValuesMap, path, _baseDirName);
-
-		if (ListUtil.isEmpty(excludes)) {
-			return false;
-		}
-
-		String pathWithParameter = null;
-
-		if (Validator.isNotNull(parameter)) {
-			pathWithParameter = path + StringPool.AT + parameter;
-		}
-
-		String pathWithLineNumber = null;
-
-		if (lineNumber > 0) {
-			pathWithLineNumber = path + StringPool.AT + lineNumber;
-		}
-
-		for (String exclude : excludes) {
-			if (Validator.isNull(exclude)) {
-				continue;
-			}
-
-			if (exclude.startsWith("**")) {
-				exclude = exclude.substring(2);
-			}
-
-			if (exclude.endsWith("**")) {
-				exclude = exclude.substring(0, exclude.length() - 2);
-
-				if (path.contains(exclude)) {
-					return true;
-				}
-
-				continue;
-			}
-
-			if (path.endsWith(exclude) ||
-				((pathWithParameter != null) &&
-				 pathWithParameter.endsWith(exclude)) ||
-				((pathWithLineNumber != null) &&
-				 pathWithLineNumber.endsWith(exclude))) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();

@@ -1044,12 +1044,14 @@ public class GitHubDevSyncUtil {
 				deleteCachedLocalGitBranches(
 					cachedBranchName, gitWorkingDirectory);
 
-				deleteExtraTimestampBranches(gitHubDevGitRemotes);
+				if (JenkinsResultsParserUtil.getRandomValue(1, 10) == 5) {
+					deleteExtraTimestampBranches(gitHubDevGitRemotes);
 
-				deleteOrphanedCachedBranches(gitHubDevGitRemotes);
+					deleteOrphanedCachedBranches(gitHubDevGitRemotes);
 
-				deleteExpiredRemoteGitBranches(
-					gitWorkingDirectory, gitHubDevGitRemotes);
+					deleteExpiredRemoteGitBranches(
+						gitWorkingDirectory, gitHubDevGitRemotes);
+				}
 
 				if (remoteGitBranchExists(
 						cachedBranchName, gitWorkingDirectory,

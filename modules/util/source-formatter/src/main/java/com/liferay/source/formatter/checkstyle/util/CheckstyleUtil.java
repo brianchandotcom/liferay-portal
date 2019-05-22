@@ -181,7 +181,7 @@ public class CheckstyleUtil {
 			});
 
 		attributesJSONObject.put(
-			SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
+			SourceFormatterCheckUtil.CONFIGURATION_FILE_LOCATION,
 			configurationAttributesJSONObject);
 
 		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(

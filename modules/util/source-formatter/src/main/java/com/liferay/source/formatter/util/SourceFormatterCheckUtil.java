@@ -39,6 +39,9 @@ import java.util.Set;
  */
 public class SourceFormatterCheckUtil {
 
+	public static final String CONFIGURATION_FILE_LOCATION =
+		"configuration_file_location";
+
 	public static final String ENABLED_KEY = "enabled";
 
 	public static JSONObject addPropertiesAttributes(
@@ -229,9 +232,7 @@ public class SourceFormatterCheckUtil {
 				continue;
 			}
 
-			if (fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
+			if (fileLocation.equals(CONFIGURATION_FILE_LOCATION)) {
 				if (value == null) {
 					value = curValue;
 				}
@@ -317,9 +318,7 @@ public class SourceFormatterCheckUtil {
 				continue;
 			}
 
-			if (!fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
+			if (!fileLocation.equals(CONFIGURATION_FILE_LOCATION)) {
 				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
 					baseDirName);
 

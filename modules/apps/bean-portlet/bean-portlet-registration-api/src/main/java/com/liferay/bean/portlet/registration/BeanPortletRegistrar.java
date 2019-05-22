@@ -19,11 +19,13 @@ import com.liferay.bean.portlet.extension.BeanFilterMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
 import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Neil Griffin
@@ -31,13 +33,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BeanPortletRegistrar {
 
-	public void register(
+	public List<ServiceRegistration<?>> register(
 		Set<Class<?>> discoveredClasses, ServletContext servletContext,
 		BeanFilterMethodFactory beanFilterMethodFactory,
 		BeanFilterMethodInvoker beanFilterMethodInvoker,
 		BeanPortletMethodFactory beanPortletMethodFactory,
 		BeanPortletMethodInvoker beanPortletMethodInvoker);
 
-	public void unregister(ServletContext servletContext);
+	public void unregister(
+		List<ServiceRegistration<?>> serviceRegistrations,
+		ServletContext servletContext);
 
 }

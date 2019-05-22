@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -94,19 +95,20 @@ import javax.xml.namespace.QName;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Neil Griffin
  */
-@Component(scope = ServiceScope.PROTOTYPE, service = BeanPortletRegistrar.class)
+@Component(service = BeanPortletRegistrar.class)
 public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 	@Override
-	public void register(
+	public List<ServiceRegistration<?>> register(
 		Set<Class<?>> discoveredClasses, ServletContext servletContext,
 		BeanFilterMethodFactory beanFilterMethodFactory,
 		BeanFilterMethodInvoker beanFilterMethodInvoker,
@@ -187,10 +189,14 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
 
+		Map<String, BeanFilter> beanFilters = new HashMap<>();
+		Map<String, BeanPortlet> beanPortlets = new HashMap<>();
+		BeanApp beanApp = null;
+
 		if (portletDescriptorURL != null) {
 			try {
-				_beanApp = PortletDescriptorParser.parse(
-					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
+				beanApp = PortletDescriptorParser.parse(
+					beanFilters, beanPortlets, bundle, portletDescriptorURL,
 					beanPortletMethodFactory, portletBeanMethodsFunction,
 					preferencesValidatorFunction, descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
@@ -200,20 +206,27 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			}
 		}
 
-		_addBeanFiltersFromDiscoveredClasses(discoveredClasses);
+		if (beanApp == null) {
+			beanApp = new BeanAppImpl(
+				"3.0", null, Collections.emptyList(), Collections.emptyMap(),
+				Collections.emptyMap(), Collections.emptySet(),
+				Collections.emptyList());
+		}
+
+		_addBeanFiltersFromDiscoveredClasses(beanFilters, discoveredClasses);
 
 		_addBeanPortletsFromDiscoveredClasses(
-			discoveredClasses, beanPortletMethodFactory,
+			beanApp, beanPortlets, discoveredClasses, beanPortletMethodFactory,
 			portletBeanMethodsFunction, preferencesValidatorFunction,
 			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		_addBeanPortletsFromScannedMethods(
-			portletBeanMethodsFunction, discoveredBeanMethods,
+			beanPortlets, portletBeanMethodsFunction, discoveredBeanMethods,
 			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		_addBeanPortletsFromLiferayDescriptor(
-			portletBeanMethodsFunction, descriptorDisplayCategories,
-			descriptorLiferayConfigurations);
+			beanPortlets, portletBeanMethodsFunction,
+			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		@SuppressWarnings("unchecked")
 		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
@@ -226,14 +239,16 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 		}
 
-		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+
+		for (BeanPortlet beanPortlet : beanPortlets.values()) {
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				RegistrationUtil.registerBeanPortlet(
-					bundleContext, _beanApp, beanPortlet,
+					bundleContext, beanApp, beanPortlet,
 					beanPortletMethodInvoker, servletContext, beanPortletIds);
 
 			if (portletServiceRegistration != null) {
-				_serviceRegistrations.add(portletServiceRegistration);
+				serviceRegistrations.add(portletServiceRegistration);
 			}
 
 			ServiceRegistration<ResourceBundleLoader>
@@ -242,16 +257,16 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 						bundleContext, beanPortlet, servletContext);
 
 			if (resourceBundleLoaderserviceRegistration != null) {
-				_serviceRegistrations.add(
+				serviceRegistrations.add(
 					resourceBundleLoaderserviceRegistration);
 			}
 		}
 
-		for (BeanFilter beanFilter : _beanFilters.values()) {
+		for (BeanFilter beanFilter : beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {
 				RegistrationUtil.registerBeanFilter(
-					_serviceRegistrations, bundleContext, portletName,
-					_beanPortlets.keySet(), beanFilter, beanFilterMethodFactory,
+					serviceRegistrations, bundleContext, portletName,
+					beanPortlets.keySet(), beanFilter, beanFilterMethodFactory,
 					beanFilterMethodInvoker, servletContext);
 			}
 		}
@@ -268,7 +283,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/portlet-servlet/*");
 
-		_serviceRegistrations.add(
+		serviceRegistrations.add(
 			bundleContext.registerService(
 				Servlet.class,
 				new PortletServlet() {
@@ -277,7 +292,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		Set<String> portletNames = descriptorDisplayCategories.keySet();
 
-		portletNames.removeAll(_beanPortlets.keySet());
+		portletNames.removeAll(beanPortlets.keySet());
 
 		if (!portletNames.isEmpty()) {
 			_log.error(
@@ -288,34 +303,67 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Registered ", _beanPortlets.size(), " bean portlets and ",
-					_beanFilters.size(), " bean filters for ",
+					"Registered ", beanPortlets.size(), " bean portlets and ",
+					beanFilters.size(), " bean filters for ",
 					servletContext.getServletContextName()));
 		}
+
+		return serviceRegistrations;
 	}
 
 	@Override
-	public void unregister(ServletContext servletContext) {
+	public void unregister(
+		List<ServiceRegistration<?>> serviceRegistrations,
+		ServletContext servletContext) {
+
+		int totalBeanPortlets = 0;
+		int totalBeanFilters = 0;
+
 		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
+				serviceRegistrations) {
 
-			serviceRegistration.unregister();
+			try {
+				ServiceReference<?> serviceReference =
+					serviceRegistration.getReference();
+
+				String[] serviceClasses =
+					(String[])serviceReference.getProperty(
+						Constants.OBJECTCLASS);
+
+				if (ArrayUtil.isNotEmpty(serviceClasses)) {
+					if (Objects.equals(
+							serviceClasses[0], "javax.portlet.Portlet")) {
+
+						totalBeanPortlets++;
+					}
+					else if (Objects.equals(
+								serviceClasses[0],
+								"javax.portlet.filter.PortletFilter")) {
+
+						totalBeanFilters++;
+					}
+				}
+
+				serviceRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+
+				// Ignore since the service has been unregistered
+
+			}
 		}
-
-		_serviceRegistrations.clear();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Unregistered ", _beanPortlets.size(),
-					" bean portlets and ", _beanFilters.size(),
-					" bean filters for ",
+					"Unregistered ", totalBeanPortlets, " bean portlets and ",
+					totalBeanFilters, " bean filters for ",
 					servletContext.getServletContextName()));
 		}
 	}
 
 	private void _addBeanFiltersFromDiscoveredClasses(
-		Set<Class<?>> discoveredClasses) {
+		Map<String, BeanFilter> beanFilters, Set<Class<?>> discoveredClasses) {
 
 		for (Class<?> discoveredClass : discoveredClasses) {
 			PortletLifecycleFilter portletLifecycleFilter =
@@ -370,7 +418,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 			String filterName = portletLifecycleFilter.filterName();
 
-			BeanFilter beanFilter = _beanFilters.get(filterName);
+			BeanFilter beanFilter = beanFilters.get(filterName);
 
 			if (beanFilter == null) {
 				beanFilter = new BeanFilterImpl(
@@ -391,11 +439,12 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					initParams);
 			}
 
-			_beanFilters.put(filterName, beanFilter);
+			beanFilters.put(filterName, beanFilter);
 		}
 	}
 
 	private void _addBeanPortlet(
+		BeanApp beanApp, Map<String, BeanPortlet> beanPortlets,
 		Set<Class<?>> discoveredClasses, Class<?> beanPortletClass,
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap,
 		PortletConfiguration portletConfiguration,
@@ -437,17 +486,17 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		String specVersion = GetterUtil.getString(
 			portletApplication.version(), "3.0");
 
-		if (Validator.isNotNull(_beanApp.getSpecVersion())) {
-			specVersion = _beanApp.getSpecVersion();
+		if (Validator.isNotNull(beanApp.getSpecVersion())) {
+			specVersion = beanApp.getSpecVersion();
 		}
 
 		String defaultNamespace = portletApplication.defaultNamespaceURI();
 
-		if (Validator.isNotNull(_beanApp.getDefaultNamespace())) {
-			defaultNamespace = _beanApp.getDefaultNamespace();
+		if (Validator.isNotNull(beanApp.getDefaultNamespace())) {
+			defaultNamespace = beanApp.getDefaultNamespace();
 		}
 
-		List<Event> events = new ArrayList<>(_beanApp.getEvents());
+		List<Event> events = new ArrayList<>(beanApp.getEvents());
 
 		for (EventDefinition eventDefinition : portletApplication.events()) {
 			String valueType = null;
@@ -488,7 +537,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				publicRenderParameter.getIdentifier(), publicRenderParameter);
 		}
 
-		publicRenderParameters.putAll(_beanApp.getPublicRenderParameters());
+		publicRenderParameters.putAll(beanApp.getPublicRenderParameters());
 
 		Map<String, List<String>> containerRuntimeOptions = new HashMap<>();
 
@@ -499,10 +548,10 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
 		}
 
-		containerRuntimeOptions.putAll(_beanApp.getContainerRuntimeOptions());
+		containerRuntimeOptions.putAll(beanApp.getContainerRuntimeOptions());
 
 		Set<String> customPortletModes = new LinkedHashSet<>(
-			_beanApp.getCustomPortletModes());
+			beanApp.getCustomPortletModes());
 
 		for (CustomPortletMode customPortletMode :
 				portletApplication.customPortletModes()) {
@@ -527,9 +576,9 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					portletListener.ordinal(), discoveredClass.getName()));
 		}
 
-		portletListeners.addAll(_beanApp.getPortletListeners());
+		portletListeners.addAll(beanApp.getPortletListeners());
 
-		_beanApp = new BeanAppImpl(
+		beanApp = new BeanAppImpl(
 			specVersion, defaultNamespace, events, publicRenderParameters,
 			containerRuntimeOptions, customPortletModes, portletListeners);
 
@@ -684,7 +733,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			liferayConfiguration.putAll(descriptorLiferayConfiguration);
 		}
 
-		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
+		BeanPortlet descriptorBeanPortlet = beanPortlets.get(
 			configuredPortletName);
 
 		Set<String> supportedLocales = new LinkedHashSet<>(
@@ -723,7 +772,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				portletConfiguration.asyncSupported(), multipartConfig,
 				displayCategory, liferayConfiguration);
 
-			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
+			beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
 
 			return;
 		}
@@ -873,10 +922,11 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			containerRuntimeOptions, portletDependencies, asyncSupport,
 			multipartConfig, displayCategory, liferayConfiguration);
 
-		_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
+		beanPortlets.put(configuredPortletName, mergedBeanPortlet);
 	}
 
 	private void _addBeanPortletsFromDiscoveredClasses(
+		BeanApp beanApp, Map<String, BeanPortlet> beanPortlets,
 		Set<Class<?>> discoveredClasses,
 		BeanPortletMethodFactory beanPortletMethodFactory,
 		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
@@ -908,9 +958,9 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 						beanPortletMethods);
 
 				_addBeanPortlet(
-					discoveredClasses, discoveredClass, beanMethodMap,
-					portletConfiguration, preferencesValidatorFunction,
-					descriptorDisplayCategories,
+					beanApp, beanPortlets, discoveredClasses, discoveredClass,
+					beanMethodMap, portletConfiguration,
+					preferencesValidatorFunction, descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
 			}
 		}
@@ -934,13 +984,15 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				BeanMethodIndexUtil.indexBeanMethods(beanPortletMethods);
 
 			_addBeanPortlet(
-				discoveredClasses, discoveredClass, beanMethodMap,
-				portletConfiguration, preferencesValidatorFunction,
-				descriptorDisplayCategories, descriptorLiferayConfigurations);
+				beanApp, beanPortlets, discoveredClasses, discoveredClass,
+				beanMethodMap, portletConfiguration,
+				preferencesValidatorFunction, descriptorDisplayCategories,
+				descriptorLiferayConfigurations);
 		}
 	}
 
 	private void _addBeanPortletsFromLiferayDescriptor(
+		Map<String, BeanPortlet> beanPortlets,
 		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
@@ -950,7 +1002,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 			String portletName = entry.getKey();
 
-			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+			BeanPortlet beanPortlet = beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
 				Set<QName> supportedProcessingEvents = new HashSet<>();
@@ -970,12 +1022,13 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					descriptorDisplayCategories.get(portletName),
 					entry.getValue());
 
-				_beanPortlets.put(portletName, beanPortlet);
+				beanPortlets.put(portletName, beanPortlet);
 			}
 		}
 	}
 
 	private void _addBeanPortletsFromScannedMethods(
+		Map<String, BeanPortlet> beanPortlets,
 		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
 		List<DiscoveredBeanMethod> discoveredBeanMethods,
 		Map<String, String> descriptorDisplayCategories,
@@ -995,7 +1048,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				continue;
 			}
 
-			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+			BeanPortlet beanPortlet = beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
 				Map<BeanPortletMethodType, List<BeanPortletMethod>>
@@ -1015,7 +1068,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					descriptorDisplayCategories.get(portletName),
 					descriptorLiferayConfigurations.get(portletName));
 
-				_beanPortlets.put(portletName, beanPortlet);
+				beanPortlets.put(portletName, beanPortlet);
 			}
 		}
 	}
@@ -1238,14 +1291,5 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			private final UserAttribute[] _userAttributes = {};
 
 		};
-
-	private BeanApp _beanApp = new BeanAppImpl(
-		"3.0", null, Collections.emptyList(), Collections.emptyMap(),
-		Collections.emptyMap(), Collections.emptySet(),
-		Collections.emptyList());
-	private final Map<String, BeanFilter> _beanFilters = new HashMap<>();
-	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
-	private final List<ServiceRegistration<?>> _serviceRegistrations =
-		new ArrayList<>();
 
 }

@@ -586,12 +586,13 @@ public class CDIBeanPortletExtension implements Extension {
 
 			};
 
-		_beanPortletRegistrar.register(
-			_discoveredClasses, servletContext,
-			new CDIBeanFilterMethodFactory(beanManager),
-			beanFilterMethodInvoker,
-			new CDIBeanPortletMethodFactory(beanManager),
-			beanPortletMethodInvoker);
+		_serviceRegistrations.addAll(
+			_beanPortletRegistrar.register(
+				_discoveredClasses, servletContext,
+				new CDIBeanFilterMethodFactory(beanManager),
+				beanFilterMethodInvoker,
+				new CDIBeanPortletMethodFactory(beanManager),
+				beanPortletMethodInvoker));
 
 		// MVC
 
@@ -658,22 +659,10 @@ public class CDIBeanPortletExtension implements Extension {
 	public void step6ApplicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object contextObject) {
 
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			try {
-				serviceRegistration.unregister();
-			}
-			catch (IllegalStateException ise) {
-
-				// Ignore since the service has been unregistered
-
-			}
-		}
+		_beanPortletRegistrar.unregister(
+			_serviceRegistrations, (ServletContext)contextObject);
 
 		_serviceRegistrations.clear();
-
-		_beanPortletRegistrar.unregister((ServletContext)contextObject);
 	}
 
 	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();

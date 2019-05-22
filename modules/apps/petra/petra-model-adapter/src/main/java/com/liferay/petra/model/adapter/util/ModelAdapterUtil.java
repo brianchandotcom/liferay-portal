@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Shuyang Zhou
@@ -115,6 +116,18 @@ public class ModelAdapterUtil {
 		adaptedQueryDefinition.setAttributes(queryDefinition.getAttributes());
 
 		return adaptedQueryDefinition;
+	}
+
+	public static <T> T adapt(
+		Function<InvocationHandler, T> proxyProviderFunction,
+		Object delegateObject) {
+
+		if (delegateObject == null) {
+			return null;
+		}
+
+		return proxyProviderFunction.apply(
+			new DelegateInvocationHandler(delegateObject));
 	}
 
 	private static class DelegateInvocationHandler

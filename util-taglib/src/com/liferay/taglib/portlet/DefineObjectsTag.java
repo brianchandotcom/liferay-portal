@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -93,9 +94,7 @@ public class DefineObjectsTag extends TagSupport {
 			pageContext.setAttribute("portletPreferences", portletPreferences);
 			pageContext.setAttribute(
 				"portletPreferencesValues",
-				ProxyUtil.newProxyInstance(
-					ClassLoader.getSystemClassLoader(),
-					new Class<?>[] {Map.class},
+				_mapProxyProviderFunction.apply(
 					new PortletPreferencesValuesInvocationHandler(
 						portletPreferences)));
 
@@ -147,6 +146,10 @@ public class DefineObjectsTag extends TagSupport {
 
 		return SKIP_BODY;
 	}
+
+	private static final Function<InvocationHandler, Map<?, ?>>
+		_mapProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Map.class);
 
 	private static class PortletPreferencesValuesInvocationHandler
 		implements InvocationHandler {

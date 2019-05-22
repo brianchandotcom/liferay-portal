@@ -59,8 +59,6 @@ public class CheckstyleUtil {
 			new PropertiesExpander(System.getProperties()),
 			ConfigurationLoader.IgnoredModulesOptions.EXECUTE);
 
-		List<String> checkNames = new ArrayList<>();
-
 		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
 			configuration, "TreeWalker");
 
@@ -70,6 +68,8 @@ public class CheckstyleUtil {
 		if (checkConfigurations == null) {
 			return configuration;
 		}
+
+		List<String> checkNames = new ArrayList<>();
 
 		String filterCheckName = sourceFormatterArgs.getCheckName();
 

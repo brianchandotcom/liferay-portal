@@ -201,7 +201,7 @@ public class SourceChecksUtil {
 
 		if (configurationAttributesJSONObject.length() != 0) {
 			attributesJSONObject.put(
-				SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
+				SourceFormatterCheckUtil.CONFIGURATION_FILE_LOCATION,
 				configurationAttributesJSONObject);
 		}
 

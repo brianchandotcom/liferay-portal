@@ -52,9 +52,6 @@ import java.util.regex.Pattern;
  */
 public class SourceFormatterUtil {
 
-	public static final String CONFIGURATION_FILE_LOCATION =
-		"configuration_file_location";
-
 	public static final String GIT_LIFERAY_PORTAL_BRANCH =
 		"git.liferay.portal.branch";
 

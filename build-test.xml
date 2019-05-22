@@ -7129,7 +7129,7 @@ ${lcs.portal.bundle.properties}</echo>
 			file="${app.server.dir}/bin/setenv${file.suffix.bat}"
 		>
 			<replacetoken><![CDATA[-XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[-XX:MaxPermSize=256m -javaagent:../../patching-tool/lib/patching-tool-agent.jar]]></replacevalue>
+			<replacevalue><![CDATA[-javaagent:../../patching-tool/lib/patching-tool-agent.jar]]></replacevalue>
 		</replace>
 
 		<echo file="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties">#QA AWS

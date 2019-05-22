@@ -52,7 +52,7 @@
 				dir="${app.server.jboss.dir}/bin"
 				includes="*.bat,*.conf"
 				token="-Xmx512m"
-				value="-Xmx1024m"
+				value="-Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 			/>
 		</sequential>
 	</macrodef>
@@ -1215,16 +1215,10 @@ release was successful.</echo>
 					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
 					<jvm-options>-Duser.timezone=GMT</jvm-options>
-					<jvm-options>-Xmx1024m</jvm-options>
+					<jvm-options>-Xms2560m</jvm-options>
+					<jvm-options>-Xmx2560m</jvm-options>
 				]]>
 			</replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.glassfish.instance.dir}/config/domain.xml"
-		>
-			<replacetoken><![CDATA[<jvm-options>-XX:MaxPermSize=192m</jvm-options>]]></replacetoken>
-			<replacevalue><![CDATA[<jvm-options>-XX:MaxPermSize=512m</jvm-options>]]></replacevalue>
 		</replace>
 
 		<chmod
@@ -1727,7 +1721,7 @@ this task.
 			<replacetoken><![CDATA[export JAVA_OPTS]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 
 					export JAVA_OPTS
 				]]>
@@ -1742,7 +1736,7 @@ this task.
 				<![CDATA[
 					set JONAS_CLASSPATH=%JONAS_BASE%\conf;%JONAS_CLASSPATH%
 
-					set "JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+					set "JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 				]]>
 			</replacevalue>
 		</replace>
@@ -1791,7 +1785,7 @@ this task.
 			file="${app.server.resin.dir}/conf/resin.properties"
 		>
 			<replacetoken><![CDATA[# jvm_args  : -Xmx2048m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m]]></replacevalue>
+			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7]]></replacevalue>
 		</replace>
 
 		<replace
@@ -1897,7 +1891,7 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.bat"
 				>
 					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
-					<replacevalue><![CDATA[set JVM_OPTS=-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxMetaspaceSize=512m]]></replacevalue>
+					<replacevalue><![CDATA[set JVM_OPTS=-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7]]></replacevalue>
 				</replace>
 			</then>
 			<else>
@@ -1905,7 +1899,7 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.sh"
 				>
 					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss256K"]]></replacetoken>
-					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024M -Xss512K -XX:MaxMetaspaceSize=512m"]]></replacevalue>
+					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></replacevalue>
 				</replace>
 			</else>
 		</if>

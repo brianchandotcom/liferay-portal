@@ -14,7 +14,7 @@
 							</lfr-editable>
 						</div>
 
-						<button aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="collapsed navbar-toggler text-reset" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+						<button aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="collapsed ml-auto navbar-toggler text-reset" data-target="#navigationCollapse" data-toggle="collapse" type="button">
 							<span class="d-flex flex-column justify-content-center navbar-toggler-icon">
 								<span class="d-block"></span>
 
@@ -23,6 +23,30 @@
 								<span class="d-block"></span>
 							</span>
 						</button>
+
+						<div class="ml-3 order-md-1">
+							[#assign
+								isSetupComplete = false
+								isSignedIn = false
+							/]
+
+							[#if user??]
+								[#assign isSetupComplete = user.isSetupComplete() /]
+							[/#if]
+
+							[#if themeDisplay??]
+								[#assign isSignedIn = themeDisplay.isSignedIn() /]
+							[/#if]
+
+							[#if isSetupComplete || !isSignedIn]
+								[#if liferay_portlet??]
+									[@liferay_portlet.runtime
+										portletProviderAction=portletProviderAction.VIEW
+										portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
+									/]
+								[/#if]
+							[/#if]
+						</div>
 
 						<div aria-expanded="false" class="collapse justify-content-md-end navbar-collapse text-center" id="navigationCollapse">
 							<lfr-widget-nav></lfr-widget-nav>

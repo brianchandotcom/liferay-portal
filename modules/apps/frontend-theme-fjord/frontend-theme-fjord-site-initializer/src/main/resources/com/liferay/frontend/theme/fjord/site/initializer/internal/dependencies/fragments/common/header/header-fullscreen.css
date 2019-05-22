@@ -56,4 +56,7 @@
 		display: none;
 	}
 }
-/* Fragments' bug: everything added after a @media doesn't work */
+
+.fjord-header-fullscreen .sign-in {
+	color: inherit;
+}

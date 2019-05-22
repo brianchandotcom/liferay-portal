@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
@@ -219,9 +218,8 @@ public class MessageBoardSectionResourceImpl
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					ExpandoBridgeFactoryUtil.getExpandoBridge(
-						mbCategory.getCompanyId(), MBCategory.class.getName(),
-						mbCategory.getCategoryId()),
+					mbCategory.getCompanyId(), MBCategory.class,
+					mbCategory.getCategoryId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbCategory.getCreateDate();
 				dateModified = mbCategory.getModifiedDate();

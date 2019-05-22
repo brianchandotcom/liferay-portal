@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
@@ -179,9 +178,8 @@ public class KnowledgeBaseFolderResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					ExpandoBridgeFactoryUtil.getExpandoBridge(
-						kbFolder.getCompanyId(), KBFolder.class.getName(),
-						kbFolder.getKbFolderId()),
+					kbFolder.getCompanyId(), KBFolder.class,
+					kbFolder.getKbFolderId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();

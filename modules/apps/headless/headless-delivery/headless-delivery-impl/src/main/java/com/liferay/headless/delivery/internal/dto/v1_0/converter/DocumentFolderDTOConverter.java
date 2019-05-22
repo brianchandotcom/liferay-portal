@@ -16,7 +16,6 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
@@ -55,9 +54,7 @@ public class DocumentFolderDTOConverter implements DTOConverter {
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(folder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					ExpandoBridgeFactoryUtil.getExpandoBridge(
-						folder.getCompanyId(), DLFolder.class.getName(),
-						folder.getFolderId()),
+					folder.getCompanyId(), DLFolder.class, folder.getFolderId(),
 					dtoConverterContext.getLocale());
 				dateCreated = folder.getCreateDate();
 				dateModified = folder.getModifiedDate();

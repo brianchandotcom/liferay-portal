@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
@@ -59,10 +58,8 @@ public class StructuredContentFolderDTOConverter implements DTOConverter {
 					_portal,
 					_userLocalService.getUser(journalFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					ExpandoBridgeFactoryUtil.getExpandoBridge(
-						journalFolder.getCompanyId(),
-						JournalFolder.class.getName(),
-						journalFolder.getFolderId()),
+					journalFolder.getCompanyId(), JournalFolder.class,
+					journalFolder.getFolderId(),
 					dtoConverterContext.getLocale());
 				dateCreated = journalFolder.getCreateDate();
 				dateModified = journalFolder.getModifiedDate();

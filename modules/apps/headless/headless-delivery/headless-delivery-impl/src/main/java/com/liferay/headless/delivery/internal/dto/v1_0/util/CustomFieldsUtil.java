@@ -80,7 +80,10 @@ public class CustomFieldsUtil {
 	}
 
 	public static Map<String, Object> toCustomFields(
-		ExpandoBridge expandoBridge, Locale locale) {
+		long companyId, Class<?> clazz, long classPK, Locale locale) {
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			companyId, clazz.getName(), classPK);
 
 		Map<String, Serializable> attributes = expandoBridge.getAttributes();
 

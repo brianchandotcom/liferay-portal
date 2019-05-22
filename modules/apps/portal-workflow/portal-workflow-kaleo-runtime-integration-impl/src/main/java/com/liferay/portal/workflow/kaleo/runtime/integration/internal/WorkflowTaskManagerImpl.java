@@ -64,6 +64,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -899,9 +900,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		if ((role.getType() == RoleConstants.TYPE_SITE) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+			if (Objects.equals(role.getName(), RoleConstants.SITE_MEMBER)) {
 				long[] userGroupUserIds = _userLocalService.getGroupUserIds(
 					kaleoTaskInstanceToken.getGroupId());
 
@@ -973,9 +972,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		if ((role.getType() == RoleConstants.TYPE_SITE) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+			if (Objects.equals(role.getName(), RoleConstants.SITE_MEMBER)) {
 				List<User> userGroupUsers = _userLocalService.getGroupUsers(
 					kaleoTaskInstanceToken.getGroupId());
 

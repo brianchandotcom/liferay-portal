@@ -277,16 +277,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		}
 
 		if (searchByUserRoles) {
-			long userId = kaleoTaskInstanceTokenQuery.getUserId();
-
-			List<Long> roleIds = getSearchByUserRoleIds(userId);
+			List<Long> roleIds = getSearchByUserRoleIds(
+				kaleoTaskInstanceTokenQuery.getUserId());
 
 			Map<Long, Set<Long>> roleIdGroupIdsMap = getRoleIdGroupIdsMap(
 				kaleoTaskInstanceTokenQuery);
-
-			mapSiteMemberGroupId(
-				kaleoTaskInstanceTokenQuery.getCompanyId(), userId,
-				roleIdGroupIdsMap);
 
 			if (roleIds.isEmpty() && roleIdGroupIdsMap.isEmpty()) {
 				return;
@@ -442,6 +437,10 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 				roleIdGroupIdsMap);
 		}
 
+		mapSiteMemberGroupId(
+			kaleoTaskInstanceTokenQuery.getCompanyId(),
+			kaleoTaskInstanceTokenQuery.getUserId(), roleIdGroupIdsMap);
+
 		return roleIdGroupIdsMap;
 	}
 
@@ -524,14 +523,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			Role siteMemberRole = roleLocalService.getRole(
 				companyId, RoleConstants.SITE_MEMBER);
 
-			Set<Long> groupIds = new TreeSet<>();
-
-			roleIdGroupIdsMap.put(siteMemberRole.getRoleId(), groupIds);
-
 			User user = userLocalService.getUserById(userId);
 
 			for (Long groupId : user.getGroupIds()) {
-				groupIds.add(groupId);
+				mapRoleIdGroupId(
+					siteMemberRole.getRoleId(), groupId, roleIdGroupIdsMap);
 			}
 		}
 		catch (Exception e) {

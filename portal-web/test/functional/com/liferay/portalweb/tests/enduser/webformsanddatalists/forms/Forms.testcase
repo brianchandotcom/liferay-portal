@@ -2975,14 +2975,14 @@ definition {
 
 		for (var optionNumber : list "1,2,3") {
 			FormFields.editGridOptions(
-				gridField = "row",
+				gridField = "Row",
 				optionValue = "Option ${optionNumber}",
 				rowNumber = "${optionNumber}");
 		}
 
 		for (var optionNumber : list "1,2,3") {
 			FormFields.editGridOptions(
-				gridField = "column",
+				gridField = "Column",
 				optionValue = "Category ${optionNumber}",
 				rowNumber = "${optionNumber}");
 		}
@@ -3089,7 +3089,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Status",
-			fieldValue = "APPROVED");
+			fieldValue = "Approved");
 
 		FormsAdminNavigator.gotoView();
 

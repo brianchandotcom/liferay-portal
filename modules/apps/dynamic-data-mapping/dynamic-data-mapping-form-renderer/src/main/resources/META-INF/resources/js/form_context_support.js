@@ -191,6 +191,8 @@ AUI.add(
 									}
 								}
 							);
+
+							instance._removeFieldContexts(columnFieldContexts, repeatedSiblings);
 						}
 					}
 				);
@@ -214,6 +216,54 @@ AUI.add(
 				visitor.set('pages', context.pages);
 
 				instance.set('fields', instance._createFieldsFromContext(context));
+			},
+
+			/**
+			 * This method removes fields from columnFieldContexts that are no
+			 * longer being used. It checks if the field is in repeatedSiblings
+			 * in order to decide to remove it or not.
+			 *
+			 * @param columnFieldContexts
+			 * @param repeatedSiblings
+			 * @private
+			 */
+			_removeFieldContexts: function(columnFieldContexts, repeatedSiblings) {
+				var removeContext = [];
+				var repeatedContext = [];
+
+				//Get the context of repeatedSiblings and place them in repeatedContext
+				repeatedSiblings.forEach(
+					function(context) {
+						repeatedContext.push(context.get('context'));
+					}
+				);
+
+				//Loop through columnFieldContexts and try to find the same field in repeatedContext.
+				columnFieldContexts.forEach(function(columnFieldContext) {
+					var foundFieldContext = AArray.find(
+						repeatedContext,
+						function(repeatedContext) {
+							if (columnFieldContext.fieldName === repeatedContext.fieldName &&
+								columnFieldContext.instanceId === repeatedContext.instanceId) {
+
+								return true;
+							}
+
+							return false;
+						}
+					);
+
+					//If the field in columnFieldContexts cannot be found in repeatedContext,
+					//place the field in the removeContext array.
+					if (!foundFieldContext) {
+						removeContext.push(columnFieldContext);
+					}
+				});
+
+				//Remove the fields from columnFieldContexts
+				for (var i in removeContext) {
+					columnFieldContexts.splice(columnFieldContexts.indexOf(removeContext[i]), 1);
+				};
 			},
 
 			_scheduleFieldDisposal: function(field) {

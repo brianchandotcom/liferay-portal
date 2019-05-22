@@ -199,7 +199,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {24, 28});
 	}
 
-	@Test
 	public void testIncorrectVariableNames() throws Exception {
 		test(
 			"IncorrectVariableNames1.testjava",

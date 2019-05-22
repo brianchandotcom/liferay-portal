@@ -147,6 +147,16 @@ public class SourceFormatterCheckUtil {
 		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
 		String defaultValue, String absolutePath, String baseDirName) {
 
+		return getJSONObjectValue(
+			jsonObject, cachedValuesMap, key, defaultValue, absolutePath,
+			baseDirName, false);
+	}
+
+	public static String getJSONObjectValue(
+		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
+		String defaultValue, String absolutePath, String baseDirName,
+		boolean checkConfigurationOnly) {
+
 		if (jsonObject == null) {
 			return defaultValue;
 		}
@@ -185,6 +195,10 @@ public class SourceFormatterCheckUtil {
 					value = curValue;
 				}
 
+				continue;
+			}
+
+			if (checkConfigurationOnly) {
 				continue;
 			}
 

@@ -99,7 +99,7 @@ exports[`Should component receive props 1`] = `
                   <strong
                     className="ml-0 mr-0 navbar-text"
                   >
-                    Filter By
+                    filter-by
                   </strong>
                 </li>
                 <withRouter(Filter)
@@ -109,23 +109,23 @@ exports[`Should component receive props 1`] = `
                       Object {
                         "active": false,
                         "key": "Overdue",
-                        "name": "Overdue",
+                        "name": "overdue",
                       },
                       Object {
                         "active": false,
                         "key": "OnTime",
-                        "name": "On Time",
+                        "name": "on-time",
                       },
                       Object {
                         "active": false,
                         "key": "Untracked",
-                        "name": "Untracked",
+                        "name": "untracked",
                       },
                     ]
                   }
                   key="slaStatuses"
                   multiple={true}
-                  name="SLA Status"
+                  name="sla-status"
                 >
                   <Route>
                     <Filter
@@ -177,17 +177,17 @@ exports[`Should component receive props 1`] = `
                           Object {
                             "active": false,
                             "key": "Overdue",
-                            "name": "Overdue",
+                            "name": "overdue",
                           },
                           Object {
                             "active": false,
                             "key": "OnTime",
-                            "name": "On Time",
+                            "name": "on-time",
                           },
                           Object {
                             "active": false,
                             "key": "Untracked",
-                            "name": "Untracked",
+                            "name": "untracked",
                           },
                         ]
                       }
@@ -214,7 +214,7 @@ exports[`Should component receive props 1`] = `
                         }
                       }
                       multiple={true}
-                      name="SLA Status"
+                      name="sla-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -229,7 +229,7 @@ exports[`Should component receive props 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            SLA Status
+                            sla-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -256,17 +256,17 @@ exports[`Should component receive props 1`] = `
                                 Object {
                                   "active": false,
                                   "key": "Overdue",
-                                  "name": "Overdue",
+                                  "name": "overdue",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "OnTime",
-                                  "name": "On Time",
+                                  "name": "on-time",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "Untracked",
-                                  "name": "Untracked",
+                                  "name": "untracked",
                                 },
                               ]
                             }
@@ -282,7 +282,7 @@ exports[`Should component receive props 1`] = `
                                 itemKey="Overdue"
                                 key="0"
                                 multiple={true}
-                                name="Overdue"
+                                name="overdue"
                                 onChange={[Function]}
                               >
                                 <li
@@ -304,7 +304,7 @@ exports[`Should component receive props 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Overdue
+                                        overdue
                                       </span>
                                     </span>
                                   </label>
@@ -316,7 +316,7 @@ exports[`Should component receive props 1`] = `
                                 itemKey="OnTime"
                                 key="1"
                                 multiple={true}
-                                name="On Time"
+                                name="on-time"
                                 onChange={[Function]}
                               >
                                 <li
@@ -338,7 +338,7 @@ exports[`Should component receive props 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        On Time
+                                        on-time
                                       </span>
                                     </span>
                                   </label>
@@ -350,7 +350,7 @@ exports[`Should component receive props 1`] = `
                                 itemKey="Untracked"
                                 key="2"
                                 multiple={true}
-                                name="Untracked"
+                                name="untracked"
                                 onChange={[Function]}
                               >
                                 <li
@@ -372,7 +372,7 @@ exports[`Should component receive props 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Untracked
+                                        untracked
                                       </span>
                                     </span>
                                   </label>
@@ -403,7 +403,7 @@ exports[`Should component receive props 1`] = `
                   }
                   key="statuses"
                   multiple={true}
-                  name="Process Status"
+                  name="process-status"
                 >
                   <Route>
                     <Filter
@@ -487,7 +487,7 @@ exports[`Should component receive props 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Status"
+                      name="process-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -502,7 +502,7 @@ exports[`Should component receive props 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Status
+                            process-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -624,7 +624,7 @@ exports[`Should component receive props 1`] = `
                   items={Array []}
                   key="taskKeys"
                   multiple={true}
-                  name="Process Step"
+                  name="process-step"
                 >
                   <Route>
                     <Filter
@@ -695,7 +695,7 @@ exports[`Should component receive props 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Step"
+                      name="process-step"
                     >
                       <li
                         className="dropdown nav-item"
@@ -710,7 +710,7 @@ exports[`Should component receive props 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Step
+                            process-step
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -743,7 +743,7 @@ exports[`Should component receive props 1`] = `
                                 <span
                                   className="disabled dropdown-item"
                                 >
-                                  No results were found.
+                                  no-results-were-found
                                 </span>
                               </li>
                             </ul>
@@ -766,19 +766,19 @@ exports[`Should component receive props 1`] = `
                   "items": Array [],
                   "key": "slaStatuses",
                   "multiple": true,
-                  "name": "SLA Status",
+                  "name": "sla-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
                   "multiple": true,
-                  "name": "Process Status",
+                  "name": "process-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
                   "multiple": true,
-                  "name": "Process Step",
+                  "name": "process-step",
                 },
               ]
             }
@@ -792,19 +792,19 @@ exports[`Should component receive props 1`] = `
                       "items": Array [],
                       "key": "slaStatuses",
                       "multiple": true,
-                      "name": "SLA Status",
+                      "name": "sla-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
                       "multiple": true,
-                      "name": "Process Status",
+                      "name": "process-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
                       "multiple": true,
-                      "name": "Process Step",
+                      "name": "process-step",
                     },
                   ]
                 }
@@ -882,7 +882,7 @@ exports[`Should component receive props 1`] = `
         >
           <ListView
             emptyActionButton={<ReloadButton />}
-            emptyMessageText="There are no process items at the moment."
+            emptyMessageText="there-are-no-process-items-at-the-moment"
             errorMessageText={null}
             fetching={false}
             loading={true}
@@ -947,7 +947,7 @@ exports[`Should component receive props 1`] = `
                         />
                       </Icon>
                     </span>
-                    Item #undefined
+                    item #undefined
                   </div>
                   <button
                     aria-labelledby="Close"
@@ -979,14 +979,14 @@ exports[`Should component receive props 1`] = `
                     <h4
                       className=" font-weight-medium mb-4"
                     >
-                      Due Date by SLA
+                      due-date-by-sla
                     </h4>
                   </Component>
                   <p>
                     <span
                       className="font-weight-medium text-muted"
                     >
-                      No SLA records for this item.
+                      no-sla-records-for-this-item
                     </span>
                   </p>
                   <Component
@@ -995,11 +995,11 @@ exports[`Should component receive props 1`] = `
                     <h4
                       className="mt-5 font-weight-medium mb-4"
                     >
-                      Process Details
+                      process-details
                     </h4>
                   </Component>
                   <Component
-                    description="Process Status"
+                    description="process-status"
                   >
                     <p
                       className="row"
@@ -1007,7 +1007,7 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Process Status 
+                        process-status 
                       </span>
                       <span
                         className="col small"
@@ -1015,7 +1015,7 @@ exports[`Should component receive props 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Created By"
+                    description="created-by"
                   >
                     <p
                       className="row"
@@ -1023,7 +1023,7 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Created By 
+                        created-by 
                       </span>
                       <span
                         className="col small"
@@ -1031,7 +1031,7 @@ exports[`Should component receive props 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Type"
+                    description="asset-type"
                   >
                     <p
                       className="row"
@@ -1039,7 +1039,7 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Type 
+                        asset-type 
                       </span>
                       <span
                         className="col small"
@@ -1047,7 +1047,7 @@ exports[`Should component receive props 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Title"
+                    description="asset-title"
                   >
                     <p
                       className="row"
@@ -1055,7 +1055,7 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Title 
+                        asset-title 
                       </span>
                       <span
                         className="col small"
@@ -1063,7 +1063,7 @@ exports[`Should component receive props 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Current Step"
+                    description="current-step"
                     detail=""
                   >
                     <p
@@ -1072,7 +1072,7 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Current Step 
+                        current-step 
                       </span>
                       <span
                         className="col small"
@@ -1084,7 +1084,7 @@ exports[`Should component receive props 1`] = `
                     href="/group/control_panel/manage/-/workflow_instance/view/undefined"
                     target="_blank"
                   >
-                    Go to Submission Page
+                    go-to-submission-page
                     <span
                       className="inline-item inline-item-after"
                     >
@@ -1207,7 +1207,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   <strong
                     className="ml-0 mr-0 navbar-text"
                   >
-                    Filter By
+                    filter-by
                   </strong>
                 </li>
                 <withRouter(Filter)
@@ -1217,23 +1217,23 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       Object {
                         "active": false,
                         "key": "Overdue",
-                        "name": "Overdue",
+                        "name": "overdue",
                       },
                       Object {
                         "active": false,
                         "key": "OnTime",
-                        "name": "On Time",
+                        "name": "on-time",
                       },
                       Object {
                         "active": false,
                         "key": "Untracked",
-                        "name": "Untracked",
+                        "name": "untracked",
                       },
                     ]
                   }
                   key="slaStatuses"
                   multiple={true}
-                  name="SLA Status"
+                  name="sla-status"
                 >
                   <Route>
                     <Filter
@@ -1285,17 +1285,17 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           Object {
                             "active": false,
                             "key": "Overdue",
-                            "name": "Overdue",
+                            "name": "overdue",
                           },
                           Object {
                             "active": false,
                             "key": "OnTime",
-                            "name": "On Time",
+                            "name": "on-time",
                           },
                           Object {
                             "active": false,
                             "key": "Untracked",
-                            "name": "Untracked",
+                            "name": "untracked",
                           },
                         ]
                       }
@@ -1322,7 +1322,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                         }
                       }
                       multiple={true}
-                      name="SLA Status"
+                      name="sla-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -1337,7 +1337,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            SLA Status
+                            sla-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -1364,17 +1364,17 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                 Object {
                                   "active": false,
                                   "key": "Overdue",
-                                  "name": "Overdue",
+                                  "name": "overdue",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "OnTime",
-                                  "name": "On Time",
+                                  "name": "on-time",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "Untracked",
-                                  "name": "Untracked",
+                                  "name": "untracked",
                                 },
                               ]
                             }
@@ -1390,7 +1390,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                 itemKey="Overdue"
                                 key="0"
                                 multiple={true}
-                                name="Overdue"
+                                name="overdue"
                                 onChange={[Function]}
                               >
                                 <li
@@ -1412,7 +1412,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Overdue
+                                        overdue
                                       </span>
                                     </span>
                                   </label>
@@ -1424,7 +1424,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                 itemKey="OnTime"
                                 key="1"
                                 multiple={true}
-                                name="On Time"
+                                name="on-time"
                                 onChange={[Function]}
                               >
                                 <li
@@ -1446,7 +1446,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        On Time
+                                        on-time
                                       </span>
                                     </span>
                                   </label>
@@ -1458,7 +1458,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                 itemKey="Untracked"
                                 key="2"
                                 multiple={true}
-                                name="Untracked"
+                                name="untracked"
                                 onChange={[Function]}
                               >
                                 <li
@@ -1480,7 +1480,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Untracked
+                                        untracked
                                       </span>
                                     </span>
                                   </label>
@@ -1511,7 +1511,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   }
                   key="statuses"
                   multiple={true}
-                  name="Process Status"
+                  name="process-status"
                 >
                   <Route>
                     <Filter
@@ -1595,7 +1595,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Status"
+                      name="process-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -1610,7 +1610,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Status
+                            process-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -1732,7 +1732,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   items={Array []}
                   key="taskKeys"
                   multiple={true}
-                  name="Process Step"
+                  name="process-step"
                 >
                   <Route>
                     <Filter
@@ -1803,7 +1803,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Step"
+                      name="process-step"
                     >
                       <li
                         className="dropdown nav-item"
@@ -1818,7 +1818,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Step
+                            process-step
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -1851,7 +1851,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                 <span
                                   className="disabled dropdown-item"
                                 >
-                                  No results were found.
+                                  no-results-were-found
                                 </span>
                               </li>
                             </ul>
@@ -1874,19 +1874,19 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   "items": Array [],
                   "key": "slaStatuses",
                   "multiple": true,
-                  "name": "SLA Status",
+                  "name": "sla-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
                   "multiple": true,
-                  "name": "Process Status",
+                  "name": "process-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
                   "multiple": true,
-                  "name": "Process Step",
+                  "name": "process-step",
                 },
               ]
             }
@@ -1900,19 +1900,19 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       "items": Array [],
                       "key": "slaStatuses",
                       "multiple": true,
-                      "name": "SLA Status",
+                      "name": "sla-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
                       "multiple": true,
-                      "name": "Process Status",
+                      "name": "process-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
                       "multiple": true,
-                      "name": "Process Step",
+                      "name": "process-step",
                     },
                   ]
                 }
@@ -1990,7 +1990,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
         >
           <ListView
             emptyActionButton={<ReloadButton />}
-            emptyMessageText="There are no process items at the moment."
+            emptyMessageText="there-are-no-process-items-at-the-moment"
             errorMessageText={null}
             fetching={false}
             loading={true}
@@ -2053,7 +2053,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                         />
                       </Icon>
                     </span>
-                    Item #undefined
+                    item #undefined
                   </div>
                   <button
                     aria-labelledby="Close"
@@ -2085,14 +2085,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     <h4
                       className=" font-weight-medium mb-4"
                     >
-                      Due Date by SLA
+                      due-date-by-sla
                     </h4>
                   </Component>
                   <p>
                     <span
                       className="font-weight-medium text-muted"
                     >
-                      No SLA records for this item.
+                      no-sla-records-for-this-item
                     </span>
                   </p>
                   <Component
@@ -2101,11 +2101,11 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     <h4
                       className="mt-5 font-weight-medium mb-4"
                     >
-                      Process Details
+                      process-details
                     </h4>
                   </Component>
                   <Component
-                    description="Process Status"
+                    description="process-status"
                   >
                     <p
                       className="row"
@@ -2113,7 +2113,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Process Status 
+                        process-status 
                       </span>
                       <span
                         className="col small"
@@ -2121,7 +2121,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Created By"
+                    description="created-by"
                   >
                     <p
                       className="row"
@@ -2129,7 +2129,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Created By 
+                        created-by 
                       </span>
                       <span
                         className="col small"
@@ -2137,7 +2137,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Type"
+                    description="asset-type"
                   >
                     <p
                       className="row"
@@ -2145,7 +2145,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Type 
+                        asset-type 
                       </span>
                       <span
                         className="col small"
@@ -2153,7 +2153,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Title"
+                    description="asset-title"
                   >
                     <p
                       className="row"
@@ -2161,7 +2161,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Title 
+                        asset-title 
                       </span>
                       <span
                         className="col small"
@@ -2169,7 +2169,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Current Step"
+                    description="current-step"
                     detail=""
                   >
                     <p
@@ -2178,7 +2178,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Current Step 
+                        current-step 
                       </span>
                       <span
                         className="col small"
@@ -2190,7 +2190,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     href="/group/control_panel/manage/-/workflow_instance/view/undefined"
                     target="_blank"
                   >
-                    Go to Submission Page
+                    go-to-submission-page
                     <span
                       className="inline-item inline-item-after"
                     >
@@ -2318,7 +2318,7 @@ exports[`Should render component 1`] = `
                   <strong
                     className="ml-0 mr-0 navbar-text"
                   >
-                    Filter By
+                    filter-by
                   </strong>
                 </li>
                 <withRouter(Filter)
@@ -2328,23 +2328,23 @@ exports[`Should render component 1`] = `
                       Object {
                         "active": false,
                         "key": "Overdue",
-                        "name": "Overdue",
+                        "name": "overdue",
                       },
                       Object {
                         "active": false,
                         "key": "OnTime",
-                        "name": "On Time",
+                        "name": "on-time",
                       },
                       Object {
                         "active": false,
                         "key": "Untracked",
-                        "name": "Untracked",
+                        "name": "untracked",
                       },
                     ]
                   }
                   key="slaStatuses"
                   multiple={true}
-                  name="SLA Status"
+                  name="sla-status"
                 >
                   <Route>
                     <Filter
@@ -2396,17 +2396,17 @@ exports[`Should render component 1`] = `
                           Object {
                             "active": false,
                             "key": "Overdue",
-                            "name": "Overdue",
+                            "name": "overdue",
                           },
                           Object {
                             "active": false,
                             "key": "OnTime",
-                            "name": "On Time",
+                            "name": "on-time",
                           },
                           Object {
                             "active": false,
                             "key": "Untracked",
-                            "name": "Untracked",
+                            "name": "untracked",
                           },
                         ]
                       }
@@ -2433,7 +2433,7 @@ exports[`Should render component 1`] = `
                         }
                       }
                       multiple={true}
-                      name="SLA Status"
+                      name="sla-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -2448,7 +2448,7 @@ exports[`Should render component 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            SLA Status
+                            sla-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -2475,17 +2475,17 @@ exports[`Should render component 1`] = `
                                 Object {
                                   "active": false,
                                   "key": "Overdue",
-                                  "name": "Overdue",
+                                  "name": "overdue",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "OnTime",
-                                  "name": "On Time",
+                                  "name": "on-time",
                                 },
                                 Object {
                                   "active": false,
                                   "key": "Untracked",
-                                  "name": "Untracked",
+                                  "name": "untracked",
                                 },
                               ]
                             }
@@ -2501,7 +2501,7 @@ exports[`Should render component 1`] = `
                                 itemKey="Overdue"
                                 key="0"
                                 multiple={true}
-                                name="Overdue"
+                                name="overdue"
                                 onChange={[Function]}
                               >
                                 <li
@@ -2523,7 +2523,7 @@ exports[`Should render component 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Overdue
+                                        overdue
                                       </span>
                                     </span>
                                   </label>
@@ -2535,7 +2535,7 @@ exports[`Should render component 1`] = `
                                 itemKey="OnTime"
                                 key="1"
                                 multiple={true}
-                                name="On Time"
+                                name="on-time"
                                 onChange={[Function]}
                               >
                                 <li
@@ -2557,7 +2557,7 @@ exports[`Should render component 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        On Time
+                                        on-time
                                       </span>
                                     </span>
                                   </label>
@@ -2569,7 +2569,7 @@ exports[`Should render component 1`] = `
                                 itemKey="Untracked"
                                 key="2"
                                 multiple={true}
-                                name="Untracked"
+                                name="untracked"
                                 onChange={[Function]}
                               >
                                 <li
@@ -2591,7 +2591,7 @@ exports[`Should render component 1`] = `
                                       <span
                                         className="custom-control-label-text"
                                       >
-                                        Untracked
+                                        untracked
                                       </span>
                                     </span>
                                   </label>
@@ -2622,7 +2622,7 @@ exports[`Should render component 1`] = `
                   }
                   key="statuses"
                   multiple={true}
-                  name="Process Status"
+                  name="process-status"
                 >
                   <Route>
                     <Filter
@@ -2706,7 +2706,7 @@ exports[`Should render component 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Status"
+                      name="process-status"
                     >
                       <li
                         className="dropdown nav-item"
@@ -2721,7 +2721,7 @@ exports[`Should render component 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Status
+                            process-status
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -2843,7 +2843,7 @@ exports[`Should render component 1`] = `
                   items={Array []}
                   key="taskKeys"
                   multiple={true}
-                  name="Process Step"
+                  name="process-step"
                 >
                   <Route>
                     <Filter
@@ -2914,7 +2914,7 @@ exports[`Should render component 1`] = `
                         }
                       }
                       multiple={true}
-                      name="Process Step"
+                      name="process-step"
                     >
                       <li
                         className="dropdown nav-item"
@@ -2929,7 +2929,7 @@ exports[`Should render component 1`] = `
                           <span
                             className="mr-2 navbar-text-truncate"
                           >
-                            Process Step
+                            process-step
                           </span>
                           <Icon
                             iconName="caret-bottom"
@@ -2962,7 +2962,7 @@ exports[`Should render component 1`] = `
                                 <span
                                   className="disabled dropdown-item"
                                 >
-                                  No results were found.
+                                  no-results-were-found
                                 </span>
                               </li>
                             </ul>
@@ -2985,19 +2985,19 @@ exports[`Should render component 1`] = `
                   "items": Array [],
                   "key": "slaStatuses",
                   "multiple": true,
-                  "name": "SLA Status",
+                  "name": "sla-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "statuses",
                   "multiple": true,
-                  "name": "Process Status",
+                  "name": "process-status",
                 },
                 Object {
                   "items": Array [],
                   "key": "taskKeys",
                   "multiple": true,
-                  "name": "Process Step",
+                  "name": "process-step",
                 },
               ]
             }
@@ -3011,19 +3011,19 @@ exports[`Should render component 1`] = `
                       "items": Array [],
                       "key": "slaStatuses",
                       "multiple": true,
-                      "name": "SLA Status",
+                      "name": "sla-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "statuses",
                       "multiple": true,
-                      "name": "Process Status",
+                      "name": "process-status",
                     },
                     Object {
                       "items": Array [],
                       "key": "taskKeys",
                       "multiple": true,
-                      "name": "Process Step",
+                      "name": "process-step",
                     },
                   ]
                 }
@@ -3101,7 +3101,7 @@ exports[`Should render component 1`] = `
         >
           <ListView
             emptyActionButton={<ReloadButton />}
-            emptyMessageText="There are no process items at the moment."
+            emptyMessageText="there-are-no-process-items-at-the-moment"
             errorMessageText={null}
             fetching={false}
             loading={true}
@@ -3166,7 +3166,7 @@ exports[`Should render component 1`] = `
                         />
                       </Icon>
                     </span>
-                    Item #undefined
+                    item #undefined
                   </div>
                   <button
                     aria-labelledby="Close"
@@ -3198,14 +3198,14 @@ exports[`Should render component 1`] = `
                     <h4
                       className=" font-weight-medium mb-4"
                     >
-                      Due Date by SLA
+                      due-date-by-sla
                     </h4>
                   </Component>
                   <p>
                     <span
                       className="font-weight-medium text-muted"
                     >
-                      No SLA records for this item.
+                      no-sla-records-for-this-item
                     </span>
                   </p>
                   <Component
@@ -3214,11 +3214,11 @@ exports[`Should render component 1`] = `
                     <h4
                       className="mt-5 font-weight-medium mb-4"
                     >
-                      Process Details
+                      process-details
                     </h4>
                   </Component>
                   <Component
-                    description="Process Status"
+                    description="process-status"
                   >
                     <p
                       className="row"
@@ -3226,7 +3226,7 @@ exports[`Should render component 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Process Status 
+                        process-status 
                       </span>
                       <span
                         className="col small"
@@ -3234,7 +3234,7 @@ exports[`Should render component 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Created By"
+                    description="created-by"
                   >
                     <p
                       className="row"
@@ -3242,7 +3242,7 @@ exports[`Should render component 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Created By 
+                        created-by 
                       </span>
                       <span
                         className="col small"
@@ -3250,7 +3250,7 @@ exports[`Should render component 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Type"
+                    description="asset-type"
                   >
                     <p
                       className="row"
@@ -3258,7 +3258,7 @@ exports[`Should render component 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Type 
+                        asset-type 
                       </span>
                       <span
                         className="col small"
@@ -3266,7 +3266,7 @@ exports[`Should render component 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Asset Title"
+                    description="asset-title"
                   >
                     <p
                       className="row"
@@ -3274,7 +3274,7 @@ exports[`Should render component 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Asset Title 
+                        asset-title 
                       </span>
                       <span
                         className="col small"
@@ -3282,7 +3282,7 @@ exports[`Should render component 1`] = `
                     </p>
                   </Component>
                   <Component
-                    description="Current Step"
+                    description="current-step"
                     detail=""
                   >
                     <p
@@ -3291,7 +3291,7 @@ exports[`Should render component 1`] = `
                       <span
                         className="col-2 font-weight-medium small text-secondary"
                       >
-                        Current Step 
+                        current-step 
                       </span>
                       <span
                         className="col small"
@@ -3303,7 +3303,7 @@ exports[`Should render component 1`] = `
                     href="/group/control_panel/manage/-/workflow_instance/view/undefined"
                     target="_blank"
                   >
-                    Go to Submission Page
+                    go-to-submission-page
                     <span
                       className="inline-item inline-item-after"
                     >
@@ -3351,7 +3351,7 @@ Array [
           <strong
             className="ml-0 mr-0 navbar-text"
           >
-            Filter By
+            filter-by
           </strong>
         </li>
         <li
@@ -3367,7 +3367,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              SLA Status
+              sla-status
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -3406,7 +3406,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      Overdue
+                      overdue
                     </span>
                   </span>
                 </label>
@@ -3430,7 +3430,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      On Time
+                      on-time
                     </span>
                   </span>
                 </label>
@@ -3454,7 +3454,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      Untracked
+                      untracked
                     </span>
                   </span>
                 </label>
@@ -3475,7 +3475,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              Process Status
+              process-status
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -3559,7 +3559,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              Process Step
+              process-step
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -3583,7 +3583,7 @@ Array [
                 <span
                   className="disabled dropdown-item"
                 >
-                  No results were found.
+                  no-results-were-found
                 </span>
               </li>
             </ul>
@@ -3648,7 +3648,7 @@ Array [
                 role="presentation"
               />
             </span>
-            Item #undefined
+            item #undefined
           </div>
           <button
             aria-labelledby="Close"
@@ -3675,19 +3675,19 @@ Array [
           <h4
             className=" font-weight-medium mb-4"
           >
-            Due Date by SLA
+            due-date-by-sla
           </h4>
           <p>
             <span
               className="font-weight-medium text-muted"
             >
-              No SLA records for this item.
+              no-sla-records-for-this-item
             </span>
           </p>
           <h4
             className="mt-5 font-weight-medium mb-4"
           >
-            Process Details
+            process-details
           </h4>
           <p
             className="row"
@@ -3695,7 +3695,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Process Status 
+              process-status 
             </span>
             <span
               className="col small"
@@ -3707,7 +3707,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Created By 
+              created-by 
             </span>
             <span
               className="col small"
@@ -3719,7 +3719,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Asset Type 
+              asset-type 
             </span>
             <span
               className="col small"
@@ -3731,7 +3731,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Asset Title 
+              asset-title 
             </span>
             <span
               className="col small"
@@ -3743,7 +3743,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Current Step 
+              current-step 
             </span>
             <span
               className="col small"
@@ -3756,7 +3756,7 @@ Array [
             href="/group/control_panel/manage/-/workflow_instance/view/undefined"
             target="_blank"
           >
-            Go to Submission Page
+            go-to-submission-page
             <span
               className="inline-item inline-item-after"
             >
@@ -3796,7 +3796,7 @@ Array [
           <strong
             className="ml-0 mr-0 navbar-text"
           >
-            Filter By
+            filter-by
           </strong>
         </li>
         <li
@@ -3812,7 +3812,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              SLA Status
+              sla-status
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -3851,7 +3851,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      Overdue
+                      overdue
                     </span>
                   </span>
                 </label>
@@ -3875,7 +3875,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      On Time
+                      on-time
                     </span>
                   </span>
                 </label>
@@ -3899,7 +3899,7 @@ Array [
                     <span
                       className="custom-control-label-text"
                     >
-                      Untracked
+                      untracked
                     </span>
                   </span>
                 </label>
@@ -3920,7 +3920,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              Process Status
+              process-status
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -4004,7 +4004,7 @@ Array [
             <span
               className="mr-2 navbar-text-truncate"
             >
-              Process Step
+              process-step
             </span>
             <svg
               className="lexicon-icon lexicon-icon-caret-bottom"
@@ -4028,7 +4028,7 @@ Array [
                 <span
                   className="disabled dropdown-item"
                 >
-                  No results were found.
+                  no-results-were-found
                 </span>
               </li>
             </ul>
@@ -4093,7 +4093,7 @@ Array [
                 role="presentation"
               />
             </span>
-            Item #undefined
+            item #undefined
           </div>
           <button
             aria-labelledby="Close"
@@ -4120,19 +4120,19 @@ Array [
           <h4
             className=" font-weight-medium mb-4"
           >
-            Due Date by SLA
+            due-date-by-sla
           </h4>
           <p>
             <span
               className="font-weight-medium text-muted"
             >
-              No SLA records for this item.
+              no-sla-records-for-this-item
             </span>
           </p>
           <h4
             className="mt-5 font-weight-medium mb-4"
           >
-            Process Details
+            process-details
           </h4>
           <p
             className="row"
@@ -4140,7 +4140,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Process Status 
+              process-status 
             </span>
             <span
               className="col small"
@@ -4152,7 +4152,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Created By 
+              created-by 
             </span>
             <span
               className="col small"
@@ -4164,7 +4164,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Asset Type 
+              asset-type 
             </span>
             <span
               className="col small"
@@ -4176,7 +4176,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Asset Title 
+              asset-title 
             </span>
             <span
               className="col small"
@@ -4188,7 +4188,7 @@ Array [
             <span
               className="col-2 font-weight-medium small text-secondary"
             >
-              Current Step 
+              current-step 
             </span>
             <span
               className="col small"
@@ -4201,7 +4201,7 @@ Array [
             href="/group/control_panel/manage/-/workflow_instance/view/undefined"
             target="_blank"
           >
-            Go to Submission Page
+            go-to-submission-page
             <span
               className="inline-item inline-item-after"
             >

@@ -111,7 +111,7 @@ exports[`Should change search value 1`] = `
                   <input
                     className="form-control input-group-inset input-group-inset-after"
                     onChange={[Function]}
-                    placeholder="Search for..."
+                    placeholder="search-for"
                     type="text"
                     value=""
                   />
@@ -165,7 +165,7 @@ exports[`Should render component 1`] = `
         className="form-control input-group-inset input-group-inset-after"
         disabled={true}
         onChange={[Function]}
-        placeholder="Search for..."
+        placeholder="search-for"
         type="text"
         value=""
       />

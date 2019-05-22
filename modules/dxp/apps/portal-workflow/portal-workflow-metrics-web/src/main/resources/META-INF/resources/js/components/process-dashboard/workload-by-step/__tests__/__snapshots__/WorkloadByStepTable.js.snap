@@ -12,7 +12,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
         <th
           className="table-cell-expand table-head-title"
         >
-          Step Name
+          step-name
         </th>
         <th
           className="table-head-title text-right"
@@ -46,10 +46,10 @@ exports[`Should display hyphen when the task has no count 1`] = `
             </span>
             <span
               className="text-truncate title"
-              data-title="Overdue"
-              title="Overdue"
+              data-title="overdue"
+              title="overdue"
             >
-              Overdue
+              overdue
             </span>
             <span
               className="inline-item inline-item-after"
@@ -99,10 +99,10 @@ exports[`Should display hyphen when the task has no count 1`] = `
             </span>
             <span
               className="text-truncate title"
-              data-title="On Time"
-              title="On Time"
+              data-title="on-time"
+              title="on-time"
             >
-              On Time
+              on-time
             </span>
             <span
               className="inline-item inline-item-after"
@@ -130,10 +130,10 @@ exports[`Should display hyphen when the task has no count 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="Total Pending"
-              title="Total Pending"
+              data-title="total-pending"
+              title="total-pending"
             >
-              Total Pending
+              total-pending
             </span>
             <span
               className="inline-item inline-item-after"
@@ -211,7 +211,7 @@ exports[`Should render component 1`] = `
         <th
           className="table-cell-expand table-head-title"
         >
-          Step Name
+          step-name
         </th>
         <th
           className="table-head-title text-right"
@@ -245,10 +245,10 @@ exports[`Should render component 1`] = `
             </span>
             <span
               className="text-truncate title"
-              data-title="Overdue"
-              title="Overdue"
+              data-title="overdue"
+              title="overdue"
             >
-              Overdue
+              overdue
             </span>
             <span
               className="inline-item inline-item-after"
@@ -298,10 +298,10 @@ exports[`Should render component 1`] = `
             </span>
             <span
               className="text-truncate title"
-              data-title="On Time"
-              title="On Time"
+              data-title="on-time"
+              title="on-time"
             >
-              On Time
+              on-time
             </span>
             <span
               className="inline-item inline-item-after"
@@ -329,10 +329,10 @@ exports[`Should render component 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="Total Pending"
-              title="Total Pending"
+              data-title="total-pending"
+              title="total-pending"
             >
-              Total Pending
+              total-pending
             </span>
             <span
               className="inline-item inline-item-after"

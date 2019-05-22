@@ -78,11 +78,11 @@ exports[`Should render component 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          description="Completed workflow items are counted and categorized by their SLA status."
+          description="completed-items-description"
           filter={null}
           processId="35315"
           timeRange={null}
-          title="Completed Items"
+          title="completed-items"
         >
           <Panel>
             <div
@@ -112,10 +112,10 @@ exports[`Should render component 1`] = `
                           <span
                             className="mr-3"
                           >
-                            Completed Items
+                            completed-items
                           </span>
                           <Tooltip
-                            message="Completed workflow items are counted and categorized by their SLA status."
+                            message="completed-items-description"
                             position="right"
                             width="288"
                           >
@@ -253,11 +253,11 @@ exports[`Should render component with failure state 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          description="Completed workflow items are counted and categorized by their SLA status."
+          description="completed-items-description"
           filter={null}
           processId="35315"
           timeRange={null}
-          title="Completed Items"
+          title="completed-items"
         >
           <Panel>
             <div
@@ -287,10 +287,10 @@ exports[`Should render component with failure state 1`] = `
                           <span
                             className="mr-3"
                           >
-                            Completed Items
+                            completed-items
                           </span>
                           <Tooltip
-                            message="Completed workflow items are counted and categorized by their SLA status."
+                            message="completed-items-description"
                             position="right"
                             width="288"
                           >

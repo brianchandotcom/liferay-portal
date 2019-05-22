@@ -87,7 +87,7 @@ exports[`Should remove a item 1`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -266,8 +266,8 @@ exports[`Should remove a item 1`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >
@@ -500,7 +500,7 @@ exports[`Should render toast with SLA saved message 1`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -679,8 +679,8 @@ exports[`Should render toast with SLA saved message 1`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >
@@ -791,7 +791,7 @@ exports[`Should render toast with SLA updated message 1`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -970,8 +970,8 @@ exports[`Should render toast with SLA updated message 1`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >
@@ -1082,7 +1082,7 @@ exports[`Should test props change 1`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -1261,8 +1261,8 @@ exports[`Should test props change 1`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >

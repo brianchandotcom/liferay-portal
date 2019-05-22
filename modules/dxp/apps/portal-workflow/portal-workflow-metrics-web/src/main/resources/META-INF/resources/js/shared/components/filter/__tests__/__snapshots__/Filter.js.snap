@@ -38,7 +38,7 @@ exports[`Should render component 1`] = `
         <span
           className="disabled dropdown-item"
         >
-          No results were found.
+          no-results-were-found
         </span>
       </li>
     </ul>
@@ -93,7 +93,7 @@ exports[`Should render component with search wrapper 1`] = `
             <input
               className="form-control input-group-inset input-group-inset-after"
               onChange={[Function]}
-              placeholder="Search for..."
+              placeholder="search-for"
               type="text"
             />
             <span

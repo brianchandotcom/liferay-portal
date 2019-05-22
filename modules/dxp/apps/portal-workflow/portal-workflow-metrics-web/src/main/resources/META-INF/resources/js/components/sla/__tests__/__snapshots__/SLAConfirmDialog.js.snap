@@ -82,7 +82,7 @@ exports[`Should cancel dialog 1`] = `
                 className="modal-body"
               >
                 <p>
-                  Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?
+                  deleting-slas-will-reflect-on-report-data
                 </p>
               </div>
               <div
@@ -102,7 +102,7 @@ exports[`Should cancel dialog 1`] = `
                         onClick={[Function]}
                         type="button"
                       >
-                        Cancel
+                        cancel
                       </button>
                     </div>
                     <div
@@ -216,7 +216,7 @@ exports[`Should cancel dialog through SLA List 1`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -395,8 +395,8 @@ exports[`Should cancel dialog through SLA List 1`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >
@@ -507,7 +507,7 @@ exports[`Should cancel dialog through SLA List 2`] = `
                 className="nav-item autofit-col-expand autofit-float-end"
               >
                 <Tooltip
-                  message="New SLA"
+                  message="new-sla"
                   position="bottom"
                   width="85"
                 >
@@ -686,8 +686,8 @@ exports[`Should cancel dialog through SLA List 2`] = `
           className="container-fluid-1280"
         >
           <ListView
-            emptyMessageText="SLA allows to define and measure process performance."
-            emptyTitleText="No SLAs Yet"
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
             fetching={false}
             loading={true}
           >
@@ -793,7 +793,7 @@ exports[`Should remove item 1`] = `
                 className="modal-body"
               >
                 <p>
-                  Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?
+                  deleting-slas-will-reflect-on-report-data
                 </p>
               </div>
               <div
@@ -813,7 +813,7 @@ exports[`Should remove item 1`] = `
                         onClick={[Function]}
                         type="button"
                       >
-                        Cancel
+                        cancel
                       </button>
                     </div>
                     <div
@@ -856,7 +856,7 @@ exports[`Should render component 1`] = `
         className="modal-body"
       >
         <p>
-          Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?
+          deleting-slas-will-reflect-on-report-data
         </p>
       </div>
       <div
@@ -876,7 +876,7 @@ exports[`Should render component 1`] = `
                 onClick={[Function]}
                 type="button"
               >
-                Cancel
+                cancel
               </button>
             </div>
             <div

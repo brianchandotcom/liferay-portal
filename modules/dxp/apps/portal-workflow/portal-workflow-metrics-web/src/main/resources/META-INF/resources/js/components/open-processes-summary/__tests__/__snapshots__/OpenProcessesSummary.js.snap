@@ -13,7 +13,7 @@ exports[`Should render component 1`] = `
       <div
         className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold"
       >
-        Open Processes Summary
+        open-processes-summary
       </div>
       <div
         className="card-body"
@@ -37,7 +37,7 @@ exports[`Should render component 1`] = `
             <span
               className="regular-text semi-bold text-secondary"
             >
-              Total Open
+              total-open
             </span>
             <div
               className=""
@@ -55,7 +55,7 @@ exports[`Should render component 1`] = `
               <span
                 className="regular-text text-secondary"
               >
-                Items
+                items
               </span>
             </div>
           </div>
@@ -70,7 +70,7 @@ exports[`Should render component 1`] = `
             <span
               className="regular-text semi-bold text-secondary"
             >
-              On Time
+              on-time
             </span>
             <div
               className=""
@@ -88,7 +88,7 @@ exports[`Should render component 1`] = `
               <span
                 className="regular-text text-secondary"
               >
-                Items
+                items
               </span>
             </div>
           </div>
@@ -103,7 +103,7 @@ exports[`Should render component 1`] = `
             <span
               className="regular-text semi-bold text-secondary"
             >
-              Overdue
+              overdue
             </span>
             <div
               className=""
@@ -121,7 +121,7 @@ exports[`Should render component 1`] = `
               <span
                 className="regular-text text-secondary"
               >
-                Items
+                items
               </span>
             </div>
           </div>

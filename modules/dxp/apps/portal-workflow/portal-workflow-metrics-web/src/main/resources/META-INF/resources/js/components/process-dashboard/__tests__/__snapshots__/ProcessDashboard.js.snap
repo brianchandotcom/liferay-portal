@@ -123,7 +123,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -173,7 +173,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -356,7 +356,7 @@ exports[`Should render component with completed tab activated 1`] = `
                                       href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                                       onClick={[Function]}
                                     >
-                                      SLA Settings
+                                      sla-settings
                                     </a>
                                   </Link>
                                 </ChildLinkWrapper>
@@ -779,7 +779,7 @@ exports[`Should render component with default tab activated 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -829,7 +829,7 @@ exports[`Should render component with default tab activated 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -1012,7 +1012,7 @@ exports[`Should render component with default tab activated 1`] = `
                                       href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
                                       onClick={[Function]}
                                     >
-                                      SLA Settings
+                                      sla-settings
                                     </a>
                                   </Link>
                                 </ChildLinkWrapper>
@@ -1435,7 +1435,7 @@ exports[`Should render component with failure state 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -1485,7 +1485,7 @@ exports[`Should render component with failure state 1`] = `
                               class="dropdown-item"
                               href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -1668,7 +1668,7 @@ exports[`Should render component with failure state 1`] = `
                                       href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                                       onClick={[Function]}
                                     >
-                                      SLA Settings
+                                      sla-settings
                                     </a>
                                   </Link>
                                 </ChildLinkWrapper>
@@ -2048,9 +2048,9 @@ exports[`Should render dashboard route children 1`] = `
         query=""
       >
         <ProcessItemsCard
-          description="Pending workflow items are counted and categorized by their SLA status."
+          description="pending-items-description"
           processId={35315}
-          title="Pending Items"
+          title="pending-items"
         >
           <Panel>
             <div
@@ -2080,10 +2080,10 @@ exports[`Should render dashboard route children 1`] = `
                           <span
                             className="mr-3"
                           >
-                            Pending Items
+                            pending-items
                           </span>
                           <Tooltip
-                            message="Pending workflow items are counted and categorized by their SLA status."
+                            message="pending-items-description"
                             position="right"
                             width="288"
                           >
@@ -2163,10 +2163,10 @@ exports[`Should render dashboard route children 1`] = `
                       <span
                         className="mr-3"
                       >
-                        Workload by Step
+                        workload-by-step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
+                        message="workload-by-step-description"
                         position="right"
                         width="288"
                       >
@@ -2207,7 +2207,7 @@ exports[`Should render dashboard route children 1`] = `
                     className="border-0"
                     emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
-                    emptyMessageText="There are no pending items at the moment."
+                    emptyMessageText="there-are-no-pending-items-at-the-moment"
                     errorMessageText={null}
                     fetching={false}
                     hideAnimation={true}
@@ -2360,7 +2360,7 @@ exports[`Should render with blocked SLA 1`] = `
                               class="dropdown-item"
                               href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -2410,7 +2410,7 @@ exports[`Should render with blocked SLA 1`] = `
                               class="dropdown-item"
                               href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                             >
-                              SLA Settings
+                              sla-settings
                             </a>
                           </li>
                         </ul>
@@ -2593,7 +2593,7 @@ exports[`Should render with blocked SLA 1`] = `
                                       href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
                                       onClick={[Function]}
                                     >
-                                      SLA Settings
+                                      sla-settings
                                     </a>
                                   </Link>
                                 </ChildLinkWrapper>

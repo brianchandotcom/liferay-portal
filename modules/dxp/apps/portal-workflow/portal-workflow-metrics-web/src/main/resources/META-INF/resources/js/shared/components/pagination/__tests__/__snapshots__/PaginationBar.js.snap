@@ -77,7 +77,7 @@ exports[`Should render component 1`] = `
   <div
     className="pagination-results"
   >
-    Showing 1 to 5 of 22 entries.
+    showing-x-to-x-of-x-entries
   </div>
   <ul
     className="pagination pull-right"

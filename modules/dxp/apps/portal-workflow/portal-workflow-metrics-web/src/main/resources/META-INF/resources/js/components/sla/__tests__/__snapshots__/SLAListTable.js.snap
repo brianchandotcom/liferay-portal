@@ -17,7 +17,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          SLA Name
+          sla-name
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -27,7 +27,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Description
+          description
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -37,7 +37,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Status
+          status
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -47,7 +47,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Duration
+          duration
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -85,7 +85,7 @@ exports[`Should render component 1`] = `
         <td
           className=""
         >
-          Running
+          running
         </td>
         <td>
           
@@ -127,7 +127,7 @@ exports[`Should render component 1`] = `
                   href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                   onClick={[Function]}
                 >
-                  Edit
+                  edit
                 </a>
               </li>
               <li>
@@ -135,7 +135,7 @@ exports[`Should render component 1`] = `
                   className="dropdown-item"
                   onClick={[Function]}
                 >
-                  Delete
+                  delete
                 </button>
               </li>
             </ul>
@@ -164,7 +164,7 @@ exports[`Should render component 1`] = `
         <td
           className=""
         >
-          Running
+          running
         </td>
         <td>
           
@@ -206,7 +206,7 @@ exports[`Should render component 1`] = `
                   href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                   onClick={[Function]}
                 >
-                  Edit
+                  edit
                 </a>
               </li>
               <li>
@@ -214,7 +214,7 @@ exports[`Should render component 1`] = `
                   className="dropdown-item"
                   onClick={[Function]}
                 >
-                  Delete
+                  delete
                 </button>
               </li>
             </ul>
@@ -243,7 +243,7 @@ exports[`Should render component 1`] = `
         <td
           className=""
         >
-          Running
+          running
         </td>
         <td>
           
@@ -285,7 +285,7 @@ exports[`Should render component 1`] = `
                   href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                   onClick={[Function]}
                 >
-                  Edit
+                  edit
                 </a>
               </li>
               <li>
@@ -293,7 +293,7 @@ exports[`Should render component 1`] = `
                   className="dropdown-item"
                   onClick={[Function]}
                 >
-                  Delete
+                  delete
                 </button>
               </li>
             </ul>

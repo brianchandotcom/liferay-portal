@@ -24,7 +24,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          ID
+          id
         </th>
         <th
           className="table-cell-expand table-head-title"
@@ -34,7 +34,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Item Subject
+          item-subject
         </th>
         <th
           className="table-head-title"
@@ -44,7 +44,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Process Step
+          process-step
         </th>
         <th
           className="table-head-title"
@@ -54,7 +54,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Created By
+          created-by
         </th>
         <th
           className="pr-4 table-head-title text-right"
@@ -64,7 +64,7 @@ exports[`Should render component 1`] = `
             }
           }
         >
-          Creation Date
+          creation-date
         </th>
       </tr>
     </thead>

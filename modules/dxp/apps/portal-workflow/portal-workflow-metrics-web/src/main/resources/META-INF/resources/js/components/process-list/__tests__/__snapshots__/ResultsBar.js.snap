@@ -22,7 +22,7 @@ exports[`Should render component with one item 1`] = `
             <span
               className="text-truncate"
             >
-              1 Result for 
+              x-result-for-x
             </span>
           </span>
         </div>
@@ -39,7 +39,7 @@ exports[`Should render component with one item 1`] = `
             onClick={[Function]}
           >
             <span>
-              Clear All
+              clear-all
             </span>
           </a>
         </div>
@@ -71,7 +71,7 @@ exports[`Should render component with one list item 1`] = `
             <span
               className="text-truncate"
             >
-              5 Results for 
+              x-results-for-x
             </span>
           </span>
         </div>
@@ -88,7 +88,7 @@ exports[`Should render component with one list item 1`] = `
             onClick={[Function]}
           >
             <span>
-              Clear All
+              clear-all
             </span>
           </a>
         </div>

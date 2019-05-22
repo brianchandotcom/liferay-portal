@@ -98,10 +98,10 @@ exports[`Should component receive props 1`] = `
                       <span
                         className="mr-3"
                       >
-                        Workload by Step
+                        workload-by-step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
+                        message="workload-by-step-description"
                         position="right"
                         width="288"
                       >
@@ -142,7 +142,7 @@ exports[`Should component receive props 1`] = `
                     className="border-0"
                     emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
-                    emptyMessageText="There are no pending items at the moment."
+                    emptyMessageText="there-are-no-pending-items-at-the-moment"
                     errorMessageText={null}
                     fetching={false}
                     hideAnimation={true}
@@ -266,10 +266,10 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       <span
                         className="mr-3"
                       >
-                        Workload by Step
+                        workload-by-step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
+                        message="workload-by-step-description"
                         position="right"
                         width="288"
                       >
@@ -310,7 +310,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     className="border-0"
                     emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
-                    emptyMessageText="There are no pending items at the moment."
+                    emptyMessageText="there-are-no-pending-items-at-the-moment"
                     errorMessageText={null}
                     fetching={false}
                     hideAnimation={true}
@@ -438,10 +438,10 @@ exports[`Should render component 1`] = `
                       <span
                         className="mr-3"
                       >
-                        Workload by Step
+                        workload-by-step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
+                        message="workload-by-step-description"
                         position="right"
                         width="288"
                       >
@@ -482,7 +482,7 @@ exports[`Should render component 1`] = `
                     className="border-0"
                     emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
-                    emptyMessageText="There are no pending items at the moment."
+                    emptyMessageText="there-are-no-pending-items-at-the-moment"
                     errorMessageText={null}
                     fetching={false}
                     hideAnimation={true}
@@ -527,7 +527,7 @@ exports[`Should render component with empty data 1`] = `
           <span
             className="mr-3"
           >
-            Workload by Step
+            workload-by-step
           </span>
           <span
             className="workflow-tooltip"
@@ -585,7 +585,7 @@ exports[`Should render component with error state 1`] = `
           <span
             className="mr-3"
           >
-            Workload by Step
+            workload-by-step
           </span>
           <span
             className="workflow-tooltip"

@@ -26,7 +26,7 @@ exports[`Should render component 1`] = `
                 className="form-control input-group-inset input-group-inset-after"
                 disabled={false}
                 onChange={[Function]}
-                placeholder="Search for..."
+                placeholder="search-for"
                 type="text"
                 value=""
               />
@@ -99,7 +99,7 @@ exports[`Should render component with 4 records 1`] = `
                 className="form-control input-group-inset input-group-inset-after"
                 disabled={false}
                 onChange={[Function]}
-                placeholder="Search for..."
+                placeholder="search-for"
                 type="text"
                 value=""
               />
@@ -172,7 +172,7 @@ exports[`Should render component with 10 records 1`] = `
                 className="form-control input-group-inset input-group-inset-after"
                 disabled={false}
                 onChange={[Function]}
-                placeholder="Search for..."
+                placeholder="search-for"
                 type="text"
                 value=""
               />

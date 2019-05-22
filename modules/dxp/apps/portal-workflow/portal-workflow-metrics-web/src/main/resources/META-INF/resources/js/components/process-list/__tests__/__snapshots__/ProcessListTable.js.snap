@@ -24,10 +24,10 @@ exports[`Should render component 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="Process Name"
-              title="Process Name"
+              data-title="process-name"
+              title="process-name"
             >
-              Process Name
+              process-name
             </span>
             <span
               className="inline-item inline-item-after"
@@ -60,10 +60,10 @@ exports[`Should render component 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="Overdue"
-              title="Overdue"
+              data-title="overdue"
+              title="overdue"
             >
-              Overdue
+              overdue
             </span>
             <span
               className="inline-item inline-item-after"
@@ -96,10 +96,10 @@ exports[`Should render component 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="On Time"
-              title="On Time"
+              data-title="on-time"
+              title="on-time"
             >
-              On Time
+              on-time
             </span>
             <span
               className="inline-item inline-item-after"
@@ -132,10 +132,10 @@ exports[`Should render component 1`] = `
           >
             <span
               className="text-truncate title"
-              data-title="Total Pending"
-              title="Total Pending"
+              data-title="total-pending"
+              title="total-pending"
             >
-              Total Pending
+              total-pending
             </span>
             <span
               className="inline-item inline-item-after"

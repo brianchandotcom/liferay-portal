@@ -39,7 +39,7 @@ exports[`Should render Item component 1`] = `
   <span
     className="small"
   >
-    (Resolved Overdue)
+    (resolved-overdue)
   </span>
 </p>
 `;
@@ -83,7 +83,7 @@ exports[`Should render Item component onTime 1`] = `
   <span
     className="small"
   >
-    (Resolved Overdue)
+    (resolved-overdue)
   </span>
 </p>
 `;
@@ -127,7 +127,7 @@ exports[`Should render Item component status Paused 1`] = `
   <span
     className="small"
   >
-    (SLA Paused)
+    (sla-paused)
   </span>
 </p>
 `;
@@ -171,7 +171,7 @@ exports[`Should render Item component status Running 1`] = `
   <span
     className="small"
   >
-    May 20, 5:09 PM (1d 02h 43min Left)
+    May 20, 5:09 PM (1d 02h 43min left)
   </span>
 </p>
 `;
@@ -215,7 +215,7 @@ exports[`Should render Item component status Running and overdue 1`] = `
   <span
     className="small"
   >
-    May 20, 5:09 PM (1d 02h 43min Overdue)
+    May 20, 5:09 PM (1d 02h 43min overdue)
   </span>
 </p>
 `;
@@ -259,7 +259,7 @@ exports[`Should render Item component status Stopped 1`] = `
   <span
     className="small"
   >
-    (Resolved on Time)
+    (resolved-on-time)
   </span>
 </p>
 `;
@@ -303,7 +303,7 @@ exports[`Should render Item component status Stopped overdue 1`] = `
   <span
     className="small"
   >
-    (Resolved Overdue)
+    (resolved-overdue)
   </span>
 </p>
 `;
@@ -375,7 +375,7 @@ exports[`Should render component 1`] = `
               role="presentation"
             />
           </span>
-          Item #undefined
+          item #undefined
         </div>
         <button
           aria-labelledby="Close"
@@ -402,19 +402,19 @@ exports[`Should render component 1`] = `
         <h4
           className=" font-weight-medium mb-4"
         >
-          Due Date by SLA
+          due-date-by-sla
         </h4>
         <p>
           <span
             className="font-weight-medium text-muted"
           >
-            No SLA records for this item.
+            no-sla-records-for-this-item
           </span>
         </p>
         <h4
           className="mt-5 font-weight-medium mb-4"
         >
-          Process Details
+          process-details
         </h4>
         <p
           className="row"
@@ -422,7 +422,7 @@ exports[`Should render component 1`] = `
           <span
             className="col-2 font-weight-medium small text-secondary"
           >
-            Process Status 
+            process-status 
           </span>
           <span
             className="col small"
@@ -434,7 +434,7 @@ exports[`Should render component 1`] = `
           <span
             className="col-2 font-weight-medium small text-secondary"
           >
-            Created By 
+            created-by 
           </span>
           <span
             className="col small"
@@ -446,7 +446,7 @@ exports[`Should render component 1`] = `
           <span
             className="col-2 font-weight-medium small text-secondary"
           >
-            Asset Type 
+            asset-type 
           </span>
           <span
             className="col small"
@@ -458,7 +458,7 @@ exports[`Should render component 1`] = `
           <span
             className="col-2 font-weight-medium small text-secondary"
           >
-            Asset Title 
+            asset-title 
           </span>
           <span
             className="col small"
@@ -470,7 +470,7 @@ exports[`Should render component 1`] = `
           <span
             className="col-2 font-weight-medium small text-secondary"
           >
-            Current Step 
+            current-step 
           </span>
           <span
             className="col small"
@@ -483,7 +483,7 @@ exports[`Should render component 1`] = `
           href="/group/control_panel/manage/-/workflow_instance/view/undefined"
           target="_blank"
         >
-          Go to Submission Page
+          go-to-submission-page
           <span
             className="inline-item inline-item-after"
           >
@@ -625,7 +625,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -657,14 +657,14 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -673,11 +673,11 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -685,7 +685,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -693,7 +693,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -701,7 +701,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -709,7 +709,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -717,7 +717,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -725,7 +725,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -733,7 +733,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -741,7 +741,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -750,7 +750,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -762,7 +762,7 @@ exports[`Should test componentWillReceiveProps 1`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >
@@ -912,7 +912,7 @@ exports[`Should test render with status OnTime 1`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -944,14 +944,14 @@ exports[`Should test render with status OnTime 1`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -960,11 +960,11 @@ exports[`Should test render with status OnTime 1`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -972,7 +972,7 @@ exports[`Should test render with status OnTime 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -980,7 +980,7 @@ exports[`Should test render with status OnTime 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -988,7 +988,7 @@ exports[`Should test render with status OnTime 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -996,7 +996,7 @@ exports[`Should test render with status OnTime 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -1004,7 +1004,7 @@ exports[`Should test render with status OnTime 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -1012,7 +1012,7 @@ exports[`Should test render with status OnTime 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -1020,7 +1020,7 @@ exports[`Should test render with status OnTime 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -1028,7 +1028,7 @@ exports[`Should test render with status OnTime 1`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -1037,7 +1037,7 @@ exports[`Should test render with status OnTime 1`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -1049,7 +1049,7 @@ exports[`Should test render with status OnTime 1`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >
@@ -1199,7 +1199,7 @@ exports[`Should test render with status OnTime 2`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -1231,14 +1231,14 @@ exports[`Should test render with status OnTime 2`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -1247,11 +1247,11 @@ exports[`Should test render with status OnTime 2`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -1259,7 +1259,7 @@ exports[`Should test render with status OnTime 2`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -1267,7 +1267,7 @@ exports[`Should test render with status OnTime 2`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -1275,7 +1275,7 @@ exports[`Should test render with status OnTime 2`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -1283,7 +1283,7 @@ exports[`Should test render with status OnTime 2`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -1291,7 +1291,7 @@ exports[`Should test render with status OnTime 2`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -1299,7 +1299,7 @@ exports[`Should test render with status OnTime 2`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -1307,7 +1307,7 @@ exports[`Should test render with status OnTime 2`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -1315,7 +1315,7 @@ exports[`Should test render with status OnTime 2`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -1324,7 +1324,7 @@ exports[`Should test render with status OnTime 2`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -1336,7 +1336,7 @@ exports[`Should test render with status OnTime 2`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >
@@ -1486,7 +1486,7 @@ exports[`Should test render with status OnTime 3`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -1518,14 +1518,14 @@ exports[`Should test render with status OnTime 3`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -1534,11 +1534,11 @@ exports[`Should test render with status OnTime 3`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -1546,7 +1546,7 @@ exports[`Should test render with status OnTime 3`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -1554,7 +1554,7 @@ exports[`Should test render with status OnTime 3`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -1562,7 +1562,7 @@ exports[`Should test render with status OnTime 3`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -1570,7 +1570,7 @@ exports[`Should test render with status OnTime 3`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -1578,7 +1578,7 @@ exports[`Should test render with status OnTime 3`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -1586,7 +1586,7 @@ exports[`Should test render with status OnTime 3`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -1594,7 +1594,7 @@ exports[`Should test render with status OnTime 3`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -1602,7 +1602,7 @@ exports[`Should test render with status OnTime 3`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -1611,7 +1611,7 @@ exports[`Should test render with status OnTime 3`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -1623,7 +1623,7 @@ exports[`Should test render with status OnTime 3`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >
@@ -1773,7 +1773,7 @@ exports[`Should test render with status OnTime 4`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -1805,14 +1805,14 @@ exports[`Should test render with status OnTime 4`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -1821,11 +1821,11 @@ exports[`Should test render with status OnTime 4`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -1833,7 +1833,7 @@ exports[`Should test render with status OnTime 4`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -1841,7 +1841,7 @@ exports[`Should test render with status OnTime 4`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -1849,7 +1849,7 @@ exports[`Should test render with status OnTime 4`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -1857,7 +1857,7 @@ exports[`Should test render with status OnTime 4`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -1865,7 +1865,7 @@ exports[`Should test render with status OnTime 4`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -1873,7 +1873,7 @@ exports[`Should test render with status OnTime 4`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -1881,7 +1881,7 @@ exports[`Should test render with status OnTime 4`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -1889,7 +1889,7 @@ exports[`Should test render with status OnTime 4`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -1898,7 +1898,7 @@ exports[`Should test render with status OnTime 4`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -1910,7 +1910,7 @@ exports[`Should test render with status OnTime 4`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >
@@ -2060,7 +2060,7 @@ exports[`Should test render with status OnTime 5`] = `
                       />
                     </Icon>
                   </span>
-                  Item #123
+                  item #123
                 </div>
                 <button
                   aria-labelledby="Close"
@@ -2092,14 +2092,14 @@ exports[`Should test render with status OnTime 5`] = `
                   <h4
                     className=" font-weight-medium mb-4"
                   >
-                    Due Date by SLA
+                    due-date-by-sla
                   </h4>
                 </Component>
                 <p>
                   <span
                     className="font-weight-medium text-muted"
                   >
-                    No SLA records for this item.
+                    no-sla-records-for-this-item
                   </span>
                 </p>
                 <Component
@@ -2108,11 +2108,11 @@ exports[`Should test render with status OnTime 5`] = `
                   <h4
                     className="mt-5 font-weight-medium mb-4"
                   >
-                    Process Details
+                    process-details
                   </h4>
                 </Component>
                 <Component
-                  description="Process Status"
+                  description="process-status"
                 >
                   <p
                     className="row"
@@ -2120,7 +2120,7 @@ exports[`Should test render with status OnTime 5`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Process Status 
+                      process-status 
                     </span>
                     <span
                       className="col small"
@@ -2128,7 +2128,7 @@ exports[`Should test render with status OnTime 5`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Created By"
+                  description="created-by"
                 >
                   <p
                     className="row"
@@ -2136,7 +2136,7 @@ exports[`Should test render with status OnTime 5`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Created By 
+                      created-by 
                     </span>
                     <span
                       className="col small"
@@ -2144,7 +2144,7 @@ exports[`Should test render with status OnTime 5`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Type"
+                  description="asset-type"
                 >
                   <p
                     className="row"
@@ -2152,7 +2152,7 @@ exports[`Should test render with status OnTime 5`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Type 
+                      asset-type 
                     </span>
                     <span
                       className="col small"
@@ -2160,7 +2160,7 @@ exports[`Should test render with status OnTime 5`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Asset Title"
+                  description="asset-title"
                 >
                   <p
                     className="row"
@@ -2168,7 +2168,7 @@ exports[`Should test render with status OnTime 5`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Asset Title 
+                      asset-title 
                     </span>
                     <span
                       className="col small"
@@ -2176,7 +2176,7 @@ exports[`Should test render with status OnTime 5`] = `
                   </p>
                 </Component>
                 <Component
-                  description="Current Step"
+                  description="current-step"
                   detail=""
                 >
                   <p
@@ -2185,7 +2185,7 @@ exports[`Should test render with status OnTime 5`] = `
                     <span
                       className="col-2 font-weight-medium small text-secondary"
                     >
-                      Current Step 
+                      current-step 
                     </span>
                     <span
                       className="col small"
@@ -2197,7 +2197,7 @@ exports[`Should test render with status OnTime 5`] = `
                   href="/group/control_panel/manage/-/workflow_instance/view/123"
                   target="_blank"
                 >
-                  Go to Submission Page
+                  go-to-submission-page
                   <span
                     className="inline-item inline-item-after"
                   >

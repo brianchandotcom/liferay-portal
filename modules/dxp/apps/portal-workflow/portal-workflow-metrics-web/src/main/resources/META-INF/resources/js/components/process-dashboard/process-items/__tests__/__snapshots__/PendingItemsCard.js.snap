@@ -77,9 +77,9 @@ exports[`Should render component 1`] = `
         processId="35315"
       >
         <ProcessItemsCard
-          description="Pending workflow items are counted and categorized by their SLA status."
+          description="pending-items-description"
           processId="35315"
-          title="Pending Items"
+          title="pending-items"
         >
           <Panel>
             <div
@@ -109,10 +109,10 @@ exports[`Should render component 1`] = `
                           <span
                             className="mr-3"
                           >
-                            Pending Items
+                            pending-items
                           </span>
                           <Tooltip
-                            message="Pending workflow items are counted and categorized by their SLA status."
+                            message="pending-items-description"
                             position="right"
                             width="288"
                           >
@@ -249,9 +249,9 @@ exports[`Should render component with failure state 1`] = `
         processId="35315"
       >
         <ProcessItemsCard
-          description="Pending workflow items are counted and categorized by their SLA status."
+          description="pending-items-description"
           processId="35315"
-          title="Pending Items"
+          title="pending-items"
         >
           <Panel>
             <div
@@ -281,10 +281,10 @@ exports[`Should render component with failure state 1`] = `
                           <span
                             className="mr-3"
                           >
-                            Pending Items
+                            pending-items
                           </span>
                           <Tooltip
-                            message="Pending workflow items are counted and categorized by their SLA status."
+                            message="pending-items-description"
                             position="right"
                             width="288"
                           >

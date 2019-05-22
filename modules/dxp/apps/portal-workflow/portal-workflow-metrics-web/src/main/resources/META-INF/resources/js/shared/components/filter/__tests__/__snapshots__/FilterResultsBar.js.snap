@@ -22,7 +22,7 @@ exports[`Should render component 1`] = `
             <span
               className="text-truncate"
             >
-              2 Results for 
+              x-results-for-x
             </span>
           </span>
         </div>
@@ -87,7 +87,7 @@ exports[`Should render component 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Clear All
+            clear-all
           </button>
         </div>
       </li>

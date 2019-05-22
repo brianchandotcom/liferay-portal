@@ -4,7 +4,7 @@ exports[`Should render component 1`] = `
 <div
   className="pagination-results"
 >
-  Showing 1 to 10 of 12 entries.
+  showing-x-to-x-of-x-entries
 </div>
 `;
 
@@ -12,6 +12,6 @@ exports[`Should render component to second page 1`] = `
 <div
   className="pagination-results"
 >
-  Showing 11 to 12 of 12 entries.
+  showing-x-to-x-of-x-entries
 </div>
 `;

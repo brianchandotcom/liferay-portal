@@ -30,8 +30,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTPortalConfiguration {
 
 	@Meta.AD(
-		deflt = "Administrator", name = "administrator-roles", required = false
+		deflt = "Administrator", name = "administrator-role-names",
+		required = false
 	)
-	public String[] administratorRoles();
+	public String[] administratorRoleNames();
 
 }

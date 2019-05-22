@@ -117,10 +117,12 @@ public class ChangeListsPortlet extends MVCPortlet {
 			return;
 		}
 
-		String[] administratorRoles =
-			_ctPortalConfiguration.administratorRoles();
+		String[] administratorRoleNames =
+			_ctPortalConfiguration.administratorRoleNames();
 
-		if ((administratorRoles == null) || (administratorRoles.length == 0)) {
+		if ((administratorRoleNames == null) ||
+			(administratorRoleNames.length == 0)) {
+
 			if (permissionChecker.isOmniadmin()) {
 				return;
 			}
@@ -129,7 +131,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 		UserBag userBag = permissionChecker.getUserBag();
 
 		for (Role role : userBag.getRoles()) {
-			if (ArrayUtil.contains(administratorRoles, role.getName())) {
+			if (ArrayUtil.contains(administratorRoleNames, role.getName())) {
 				return;
 			}
 		}

@@ -21,7 +21,6 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
@@ -194,43 +193,6 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
-	private static JSONObject _addPropertiesAttributes(
-		JSONObject attributesJSONObject, Map<String, Properties> propertiesMap,
-		String... keys) {
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			JSONObject propertiesAttributesJSONObject = new JSONObjectImpl();
-
-			Properties properties = entry.getValue();
-
-			for (Object obj : properties.keySet()) {
-				String key = (String)obj;
-
-				if (!ArrayUtil.contains(keys, key)) {
-					continue;
-				}
-
-				JSONArray jsonArray = new JSONArrayImpl();
-
-				for (String value :
-						StringUtil.split(
-							properties.getProperty(key), StringPool.COMMA)) {
-
-					jsonArray.put(value);
-				}
-
-				propertiesAttributesJSONObject.put(key, jsonArray);
-			}
-
-			if (propertiesAttributesJSONObject.length() != 0) {
-				attributesJSONObject.put(
-					entry.getKey(), propertiesAttributesJSONObject);
-			}
-		}
-
-		return attributesJSONObject;
-	}
-
 	private static JSONObject _getAttributesJSONObject(
 		Map<String, Properties> propertiesMap, String checkName,
 		SourceCheckConfiguration sourceCheckConfiguration) {
@@ -246,7 +208,7 @@ public class SourceChecksUtil {
 				configurationAttributesJSONObject);
 		}
 
-		attributesJSONObject = _addPropertiesAttributes(
+		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap,
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
 

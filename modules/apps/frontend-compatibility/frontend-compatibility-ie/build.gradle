@@ -7,6 +7,7 @@ configurations {
 	arrayFrom
 	arrayIncludes
 	arrayOf
+	classList
 	fetch
 	formData
 	objectAssign
@@ -24,6 +25,7 @@ task buildArrayFindIndex(type: Copy)
 task buildArrayFrom(type: Copy)
 task buildArrayIncludes(type: Copy)
 task buildArrayOf(type: Copy)
+task buildClassList(type: Copy)
 task buildFetch(type: Copy)
 task buildFormData(type: Copy)
 task buildObjectAssign(type: Copy)
@@ -127,6 +129,22 @@ buildArrayOf {
 
 	rename {
 		it.replace "array-of", "array.of"
+	}
+}
+
+buildClassList {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.arrayOf.singleFile)
+	}
+
+	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/Element.prototype.classList.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "Element.prototype.classList", "element.classlist"
 	}
 }
 
@@ -277,6 +295,7 @@ classes {
 	dependsOn buildArrayFrom
 	dependsOn buildArrayIncludes
 	dependsOn buildArrayOf
+	dependsOn buildClassList
 	dependsOn buildFetch
 	dependsOn buildFormData
 	dependsOn buildObjectAssign
@@ -300,6 +319,8 @@ dependencies {
 	arrayIncludes group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
 
 	arrayOf group: "org.webjars.npm", name: "array.of", transitive: false, version: "0.1.1"
+
+	classList group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

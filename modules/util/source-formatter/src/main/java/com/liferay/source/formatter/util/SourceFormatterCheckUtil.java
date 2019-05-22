@@ -1,0 +1,206 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.util;
+
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.source.formatter.checks.util.SourceUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Hugo Huijser
+ */
+public class SourceFormatterCheckUtil {
+
+	public static String getJSONObjectValue(
+		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
+		String defaultValue, String absolutePath, String baseDirName) {
+
+		if (jsonObject == null) {
+			return defaultValue;
+		}
+
+		String value = cachedValuesMap.get(key);
+
+		if (value != null) {
+			return value;
+		}
+
+		value = cachedValuesMap.get(absolutePath + ":" + key);
+
+		if (value != null) {
+			return value;
+		}
+
+		String closestPropertiesFileLocation = null;
+		boolean hasSubdirectoryValue = false;
+
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			String curValue = _getJSONObjectValue(
+				jsonObject.getJSONObject(fileLocation), key);
+
+			if (curValue == null) {
+				continue;
+			}
+
+			if (fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				if (value == null) {
+					value = curValue;
+				}
+
+				continue;
+			}
+
+			String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+				baseDirName);
+
+			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+				hasSubdirectoryValue = true;
+			}
+
+			if (!absolutePath.startsWith(fileLocation) &&
+				!fileLocation.equals(baseDirNameAbsolutePath)) {
+
+				continue;
+			}
+
+			if ((closestPropertiesFileLocation == null) ||
+				(closestPropertiesFileLocation.length() <
+					fileLocation.length())) {
+
+				value = curValue;
+
+				closestPropertiesFileLocation = fileLocation;
+			}
+		}
+
+		if (value == null) {
+			value = defaultValue;
+		}
+
+		cachedValuesMap.put(absolutePath + ":" + key, value);
+
+		if (!hasSubdirectoryValue) {
+			cachedValuesMap.put(key, value);
+		}
+
+		return value;
+	}
+
+	public static List<String> getJSONObjectValues(
+		JSONObject jsonObject, String key,
+		Map<String, List<String>> cachedValuesMap, String absolutePath,
+		String baseDirName) {
+
+		if (jsonObject == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> values = cachedValuesMap.get(key);
+
+		if (values != null) {
+			return values;
+		}
+
+		values = cachedValuesMap.get(absolutePath + ":" + key);
+
+		if (values != null) {
+			return values;
+		}
+
+		values = new ArrayList<>();
+
+		boolean hasSubdirectoryValues = false;
+
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			List<String> curValues = _getJSONObjectValues(
+				jsonObject.getJSONObject(fileLocation), key);
+
+			if (curValues.isEmpty()) {
+				continue;
+			}
+
+			if (!fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+					baseDirName);
+
+				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+					hasSubdirectoryValues = true;
+				}
+
+				if (!absolutePath.startsWith(fileLocation)) {
+					continue;
+				}
+			}
+
+			values.addAll(curValues);
+		}
+
+		if (!hasSubdirectoryValues) {
+			cachedValuesMap.put(key, values);
+		}
+		else {
+			cachedValuesMap.put(absolutePath + ":" + key, values);
+		}
+
+		return values;
+	}
+
+	private static String _getJSONObjectValue(
+		JSONObject jsonObject, String key) {
+
+		JSONArray jsonArray = jsonObject.getJSONArray(key);
+
+		if ((jsonArray == null) || (jsonArray.length() != 1)) {
+			return null;
+		}
+
+		return jsonArray.getString(0);
+	}
+
+	private static List<String> _getJSONObjectValues(
+		JSONObject jsonObject, String key) {
+
+		List<String> values = new ArrayList<>();
+
+		JSONArray jsonArray = jsonObject.getJSONArray(key);
+
+		if (jsonArray != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				values.add(jsonArray.getString(i));
+			}
+		}
+
+		return values;
+	}
+
+}

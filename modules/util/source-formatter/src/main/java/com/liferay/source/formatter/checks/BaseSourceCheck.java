@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,6 +31,7 @@ import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
@@ -41,9 +41,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -195,7 +193,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected String getAttributeValue(
 		String attributeKey, String defaultValue, String absolutePath) {
 
-		return _getJSONObjectValue(
+		return SourceFormatterCheckUtil.getJSONObjectValue(
 			_attributesJSONObject, _attributeValueMap, attributeKey,
 			defaultValue, absolutePath, _baseDirName);
 	}
@@ -203,7 +201,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected List<String> getAttributeValues(
 		String attributeKey, String absolutePath) {
 
-		return _getJSONObjectValues(
+		return SourceFormatterCheckUtil.getJSONObjectValues(
 			_attributesJSONObject, attributeKey, _attributeValuesMap,
 			absolutePath, _baseDirName);
 	}
@@ -694,178 +692,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	private String _getJSONObjectValue(
-		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
-		String defaultValue, String absolutePath, String baseDirName) {
-
-		if (jsonObject == null) {
-			return defaultValue;
-		}
-
-		String value = cachedValuesMap.get(key);
-
-		if (value != null) {
-			return value;
-		}
-
-		value = cachedValuesMap.get(absolutePath + ":" + key);
-
-		if (value != null) {
-			return value;
-		}
-
-		String closestPropertiesFileLocation = null;
-		boolean hasSubdirectoryValue = false;
-
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String fileLocation = keys.next();
-
-			String curValue = _getJSONObjectValue(
-				jsonObject.getJSONObject(fileLocation), key);
-
-			if (curValue == null) {
-				continue;
-			}
-
-			if (fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
-				if (value == null) {
-					value = curValue;
-				}
-
-				continue;
-			}
-
-			String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
-				baseDirName);
-
-			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-				hasSubdirectoryValue = true;
-			}
-
-			if (!absolutePath.startsWith(fileLocation) &&
-				!fileLocation.equals(baseDirNameAbsolutePath)) {
-
-				continue;
-			}
-
-			if ((closestPropertiesFileLocation == null) ||
-				(closestPropertiesFileLocation.length() <
-					fileLocation.length())) {
-
-				value = curValue;
-
-				closestPropertiesFileLocation = fileLocation;
-			}
-		}
-
-		if (value == null) {
-			value = defaultValue;
-		}
-
-		cachedValuesMap.put(absolutePath + ":" + key, value);
-
-		if (!hasSubdirectoryValue) {
-			cachedValuesMap.put(key, value);
-		}
-
-		return value;
-	}
-
-	private String _getJSONObjectValue(JSONObject jsonObject, String key) {
-		JSONArray jsonArray = jsonObject.getJSONArray(key);
-
-		if ((jsonArray == null) || (jsonArray.length() != 1)) {
-			return null;
-		}
-
-		return jsonArray.getString(0);
-	}
-
-	private List<String> _getJSONObjectValues(
-		JSONObject jsonObject, String key) {
-
-		List<String> values = new ArrayList<>();
-
-		JSONArray jsonArray = jsonObject.getJSONArray(key);
-
-		if (jsonArray != null) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				values.add(jsonArray.getString(i));
-			}
-		}
-
-		return values;
-	}
-
-	private List<String> _getJSONObjectValues(
-		JSONObject jsonObject, String key,
-		Map<String, List<String>> cachedValuesMap, String absolutePath,
-		String baseDirName) {
-
-		if (jsonObject == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> values = cachedValuesMap.get(key);
-
-		if (values != null) {
-			return values;
-		}
-
-		values = cachedValuesMap.get(absolutePath + ":" + key);
-
-		if (values != null) {
-			return values;
-		}
-
-		values = new ArrayList<>();
-
-		boolean hasSubdirectoryValues = false;
-
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String fileLocation = keys.next();
-
-			List<String> curValues = _getJSONObjectValues(
-				jsonObject.getJSONObject(fileLocation), key);
-
-			if (curValues.isEmpty()) {
-				continue;
-			}
-
-			if (!fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
-				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
-					baseDirName);
-
-				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-					hasSubdirectoryValues = true;
-				}
-
-				if (!absolutePath.startsWith(fileLocation)) {
-					continue;
-				}
-			}
-
-			values.addAll(curValues);
-		}
-
-		if (!hasSubdirectoryValues) {
-			cachedValuesMap.put(key, values);
-		}
-		else {
-			cachedValuesMap.put(absolutePath + ":" + key, values);
-		}
-
-		return values;
-	}
-
 	private URL _getPortalGitURL(String fileName, String portalBranchName) {
 		if (Validator.isNull(portalBranchName)) {
 			return null;
@@ -885,7 +711,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private boolean _isExcludedPath(
 		String key, String path, int lineNumber, String parameter) {
 
-		List<String> excludes = _getJSONObjectValues(
+		List<String> excludes = SourceFormatterCheckUtil.getJSONObjectValues(
 			_excludesJSONObject, key, _excludesValuesMap, path, _baseDirName);
 
 		if (ListUtil.isEmpty(excludes)) {

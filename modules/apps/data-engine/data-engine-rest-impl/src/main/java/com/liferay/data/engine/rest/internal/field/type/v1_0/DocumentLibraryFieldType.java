@@ -15,9 +15,9 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
+import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 import com.liferay.data.engine.spi.field.type.BaseFieldType;
 import com.liferay.data.engine.spi.field.type.FieldType;
-import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

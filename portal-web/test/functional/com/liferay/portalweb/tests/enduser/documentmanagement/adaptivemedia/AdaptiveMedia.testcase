@@ -729,8 +729,7 @@ definition {
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Low Resolution",
-			imageState = "Disabled",
-			percentAdapted = "100");
+			imageState = "Disabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

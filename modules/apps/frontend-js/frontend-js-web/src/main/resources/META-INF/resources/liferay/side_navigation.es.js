@@ -559,7 +559,8 @@
 				}
 
 				if (instance.mobile) {
-					instance._focusElement($menu);
+					// ios 8 fixed element disappears when trying to scroll
+					$menu.focus();
 				}
 			});
 
@@ -635,13 +636,6 @@
 			instance._onClickTrigger();
 
 			instance._onClickSidenavClose();
-		},
-
-		_focusElement: function($el) {
-
-			// ios 8 fixed element disappears when trying to scroll
-
-			$el.focus();
 		},
 
 		_getSidenavWidth: function() {

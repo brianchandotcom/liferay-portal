@@ -7,7 +7,7 @@ import {
 } from '../slaFormUtil';
 
 test('Should test duration', () => {
-	const invalidKey = 'A duration time is required.';
+	const invalidKey = 'a-duration-time-is-required';
 
 	expect(validateDuration('1', '2')).toBe(undefined);
 	expect(validateDuration('', '')).toBe(invalidKey);
@@ -22,14 +22,14 @@ test('Should test errors', () => {
 });
 
 test('Should test hours', () => {
-	const invalidKey = 'Value must be an hour below 23:59.';
+	const invalidKey = 'value-must-be-an-hour-below';
 
 	expect(validateHours('12:45')).toBe(undefined);
 	expect(validateHours('44:45')).toBe(invalidKey);
 });
 
 test('Should test name', () => {
-	const invalidKey = 'A name is required.';
+	const invalidKey = 'a-name-is-required';
 
 	expect(validateName('test')).toBe(undefined);
 	expect(validateName()).toBe(invalidKey);
@@ -38,7 +38,7 @@ test('Should test name', () => {
 });
 
 test('Should test nodes', () => {
-	const invalidKey = 'At least one parameter is required.';
+	const invalidKey = 'at-least-one-parameter-is-required';
 
 	expect(validateNodeKeys([])).toBe(invalidKey);
 	expect(validateNodeKeys(null)).toBe(invalidKey);

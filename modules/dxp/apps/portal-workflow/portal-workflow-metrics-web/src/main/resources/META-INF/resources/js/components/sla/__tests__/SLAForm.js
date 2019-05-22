@@ -122,7 +122,7 @@ test('Should display errors when input blur with invalid values', () => {
 
 	const { errors } = instance.state;
 
-	expect(errors.hours).toBe('Value must be an hour below 23:59.');
+	expect(errors.hours).toBe('value-must-be-an-hour-below');
 	expect(component).toMatchSnapshot();
 });
 
@@ -139,7 +139,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 
 	const { errors } = instance.state;
 
-	expect(errors.duration).toBe('A duration time is required.');
+	expect(errors.duration).toBe('a-duration-time-is-required');
 	expect(component).toMatchSnapshot();
 });
 
@@ -175,7 +175,7 @@ test('Should display error when submitting the form with empty name', () => {
 
 	const { errors } = instance.state;
 
-	expect(errors.name).toBe('A name is required.');
+	expect(errors.name).toBe('a-name-is-required');
 	expect(component).toMatchSnapshot();
 });
 

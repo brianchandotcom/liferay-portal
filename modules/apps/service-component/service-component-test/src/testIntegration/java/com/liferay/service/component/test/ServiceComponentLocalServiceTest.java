@@ -28,20 +28,16 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,6 +45,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alberto Chaparro
@@ -125,20 +126,25 @@ public class ServiceComponentLocalServiceTest {
 	public void testVerifyFromSchemaVersion000WithInitialDatabaseCreation()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			ServiceComponentLocalServiceTest.class);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"upgrade.bundle.symbolic.name", "ServiceComponentLocalServiceTest");
-		properties.put("upgrade.from.schema.version", "0.0.0");
-		properties.put("upgrade.initial.database.creation", true);
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		final DB db = DBManagerUtil.getDB();
 
 		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			registry.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db), properties);
+			bundleContext.registerService(
+				UpgradeStep.class, new TestUpgradeStep(db),
+				new HashMapDictionary<String, Object>() {
+					{
+						put(
+							"upgrade.bundle.symbolic.name",
+							"ServiceComponentLocalServiceTest");
+						put("upgrade.from.schema.version", "0.0.0");
+						put("upgrade.initial.database.creation", true);
+					}
+				});
 
 		String tableName = _TEST_TABLE;
 
@@ -168,20 +174,25 @@ public class ServiceComponentLocalServiceTest {
 	public void testVerifyFromSchemaVersion000WitouthInitialDatabaseCreation()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			ServiceComponentLocalServiceTest.class);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"upgrade.bundle.symbolic.name", "ServiceComponentLocalServiceTest");
-		properties.put("upgrade.from.schema.version", "0.0.0");
-		properties.put("upgrade.initial.database.creation", false);
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		final DB db = DBManagerUtil.getDB();
 
 		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			registry.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db), properties);
+			bundleContext.registerService(
+				UpgradeStep.class, new TestUpgradeStep(db),
+				new HashMapDictionary<String, Object>() {
+					{
+						put(
+							"upgrade.bundle.symbolic.name",
+							"ServiceComponentLocalServiceTest");
+						put("upgrade.from.schema.version", "0.0.0");
+						put("upgrade.initial.database.creation", false);
+					}
+				});
 
 		try {
 			ServiceComponentLocalServiceUtil.verifyDB();
@@ -207,20 +218,25 @@ public class ServiceComponentLocalServiceTest {
 	public void testVerifyFromSchemaVersion001WithInitialDatabaseCreation()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			ServiceComponentLocalServiceTest.class);
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"upgrade.bundle.symbolic.name", "ServiceComponentLocalServiceTest");
-		properties.put("upgrade.from.schema.version", "0.0.1");
-		properties.put("upgrade.initial.database.creation", true);
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		final DB db = DBManagerUtil.getDB();
 
 		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			registry.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db), properties);
+			bundleContext.registerService(
+				UpgradeStep.class, new TestUpgradeStep(db),
+				new HashMapDictionary<String, Object>() {
+					{
+						put(
+							"upgrade.bundle.symbolic.name",
+							"ServiceComponentLocalServiceTest");
+						put("upgrade.from.schema.version", "0.0.1");
+						put("upgrade.initial.database.creation", true);
+					}
+				});
 
 		try {
 			ServiceComponentLocalServiceUtil.verifyDB();

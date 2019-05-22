@@ -81,6 +81,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.math.BigDecimal;
 
 import java.sql.Blob;
@@ -1396,7 +1398,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	@Override
 	public ${entity.name} toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (${entity.name})ProxyUtil.newProxyInstance(_classLoader, _escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1739,9 +1741,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
-
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class, ModelWrapper.class};
+	private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(${entity.name}.class, ModelWrapper.class);
 
 	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;

@@ -46,12 +46,8 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
-import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
@@ -347,36 +343,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return new String[] {indexName};
 	}
 
-	protected com.liferay.portal.search.query.Query getQuery(
-		SearchRequest searchRequest) {
-
-		com.liferay.portal.search.query.Query query = searchRequest.getQuery();
-
-		List<ComplexQueryPart> complexQueryParts =
-			searchRequest.getComplexQueryParts();
-
-		if (complexQueryParts.isEmpty()) {
-			if (query != null) {
-				return query;
-			}
-
-			return null;
-		}
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (query != null) {
-			booleanQuery.addMustQueryClauses(query);
-		}
-
-		return _complexQueryBuilderFactory.builder(
-		).addParts(
-			complexQueryParts
-		).root(
-			booleanQuery
-		).build();
-	}
-
 	protected SearchRequest getSearchRequest(SearchContext searchContext) {
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
 			searchContext);
@@ -429,6 +395,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest,
 		Query query, SearchContext searchContext) {
 
+		baseSearchRequest.addComplexQueryParts(
+			searchRequest.getComplexQueryParts());
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
@@ -453,13 +421,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		for (Aggregation aggregation : map.values()) {
 			baseSearchRequest.addAggregation(aggregation);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setComplexQueryBuilderFactory(
-		ComplexQueryBuilderFactory complexQueryBuilderFactory) {
-
-		_complexQueryBuilderFactory = complexQueryBuilderFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -505,15 +466,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_props = props;
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueries(Queries queries) {
-		_queries = queries;
-	}
-
 	protected void setQuery(
 		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest) {
 
-		baseSearchRequest.setQuery(getQuery(searchRequest));
+		baseSearchRequest.setQuery(searchRequest.getQuery());
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
@@ -552,12 +508,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);
 
-	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private IndexNameBuilder _indexNameBuilder;
 	private boolean _logExceptionsOnly;
 	private Props _props;
-	private Queries _queries;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private SearchResponseBuilderFactory _searchResponseBuilderFactory;

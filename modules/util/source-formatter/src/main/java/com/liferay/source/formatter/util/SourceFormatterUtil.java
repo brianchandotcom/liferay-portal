@@ -74,8 +74,8 @@ public class SourceFormatterUtil {
 		"/source/formatter/dependencies/";
 
 	public static JSONObject addPropertiesAttributes(
-		JSONObject attributesJSONObject, CheckType checkType, String checkName,
-		Map<String, Properties> propertiesMap) {
+		JSONObject attributesJSONObject, Map<String, Properties> propertiesMap,
+		CheckType checkType, String checkName) {
 
 		String keyPrefix = _getKeyPrefix(checkType, checkName);
 

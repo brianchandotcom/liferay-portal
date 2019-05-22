@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -212,6 +213,15 @@ public class DocumentResourceImpl
 					null
 				)));
 
+		if (documentOptional.isPresent()) {
+			Document document = documentOptional.get();
+
+			CustomFieldsUtil.addCustomFields(
+				fileEntry.getCompanyId(), DLFileEntry.class,
+				fileEntry.getFileEntryId(), document.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+		}
+
 		return _toDocument(fileEntry);
 	}
 
@@ -301,6 +311,15 @@ public class DocumentResourceImpl
 					Document.ViewableBy.OWNER.getValue()
 				)));
 
+		if (documentOptional.isPresent()) {
+			Document document = documentOptional.get();
+
+			CustomFieldsUtil.addCustomFields(
+				fileEntry.getCompanyId(), DLFileEntry.class,
+				fileEntry.getFileEntryId(), document.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+		}
+
 		return _toDocument(fileEntry);
 	}
 
@@ -360,6 +379,15 @@ public class DocumentResourceImpl
 				).orElse(
 					Document.ViewableBy.OWNER.getValue()
 				)));
+
+		if (documentOptional.isPresent()) {
+			Document document = documentOptional.get();
+
+			CustomFieldsUtil.addCustomFields(
+				fileEntry.getCompanyId(), DLFileEntry.class,
+				fileEntry.getFileEntryId(), document.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+		}
 
 		return _toDocument(fileEntry);
 	}

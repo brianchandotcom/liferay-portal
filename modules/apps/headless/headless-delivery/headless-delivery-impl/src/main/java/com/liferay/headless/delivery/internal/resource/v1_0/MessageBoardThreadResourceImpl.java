@@ -18,12 +18,14 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
@@ -227,6 +229,11 @@ public class MessageBoardThreadResourceImpl
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			mbThread.getRootMessageId());
 
+		CustomFieldsUtil.addCustomFields(
+			mbMessage.getCompanyId(), MBMessage.class, mbMessage.getMessageId(),
+			messageBoardThread.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
 		_updateQuestion(mbMessage, messageBoardThread);
 
 		return _toMessageBoardThread(
@@ -273,6 +280,11 @@ public class MessageBoardThreadResourceImpl
 			ServiceContextUtil.createServiceContext(
 				messageBoardThread.getKeywords(), null, siteId,
 				messageBoardThread.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			mbMessage.getCompanyId(), MBMessage.class, mbMessage.getMessageId(),
+			messageBoardThread.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 
 		_updateQuestion(mbMessage, messageBoardThread);
 
@@ -328,6 +340,11 @@ public class MessageBoardThreadResourceImpl
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
 					_portal, _userService.getUserById(mbThread.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						mbThread.getCompanyId(), MBMessage.class.getName(),
+						mbMessage.getMessageId()),
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();

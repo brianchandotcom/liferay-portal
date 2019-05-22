@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -231,6 +234,32 @@ public class RepositoryEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, RepositoryEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			RepositoryEntry.class.getClassLoader(), RepositoryEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<RepositoryEntry> constructor =
+				(Constructor<RepositoryEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<RepositoryEntry, Object>>
@@ -571,8 +600,7 @@ public class RepositoryEntryModelImpl
 	@Override
 	public RepositoryEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RepositoryEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -821,11 +849,8 @@ public class RepositoryEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RepositoryEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RepositoryEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RepositoryEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private String _uuid;

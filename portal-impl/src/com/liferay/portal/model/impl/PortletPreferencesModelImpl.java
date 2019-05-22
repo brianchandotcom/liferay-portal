@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -271,6 +274,32 @@ public class PortletPreferencesModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PortletPreferences>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PortletPreferences.class.getClassLoader(), PortletPreferences.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PortletPreferences> constructor =
+				(Constructor<PortletPreferences>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PortletPreferences, Object>>
@@ -517,8 +546,7 @@ public class PortletPreferencesModelImpl
 	@Override
 	public PortletPreferences toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PortletPreferences)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -727,11 +755,8 @@ public class PortletPreferencesModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PortletPreferences.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PortletPreferences.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PortletPreferences>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _portletPreferencesId;

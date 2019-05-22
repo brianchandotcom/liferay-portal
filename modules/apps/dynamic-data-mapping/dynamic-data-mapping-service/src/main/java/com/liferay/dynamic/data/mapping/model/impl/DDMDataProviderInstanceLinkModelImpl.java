@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -212,6 +215,32 @@ public class DDMDataProviderInstanceLinkModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, DDMDataProviderInstanceLink>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DDMDataProviderInstanceLink.class.getClassLoader(),
+			DDMDataProviderInstanceLink.class, ModelWrapper.class);
+
+		try {
+			Constructor<DDMDataProviderInstanceLink> constructor =
+				(Constructor<DDMDataProviderInstanceLink>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map
 		<String, Function<DDMDataProviderInstanceLink, Object>>
 			_attributeGetterFunctions;
@@ -347,10 +376,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 	@Override
 	public DDMDataProviderInstanceLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DDMDataProviderInstanceLink)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -533,11 +560,9 @@ public class DDMDataProviderInstanceLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMDataProviderInstanceLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMDataProviderInstanceLink.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, DDMDataProviderInstanceLink>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;

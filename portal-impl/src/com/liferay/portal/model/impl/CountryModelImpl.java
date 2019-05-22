@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -262,6 +265,31 @@ public class CountryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Country>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Country.class.getClassLoader(), Country.class, ModelWrapper.class);
+
+		try {
+			Constructor<Country> constructor =
+				(Constructor<Country>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Country, Object>>
@@ -508,8 +536,7 @@ public class CountryModelImpl
 	@Override
 	public Country toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Country)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -720,11 +747,8 @@ public class CountryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Country.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Country.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Country>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _countryId;

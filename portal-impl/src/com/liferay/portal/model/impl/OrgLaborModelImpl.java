@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -286,6 +289,32 @@ public class OrgLaborModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, OrgLabor>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			OrgLabor.class.getClassLoader(), OrgLabor.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<OrgLabor> constructor =
+				(Constructor<OrgLabor>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<OrgLabor, Object>>
@@ -609,8 +638,7 @@ public class OrgLaborModelImpl
 	@Override
 	public OrgLabor toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (OrgLabor)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -838,11 +866,8 @@ public class OrgLaborModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OrgLabor.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OrgLabor.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, OrgLabor>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _orgLaborId;

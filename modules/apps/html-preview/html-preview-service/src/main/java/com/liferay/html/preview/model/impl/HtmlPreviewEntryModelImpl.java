@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -222,6 +225,32 @@ public class HtmlPreviewEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, HtmlPreviewEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			HtmlPreviewEntry.class.getClassLoader(), HtmlPreviewEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<HtmlPreviewEntry> constructor =
+				(Constructor<HtmlPreviewEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<HtmlPreviewEntry, Object>>
@@ -499,8 +528,7 @@ public class HtmlPreviewEntryModelImpl
 	@Override
 	public HtmlPreviewEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (HtmlPreviewEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -714,11 +742,8 @@ public class HtmlPreviewEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		HtmlPreviewEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		HtmlPreviewEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, HtmlPreviewEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _htmlPreviewEntryId;
 	private long _groupId;

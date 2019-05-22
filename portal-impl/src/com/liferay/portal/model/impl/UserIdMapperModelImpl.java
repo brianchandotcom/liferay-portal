@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -215,6 +218,32 @@ public class UserIdMapperModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, UserIdMapper>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			UserIdMapper.class.getClassLoader(), UserIdMapper.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<UserIdMapper> constructor =
+				(Constructor<UserIdMapper>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<UserIdMapper, Object>>
@@ -418,8 +447,7 @@ public class UserIdMapperModelImpl
 	@Override
 	public UserIdMapper toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserIdMapper)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -614,11 +642,8 @@ public class UserIdMapperModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserIdMapper.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserIdMapper.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserIdMapper>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _userIdMapperId;

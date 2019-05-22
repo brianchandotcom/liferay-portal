@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -326,6 +329,32 @@ public class AssetCategoryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, AssetCategory>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AssetCategory.class.getClassLoader(), AssetCategory.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<AssetCategory> constructor =
+				(Constructor<AssetCategory>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<AssetCategory, Object>>
@@ -1056,8 +1085,7 @@ public class AssetCategoryModelImpl
 	@Override
 	public AssetCategory toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetCategory)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1343,11 +1371,8 @@ public class AssetCategoryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetCategory.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetCategory.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetCategory>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

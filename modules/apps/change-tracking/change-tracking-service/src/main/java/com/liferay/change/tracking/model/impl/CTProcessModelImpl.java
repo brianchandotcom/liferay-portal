@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -201,6 +204,32 @@ public class CTProcessModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, CTProcess>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			CTProcess.class.getClassLoader(), CTProcess.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<CTProcess> constructor =
+				(Constructor<CTProcess>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<CTProcess, Object>>
@@ -377,8 +406,7 @@ public class CTProcessModelImpl
 	@Override
 	public CTProcess toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (CTProcess)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -562,11 +590,8 @@ public class CTProcessModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		CTProcess.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		CTProcess.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, CTProcess>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

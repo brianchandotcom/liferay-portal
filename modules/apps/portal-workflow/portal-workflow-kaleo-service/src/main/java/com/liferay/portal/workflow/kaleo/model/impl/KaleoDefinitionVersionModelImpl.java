@@ -38,6 +38,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -245,6 +248,32 @@ public class KaleoDefinitionVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, KaleoDefinitionVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KaleoDefinitionVersion.class.getClassLoader(),
+			KaleoDefinitionVersion.class, ModelWrapper.class);
+
+		try {
+			Constructor<KaleoDefinitionVersion> constructor =
+				(Constructor<KaleoDefinitionVersion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<KaleoDefinitionVersion, Object>>
@@ -917,8 +946,7 @@ public class KaleoDefinitionVersionModelImpl
 	@Override
 	public KaleoDefinitionVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoDefinitionVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1205,11 +1233,8 @@ public class KaleoDefinitionVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoDefinitionVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoDefinitionVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoDefinitionVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _kaleoDefinitionVersionId;

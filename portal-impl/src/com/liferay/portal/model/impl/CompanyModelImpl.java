@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -270,6 +273,31 @@ public class CompanyModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Company>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Company.class.getClassLoader(), Company.class, ModelWrapper.class);
+
+		try {
+			Constructor<Company> constructor =
+				(Constructor<Company>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Company, Object>>
@@ -562,8 +590,7 @@ public class CompanyModelImpl
 	@Override
 	public Company toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Company)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -790,11 +817,8 @@ public class CompanyModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Company.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Company.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Company>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _companyId;

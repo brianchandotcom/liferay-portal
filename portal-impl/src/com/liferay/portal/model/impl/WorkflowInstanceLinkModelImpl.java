@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -229,6 +232,32 @@ public class WorkflowInstanceLinkModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WorkflowInstanceLink>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WorkflowInstanceLink.class.getClassLoader(),
+			WorkflowInstanceLink.class, ModelWrapper.class);
+
+		try {
+			Constructor<WorkflowInstanceLink> constructor =
+				(Constructor<WorkflowInstanceLink>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<WorkflowInstanceLink, Object>>
@@ -547,8 +576,7 @@ public class WorkflowInstanceLinkModelImpl
 	@Override
 	public WorkflowInstanceLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WorkflowInstanceLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -778,11 +806,8 @@ public class WorkflowInstanceLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WorkflowInstanceLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WorkflowInstanceLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WorkflowInstanceLink>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _workflowInstanceLinkId;

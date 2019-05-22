@@ -36,6 +36,9 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItemSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -304,6 +307,32 @@ public class SiteNavigationMenuItemModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SiteNavigationMenuItem>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SiteNavigationMenuItem.class.getClassLoader(),
+			SiteNavigationMenuItem.class, ModelWrapper.class);
+
+		try {
+			Constructor<SiteNavigationMenuItem> constructor =
+				(Constructor<SiteNavigationMenuItem>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SiteNavigationMenuItem, Object>>
@@ -727,8 +756,7 @@ public class SiteNavigationMenuItemModelImpl
 	@Override
 	public SiteNavigationMenuItem toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SiteNavigationMenuItem)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1014,11 +1042,8 @@ public class SiteNavigationMenuItemModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SiteNavigationMenuItem.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SiteNavigationMenuItem.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SiteNavigationMenuItem>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

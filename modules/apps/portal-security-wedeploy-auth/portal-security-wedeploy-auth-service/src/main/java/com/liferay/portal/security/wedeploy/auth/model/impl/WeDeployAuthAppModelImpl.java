@@ -34,6 +34,9 @@ import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -276,6 +279,32 @@ public class WeDeployAuthAppModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WeDeployAuthApp>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WeDeployAuthApp.class.getClassLoader(), WeDeployAuthApp.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<WeDeployAuthApp> constructor =
+				(Constructor<WeDeployAuthApp>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<WeDeployAuthApp, Object>>
@@ -554,8 +583,7 @@ public class WeDeployAuthAppModelImpl
 	@Override
 	public WeDeployAuthApp toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WeDeployAuthApp)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -787,11 +815,8 @@ public class WeDeployAuthAppModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WeDeployAuthApp.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WeDeployAuthApp.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WeDeployAuthApp>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _weDeployAuthAppId;
 	private long _companyId;

@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -210,6 +213,32 @@ public class BlogsStatsUserModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, BlogsStatsUser>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			BlogsStatsUser.class.getClassLoader(), BlogsStatsUser.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<BlogsStatsUser> constructor =
+				(Constructor<BlogsStatsUser>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<BlogsStatsUser, Object>>
@@ -475,8 +504,7 @@ public class BlogsStatsUserModelImpl
 	@Override
 	public BlogsStatsUser toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BlogsStatsUser)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -688,11 +716,8 @@ public class BlogsStatsUserModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BlogsStatsUser.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BlogsStatsUser.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BlogsStatsUser>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

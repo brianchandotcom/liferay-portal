@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -250,6 +253,32 @@ public class MBMailingListModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, MBMailingList>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			MBMailingList.class.getClassLoader(), MBMailingList.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<MBMailingList> constructor =
+				(Constructor<MBMailingList>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<MBMailingList, Object>>
@@ -840,8 +869,7 @@ public class MBMailingListModelImpl
 	@Override
 	public MBMailingList toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBMailingList)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1169,11 +1197,8 @@ public class MBMailingListModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBMailingList.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBMailingList.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBMailingList>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

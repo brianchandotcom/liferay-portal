@@ -41,6 +41,9 @@ import com.liferay.wiki.model.WikiNodeSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -293,6 +296,32 @@ public class WikiNodeModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WikiNode>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WikiNode.class.getClassLoader(), WikiNode.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<WikiNode> constructor =
+				(Constructor<WikiNode>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<WikiNode, Object>>
@@ -940,8 +969,7 @@ public class WikiNodeModelImpl
 	@Override
 	public WikiNode toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiNode)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1216,11 +1244,8 @@ public class WikiNodeModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiNode.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiNode.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WikiNode>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

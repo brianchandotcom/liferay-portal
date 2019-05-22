@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -390,6 +393,31 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Group>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Group.class.getClassLoader(), Group.class, ModelWrapper.class);
+
+		try {
+			Constructor<Group> constructor =
+				(Constructor<Group>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Group, Object>>
@@ -1278,8 +1306,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	@Override
 	public Group toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Group)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1579,11 +1606,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Group.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Group.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Group>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private String _uuid;

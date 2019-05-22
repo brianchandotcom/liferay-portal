@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -220,6 +223,32 @@ public class RecentLayoutSetBranchModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, RecentLayoutSetBranch>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			RecentLayoutSetBranch.class.getClassLoader(),
+			RecentLayoutSetBranch.class, ModelWrapper.class);
+
+		try {
+			Constructor<RecentLayoutSetBranch> constructor =
+				(Constructor<RecentLayoutSetBranch>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<RecentLayoutSetBranch, Object>>
@@ -442,8 +471,7 @@ public class RecentLayoutSetBranchModelImpl
 	@Override
 	public RecentLayoutSetBranch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RecentLayoutSetBranch)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -638,11 +666,8 @@ public class RecentLayoutSetBranchModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RecentLayoutSetBranch.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RecentLayoutSetBranch.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RecentLayoutSetBranch>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _recentLayoutSetBranchId;

@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -211,6 +214,32 @@ public class VirtualHostModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, VirtualHost>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			VirtualHost.class.getClassLoader(), VirtualHost.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<VirtualHost> constructor =
+				(Constructor<VirtualHost>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<VirtualHost, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<VirtualHost, Object>>
@@ -361,8 +390,7 @@ public class VirtualHostModelImpl
 	@Override
 	public VirtualHost toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (VirtualHost)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -542,11 +570,8 @@ public class VirtualHostModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		VirtualHost.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		VirtualHost.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, VirtualHost>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _virtualHostId;

@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -205,6 +208,32 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, OAuth2ApplicationScopeAliases>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			OAuth2ApplicationScopeAliases.class.getClassLoader(),
+			OAuth2ApplicationScopeAliases.class, ModelWrapper.class);
+
+		try {
+			Constructor<OAuth2ApplicationScopeAliases> constructor =
+				(Constructor<OAuth2ApplicationScopeAliases>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -398,10 +427,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Override
 	public OAuth2ApplicationScopeAliases toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(OAuth2ApplicationScopeAliases)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -605,11 +632,9 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OAuth2ApplicationScopeAliases.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OAuth2ApplicationScopeAliases.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, OAuth2ApplicationScopeAliases>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

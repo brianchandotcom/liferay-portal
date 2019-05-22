@@ -31,6 +31,9 @@ import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocaliz
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -217,6 +220,32 @@ public class LocalizedEntryLocalizationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, LocalizedEntryLocalization>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			LocalizedEntryLocalization.class.getClassLoader(),
+			LocalizedEntryLocalization.class, ModelWrapper.class);
+
+		try {
+			Constructor<LocalizedEntryLocalization> constructor =
+				(Constructor<LocalizedEntryLocalization>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -517,10 +546,8 @@ public class LocalizedEntryLocalizationModelImpl
 	@Override
 	public LocalizedEntryLocalization toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(LocalizedEntryLocalization)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -725,11 +752,8 @@ public class LocalizedEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LocalizedEntryLocalization.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LocalizedEntryLocalization.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LocalizedEntryLocalization>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _localizedEntryLocalizationId;

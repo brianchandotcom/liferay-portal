@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -260,6 +263,32 @@ public class UserGroupRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, UserGroupRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			UserGroupRole.class.getClassLoader(), UserGroupRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<UserGroupRole> constructor =
+				(Constructor<UserGroupRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<UserGroupRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<UserGroupRole, Object>>
@@ -413,8 +442,7 @@ public class UserGroupRoleModelImpl
 	@Override
 	public UserGroupRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserGroupRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -583,11 +611,8 @@ public class UserGroupRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserGroupRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserGroupRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserGroupRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _userId;

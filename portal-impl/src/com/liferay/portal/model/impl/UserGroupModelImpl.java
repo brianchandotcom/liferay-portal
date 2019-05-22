@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -334,6 +337,32 @@ public class UserGroupModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, UserGroup>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			UserGroup.class.getClassLoader(), UserGroup.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<UserGroup> constructor =
+				(Constructor<UserGroup>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<UserGroup, Object>>
@@ -693,8 +722,7 @@ public class UserGroupModelImpl
 	@Override
 	public UserGroup toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserGroup)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -947,11 +975,8 @@ public class UserGroupModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserGroup.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserGroup.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserGroup>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private String _uuid;

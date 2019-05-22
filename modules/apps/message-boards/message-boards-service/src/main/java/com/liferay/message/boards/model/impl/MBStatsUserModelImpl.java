@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -212,6 +215,32 @@ public class MBStatsUserModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, MBStatsUser>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			MBStatsUser.class.getClassLoader(), MBStatsUser.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<MBStatsUser> constructor =
+				(Constructor<MBStatsUser>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<MBStatsUser, Object>>
@@ -405,8 +434,7 @@ public class MBStatsUserModelImpl
 	@Override
 	public MBStatsUser toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBStatsUser)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -599,11 +627,8 @@ public class MBStatsUserModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBStatsUser.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBStatsUser.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBStatsUser>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _statsUserId;
 	private long _groupId;

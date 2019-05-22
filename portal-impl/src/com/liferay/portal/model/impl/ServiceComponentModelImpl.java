@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -208,6 +211,32 @@ public class ServiceComponentModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ServiceComponent>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ServiceComponent.class.getClassLoader(), ServiceComponent.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ServiceComponent> constructor =
+				(Constructor<ServiceComponent>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ServiceComponent, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ServiceComponent, Object>>
@@ -373,8 +402,7 @@ public class ServiceComponentModelImpl
 	@Override
 	public ServiceComponent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ServiceComponent)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -576,11 +604,8 @@ public class ServiceComponentModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ServiceComponent.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ServiceComponent.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ServiceComponent>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _serviceComponentId;

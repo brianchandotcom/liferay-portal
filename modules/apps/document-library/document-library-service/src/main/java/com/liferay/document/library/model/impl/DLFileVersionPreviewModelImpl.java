@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -201,6 +204,32 @@ public class DLFileVersionPreviewModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, DLFileVersionPreview>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DLFileVersionPreview.class.getClassLoader(),
+			DLFileVersionPreview.class, ModelWrapper.class);
+
+		try {
+			Constructor<DLFileVersionPreview> constructor =
+				(Constructor<DLFileVersionPreview>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<DLFileVersionPreview, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<DLFileVersionPreview, Object>>
@@ -362,8 +391,7 @@ public class DLFileVersionPreviewModelImpl
 	@Override
 	public DLFileVersionPreview toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileVersionPreview)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -557,11 +585,8 @@ public class DLFileVersionPreviewModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileVersionPreview.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileVersionPreview.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileVersionPreview>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

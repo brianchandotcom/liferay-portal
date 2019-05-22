@@ -29,6 +29,9 @@ import com.liferay.sync.model.SyncDLFileVersionDiffModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -219,6 +222,32 @@ public class SyncDLFileVersionDiffModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SyncDLFileVersionDiff>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SyncDLFileVersionDiff.class.getClassLoader(),
+			SyncDLFileVersionDiff.class, ModelWrapper.class);
+
+		try {
+			Constructor<SyncDLFileVersionDiff> constructor =
+				(Constructor<SyncDLFileVersionDiff>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SyncDLFileVersionDiff, Object>>
@@ -423,8 +452,7 @@ public class SyncDLFileVersionDiffModelImpl
 	@Override
 	public SyncDLFileVersionDiff toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDLFileVersionDiff)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -628,11 +656,8 @@ public class SyncDLFileVersionDiffModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDLFileVersionDiff.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDLFileVersionDiff.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SyncDLFileVersionDiff>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _syncDLFileVersionDiffId;
 	private long _fileEntryId;

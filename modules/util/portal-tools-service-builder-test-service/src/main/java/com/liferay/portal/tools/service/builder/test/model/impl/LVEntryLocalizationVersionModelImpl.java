@@ -32,6 +32,9 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVe
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -223,6 +226,32 @@ public class LVEntryLocalizationVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, LVEntryLocalizationVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			LVEntryLocalizationVersion.class.getClassLoader(),
+			LVEntryLocalizationVersion.class, ModelWrapper.class);
+
+		try {
+			Constructor<LVEntryLocalizationVersion> constructor =
+				(Constructor<LVEntryLocalizationVersion>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -651,10 +680,8 @@ public class LVEntryLocalizationVersionModelImpl
 	@Override
 	public LVEntryLocalizationVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(LVEntryLocalizationVersion)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -883,11 +910,8 @@ public class LVEntryLocalizationVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LVEntryLocalizationVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LVEntryLocalizationVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LVEntryLocalizationVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _lvEntryLocalizationVersionId;
 	private int _version;

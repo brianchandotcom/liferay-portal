@@ -32,6 +32,9 @@ import com.liferay.powwow.model.PowwowServerModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -220,6 +223,32 @@ public class PowwowServerModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PowwowServer>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PowwowServer.class.getClassLoader(), PowwowServer.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PowwowServer> constructor =
+				(Constructor<PowwowServer>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PowwowServer, Object>>
@@ -509,8 +538,7 @@ public class PowwowServerModelImpl
 	@Override
 	public PowwowServer toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PowwowServer)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -750,11 +778,8 @@ public class PowwowServerModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PowwowServer.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PowwowServer.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PowwowServer>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _powwowServerId;
 	private long _companyId;

@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -323,6 +326,31 @@ public class ContactModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Contact>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Contact.class.getClassLoader(), Contact.class, ModelWrapper.class);
+
+		try {
+			Constructor<Contact> constructor =
+				(Constructor<Contact>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Contact, Object>>
@@ -952,8 +980,7 @@ public class ContactModelImpl
 	@Override
 	public Contact toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Contact)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1321,11 +1348,8 @@ public class ContactModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Contact.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Contact.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Contact>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _contactId;

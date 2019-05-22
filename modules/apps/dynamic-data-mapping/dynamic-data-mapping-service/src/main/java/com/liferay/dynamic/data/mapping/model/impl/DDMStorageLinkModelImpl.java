@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -218,6 +221,32 @@ public class DDMStorageLinkModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, DDMStorageLink>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DDMStorageLink.class.getClassLoader(), DDMStorageLink.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<DDMStorageLink> constructor =
+				(Constructor<DDMStorageLink>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<DDMStorageLink, Object>>
@@ -444,8 +473,7 @@ public class DDMStorageLinkModelImpl
 	@Override
 	public DDMStorageLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStorageLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -641,11 +669,8 @@ public class DDMStorageLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStorageLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStorageLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMStorageLink>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

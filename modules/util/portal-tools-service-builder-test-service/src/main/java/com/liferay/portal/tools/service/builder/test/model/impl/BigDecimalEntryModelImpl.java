@@ -31,6 +31,9 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntryModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.math.BigDecimal;
 
 import java.sql.Types;
@@ -229,6 +232,32 @@ public class BigDecimalEntryModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, BigDecimalEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			BigDecimalEntry.class.getClassLoader(), BigDecimalEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<BigDecimalEntry> constructor =
+				(Constructor<BigDecimalEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<BigDecimalEntry, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<BigDecimalEntry, Object>>
@@ -376,8 +405,7 @@ public class BigDecimalEntryModelImpl
 	@Override
 	public BigDecimalEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BigDecimalEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -535,11 +563,8 @@ public class BigDecimalEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BigDecimalEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BigDecimalEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BigDecimalEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _bigDecimalEntryId;
 	private long _companyId;

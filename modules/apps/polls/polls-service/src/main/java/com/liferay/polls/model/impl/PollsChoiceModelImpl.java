@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -289,6 +292,32 @@ public class PollsChoiceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PollsChoice>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PollsChoice.class.getClassLoader(), PollsChoice.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PollsChoice> constructor =
+				(Constructor<PollsChoice>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PollsChoice, Object>>
@@ -772,8 +801,7 @@ public class PollsChoiceModelImpl
 	@Override
 	public PollsChoice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PollsChoice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1033,11 +1061,8 @@ public class PollsChoiceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PollsChoice.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PollsChoice.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PollsChoice>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

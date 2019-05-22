@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -227,6 +230,32 @@ public class AssetListEntryUsageModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, AssetListEntryUsage>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AssetListEntryUsage.class.getClassLoader(),
+			AssetListEntryUsage.class, ModelWrapper.class);
+
+		try {
+			Constructor<AssetListEntryUsage> constructor =
+				(Constructor<AssetListEntryUsage>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<AssetListEntryUsage, Object>>
@@ -622,8 +651,7 @@ public class AssetListEntryUsageModelImpl
 	@Override
 	public AssetListEntryUsage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetListEntryUsage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -885,11 +913,8 @@ public class AssetListEntryUsageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetListEntryUsage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetListEntryUsage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetListEntryUsage>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -32,6 +32,9 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVe
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -224,6 +227,32 @@ public class LVEntryLocalizationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, LVEntryLocalization>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			LVEntryLocalization.class.getClassLoader(),
+			LVEntryLocalization.class, ModelWrapper.class);
+
+		try {
+			Constructor<LVEntryLocalization> constructor =
+				(Constructor<LVEntryLocalization>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<LVEntryLocalization, Object>>
@@ -620,8 +649,7 @@ public class LVEntryLocalizationModelImpl
 	@Override
 	public LVEntryLocalization toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LVEntryLocalization)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -833,11 +861,8 @@ public class LVEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LVEntryLocalization.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LVEntryLocalization.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LVEntryLocalization>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _headId;

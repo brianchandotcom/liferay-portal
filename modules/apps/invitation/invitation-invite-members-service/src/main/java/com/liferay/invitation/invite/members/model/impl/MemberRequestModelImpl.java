@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -226,6 +229,32 @@ public class MemberRequestModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, MemberRequest>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			MemberRequest.class.getClassLoader(), MemberRequest.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<MemberRequest> constructor =
+				(Constructor<MemberRequest>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<MemberRequest, Object>>
@@ -535,8 +564,7 @@ public class MemberRequestModelImpl
 	@Override
 	public MemberRequest toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MemberRequest)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -764,11 +792,8 @@ public class MemberRequestModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MemberRequest.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MemberRequest.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MemberRequest>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _memberRequestId;
 	private long _groupId;

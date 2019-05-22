@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -295,6 +298,32 @@ public class BookmarksFolderModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, BookmarksFolder>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			BookmarksFolder.class.getClassLoader(), BookmarksFolder.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<BookmarksFolder> constructor =
+				(Constructor<BookmarksFolder>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<BookmarksFolder, Object>>
@@ -1002,8 +1031,7 @@ public class BookmarksFolderModelImpl
 	@Override
 	public BookmarksFolder toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BookmarksFolder)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1307,11 +1335,8 @@ public class BookmarksFolderModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BookmarksFolder.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BookmarksFolder.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BookmarksFolder>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -35,6 +35,9 @@ import com.liferay.tasks.model.TasksEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -290,6 +293,32 @@ public class TasksEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, TasksEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			TasksEntry.class.getClassLoader(), TasksEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<TasksEntry> constructor =
+				(Constructor<TasksEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<TasksEntry, Object>>
@@ -669,8 +698,7 @@ public class TasksEntryModelImpl
 	@Override
 	public TasksEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TasksEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -940,11 +968,8 @@ public class TasksEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TasksEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TasksEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TasksEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _tasksEntryId;
 	private long _groupId;

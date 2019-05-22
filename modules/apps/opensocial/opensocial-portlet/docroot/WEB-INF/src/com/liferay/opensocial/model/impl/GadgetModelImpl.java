@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -264,6 +267,31 @@ public class GadgetModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Gadget>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Gadget.class.getClassLoader(), Gadget.class, ModelWrapper.class);
+
+		try {
+			Constructor<Gadget> constructor =
+				(Constructor<Gadget>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Gadget, Object>>
@@ -500,8 +528,7 @@ public class GadgetModelImpl
 	@Override
 	public Gadget toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Gadget)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -727,11 +754,8 @@ public class GadgetModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Gadget.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Gadget.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Gadget>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

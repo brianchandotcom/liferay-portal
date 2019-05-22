@@ -38,6 +38,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -293,6 +296,32 @@ public class KBCommentModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, KBComment>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KBComment.class.getClassLoader(), KBComment.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<KBComment> constructor =
+				(Constructor<KBComment>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<KBComment, Object>>
@@ -685,8 +714,7 @@ public class KBCommentModelImpl
 	@Override
 	public KBComment toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KBComment)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -943,11 +971,8 @@ public class KBCommentModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KBComment.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KBComment.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KBComment>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

@@ -34,6 +34,9 @@ import com.liferay.powwow.model.PowwowParticipantSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -285,6 +288,32 @@ public class PowwowParticipantModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PowwowParticipant>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PowwowParticipant.class.getClassLoader(), PowwowParticipant.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PowwowParticipant> constructor =
+				(Constructor<PowwowParticipant>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PowwowParticipant, Object>>
@@ -640,8 +669,7 @@ public class PowwowParticipantModelImpl
 	@Override
 	public PowwowParticipant toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PowwowParticipant)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -881,11 +909,8 @@ public class PowwowParticipantModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PowwowParticipant.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PowwowParticipant.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PowwowParticipant>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _powwowParticipantId;
 	private long _groupId;

@@ -31,6 +31,9 @@ import com.liferay.social.kernel.model.SocialActivityCounterModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -234,6 +237,32 @@ public class SocialActivityCounterModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SocialActivityCounter>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SocialActivityCounter.class.getClassLoader(),
+			SocialActivityCounter.class, ModelWrapper.class);
+
+		try {
+			Constructor<SocialActivityCounter> constructor =
+				(Constructor<SocialActivityCounter>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SocialActivityCounter, Object>>
@@ -598,8 +627,7 @@ public class SocialActivityCounterModelImpl
 	@Override
 	public SocialActivityCounter toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityCounter)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -829,11 +857,8 @@ public class SocialActivityCounterModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivityCounter.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivityCounter.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivityCounter>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _activityCounterId;
 	private long _groupId;

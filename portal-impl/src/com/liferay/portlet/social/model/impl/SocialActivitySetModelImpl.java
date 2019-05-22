@@ -34,6 +34,9 @@ import com.liferay.social.kernel.model.SocialActivitySetModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -227,6 +230,32 @@ public class SocialActivitySetModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SocialActivitySet>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SocialActivitySet.class.getClassLoader(), SocialActivitySet.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SocialActivitySet> constructor =
+				(Constructor<SocialActivitySet>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SocialActivitySet, Object>>
@@ -541,8 +570,7 @@ public class SocialActivitySetModelImpl
 	@Override
 	public SocialActivitySet toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivitySet)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -762,11 +790,8 @@ public class SocialActivitySetModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivitySet.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivitySet.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivitySet>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _activitySetId;
 	private long _groupId;

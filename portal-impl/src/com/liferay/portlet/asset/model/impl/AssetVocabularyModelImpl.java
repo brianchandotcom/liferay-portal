@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -296,6 +299,32 @@ public class AssetVocabularyModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, AssetVocabulary>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AssetVocabulary.class.getClassLoader(), AssetVocabulary.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<AssetVocabulary> constructor =
+				(Constructor<AssetVocabulary>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<AssetVocabulary, Object>>
@@ -945,8 +974,7 @@ public class AssetVocabularyModelImpl
 	@Override
 	public AssetVocabulary toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetVocabulary)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1221,11 +1249,8 @@ public class AssetVocabularyModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetVocabulary.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetVocabulary.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetVocabulary>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

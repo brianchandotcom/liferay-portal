@@ -33,6 +33,9 @@ import com.liferay.social.kernel.model.SocialActivitySettingSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -275,6 +278,32 @@ public class SocialActivitySettingModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, SocialActivitySetting>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SocialActivitySetting.class.getClassLoader(),
+			SocialActivitySetting.class, ModelWrapper.class);
+
+		try {
+			Constructor<SocialActivitySetting> constructor =
+				(Constructor<SocialActivitySetting>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<SocialActivitySetting, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<SocialActivitySetting, Object>>
@@ -511,8 +540,7 @@ public class SocialActivitySettingModelImpl
 	@Override
 	public SocialActivitySetting toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivitySetting)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -715,11 +743,8 @@ public class SocialActivitySettingModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivitySetting.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivitySetting.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivitySetting>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _activitySettingId;
 	private long _groupId;

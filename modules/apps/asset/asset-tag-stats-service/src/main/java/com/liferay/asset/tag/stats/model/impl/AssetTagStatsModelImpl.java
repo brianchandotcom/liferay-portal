@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -199,6 +202,32 @@ public class AssetTagStatsModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, AssetTagStats>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AssetTagStats.class.getClassLoader(), AssetTagStats.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<AssetTagStats> constructor =
+				(Constructor<AssetTagStats>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<AssetTagStats, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<AssetTagStats, Object>>
@@ -355,8 +384,7 @@ public class AssetTagStatsModelImpl
 	@Override
 	public AssetTagStats toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetTagStats)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -535,11 +563,8 @@ public class AssetTagStatsModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetTagStats.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetTagStats.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetTagStats>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -23,6 +23,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
@@ -30,6 +31,7 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
@@ -75,6 +77,11 @@ public class BlogPostingDTOConverter implements DTOConverter {
 				articleBody = blogsEntry.getContent();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						blogsEntry.getCompanyId(), BlogsEntry.class.getName(),
+						blogsEntry.getEntryId()),
+					dtoConverterContext.getLocale());
 				dateCreated = blogsEntry.getCreateDate();
 				dateModified = blogsEntry.getModifiedDate();
 				datePublished = blogsEntry.getDisplayDate();

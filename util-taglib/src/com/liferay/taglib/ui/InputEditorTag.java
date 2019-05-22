@@ -51,6 +51,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -526,15 +527,17 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:data",
-			ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(), new Class<?>[] {Map.class},
-				new LazyDataInvocationHandler()));
+			_mapProxyProviderFunction.apply(new LazyDataInvocationHandler()));
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
 	private static final String _TOOLBAR_SET_DEFAULT = "liferay";
+
+	private static final Function<InvocationHandler, Map<?, ?>>
+		_mapProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Map.class);
 
 	private static final ServiceTrackerMap<String, Editor> _serviceTrackerMap =
 		ServiceTrackerCollections.openSingleValueMap(

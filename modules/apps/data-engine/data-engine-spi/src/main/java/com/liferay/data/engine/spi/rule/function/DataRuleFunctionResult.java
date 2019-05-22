@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.spi.rule.function;
 
-import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 
 /**
  * @author Jeyvison Nascimento

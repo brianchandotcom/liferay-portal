@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.rule.function.v1_0;
 
 import com.liferay.data.engine.rest.internal.constants.DataRuleFunctionConstants;
-import com.liferay.data.engine.spi.field.type.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunction;
 import com.liferay.data.engine.spi.rule.function.DataRuleFunctionResult;
 import com.liferay.portal.kernel.util.GetterUtil;

@@ -188,6 +188,18 @@ public class EndpointSchemaInferrer {
 		JsonNode schemaJsonNode = _extractSchemaJsonNode(
 			schemaName, apiSpecJsonNode);
 
+		_processSchemaJsonNode(
+			null, schemaJsonNode, index, previousFieldNames, schemaFields,
+			apiSpecJsonNode);
+
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
+	}
+
+	private static void _processSchemaJsonNode(
+		String parentPropertyName, JsonNode schemaJsonNode, AtomicInteger index,
+		Set<String> previousFieldNames, List<Schema.Field> schemaFields,
+		JsonNode apiSpecJsonNode) {
+
 		Set<String> requiredPropertyNames = _getRequiredPropertyNames(
 			schemaJsonNode);
 
@@ -200,8 +212,35 @@ public class EndpointSchemaInferrer {
 
 			Map.Entry<String, JsonNode> propertyEntry = it.next();
 
+			JsonNode propertyJsonNode = propertyEntry.getValue();
+
+			JsonNode schemaRefJsonNode = propertyJsonNode.path(
+				OpenApiConstants.REF);
+
+			if (!schemaRefJsonNode.isMissingNode() &&
+				(parentPropertyName == null)) {
+
+				String referenceSchemaName = _stripSchemaName(
+					schemaRefJsonNode);
+
+				JsonNode referenceSchemaJsonNode = _extractSchemaJsonNode(
+					referenceSchemaName, apiSpecJsonNode);
+
+				_processSchemaJsonNode(
+					propertyEntry.getKey(), referenceSchemaJsonNode, index,
+					previousFieldNames, schemaFields, apiSpecJsonNode);
+
+				continue;
+			}
+
 			String fieldName = NameUtil.correct(
 				propertyEntry.getKey(), index.get(), previousFieldNames);
+
+			if (parentPropertyName != null) {
+				fieldName = NameUtil.correct(
+					parentPropertyName + "_" + propertyEntry.getKey(),
+					index.get(), previousFieldNames);
+			}
 
 			previousFieldNames.add(fieldName);
 
@@ -213,10 +252,8 @@ public class EndpointSchemaInferrer {
 				designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 			}
 
-			schemaFields.add(index.get(), designField);
+			schemaFields.add(designField);
 		}
-
-		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
 	private static String _stripSchemaName(JsonNode schemaRefJsonNode) {

@@ -189,11 +189,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected String getAttributeValue(
 		String attributeKey, String absolutePath) {
 
-		return getAttributeValue(attributeKey, absolutePath, StringPool.BLANK);
+		return getAttributeValue(attributeKey, StringPool.BLANK, absolutePath);
 	}
 
 	protected String getAttributeValue(
-		String attributeKey, String absolutePath, String defaultValue) {
+		String attributeKey, String defaultValue, String absolutePath) {
 
 		return _getJSONObjectValue(
 			_attributesJSONObject, _attributeValueMap, attributeKey,

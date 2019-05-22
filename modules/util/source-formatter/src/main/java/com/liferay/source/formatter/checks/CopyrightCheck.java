@@ -125,7 +125,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 
 		String copyRightFileName = getAttributeValue(
-			_COPYRIGHT_FILE_NAME_KEY, absolutePath, "copyright.txt");
+			_COPYRIGHT_FILE_NAME_KEY, "copyright.txt", absolutePath);
 
 		_copyright = getContent(
 			copyRightFileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);

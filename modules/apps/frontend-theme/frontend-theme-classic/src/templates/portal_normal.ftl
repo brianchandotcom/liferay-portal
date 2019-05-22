@@ -51,7 +51,7 @@
 				</div>
 			</div>
 
-			<div class="mb-4 navbar navbar-classic navbar-expand-md navbar-light pb-3">
+			<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
 				<div class="container">
 					<a class="${logo_css_class} align-items-center d-inline-flex d-md-none logo-xs" href="${site_default_url}" rel="nofollow">
 						<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />

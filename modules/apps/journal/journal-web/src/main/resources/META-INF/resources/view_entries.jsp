@@ -106,12 +106,11 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							<span class="text-default">
 								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 							</span>
-
-							<h2 class="h5">
+							<span class="font-weight-bold h5">
 								<aui:a href="<%= editURL %>">
 									<%= HtmlUtil.escape(title) %>
 								</aui:a>
-							</h2>
+							</span>
 
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
 								<h5>
@@ -289,13 +288,11 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							<span class="text-default">
 								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curFolder.getUserName()), createDateDescription} %>" key="x-modified-x-ago" />
 							</span>
-
-							<h2 class="h5">
+							<span class="font-weight-bold h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= HtmlUtil.escape(curFolder.getName()) %>
 								</aui:a>
-							</h2>
-
+							</span>
 							<span class="text-default">
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curFolder.getStatus() %>" />
 							</span>

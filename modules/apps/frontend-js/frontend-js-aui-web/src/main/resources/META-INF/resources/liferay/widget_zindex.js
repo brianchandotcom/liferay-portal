@@ -3,42 +3,39 @@ AUI.add(
 	function(A) {
 		var STR_HOST = 'host';
 
-		var WidgetZIndex = A.Component.create(
-			{
-				EXTENDS: A.Plugin.Base,
+		var WidgetZIndex = A.Component.create({
+			EXTENDS: A.Plugin.Base,
 
-				NAME: 'widgetzindex',
+			NAME: 'widgetzindex',
 
-				NS: 'zindex',
+			NS: 'zindex',
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-						var host = instance.get(STR_HOST);
+					var host = instance.get(STR_HOST);
 
-						if (!host.get('rendered') && host.get('visible')) {
+					if (!host.get('rendered') && host.get('visible')) {
+						instance._setHostZIndex();
+					}
+
+					instance.onHostEvent('visibleChange', function(event) {
+						if (event.newVal) {
 							instance._setHostZIndex();
 						}
+					});
+				},
 
-						instance.onHostEvent(
-							'visibleChange',
-							function(event) {
-								if (event.newVal) {
-									instance._setHostZIndex();
-								}
-							}
-						);
-					},
+				_setHostZIndex: function() {
+					var instance = this;
 
-					_setHostZIndex: function() {
-						var instance = this;
-
-						instance.get(STR_HOST).set('zIndex', ++Liferay.zIndex.WINDOW);
-					}
+					instance
+						.get(STR_HOST)
+						.set('zIndex', ++Liferay.zIndex.WINDOW);
 				}
 			}
-		);
+		});
 
 		Liferay.WidgetZIndex = WidgetZIndex;
 	},

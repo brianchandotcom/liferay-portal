@@ -37,144 +37,172 @@ AUI.add(
 
 		var STR_TOKEN = '~::~';
 
-		var XMLFormatter = A.Component.create(
-			{
-				ATTRS: {
-					lineIndent: {
-						validator: Lang.isString,
-						value: '\r\n'
-					},
-
-					tagIndent: {
-						validator: Lang.isString,
-						value: '\t'
-					}
+		var XMLFormatter = A.Component.create({
+			ATTRS: {
+				lineIndent: {
+					validator: Lang.isString,
+					value: '\r\n'
 				},
 
-				EXTENDS: A.Base,
+				tagIndent: {
+					validator: Lang.isString,
+					value: '\t'
+				}
+			},
 
-				NAME: 'liferayxmlformatter',
+			EXTENDS: A.Base,
 
-				prototype: {
-					format: function(content) {
-						var instance = this;
+			NAME: 'liferayxmlformatter',
 
-						var tagIndent = instance.get('tagIndent');
+			prototype: {
+				format: function(content) {
+					var instance = this;
 
-						var lineIndent = instance.get('lineIndent');
+					var tagIndent = instance.get('tagIndent');
 
-						content = instance.minify(content);
+					var lineIndent = instance.get('lineIndent');
 
-						content = content.replace(REGEX_TAG_OPEN, STR_TOKEN + '<');
-						content = content.replace(REGEX_NAMESPACE_XML_ATTR, STR_TOKEN + '$1$2');
+					content = instance.minify(content);
 
-						var commentCounter = 0;
+					content = content.replace(REGEX_TAG_OPEN, STR_TOKEN + '<');
+					content = content.replace(
+						REGEX_NAMESPACE_XML_ATTR,
+						STR_TOKEN + '$1$2'
+					);
 
-						var items = content.split(STR_TOKEN);
+					var commentCounter = 0;
 
-						var inComment = false;
+					var items = content.split(STR_TOKEN);
 
-						var level = 0;
+					var inComment = false;
 
-						var result = STR_BLANK;
+					var level = 0;
 
-						items.forEach(
-							function(item, index) {
-								if (REGEX_DECLARATIVE_OPEN.test(item)) {
-									result += instance._indent(lineIndent, tagIndent, level) + item;
+					var result = STR_BLANK;
 
-									commentCounter++;
+					items.forEach(function(item, index) {
+						if (REGEX_DECLARATIVE_OPEN.test(item)) {
+							result +=
+								instance._indent(lineIndent, tagIndent, level) +
+								item;
 
-									inComment = true;
+							commentCounter++;
 
-									if (REGEX_DECLARATIVE_CLOSE.test(item) || REGEX_DOCTYPE.test(item)) {
-										commentCounter--;
+							inComment = true;
 
-										if (commentCounter === 0) {
-											inComment = false;
-										}
-									}
-								}
-								else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
-									result += item;
+							if (
+								REGEX_DECLARATIVE_CLOSE.test(item) ||
+								REGEX_DOCTYPE.test(item)
+							) {
+								commentCounter--;
 
-									commentCounter--;
-
-									if (commentCounter === 0) {
-										inComment = false;
-									}
-								}
-								else if (REGEX_ELEMENT.exec(items[index - 1]) && REGEX_ELEMENT_CLOSE.exec(item) &&
-									REGEX_ELEMENT_NAMESPACED.exec(items[index - 1]) == REGEX_ELEMENT_NAMESPACED_CLOSE.exec(item)[0].replace('/', STR_BLANK)) {
-									result += item;
-
-									if (!inComment) {
-										--level;
-									}
-								}
-								else if (REGEX_ELEMENT_OPEN.test(item) && !REGEX_TAG_CLOSE.test(item) && !REGEX_TAG_SINGLE_CLOSE.test(item)) {
-									if (inComment) {
-										result += item;
-									}
-									else {
-										result += instance._indent(lineIndent, tagIndent, level++) + item;
-									}
-								}
-								else if (REGEX_ELEMENT_OPEN.test(item) && REGEX_TAG_CLOSE.test(item)) {
-									if (inComment) {
-										result += item;
-									}
-									else {
-										result += instance._indent(lineIndent, tagIndent, level) + item;
-									}
-								}
-								else if (REGEX_TAG_CLOSE.test(item)) {
-									if (inComment) {
-										result += item;
-									}
-									else {
-										result += instance._indent(lineIndent, tagIndent, --level) + item;
-									}
-								}
-								else if (REGEX_TAG_SINGLE_CLOSE.test(item)) {
-									if (inComment) {
-										result += item;
-									}
-									else {
-										result += instance._indent(lineIndent, tagIndent, level) + item;
-									}
-								}
-								else if (REGEX_DIRECTIVE.test(item)) {
-									result += instance._indent(lineIndent, tagIndent, level) + item;
-								}
-								else if (REGEX_NAMESPACE_XML) {
-									result += instance._indent(lineIndent, tagIndent, level) + item;
-								}
-								else {
-									result += item;
+								if (commentCounter === 0) {
+									inComment = false;
 								}
 							}
-						);
+						} else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
+							result += item;
 
-						if (new RegExp('^' + lineIndent).test(result)) {
-							result = result.slice(lineIndent.length);
+							commentCounter--;
+
+							if (commentCounter === 0) {
+								inComment = false;
+							}
+						} else if (
+							REGEX_ELEMENT.exec(items[index - 1]) &&
+							REGEX_ELEMENT_CLOSE.exec(item) &&
+							REGEX_ELEMENT_NAMESPACED.exec(items[index - 1]) ==
+								REGEX_ELEMENT_NAMESPACED_CLOSE.exec(
+									item
+								)[0].replace('/', STR_BLANK)
+						) {
+							result += item;
+
+							if (!inComment) {
+								--level;
+							}
+						} else if (
+							REGEX_ELEMENT_OPEN.test(item) &&
+							!REGEX_TAG_CLOSE.test(item) &&
+							!REGEX_TAG_SINGLE_CLOSE.test(item)
+						) {
+							if (inComment) {
+								result += item;
+							} else {
+								result +=
+									instance._indent(
+										lineIndent,
+										tagIndent,
+										level++
+									) + item;
+							}
+						} else if (
+							REGEX_ELEMENT_OPEN.test(item) &&
+							REGEX_TAG_CLOSE.test(item)
+						) {
+							if (inComment) {
+								result += item;
+							} else {
+								result +=
+									instance._indent(
+										lineIndent,
+										tagIndent,
+										level
+									) + item;
+							}
+						} else if (REGEX_TAG_CLOSE.test(item)) {
+							if (inComment) {
+								result += item;
+							} else {
+								result +=
+									instance._indent(
+										lineIndent,
+										tagIndent,
+										--level
+									) + item;
+							}
+						} else if (REGEX_TAG_SINGLE_CLOSE.test(item)) {
+							if (inComment) {
+								result += item;
+							} else {
+								result +=
+									instance._indent(
+										lineIndent,
+										tagIndent,
+										level
+									) + item;
+							}
+						} else if (REGEX_DIRECTIVE.test(item)) {
+							result +=
+								instance._indent(lineIndent, tagIndent, level) +
+								item;
+						} else if (REGEX_NAMESPACE_XML) {
+							result +=
+								instance._indent(lineIndent, tagIndent, level) +
+								item;
+						} else {
+							result += item;
 						}
+					});
 
-						return result;
-					},
-
-					minify: function(content) {
-						return content.replace(REGEX_WHITESPACE_BETWEEN_TAGS, '><');
-					},
-
-					_indent: function(lineIndent, separator, times) {
-						var instance = this;
-
-						return lineIndent + new Array(times + 1).join(separator);
+					if (new RegExp('^' + lineIndent).test(result)) {
+						result = result.slice(lineIndent.length);
 					}
+
+					return result;
+				},
+
+				minify: function(content) {
+					return content.replace(REGEX_WHITESPACE_BETWEEN_TAGS, '><');
+				},
+
+				_indent: function(lineIndent, separator, times) {
+					var instance = this;
+
+					return lineIndent + new Array(times + 1).join(separator);
 				}
 			}
-		);
+		});
 
 		Liferay.XMLFormatter = XMLFormatter;
 	},

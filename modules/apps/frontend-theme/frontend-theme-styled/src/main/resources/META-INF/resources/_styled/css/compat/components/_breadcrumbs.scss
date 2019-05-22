@@ -10,7 +10,7 @@
 	.breadcrumb > li + li::before {
 		display: inline-block; // Suppress underlining of the separator in modern browsers
 		color: $breadcrumb-divider-color;
-		content: "#{$breadcrumb-divider}";
+		content: '#{$breadcrumb-divider}';
 		padding-left: $breadcrumb-item-padding;
 		padding-right: $breadcrumb-item-padding;
 	}

@@ -30,6 +30,12 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-move', 'event-touch', 'liferay-menu-toggle']
+		requires: [
+			'aui-node',
+			'aui-overlay-mask-deprecated',
+			'event-move',
+			'event-touch',
+			'liferay-menu-toggle'
+		]
 	}
 );

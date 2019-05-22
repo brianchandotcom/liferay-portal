@@ -4,13 +4,16 @@ import '../SuccessPage/SuccessPageWizardItem.soy.js';
 import Component from 'metal-jsx';
 import {ClayActionsDropdown} from 'clay-dropdown';
 import {Config} from 'metal-state';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 import {setValue} from '../../util/i18n.es';
 
 const withMultiplePages = ChildComponent => {
 	class MultiplePages extends Component {
 		static PROPS = {
-
 			/**
 			 * @default
 			 * @instance
@@ -96,17 +99,14 @@ const withMultiplePages = ChildComponent => {
 			 * @type {object}
 			 */
 
-			successPageSettings: Config.shapeOf(
-				{
-					body: Config.object(),
-					enabled: Config.bool(),
-					title: Config.object()
-				}
-			).value({})
-		}
+			successPageSettings: Config.shapeOf({
+				body: Config.object(),
+				enabled: Config.bool(),
+				title: Config.object()
+			}).value({})
+		};
 
 		static STATE = {
-
 			/**
 			 * @default false
 			 * @instance
@@ -114,8 +114,10 @@ const withMultiplePages = ChildComponent => {
 			 * @type {boolean}
 			 */
 
-			dropdownExpanded: Config.bool().value(false).internal()
-		}
+			dropdownExpanded: Config.bool()
+				.value(false)
+				.internal()
+		};
 
 		getPages() {
 			let {pages} = this.props;
@@ -154,19 +156,22 @@ const withMultiplePages = ChildComponent => {
 			const {spritemap, view} = this.props;
 
 			return (
-				<div class={`container ddm-paginated-builder ${this.getPaginationPosition()}`}>
-					<ChildComponent
-						{...this.props}
-						pages={this.getPages()}
-					/>
+				<div
+					class={`container ddm-paginated-builder ${this.getPaginationPosition()}`}
+				>
+					<ChildComponent {...this.props} pages={this.getPages()} />
 
 					{view !== 'fieldSets' && (
 						<ClayActionsDropdown
 							disabled={this.isDropdownDisabled()}
 							elementClasses={'ddm-paginated-builder-dropdown'}
 							events={{
-								expandedChanged: this._handleExpandedChanged.bind(this),
-								itemClicked: this._handleDropdownItemClicked.bind(this)
+								expandedChanged: this._handleExpandedChanged.bind(
+									this
+								),
+								itemClicked: this._handleDropdownItemClicked.bind(
+									this
+								)
 							}}
 							expanded={dropdownExpanded}
 							items={this._getPageSettingsItems()}
@@ -187,13 +192,13 @@ const withMultiplePages = ChildComponent => {
 			const {dispatch} = this.context;
 			const {pages} = this.props;
 
-			this._updateSuccessPage(
-				{
-					body: Liferay.Language.get('your-information-was-successfully-received-thanks-for-fill-out'),
-					enabled: true,
-					title: Liferay.Language.get('done')
-				}
-			);
+			this._updateSuccessPage({
+				body: Liferay.Language.get(
+					'your-information-was-successfully-received-thanks-for-fill-out'
+				),
+				enabled: true,
+				title: Liferay.Language.get('done')
+			});
 
 			dispatch('activePageUpdated', pages.length);
 		}
@@ -207,52 +212,39 @@ const withMultiplePages = ChildComponent => {
 		_deleteSuccessPage() {
 			const {dispatch} = this.context;
 
-			this._updateSuccessPage(
-				{
-					enabled: false
-				}
-			);
+			this._updateSuccessPage({
+				enabled: false
+			});
 
 			dispatch('activePageUpdated', this.props.pages.length - 1);
 		}
 
 		_getPageSettingsItems() {
-			const {
-				pages,
-				paginationMode,
-				successPageSettings
-			} = this.props;
+			const {pages, paginationMode, successPageSettings} = this.props;
 			const pageSettingsItems = [
 				{
-					'label': Liferay.Language.get('add-new-page'),
-					'settingsItem': 'add-page'
+					label: Liferay.Language.get('add-new-page'),
+					settingsItem: 'add-page'
 				}
 			];
 
 			if (this.getPages().length === 1) {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('reset-page'),
-						'settingsItem': 'reset-page'
-					}
-				);
-			}
-			else {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('delete-current-page'),
-						'settingsItem': 'delete-page'
-					}
-				);
+				pageSettingsItems.push({
+					label: Liferay.Language.get('reset-page'),
+					settingsItem: 'reset-page'
+				});
+			} else {
+				pageSettingsItems.push({
+					label: Liferay.Language.get('delete-current-page'),
+					settingsItem: 'delete-page'
+				});
 			}
 
 			if (!successPageSettings.enabled) {
-				pageSettingsItems.push(
-					{
-						'label': Liferay.Language.get('add-success-page'),
-						'settingsItem': 'add-success-page'
-					}
-				);
+				pageSettingsItems.push({
+					label: Liferay.Language.get('add-success-page'),
+					settingsItem: 'add-success-page'
+				});
 			}
 
 			if (pages.length > 1) {
@@ -262,12 +254,10 @@ const withMultiplePages = ChildComponent => {
 					label = Liferay.Language.get('switch-pagination-to-bottom');
 				}
 
-				pageSettingsItems.push(
-					{
-						label,
-						settingsItem: 'switch-pagination-mode'
-					}
-				);
+				pageSettingsItems.push({
+					label,
+					settingsItem: 'switch-pagination-mode'
+				});
 			}
 
 			return pageSettingsItems;
@@ -277,40 +267,34 @@ const withMultiplePages = ChildComponent => {
 			const {activePage, successPageSettings} = this.props;
 			const {settingsItem} = data.item;
 
-			this.setState(
-				{
-					dropdownExpanded: false
-				}
-			);
+			this.setState({
+				dropdownExpanded: false
+			});
 
 			if (settingsItem == 'add-page') {
 				this._addPage();
-			}
-			else if (settingsItem === 'reset-page') {
+			} else if (settingsItem === 'reset-page') {
 				this._resetPage();
-			}
-			else if (settingsItem === 'delete-page') {
-				if (successPageSettings.enabled && activePage == this.getPages().length - 1) {
+			} else if (settingsItem === 'delete-page') {
+				if (
+					successPageSettings.enabled &&
+					activePage == this.getPages().length - 1
+				) {
 					this._deleteSuccessPage();
-				}
-				else {
+				} else {
 					this._deletePage();
 				}
-			}
-			else if (settingsItem == 'switch-pagination-mode') {
+			} else if (settingsItem == 'switch-pagination-mode') {
 				this._switchPaginationMode();
-			}
-			else if (settingsItem == 'add-success-page') {
+			} else if (settingsItem == 'add-success-page') {
 				this._addSuccessPage();
 			}
 		}
 
 		_handleExpandedChanged({newVal}) {
-			this.setState(
-				{
-					dropdownExpanded: newVal
-				}
-			);
+			this.setState({
+				dropdownExpanded: newVal
+			});
 		}
 
 		_resetPage() {

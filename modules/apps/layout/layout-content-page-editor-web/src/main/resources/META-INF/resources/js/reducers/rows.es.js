@@ -1,8 +1,30 @@
-import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS, UPDATE_ROW_CONFIG} from '../actions/actions.es';
-import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {
+	ADD_ROW,
+	MOVE_ROW,
+	REMOVE_ROW,
+	UPDATE_ROW_COLUMNS_ERROR,
+	UPDATE_ROW_COLUMNS_LOADING,
+	UPDATE_ROW_COLUMNS_NUMBER_SUCCESS,
+	UPDATE_ROW_CONFIG
+} from '../actions/actions.es';
+import {
+	add,
+	addRow,
+	remove,
+	setIn,
+	updateIn,
+	updateWidgets
+} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
-import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
-import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	getDropRowPosition,
+	getRowFragmentEntryLinkIds,
+	getRowIndex
+} from '../utils/FragmentsEditorGetUtils.es';
+import {
+	removeFragmentEntryLinks,
+	updatePageEditorLayoutData
+} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * @param {object} state
@@ -15,41 +37,33 @@ import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/Fra
 function addRowReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(
-		resolve => {
-			if (action.type === ADD_ROW) {
-				const position = getDropRowPosition(
-					nextState.layoutData.structure,
-					nextState.dropTargetItemId,
-					nextState.dropTargetBorder
-				);
+	return new Promise(resolve => {
+		if (action.type === ADD_ROW) {
+			const position = getDropRowPosition(
+				nextState.layoutData.structure,
+				nextState.dropTargetItemId,
+				nextState.dropTargetBorder
+			);
 
-				const nextData = addRow(
-					action.layoutColumns,
-					nextState.layoutData,
-					position
-				);
+			const nextData = addRow(
+				action.layoutColumns,
+				nextState.layoutData,
+				position
+			);
 
-				updatePageEditorLayoutData(
-					nextData,
-					nextState.segmentsExperienceId
-				).then(
-					() => {
-						nextState = setIn(nextState, ['layoutData'], nextData);
+			updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId)
+				.then(() => {
+					nextState = setIn(nextState, ['layoutData'], nextData);
 
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(nextState);
-					}
-				);
-			}
-			else {
-				resolve(nextState);
-			}
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(nextState);
+				});
+		} else {
+			resolve(nextState);
 		}
-	);
+	});
 }
 
 /**
@@ -65,36 +79,28 @@ function addRowReducer(state, action) {
 function moveRowReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(
-		resolve => {
-			if (action.type === MOVE_ROW) {
-				const nextData = _moveRow(
-					action.rowId,
-					nextState.layoutData,
-					action.targetItemId,
-					action.targetBorder
-				);
+	return new Promise(resolve => {
+		if (action.type === MOVE_ROW) {
+			const nextData = _moveRow(
+				action.rowId,
+				nextState.layoutData,
+				action.targetItemId,
+				action.targetBorder
+			);
 
-				updatePageEditorLayoutData(
-					nextData,
-					nextState.segmentsExperienceId
-				).then(
-					() => {
-						nextState = setIn(nextState, ['layoutData'], nextData);
+			updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId)
+				.then(() => {
+					nextState = setIn(nextState, ['layoutData'], nextData);
 
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(nextState);
-					}
-				);
-			}
-			else {
-				resolve(nextState);
-			}
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(nextState);
+				});
+		} else {
+			resolve(nextState);
 		}
-	);
+	});
 }
 
 /**
@@ -108,64 +114,55 @@ function moveRowReducer(state, action) {
 function removeRowReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(
-		resolve => {
-			if (action.type === REMOVE_ROW) {
-				nextState = updateIn(
-					nextState,
-					['layoutData', 'structure'],
-					structure => remove(
-						structure,
-						getRowIndex(structure, action.rowId)
-					),
-					[]
-				);
+	return new Promise(resolve => {
+		if (action.type === REMOVE_ROW) {
+			nextState = updateIn(
+				nextState,
+				['layoutData', 'structure'],
+				structure =>
+					remove(structure, getRowIndex(structure, action.rowId)),
+				[]
+			);
 
-				const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
-					state.layoutData.structure[
-						getRowIndex(state.layoutData.structure, action.rowId)
-					]
-				).filter(
-					fragmentEntryLinkId => !containsFragmentEntryLinkId(
+			const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
+				state.layoutData.structure[
+					getRowIndex(state.layoutData.structure, action.rowId)
+				]
+			).filter(
+				fragmentEntryLinkId =>
+					!containsFragmentEntryLinkId(
 						nextState.layoutDataList,
 						fragmentEntryLinkId,
-						nextState.segmentsExperienceId || nextState.defaultSegmentsExperienceId
+						nextState.segmentsExperienceId ||
+							nextState.defaultSegmentsExperienceId
 					)
-				);
+			);
 
-				fragmentEntryLinkIds.forEach(
-					fragmentEntryLinkId => {
-						nextState = updateWidgets(
-							nextState,
-							fragmentEntryLinkId
-						);
-					}
-				);
+			fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
+				nextState = updateWidgets(nextState, fragmentEntryLinkId);
+			});
 
-				updatePageEditorLayoutData(
-					nextState.layoutData,
-					nextState.segmentsExperienceId
-				).then(
-					() => removeFragmentEntryLinks(
+			updatePageEditorLayoutData(
+				nextState.layoutData,
+				nextState.segmentsExperienceId
+			)
+				.then(() =>
+					removeFragmentEntryLinks(
 						nextState.layoutData,
 						fragmentEntryLinkIds,
 						nextState.segmentsExperienceId
 					)
-				).then(
-					() => {
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(state);
-					}
-				);
-			}
-			else {
-				resolve(state);
-			}
+				)
+				.then(() => {
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(state);
+				});
+		} else {
+			resolve(state);
 		}
-	);
+	});
 }
 
 /**
@@ -179,9 +176,10 @@ function removeRowReducer(state, action) {
 function updateRowColumnsReducer(state, action) {
 	let nextState = state;
 
-	if (action.type === UPDATE_ROW_COLUMNS_ERROR ||
-		action.type === UPDATE_ROW_COLUMNS_LOADING) {
-
+	if (
+		action.type === UPDATE_ROW_COLUMNS_ERROR ||
+		action.type === UPDATE_ROW_COLUMNS_LOADING
+	) {
 		nextState = setIn(nextState, ['layoutData'], action.layoutData);
 	}
 
@@ -203,14 +201,9 @@ function updateRowColumnsNumberReducer(state, action) {
 	if (action.type === UPDATE_ROW_COLUMNS_NUMBER_SUCCESS) {
 		nextState = setIn(nextState, ['layoutData'], action.layoutData);
 
-		action.fragmentEntryLinkIdsToRemove.forEach(
-			fragmentEntryLinkId => {
-				nextState = updateWidgets(
-					nextState,
-					fragmentEntryLinkId
-				);
-			}
-		);
+		action.fragmentEntryLinkIdsToRemove.forEach(fragmentEntryLinkId => {
+			nextState = updateWidgets(nextState, fragmentEntryLinkId);
+		});
 	}
 
 	return nextState;
@@ -224,8 +217,8 @@ function updateRowColumnsNumberReducer(state, action) {
  * @param {string} action.type
  * @return {object}
  */
-const updateRowConfigReducer = (state, action) => new Promise(
-	resolve => {
+const updateRowConfigReducer = (state, action) =>
+	new Promise(resolve => {
 		let nextState = state;
 
 		if (action.type === UPDATE_ROW_CONFIG) {
@@ -236,47 +229,36 @@ const updateRowConfigReducer = (state, action) => new Promise(
 
 			if (rowIndex === -1) {
 				resolve(nextState);
-			}
-			else {
-				Object.entries(action.config).forEach(
-					entry => {
-						const [key, value] = entry;
+			} else {
+				Object.entries(action.config).forEach(entry => {
+					const [key, value] = entry;
 
-						const configPath = [
-							'layoutData',
-							'structure',
-							rowIndex,
-							'config',
-							key
-						];
+					const configPath = [
+						'layoutData',
+						'structure',
+						rowIndex,
+						'config',
+						key
+					];
 
-						nextState = setIn(
-							nextState,
-							configPath,
-							value
-						);
-					}
-				);
+					nextState = setIn(nextState, configPath, value);
+				});
 
 				updatePageEditorLayoutData(
 					nextState.layoutData,
 					nextState.segmentsExperienceId
-				).then(
-					() => {
+				)
+					.then(() => {
 						resolve(nextState);
-					}
-				).catch(
-					() => {
+					})
+					.catch(() => {
 						resolve(state);
-					}
-				);
+					});
 			}
-		}
-		else {
+		} else {
 			resolve(nextState);
 		}
-	}
-);
+	});
 
 /**
  * Returns a new layoutData with the given row moved to the position

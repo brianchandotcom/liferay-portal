@@ -1,6 +1,7 @@
 .portlet-layout {
 	.portlet {
-		.management-bar, .navbar-underline {
+		.management-bar,
+		.navbar-underline {
 			> .container-fluid-max-xl {
 				padding-left: 0;
 				padding-right: 0;
@@ -47,7 +48,8 @@
 			vertical-align: middle;
 		}
 
-		.portlet-topper-toolbar, .icon-monospaced {
+		.portlet-topper-toolbar,
+		.icon-monospaced {
 			height: 1.5rem;
 			line-height: 1.5rem;
 			width: 1.5rem;
@@ -59,7 +61,8 @@
 		}
 	}
 
-	&:hover, &.open {
+	&:hover,
+	&.open {
 		> .portlet-topper {
 			z-index: 999;
 		}

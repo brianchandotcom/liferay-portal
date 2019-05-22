@@ -20,8 +20,7 @@ AUI.add(
 
 		var STR_NEW_LINE = '\n';
 
-		var AutcompleteInputCaretIndex = function() {
-		};
+		var AutcompleteInputCaretIndex = function() {};
 
 		AutcompleteInputCaretIndex.prototype = {
 			_getCaretIndex: function(node) {
@@ -39,7 +38,10 @@ AUI.add(
 				if (range && range.parentElement() === inputEl) {
 					var value = inputEl.value;
 
-					var normalizedValue = value.replace(REGEX_NEW_LINE, STR_NEW_LINE);
+					var normalizedValue = value.replace(
+						REGEX_NEW_LINE,
+						STR_NEW_LINE
+					);
 
 					var textInputRange = inputEl.createTextRange();
 
@@ -51,19 +53,38 @@ AUI.add(
 
 					var length = value.length;
 
-					if (textInputRange.compareEndPoints('StartToEnd', endRange) > -1) {
+					if (
+						textInputRange.compareEndPoints(
+							'StartToEnd',
+							endRange
+						) > -1
+					) {
 						start = end = length;
-					}
-					else {
-						start = -textInputRange.moveStart(STR_CHARACTER, -length);
-						start += normalizedValue.slice(0, start).split(STR_NEW_LINE).length - 1;
+					} else {
+						start = -textInputRange.moveStart(
+							STR_CHARACTER,
+							-length
+						);
+						start +=
+							normalizedValue.slice(0, start).split(STR_NEW_LINE)
+								.length - 1;
 
-						if (textInputRange.compareEndPoints(STR_END_TO_END, endRange) > -1) {
+						if (
+							textInputRange.compareEndPoints(
+								STR_END_TO_END,
+								endRange
+							) > -1
+						) {
 							end = length;
-						}
-						else {
-							end = -textInputRange.moveEnd(STR_CHARACTER, -length);
-							end += normalizedValue.slice(0, end).split(STR_NEW_LINE).length - 1;
+						} else {
+							end = -textInputRange.moveEnd(
+								STR_CHARACTER,
+								-length
+							);
+							end +=
+								normalizedValue
+									.slice(0, end)
+									.split(STR_NEW_LINE).length - 1;
 						}
 					}
 				}

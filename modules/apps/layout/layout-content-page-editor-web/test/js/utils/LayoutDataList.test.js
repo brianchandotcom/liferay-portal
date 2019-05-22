@@ -4,57 +4,52 @@ const LAYOUT_DATA_PERSONALIZATION = [
 	{
 		segmentsExperienceId: 'segmentsExperienceId1',
 		layoutData: {
-			"structure": [
+			structure: [
 				{
-					"columns": [
+					columns: [
 						{
-							"fragmentEntryLinkIds": [
-								"37212",
-								"37213"
-							],
+							fragmentEntryLinkIds: ['37212', '37213']
 						}
 					]
 				},
 				{
-					"columns": [
+					columns: [
 						{
-							"fragmentEntryLinkIds": ["37218"]
+							fragmentEntryLinkIds: ['37218']
 						},
 						{
-							"fragmentEntryLinkIds": ["37215"]
+							fragmentEntryLinkIds: ['37215']
 						}
 					]
 				}
 			]
 		}
-	}, {
+	},
+	{
 		segmentsExperienceId: 'segmentsExperienceId2',
 		layoutData: {
-			"structure": [
+			structure: [
 				{
-					"columns": [
+					columns: [
 						{
-							"fragmentEntryLinkIds": [
-								"37212",
-								"37213"
-							]
+							fragmentEntryLinkIds: ['37212', '37213']
 						}
 					]
 				},
 				{
-					"columns": [
+					columns: [
 						{
-							"fragmentEntryLinkIds": ["37214"]
+							fragmentEntryLinkIds: ['37214']
 						},
 						{
-							"fragmentEntryLinkIds": ["37215"]
+							fragmentEntryLinkIds: ['37215']
 						}
 					]
 				}
 			]
 		}
 	}
-]
+];
 
 describe('confirmFragmnetEntryLinkIdLayoutDataList ', () => {
 	test('should confirm fragmentEntryLinkId presence in a LayoutData different than the one selected', () => {
@@ -77,10 +72,7 @@ describe('confirmFragmnetEntryLinkIdLayoutDataList ', () => {
 
 	test('should confirm fragmentEntryLinkId presence in a LayoutData', () => {
 		expect(
-			containsFragmentEntryLinkId(
-				LAYOUT_DATA_PERSONALIZATION,
-				'37214'
-			)
+			containsFragmentEntryLinkId(LAYOUT_DATA_PERSONALIZATION, '37214')
 		).toBe(true);
 	});
 
@@ -92,5 +84,5 @@ describe('confirmFragmnetEntryLinkIdLayoutDataList ', () => {
 				'segmentsExperienceId2'
 			)
 		).toBe(false);
-	})
-})
+	});
+});

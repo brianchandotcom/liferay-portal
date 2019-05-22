@@ -12,19 +12,22 @@
 		border-color: #666;
 	}
 
-	.palette-item, .palette-item-inner, .palette-item-hover, .palette-item-hover .palette-item-inner {
+	.palette-item,
+	.palette-item-inner,
+	.palette-item-hover,
+	.palette-item-hover .palette-item-inner {
 		border-color: transparent;
 	}
 
 	.lfr-input-localized .lfr-input-localized-state {
-		background: #DDD;
+		background: #ddd;
 
 		&.lfr-input-localized-state-error {
-			background: #FF0047;
+			background: #ff0047;
 		}
 	}
 
 	.palette-item-selected .lfr-input-localized-state {
-		background: #27C1F2;
+		background: #27c1f2;
 	}
 }

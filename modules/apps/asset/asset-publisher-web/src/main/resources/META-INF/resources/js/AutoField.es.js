@@ -17,7 +17,6 @@ const DEFAULT_RULE = {
  */
 
 class AutoField extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -84,7 +83,6 @@ class AutoField extends Component {
 }
 
 AutoField.STATE = {
-
 	/**
 	 * Array of rules being rendered as children. Each rule
 	 * represents a step on the filtering process, being either

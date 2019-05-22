@@ -9,45 +9,40 @@ AUI.add(
 			instance.form.on('submit', A.bind(instance._onSubmit, instance));
 		};
 
-		A.mix(
-			ModifiedFacetConfiguration.prototype,
-			{
-				_onSubmit: function(event) {
-					var instance = this;
+		A.mix(ModifiedFacetConfiguration.prototype, {
+			_onSubmit: function(event) {
+				var instance = this;
 
-					event.preventDefault();
+				event.preventDefault();
 
-					var ranges = [];
+				var ranges = [];
 
-					var rangeFormRows = A.all('.range-form-row').filter(
-						function(item) {
-							return !item.get('hidden');
-						}
-					);
+				var rangeFormRows = A.all('.range-form-row').filter(function(
+					item
+				) {
+					return !item.get('hidden');
+				});
 
-					rangeFormRows.each(
-						function(item) {
-							var label = item.one('.label-input').val();
+				rangeFormRows.each(function(item) {
+					var label = item.one('.label-input').val();
 
-							var range = item.one('.range-input').val();
+					var range = item.one('.range-input').val();
 
-							ranges.push(
-								{
-									label: label,
-									range: range
-								}
-							);
-						}
-					);
+					ranges.push({
+						label: label,
+						range: range
+					});
+				});
 
-					instance.form.one('.ranges-input').val(JSON.stringify(ranges));
+				instance.form.one('.ranges-input').val(JSON.stringify(ranges));
 
-					submitForm(instance.form);
-				}
+				submitForm(instance.form);
 			}
-		);
+		});
 
-		Liferay.namespace('Search').ModifiedFacetConfiguration = ModifiedFacetConfiguration;
+		Liferay.namespace(
+			'Search'
+		).ModifiedFacetConfiguration = ModifiedFacetConfiguration;
 	},
 	'',
 	{

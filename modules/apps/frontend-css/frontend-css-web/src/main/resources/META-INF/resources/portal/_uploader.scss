@@ -107,7 +107,10 @@
 		padding-left: 25px;
 	}
 
-	.upload-complete .cancel-button, .delete-button, .upload-complete.file-saved .delete-button, .upload-complete.upload-error .delete-button {
+	.upload-complete .cancel-button,
+	.delete-button,
+	.upload-complete.file-saved .delete-button,
+	.upload-complete.upload-error .delete-button {
 		display: none;
 	}
 
@@ -131,7 +134,8 @@
 			margin-top: -7px;
 		}
 
-		.error-message, .success-message {
+		.error-message,
+		.success-message {
 			margin-left: 1em;
 
 			&.card-bottom {

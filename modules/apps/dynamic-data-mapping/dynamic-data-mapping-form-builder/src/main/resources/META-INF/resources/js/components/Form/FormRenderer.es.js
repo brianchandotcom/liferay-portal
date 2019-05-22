@@ -14,7 +14,6 @@ import {pageStructure} from '../../util/config.es';
 
 class FormRenderer extends Component {
 	static STATE = {
-
 		/**
 		 * @default
 		 * @instance
@@ -79,10 +78,7 @@ class FormRenderer extends Component {
 			index = this.pages.length - 1;
 		}
 
-		this.emit(
-			'activePageUpdated',
-			index
-		);
+		this.emit('activePageUpdated', index);
 	}
 
 	_handlePaginationRightClicked() {
@@ -93,10 +89,7 @@ class FormRenderer extends Component {
 			index = -1;
 		}
 
-		this.emit(
-			'activePageUpdated',
-			index
-		);
+		this.emit('activePageUpdated', index);
 	}
 }
 

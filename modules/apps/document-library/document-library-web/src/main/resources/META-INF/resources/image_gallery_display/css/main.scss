@@ -1,4 +1,4 @@
-@import "bourbon";
+@import 'bourbon';
 
 .portlet-image-gallery-display {
 	.lfr-asset-attributes {
@@ -35,21 +35,22 @@
 		text-align: center;
 		width: 150px;
 
-		&:hover, &.hover {
-			background-color: #D3E8F1;
+		&:hover,
+		&.hover {
+			background-color: #d3e8f1;
 		}
 
 		&.error:hover {
-			background-color: #FDD;
+			background-color: #fdd;
 		}
 
 		&:hover .image-thumbnail img {
-			background-color: #B0D2E1;
-			border-color: #7ABFDD;
+			background-color: #b0d2e1;
+			border-color: #7abfdd;
 		}
 
 		a {
-			color: #5B677D;
+			color: #5b677d;
 		}
 	}
 
@@ -63,14 +64,15 @@
 		position: relative;
 
 		img {
-			background: #EAEAEA;
-			border: 1px solid #CCC;
+			background: #eaeaea;
+			border: 1px solid #ccc;
 			margin: 0;
 			padding: 5px;
 		}
 	}
 
-	img.locked-icon, img.shortcut-icon {
+	img.locked-icon,
+	img.shortcut-icon {
 		bottom: 10px;
 		position: absolute;
 		z-index: 10;

@@ -8,7 +8,6 @@ import templates from './FormPortal.soy.js';
 class FormPortal extends Component {}
 
 FormPortal.STATE = {
-
 	/**
 	 * @default input
 	 * @instance

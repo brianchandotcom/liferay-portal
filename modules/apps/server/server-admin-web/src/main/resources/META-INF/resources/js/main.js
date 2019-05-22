@@ -13,154 +13,165 @@ AUI.add(
 
 		var STR_URL = 'url';
 
-		var Admin = A.Component.create(
-			{
-				ATTRS: {
-					form: {
-						setter: A.one,
-						value: null
-					},
-
-					redirectUrl: {
-						validator: Lang.isString,
-						value: null
-					},
-
-					submitButton: {
-						validator: Lang.isString,
-						value: null
-					},
-
-					url: {
-						value: null
-					}
+		var Admin = A.Component.create({
+			ATTRS: {
+				form: {
+					setter: A.one,
+					value: null
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				redirectUrl: {
+					validator: Lang.isString,
+					value: null
+				},
 
-				EXTENDS: A.Base,
+				submitButton: {
+					validator: Lang.isString,
+					value: null
+				},
 
-				NAME: 'admin',
+				url: {
+					value: null
+				}
+			},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+			AUGMENTS: [Liferay.PortletBase],
 
-						instance._eventHandles = [];
+			EXTENDS: A.Base,
 
-						instance.bindUI();
-					},
+			NAME: 'admin',
 
-					bindUI: function() {
-						var instance = this;
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-						instance._eventHandles.push(
-							instance.get(STR_FORM).delegate(
+					instance._eventHandles = [];
+
+					instance.bindUI();
+				},
+
+				bindUI: function() {
+					var instance = this;
+
+					instance._eventHandles.push(
+						instance
+							.get(STR_FORM)
+							.delegate(
 								STR_CLICK,
 								A.bind('_onSubmit', instance),
 								instance.get('submitButton')
 							)
+					);
+				},
+
+				destructor: function() {
+					var instance = this;
+
+					A.Array.invoke(instance._eventHandles, 'detach');
+
+					instance._eventHandles = null;
+
+					A.clearTimeout(instance._laterTimeout);
+				},
+
+				_addInputsFromData: function(data) {
+					var instance = this;
+
+					var form = instance.get(STR_FORM);
+
+					var inputsArray = A.Object.map(data, function(value, key) {
+						key = MAP_DATA_PARAMS[key] || key;
+
+						var nsKey = instance.ns(key);
+
+						return (
+							'<input id="' +
+							nsKey +
+							'" name="' +
+							nsKey +
+							'" type="hidden" value="' +
+							value +
+							'" />'
 						);
-					},
+					});
 
-					destructor: function() {
-						var instance = this;
+					form.append(inputsArray.join(''));
+				},
 
-						A.Array.invoke(instance._eventHandles, 'detach');
+				_installXuggler: function(event) {
+					var instance = this;
 
-						instance._eventHandles = null;
+					var form = instance.get(STR_FORM);
 
-						A.clearTimeout(instance._laterTimeout);
-					},
+					var data = A.IO.stringify(form.getDOM());
 
-					_addInputsFromData: function(data) {
-						var instance = this;
+					data = A.QueryString.parse(data);
 
-						var form = instance.get(STR_FORM);
+					var redirectKey = instance.ns('redirect');
 
-						var inputsArray = A.Object.map(
-							data,
-							function(value, key) {
-								key = MAP_DATA_PARAMS[key] || key;
+					var url = Liferay.Util.addParams(
+						'p_p_isolated=1',
+						instance.get(STR_URL)
+					);
 
-								var nsKey = instance.ns(key);
+					data[redirectKey] = Liferay.Util.addParams(
+						'p_p_isolated=1',
+						data[redirectKey]
+					);
 
-								return '<input id="' + nsKey + '" name="' + nsKey + '" type="hidden" value="' + value + '" />';
-							}
-						);
+					A.one('#adminXugglerPanelContent').load(url, {
+						data: data,
+						loadingMask: {
+							'strings.loading': Liferay.Language.get(
+								'xuggler-library-is-installing'
+							)
+						},
+						selector: '#adminXugglerPanelContent',
+						where: 'outer'
+					});
+				},
 
-						form.append(inputsArray.join(''));
-					},
+				_onSubmit: function(event) {
+					var instance = this;
 
-					_installXuggler: function(event) {
-						var instance = this;
+					var data = event.currentTarget.getData();
+					var form = instance.get(STR_FORM);
 
-						var form = instance.get(STR_FORM);
+					var cmd = data.cmd;
+					var redirect = instance.one('#redirect', form);
 
-						var data = A.IO.stringify(form.getDOM());
+					if (redirect) {
+						redirect.val(instance.get('redirectURL'));
+					}
 
-						data = A.QueryString.parse(data);
+					instance._addInputsFromData(data);
 
-						var redirectKey = instance.ns('redirect');
+					if (cmd === 'installXuggler') {
+						var cmdNode = instance.one('#cmd');
 
-						var url = Liferay.Util.addParams('p_p_isolated=1', instance.get(STR_URL));
+						instance._installXuggler();
 
-						data[redirectKey] = Liferay.Util.addParams('p_p_isolated=1', data[redirectKey]);
-
-						A.one('#adminXugglerPanelContent').load(
-							url,
-							{
-								data: data,
-								loadingMask: {
-									'strings.loading': Liferay.Language.get('xuggler-library-is-installing')
-								},
-								selector: '#adminXugglerPanelContent',
-								where: 'outer'
-							}
-						);
-					},
-
-					_onSubmit: function(event) {
-						var instance = this;
-
-						var data = event.currentTarget.getData();
-						var form = instance.get(STR_FORM);
-
-						var cmd = data.cmd;
-						var redirect = instance.one('#redirect', form);
-
-						if (redirect) {
-							redirect.val(instance.get('redirectURL'));
+						if (cmdNode) {
+							cmdNode.remove();
 						}
 
-						instance._addInputsFromData(data);
-
-						if (cmd === 'installXuggler') {
-							var cmdNode = instance.one('#cmd');
-
-							instance._installXuggler();
-
-							if (cmdNode) {
-								cmdNode.remove();
-							}
-
-							instance._installXuggler();
-						}
-						else {
-							submitForm(
-								form,
-								instance.get(STR_URL)
-							);
-						}
+						instance._installXuggler();
+					} else {
+						submitForm(form, instance.get(STR_URL));
 					}
 				}
 			}
-		);
+		});
 
 		Liferay.Portlet.Admin = Admin;
 	},
 	'',
 	{
-		requires: ['aui-io-plugin-deprecated', 'aui-io-request', 'liferay-portlet-base', 'querystring-parse']
+		requires: [
+			'aui-io-plugin-deprecated',
+			'aui-io-request',
+			'liferay-portlet-base',
+			'querystring-parse'
+		]
 	}
 );

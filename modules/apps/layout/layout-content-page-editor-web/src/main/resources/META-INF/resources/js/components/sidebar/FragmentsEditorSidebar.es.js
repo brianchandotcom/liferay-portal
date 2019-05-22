@@ -12,7 +12,6 @@ import templates from './FragmentsEditorSidebar.soy';
  * @review
  */
 class FragmentsEditorSidebar extends Component {
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -48,14 +47,11 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	_handleHide() {
-		this.store.dispatch(
-			{
-				sidebarPanelId: '',
-				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-			}
-		);
+		this.store.dispatch({
+			sidebarPanelId: '',
+			type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+		});
 	}
-
 }
 
 /**
@@ -65,7 +61,6 @@ class FragmentsEditorSidebar extends Component {
  * @type {!Object}
  */
 FragmentsEditorSidebar.STATE = {
-
 	/**
 	 * Synced ProductMenu sidebar.
 	 * @default undefined

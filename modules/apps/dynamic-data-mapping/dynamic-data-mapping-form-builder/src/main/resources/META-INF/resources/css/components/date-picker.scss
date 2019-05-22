@@ -1,6 +1,6 @@
 .datepicker {
 	body {
-		background-color: #FFF;
+		background-color: #fff;
 	}
 
 	.row {
@@ -42,7 +42,7 @@
 	.day {
 		align-items: center;
 		border-radius: 100%;
-		color: #6B6C7E;
+		color: #6b6c7e;
 		cursor: pointer;
 		display: flex;
 		height: 31px;
@@ -56,12 +56,12 @@
 	}
 
 	.day.active {
-		background-color: #0B5FFF;
-		color: #FFF !important;
+		background-color: #0b5fff;
+		color: #fff !important;
 	}
 
 	.day.outside {
-		color: #A7A9BC;
+		color: #a7a9bc;
 	}
 
 	.form-caption,
@@ -98,7 +98,7 @@
 	.extension-time {
 		align-items: center;
 		background-color: rgba(241, 242, 245, 0.5);
-		color: #6B6C7E;
+		color: #6b6c7e;
 		display: flex;
 		padding: 16px 32px;
 	}

@@ -2,14 +2,17 @@ import './EditablePageHeader.soy.js';
 import Component, {Fragment} from 'metal-jsx';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {sub} from '../../util/strings.es.js';
 
 const withEditablePageHeader = ChildComponent => {
 	class EditablePageHeader extends Component {
 		static PROPS = {
-
 			/**
 			 * @default
 			 * @instance
@@ -88,14 +91,22 @@ const withEditablePageHeader = ChildComponent => {
 			 */
 
 			spritemap: Config.string().required()
-		}
+		};
 
 		attached() {
 			this._eventHandler = new EventHandler();
 
 			this._eventHandler.add(
-				this.delegate('input', '.form-builder-page-header-title', this._handlePageTitleChanged.bind(this)),
-				this.delegate('input', '.form-builder-page-header-description', this._handlePageDescriptionChanged.bind(this))
+				this.delegate(
+					'input',
+					'.form-builder-page-header-title',
+					this._handlePageTitleChanged.bind(this)
+				),
+				this.delegate(
+					'input',
+					'.form-builder-page-header-description',
+					this._handlePageDescriptionChanged.bind(this)
+				)
 			);
 		}
 
@@ -108,17 +119,18 @@ const withEditablePageHeader = ChildComponent => {
 			const total = pages.length;
 			const visitor = new PagesVisitor(pages);
 
-			return visitor.mapPages(
-				(page, pageIndex) => {
-					return {
-						...page,
-						headerRenderer: 'editable',
-						pageIndex,
-						placeholder: sub(Liferay.Language.get('untitled-page-x-of-x'), [pageIndex + 1, total]),
-						total
-					};
-				}
-			);
+			return visitor.mapPages((page, pageIndex) => {
+				return {
+					...page,
+					headerRenderer: 'editable',
+					pageIndex,
+					placeholder: sub(
+						Liferay.Language.get('untitled-page-x-of-x'),
+						[pageIndex + 1, total]
+					),
+					total
+				};
+			});
 		}
 
 		render() {
@@ -138,22 +150,20 @@ const withEditablePageHeader = ChildComponent => {
 
 			dispatch(
 				'pagesUpdated',
-				visitor.mapPages(
-					(page, pageIndex) => {
-						if (pageIndex === activePage) {
-							page = {
-								...page,
-								description: value,
-								localizedDescription: {
-									...page.localizedDescription,
-									[editingLanguageId]: value
-								}
-							};
-						}
-
-						return page;
+				visitor.mapPages((page, pageIndex) => {
+					if (pageIndex === activePage) {
+						page = {
+							...page,
+							description: value,
+							localizedDescription: {
+								...page.localizedDescription,
+								[editingLanguageId]: value
+							}
+						};
 					}
-				)
+
+					return page;
+				})
 			);
 		}
 
@@ -166,22 +176,20 @@ const withEditablePageHeader = ChildComponent => {
 
 			dispatch(
 				'pagesUpdated',
-				visitor.mapPages(
-					(page, pageIndex) => {
-						if (pageIndex === activePage) {
-							page = {
-								...page,
-								localizedTitle: {
-									...page.localizedTitle,
-									[editingLanguageId]: value
-								},
-								title: value
-							};
-						}
-
-						return page;
+				visitor.mapPages((page, pageIndex) => {
+					if (pageIndex === activePage) {
+						page = {
+							...page,
+							localizedTitle: {
+								...page.localizedTitle,
+								[editingLanguageId]: value
+							},
+							title: value
+						};
 					}
-				)
+
+					return page;
+				})
 			);
 		}
 	}

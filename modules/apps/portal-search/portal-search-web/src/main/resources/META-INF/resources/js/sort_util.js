@@ -14,29 +14,32 @@ AUI.add(
 			removeURLParameters: function(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				var newParameters = parameterArray.filter(
-					function(item) {
-						var itemSplit = item.split('=');
+				var newParameters = parameterArray.filter(function(item) {
+					var itemSplit = item.split('=');
 
-						if (itemSplit && (itemSplit[0] === key)) {
-							return false;
-						}
-
-						return true;
+					if (itemSplit && itemSplit[0] === key) {
+						return false;
 					}
-				);
+
+					return true;
+				});
 
 				return newParameters;
 			},
 
 			setURLParameters: function(key, values, parameterArray) {
-				var newParameters = SortUtil.removeURLParameters(key, parameterArray);
-
-				values.forEach(
-					function(item) {
-						newParameters = SortUtil.addURLParameter(key, item, newParameters);
-					}
+				var newParameters = SortUtil.removeURLParameters(
+					key,
+					parameterArray
 				);
+
+				values.forEach(function(item) {
+					newParameters = SortUtil.addURLParameter(
+						key,
+						item,
+						newParameters
+					);
+				});
 
 				return newParameters;
 			},
@@ -54,13 +57,15 @@ AUI.add(
 					search = search.substr(1);
 				}
 
-				var parameterArray = search.split('&').filter(
-					function(item) {
-						return item.trim() !== '';
-					}
-				);
+				var parameterArray = search.split('&').filter(function(item) {
+					return item.trim() !== '';
+				});
 
-				var newParameters = SortUtil.setURLParameters(key, selections, parameterArray);
+				var newParameters = SortUtil.setURLParameters(
+					key,
+					selections,
+					parameterArray
+				);
 
 				search = newParameters.join('&');
 

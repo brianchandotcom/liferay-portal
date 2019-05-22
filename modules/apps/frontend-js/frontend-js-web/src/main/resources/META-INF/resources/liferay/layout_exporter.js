@@ -1,4 +1,4 @@
-;(function(A, Liferay) {
+(function(A, Liferay) {
 	var LayoutExporter = {
 		icons: {
 			minus: themeDisplay.getPathThemeImages() + '/arrows/01_minus.png',
@@ -8,25 +8,23 @@
 		publishToLive: function(options) {
 			options = options || {};
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-						on: {
-							visibleChange: function(event) {
-								var instance = this;
+			Liferay.Util.openWindow({
+				dialog: {
+					constrain: true,
+					modal: true,
+					on: {
+						visibleChange: function(event) {
+							var instance = this;
 
-								if (!event.newVal) {
-									instance.destroy();
-								}
+							if (!event.newVal) {
+								instance.destroy();
 							}
 						}
-					},
-					title: options.title,
-					uri: options.url
-				}
-			);
+					}
+				},
+				title: options.title,
+				uri: options.url
+			});
 		}
 	};
 
@@ -65,8 +63,7 @@
 				if (detail.hasClass('hide')) {
 					detail.show();
 					icon = LayoutExporter.icons.minus;
-				}
-				else {
+				} else {
 					detail.hide();
 				}
 
@@ -85,36 +82,51 @@
 			var namespace = options.namespace;
 			var reviewers = options.reviewers;
 
-			var contents = '<div>' +
-				'<form action="' + options.url + '" method="post">';
+			var contents =
+				'<div>' + '<form action="' + options.url + '" method="post">';
 
 			if (reviewers.length > 0) {
-				contents += '<textarea name="' + namespace + 'description" style="height: 100px; width: 284px;"></textarea><br /><br />' +
-				Liferay.Language.get('reviewer') + ' <select name="' + namespace + 'reviewUserId">';
+				contents +=
+					'<textarea name="' +
+					namespace +
+					'description" style="height: 100px; width: 284px;"></textarea><br /><br />' +
+					Liferay.Language.get('reviewer') +
+					' <select name="' +
+					namespace +
+					'reviewUserId">';
 
 				for (var i = 0; i < reviewers.length; i++) {
-					contents += '<option value="' + reviewers[i].userId + '">' + reviewers[i].fullName + '</option>';
+					contents +=
+						'<option value="' +
+						reviewers[i].userId +
+						'">' +
+						reviewers[i].fullName +
+						'</option>';
 				}
 
-				contents += '</select><br /><br />' +
-				'<input type="submit" value="' + Liferay.Language.get('proceed') + '" />';
-			}
-			else {
-				contents += Liferay.Language.get('no-reviewers-were-found') + '<br />' +
-				Liferay.Language.get('please-contact-the-administrator-to-assign-reviewers') + '<br /><br />';
+				contents +=
+					'</select><br /><br />' +
+					'<input type="submit" value="' +
+					Liferay.Language.get('proceed') +
+					'" />';
+			} else {
+				contents +=
+					Liferay.Language.get('no-reviewers-were-found') +
+					'<br />' +
+					Liferay.Language.get(
+						'please-contact-the-administrator-to-assign-reviewers'
+					) +
+					'<br /><br />';
 			}
 
-			contents += '</form>' +
-			'</div>';
+			contents += '</form>' + '</div>';
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true
-					},
-					title: contents
-				}
-			);
+			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true
+				},
+				title: contents
+			});
 		},
 		['liferay-util-window']
 	);

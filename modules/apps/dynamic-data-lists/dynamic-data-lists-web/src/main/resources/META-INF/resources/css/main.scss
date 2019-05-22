@@ -10,7 +10,8 @@
 	position: relative;
 }
 
-.document-library-file-entry-cell-editor-hidden, .link-to-page-cell-editor-hidden {
+.document-library-file-entry-cell-editor-hidden,
+.link-to-page-cell-editor-hidden {
 	display: none;
 }
 
@@ -36,7 +37,8 @@
 	}
 }
 
-.portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
+.portlet-dynamic-data-lists,
+.portlet-dynamic-data-lists-display {
 	.form-group.geolocation-field .button-holder .btn {
 		margin-top: 0;
 	}
@@ -54,12 +56,13 @@
 		width: 32px;
 	}
 
-	.record-set-id, .record-set-modified-date {
+	.record-set-id,
+	.record-set-modified-date {
 		margin-right: 20px;
 	}
 
 	.lfr-ddm-container {
-		background-color: #FFF;
+		background-color: #fff;
 	}
 }
 

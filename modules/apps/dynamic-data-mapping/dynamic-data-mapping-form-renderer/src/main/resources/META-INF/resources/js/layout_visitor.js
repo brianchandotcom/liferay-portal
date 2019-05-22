@@ -3,106 +3,104 @@ AUI.add(
 	function(A) {
 		var EMPTY_FN = A.Lang.emptyFn;
 
-		var LayoutVisitor = A.Component.create(
-			{
-				ATTRS: {
-					columnHandler: {
-						value: EMPTY_FN
-					},
-
-					fieldHandler: {
-						value: EMPTY_FN
-					},
-
-					pageHandler: {
-						value: EMPTY_FN
-					},
-
-					pages: {
-						validator: Array.isArray,
-						value: []
-					},
-
-					rowHandler: {
-						value: EMPTY_FN
-					}
+		var LayoutVisitor = A.Component.create({
+			ATTRS: {
+				columnHandler: {
+					value: EMPTY_FN
 				},
 
-				EXTENDS: A.Base,
+				fieldHandler: {
+					value: EMPTY_FN
+				},
 
-				NAME: 'liferay-ddm-form-renderer-layout-visitor',
+				pageHandler: {
+					value: EMPTY_FN
+				},
 
-				prototype: {
-					visit: function() {
-						var instance = this;
+				pages: {
+					validator: Array.isArray,
+					value: []
+				},
 
-						return instance._visitPages(instance.get('pages'));
-					},
+				rowHandler: {
+					value: EMPTY_FN
+				}
+			},
 
-					_visitColumn: function(column) {
-						var instance = this;
+			EXTENDS: A.Base,
 
-						var columnHandler = instance.get('columnHandler');
+			NAME: 'liferay-ddm-form-renderer-layout-visitor',
 
-						instance._visitFields(column.fields);
+			prototype: {
+				visit: function() {
+					var instance = this;
 
-						return columnHandler.apply(instance, arguments);
-					},
+					return instance._visitPages(instance.get('pages'));
+				},
 
-					_visitColumns: function(columns) {
-						var instance = this;
+				_visitColumn: function(column) {
+					var instance = this;
 
-						return columns.map(A.bind('_visitColumn', instance));
-					},
+					var columnHandler = instance.get('columnHandler');
 
-					_visitField: function(field, fields) {
-						var instance = this;
+					instance._visitFields(column.fields);
 
-						var fieldHandler = instance.get('fieldHandler');
+					return columnHandler.apply(instance, arguments);
+				},
 
-						return fieldHandler.apply(instance, arguments);
-					},
+				_visitColumns: function(columns) {
+					var instance = this;
 
-					_visitFields: function(fields) {
-						var instance = this;
+					return columns.map(A.bind('_visitColumn', instance));
+				},
 
-						return fields.map(A.rbind('_visitField', instance, fields));
-					},
+				_visitField: function(field, fields) {
+					var instance = this;
 
-					_visitPage: function(page) {
-						var instance = this;
+					var fieldHandler = instance.get('fieldHandler');
 
-						var pageHandler = instance.get('pageHandler');
+					return fieldHandler.apply(instance, arguments);
+				},
 
-						instance._visitRows(page.rows);
+				_visitFields: function(fields) {
+					var instance = this;
 
-						return pageHandler.apply(instance, arguments);
-					},
+					return fields.map(A.rbind('_visitField', instance, fields));
+				},
 
-					_visitPages: function(pages) {
-						var instance = this;
+				_visitPage: function(page) {
+					var instance = this;
 
-						return pages.map(A.bind('_visitPage', instance));
-					},
+					var pageHandler = instance.get('pageHandler');
 
-					_visitRow: function(row) {
-						var instance = this;
+					instance._visitRows(page.rows);
 
-						var rowHandler = instance.get('rowHandler');
+					return pageHandler.apply(instance, arguments);
+				},
 
-						instance._visitColumns(row.columns);
+				_visitPages: function(pages) {
+					var instance = this;
 
-						return rowHandler.apply(instance, arguments);
-					},
+					return pages.map(A.bind('_visitPage', instance));
+				},
 
-					_visitRows: function(rows) {
-						var instance = this;
+				_visitRow: function(row) {
+					var instance = this;
 
-						return rows.map(A.bind('_visitRow', instance));
-					}
+					var rowHandler = instance.get('rowHandler');
+
+					instance._visitColumns(row.columns);
+
+					return rowHandler.apply(instance, arguments);
+				},
+
+				_visitRows: function(rows) {
+					var instance = this;
+
+					return rows.map(A.bind('_visitRow', instance));
 				}
 			}
-		);
+		});
 
 		Liferay.namespace('DDM').LayoutVisitor = LayoutVisitor;
 	},

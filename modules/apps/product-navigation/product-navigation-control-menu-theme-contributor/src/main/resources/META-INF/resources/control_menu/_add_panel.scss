@@ -1,8 +1,10 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 body.open-admin-panel {
-	&, .control-menu, .affix {
+	&,
+	.control-menu,
+	.affix {
 		@include sm() {
 			padding-right: $admin-panel-width;
 		}
@@ -15,7 +17,8 @@ body.open-admin-panel {
 	}
 }
 
-body.open-admin-panel, body.sidenav-transition {
+body.open-admin-panel,
+body.sidenav-transition {
 	@include sm() {
 		overflow-x: hidden;
 	}
@@ -92,7 +95,7 @@ body.open-admin-panel, body.sidenav-transition {
 			width: 32px;
 
 			&.active {
-				color: #869CAD;
+				color: #869cad;
 			}
 		}
 

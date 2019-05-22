@@ -4,25 +4,20 @@ import {cleanup, render} from 'react-testing-library';
 
 const connectDnd = jest.fn(el => el);
 
-describe(
-	'CriteriaSidebarItem',
-	() => {
-		afterEach(cleanup);
+describe('CriteriaSidebarItem', () => {
+	afterEach(cleanup);
 
-		it(
-			'should render',
-			() => {
-				const OriginalCriteriaSidebarItem = CriteriaSidebarItem.DecoratedComponent;
+	it('should render', () => {
+		const OriginalCriteriaSidebarItem =
+			CriteriaSidebarItem.DecoratedComponent;
 
-				const {asFragment} = render(
-					<OriginalCriteriaSidebarItem
-						connectDragSource={connectDnd}
-						propertyKey="user"
-					/>
-				);
-
-				expect(asFragment()).toMatchSnapshot();
-			}
+		const {asFragment} = render(
+			<OriginalCriteriaSidebarItem
+				connectDragSource={connectDnd}
+				propertyKey='user'
+			/>
 		);
-	}
-);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+});

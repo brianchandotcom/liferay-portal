@@ -10,7 +10,8 @@
 	}
 
 	.lfr-button {
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			border: 1px solid transparent;
 		}
 
@@ -31,7 +32,8 @@
 	}
 }
 
-.lfr-toolbar, .lfr-emoticon-container {
+.lfr-toolbar,
+.lfr-emoticon-container {
 	.lfr-button {
 		border: 1px solid transparent;
 		cursor: pointer;
@@ -40,7 +42,10 @@
 	}
 }
 
-.lfr-toolbar select, .lfr-toolbar .lfr-button, .lfr-toolbar .lfr-separator, .lfr-emoticon-container .lfr-button {
+.lfr-toolbar select,
+.lfr-toolbar .lfr-button,
+.lfr-toolbar .lfr-separator,
+.lfr-emoticon-container .lfr-button {
 	float: left;
 }
 

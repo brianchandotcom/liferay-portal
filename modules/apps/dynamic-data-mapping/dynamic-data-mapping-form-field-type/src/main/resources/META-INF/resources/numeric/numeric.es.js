@@ -17,9 +17,7 @@ class Numeric extends Component {}
 Soy.register(Numeric, templates, 'render');
 
 if (!window.DDMNumeric) {
-	window.DDMNumeric = {
-
-	};
+	window.DDMNumeric = {};
 }
 
 window.DDMNumeric.createNumberMask = createNumberMask;

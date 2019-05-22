@@ -1,30 +1,30 @@
-@import "./ColumnOverlayGrid";
+@import './ColumnOverlayGrid';
 
-@import "./DragDrop";
+@import './DragDrop';
 
-@import "./ElementTopper";
+@import './ElementTopper';
 
-@import "./FloatingToolbar";
+@import './FloatingToolbar';
 
-@import "./FragmentEntryLink";
+@import './FragmentEntryLink';
 
-@import "./FragmentEntryLinkList";
+@import './FragmentEntryLinkList';
 
-@import "./FragmentEntryLinkEditables";
+@import './FragmentEntryLinkEditables';
 
-@import "./FragmentsEditorShim";
+@import './FragmentsEditorShim';
 
-@import "./FragmentsEditorSidebar";
+@import './FragmentsEditorSidebar';
 
-@import "./FragmentsEditorToolbar";
+@import './FragmentsEditorToolbar';
 
-@import "./SegmentsExperienceSelector";
+@import './SegmentsExperienceSelector';
 
-@import "./SelectMappingDialog";
+@import './SelectMappingDialog';
 
-@import "./SidebarLayoutsSection";
+@import './SidebarLayoutsSection';
 
-@import "./variables";
+@import './variables';
 
 .lfr-edit-mode__disabled-area {
 	cursor: not-allowed;
@@ -57,7 +57,9 @@
 	overflow-y: auto;
 
 	@media (min-width: 768px) {
-		height: calc(100vh - #{$desktopControlMenuHeight + $desktopManagementBarHeight});
+		height: calc(
+			100vh - #{$desktopControlMenuHeight + $desktopManagementBarHeight}
+		);
 		margin-top: $desktopControlMenuHeight + $desktopManagementBarHeight;
 	}
 }
@@ -69,7 +71,8 @@
 	will-change: margin;
 
 	@media (min-width: 768px) {
-		&--padded, &--padded.no-fragments-message {
+		&--padded,
+		&--padded.no-fragments-message {
 			margin-right: $sidebarWidth;
 		}
 	}
@@ -86,7 +89,8 @@
 		margin-top: 0;
 	}
 
-	&--padded, &--padded.no-fragments-message {
+	&--padded,
+	&--padded.no-fragments-message {
 		margin-right: 0;
 	}
 }

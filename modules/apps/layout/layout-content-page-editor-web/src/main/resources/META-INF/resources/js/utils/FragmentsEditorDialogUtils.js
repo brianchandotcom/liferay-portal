@@ -11,8 +11,10 @@ let _widgetConfigurationChangeHandler = null;
  * Possible types that can be returned by the image selector
  */
 const IMAGE_SELECTOR_RETURN_TYPES = {
-	downloadUrl: 'com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType',
-	fileEntryItemSelector: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
+	downloadUrl:
+		'com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType',
+	fileEntryItemSelector:
+		'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 	url: 'URL'
 };
 
@@ -24,15 +26,13 @@ const IMAGE_SELECTOR_RETURN_TYPES = {
  * @param {string} options.portletNamespace
  * @param {function} [options.destroyedCallback=null]
  */
-function openAssetBrowser(
-	{
-		assetBrowserURL,
-		callback,
-		modalTitle,
-		portletNamespace,
-		destroyedCallback = null
-	}
-) {
+function openAssetBrowser({
+	assetBrowserURL,
+	callback,
+	modalTitle,
+	portletNamespace,
+	destroyedCallback = null
+}) {
 	Liferay.Util.selectEntity(
 		{
 			dialog: {
@@ -46,15 +46,12 @@ function openAssetBrowser(
 		},
 		event => {
 			if (event.assetclassnameid) {
-				callback(
-					{
-						classNameId: event.assetclassnameid,
-						classPK: event.assetclasspk,
-						title: event.assettitle
-					}
-				);
-			}
-			else if (destroyedCallback) {
+				callback({
+					classNameId: event.assetclassnameid,
+					classPK: event.assetclasspk,
+					title: event.assettitle
+				});
+			} else if (destroyedCallback) {
 				destroyedCallback();
 			}
 		}
@@ -68,58 +65,54 @@ function openAssetBrowser(
  * @param {string} options.portletNamespace
  * @param {function} [options.destroyedCallback=null]
  */
-function openImageSelector(
-	{
-		callback,
-		imageSelectorURL,
-		portletNamespace,
-		destroyedCallback = null
-	}
-) {
-	AUI().use(
-		'liferay-item-selector-dialog',
-		A => {
-			const itemSelector = new A.LiferayItemSelectorDialog(
-				{
-					eventName: `${portletNamespace}selectImage`,
-					on: {
-						selectedItemChange: event => {
-							const selectedItem = event.newVal || {};
+function openImageSelector({
+	callback,
+	imageSelectorURL,
+	portletNamespace,
+	destroyedCallback = null
+}) {
+	AUI().use('liferay-item-selector-dialog', A => {
+		const itemSelector = new A.LiferayItemSelectorDialog({
+			eventName: `${portletNamespace}selectImage`,
+			on: {
+				selectedItemChange: event => {
+					const selectedItem = event.newVal || {};
 
-							const {returnType, value} = selectedItem;
-							let selectedImageURL = '';
+					const {returnType, value} = selectedItem;
+					let selectedImageURL = '';
 
-							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
-								returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
+					if (
+						returnType ===
+							IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
+						returnType === IMAGE_SELECTOR_RETURN_TYPES.url
+					) {
+						selectedImageURL = value;
+					}
 
-								selectedImageURL = value;
-							}
+					if (
+						returnType ===
+						IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector
+					) {
+						selectedImageURL = JSON.parse(value).url;
+					}
 
-							if (returnType === IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector) {
-								selectedImageURL = JSON.parse(value).url;
-							}
+					if (selectedImageURL) {
+						callback(selectedImageURL);
+					}
+				},
 
-							if (selectedImageURL) {
-								callback(selectedImageURL);
-							}
-						},
-
-						visibleChange: event => {
-							if ((event.newVal === false) &&
-								destroyedCallback) {
-
-								destroyedCallback();
-							}
-						}
-					},
-					title: Liferay.Language.get('select'),
-					url: imageSelectorURL
+				visibleChange: event => {
+					if (event.newVal === false && destroyedCallback) {
+						destroyedCallback();
+					}
 				}
-			);
+			},
+			title: Liferay.Language.get('select'),
+			url: imageSelectorURL
+		});
 
-			itemSelector.open();
-		}
-	);
+		itemSelector.open();
+	});
 }
 
 /**
@@ -131,28 +124,20 @@ function startListeningWidgetConfigurationChange(store) {
 
 	let submitFormHandler = null;
 
-	_widgetConfigurationChangeHandler = Liferay.after(
-		'popupReady',
-		event => {
-			if (submitFormHandler) {
-				submitFormHandler.detach();
+	_widgetConfigurationChangeHandler = Liferay.after('popupReady', event => {
+		if (submitFormHandler) {
+			submitFormHandler.detach();
 
-				submitFormHandler = null;
-			}
-
-			submitFormHandler = event.win.Liferay.on(
-				'submitForm',
-				() => {
-					store.dispatch(
-						{
-							lastSaveDate: new Date(),
-							type: UPDATE_LAST_SAVE_DATE
-						}
-					);
-				}
-			);
+			submitFormHandler = null;
 		}
-	);
+
+		submitFormHandler = event.win.Liferay.on('submitForm', () => {
+			store.dispatch({
+				lastSaveDate: new Date(),
+				type: UPDATE_LAST_SAVE_DATE
+			});
+		});
+	});
 }
 
 /**

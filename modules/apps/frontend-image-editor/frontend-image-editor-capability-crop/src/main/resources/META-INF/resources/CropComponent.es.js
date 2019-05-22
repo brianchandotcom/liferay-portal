@@ -10,7 +10,6 @@ import controlsTemplates from './CropControls.soy';
  * Creates a Crop component.
  */
 class CropComponent extends Component {
-
 	/**
 	 * Applies the brightness filter to generate a final version of the image.
 	 *
@@ -48,11 +47,23 @@ class CropComponent extends Component {
 		canvas.height = normalizedHeight;
 
 		let context = canvas.getContext('2d');
-		context.drawImage(rawCanvas, normalizedLeft, normalizedTop, normalizedWidth, normalizedHeight, 0, 0, normalizedWidth, normalizedHeight);
+		context.drawImage(
+			rawCanvas,
+			normalizedLeft,
+			normalizedTop,
+			normalizedWidth,
+			normalizedHeight,
+			0,
+			0,
+			normalizedWidth,
+			normalizedHeight
+		);
 
 		cropHandles.dispose();
 
-		return CancellablePromise.resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+		return CancellablePromise.resolve(
+			context.getImageData(0, 0, canvas.width, canvas.height)
+		);
 	}
 }
 
@@ -63,7 +74,6 @@ class CropComponent extends Component {
  * @type {!Object}
  */
 CropComponent.STATE = {
-
 	/**
 	 * Injected helper that retrieves the editor canvas.
 	 *

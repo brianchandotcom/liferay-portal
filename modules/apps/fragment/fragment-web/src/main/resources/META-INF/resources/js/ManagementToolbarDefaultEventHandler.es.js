@@ -4,17 +4,15 @@ import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addFragmentEntry(itemData) {
-		OpenSimpleInputModal(
-			{
-				dialogTitle: itemData.title,
-				formSubmitURL: itemData.addFragmentEntryURL,
-				mainFieldLabel: Liferay.Language.get('name'),
-				mainFieldName: 'name',
-				mainFieldPlaceholder: Liferay.Language.get('name'),
-				namespace: this.namespace,
-				spritemap: this.spritemap
-			}
-		);
+		OpenSimpleInputModal({
+			dialogTitle: itemData.title,
+			formSubmitURL: itemData.addFragmentEntryURL,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			mainFieldPlaceholder: Liferay.Language.get('name'),
+			namespace: this.namespace,
+			spritemap: this.spritemap
+		});
 	}
 
 	copySelectedFragmentEntries() {
@@ -30,7 +28,11 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	deleteSelectedFragmentEntries() {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			submitForm(this.one('#fm'), this.deleteFragmentEntriesURL);
 		}
 	}
@@ -62,7 +64,10 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryIds').value = fragmentEntryIds;
 
-					submitForm(this.one('#fragmentEntryFm'), this.moveFragmentEntryURL);
+					submitForm(
+						this.one('#fragmentEntryFm'),
+						this.moveFragmentEntryURL
+					);
 				}
 			}.bind(this)
 		);

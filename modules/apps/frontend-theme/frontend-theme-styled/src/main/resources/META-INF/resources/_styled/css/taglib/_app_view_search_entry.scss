@@ -1,11 +1,12 @@
 .app-view-search-entry-taglib {
-	.entry-discussion, .entry-attachment {
+	.entry-discussion,
+	.entry-attachment {
 		a {
 			text-decoration: none;
 		}
 
 		&:hover {
-			background-color: #D3E8F1;
+			background-color: #d3e8f1;
 		}
 	}
 
@@ -19,14 +20,14 @@
 	}
 
 	&.alt {
-		background-color: #EDF0F3;
+		background-color: #edf0f3;
 	}
 
 	&.search {
-		background-color: #FFF;
+		background-color: #fff;
 
 		&.alt {
-			background-color: #E2E5E8;
+			background-color: #e2e5e8;
 		}
 	}
 }

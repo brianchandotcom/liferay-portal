@@ -11,12 +11,9 @@ class Editor extends Component {
 	}
 
 	created() {
-		AUI().use(
-			'liferay-alloy-editor',
-			A => {
-				this.A = A;
-			}
-		);
+		AUI().use('liferay-alloy-editor', A => {
+			this.A = A;
+		});
 	}
 
 	willReceiveState({children, value}) {
@@ -37,39 +34,38 @@ class Editor extends Component {
 
 		window[name] = {};
 
-		this._alloyEditor = new A.LiferayAlloyEditor(
-			{
-				contents: value,
-				editorConfig: {
-					extraPlugins: 'ae_placeholder,ae_selectionregion,ae_uicore',
-					removePlugins: 'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
-					spritemap: `${themeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
-					srcNode: A.one(editorNode),
-					toolbars: {
-						add: {
-							buttons: ['hline', 'table']
-						},
-						styles: {
-							selections: AlloyEditor.Selections,
-							tabIndex: 1
-						}
+		this._alloyEditor = new A.LiferayAlloyEditor({
+			contents: value,
+			editorConfig: {
+				extraPlugins: 'ae_placeholder,ae_selectionregion,ae_uicore',
+				removePlugins:
+					'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
+				spritemap: `${themeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
+				srcNode: A.one(editorNode),
+				toolbars: {
+					add: {
+						buttons: ['hline', 'table']
+					},
+					styles: {
+						selections: AlloyEditor.Selections,
+						tabIndex: 1
 					}
-				},
-				namespace: name,
-				onChangeMethod: this._onChangeEditor.bind(this),
-				plugins: [],
-				textMode: false
-			}
-		).render();
+				}
+			},
+			namespace: name,
+			onChangeMethod: this._onChangeEditor.bind(this),
+			plugins: [],
+			textMode: false
+		}).render();
 
-		this._alloyEditor.getNativeEditor().on('actionPerformed', this._onActionPerformed.bind(this));
+		this._alloyEditor
+			.getNativeEditor()
+			.on('actionPerformed', this._onActionPerformed.bind(this));
 	}
 
 	_onActionPerformed(e) {
 		const {
-			data: {
-				props
-			}
+			data: {props}
 		} = e;
 
 		if (!props.command) {
@@ -84,20 +80,17 @@ class Editor extends Component {
 			{
 				value
 			},
-			() => this.emit(
-				'fieldEdited',
-				{
+			() =>
+				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent: event,
 					value
-				}
-			)
+				})
 		);
 	}
 }
 
 Editor.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance

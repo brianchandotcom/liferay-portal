@@ -5,13 +5,13 @@
 	}
 
 	.custom-devices {
-		background-color: #393A4A;
+		background-color: #393a4a;
 		border-radius: 4px;
 		margin: 0 10px 20px;
 		padding: 8px 6px 16px;
 
 		label {
-			color: #A7A9BC;
+			color: #a7a9bc;
 			font-size: 12px;
 		}
 
@@ -30,7 +30,7 @@
 		padding: 0 14px;
 
 		.icon-monospaced {
-			color: #A7A9BC;
+			color: #a7a9bc;
 			height: 2.5rem;
 			width: 2.5rem;
 
@@ -42,23 +42,23 @@
 		}
 
 		small {
-			color: #A7A9BC;
+			color: #a7a9bc;
 			margin: 4px 0 16px;
 		}
 	}
 
 	.lfr-device-item {
 		&.selected {
-			color: #FFF;
+			color: #fff;
 
 			.icon {
-				background-color: #393A4A;
+				background-color: #393a4a;
 				border-radius: 4px;
-				color: #FFF;
+				color: #fff;
 			}
 
 			small {
-				color: #FFF;
+				color: #fff;
 			}
 		}
 
@@ -98,27 +98,37 @@
 			padding: 4px;
 		}
 
-		&.b, &.bl, &.br {
+		&.b,
+		&.bl,
+		&.br {
 			bottom: 10px;
 		}
 
-		&.t, &.tl, &.tr {
+		&.t,
+		&.tl,
+		&.tr {
 			top: 10px;
 		}
 
-		&.b, &.t {
+		&.b,
+		&.t {
 			text-align: center;
 		}
 
-		&.r, &.br, &.tr {
+		&.r,
+		&.br,
+		&.tr {
 			text-align: right;
 		}
 
-		&.l, &.bl, &.tl {
+		&.l,
+		&.bl,
+		&.tl {
 			text-align: left;
 		}
 
-		&.r, &.l {
+		&.r,
+		&.l {
 			margin-top: -15px;
 			top: 50%;
 		}
@@ -164,8 +174,10 @@
 		}
 	}
 
-	&.smartphone, &.tablet {
-		&:after, &:before {
+	&.smartphone,
+	&.tablet {
+		&:after,
+		&:before {
 			display: block;
 		}
 	}

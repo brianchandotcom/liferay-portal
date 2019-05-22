@@ -8,8 +8,7 @@ AUI.add(
 
 			if ('namespace' in config) {
 				namespace = config.namespace;
-			}
-			else {
+			} else {
 				namespace = A.guid();
 			}
 

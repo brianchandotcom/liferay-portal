@@ -6,39 +6,48 @@ AUI.add(
 				{
 					label: Liferay.Language.get('is-greater-than-or-equal-to'),
 					name: 'lt',
-					parameterMessage: Liferay.Language.get('number-placeholder'),
+					parameterMessage: Liferay.Language.get(
+						'number-placeholder'
+					),
 					regex: /^(.+)\<(\d+\.?\d*)$/,
 					template: '{name}<{parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-greater-than'),
 					name: 'lteq',
-					parameterMessage: Liferay.Language.get('number-placeholder'),
+					parameterMessage: Liferay.Language.get(
+						'number-placeholder'
+					),
 					regex: /^(.+)\<\=(\d+\.?\d*)$/,
 					template: '{name}<={parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-not-equal-to'),
 					name: 'eq',
-					parameterMessage: Liferay.Language.get('number-placeholder'),
+					parameterMessage: Liferay.Language.get(
+						'number-placeholder'
+					),
 					regex: /^(.+)\=\=(\d+\.?\d*)$/,
 					template: '{name}=={parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-less-than-or-equal-to'),
 					name: 'gt',
-					parameterMessage: Liferay.Language.get('number-placeholder'),
+					parameterMessage: Liferay.Language.get(
+						'number-placeholder'
+					),
 					regex: /^(.+)\>(\d+\.?\d*)$/,
 					template: '{name}>{parameter}'
 				},
 				{
 					label: Liferay.Language.get('is-less-than'),
 					name: 'gteq',
-					parameterMessage: Liferay.Language.get('number-placeholder'),
+					parameterMessage: Liferay.Language.get(
+						'number-placeholder'
+					),
 					regex: /^(.+)\>\=(\d+\.?\d*)$/,
 					template: '{name}>={parameter}'
 				}
-
 			],
 			string: [
 				{
@@ -72,7 +81,9 @@ AUI.add(
 				{
 					label: Liferay.Language.get('does-not-match'),
 					name: 'regularExpression',
-					parameterMessage: Liferay.Language.get('regular-expression'),
+					parameterMessage: Liferay.Language.get(
+						'regular-expression'
+					),
 					regex: /^match\((.+), "(.*)"\)$/,
 					template: 'match({name}, "{parameter}")'
 				}
@@ -89,10 +100,13 @@ AUI.add(
 
 				var text = '';
 
-				var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				var possible =
+					'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 				for (var i = 0; i < length; i++) {
-					text += possible.charAt(Math.floor(Math.random() * possible.length));
+					text += possible.charAt(
+						Math.floor(Math.random() * possible.length)
+					);
 				}
 
 				return text;
@@ -101,7 +115,11 @@ AUI.add(
 			getFieldByKey: function(haystack, needle, searchKey) {
 				var instance = this;
 
-				return instance.searchFieldsByKey(haystack, needle, searchKey)[0];
+				return instance.searchFieldsByKey(
+					haystack,
+					needle,
+					searchKey
+				)[0];
 			},
 
 			getFieldNameFromQualifiedName: function(qualifiedName) {
@@ -152,8 +170,7 @@ AUI.add(
 
 					if (next[searchKey] === needle) {
 						results.push(next);
-					}
-					else {
+					} else {
 						var children = next.fields || next.nestedFields;
 
 						if (children) {

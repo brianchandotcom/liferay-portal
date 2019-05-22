@@ -5,7 +5,6 @@ import {debounce} from 'metal-debounce';
 import {PagesVisitor} from '../../util/visitors.es';
 
 const WithEvaluator = ChildComponent => {
-
 	/**
 	 * FormRenderer.
 	 * @extends Component
@@ -13,7 +12,6 @@ const WithEvaluator = ChildComponent => {
 
 	class Evaluator extends Component {
 		static PROPS = {
-
 			/**
 			 * @default
 			 * @instance
@@ -86,11 +84,11 @@ const WithEvaluator = ChildComponent => {
 			 */
 
 			url: Config.string()
-		}
+		};
 
 		static STATE = {
 			pages: Config.array().valueFn('_pagesValueFn')
-		}
+		};
 
 		attached() {
 			this.evaluate();
@@ -102,11 +100,7 @@ const WithEvaluator = ChildComponent => {
 
 		evaluate(fieldInstance) {
 			if (!this.isDisposed()) {
-				const {
-					editingLanguageId,
-					formContext,
-					url
-				} = this.props;
+				const {editingLanguageId, formContext, url} = this.props;
 				const {pages} = this.state;
 
 				let fieldName;
@@ -115,27 +109,21 @@ const WithEvaluator = ChildComponent => {
 					fieldName = fieldInstance.fieldName;
 				}
 
-				makeFetch(
-					{
-						body: convertToSearchParams(
-							{
-								languageId: editingLanguageId,
-								p_auth: Liferay.authToken,
-								serializedFormContext: JSON.stringify(formContext),
-								trigger: fieldName
-							}
-						),
-						url
-					}
-				).then(
-					newPages => {
-						const mergedPages = this._mergePages(pages, newPages);
+				makeFetch({
+					body: convertToSearchParams({
+						languageId: editingLanguageId,
+						p_auth: Liferay.authToken,
+						serializedFormContext: JSON.stringify(formContext),
+						trigger: fieldName
+					}),
+					url
+				}).then(newPages => {
+					const mergedPages = this._mergePages(pages, newPages);
 
-						if (!this.isDisposed()) {
-							this.emit('evaluated', mergedPages);
-						}
+					if (!this.isDisposed()) {
+						this.emit('evaluated', mergedPages);
 					}
-				);
+				});
 			}
 		}
 
@@ -160,11 +148,9 @@ const WithEvaluator = ChildComponent => {
 			const {formContext} = props;
 
 			if (formContext && Object.keys(formContext.newVal).length) {
-				this.setState(
-					{
-						pages: formContext.newVal.pages
-					}
-				);
+				this.setState({
+					pages: formContext.newVal.pages
+				});
 			}
 		}
 
@@ -185,22 +171,16 @@ const WithEvaluator = ChildComponent => {
 			for (const languageId in newValue) {
 				newValue = {
 					...newValue,
-					[languageId]: newValue[languageId].map(
-						option => {
-							const existingOption = field.value[languageId]
-								.find(
-									({value}) => value === option.value
-								);
+					[languageId]: newValue[languageId].map(option => {
+						const existingOption = field.value[languageId].find(
+							({value}) => value === option.value
+						);
 
-							return {
-								...option,
-								edited: (
-									existingOption &&
-									existingOption.edited
-								)
-							};
-						}
-					)
+						return {
+							...option,
+							edited: existingOption && existingOption.edited
+						};
+					})
 				};
 			}
 
@@ -215,7 +195,9 @@ const WithEvaluator = ChildComponent => {
 				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
 					let newField = {
 						...field,
-						...newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex],
+						...newPages[pageIndex].rows[rowIndex].columns[
+							columnIndex
+						].fields[fieldIndex],
 						defaultLanguageId,
 						editingLanguageId
 					};

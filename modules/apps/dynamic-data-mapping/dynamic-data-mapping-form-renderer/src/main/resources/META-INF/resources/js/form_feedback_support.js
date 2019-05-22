@@ -1,10 +1,10 @@
 AUI.add(
 	'liferay-ddm-form-renderer-feedback',
 	function(A) {
-		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
+		var TPL_BUTTON_SPINNER =
+			'<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
 
-		var FormFeedbackSupport = function() {
-		};
+		var FormFeedbackSupport = function() {};
 
 		FormFeedbackSupport.ATTRS = {
 			alert: {
@@ -30,11 +30,9 @@ AUI.add(
 			clearValidationStatus: function() {
 				var instance = this;
 
-				instance.eachNestedField(
-					function(field) {
-						field.clearValidationStatus();
-					}
-				);
+				instance.eachNestedField(function(field) {
+					field.clearValidationStatus();
+				});
 			},
 
 			disableSubmitButton: function() {
@@ -52,21 +50,17 @@ AUI.add(
 			hideErrorMessages: function() {
 				var instance = this;
 
-				instance.eachNestedField(
-					function(field) {
-						field.hideErrorMessage();
-					}
-				);
+				instance.eachNestedField(function(field) {
+					field.hideErrorMessage();
+				});
 			},
 
 			hideFeedback: function() {
 				var instance = this;
 
-				instance.eachNestedField(
-					function(field) {
-						field.hideFeedback();
-					}
-				);
+				instance.eachNestedField(function(field) {
+					field.hideFeedback();
+				});
 
 				instance.get('alert').hide();
 				instance._spinner.hide();
@@ -80,12 +74,10 @@ AUI.add(
 				if (container.inDoc()) {
 					var alert = instance.get('alert');
 
-					alert.setAttrs(
-						{
-							bodyContent: message,
-							cssClass: cssClass || 'alert-danger'
-						}
-					);
+					alert.setAttrs({
+						bodyContent: message,
+						cssClass: cssClass || 'alert-danger'
+					});
 
 					alert.render();
 					alert.show();
@@ -102,20 +94,20 @@ AUI.add(
 				if (submitButton) {
 					instance._spinner.appendTo(submitButton);
 					instance._spinner.show();
-				}
-				else {
-					instance.showAlert(Liferay.Language.get('please-wait'), 'alert-info');
+				} else {
+					instance.showAlert(
+						Liferay.Language.get('please-wait'),
+						'alert-info'
+					);
 				}
 			},
 
 			showValidationStatus: function() {
 				var instance = this;
 
-				instance.eachNestedField(
-					function(field) {
-						field.showValidationStatus();
-					}
-				);
+				instance.eachNestedField(function(field) {
+					field.showValidationStatus();
+				});
 			},
 
 			_createSpinner: function() {
@@ -137,18 +129,18 @@ AUI.add(
 			_valueAlert: function() {
 				var instance = this;
 
-				return new A.Alert(
-					{
-						animated: false,
-						closeable: true,
-						destroyOnHide: false,
-						duration: 0.5
-					}
-				);
+				return new A.Alert({
+					animated: false,
+					closeable: true,
+					destroyOnHide: false,
+					duration: 0.5
+				});
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormFeedbackSupport = FormFeedbackSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormFeedbackSupport = FormFeedbackSupport;
 	},
 	'',
 	{

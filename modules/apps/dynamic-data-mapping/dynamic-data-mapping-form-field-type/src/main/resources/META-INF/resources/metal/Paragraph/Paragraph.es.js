@@ -8,7 +8,6 @@ import {Config} from 'metal-state';
 class Paragraph extends Component {}
 
 Paragraph.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance

@@ -1,11 +1,12 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .control-menu {
 	.staging-links {
 		position: static;
 
-		.live-link, .staging-link {
+		.live-link,
+		.staging-link {
 			font-size: 16px;
 			padding: 0 8px;
 		}
@@ -28,7 +29,7 @@
 }
 
 .custom-info-alert {
-	background: #FFF;
+	background: #fff;
 	border: none;
 }
 
@@ -62,7 +63,7 @@
 			top: 0;
 
 			&:after {
-				background-color: #FFF;
+				background-color: #fff;
 				bottom: 7px;
 				content: '';
 				display: block;
@@ -108,8 +109,8 @@
 	}
 }
 
-.staging-bar-workflow-text .status{
-	color: #2E5AAC;
+.staging-bar-workflow-text .status {
+	color: #2e5aac;
 }
 
 .staging-ready {
@@ -149,8 +150,8 @@
 }
 
 .staging-variation-selector {
-	background: #F5F7F8;
-	border: 1px solid #E9E9EF;
+	background: #f5f7f8;
+	border: 1px solid #e9e9ef;
 	border-radius: 4px;
 	color: #000000;
 	display: block;

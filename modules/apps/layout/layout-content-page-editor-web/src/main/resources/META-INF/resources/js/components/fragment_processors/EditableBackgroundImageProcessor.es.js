@@ -5,8 +5,7 @@ import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
  * destroyed on hide.
  * @review
  */
-function destroy() {
-}
+function destroy() {}
 
 /**
  * Show the image selector dialog and calls the given callback when an
@@ -16,18 +15,12 @@ function destroy() {
  * @param {string} portletNamespace
  * @review
  */
-function init(
-	callback,
-	imageSelectorURL,
-	portletNamespace
-) {
-	openImageSelector(
-		{
-			callback,
-			imageSelectorURL,
-			portletNamespace
-		}
-	);
+function init(callback, imageSelectorURL, portletNamespace) {
+	openImageSelector({
+		callback,
+		imageSelectorURL,
+		portletNamespace
+	});
 }
 
 /**
@@ -35,9 +28,9 @@ function init(
  * @param {string} [backgroundImageURL='']
  */
 function render(element, backgroundImageURL = '') {
-	element.style.backgroundImage = backgroundImageURL ?
-		`url("${backgroundImageURL}")` :
-		'';
+	element.style.backgroundImage = backgroundImageURL
+		? `url("${backgroundImageURL}")`
+		: '';
 	element.style.backgroundSize = 'cover';
 }
 

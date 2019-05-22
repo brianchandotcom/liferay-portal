@@ -2,62 +2,56 @@ import * as fieldEditedHandler from 'source/components/LayoutProvider/handlers/f
 import * as focusedFieldUtil from 'source/components/LayoutProvider/util/focusedField.es';
 import mockPages from 'mock/mockPages.es';
 
-describe(
-	'LayoutProvider/handlers/fieldEditedHandler',
-	() => {
-		describe(
-			'handleFieldEdited(state, event)',
-			() => {
-				it(
-					'should call updateFocusedField()',
-					() => {
-						const event = {
-							propertyName: 'dataType',
-							propertyValue: 'string'
-						};
-						const state = {
-							focusedField: {},
-							pages: mockPages,
-							rules: []
-						};
+describe('LayoutProvider/handlers/fieldEditedHandler', () => {
+	describe('handleFieldEdited(state, event)', () => {
+		it('should call updateFocusedField()', () => {
+			const event = {
+				propertyName: 'dataType',
+				propertyValue: 'string'
+			};
+			const state = {
+				focusedField: {},
+				pages: mockPages,
+				rules: []
+			};
 
-						const updateFocusedFieldSpy = jest.spyOn(focusedFieldUtil, 'updateFocusedField');
+			const updateFocusedFieldSpy = jest.spyOn(
+				focusedFieldUtil,
+				'updateFocusedField'
+			);
 
-						updateFocusedFieldSpy.mockImplementation(() => ({}));
+			updateFocusedFieldSpy.mockImplementation(() => ({}));
 
-						fieldEditedHandler.handleFieldEdited(state, event);
+			fieldEditedHandler.handleFieldEdited(state, event);
 
-						expect(updateFocusedFieldSpy).toHaveBeenCalled();
+			expect(updateFocusedFieldSpy).toHaveBeenCalled();
 
-						updateFocusedFieldSpy.mockRestore();
-					}
-				);
+			updateFocusedFieldSpy.mockRestore();
+		});
 
-				it(
-					'should not call updateFocusedField() when changing name to an empty string',
-					() => {
-						const event = {
-							propertyName: 'name',
-							propertyValue: ''
-						};
-						const state = {
-							focusedField: {},
-							pages: mockPages,
-							rules: []
-						};
+		it('should not call updateFocusedField() when changing name to an empty string', () => {
+			const event = {
+				propertyName: 'name',
+				propertyValue: ''
+			};
+			const state = {
+				focusedField: {},
+				pages: mockPages,
+				rules: []
+			};
 
-						const updateFocusedFieldSpy = jest.spyOn(focusedFieldUtil, 'updateFocusedField');
+			const updateFocusedFieldSpy = jest.spyOn(
+				focusedFieldUtil,
+				'updateFocusedField'
+			);
 
-						updateFocusedFieldSpy.mockImplementation(() => ({}));
+			updateFocusedFieldSpy.mockImplementation(() => ({}));
 
-						fieldEditedHandler.handleFieldEdited(state, event);
+			fieldEditedHandler.handleFieldEdited(state, event);
 
-						expect(updateFocusedFieldSpy).not.toHaveBeenCalled();
+			expect(updateFocusedFieldSpy).not.toHaveBeenCalled();
 
-						updateFocusedFieldSpy.mockRestore();
-					}
-				);
-			}
-		);
-	}
-);
+			updateFocusedFieldSpy.mockRestore();
+		});
+	});
+});

@@ -14,11 +14,12 @@ module.exports = function(config) {
 			reporters: [
 				{
 					subdir: 'lcov',
-					type: 'lcov',
-				}, {
-					type: 'text-summary',
+					type: 'lcov'
 				},
-			],
+				{
+					type: 'text-summary'
+				}
+			]
 		},
 
 		customLaunchers: {
@@ -35,9 +36,7 @@ module.exports = function(config) {
 			}
 		},
 
-		files: [
-			'test/index.js',
-		],
+		files: ['test/index.js'],
 
 		frameworks: ['chai', 'mocha', 'sinon'],
 
@@ -48,17 +47,17 @@ module.exports = function(config) {
 			'karma-mocha',
 			'karma-sinon',
 			'karma-sourcemap-loader',
-			'karma-webpack',
+			'karma-webpack'
 		],
 
 		preprocessors: {
-			'test/index.js': ['webpack', 'sourcemap'],
+			'test/index.js': ['webpack', 'sourcemap']
 		},
 
 		reporters: ['progress', 'coverage-istanbul'],
 
 		singleRun: true,
 
-		webpack,
+		webpack
 	});
 };

@@ -1,11 +1,14 @@
 $c: '.ddm-data-provider-container';
 
 #{$c} {
-	.container-input-field, .container-output-field {
+	.container-input-field,
+	.container-output-field {
 		margin-bottom: 10px;
 	}
 
-	.container-input-label, .container-output-label, .alert {
+	.container-input-label,
+	.container-output-label,
+	.alert {
 		margin-top: 10px;
 	}
 }

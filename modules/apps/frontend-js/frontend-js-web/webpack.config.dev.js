@@ -10,5 +10,5 @@ module.exports = {
 		publicPath: config.output.publicPath
 	},
 	devtool: 'inline-source-map',
-	mode: 'development',
+	mode: 'development'
 };

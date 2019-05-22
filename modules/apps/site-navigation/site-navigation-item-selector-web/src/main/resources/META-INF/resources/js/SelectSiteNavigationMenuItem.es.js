@@ -15,7 +15,6 @@ import templates from './SelectSiteNavigationMenuItem.soy';
  */
 
 class SelectSiteNavigationMenuItem extends PortletBase {
-
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
@@ -27,17 +26,17 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	filterSiblingNodes_(nodes, filterValue) {
 		let filteredNodes = [];
 
-		nodes.forEach(
-			(node) => {
-				if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-					filteredNodes.push(node);
-				}
-
-				if (node.children) {
-					filteredNodes = filteredNodes.concat(this.filterSiblingNodes_(node.children, filterValue));
-				}
+		nodes.forEach(node => {
+			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
+				filteredNodes.push(node);
 			}
-		);
+
+			if (node.children) {
+				filteredNodes = filteredNodes.concat(
+					this.filterSiblingNodes_(node.children, filterValue)
+				);
+			}
+		});
 
 		return filteredNodes;
 	}
@@ -52,8 +51,7 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		}
-		else {
+		} else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -62,8 +60,7 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 		if (filterValue !== '') {
 			this.viewType = 'flat';
 			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
-		}
-		else {
+		} else {
 			this.viewType = 'tree';
 		}
 	}
@@ -84,18 +81,14 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 				selectSiteNavigationMenuItemName: node.name
 			};
 
-			Liferay.Util.getOpener().Liferay.fire(
-				this.itemSelectorSaveEvent,
-				{
-					data: data
-				}
-			);
+			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+				data: data
+			});
 		}
 	}
 }
 
 SelectSiteNavigationMenuItem.STATE = {
-
 	/**
 	 * Event name to fire on node selection
 	 * @type {String}

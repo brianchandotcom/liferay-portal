@@ -15,7 +15,6 @@ import templates from './AdaptiveMediaProgress.soy';
  */
 
 class AdaptiveMediaProgress extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -37,7 +36,11 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * that has to be invoked.
 	 */
 	startProgress(backgroundTaskUrl) {
-		if (this.percentage_ >= 100 || this.totalImages === 0 || this.disabled) {
+		if (
+			this.percentage_ >= 100 ||
+			this.totalImages === 0 ||
+			this.disabled
+		) {
 			return;
 		}
 
@@ -54,10 +57,7 @@ class AdaptiveMediaProgress extends PortletBase {
 
 		this.showLoadingIndicator_ = true;
 
-		this.emit(
-			'start',
-			{uuid: this.uuid}
-		);
+		this.emit('start', {uuid: this.uuid});
 	}
 
 	/**
@@ -78,22 +78,19 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @protected
 	 */
 	getAdaptedImagesPercentage_() {
-		Ajax.request(this.percentageUrl).then(
-			(xhr) => {
-				try {
-					const json = JSON.parse(xhr.response);
+		Ajax.request(this.percentageUrl).then(xhr => {
+			try {
+				const json = JSON.parse(xhr.response);
 
-					this.updateProgressBar_(json.adaptedImages, json.totalImages);
+				this.updateProgressBar_(json.adaptedImages, json.totalImages);
 
-					if (this.percentage_ >= 100) {
-						this.onProgressBarComplete_();
-					}
+				if (this.percentage_ >= 100) {
+					this.onProgressBarComplete_();
 				}
-				catch (e) {
-					clearInterval(this.intervalId_);
-				}
+			} catch (e) {
+				clearInterval(this.intervalId_);
 			}
-		);
+		});
 	}
 
 	/**
@@ -105,10 +102,7 @@ class AdaptiveMediaProgress extends PortletBase {
 		this.clearInterval_();
 		this.showLoadingIndicator_ = false;
 
-		this.emit(
-			'finish',
-			{uuid: this.uuid}
-		);
+		this.emit('finish', {uuid: this.uuid});
 	}
 
 	/**
@@ -118,8 +112,10 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @protected
 	 */
 	updateProgressBar_(adaptedImages, totalImages) {
-		this.percentage_ = Math.round(adaptedImages / totalImages * 100) || 0;
-		this.progressBarTooltip_ = this.tooltip ? this.tooltip : adaptedImages + '/' + totalImages;
+		this.percentage_ = Math.round((adaptedImages / totalImages) * 100) || 0;
+		this.progressBarTooltip_ = this.tooltip
+			? this.tooltip
+			: adaptedImages + '/' + totalImages;
 	}
 }
 
@@ -130,7 +126,6 @@ class AdaptiveMediaProgress extends PortletBase {
  * @type {!Object}
  */
 AdaptiveMediaProgress.STATE = {
-
 	/**
 	 * Number of adapted images in the platform.
 	 *

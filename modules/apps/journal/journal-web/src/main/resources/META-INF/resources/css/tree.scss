@@ -1,7 +1,7 @@
 .portlet-journal-tree {
 	.card {
 		&:focus {
-			box-shadow: inset 0 0 0 2px #ABBCC3;
+			box-shadow: inset 0 0 0 2px #abbcc3;
 			outline: none;
 		}
 
@@ -13,7 +13,7 @@
 	}
 
 	.selected .card {
-		box-shadow: inset 0 0 0 2px #65B6F0;
+		box-shadow: inset 0 0 0 2px #65b6f0;
 	}
 
 	.disabled {
@@ -37,7 +37,7 @@
 	}
 
 	.treeview-nodes {
-		border-left: 2px solid #869CAD;
+		border-left: 2px solid #869cad;
 		list-style: none;
 		margin-left: 40px;
 		padding-left: 0;
@@ -54,7 +54,7 @@
 	}
 
 	.treeview-node-toggler {
-		background-color: #869CAD;
+		background-color: #869cad;
 		border-radius: 3px;
 		display: inline-block;
 		height: 14px;
@@ -67,7 +67,7 @@
 		width: 14px;
 
 		&:before {
-			color: #FFF;
+			color: #fff;
 			content: '+';
 			display: block;
 			line-height: 11px;

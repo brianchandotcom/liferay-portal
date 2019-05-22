@@ -8,7 +8,6 @@ import middlewares from './middlewares/defaults';
  * @class
  */
 class Client {
-
 	/**
 	 * Constructor
 	 * @param {*} uri The Endpoint URI where the data should be sent
@@ -18,24 +17,19 @@ class Client {
 	}
 
 	_getContextEvents(analytics, context) {
-		return analytics.events.filter(
-			event => {
-				const contextHash = hash(
-					context,
-					{
-						unorderedObjects: false
-					}
-				);
+		return analytics.events.filter(event => {
+			const contextHash = hash(context, {
+				unorderedObjects: false
+			});
 
-				let eventId = false;
+			let eventId = false;
 
-				if (event.applicationId && event.contextHash === contextHash) {
-					eventId = event.eventId;
-				}
-
-				return eventId;
+			if (event.applicationId && event.contextHash === contextHash) {
+				eventId = event.eventId;
 			}
-		);
+
+			return eventId;
+		});
 	}
 
 	/**
@@ -107,10 +101,12 @@ class Client {
 	 */
 	send(analytics, userId) {
 		return Promise.all(
-			analytics.contexts.filter(
-				context => this._getContextEvents(analytics, context).length > 0
-			).map(
-				context => {
+			analytics.contexts
+				.filter(
+					context =>
+						this._getContextEvents(analytics, context).length > 0
+				)
+				.map(context => {
 					const request = this._getRequest(
 						analytics,
 						userId,
@@ -120,8 +116,7 @@ class Client {
 					return fetch(this.uri, request).then(
 						this._validateResponse
 					);
-				}
-			)
+				})
 		);
 	}
 

@@ -60,8 +60,7 @@ AUI.add(
 			if (_enabled) {
 				if (Poller.isSupportsComet()) {
 					_receive();
-				}
-				else {
+				} else {
 					_timerId = setTimeout(_receive, Poller.getDelay());
 				}
 			}
@@ -104,7 +103,11 @@ AUI.add(
 							chunkData.initialRequest = portlet.initialRequest;
 						}
 
-						portlet.listener.call(portlet.scope || Poller, chunkData, chunk.chunkId);
+						portlet.listener.call(
+							portlet.scope || Poller,
+							chunkData,
+							chunk.chunkId
+						);
 
 						if (chunkData && chunkData.pollerHintHighConnectivity) {
 							_requestDelay = _delays[0];
@@ -129,8 +132,7 @@ AUI.add(
 
 				if (!meta.suspendPolling) {
 					_thawConnection();
-				}
-				else {
+				} else {
 					_freezeConnection();
 				}
 			}
@@ -139,24 +141,21 @@ AUI.add(
 		var _receive = function() {
 			if (!_suspended && !_frozen) {
 				_metaData.userId = _getEncryptedUserId();
-				_metaData.timestamp = (new Date()).getTime();
+				_metaData.timestamp = new Date().getTime();
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
 				var requestStr = JSON.stringify([_metaData]);
 
-				A.io(
-					_getReceiveUrl(),
-					{
-						data: {
-							pollerRequest: requestStr
-						},
-						method: A.config.io.method,
-						on: {
-							success: _processResponse
-						}
+				A.io(_getReceiveUrl(), {
+					data: {
+						pollerRequest: requestStr
+					},
+					method: A.config.io.method,
+					on: {
+						success: _processResponse
 					}
-				);
+				});
 			}
 		};
 
@@ -170,30 +169,33 @@ AUI.add(
 		};
 
 		var _send = function() {
-			if (_enabled && !_locked && _sendQueue.length && !_suspended && !_frozen) {
+			if (
+				_enabled &&
+				!_locked &&
+				_sendQueue.length &&
+				!_suspended &&
+				!_frozen
+			) {
 				_locked = true;
 
 				var data = _sendQueue.shift();
 
 				_metaData.userId = _getEncryptedUserId();
-				_metaData.timestamp = (new Date()).getTime();
+				_metaData.timestamp = new Date().getTime();
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
 				var requestStr = JSON.stringify([_metaData].concat(data));
 
-				A.io(
-					_getSendUrl(),
-					{
-						data: {
-							pollerRequest: requestStr
-						},
-						method: A.config.io.method,
-						on: {
-							complete: _sendComplete
-						}
+				A.io(_getSendUrl(), {
+					data: {
+						pollerRequest: requestStr
+					},
+					method: A.config.io.method,
+					on: {
+						complete: _sendComplete
 					}
-				);
+				});
 			}
 		};
 
@@ -236,8 +238,7 @@ AUI.add(
 			getDelay: function() {
 				if (_customDelay !== null) {
 					_requestDelay = _customDelay;
-				}
-				else if (_delayIndex <= _maxDelay) {
+				} else if (_delayIndex <= _maxDelay) {
 					_requestDelay = _delays[_delayIndex];
 					_delayAccessCount++;
 
@@ -282,8 +283,7 @@ AUI.add(
 			setCustomDelay: function(delay) {
 				if (delay === null) {
 					_customDelay = delay;
-				}
-				else {
+				} else {
 					_customDelay = delay / 1000;
 				}
 			},
@@ -311,8 +311,14 @@ AUI.add(
 							var content = data[i];
 
 							if (content.replace) {
-								content = content.replace(_openCurlyBrace, _escapedOpenCurlyBrace);
-								content = content.replace(_closeCurlyBrace, _escapedCloseCurlyBrace);
+								content = content.replace(
+									_openCurlyBrace,
+									_escapedOpenCurlyBrace
+								);
+								content = content.replace(
+									_closeCurlyBrace,
+									_escapedCloseCurlyBrace
+								);
 
 								data[i] = content;
 							}
@@ -343,14 +349,11 @@ AUI.add(
 			url: _url
 		};
 
-		A.getWin().on(
-			'focus',
-			function(event) {
-				_metaData.startPolling = true;
+		A.getWin().on('focus', function(event) {
+			_metaData.startPolling = true;
 
-				_thawConnection();
-			}
-		);
+			_thawConnection();
+		});
 
 		Liferay.Poller = Poller;
 	},

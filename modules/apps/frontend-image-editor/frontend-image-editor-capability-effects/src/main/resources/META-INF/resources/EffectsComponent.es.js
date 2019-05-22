@@ -10,7 +10,6 @@ import controlsTemplates from './EffectsControls.soy';
  * Creates an Effects component.
  */
 class EffectsComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -19,8 +18,14 @@ class EffectsComponent extends Component {
 
 		async.nextTick(() => {
 			this.getImageEditorImageData()
-				.then((imageData) => CancellablePromise.resolve(this.generateThumbnailImageData_(imageData)))
-				.then((previewImageData) => this.generateThumbnails_(previewImageData))
+				.then(imageData =>
+					CancellablePromise.resolve(
+						this.generateThumbnailImageData_(imageData)
+					)
+				)
+				.then(previewImageData =>
+					this.generateThumbnails_(previewImageData)
+				)
 				.then(() => this.prefetchEffects_());
 		});
 	}
@@ -63,8 +68,10 @@ class EffectsComponent extends Component {
 			imageData: imageData
 		});
 
-		promise.then((imageData) => {
-			let canvas = this.element.querySelector('#' + this.ref + effect + ' canvas');
+		promise.then(imageData => {
+			let canvas = this.element.querySelector(
+				'#' + this.ref + effect + ' canvas'
+			);
 			canvas.getContext('2d').putImageData(imageData, 0, 0);
 		});
 
@@ -80,7 +87,9 @@ class EffectsComponent extends Component {
 	 */
 	generateThumbnails_(imageData) {
 		return CancellablePromise.all(
-			this.effects.map(effect => this.generateThumbnail_(effect, imageData))
+			this.effects.map(effect =>
+				this.generateThumbnail_(effect, imageData)
+			)
 		);
 	}
 
@@ -108,7 +117,17 @@ class EffectsComponent extends Component {
 		canvas.height = thumbnailSize;
 
 		let context = canvas.getContext('2d');
-		context.drawImage(rawCanvas, imageWidth - commonSize, imageHeight - commonSize, commonSize, commonSize, 0, 0, thumbnailSize, thumbnailSize);
+		context.drawImage(
+			rawCanvas,
+			imageWidth - commonSize,
+			imageHeight - commonSize,
+			commonSize,
+			commonSize,
+			0,
+			0,
+			thumbnailSize,
+			thumbnailSize
+		);
 
 		return context.getImageData(0, 0, thumbnailSize, thumbnailSize);
 	}
@@ -122,14 +141,17 @@ class EffectsComponent extends Component {
 	prefetchEffects_() {
 		return new CancellablePromise((resolve, reject) => {
 			if (!this.isDisposed()) {
-				let missingEffects = this.effects.filter((effect) => !this.cache_[effect]);
+				let missingEffects = this.effects.filter(
+					effect => !this.cache_[effect]
+				);
 
 				if (!missingEffects.length) {
 					resolve();
-				}
-				else {
+				} else {
 					this.getImageEditorImageData()
-						.then((imageData) => this.process(imageData, missingEffects[0]))
+						.then(imageData =>
+							this.process(imageData, missingEffects[0])
+						)
 						.then(() => this.prefetchEffects_());
 				}
 			}
@@ -210,7 +232,7 @@ class EffectsComponent extends Component {
 			const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
 			const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
 
-			this.carouselOffset = (marginLeft - itemWidth) + 'px';
+			this.carouselOffset = marginLeft - itemWidth + 'px';
 		}
 	}
 
@@ -224,9 +246,11 @@ class EffectsComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
-			let processWorker = new Worker(this.modulePath + '/EffectsWorker.js');
+			let processWorker = new Worker(
+				this.modulePath + '/EffectsWorker.js'
+			);
 
-			processWorker.onmessage = (event) => resolve(event.data);
+			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});
 	}
@@ -239,7 +263,6 @@ class EffectsComponent extends Component {
  * @type {!Object}
  */
 EffectsComponent.STATE = {
-
 	/**
 	 * Offset in pixels (<code>px</code> postfix) for the carousel item.
 	 *
@@ -257,7 +280,28 @@ EffectsComponent.STATE = {
 	 */
 	effects: {
 		validator: core.isArray,
-		value: ['none', 'ruby', 'absinthe', 'chroma', 'atari', 'tripel', 'ailis', 'flatfoot', 'pyrexia', 'umbra', 'rouge', 'idyll', 'glimmer', 'elysium', 'nucleus', 'amber', 'paella', 'aureus', 'expanse', 'orchid']
+		value: [
+			'none',
+			'ruby',
+			'absinthe',
+			'chroma',
+			'atari',
+			'tripel',
+			'ailis',
+			'flatfoot',
+			'pyrexia',
+			'umbra',
+			'rouge',
+			'idyll',
+			'glimmer',
+			'elysium',
+			'nucleus',
+			'amber',
+			'paella',
+			'aureus',
+			'expanse',
+			'orchid'
+		]
 	},
 
 	/**

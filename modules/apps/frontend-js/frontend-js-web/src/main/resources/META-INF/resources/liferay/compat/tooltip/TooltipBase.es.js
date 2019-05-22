@@ -12,7 +12,6 @@ import {EventHandler} from 'metal-events';
  */
 
 class TooltipBase extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -57,7 +56,9 @@ class TooltipBase extends Component {
 	 */
 
 	align(opt_alignElement) {
-		this.syncCurrentAlignElement(opt_alignElement || this.currentAlignElement);
+		this.syncCurrentAlignElement(
+			opt_alignElement || this.currentAlignElement
+		);
 	}
 
 	/**
@@ -79,15 +80,15 @@ class TooltipBase extends Component {
 
 	handleHide(event) {
 		const delegateTarget = event.delegateTarget;
-		const interactingWithDifferentTarget = delegateTarget && (delegateTarget !== this.currentAlignElement);
+		const interactingWithDifferentTarget =
+			delegateTarget && delegateTarget !== this.currentAlignElement;
 		this.callAsync_(function() {
 			if (this.locked_) {
 				return;
 			}
 			if (interactingWithDifferentTarget) {
 				this.currentAlignElement = delegateTarget;
-			}
-			else {
+			} else {
 				this.visible = false;
 				this.syncVisible(false);
 			}
@@ -118,8 +119,7 @@ class TooltipBase extends Component {
 	handleToggle(event) {
 		if (this.visible) {
 			this.handleHide(event);
-		}
-		else {
+		} else {
 			this.handleShow(event);
 		}
 	}
@@ -169,7 +169,11 @@ class TooltipBase extends Component {
 				this.title = dataTitle;
 			}
 			if (this.inDocument) {
-				this.alignedPosition = TooltipBase.Align.align(this.element, alignElement, this.position);
+				this.alignedPosition = TooltipBase.Align.align(
+					this.element,
+					alignElement,
+					this.position
+				);
 			}
 		}
 	}
@@ -207,16 +211,33 @@ class TooltipBase extends Component {
 
 		this.eventHandler_.add(
 			this.on('mouseenter', this.lock),
-			this.on('mouseleave', this.unlock));
+			this.on('mouseleave', this.unlock)
+		);
 
 		if (triggerEvents[0] === triggerEvents[1]) {
 			this.eventHandler_.add(
-				dom.delegate(document, triggerEvents[0], selector, this.handleToggle.bind(this)));
-		}
-		else {
+				dom.delegate(
+					document,
+					triggerEvents[0],
+					selector,
+					this.handleToggle.bind(this)
+				)
+			);
+		} else {
 			this.eventHandler_.add(
-				dom.delegate(document, triggerEvents[0], selector, this.handleShow.bind(this)),
-				dom.delegate(document, triggerEvents[1], selector, this.handleHide.bind(this)));
+				dom.delegate(
+					document,
+					triggerEvents[0],
+					selector,
+					this.handleShow.bind(this)
+				),
+				dom.delegate(
+					document,
+					triggerEvents[1],
+					selector,
+					this.handleHide.bind(this)
+				)
+			);
 		}
 	}
 
@@ -244,7 +265,6 @@ TooltipBase.Align = Align;
  */
 
 TooltipBase.STATE = {
-
 	/**
 	 * The current position of the tooltip after being aligned via `Align.align`.
 	 * @type {number}
@@ -322,8 +342,7 @@ TooltipBase.STATE = {
 	 * @type {string}
 	 */
 
-	title: {
-	}
+	title: {}
 };
 
 /**

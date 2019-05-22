@@ -1,8 +1,8 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
-$border-color: #C9C9C9;
-$section-header-bg: #CCE6F7;
+$border-color: #c9c9c9;
+$section-header-bg: #cce6f7;
 
 #wrapper .contacts-portlet .panel-page-body {
 	padding: 0;
@@ -21,7 +21,8 @@ $section-header-bg: #CCE6F7;
 		display: none;
 	}
 
-	.column-content, .column-content-center {
+	.column-content,
+	.column-content-center {
 		padding: 0;
 	}
 
@@ -39,11 +40,12 @@ $section-header-bg: #CCE6F7;
 			width: 224px;
 		}
 
-		input[type="checkbox"] {
+		input[type='checkbox'] {
 			margin: 0;
 		}
 
-		.control-group, select {
+		.control-group,
+		select {
 			margin-bottom: 0;
 		}
 	}
@@ -57,7 +59,8 @@ $section-header-bg: #CCE6F7;
 		}
 	}
 
-	.lfr-contact-grid-item, .lfr-detail-info {
+	.lfr-contact-grid-item,
+	.lfr-detail-info {
 		display: block;
 		overflow: hidden;
 
@@ -97,7 +100,9 @@ $section-header-bg: #CCE6F7;
 			}
 		}
 
-		.lfr-contact-extra, .lfr-contact-job-title, .lfr-contact-name {
+		.lfr-contact-extra,
+		.lfr-contact-job-title,
+		.lfr-contact-name {
 			overflow-x: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -119,11 +124,11 @@ $section-header-bg: #CCE6F7;
 			cursor: pointer;
 
 			&.alt {
-				background-color: #F5F8FB;
+				background-color: #f5f8fb;
 			}
 
 			&:hover {
-				background-color: #E8EFF4;
+				background-color: #e8eff4;
 			}
 		}
 
@@ -137,7 +142,8 @@ $section-header-bg: #CCE6F7;
 		display: none;
 	}
 
-	.contacts-result, .my-contacts {
+	.contacts-result,
+	.my-contacts {
 		.lfr-contact-grid-item {
 			cursor: pointer;
 
@@ -153,7 +159,7 @@ $section-header-bg: #CCE6F7;
 	}
 
 	.contacts-result {
-		border-right: 1px solid #C9C9C9;
+		border-right: 1px solid #c9c9c9;
 		bottom: 0;
 		overflow-x: hidden;
 		overflow-y: scroll;
@@ -163,14 +169,14 @@ $section-header-bg: #CCE6F7;
 		width: 100%;
 
 		.more-results a {
-			border: 1px solid #CCC;
+			border: 1px solid #ccc;
 			display: block;
 			margin: 5px;
 			padding: 2px;
 			text-align: center;
 
 			&:hover {
-				background-color: #CCE6F7;
+				background-color: #cce6f7;
 				text-decoration: underline;
 			}
 		}
@@ -182,15 +188,16 @@ $section-header-bg: #CCE6F7;
 			padding-left: 10px;
 		}
 
-		.lfr-contact-grid-item:hover, .more-results a {
-			background-color: #E8EFF4;
+		.lfr-contact-grid-item:hover,
+		.more-results a {
+			background-color: #e8eff4;
 		}
 
 		.empty {
 			margin: 5px;
 
 			.icon-warning-sign {
-				margin-right: 10px
+				margin-right: 10px;
 			}
 		}
 
@@ -227,7 +234,8 @@ $section-header-bg: #CCE6F7;
 			width: 100%;
 		}
 
-		.lfr-contact-thumb, .lfr-contact-info {
+		.lfr-contact-thumb,
+		.lfr-contact-info {
 			padding: 10px 10px 5px;
 		}
 
@@ -344,7 +352,7 @@ $section-header-bg: #CCE6F7;
 	}
 
 	.section {
-		border-bottom: 1px solid #E7E7E7;
+		border-bottom: 1px solid #e7e7e7;
 		clear: both;
 		float: none;
 		padding: 10px;
@@ -358,7 +366,7 @@ $section-header-bg: #CCE6F7;
 		}
 
 		h3 {
-			color: #B4BEC8;
+			color: #b4bec8;
 			float: left;
 			font-size: 1em;
 			line-height: 20px;
@@ -426,7 +434,8 @@ $section-header-bg: #CCE6F7;
 		.contacts-count {
 			font-weight: bold;
 
-			&, .contacts-center-introduction {
+			&,
+			.contacts-center-introduction {
 				margin: 5px 0;
 			}
 		}
@@ -451,8 +460,10 @@ $section-header-bg: #CCE6F7;
 	.lfr-asset-metadata {
 		margin-bottom: 5px;
 
-		.lfr-asset-coworker, .lfr-asset-follower, .lfr-asset-following {
-			padding: 0 20px
+		.lfr-asset-coworker,
+		.lfr-asset-follower,
+		.lfr-asset-following {
+			padding: 0 20px;
 		}
 	}
 
@@ -492,7 +503,9 @@ $section-header-bg: #CCE6F7;
 			font-weight: bold;
 		}
 
-		.lfr-user-data-extra, .lfr-user-data-job-title, .lfr-user-data-name a {
+		.lfr-user-data-extra,
+		.lfr-user-data-job-title,
+		.lfr-user-data-name a {
 			overflow: hidden;
 			text-overflow: hidden;
 			word-wrap: nowrap;
@@ -503,7 +516,8 @@ $section-header-bg: #CCE6F7;
 		cursor: pointer;
 	}
 
-	.lfr-panel, .taglib-header {
+	.lfr-panel,
+	.taglib-header {
 		margin-bottom: 1em;
 	}
 
@@ -547,8 +561,8 @@ $section-header-bg: #CCE6F7;
 	}
 
 	.profile-actions {
-		background: #EEE;
-		border: 1px solid #C7D0DA;
+		background: #eee;
+		border: 1px solid #c7d0da;
 		margin: 20px 65px;
 		padding: 4px 4px 0;
 
@@ -559,7 +573,7 @@ $section-header-bg: #CCE6F7;
 		}
 
 		h3 {
-			color: #B4BEC8;
+			color: #b4bec8;
 			float: left;
 			font-size: 1em;
 			margin: 0;
@@ -592,11 +606,11 @@ $section-header-bg: #CCE6F7;
 			}
 
 			.lfr-token {
-				background-color: #FFF;
+				background-color: #fff;
 				border-width: 0;
 
 				&:hover {
-					background-color: #E9E8E8;
+					background-color: #e9e8e8;
 				}
 			}
 		}
@@ -610,7 +624,8 @@ $section-header-bg: #CCE6F7;
 }
 
 .contact-dialog {
-	input[type="text"], textarea {
+	input[type='text'],
+	textarea {
 		width: 90%;
 	}
 
@@ -621,7 +636,8 @@ $section-header-bg: #CCE6F7;
 }
 
 .profile-dialog {
-	input[type="text"], select {
+	input[type='text'],
+	select {
 		padding: 5px 1px;
 	}
 
@@ -671,7 +687,8 @@ $section-header-bg: #CCE6F7;
 }
 
 .portlet-configuration .contacts-portlet {
-	.lfr-user-profile-preferences, .toggler {
+	.lfr-user-profile-preferences,
+	.toggler {
 		margin: 0;
 		overflow: hidden;
 	}
@@ -704,7 +721,7 @@ $section-header-bg: #CCE6F7;
 				.contact-group-filter {
 					padding: 7px 7px 8px;
 
-					input[type="checkbox"] {
+					input[type='checkbox'] {
 						display: none;
 					}
 
@@ -732,7 +749,8 @@ $section-header-bg: #CCE6F7;
 			overflow: hidden;
 			padding-left: 100%;
 
-			.contacts-list, .contacts-result {
+			.contacts-list,
+			.contacts-result {
 				width: 100%;
 			}
 
@@ -756,7 +774,7 @@ $section-header-bg: #CCE6F7;
 		}
 
 		.contacts-list {
-			background: #FFF;
+			background: #fff;
 			margin-left: 0;
 
 			@include transition-duration(0.3s);
@@ -788,7 +806,7 @@ $section-header-bg: #CCE6F7;
 			}
 
 			.toggle-user {
-				background-color: #EEE;
+				background-color: #eee;
 				background-color: rgba(0, 0, 0, 0.4);
 
 				border-radius: 0 8px 8px 0;
@@ -800,7 +818,7 @@ $section-header-bg: #CCE6F7;
 				top: -43px;
 
 				i {
-					color: #FFF;
+					color: #fff;
 					display: block;
 					font-size: 2em;
 					padding: 16px 11px;

@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -100,6 +101,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -502,10 +504,6 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		}
 	}
 
-	protected User createContentReviewerUser(String roleName) throws Exception {
-		return createUser(roleName, group, false);
-	}
-
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -572,6 +570,24 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 				adminUser.getCompanyId(), adminUser.getUserId(),
 				SCRIPTED_SINGLE_APPROVER, SCRIPTED_SINGLE_APPROVER,
+				content.getBytes());
+		}
+	}
+
+	protected void createSiteMemberWorkflow() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_PROXY_MESSAGE_LISTENER_CLASS_NAME, Level.OFF)) {
+
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				adminUser.getCompanyId(), SITE_MEMBER_SINGLE_APPROVER, 1);
+		}
+		catch (WorkflowException we) {
+			String content = read("single-approver-definition-site-member.xml");
+
+			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+				adminUser.getCompanyId(), adminUser.getUserId(),
+				SITE_MEMBER_SINGLE_APPROVER, SITE_MEMBER_SINGLE_APPROVER,
 				content.getBytes());
 		}
 	}
@@ -724,6 +740,13 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		return workflowTasks.get(0);
 	}
 
+	protected boolean hasOtherAssignees(User user) throws Exception {
+		WorkflowTask workflowTask = getWorkflowTask(user, null, false, null, 0);
+
+		return WorkflowTaskManagerUtil.hasOtherAssignees(
+			workflowTask.getWorkflowTaskId(), user.getUserId());
+	}
+
 	protected String read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -776,12 +799,15 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 		siteAdminUser = createUser(RoleConstants.SITE_ADMINISTRATOR);
 
-		siteContentReviewerUser = createContentReviewerUser(
+		siteContentReviewerUser = createUser(
 			RoleConstants.SITE_CONTENT_REVIEWER);
+
+		siteMemberUser = createUser(RoleConstants.SITE_MEMBER);
 	}
 
 	protected void setUpWorkflow() throws Exception {
 		createJoinXorWorkflow();
+		createSiteMemberWorkflow();
 		createScriptedAssignmentWorkflow();
 	}
 
@@ -792,8 +818,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 			FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 				fileEntryId, StringPool.BLANK, ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomString(), StringPool.BLANK, null, false,
-				null, 0, serviceContext);
+				RandomTestUtil.randomString(), StringPool.BLANK, null,
+				DLVersionNumberIncrease.AUTOMATIC, null, 0, serviceContext);
 
 			return fileEntry.getLatestFileVersion();
 		}
@@ -853,6 +879,9 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected static final String SCRIPTED_SINGLE_APPROVER =
 		"Scripted Single Approver";
 
+	protected static final String SITE_MEMBER_SINGLE_APPROVER =
+		"Site Member Single Approver";
+
 	protected User adminUser;
 
 	@DeleteAfterTestRun
@@ -864,34 +893,30 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected ServiceContext serviceContext;
 	protected User siteAdminUser;
 	protected User siteContentReviewerUser;
+	protected User siteMemberUser;
 
 	private List<WorkflowTask> _getWorkflowTasks(User user, boolean completed)
 		throws Exception {
 
-		List<WorkflowTask> workflowTasks = new ArrayList<>();
+		return IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			() -> {
+				List<WorkflowTask> workflowTasks = new ArrayList<>();
 
-		long deadline =
-			System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+				workflowTasks.addAll(
+					WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
+						user.getCompanyId(), user.getUserId(), completed,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-		while (workflowTasks.isEmpty()) {
-			workflowTasks.addAll(
-				WorkflowTaskManagerUtil.getWorkflowTasksByUserRoles(
-					user.getCompanyId(), user.getUserId(), completed,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+				workflowTasks.addAll(
+					WorkflowTaskManagerUtil.getWorkflowTasksByUser(
+						user.getCompanyId(), user.getUserId(), completed,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-			workflowTasks.addAll(
-				WorkflowTaskManagerUtil.getWorkflowTasksByUser(
-					user.getCompanyId(), user.getUserId(), completed,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+				Assert.assertFalse(workflowTasks.isEmpty());
 
-			if (System.currentTimeMillis() > deadline) {
-				break;
-			}
-
-			Thread.sleep(TimeUnit.SECONDS.toMillis(1));
-		}
-
-		return workflowTasks;
+				return workflowTasks;
+			});
 	}
 
 	private static final String _MAIL_ENGINE_CLASS_NAME =

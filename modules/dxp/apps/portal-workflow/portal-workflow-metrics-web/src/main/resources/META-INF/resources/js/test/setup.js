@@ -4,24 +4,6 @@ require('whatwg-fetch');
 
 const enzyme = require('enzyme');
 const EnzymeAdapter = require('enzyme-adapter-react-16');
-const fs = require('fs');
-const path = require('path');
-const properties = require('properties');
-
-const LANG_KEY_PATH = path.resolve(
-	'..',
-	'portal-workflow-metrics-lang',
-	'src',
-	'main',
-	'resources',
-	'content',
-	'Language.properties'
-);
-
-const languageProperties = fs.readFileSync(LANG_KEY_PATH);
-
-const TRANSLATIONS =
-	properties.parse(languageProperties.toString('utf8')) || {};
 
 window.AUI = () => ({
 	use: (module, callback) => callback()
@@ -30,7 +12,16 @@ window.AUI = () => ({
 window.Liferay = {
 	authToken: 'auth',
 	Language: {
-		get: key => TRANSLATIONS[key] || key
+		get: key => {
+			if (key === 'decimal-delimiter') {
+				return '.';
+			}
+			else if (key === 'thousand-abbreviation') {
+				return 'K';
+			}
+
+			return key;
+		}
 	},
 	Session: {
 		extend: () => {}

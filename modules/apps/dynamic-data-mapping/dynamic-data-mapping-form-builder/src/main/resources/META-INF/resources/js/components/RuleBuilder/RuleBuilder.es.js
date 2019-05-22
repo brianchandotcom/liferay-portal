@@ -194,8 +194,6 @@ class RuleBuilder extends Component {
 			spritemap
 		} = this.props;
 
-		const contextPages = this.props.context.pages;
-
 		const {
 			dataProvider,
 			index,
@@ -210,7 +208,6 @@ class RuleBuilder extends Component {
 					<RuleEditor
 						actions={[]}
 						conditions={[]}
-						contextPages={contextPages}
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
@@ -231,7 +228,6 @@ class RuleBuilder extends Component {
 				)}
 				{mode === 'edit' && (
 					<RuleEditor
-						contextPages={contextPages}
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}

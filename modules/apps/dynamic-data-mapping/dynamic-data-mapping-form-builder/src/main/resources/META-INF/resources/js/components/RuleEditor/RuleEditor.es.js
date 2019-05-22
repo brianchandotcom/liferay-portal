@@ -150,11 +150,7 @@ class RuleEditor extends Component {
 			)
 		).internal().setter('_setConditions').value([]),
 
-<<<<<<< HEAD
 		conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsValueFn'),
-=======
-		contextPages: Config.array(),
->>>>>>> LPS-95080 getting pages from context to get field options
 
 		dataProvider: Config.arrayOf(
 			Config.shapeOf(
@@ -441,24 +437,12 @@ class RuleEditor extends Component {
 		const visitor = new PagesVisitor(this.pages);
 
 		const field = visitor.findField(
-			function(field) { 
+			field => {
 				return field.fieldName === fieldName;
-			});
-		
-		options = field.options;
-		
-		if(field.dataSourceType === 'data-provider' && this.contextPages) {
-			const contextVisitor = new PagesVisitor(this.contextPages);
-			
-			const contextField = contextVisitor.findField(
-				function(field) { 
-					return field.fieldName === fieldName;
-				});
-				
-			if(contextField) {
-				options = contextField.options;
 			}
-		}
+		);
+
+		options = field.options;
 
 		return options;
 	}

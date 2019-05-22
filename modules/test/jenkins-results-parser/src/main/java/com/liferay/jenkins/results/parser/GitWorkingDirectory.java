@@ -1725,7 +1725,9 @@ public class GitWorkingDirectory {
 			return null;
 		}
 
-		return getRemoteGitBranch(remoteGitBranchName, remoteURL);
+		return (RemoteGitBranch)GitBranchFactory.newRemoteGitRef(
+			GitRepositoryFactory.getRemoteGitRepository(remoteURL),
+			remoteGitBranchName, localGitBranch.getSHA(), "heads");
 	}
 
 	public LocalGitBranch rebase(

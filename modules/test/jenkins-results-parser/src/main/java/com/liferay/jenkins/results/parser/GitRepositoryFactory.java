@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 import org.json.JSONObject;
 

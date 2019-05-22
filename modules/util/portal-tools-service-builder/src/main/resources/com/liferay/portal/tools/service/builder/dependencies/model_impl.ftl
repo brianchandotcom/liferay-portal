@@ -81,6 +81,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.math.BigDecimal;
 
 import java.sql.Blob;
@@ -497,6 +500,27 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetterBiConsumers() {
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, ${entity.name}> _getProxyProviderFunction() {
+		Class<?> proxyClass = ProxyUtil.getProxyClass(${entity.name}.class.getClassLoader(), ${entity.name}.class, ModelWrapper.class);
+
+		try {
+			Constructor<${entity.name}> constructor =
+				(Constructor<${entity.name}>)proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<${entity.name}, Object>> _attributeGetterFunctions;
@@ -1396,7 +1420,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	@Override
 	public ${entity.name} toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (${entity.name})ProxyUtil.newProxyInstance(_classLoader, _escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1739,9 +1763,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
-
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class, ModelWrapper.class};
+	private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;

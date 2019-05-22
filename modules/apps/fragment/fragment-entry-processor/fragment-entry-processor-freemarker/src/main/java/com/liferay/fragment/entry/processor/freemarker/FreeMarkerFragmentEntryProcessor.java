@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.freemarker;
 import com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -123,11 +124,23 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-		FragmentEntryLink fragmentEntryLink, String html, String mode,
-		Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-		int previewType) {
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
+		throws PortalException {
 
-		return html;
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					null, null, mode, locale);
+
+		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
+		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
+		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
+			segmentsExperienceIds);
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, html, defaultFragmentEntryProcessorContext);
 	}
 
 	@Override

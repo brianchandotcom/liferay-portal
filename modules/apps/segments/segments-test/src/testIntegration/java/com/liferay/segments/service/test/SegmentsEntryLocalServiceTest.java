@@ -15,6 +15,7 @@
 package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -34,6 +35,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
+import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -128,6 +130,15 @@ public class SegmentsEntryLocalServiceTest {
 
 		SegmentsTestUtil.addSegmentsEntry(
 			childGroup.getGroupId(), segmentsEntryKey);
+	}
+
+	@Test(expected = SegmentsEntryNameException.class)
+	public void testAddSegmentsEntryWithoutName() throws Exception {
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK,
+			CriteriaSerializer.serialize(new Criteria()),
+			RandomTestUtil.randomString());
 	}
 
 	@Test

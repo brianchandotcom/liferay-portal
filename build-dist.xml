@@ -1211,6 +1211,7 @@ release was successful.</echo>
 			<replacevalue>
 				<![CDATA[
 					<jvm-options>-Dfile.encoding=UTF8</jvm-options>
+					<jvm-options>-Djava.locale.providers=JRE,COMPAT,CLDR</jvm-options>
 					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
 					<jvm-options>-Duser.timezone=GMT</jvm-options>
@@ -1341,7 +1342,7 @@ this task.
 					<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 				</replace>
 
-				<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
+				<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
 
 				<replace
 					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
@@ -1390,7 +1391,7 @@ this task.
 						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 					</replace>
 
-					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
+					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
 
 					<replace
 						file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
@@ -1446,7 +1447,7 @@ this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 
 					:JAVA_OPTS_SET
 				]]>
@@ -1726,7 +1727,7 @@ this task.
 			<replacetoken><![CDATA[export JAVA_OPTS]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 
 					export JAVA_OPTS
 				]]>
@@ -1741,7 +1742,7 @@ this task.
 				<![CDATA[
 					set JONAS_CLASSPATH=%JONAS_BASE%\conf;%JONAS_CLASSPATH%
 
-					set "JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+					set "JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 				]]>
 			</replacevalue>
 		</replace>
@@ -1790,7 +1791,7 @@ this task.
 			file="${app.server.resin.dir}/conf/resin.properties"
 		>
 			<replacetoken><![CDATA[# jvm_args  : -Xmx2048m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m]]></replacevalue>
+			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m]]></replacevalue>
 		</replace>
 
 		<replace
@@ -3378,7 +3379,7 @@ this task.
 
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 			]]>
 		</echo>
 
@@ -3395,7 +3396,7 @@ this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 
 					:JAVA_OPTS_SET
 				]]>

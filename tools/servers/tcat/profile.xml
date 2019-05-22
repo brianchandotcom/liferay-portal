@@ -4,7 +4,7 @@
 	<environmentVariables>
 		<entry>
 			<string>JAVA_OPTS</string>
-			<string>${JAVA_OPTS} -Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m</string>
+			<string>${JAVA_OPTS} -Dfile.encoding=UTF8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m</string>
 		</entry>
 	</environmentVariables>
 	<artifactToVersion></artifactToVersion>

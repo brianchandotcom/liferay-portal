@@ -89,7 +89,8 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 				GenericsUtil.getItemClass(infoListProvider));
 
 		if (itemClassInfoListProviders != null) {
-			_itemClassInfoListProviders.remove(infoListProvider);
+			_itemClassInfoListProviders.remove(
+				GenericsUtil.getItemClass(infoListProvider));
 		}
 	}
 

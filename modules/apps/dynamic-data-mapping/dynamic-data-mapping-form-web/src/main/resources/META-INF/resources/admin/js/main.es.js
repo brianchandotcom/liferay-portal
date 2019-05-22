@@ -390,9 +390,8 @@ class Form extends Component {
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(this);
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
 		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
+		this.ComposedFormBuilder = this._createFormBuilder();
 		this.submitForm = this.submitForm.bind(this);
-
-		this.formBuilder = this._createFormBuilder();
 	}
 
 	disposed() {
@@ -451,6 +450,7 @@ class Form extends Component {
 	}
 
 	render() {
+		const {ComposedFormBuilder} = this;
 		const {
 			context,
 			defaultLanguageId,
@@ -465,6 +465,7 @@ class Form extends Component {
 			spritemap,
 			view
 		} = this.props;
+		const {saveButtonLabel} = this.state;
 
 		const layoutProviderProps = {
 			...this.props,
@@ -481,15 +482,10 @@ class Form extends Component {
 			ref: 'layoutProvider'
 		};
 
-		const {formBuilder} = this;
-		const {saveButtonLabel} = this.state;
-
-		const FormBuilder = formBuilder;
-
 		return (
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
-					{this.isShowRuleBuilder() && (
+					{this.isFormBuilderView() && (
 						<RuleBuilder
 							dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
 							dataProviderInstancesURL={this.props.dataProviderInstancesURL}
@@ -504,7 +500,7 @@ class Form extends Component {
 						/>
 					)}
 
-					<FormBuilder
+					<ComposedFormBuilder
 						fieldSetDefinitionURL={fieldSetDefinitionURL}
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
@@ -516,7 +512,6 @@ class Form extends Component {
 						view={view}
 						visible={!this.isShowRuleBuilder()}
 					/>
-
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">

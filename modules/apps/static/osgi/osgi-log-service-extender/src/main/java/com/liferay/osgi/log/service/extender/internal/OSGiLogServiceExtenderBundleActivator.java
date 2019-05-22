@@ -187,10 +187,7 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 			}
 
 			for (Map.Entry<String, LogLevel> entry : logLevels.entrySet()) {
-				String category = entry.getKey();
-
-				String name = "osgi.logging.".concat(
-					category.replace('.', '_'));
+				String name = "osgi.logging.".concat(entry.getKey());
 
 				LogLevel logLevel = entry.getValue();
 

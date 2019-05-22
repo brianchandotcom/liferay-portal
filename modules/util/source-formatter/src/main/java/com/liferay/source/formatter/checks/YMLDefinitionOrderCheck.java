@@ -64,7 +64,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		while (itr.hasNext()) {
 			String s = itr.next();
 
-			if (!definitions.contains(s) || s.startsWith("{{")) {
+			if (!definitions.contains(s) || s.startsWith("{{") ||
+				s.startsWith("#")) {
+
 				definitions.add(s);
 			}
 		}

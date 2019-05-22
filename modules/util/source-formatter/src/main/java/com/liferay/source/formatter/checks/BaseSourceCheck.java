@@ -205,7 +205,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		return _getJSONObjectValues(
 			_attributesJSONObject, attributeKey, _attributeValuesMap,
-			absolutePath);
+			absolutePath, _baseDirName);
 	}
 
 	protected String getBaseDirName() {
@@ -803,7 +803,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private List<String> _getJSONObjectValues(
 		JSONObject jsonObject, String key,
-		Map<String, List<String>> cachedValuesMap, String absolutePath) {
+		Map<String, List<String>> cachedValuesMap, String absolutePath,
+		String baseDirName) {
 
 		if (jsonObject == null) {
 			return Collections.emptyList();
@@ -841,7 +842,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
 
 				String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
-					_baseDirName);
+					baseDirName);
 
 				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
 					hasSubdirectoryValues = true;
@@ -885,7 +886,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String key, String path, int lineNumber, String parameter) {
 
 		List<String> excludes = _getJSONObjectValues(
-			_excludesJSONObject, key, _excludesValuesMap, path);
+			_excludesJSONObject, key, _excludesValuesMap, path, _baseDirName);
 
 		if (ListUtil.isEmpty(excludes)) {
 			return false;

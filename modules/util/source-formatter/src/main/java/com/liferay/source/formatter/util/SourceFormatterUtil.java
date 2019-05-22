@@ -115,6 +115,43 @@ public class SourceFormatterUtil {
 		return attributesJSONObject;
 	}
 
+	public static JSONObject addPropertiesAttributes(
+		JSONObject attributesJSONObject, Map<String, Properties> propertiesMap,
+		String... keys) {
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			JSONObject propertiesAttributesJSONObject = new JSONObjectImpl();
+
+			Properties properties = entry.getValue();
+
+			for (Object obj : properties.keySet()) {
+				String key = (String)obj;
+
+				if (!ArrayUtil.contains(keys, key)) {
+					continue;
+				}
+
+				JSONArray jsonArray = new JSONArrayImpl();
+
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
+
+					jsonArray.put(value);
+				}
+
+				propertiesAttributesJSONObject.put(key, jsonArray);
+			}
+
+			if (propertiesAttributesJSONObject.length() != 0) {
+				attributesJSONObject.put(
+					entry.getKey(), propertiesAttributesJSONObject);
+			}
+		}
+
+		return attributesJSONObject;
+	}
+
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes,

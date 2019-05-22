@@ -115,7 +115,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 
 			<c:if test="<%= fragmentCollection != null %>">
 				<div class="sheet">
-					<h3 class="sheet-title">
+					<h2 class="sheet-title">
 						<div class="autofit-row autofit-row-center">
 							<div class="autofit-col">
 								<%= HtmlUtil.escape(fragmentCollection.getName()) %>
@@ -125,7 +125,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 								<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
 							</div>
 						</div>
-					</h3>
+					</h2>
 
 					<div class="sheet-section">
 						<clay:navigation-bar

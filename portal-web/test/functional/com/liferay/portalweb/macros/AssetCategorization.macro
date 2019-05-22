@@ -6,7 +6,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "AssetCategorization#TAGS_FIELD");
 
-		if (IsElementPresent(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
+		if (IsElementPresent(key_tagName = "${tagName}", locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC")) {
 			Click(
 				key_tagName = "${tagName}",
 				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC");

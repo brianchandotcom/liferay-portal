@@ -56,7 +56,7 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			portal.getControlPanelPlid(liferayPortletRequest),
-			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+			MBPortletKeys.MESSAGE_BOARDS_ADMIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/edit_category");

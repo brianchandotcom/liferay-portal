@@ -686,6 +686,19 @@ AUI.add(
 						}
 					},
 
+					syncLabel: function(locale) {
+						var instance = this;
+
+						var fieldDefinition = instance.getFieldDefinition();
+
+						if (Lang.isUndefined(fieldDefinition.label[locale])) {
+							instance.setLabel(fieldDefinition.label[instance.getDefaultLocale()]);
+						}
+						else {
+							instance.setLabel(fieldDefinition.label[locale]);
+						}
+					},
+
 					syncReadOnlyUI: function() {
 						var instance = this;
 
@@ -891,6 +904,7 @@ AUI.add(
 
 						instance.set('displayLocale', displayLocale);
 
+						instance.syncLabel(displayLocale);
 						instance.syncValueUI();
 						instance.syncReadOnlyUI();
 					},
@@ -3220,32 +3234,7 @@ AUI.add(
 									return;
 								}
 
-								var currentLocale = field.get('displayLocale');
-								var originalField = field.originalField;
-
-								var newFieldLocalizations = field.get('localizationMap');
-								var totalLocalizations = originalField.get('localizationMap');
-
-								for (var localization in totalLocalizations) {
-									if (localization === currentLocale) {
-										return;
-									}
-
-									if (!newFieldLocalizations[localization]) {
-										var localizationValue = '';
-
-										if (newFieldLocalizations[defaultLocale]) {
-											localizationValue = newFieldLocalizations[defaultLocale];
-										}
-										else if (defaultLocale === field.get('displayLocale') && field.getValue()) {
-											localizationValue = field.getValue();
-										}
-
-										newFieldLocalizations[localization] = localizationValue;
-									}
-								}
-
-								field.set('localizationMap', newFieldLocalizations);
+								instance.populateBlankLocalizationMap(defaultLocale, field.originalField, field);
 							}
 						);
 					},
@@ -3256,6 +3245,43 @@ AUI.add(
 						var fields = parentField.get('fields');
 
 						fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
+					},
+
+					populateBlankLocalizationMap(defaultLocale, originalField, repeatedField) {
+						var instance = this;
+
+						var newFieldLocalizations = repeatedField.get('localizationMap');
+						var totalLocalizations = originalField.get('localizationMap');
+
+						var currentLocale = repeatedField.get('displayLocale');
+
+						for (var localization in totalLocalizations) {
+							if (localization === currentLocale) {
+								continue;
+							}
+
+							if (!newFieldLocalizations[localization]) {
+								var localizationValue = '';
+
+								if (newFieldLocalizations[defaultLocale]) {
+									localizationValue = newFieldLocalizations[defaultLocale];
+								}
+								else if (defaultLocale === repeatedField.get('displayLocale') && repeatedField.getValue()) {
+									localizationValue = repeatedField.getValue();
+								}
+
+								newFieldLocalizations[localization] = localizationValue;
+							}
+						}
+
+						repeatedField.set('localizationMap', newFieldLocalizations);
+
+						var newNestedFields = repeatedField.get('fields');
+						var originalNestedFields = originalField.get('fields');
+
+						for (var i = 0; i < newNestedFields.length; i++) {
+							instance.populateBlankLocalizationMap(defaultLocale, originalNestedFields[i], newNestedFields[i]);
+						}
 					},
 
 					registerRepeatable: function(field) {

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet.toolbar.contributor;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,9 +44,11 @@ public abstract class BasePortletToolbarContributor
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Layout layout = themeDisplay.getLayout();
 
-		if ((scopeGroup == null) || scopeGroup.isLayoutPrototype()) {
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype()) {
 			return Collections.emptyList();
 		}
 

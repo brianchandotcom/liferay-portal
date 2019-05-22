@@ -211,6 +211,16 @@ AUI.add(
 								containerId: container.get('id')
 							}
 						);
+
+						var formNode = instance.getFormNode();
+
+						if (formNode) {
+							var ddmFormBuilderAppNode = formNode.one('.ddm-form-builder-app');
+
+							if (ddmFormBuilderAppNode) {
+								ddmFormBuilderAppNode.removeClass('ddm-form-builder-app-not-ready');
+							}
+						}
 					},
 
 					_valueEditingLanguageId: function() {

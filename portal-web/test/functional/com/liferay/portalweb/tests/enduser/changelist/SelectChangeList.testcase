@@ -135,6 +135,48 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@priority = "5"
+	test MakeActiveAnotherChangeList {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
+
+		ChangeList.selectChangeList(changeListName = "Select Change List");
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Second Change List Description",
+			changeListName = "Second Change List Name");
+
+		ChangeList.selectChangeList(changeListName = "Select Change List");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		ChangeList.gotoActivate(rowEntry = "Change List Name");
+
+		Alert.viewSuccessMessage();
+
+		ChangeList.selectChangeList(changeListName = "Select Change List");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		var key_changeListName = "Change List Name";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_STATUS",
+			value1 = "Active");
+
+		ChangeList.gotoActivate(rowEntry = "Work on Production");
+
+		Alert.viewSuccessMessage();
+
+		var key_changeListName = "Work on Production";
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_STATUS",
+			value1 = "Active");
+	}
+
 	@priority = "4"
 	test WorkOnProduction {
 		ChangeList.workOnProduction();

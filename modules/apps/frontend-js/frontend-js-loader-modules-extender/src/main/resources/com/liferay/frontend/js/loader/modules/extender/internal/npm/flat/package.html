@@ -21,11 +21,13 @@ details.
 	com.liferay.frontend.js.loader.modules.extender.npm.model} that are provided
 	by default by Liferay Portal.
 </p>
+
 <p>
 	These implementations assume a particular OSGi bundle structure to locate
 	the contents of modules. These are <code>flat</code> structures and look
 	like the following example:
 </p>
+
 <pre>
 	- my-bundle.jar
 		- META-INF
@@ -43,6 +45,7 @@ details.
 				...
 			...
 </pre>
+
 <p>
 	All NPM packages live in <code>META-INF/resources/node_modules</code>
 	and are laid out in a flat (not nested) disposition where each package

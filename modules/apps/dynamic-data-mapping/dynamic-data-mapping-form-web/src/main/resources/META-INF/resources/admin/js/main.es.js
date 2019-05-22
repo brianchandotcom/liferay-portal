@@ -1,9 +1,9 @@
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
+import compose from 'dynamic-data-mapping-form-builder/js/util/compose.es';
 import core from 'metal';
 import dom from 'metal-dom';
-import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import Notifications from './util/Notifications.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
@@ -11,8 +11,14 @@ import PublishButton from './components/PublishButton/PublishButton.es';
 import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
 import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
+import withActionableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withActionableFields.es';
+import withEditablePageHeader from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withEditablePageHeader.es';
+import withMoveableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMoveableFields.es';
+import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
+import withResizeableColumns from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withResizeableColumns.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
@@ -295,14 +301,15 @@ class Form extends Component {
 			this._createEditor('descriptionEditor')
 		];
 
+		dependencies.push(this._getTranslationManager());
+
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
-			dependencies.push(this._getTranslationManager());
 		}
 
 		Promise.all(dependencies).then(
 			results => {
-				const translationManager = results[3];
+				const translationManager = results[2];
 
 				if (translationManager) {
 					translationManager.on(
@@ -330,7 +337,7 @@ class Form extends Component {
 						namespace,
 						paginationMode,
 						published,
-						settingsDDMForm: results[2],
+						settingsDDMForm: results[3],
 						translationManager
 					},
 					this.element
@@ -383,6 +390,7 @@ class Form extends Component {
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(this);
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
 		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
+		this.ComposedFormBuilder = this._createFormBuilder();
 		this.submitForm = this.submitForm.bind(this);
 	}
 
@@ -442,6 +450,7 @@ class Form extends Component {
 	}
 
 	render() {
+		const {ComposedFormBuilder} = this;
 		const {
 			context,
 			defaultLanguageId,
@@ -456,6 +465,7 @@ class Form extends Component {
 			spritemap,
 			view
 		} = this.props;
+		const {saveButtonLabel} = this.state;
 
 		const layoutProviderProps = {
 			...this.props,
@@ -471,38 +481,37 @@ class Form extends Component {
 			initialSuccessPageSettings: context.successPageSettings,
 			ref: 'layoutProvider'
 		};
-		const {saveButtonLabel} = this.state;
 
 		return (
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
-					<RuleBuilder
-						dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
-						dataProviderInstancesURL={this.props.dataProviderInstancesURL}
-						fieldTypes={fieldTypes}
-						functionsMetadata={this.props.functionsMetadata}
-						functionsURL={this.props.functionsURL}
-						pages={context.pages}
-						rolesURL={this.props.rolesURL}
-						rules={this.props.rules}
-						spritemap={spritemap}
-						visible={this.isShowRuleBuilder()}
-					/>
-
-					{!this.isShowRuleBuilder() && (
-						<FormBuilder
-							fieldSetDefinitionURL={fieldSetDefinitionURL}
-							fieldSets={fieldSets}
+					{this.isFormBuilderView() && (
+						<RuleBuilder
+							dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
+							dataProviderInstancesURL={this.props.dataProviderInstancesURL}
 							fieldTypes={fieldTypes}
-							groupId={groupId}
-							namespace={this.props.namespace}
-							ref="builder"
+							functionsMetadata={this.props.functionsMetadata}
+							functionsURL={this.props.functionsURL}
+							pages={context.pages}
+							rolesURL={this.props.rolesURL}
 							rules={this.props.rules}
 							spritemap={spritemap}
-							view={view}
-							visible={!this.isShowRuleBuilder()}
+							visible={this.isShowRuleBuilder()}
 						/>
 					)}
+
+					<ComposedFormBuilder
+						fieldSetDefinitionURL={fieldSetDefinitionURL}
+						fieldSets={fieldSets}
+						fieldTypes={fieldTypes}
+						groupId={groupId}
+						namespace={this.props.namespace}
+						ref="builder"
+						rules={this.props.rules}
+						spritemap={spritemap}
+						view={view}
+						visible={!this.isShowRuleBuilder()}
+					/>
 				</LayoutProvider>
 
 				<div class="container-fluid-1280">
@@ -667,6 +676,21 @@ class Form extends Component {
 		}
 
 		return promise;
+	}
+
+	_createFormBuilder() {
+		const composeList = [
+			withActionableFields,
+			withMoveableFields,
+			withMultiplePages,
+			withResizeableColumns
+		];
+
+		if (this.isFormBuilderView()) {
+			composeList.push(withEditablePageHeader);
+		}
+
+		return compose(...composeList)(FormBuilderBase);
 	}
 
 	_createFormURL() {

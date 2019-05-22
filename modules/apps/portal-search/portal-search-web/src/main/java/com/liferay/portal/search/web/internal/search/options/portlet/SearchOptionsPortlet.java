@@ -14,14 +14,12 @@
 
 package com.liferay.portal.search.web.internal.search.options.portlet;
 
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchPortletPermissionUtil;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 
 import java.io.IOException;
 
@@ -79,15 +77,9 @@ public class SearchOptionsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected Language language;
-
-	@Reference
 	protected Portal portal;
 
 	@Reference
 	protected PortletPermission portletPermission;
-
-	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

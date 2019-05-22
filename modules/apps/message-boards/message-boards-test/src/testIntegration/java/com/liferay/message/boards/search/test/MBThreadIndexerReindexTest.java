@@ -90,7 +90,8 @@ public class MBThreadIndexerReindexTest {
 			RandomTestUtil.randomString(), _group);
 
 		MBMessage mbMessage = mbFixture.createMBMessage(
-			user.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+			user.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString());
 
 		MBThread mbThread = mbMessage.getThread();
 
@@ -115,7 +116,8 @@ public class MBThreadIndexerReindexTest {
 			RandomTestUtil.randomString(), _group);
 
 		MBMessage mbMessage = mbFixture.createMBMessage(
-			user.getUserId(), MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			user.getUserId(), MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			RandomTestUtil.randomString());
 
 		MBThread mbThread = mbMessage.getThread();
 

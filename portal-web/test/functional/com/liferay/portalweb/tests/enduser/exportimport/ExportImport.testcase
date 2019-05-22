@@ -766,7 +766,7 @@ definition {
 
 	@priority = "4"
 	test ExportImportThemeSettings {
-		property osgi.app.includes = "frontend-theme-fjord";
+		property osgi.app.includes = "frontend-theme-porygon";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -784,7 +784,7 @@ definition {
 
 		Page.changeCurrentTheme(
 			pageName = "Test Page",
-			themeName = "Fjord");
+			themeName = "Porygon");
 
 		LAR.configureExportSiteCP(
 			uncheckLogo = "true",
@@ -823,7 +823,7 @@ definition {
 		Page.viewCurrentTheme(
 			page = "Public Pages",
 			pageName = "Test Page",
-			themeName = "Fjord");
+			themeName = "Porygon");
 	}
 
 	@priority = "5"

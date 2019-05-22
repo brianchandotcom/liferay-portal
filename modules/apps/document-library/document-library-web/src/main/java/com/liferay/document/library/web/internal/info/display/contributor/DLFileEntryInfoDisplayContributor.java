@@ -25,6 +25,8 @@ import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
@@ -101,7 +103,14 @@ public class DLFileEntryInfoDisplayContributor
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
 		throws PortalException {
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
+		LocalRepository localRepository =
+			_repositoryProvider.fetchFileEntryLocalRepository(classPK);
+
+		if (localRepository == null) {
+			return null;
+		}
+
+		FileEntry fileEntry = localRepository.getFileEntry(classPK);
 
 		return new InfoDisplayObjectProvider<FileEntry>() {
 
@@ -222,6 +231,9 @@ public class DLFileEntryInfoDisplayContributor
 	private final DLFileEntryAssetInfoDisplayContributor
 		_dlFileEntryAssetInfoDisplayContributor =
 			new DLFileEntryAssetInfoDisplayContributor();
+
+	@Reference
+	private RepositoryProvider _repositoryProvider;
 
 	private class DLFileEntryAssetInfoDisplayContributor
 		extends BaseAssetInfoDisplayContributor<FileEntry> {

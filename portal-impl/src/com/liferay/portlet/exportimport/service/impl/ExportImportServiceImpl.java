@@ -17,10 +17,8 @@ package com.liferay.portlet.exportimport.service.impl;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.exportimport.service.base.ExportImportServiceBaseImpl;
 
@@ -75,8 +73,13 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), exportImportConfiguration.getGroupId(),
+			getPermissionChecker(), sourceGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return exportImportLocalService.exportLayoutsAsFileInBackground(
@@ -92,8 +95,13 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId);
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), exportImportConfiguration.getGroupId(),
+			getPermissionChecker(), sourceGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return exportImportLocalService.exportLayoutsAsFileInBackground(
@@ -108,12 +116,10 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
-
-		Layout layout = layoutLocalService.getLayout(sourcePlid);
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), layout.getGroupId(),
+			getPermissionChecker(), sourceGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.exportPortletInfoAsFile(
@@ -128,12 +134,10 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
-
-		Layout layout = layoutLocalService.getLayout(sourcePlid);
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), layout.getGroupId(),
+			getPermissionChecker(), sourceGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.exportPortletInfoAsFileInBackground(
@@ -349,12 +353,11 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-		String portletId = MapUtil.getString(settingsMap, "portletId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
-		PortletPermissionUtil.check(
-			getPermissionChecker(), targetPlid, portletId,
-			ActionKeys.CONFIGURATION);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.validateImportPortletInfo(
 			exportImportConfiguration, file);
@@ -369,12 +372,11 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-		String portletId = MapUtil.getString(settingsMap, "portletId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
-		PortletPermissionUtil.check(
-			getPermissionChecker(), targetPlid, portletId,
-			ActionKeys.CONFIGURATION);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);

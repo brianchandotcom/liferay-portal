@@ -110,11 +110,13 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					name="name"
 					value="<%= HtmlUtil.escape(groupDescriptiveName) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smaller table-cell-minw-150"
 					name="type"
 					value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 				/>
@@ -128,7 +130,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 					data.put("groupid", group.getGroupId());
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button cssClass="selector-button" data="<%= data %>" value="select" />
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

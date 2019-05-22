@@ -30,22 +30,9 @@ public interface SearchOptionsPortletPreferences {
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
 
-	public static final String PREFERENCE_KEY_FIELDS_TO_RETURN =
-		"fieldsToReturn";
-
-	public static final String PREFERENCE_KEY_INDEXES = "indexes";
-
 	public Optional<String> getFederatedSearchKeyOptional();
 
 	public String getFederatedSearchKeyString();
-
-	public Optional<String> getFieldsToReturnOptional();
-
-	public String getFieldsToReturnString();
-
-	public Optional<String> getIndexesOptional();
-
-	public String getIndexesString();
 
 	public boolean isAllowEmptySearches();
 

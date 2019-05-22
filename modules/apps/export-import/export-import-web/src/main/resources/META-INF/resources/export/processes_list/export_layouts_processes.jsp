@@ -301,34 +301,36 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						markupView="lexicon"
 						showWhenSingleIcon="<%= true %>"
 					>
-						<portlet:actionURL name="editExportConfiguration" var="relaunchURL">
-							<portlet:param name="mvcRenderCommandName" value="exportLayoutsView" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						</portlet:actionURL>
+						<c:if test="<%= !StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+							<portlet:actionURL name="editExportConfiguration" var="relaunchURL">
+								<portlet:param name="mvcRenderCommandName" value="exportLayoutsView" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+								<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+							</portlet:actionURL>
 
-						<liferay-ui:icon
-							icon="reload"
-							markupView="lexicon"
-							message="relaunch"
-							url="<%= relaunchURL %>"
-						/>
+							<liferay-ui:icon
+								icon="reload"
+								markupView="lexicon"
+								message="relaunch"
+								url="<%= relaunchURL %>"
+							/>
 
-						<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
-							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-							<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						</portlet:actionURL>
+							<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
+								<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+								<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+							</portlet:actionURL>
 
-						<%
-						Date completionDate = backgroundTask.getCompletionDate();
-						%>
+							<%
+							Date completionDate = backgroundTask.getCompletionDate();
+							%>
 
-						<liferay-ui:icon-delete
-							label="<%= true %>"
-							message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-							url="<%= deleteBackgroundTaskURL %>"
-						/>
+							<liferay-ui:icon-delete
+								label="<%= true %>"
+								message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+								url="<%= deleteBackgroundTaskURL %>"
+							/>
+						</c:if>
 					</liferay-ui:icon-menu>
 				</c:if>
 			</liferay-ui:search-container-column-text>

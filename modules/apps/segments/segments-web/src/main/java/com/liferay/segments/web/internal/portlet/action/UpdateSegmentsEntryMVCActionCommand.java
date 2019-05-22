@@ -37,6 +37,7 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegi
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.exception.SegmentsEntryCriteriaException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
+import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 
@@ -136,7 +137,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof SegmentsEntryCriteriaException ||
-					 e instanceof SegmentsEntryKeyException) {
+					 e instanceof SegmentsEntryKeyException ||
+					 e instanceof SegmentsEntryNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 

@@ -133,7 +133,7 @@ public class UploadServletRequestImpl
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 				if (uploadServletRequestImplMaxSize > 0) {
-					long itemSize = liferayFileItem.getItemSize();
+					long itemSize = liferayFileItem.getSize();
 
 					if ((uploadServletRequestImplSize + itemSize) >
 							uploadServletRequestImplMaxSize) {

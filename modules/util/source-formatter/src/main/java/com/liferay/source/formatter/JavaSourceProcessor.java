@@ -123,8 +123,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			sourceFormatterArgs.getBaseDirName());
 		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
 			"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
-
-		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {

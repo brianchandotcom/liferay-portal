@@ -46,24 +46,32 @@ public class ${schemaName}Resource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)?upper_case});
 
-			<#if parameters?contains("Filter filter")>
-				if (filterString != null) {
-					httpInvoker.parameter("filter", filterString);
-				}
-			</#if>
-
-			<#if parameters?contains("Pagination pagination")>
-				if (pagination != null) {
-					httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-					httpInvoker.parameter("pageSize", String.valueOf(pagination.getPageSize()));
-				}
-			</#if>
-
-			<#if parameters?contains("Sort[] sorts")>
-				if (sortString != null) {
-					httpInvoker.parameter("sort", sortString);
-				}
-			</#if>
+			<#list javaMethodSignature.javaMethodParameters as parameter>
+				<#if stringUtil.equals(parameter.parameterName, "filter")>
+					if (filterString != null) {
+						httpInvoker.parameter("filter", filterString);
+					}
+				<#elseif stringUtil.equals(parameter.parameterName, "pagination")>
+					if (pagination != null) {
+						httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+						httpInvoker.parameter("pageSize", String.valueOf(pagination.getPageSize()));
+					}
+				<#elseif stringUtil.equals(parameter.parameterName, "sorts")>
+					if (sortString != null) {
+						httpInvoker.parameter("sort", sortString);
+					}
+				<#elseif freeMarkerTool.isQueryParameter(parameter, javaMethodSignature.operation)>
+					if (${parameter.parameterName} != null) {
+						<#if stringUtil.startsWith(parameter.parameterType, "[")>
+							for (int i = 0; i < ${parameter.parameterName}.length; i++) {
+								httpInvoker.parameter("${parameter.parameterName}", String.valueOf(${parameter.parameterName}[i]));
+							}
+						<#else>
+							httpInvoker.parameter("${parameter.parameterName}", String.valueOf(${parameter.parameterName}));
+						</#if>
+					}
+				</#if>
+			</#list>
 
 			httpInvoker.path("http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}"
 

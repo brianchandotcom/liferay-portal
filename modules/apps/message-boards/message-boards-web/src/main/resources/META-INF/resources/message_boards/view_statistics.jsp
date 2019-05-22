@@ -52,19 +52,19 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 		>
 			<dl>
 				<dt>
-					<liferay-ui:message key="num-of-categories" />:
+					<liferay-ui:message key="categories" />:
 				</dt>
 				<dd>
 					<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
 				</dd>
 				<dt>
-					<liferay-ui:message key="num-of-posts" />:
+					<liferay-ui:message key="posts" />:
 				</dt>
 				<dd>
 					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
 				</dd>
 				<dt>
-					<liferay-ui:message key="num-of-participants" />:
+					<liferay-ui:message key="participants" />:
 				</dt>
 				<dd>
 					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>

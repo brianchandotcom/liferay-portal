@@ -576,6 +576,41 @@ public class WorkflowTaskManagerImplTest
 	}
 
 	@Test
+	public void testApproveSiteMember() throws Exception {
+		activateWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+			SITE_MEMBER_SINGLE_APPROVER, 1);
+
+		JournalArticle article = addJournalArticle(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, article.getStatus());
+
+		checkUserNotificationEventsByUsers(siteMemberUser);
+
+		Assert.assertTrue(hasOtherAssignees(adminUser));
+
+		assignWorkflowTaskToUser(adminUser, siteMemberUser);
+
+		completeWorkflowTask(siteMemberUser, Constants.APPROVE);
+
+		getWorkflowInstance(JournalArticle.class.getName(), article.getId());
+
+		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, article.getStatus());
+
+		deactivateWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+	}
+
+	@Test
 	public void testApproveWorkflowBlogsEntryAsSiteAdmin() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 

@@ -42,6 +42,15 @@ else {
 String searchContainerId = "exportLayoutProcesses";
 %>
 
+<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+	<liferay-staging:alert
+		dismissible="<%= true %>"
+		type="WARNING"
+	>
+		<liferay-ui:message key='<%= LanguageUtil.get(request, "export-import-change-lists-warning") %>' />
+	</liferay-staging:alert>
+</c:if>
+
 <c:choose>
 	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<div class="alert alert-info">

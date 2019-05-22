@@ -44,9 +44,7 @@ public abstract class BaseDateRangeAggregationTestCase
 		addDocument(getDate("2018-02-03T00:00:00"));
 		addDocument(getDate("2019-02-05T00:00:00"));
 
-		DateRangeAggregation dateRangeAggregation = getAggregation();
-
-		dateRangeAggregation.setFormat("yyyyMMdd");
+		DateRangeAggregation dateRangeAggregation = getAggregation("yyyyMMdd");
 
 		dateRangeAggregation.addRange("Before 2017", "20160101", "20161231");
 		dateRangeAggregation.addRange("2017", "20170101", "20171231");
@@ -77,9 +75,8 @@ public abstract class BaseDateRangeAggregationTestCase
 		addDocument(getDate("2018-02-03T00:00:00"));
 		addDocument(getDate("2019-02-05T00:00:00"));
 
-		DateRangeAggregation dateRangeAggregation = getAggregation();
+		DateRangeAggregation dateRangeAggregation = getAggregation("yyyyMMdd");
 
-		dateRangeAggregation.setFormat("yyyyMMdd");
 		dateRangeAggregation.setKeyed(true);
 
 		dateRangeAggregation.addRange("20160101", "20161231");
@@ -102,12 +99,16 @@ public abstract class BaseDateRangeAggregationTestCase
 	}
 
 	protected void addDocument(Date date) throws Exception {
-		addDocument(
-			DocumentCreationHelpers.singleDate(Field.EXPIRATION_DATE, date));
+		addDocument(DocumentCreationHelpers.singleDate(_FIELD, date));
 	}
 
-	protected DateRangeAggregation getAggregation() {
-		return aggregations.dateRange("date_range", Field.EXPIRATION_DATE);
+	protected DateRangeAggregation getAggregation(String format) {
+		DateRangeAggregation dateRangeAggregation = aggregations.dateRange(
+			"date_range", _FIELD);
+
+		dateRangeAggregation.setFormat(format);
+
+		return dateRangeAggregation;
 	}
 
 	protected Date getDate(String date) {
@@ -118,5 +119,7 @@ public abstract class BaseDateRangeAggregationTestCase
 
 		return Date.from(zonedDateTime.toInstant());
 	}
+
+	private static final String _FIELD = Field.EXPIRATION_DATE;
 
 }

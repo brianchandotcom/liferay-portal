@@ -1,0 +1,1 @@
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLSignOut()Ljava/lang/String;:SAFE

@@ -20,7 +20,7 @@
 </tr>
 <!--CATEGORY_TABLE-->
 <tr>
-	<td>CATEGORY_TABLE_CHOOSE_BUTTON_2</td>
+	<td>CATEGORY_TABLE_SELECT_BUTTON_2</td>
 	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]//button)[2]</td>
 	<td></td>
 </tr>

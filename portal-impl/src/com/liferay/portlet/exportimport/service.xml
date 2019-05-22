@@ -4,10 +4,6 @@
 <service-builder api-package-path="com.liferay.exportimport.kernel" mvcc-enabled="true" package-path="com.liferay.portlet.exportimport">
 	<namespace>ExportImport</namespace>
 	<entity local-service="true" name="ExportImport" remote-service="true">
-
-		<!-- References -->
-
-		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ExportImportConfiguration" remote-service="true" trash-enabled="true">
 

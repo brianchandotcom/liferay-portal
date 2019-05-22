@@ -19,7 +19,6 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregationResult;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -45,15 +44,8 @@ public abstract class BaseDerivativePipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.getDefaultHistogramAggregation();
 
 		DerivativePipelineAggregation derivativePipelineAggregation =
 			aggregations.derivative("derivative", "sum");

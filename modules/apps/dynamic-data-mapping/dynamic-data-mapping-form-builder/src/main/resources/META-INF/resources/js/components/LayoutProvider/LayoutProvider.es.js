@@ -280,10 +280,11 @@ class LayoutProvider extends Component {
 
 		pages = visitor.mapFields(
 			field => {
-				const {settingsContext} = field;
+				const {options, settingsContext} = field;
 
 				return {
 					...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
+					options,
 					settingsContext: {
 						...settingsContext,
 						pages: this.getLocalizedPages(settingsContext.pages)
@@ -477,10 +478,14 @@ class LayoutProvider extends Component {
 			columnIndex
 		);
 
+		const pageTarget = pages[target.pageIndex];
+
+		const rowTarget = pageTarget.rows[target.rowIndex];
+
 		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
 			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
 		}
-		else if (addedToPlaceholder) {
+		else if (addedToPlaceholder && rowTarget.columns.length === 1) {
 			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
 		}
 		else {

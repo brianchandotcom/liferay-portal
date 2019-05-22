@@ -14,10 +14,16 @@
 
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.product.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -45,6 +51,21 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	@Override
+	protected void includePage(
+			String page, HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		String layoutMode = ParamUtil.getString(
+			getOriginalServletRequest(), "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.PREVIEW)) {
+			return;
+		}
+
+		super.includePage(page, httpServletResponse);
 	}
 
 	@Override

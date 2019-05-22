@@ -1,8 +1,9 @@
 @component-name = "portal-security"
 definition {
 	property osgi.app.includes = "oauth2-provider";
-	property portal.release = "true";
 	property testray.main.component.name = "OAuth 2";
+
+	// Temporarily turned off on release jobs in favor of OAuth2.testcase. See LRQA-49224.
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -1,0 +1,48 @@
+<html>
+	<body>
+		<p>
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="actions"
+				showWhenSingleIcon="<%= true %>"
+			>
+			<div class="fjord-devices fjord-section">
+				<section class="bg-transparent jumbotron jumbotron-fluid mb-0 position-relative text-secondary">
+					<div class="container py-5">
+						<div class="row">
+							<div class="bg-image bg-image-contain bg-image-right col-lg-4 col-xl-6 d-lg-block d-none fjord-devices-image my-5 position-absolute" data-lfr-background-image-id="fjord-devices"></div>
+							<div class="col-12 col-lg-8 col-xl-6">
+								<lfr-editable id="fjord-devices-title" type="rich-text">
+									<h2 class="display-4">The Fitness App That's Ready When You Are</h2>
+								</lfr-editable>
+
+								<div class="lead">
+									<lfr-editable id="fjord-devices-text" type="rich-text">
+										<p>Add a short explanation of how to use your app. Link to demos, samples, or forums so your customers can learn more.</p>
+
+										<h3>30-Day Guarantee</h3>
+
+										<p>Include reminders on discounts, promotions, or special pricing to seal the deal.</p>
+									</lfr-editable>
+								</div>
+
+								<div class="sublead">
+										<h3>60-Day Guarantee</h3>
+									</lfr-editable>
+								</div>
+
+								<lfr-editable id="fjord-devices-button" type="rich-text">
+									<div class="d-inline-flex">
+										<a class="btn btn-primary fjord-btn-primary px-4 px-sm-5 py-2 py-sm-3 text-uppercase" href="#">Get started</a>
+									</div>
+								</lfr-editable>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</p>
+	</body>
+</html>

@@ -172,6 +172,10 @@ public class DocumentFolderResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+		if (search != null) {
+			httpInvoker.parameter("search", String.valueOf(search));
+		}
+
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);
 		}
@@ -250,6 +254,14 @@ public class DocumentFolderResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (flatten != null) {
+			httpInvoker.parameter("flatten", String.valueOf(flatten));
+		}
+
+		if (search != null) {
+			httpInvoker.parameter("search", String.valueOf(search));
+		}
 
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);

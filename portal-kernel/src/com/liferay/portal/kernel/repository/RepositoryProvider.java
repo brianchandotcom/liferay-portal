@@ -18,10 +18,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Iván Zaera
  */
+@ProviderType
 public interface RepositoryProvider {
+
+	public LocalRepository fetchFileEntryLocalRepository(long fileEntryId)
+		throws PortalException;
 
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
 		throws PortalException;

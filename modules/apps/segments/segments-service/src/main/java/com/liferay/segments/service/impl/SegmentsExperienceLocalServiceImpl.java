@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
@@ -69,7 +72,8 @@ public class SegmentsExperienceLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
-		_validate(groupId, classNameId, publishedClassPK, priority);
+		_validateName(nameMap);
+		_validatePriority(groupId, classNameId, publishedClassPK, priority);
 
 		long segmentsExperienceId = counterLocalService.increment();
 
@@ -255,6 +259,8 @@ public class SegmentsExperienceLocalServiceImpl
 			Map<Locale, String> nameMap, boolean active)
 		throws PortalException {
 
+		_validateName(nameMap);
+
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.findByPrimaryKey(
 				segmentsExperienceId);
@@ -340,7 +346,17 @@ public class SegmentsExperienceLocalServiceImpl
 		return classPK;
 	}
 
-	private void _validate(
+	private void _validateName(Map<Locale, String> nameMap)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getDefault();
+
+		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
+			throw new SegmentsExperienceNameException();
+		}
+	}
+
+	private void _validatePriority(
 			long groupId, long classNameId, long classPK, int priority)
 		throws PortalException {
 

@@ -14,9 +14,15 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.List;
 
@@ -44,19 +50,40 @@ public class DeleteUADApplicationsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long[] groupIds = ParamUtil.getLongValues(actionRequest, "groupIds");
+
 		long selectedUserId = getSelectedUserId(actionRequest);
 
 		for (String applicationKey : getApplicationKeys(actionRequest)) {
-			List<UADAnonymizer> uadAnonymizers =
-				uadApplicationSummaryHelper.getApplicationUADAnonymizers(
-					applicationKey);
+			for (UADDisplay uadDisplay :
+					uadRegistry.getApplicationUADDisplays(applicationKey)) {
 
-			for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-				uadAnonymizer.deleteAll(selectedUserId);
+				Class<?> typeClass = uadDisplay.getTypeClass();
+
+				UADAnonymizer uadAnonymizer = uadRegistry.getUADAnonymizer(
+					typeClass.getName());
+
+				List<Object> entities = uadDisplay.search(
+					selectedUserId, groupIds, null, null, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (Object entity : entities) {
+					try {
+						uadAnonymizer.delete(entity);
+					}
+					catch (NoSuchModelException nsme) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(nsme, nsme);
+						}
+					}
+				}
 			}
 		}
 
 		doReviewableRedirect(actionRequest, actionResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteUADApplicationsMVCActionCommand.class);
 
 }

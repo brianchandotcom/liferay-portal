@@ -94,22 +94,26 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3 class="sheet-title">
-					<c:choose>
-						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
-							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
-						</c:when>
-						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") %>'>
-							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
-						</c:when>
-						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-page-templates") %>'>
-							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
-						</c:otherwise>
-					</c:choose>
-				</h3>
+				<h2 class="sheet-title">
+					<div class="autofit-row autofit-row-center">
+						<div class="autofit-col">
+							<c:choose>
+								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
+								</c:when>
+								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") %>'>
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
+								</c:when>
+								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-page-templates") %>'>
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+				</h2>
 
 				<%
 				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentEntryLinkDisplayContext.getSearchContainer());

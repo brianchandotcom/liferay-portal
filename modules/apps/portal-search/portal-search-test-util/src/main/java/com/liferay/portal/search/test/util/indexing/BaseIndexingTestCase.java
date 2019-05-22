@@ -287,6 +287,8 @@ public abstract class BaseIndexingTestCase {
 
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
+	protected final AggregationFixture aggregationFixture =
+		new AggregationFixture();
 	protected final Aggregations aggregations = new AggregationsImpl();
 	protected final GeoBuilders geoBuilders = new GeoBuildersImpl();
 	protected final Highlights highlights = new HighlightsImpl();

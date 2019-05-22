@@ -19,7 +19,6 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.sort.FieldSort;
@@ -50,21 +49,16 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		String expectedBuckets = "[0.0=4, 20.0=1, 5.0=5, 10.0=5, 15.0=5]";
 		String expectedBucketValues = "10.0, 20.0, 35.0, 60.0, 85.0";
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.getDefaultHistogramAggregation();
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			aggregations.bucketSort("bucket_sort");
 
 		bucketSortPipelineAggregation.addSortFields(fieldSort);
 
-		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -99,10 +93,8 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		String expectedBuckets = "[15.0=5, 10.0=5, 5.0=5]";
 		String expectedBucketValues = "85.0, 60.0, 35.0";
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
+		HistogramAggregation histogramAggregation =
+			aggregationFixture.getDefaultHistogramAggregation();
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			aggregations.bucketSort("bucket_sort");
@@ -110,11 +102,8 @@ public abstract class BaseBucketSortPipelineAggregationTestCase
 		bucketSortPipelineAggregation.addSortFields(fieldSort);
 		bucketSortPipelineAggregation.setSize(3);
 
-		histogramAggregation.addChildAggregation(sumAggregation);
 		histogramAggregation.addPipelineAggregation(
 			bucketSortPipelineAggregation);
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
 
 		assertSearch(
 			indexingTestHelper -> {

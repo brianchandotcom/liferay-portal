@@ -313,6 +313,10 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+		if (search != null) {
+			httpInvoker.parameter("search", String.valueOf(search));
+		}
+
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);
 		}
@@ -394,6 +398,10 @@ public class MessageBoardMessageResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (search != null) {
+			httpInvoker.parameter("search", String.valueOf(search));
+		}
 
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);

@@ -53,6 +53,7 @@ import com.liferay.users.admin.web.internal.search.OrganizationUserChecker;
 import com.liferay.users.admin.web.internal.util.comparator.OrganizationUserNameComparator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -137,6 +138,20 @@ public class ViewTreeManagementToolbarDisplayContext {
 							dropdownItem.setQuickAction(true);
 						});
 				}
+
+				add(
+					dropdownItem -> {
+						dropdownItem.putData("action", Constants.REMOVE);
+						dropdownItem.setHref(
+							StringBundler.concat(
+								"javascript:", _renderResponse.getNamespace(),
+								"removeOrganizationsAndUsers();"));
+						dropdownItem.setIcon("remove-role");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, Constants.REMOVE));
+						dropdownItem.setQuickAction(true);
+					});
 			}
 		};
 	}
@@ -144,7 +159,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 	public List<String> getAvailableActionDropdownItems(
 		Organization organization) {
 
-		return ListUtil.toList(Constants.DELETE);
+		return Arrays.asList(Constants.DELETE, Constants.REMOVE);
 	}
 
 	public List<String> getAvailableActionDropdownItems(User user) {
@@ -157,6 +172,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 			availableActionDropdownItems.add(Constants.DELETE);
 			availableActionDropdownItems.add(Constants.RESTORE);
 		}
+
+		availableActionDropdownItems.add(Constants.REMOVE);
 
 		return availableActionDropdownItems;
 	}

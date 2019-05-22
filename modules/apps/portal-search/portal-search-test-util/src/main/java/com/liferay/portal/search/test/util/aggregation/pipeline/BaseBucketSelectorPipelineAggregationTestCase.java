@@ -18,11 +18,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
-import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.pipeline.BucketSelectorPipelineAggregationImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -47,21 +43,12 @@ public abstract class BaseBucketSelectorPipelineAggregationTestCase
 		}
 
 		HistogramAggregation histogramAggregation =
-			new HistogramAggregationImpl("histogram", Field.PRIORITY);
-
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = new SumAggregationImpl(
-			"sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
+			aggregationFixture.getDefaultHistogramAggregation();
 
 		Script script = scripts.script("params.sum > 40");
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
-			new BucketSelectorPipelineAggregationImpl(
-				"bucket_selector", script);
+			aggregations.bucketSelector("bucket_selector", script);
 
 		bucketSelectorPipelineAggregation.addBucketPath("sum", "sum");
 

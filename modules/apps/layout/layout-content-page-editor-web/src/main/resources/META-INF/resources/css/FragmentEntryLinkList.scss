@@ -45,6 +45,7 @@
 			transition: box-shadow ease 0.3s;
 			width: calc(100% - #{$fragmentsEditorSpacing * 3});
 			will-change: box-shadow;
+			z-index: 1;
 		}
 
 		&-resizer {

@@ -14,27 +14,42 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
+import com.liferay.change.tracking.configuration.CTPortalConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.change.tracking.configuration.CTPortalConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=false",
 		"com.liferay.portlet.css-class-wrapper=portlet-change-lists",
@@ -52,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
@@ -63,6 +78,14 @@ public class ChangeListsPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		try {
+			checkPermissions(renderRequest);
+		}
+		catch (Exception e) {
+			throw new PortletException(
+				"Unable to check permissions: " + e.getMessage(), e);
+		}
 
 		boolean production = ParamUtil.getBoolean(renderRequest, "production");
 
@@ -75,6 +98,43 @@ public class ChangeListsPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ctPortalConfiguration = ConfigurableUtil.createConfigurable(
+			CTPortalConfiguration.class, properties);
+	}
+
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return;
+		}
+
+		String[] administratorRoleNames =
+			_ctPortalConfiguration.administratorRoleNames();
+
+		UserBag userBag = permissionChecker.getUserBag();
+
+		for (Role role : userBag.getRoles()) {
+			if (ArrayUtil.contains(administratorRoleNames, role.getName())) {
+				return;
+			}
+		}
+
+		throw new PrincipalException(
+			String.format(
+				"User %s must have administrator role to access %s",
+				permissionChecker.getUserId(), getClass().getSimpleName()));
+	}
+
+	private CTPortalConfiguration _ctPortalConfiguration;
 
 	@Reference
 	private Portal _portal;

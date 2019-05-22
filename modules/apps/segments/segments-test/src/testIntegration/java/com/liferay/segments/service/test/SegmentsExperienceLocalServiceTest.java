@@ -32,6 +32,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -40,6 +41,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -147,6 +149,20 @@ public class SegmentsExperienceLocalServiceTest {
 			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
 			RandomTestUtil.randomLocaleStringMap(), 0, true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test(expected = SegmentsExperienceNameException.class)
+	public void testAddSegmentsExperienceWithoutName() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_segmentsExperienceLocalService.addSegmentsExperience(
+			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+			Collections.emptyMap(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomBoolean(), serviceContext);
 	}
 
 	@Test

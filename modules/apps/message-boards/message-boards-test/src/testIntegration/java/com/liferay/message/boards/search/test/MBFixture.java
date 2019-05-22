@@ -62,7 +62,7 @@ public class MBFixture {
 		return mbCategory;
 	}
 
-	public MBMessage createMBMessage(long userId, long categoryId)
+	public MBMessage createMBMessage(long userId, long categoryId, String title)
 		throws Exception {
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
@@ -70,10 +70,9 @@ public class MBFixture {
 
 		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
 			userId, RandomTestUtil.randomString(), _group.getGroupId(),
-			categoryId, 0, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
-			false, getServiceContext());
+			categoryId, 0, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, title,
+			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
+			inputStreamOVPs, false, 0.0, false, getServiceContext());
 
 		_mbMessages.add(mbMessage);
 
@@ -88,7 +87,7 @@ public class MBFixture {
 		MBCategory mbCategory = createMBCategory();
 
 		MBMessage mbMessage = createMBMessage(
-			userId, mbCategory.getCategoryId());
+			userId, mbCategory.getCategoryId(), title);
 
 		_mbMessages.add(mbMessage);
 

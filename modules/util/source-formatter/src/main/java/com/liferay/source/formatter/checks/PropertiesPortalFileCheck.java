@@ -42,17 +42,18 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("portal.properties"))) {
 
-			_checkPortalProperties(fileName, content);
+			_checkPortalProperties(fileName, absolutePath, content);
 		}
 
 		return content;
 	}
 
-	private void _checkPortalProperties(String fileName, String content)
+	private void _checkPortalProperties(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		String portalPortalPropertiesContent =
-			_getPortalPortalPropertiesContent();
+			_getPortalPortalPropertiesContent(absolutePath);
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -93,7 +94,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized String _getPortalPortalPropertiesContent()
+	private synchronized String _getPortalPortalPropertiesContent(
+			String absolutePath)
 		throws IOException {
 
 		if (_portalPortalPropertiesContent != null) {
@@ -102,7 +104,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 		if (isPortalSource() || isSubrepository()) {
 			_portalPortalPropertiesContent = getPortalContent(
-				"portal-impl/src/portal.properties");
+				"portal-impl/src/portal.properties", absolutePath);
 
 			if (_portalPortalPropertiesContent == null) {
 				_portalPortalPropertiesContent = StringPool.BLANK;

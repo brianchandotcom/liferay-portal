@@ -15,8 +15,6 @@
 package com.liferay.portal.search.test.util.aggregation.pipeline;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregationResult;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -38,16 +36,6 @@ public abstract class BaseMaxBucketPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		MaxBucketPipelineAggregation maxBucketPipelineAggregation =
 			aggregations.maxBucket("max_bucket", "histogram>sum");
 
@@ -56,7 +44,8 @@ public abstract class BaseMaxBucketPipelineAggregationTestCase
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							maxBucketPipelineAggregation);
 					});

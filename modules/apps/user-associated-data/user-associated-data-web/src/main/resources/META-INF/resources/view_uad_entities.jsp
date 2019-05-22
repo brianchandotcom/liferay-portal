@@ -30,6 +30,8 @@ if (parentContainerId > 0) {
 
 	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse, locale);
 }
+
+long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 %>
 
 <clay:management-toolbar
@@ -39,6 +41,7 @@ if (parentContainerId > 0) {
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+	<aui:input name="groupIds" type="hidden" value='<%= (groupIds != null) ? StringUtil.merge(groupIds) : "" %>' />
 
 	<c:choose>
 		<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">

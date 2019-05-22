@@ -61,6 +61,30 @@ import java.util.List;
 public class RepositoryProviderImpl implements RepositoryProvider {
 
 	@Override
+	public LocalRepository fetchFileEntryLocalRepository(long fileEntryId)
+		throws PortalException {
+
+		long repositoryId = fetchFileEntryRepositoryId(fileEntryId);
+
+		if (repositoryId != -1) {
+			try {
+				return getLocalRepository(repositoryId);
+			}
+			catch (InvalidRepositoryIdException irie) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("No FileEntry exists with the key {fileEntryId=");
+				sb.append(fileEntryId);
+				sb.append("}");
+
+				throw new NoSuchFileEntryException(sb.toString(), irie);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
 		throws PortalException {
 
@@ -394,6 +418,24 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 		catch (NoSuchRepositoryException nsre) {
 			throw new InvalidRepositoryIdException(nsre.getMessage());
 		}
+	}
+
+	protected long fetchFileEntryRepositoryId(long fileEntryId) {
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry.getRepositoryId();
+		}
+
+		RepositoryEntry repositoryEntry =
+			repositoryEntryLocalService.fetchRepositoryEntry(fileEntryId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry.getRepositoryId();
+		}
+
+		return -1;
 	}
 
 	protected long getFileEntryRepositoryId(long fileEntryId) {

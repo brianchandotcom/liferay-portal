@@ -83,7 +83,8 @@ public class MBMessageIndexerReindexTest {
 	@Test
 	public void testReindexMBMessageWithDefaultCategory() throws Exception {
 		MBMessage mbMessage = mbFixture.createMBMessage(
-			_user.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+			_user.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString());
 
 		String searchTerm = mbMessage.getSubject();
 
@@ -103,7 +104,8 @@ public class MBMessageIndexerReindexTest {
 	@Test
 	public void testReindexMBMessageWithDiscussion() throws Exception {
 		MBMessage mbMessage = mbFixture.createMBMessage(
-			_user.getUserId(), MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			_user.getUserId(), MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			RandomTestUtil.randomString());
 
 		String searchTerm = mbMessage.getSubject();
 

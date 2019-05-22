@@ -97,7 +97,9 @@
 					'.preview-toolbar-container [data-title]:not(.lfr-portal-tooltip)',
 					'.preview-toolbar-container [title]:not(.lfr-portal-tooltip)',
 					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
-					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])'
+					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])',
+					'.upper-tbar [data-title]:not(.lfr-portal-tooltip)',
+					'.upper-tbar [title]:not(.lfr-portal-tooltip)'
 				]
 			}
 		);

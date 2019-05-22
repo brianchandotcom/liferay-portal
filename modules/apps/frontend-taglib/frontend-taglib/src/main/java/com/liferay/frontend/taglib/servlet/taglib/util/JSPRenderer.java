@@ -69,16 +69,16 @@ public class JSPRenderer {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 * @param servletContext
+	 */
+	@Deprecated
 	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
 	}
 
 	protected ServletContext getServletContext(
 		HttpServletRequest httpServletRequest) {
-
-		if (_servletContext != null) {
-			return _servletContext;
-		}
 
 		String portletId = _portal.getPortletId(httpServletRequest);
 
@@ -97,7 +97,5 @@ public class JSPRenderer {
 
 	@Reference
 	private Portal _portal;
-
-	private ServletContext _servletContext;
 
 }

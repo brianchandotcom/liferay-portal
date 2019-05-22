@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_FOLDER_BUTTON</td>
-	<td>//button[@data-foldername='${key_dmFolderName}']/span[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFIGURATION_IFRAME</td>
 	<td>//iframe[contains(@id,'DLPortlet')]</td>
 	<td></td>
@@ -46,6 +41,11 @@
 <tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(.,'${key_dmDocumentVersionNumber}')]//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_BUTTON</td>
+	<td>//button[@data-foldername='${key_dmFolderName}']/span[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

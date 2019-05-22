@@ -40,6 +40,15 @@ else {
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
+<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+	<liferay-staging:alert
+		dismissible="<%= true %>"
+		type="WARNING"
+	>
+		<liferay-ui:message key='<%= LanguageUtil.get(request, "export-import-change-lists-warning") %>' />
+	</liferay-staging:alert>
+</c:if>
+
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-export-processes-were-found"
@@ -150,11 +159,13 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						markupView="lexicon"
 						showWhenSingleIcon="<%= true %>"
 					>
-						<liferay-ui:icon-delete
-							label="<%= true %>"
-							message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-							url="<%= deleteBackgroundTaskURL %>"
-						/>
+						<c:if test="<%= !StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+							<liferay-ui:icon-delete
+								label="<%= true %>"
+								message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+								url="<%= deleteBackgroundTaskURL %>"
+							/>
+						</c:if>
 					</liferay-ui:icon-menu>
 				</c:if>
 			</liferay-ui:search-container-column-text>

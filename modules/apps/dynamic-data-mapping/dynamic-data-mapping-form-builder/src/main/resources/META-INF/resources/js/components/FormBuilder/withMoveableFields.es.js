@@ -89,7 +89,24 @@ const withMoveableFields = ChildComponent => {
 		}
 
 		attached() {
-			this._createDragAndDrop();
+			this.createDragAndDrop();
+		}
+
+		createDragAndDrop() {
+			this._dragAndDrop = new DragDrop(
+				{
+					sources: '.moveable .ddm-drag',
+					targets: '.moveable .ddm-target',
+					useShim: false
+				}
+			);
+
+			this._dragAndDrop.on(
+				DragDrop.Events.END,
+				this._handleDragAndDropEnd.bind(this)
+			);
+
+			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 		}
 
 		disposeDragAndDrop() {
@@ -126,23 +143,6 @@ const withMoveableFields = ChildComponent => {
 			);
 		}
 
-		_createDragAndDrop() {
-			this._dragAndDrop = new DragDrop(
-				{
-					sources: '.moveable .ddm-drag',
-					targets: '.moveable .ddm-target',
-					useShim: false
-				}
-			);
-
-			this._dragAndDrop.on(
-				DragDrop.Events.END,
-				this._handleDragAndDropEnd.bind(this)
-			);
-
-			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
-		}
-
 		_handleDragAndDropEnd({source, target}) {
 			const lastParent = document.querySelector('.ddm-parent-dragging');
 
@@ -169,6 +169,8 @@ const withMoveableFields = ChildComponent => {
 					}
 				);
 			}
+
+			this._refreshDragAndDrop();
 		}
 
 		_handleDragStarted({source}) {
@@ -183,6 +185,11 @@ const withMoveableFields = ChildComponent => {
 			const {store} = this.context;
 
 			store.emit('fieldMoved', event);
+		}
+
+		_refreshDragAndDrop() {
+			this.disposeDragAndDrop();
+			this.createDragAndDrop();
 		}
 	}
 

@@ -56,7 +56,7 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 		}
 
 		Document customSQLDocument = getCustomSQLDocument(
-			fileName, absolutePath, getPortalCustomSQLDocument());
+			fileName, absolutePath, getPortalCustomSQLDocument(absolutePath));
 		String finderName = className.substring(0, className.length() - 4);
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();

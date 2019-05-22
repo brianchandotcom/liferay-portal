@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]//button[contains(.,'Choose')]</td>
+	<td>SELECT_BUTTON</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 </tbody>

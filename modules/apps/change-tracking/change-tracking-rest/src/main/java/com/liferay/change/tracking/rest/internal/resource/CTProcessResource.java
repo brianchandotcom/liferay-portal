@@ -268,6 +268,7 @@ public class CTProcessResource {
 		return _getCTProcessModel(ctProcess);
 	}
 
+	@SuppressWarnings("unchecked")
 	private QueryDefinition _getQueryDefinition(
 		int offset, int limit, String sort) {
 

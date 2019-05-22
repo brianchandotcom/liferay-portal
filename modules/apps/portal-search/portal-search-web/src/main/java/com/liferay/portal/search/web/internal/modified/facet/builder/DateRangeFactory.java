@@ -15,13 +15,18 @@
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 
 import java.util.Calendar;
 import java.util.LinkedHashMap;
@@ -114,11 +119,7 @@ public class DateRangeFactory {
 			"yyyyMMddHHmmss");
 
 		rangeString = StringUtil.replace(
-			rangeString,
-			new String[] {
-				"past-hour", "past-24-hours", "past-week", "past-month",
-				"past-year", "*"
-			},
+			rangeString, _ALIASES,
 			new String[] {
 				dateFormat.format(pastHour.getTime()),
 				dateFormat.format(past24Hours.getTime()),
@@ -131,11 +132,51 @@ public class DateRangeFactory {
 		return rangeString;
 	}
 
+	public void validateRange(String ranges)
+		throws JSONException, ParseException {
+
+		JSONArray rangesJSONArray = JSONFactoryUtil.createJSONArray(ranges);
+
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			String range = rangesJSONArray.getJSONObject(
+				i
+			).getString(
+				"range"
+			);
+
+			String from = range.split("TO")[0].trim();
+
+			from = from.substring(1);
+
+			validateDateFormat(from);
+
+			String to = range.split("TO")[1].trim();
+
+			to = to.substring(0, to.length() - 1);
+
+			validateDateFormat(to);
+		}
+	}
+
+	protected void validateDateFormat(String date) throws ParseException {
+		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+
+		if (!ArrayUtil.contains(_ALIASES, date)) {
+			dateFormat.parse(date);
+		}
+	}
+
 	private String _normalizeRangeBoundary(String dateString, String pad) {
 		dateString = dateString.replace("-", "");
 
 		return dateString + pad;
 	}
+
+	private static final String[] _ALIASES = {
+		"past-hour", "past-24-hours", "past-week", "past-month", "past-year",
+		StringPool.STAR
+	};
 
 	private static final Map<String, String> _rangeMap =
 		new LinkedHashMap<String, String>() {

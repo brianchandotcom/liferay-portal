@@ -52,7 +52,8 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			className.endsWith("FinderImpl")) {
 
 			Document customSQLDocument = getCustomSQLDocument(
-				fileName, absolutePath, getPortalCustomSQLDocument());
+				fileName, absolutePath,
+				getPortalCustomSQLDocument(absolutePath));
 
 			if ((customSQLDocument != null) && customSQLDocument.hasContent()) {
 				customSQLContent = customSQLDocument.asXML();

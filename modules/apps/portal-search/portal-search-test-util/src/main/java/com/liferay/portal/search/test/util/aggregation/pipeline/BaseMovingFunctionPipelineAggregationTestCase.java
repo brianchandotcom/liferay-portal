@@ -19,12 +19,8 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationImpl;
-import com.liferay.portal.search.internal.aggregation.pipeline.MovingFunctionPipelineAggregationImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.test.util.aggregation.AggregationAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -48,21 +44,12 @@ public abstract class BaseMovingFunctionPipelineAggregationTestCase
 		}
 
 		HistogramAggregation histogramAggregation =
-			new HistogramAggregationImpl("histogram", Field.PRIORITY);
-
-		histogramAggregation.setMinDocCount(1L);
-		histogramAggregation.setInterval(5.0);
-
-		SumAggregation sumAggregation = new SumAggregationImpl(
-			"sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
+			aggregationFixture.getDefaultHistogramAggregation();
 
 		Script script = scripts.script("MovingFunctions.unweightedAvg(values)");
 
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation =
-			new MovingFunctionPipelineAggregationImpl(
-				"moving_fn", script, "sum", 5);
+			aggregations.movingFunction("moving_fn", script, "sum", 5);
 
 		histogramAggregation.addPipelineAggregation(
 			movingFunctionPipelineAggregation);

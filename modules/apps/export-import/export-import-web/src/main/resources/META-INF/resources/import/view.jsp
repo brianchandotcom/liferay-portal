@@ -39,6 +39,15 @@ String searchContainerId = "importLayoutProcesses";
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
+<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+	<liferay-staging:alert
+		dismissible="<%= true %>"
+		type="WARNING"
+	>
+		<liferay-ui:message key='<%= LanguageUtil.get(request, "export-import-change-lists-warning") %>' />
+	</liferay-staging:alert>
+</c:if>
+
 <c:choose>
 	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, groupDisplayContextHelper.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<div class="alert alert-info">

@@ -549,8 +549,8 @@ definition {
 		SelectFrame(locator1 = "MessageBoardsSelectCategory#IFRAME");
 
 		AssertClick(
-			locator1 = "MessageBoardsSelectCategory#CATEGORY_TABLE_CHOOSE_BUTTON_2",
-			value1 = "Choose");
+			locator1 = "MessageBoardsSelectCategory#CATEGORY_TABLE_SELECT_BUTTON_2",
+			value1 = "Select");
 
 		if ("${explanationPost}" == "true") {
 			SelectFrame(value1 = "relative=top");

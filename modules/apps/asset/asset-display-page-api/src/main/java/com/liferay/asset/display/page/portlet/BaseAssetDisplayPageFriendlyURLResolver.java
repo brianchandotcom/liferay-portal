@@ -70,11 +70,11 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			_getInfoDisplayObjectProvider(
 				infoDisplayContributor, groupId, friendlyURL);
 
-		httpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			infoDisplayObjectProvider);
-
 		if (infoDisplayObjectProvider != null) {
+			httpServletRequest.setAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+				infoDisplayObjectProvider);
+
 			InfoEditURLProvider infoEditURLProvider =
 				infoEditURLProviderTracker.getInfoEditURLProvider(
 					portal.getClassName(
@@ -123,9 +123,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		InfoDisplayContributor infoDisplayContributor =
 			_getInfoDisplayContributor(friendlyURL);
 
-		Layout layout = _getInfoDisplayObjectProviderLayout(
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			_getInfoDisplayObjectProvider(
-				infoDisplayContributor, groupId, friendlyURL));
+				infoDisplayContributor, groupId, friendlyURL);
+
+		if (infoDisplayObjectProvider == null) {
+			throw new PortalException();
+		}
+
+		Layout layout = _getInfoDisplayObjectProviderLayout(
+			infoDisplayObjectProvider);
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}

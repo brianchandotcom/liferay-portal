@@ -17,6 +17,8 @@ package com.liferay.product.navigation.simulation.theme.contributor.internal.ser
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -56,6 +58,13 @@ public class ProductNavigationSimulationTopHeadDynamicInclude
 			return;
 		}
 
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.PREVIEW)) {
+			return;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
@@ -74,7 +83,9 @@ public class ProductNavigationSimulationTopHeadDynamicInclude
 
 		sb.append(
 			absolutePortalURLBuilder.forModule(
-				_bundle, "/css/simulation_panel.css"
+				_bundle,
+				"/css/simulation_panel.css?languageId=" +
+					themeDisplay.getLanguageId()
 			).build());
 
 		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");

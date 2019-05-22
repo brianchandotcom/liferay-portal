@@ -59,6 +59,17 @@
 			name: string
 		]>
 	}
+	{@param actionsFieldOptions: list<[
+			label: string,
+			name: string,
+			options: list<[
+				label: string,
+				value: string
+			]>,
+			type: string,
+			value: string
+		]>
+	}
 	{@param calculatorFunctions: list<[
 			label: string,
 			tooltip: string,
@@ -97,12 +108,7 @@
 			]>
 		]>
 	}
-	{@param? dataProvider: list<[
-			id: string,
-			name: string
-		]>
-	}
-	{@param fieldOptions: list<[
+	{@param conditionsFieldOptions: list<[
 			label: string,
 			name: string,
 			options: list<[
@@ -111,6 +117,11 @@
 			]>,
 			type: string,
 			value: string
+		]>
+	}
+	{@param? dataProvider: list<[
+			id: string,
+			name: string
 		]>
 	}
 	{@param fixedOptions: list<[
@@ -188,7 +199,7 @@
 					{param _handleSecondOperandTypeEdited: $_handleSecondOperandTypeEdited /}
 					{param _handleSecondOperandValueEdited: $_handleSecondOperandValueEdited /}
 					{param binaryOperator: $condition.binaryOperator /}
-					{param fieldOptions: $fieldOptions /}
+					{param fieldOptions: $conditionsFieldOptions /}
 					{param firstOperandType: $condition.operands[0].type /}
 					{param firstOperandOptions: $condition.firstOperandOptions /}
 					{param firstOperandValueSelected: $condition.operands[0].value /}
@@ -238,7 +249,7 @@
 					{param calculatorFields: $action.calculatorFields /}
 					{param calculatorResultOptions: $calculatorResultOptions /}
 					{param dataProvider: $dataProvider /}
-					{param fieldOptions: $fieldOptions /}
+					{param fieldOptions: $actionsFieldOptions /}
 					{param hasRequiredInputs: $action.hasRequiredInputs /}
 					{param index: index($action) /}
 					{param pageOptions: $pageOptions /}

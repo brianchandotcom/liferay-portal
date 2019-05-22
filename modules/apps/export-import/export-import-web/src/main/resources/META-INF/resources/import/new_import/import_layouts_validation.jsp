@@ -16,6 +16,15 @@
 
 <%@ include file="/import/init.jsp" %>
 
+<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+	<liferay-staging:alert
+		dismissible="<%= true %>"
+		type="WARNING"
+	>
+		<liferay-ui:message key='<%= LanguageUtil.get(request, "export-import-change-lists-warning") %>' />
+	</liferay-staging:alert>
+</c:if>
+
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
@@ -107,6 +116,16 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				continueButton.hide();
 			}
 		}
+
+		<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
+			var form = document.<portlet:namespace />fm1;
+
+			var formElements = form.elements;
+
+			for (var i = 0; i < formElements.length; ++i) {
+			formElements[i].disabled = true;
+			}
+		</c:if>
 	</aui:script>
 </aui:form>
 

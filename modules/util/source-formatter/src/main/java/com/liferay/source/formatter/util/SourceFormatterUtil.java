@@ -94,17 +94,13 @@ public class SourceFormatterUtil {
 				String attributeName = StringUtil.replaceFirst(
 					key, keyPrefix, StringPool.BLANK);
 
-				JSONArray jsonArray =
-					propertiesAttributesJSONObject.getJSONArray(attributeName);
+				JSONArray jsonArray = new JSONArrayImpl();
 
-				if (jsonArray == null) {
-					jsonArray = new JSONArrayImpl();
-				}
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
 
-				String value = properties.getProperty(key);
-
-				for (String s : StringUtil.split(value, StringPool.COMMA)) {
-					jsonArray.put(s);
+					jsonArray.put(value);
 				}
 
 				propertiesAttributesJSONObject.put(attributeName, jsonArray);
@@ -254,12 +250,6 @@ public class SourceFormatterUtil {
 		return ListUtil.fromCollection(attributeNames);
 	}
 
-	public static List<String> getAttributeNames(
-		String checkName, Map<String, Properties> propertiesMap) {
-
-		return getAttributeNames(null, checkName, propertiesMap);
-	}
-
 	public static File getFile(String baseDirName, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDirName + fileName);
@@ -352,13 +342,6 @@ public class SourceFormatterUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String getPropertyValue(
-		String attributeName, String checkName,
-		Map<String, Properties> propertiesMap) {
-
-		return getPropertyValue(attributeName, null, checkName, propertiesMap);
 	}
 
 	public static String getSimpleName(String name) {

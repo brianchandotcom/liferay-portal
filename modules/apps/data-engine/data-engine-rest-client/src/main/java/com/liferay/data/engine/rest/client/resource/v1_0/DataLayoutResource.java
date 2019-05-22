@@ -112,6 +112,10 @@ public class DataLayoutResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/data-layout/{dataLayoutId}/data-layout-permissions",
 			dataLayoutId);
@@ -259,6 +263,10 @@ public class DataLayoutResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/sites/{siteId}/data-layout-permissions",

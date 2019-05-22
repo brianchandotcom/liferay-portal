@@ -66,19 +66,19 @@ portletDisplay.setShowBackIcon(true);
 			<liferay-ui:search-container-column-text
 				name="user"
 			>
-				<%= curCTEntry.getUserName() %>
+				<%= HtmlUtil.escape(curCTEntry.getUserName()) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="site"
 			>
-				<%= CTConfigurationRegistryUtil.getVersionEntitySiteName(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()) %>
+				<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntitySiteName(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="content-type"
 			>
-				<liferay-ui:message key="<%= CTConfigurationRegistryUtil.getVersionEntityContentTypeLanguageKey(curCTEntry.getModelClassNameId()) %>" />
+				<liferay-ui:message key="<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntityContentTypeLanguageKey(curCTEntry.getModelClassNameId())) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -108,7 +108,7 @@ portletDisplay.setShowBackIcon(true);
 			<liferay-ui:search-container-column-text
 				name="version"
 			>
-				<%= CTConfigurationRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()) %>
+				<%= HtmlUtil.escape(String.valueOf(CTConfigurationRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()))) %>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

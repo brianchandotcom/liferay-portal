@@ -43,10 +43,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -267,8 +267,7 @@ public class SelectAssetDisplayPageDisplayContext {
 				themeDisplay.getURLCurrent());
 
 			return HttpUtil.addParameter(
-				viewInContextURL, "p_p_state",
-				LiferayWindowState.POP_UP.toString());
+				viewInContextURL, "p_l_mode", Constants.PREVIEW);
 		}
 		catch (Exception e) {
 		}
@@ -320,6 +319,10 @@ public class SelectAssetDisplayPageDisplayContext {
 
 			InfoDisplayObjectProvider infoDisplayObjectProvider =
 				infoDisplayContributor.getInfoDisplayObjectProvider(_classPK);
+
+			if (infoDisplayObjectProvider == null) {
+				return false;
+			}
 
 			if (!AssetDisplayPageHelper.hasAssetDisplayPage(
 					themeDisplay.getScopeGroupId(),

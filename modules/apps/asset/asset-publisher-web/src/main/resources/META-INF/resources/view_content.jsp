@@ -60,7 +60,9 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 	Liferay.once(
 		'allPortletsReady',
 		function() {
-			A.one('#p_p_id_<%= portletDisplay.getId() %>_').scrollIntoView();
+			if (!Liferay.Browser.isIe()) {
+				A.one('#p_p_id_<%= portletDisplay.getId() %>_').scrollIntoView();
+			}
 		}
 	);
 </aui:script>

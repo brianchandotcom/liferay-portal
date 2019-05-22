@@ -47,28 +47,6 @@ public class SearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String> getFieldsToReturnOptional() {
-		return _portletPreferencesHelper.getString(
-			SearchOptionsPortletPreferences.PREFERENCE_KEY_FIELDS_TO_RETURN);
-	}
-
-	@Override
-	public String getFieldsToReturnString() {
-		return getFieldsToReturnOptional().orElse(StringPool.BLANK);
-	}
-
-	@Override
-	public Optional<String> getIndexesOptional() {
-		return _portletPreferencesHelper.getString(
-			SearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES);
-	}
-
-	@Override
-	public String getIndexesString() {
-		return getIndexesOptional().orElse(StringPool.BLANK);
-	}
-
-	@Override
 	public boolean isAllowEmptySearches() {
 		return _portletPreferencesHelper.getBoolean(
 			SearchOptionsPortletPreferences.PREFERENCE_KEY_ALLOW_EMPTY_SEARCHES,

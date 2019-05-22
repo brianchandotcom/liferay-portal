@@ -45,7 +45,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +52,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -709,35 +707,9 @@ public class SourceFormatter {
 				_sourceFormatterArgs.getBaseDirName());
 
 			_excludeWorkingDirCheckoutPrivateApps(portalDir);
-
-			String portalRootLocation = SourceUtil.getAbsolutePath(portalDir);
-
-			// The comparator ensures that the properties file in the portal
-			// root directory comes last. As a result, the value of
-			// 'git.liferay.portal.branch' in a properties file that is not
-			// located in the root directory will be applied, if present.
-
-			_propertiesMap = new TreeMap<>(
-				new Comparator<String>() {
-
-					@Override
-					public int compare(String s1, String s2) {
-						if (s1.equals(portalRootLocation)) {
-							return 1;
-						}
-
-						if (s2.equals(portalRootLocation)) {
-							return -1;
-						}
-
-						return s1.compareTo(s2);
-					}
-
-				});
 		}
-		else {
-			_propertiesMap = new HashMap<>();
-		}
+
+		_propertiesMap = new HashMap<>();
 
 		// Find properties file in any parent directory
 

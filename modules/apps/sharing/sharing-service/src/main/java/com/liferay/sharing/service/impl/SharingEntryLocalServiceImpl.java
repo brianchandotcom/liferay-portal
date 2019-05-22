@@ -610,13 +610,21 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, long classPK,
 		SharingEntryAction sharingEntryAction) {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
-			toUserId, classNameId, classPK);
+		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByTU_C(
+			toUserId, classNameId);
 
-		if ((sharingEntry != null) &&
-			sharingEntry.hasSharingPermission(sharingEntryAction)) {
+		if (sharingEntries.isEmpty()) {
+			return false;
+		}
 
-			return true;
+		for (SharingEntry sharingEntry : sharingEntries) {
+			if (classPK == sharingEntry.getClassPK()) {
+				if (sharingEntry.hasSharingPermission(sharingEntryAction)) {
+					return true;
+				}
+
+				return false;
+			}
 		}
 
 		return false;

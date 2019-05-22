@@ -135,6 +135,10 @@ public class DataDefinitionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-definition-permissions",
 			dataDefinitionId);
@@ -161,6 +165,10 @@ public class DataDefinitionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/sites/{siteId}/data-definition-permissions",
 			siteId);
@@ -184,6 +192,10 @@ public class DataDefinitionResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (keywords != null) {
+			httpInvoker.parameter("keywords", String.valueOf(keywords));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));

@@ -17,7 +17,6 @@ package com.liferay.portal.search.test.util.aggregation.metrics;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
-import com.liferay.portal.search.internal.aggregation.metrics.WeightedAvgAggregationImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -39,7 +38,7 @@ public abstract class BaseWeightedAvgAggregationTestCase
 		addDocument(DocumentCreationHelpers.singleNumber(Field.PRIORITY, 5));
 
 		WeightedAvgAggregation weightedAvgAggregation =
-			new WeightedAvgAggregationImpl(
+			aggregations.weightedAvg(
 				"weighted_avg", Field.PRIORITY, Field.PRIORITY);
 
 		assertSearch(

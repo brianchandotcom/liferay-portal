@@ -23,6 +23,11 @@
 	}
 }
 
+.ddm-form-builder-app.ddm-form-builder-app-not-ready {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 body .ddm-user-view-content {
 	.liferay-ddm-form-renderer-wizard {
 		padding: 40px 34px 31px;

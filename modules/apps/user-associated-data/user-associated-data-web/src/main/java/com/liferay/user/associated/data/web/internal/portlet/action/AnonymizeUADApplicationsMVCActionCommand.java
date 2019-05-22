@@ -14,10 +14,13 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 
 import java.util.List;
@@ -52,14 +55,25 @@ public class AnonymizeUADApplicationsMVCActionCommand
 		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser(
 			selectedUser.getCompanyId());
 
-		for (String applicationKey : getApplicationKeys(actionRequest)) {
-			List<UADAnonymizer> uadAnonymizers =
-				uadApplicationSummaryHelper.getApplicationUADAnonymizers(
-					applicationKey);
+		long[] groupIds = ParamUtil.getLongValues(actionRequest, "groupIds");
 
-			for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-				uadAnonymizer.autoAnonymizeAll(
-					selectedUser.getUserId(), anonymousUser);
+		for (String applicationKey : getApplicationKeys(actionRequest)) {
+			for (UADDisplay uadDisplay :
+					uadRegistry.getApplicationUADDisplays(applicationKey)) {
+
+				Class<?> typeClass = uadDisplay.getTypeClass();
+
+				UADAnonymizer uadAnonymizer = uadRegistry.getUADAnonymizer(
+					typeClass.getName());
+
+				List<Object> entities = uadDisplay.search(
+					selectedUser.getUserId(), groupIds, null, null, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (Object entity : entities) {
+					uadAnonymizer.autoAnonymize(
+						entity, selectedUser.getUserId(), anonymousUser);
+				}
 			}
 		}
 

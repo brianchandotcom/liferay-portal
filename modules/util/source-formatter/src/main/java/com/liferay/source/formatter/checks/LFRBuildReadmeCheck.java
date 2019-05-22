@@ -58,7 +58,7 @@ public class LFRBuildReadmeCheck extends BaseFileCheck {
 		}
 
 		_modulesReadmeMarkdownContent = GetterUtil.getString(
-			getPortalContent(_MODULES_README_MARKDOWN_FILE_NAME, "master"));
+			getGitContent(_MODULES_README_MARKDOWN_FILE_NAME, "master"));
 
 		return _modulesReadmeMarkdownContent;
 	}

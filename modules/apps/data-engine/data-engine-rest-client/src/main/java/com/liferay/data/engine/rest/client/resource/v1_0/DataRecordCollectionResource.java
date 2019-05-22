@@ -41,6 +41,10 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+		if (keywords != null) {
+			httpInvoker.parameter("keywords", String.valueOf(keywords));
+		}
+
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
 			httpInvoker.parameter(
@@ -212,6 +216,10 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions",
 			dataRecordCollectionId);
@@ -238,6 +246,10 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+		if (operation != null) {
+			httpInvoker.parameter("operation", String.valueOf(operation));
+		}
+
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/sites/{siteId}/data-record-collection-permissions",
 			siteId);
@@ -261,6 +273,10 @@ public class DataRecordCollectionResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (keywords != null) {
+			httpInvoker.parameter("keywords", String.valueOf(keywords));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));

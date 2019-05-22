@@ -15,8 +15,6 @@
 package com.liferay.portal.search.test.util.aggregation.pipeline;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
-import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregationResult;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -40,26 +38,16 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		PercentilesBucketPipelineAggregation
-			percentilesBucketPipelineAggregation =
-				aggregations.percentilesBucket("percentiles", "histogram>sum");
+			percentilesBucketPipelineAggregation = getAggregation();
 
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							percentilesBucketPipelineAggregation);
 					});
@@ -93,19 +81,8 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		HistogramAggregation histogramAggregation = aggregations.histogram(
-			"histogram", Field.PRIORITY);
-
-		histogramAggregation.setMinDocCount(1L);
-		histogramAggregation.setInterval(5.0);
-
-		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
-
-		histogramAggregation.addChildAggregation(sumAggregation);
-
 		PercentilesBucketPipelineAggregation
-			percentilesBucketPipelineAggregation =
-				aggregations.percentilesBucket("percentiles", "histogram>sum");
+			percentilesBucketPipelineAggregation = getAggregation();
 
 		percentilesBucketPipelineAggregation.setPercents(25.0, 50.0, 75.0);
 
@@ -114,7 +91,8 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
 						searchRequestBuilder.addAggregation(
-							histogramAggregation);
+							aggregationFixture.
+								getDefaultHistogramAggregation());
 						searchRequestBuilder.addPipelineAggregation(
 							percentilesBucketPipelineAggregation);
 					});
@@ -135,6 +113,10 @@ public abstract class BasePercentilesPipelineAggregationTestCase
 				Assert.assertEquals("50%", 35, percentiles.get(50.0), 0);
 				Assert.assertEquals("75%", 60, percentiles.get(75.0), 0);
 			});
+	}
+
+	protected PercentilesBucketPipelineAggregation getAggregation() {
+		return aggregations.percentilesBucket("percentiles", "histogram>sum");
 	}
 
 }

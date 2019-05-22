@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.freemarker;
 import com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +26,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -35,6 +39,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,21 +129,65 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-		FragmentEntryLink fragmentEntryLink, String html, String mode,
-		Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-		int previewType) {
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
+		throws PortalException {
 
-		return html;
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					null, null, mode, locale);
+
+		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
+		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
+		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
+			segmentsExperienceIds);
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, html, defaultFragmentEntryProcessorContext);
 	}
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
+		FreeMarkerFragmentEntryProcessorConfiguration
+			freeMarkerFragmentEntryProcessorConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FreeMarkerFragmentEntryProcessorConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+			return;
+		}
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource("template_id", "[#ftl]\n" + html),
 			false);
 
 		try {
+			HttpServletRequest httpServletRequest = null;
+			HttpServletResponse httpServletResponse = null;
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext != null) {
+				httpServletRequest = serviceContext.getRequest();
+				httpServletResponse = serviceContext.getResponse();
+			}
+
+			if ((httpServletRequest != null) && (httpServletResponse != null)) {
+				TemplateManager templateManager =
+					TemplateManagerUtil.getTemplateManager(
+						TemplateConstants.LANG_TYPE_FTL);
+
+				templateManager.addTaglibSupport(
+					template, httpServletRequest, httpServletResponse);
+
+				template.prepare(httpServletRequest);
+			}
+
 			template.processTemplate(new UnsyncStringWriter());
 		}
 		catch (TemplateException te) {

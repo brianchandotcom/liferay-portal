@@ -26,7 +26,8 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <portlet:defineObjects />
 
@@ -49,6 +50,8 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error key="unparsableDate" message="unparsable-date" />
+
 		<liferay-frontend:fieldset-group>
 			<aui:fieldset id='<%= renderResponse.getNamespace() + "rangesId" %>'>
 

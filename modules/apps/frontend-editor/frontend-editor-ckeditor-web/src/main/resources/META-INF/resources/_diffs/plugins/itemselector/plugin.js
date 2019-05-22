@@ -162,8 +162,13 @@
 							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'audioselector', 'url');
 						}
 						else if (dialogName === 'image') {
-							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
 							instance._bindBrowseButton(event.editor, dialogDefinition, 'Link', 'linkselector', 'txtUrl');
+
+							dialogDefinition.getContents('info').remove('browse');
+
+							dialogDefinition.onLoad = function() {
+								this.getContentElement('info', 'txtUrl').getInputElement().setAttribute('readOnly', true);
+							};
 						}
 						else if (dialogName === 'video') {
 							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'videoselector', 'poster');

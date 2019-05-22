@@ -36,5 +36,5 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 	JSONArray fieldTypes = (JSONArray)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypes");
 	String fieldTypesModules = (String)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypesModules");
 	JSONObject dataLayout = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayout");
-	String layoutBuilderModule = (String)request.getAttribute("liferay-data-engine:data-layout-builder:layoutBuilderModule");
+	String dataLayoutBuilderModule = (String)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayoutBuilderModule");
 %>

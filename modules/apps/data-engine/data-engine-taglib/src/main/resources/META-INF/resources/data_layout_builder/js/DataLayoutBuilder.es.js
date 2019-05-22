@@ -6,10 +6,10 @@ import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 /**
- * Layout Builder.
+ * Data Layout Builder.
  * @extends Component
  */
-class LayoutBuilder extends Component {
+class DataLayoutBuilder extends Component {
 
 	attached() {
 		const {layoutProvider} = this.refs;
@@ -221,7 +221,7 @@ class LayoutBuilder extends Component {
 	}
 }
 
-LayoutBuilder.PROPS = {
+DataLayoutBuilder.PROPS = {
 	context: Config.shapeOf(
 		{
 			pages: Config.arrayOf(pageStructure),
@@ -238,5 +238,5 @@ LayoutBuilder.PROPS = {
 	spritemap: Config.string().required()
 };
 
-export default LayoutBuilder;
-export {LayoutBuilder};
+export default DataLayoutBuilder;
+export {DataLayoutBuilder};

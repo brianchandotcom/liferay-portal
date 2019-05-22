@@ -18,8 +18,8 @@
 
 <div id="<%= namespace + "container" %>"></div>
 
-<aui:script require='<%= fieldTypesModules + ", " + layoutBuilderModule + " as LayoutBuilder" %>'>
-	new LayoutBuilder.default(
+<aui:script require='<%= fieldTypesModules + ", " + dataLayoutBuilderModule + " as DataLayoutBuilder" %>'>
+	new DataLayoutBuilder.default(
 		{
 			context: <%= dataLayout %>,
 			dataDefinitionInputId: '<%= namespace + dataDefinitionInputId %>',

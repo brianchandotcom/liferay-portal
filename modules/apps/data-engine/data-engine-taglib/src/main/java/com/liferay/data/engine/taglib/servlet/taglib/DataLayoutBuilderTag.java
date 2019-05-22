@@ -50,9 +50,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			DataEngineTaglibUtil.resolveFieldTypesModules());
 
 		setNamespacedAttribute(
-			httpServletRequest, "layoutBuilderModule",
+			httpServletRequest, "dataLayoutBuilderModule",
 			DataEngineTaglibUtil.resolveModule(
-				"data-engine-taglib/data_layout_builder/js/LayoutBuilder.es"));
+				"data-engine-taglib/data_layout_builder/js/DataLayoutBuilder.es"));
 	}
 
 }

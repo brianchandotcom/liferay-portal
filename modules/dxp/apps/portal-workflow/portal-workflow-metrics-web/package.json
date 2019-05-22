@@ -84,5 +84,5 @@
 		"lint": "eslint src/main/resources/META-INF/resources/js/ && npm run csf",
 		"test": "cross-env TZ=Etc/GMT jest --coverage"
 	},
-	"version": "1.0.0"
+	"version": "2.0.0"
 }

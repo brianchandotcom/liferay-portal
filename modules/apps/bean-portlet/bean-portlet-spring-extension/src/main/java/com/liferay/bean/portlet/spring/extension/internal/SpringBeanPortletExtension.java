@@ -466,12 +466,13 @@ public class SpringBeanPortletExtension {
 			bundleContext.getServiceReference(
 				BeanPortletRegistrar.class.getName()));
 
-		_beanPortletRegistrar.register(
-			_annotatedClasses, servletContext,
-			new SpringBeanFilterMethodFactory(_configurableBeanFactory),
-			beanFilterMethodInvoker,
-			new SpringBeanPortletMethodFactory(_configurableBeanFactory),
-			beanPortletMethodInvoker);
+		_serviceRegistrations.addAll(
+			_beanPortletRegistrar.register(
+				_annotatedClasses, servletContext,
+				new SpringBeanFilterMethodFactory(_configurableBeanFactory),
+				beanFilterMethodInvoker,
+				new SpringBeanPortletMethodFactory(_configurableBeanFactory),
+				beanPortletMethodInvoker));
 	}
 
 	public void step4SessionScopeBeforeDestroyed(HttpSession httpSession) {
@@ -493,22 +494,9 @@ public class SpringBeanPortletExtension {
 	public void step5ApplicationScopeBeforeDestroyed(
 		ServletContext servletContext) {
 
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			try {
-				serviceRegistration.unregister();
-			}
-			catch (IllegalStateException ise) {
-
-				// Ignore since the service has been unregistered
-
-			}
-		}
+		_beanPortletRegistrar.unregister(_serviceRegistrations, servletContext);
 
 		_serviceRegistrations.clear();
-
-		_beanPortletRegistrar.unregister(servletContext);
 	}
 
 	private boolean _isAnnotatedType(Class<?> clazz) {

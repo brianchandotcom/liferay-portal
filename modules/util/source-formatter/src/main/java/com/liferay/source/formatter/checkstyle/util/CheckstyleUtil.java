@@ -15,7 +15,13 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
@@ -73,39 +79,65 @@ public class CheckstyleUtil {
 			new PropertiesExpander(System.getProperties()),
 			ConfigurationLoader.IgnoredModulesOptions.EXECUTE);
 
-		String checkName = sourceFormatterArgs.getCheckName();
+		List<String> checkNames = new ArrayList<>();
 
-		if (checkName != null) {
-			configuration = _filterCheck(configuration, checkName);
+		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
+			configuration, "TreeWalker");
+
+		Configuration[] checkConfigurations =
+			treeWalkerConfiguration.getChildren();
+
+		if (checkConfigurations == null) {
+			return configuration;
 		}
 
-		configuration = _addAttribute(
-			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
-			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.AppendCheck",
-			"com.liferay.source.formatter.checkstyle.checks.ConcatCheck",
-			"com.liferay.source.formatter.checkstyle.checks." +
-				"PlusStatementCheck");
-		configuration = _addAttribute(
-			configuration, "portalBranchName",
-			SourceFormatterUtil.getPropertyValue(
-				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
-			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
-		configuration = _addAttribute(
-			configuration, "runOutsidePortalExcludes",
-			SourceFormatterUtil.getPropertyValue(
-				"run.outside.portal.excludes", propertiesMap),
-			"com.liferay.source.formatter.checkstyle.checks." +
-				"ParsePrimitiveTypeCheck");
-		configuration = _addAttribute(
-			configuration, "showDebugInformation",
-			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
-			"com.liferay.*");
+		String filterCheckName = sourceFormatterArgs.getCheckName();
 
-		configuration = _addPropertiesAttributes(configuration, propertiesMap);
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			String checkName = checkConfiguration.getName();
+
+			String checkSimpleName = SourceFormatterUtil.getSimpleName(
+				checkName);
+
+			if ((filterCheckName != null) &&
+				!filterCheckName.equals(checkSimpleName)) {
+
+				treeWalkerConfiguration.removeChild(checkConfiguration);
+
+				continue;
+			}
+
+			if (!checkName.startsWith("com.liferay.")) {
+				continue;
+			}
+
+			checkNames.add(checkName);
+
+			DefaultConfiguration defaultConfiguration =
+				new DefaultConfiguration(checkName);
+
+			Map<String, String> messages = checkConfiguration.getMessages();
+
+			for (Map.Entry<String, String> entry : messages.entrySet()) {
+				defaultConfiguration.addMessage(
+					entry.getKey(), entry.getValue());
+			}
+
+			JSONObject attributesJSONObject = _getAttributesJSONObject(
+				propertiesMap, checkSimpleName, checkConfiguration,
+				sourceFormatterArgs);
+
+			defaultConfiguration.addAttribute(
+				_ATTRIBUTES_KEY, attributesJSONObject.toString());
+
+			treeWalkerConfiguration.removeChild(checkConfiguration);
+
+			treeWalkerConfiguration.addChild(defaultConfiguration);
+		}
 
 		if (sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.addCheckNames(
@@ -144,6 +176,20 @@ public class CheckstyleUtil {
 		}
 
 		return configuration;
+	}
+
+	private static JSONObject _addCustomAttributes(
+		JSONObject jsonObject, String[][] attributesArray) {
+
+		for (String[] values : attributesArray) {
+			JSONArray jsonArray = new JSONArrayImpl();
+
+			jsonArray.put(values[1]);
+
+			jsonObject.put(values[0], jsonArray);
+		}
+
+		return jsonObject;
 	}
 
 	private static Configuration _addPropertiesAttributes(
@@ -227,6 +273,46 @@ public class CheckstyleUtil {
 		return configuration;
 	}
 
+	private static JSONObject _getAttributesJSONObject(
+			Map<String, Properties> propertiesMap, String checkName,
+			Configuration configuration,
+			SourceFormatterArgs sourceFormatterArgs)
+		throws CheckstyleException {
+
+		JSONObject attributesJSONObject = new JSONObjectImpl();
+
+		JSONObject configurationAttributesJSONObject =
+			_getConfigurationAttributesJSONObject(configuration);
+
+		configurationAttributesJSONObject = _addCustomAttributes(
+			configurationAttributesJSONObject,
+			new String[][] {
+				{"baseDirName", sourceFormatterArgs.getBaseDirName()},
+				{
+					"maxLineLength",
+					String.valueOf(sourceFormatterArgs.getMaxLineLength())
+				},
+				{
+					"showDebugInformation",
+					String.valueOf(sourceFormatterArgs.isShowDebugInformation())
+				}
+			});
+
+		attributesJSONObject.put(
+			SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
+			configurationAttributesJSONObject);
+
+		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
+			attributesJSONObject, propertiesMap,
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
+
+		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
+			attributesJSONObject, propertiesMap, CheckType.CHECKSTYLE,
+			checkName);
+
+		return attributesJSONObject;
+	}
+
 	private static Configuration[] _getCheckConfigurations(
 		Configuration configuration) {
 
@@ -263,6 +349,28 @@ public class CheckstyleUtil {
 		}
 
 		return null;
+	}
+
+	private static JSONObject _getConfigurationAttributesJSONObject(
+			Configuration configuration)
+		throws CheckstyleException {
+
+		JSONObject configurationAttributesJSONObject = new JSONObjectImpl();
+
+		for (String attributeName : configuration.getAttributeNames()) {
+			JSONArray jsonArray = new JSONArrayImpl();
+
+			String[] values = StringUtil.split(
+				configuration.getAttribute(attributeName), StringPool.COMMA);
+
+			for (String value : values) {
+				jsonArray.put(value);
+			}
+
+			configurationAttributesJSONObject.put(attributeName, jsonArray);
+		}
+
+		return configurationAttributesJSONObject;
 	}
 
 	private static Configuration _overrideAttributeValue(
@@ -305,5 +413,7 @@ public class CheckstyleUtil {
 
 		return configuration;
 	}
+
+	private static final String _ATTRIBUTES_KEY = "attributes";
 
 }

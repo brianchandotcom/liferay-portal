@@ -68,7 +68,7 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeAddDocument(
-			_getIndexer(_INSTANCE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
 				companyId, instance.getId(), instance.getProcessId()));
 
@@ -90,7 +90,7 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeAddDocument(
-			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
 				companyId, node.getId(), node.getName(), processId, "STATE",
 				version));
@@ -123,7 +123,7 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeAddDocument(
-			_getIndexer(_PROCESS_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
 				companyId, process.getId(), "1.0"));
 
@@ -153,7 +153,7 @@ public class WorkflowMetricsRESTTestHelper {
 		long taskId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
-			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
 				companyId, taskId, task.getName(), processId, "TASK", "1.0"));
 
@@ -177,7 +177,7 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeDeleteDocument(
-			_getIndexer(_INSTANCE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
 				companyId, instanceId, processId));
 	}
@@ -186,14 +186,14 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeDeleteDocument(
-			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
 				companyId, 0, name, processId, "STATE", "1.0"));
 	}
 
 	public void deleteProcess(Document document) throws Exception {
 		_invokeDeleteDocument(
-			_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
+			_getIndexer(_CLASS_NAME_PROCESS_INDEXER), document);
 	}
 
 	public void deleteProcess(long companyId, long processId) throws Exception {
@@ -205,7 +205,7 @@ public class WorkflowMetricsRESTTestHelper {
 		throws Exception {
 
 		_invokeDeleteDocument(
-			_getIndexer(_NODE_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
 				companyId, 0, taskName, processId, "TASK", "1.0"));
 	}
@@ -243,14 +243,14 @@ public class WorkflowMetricsRESTTestHelper {
 	public void restoreProcess(Document document) throws Exception {
 		document.addKeyword("deleted", false);
 
-		_invokeAddDocument(_getIndexer(_PROCESS_INDEXER_CLASS_NAME), document);
+		_invokeAddDocument(_getIndexer(_CLASS_NAME_PROCESS_INDEXER), document);
 	}
 
 	public void updateProcess(long companyId, long processId, String version)
 		throws Exception {
 
 		_invokeUpdateDocument(
-			_getIndexer(_PROCESS_INDEXER_CLASS_NAME),
+			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
 				companyId, processId, version));
 
@@ -424,15 +424,15 @@ public class WorkflowMetricsRESTTestHelper {
 			});
 	}
 
-	private static final String _INSTANCE_INDEXER_CLASS_NAME =
+	private static final String _CLASS_NAME_INSTANCE_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"InstanceWorkflowMetricsIndexer";
 
-	private static final String _NODE_INDEXER_CLASS_NAME =
+	private static final String _CLASS_NAME_NODE_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"NodeWorkflowMetricsIndexer";
 
-	private static final String _PROCESS_INDEXER_CLASS_NAME =
+	private static final String _CLASS_NAME_PROCESS_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"ProcessWorkflowMetricsIndexer";
 

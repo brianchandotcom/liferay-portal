@@ -278,16 +278,19 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 
-		if (existingPage != null) {
-			for (FileEntry fileEntry :
-					existingPage.getAttachmentsFileEntries()) {
-
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					fileEntry.getFileEntryId());
-			}
-		}
-
 		if (page.isHead()) {
+			existingPage = fetchStagedModelByUuidAndGroupId(
+				page.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (existingPage != null) {
+				for (FileEntry fileEntry :
+						existingPage.getAttachmentsFileEntries()) {
+
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						fileEntry.getFileEntryId());
+				}
+			}
+
 			List<Element> attachmentElements =
 				portletDataContext.getReferenceDataElements(
 					pageElement, DLFileEntry.class,

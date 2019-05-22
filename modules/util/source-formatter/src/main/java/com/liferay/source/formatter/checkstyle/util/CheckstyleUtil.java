@@ -69,6 +69,9 @@ public class CheckstyleUtil {
 			return configuration;
 		}
 
+		JSONObject excludesJSONObject =
+			SourceFormatterCheckUtil.getExcludesJSONObject(propertiesMap);
+
 		List<String> checkNames = new ArrayList<>();
 
 		String filterCheckName = sourceFormatterArgs.getCheckName();
@@ -105,6 +108,11 @@ public class CheckstyleUtil {
 			for (Map.Entry<String, String> entry : messages.entrySet()) {
 				defaultConfiguration.addMessage(
 					entry.getKey(), entry.getValue());
+			}
+
+			if (excludesJSONObject.length() != 0) {
+				defaultConfiguration.addAttribute(
+					_EXCLUDES_KEY, excludesJSONObject.toString());
 			}
 
 			JSONObject attributesJSONObject = _getAttributesJSONObject(
@@ -228,5 +236,7 @@ public class CheckstyleUtil {
 	}
 
 	private static final String _ATTRIBUTES_KEY = "attributes";
+
+	private static final String _EXCLUDES_KEY = "excludes";
 
 }

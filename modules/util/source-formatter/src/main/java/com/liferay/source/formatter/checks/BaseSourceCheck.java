@@ -762,7 +762,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return false;
 	}
 
-	private JSONObject _attributesJSONObject;
+	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, List<String>> _attributeValuesMap =

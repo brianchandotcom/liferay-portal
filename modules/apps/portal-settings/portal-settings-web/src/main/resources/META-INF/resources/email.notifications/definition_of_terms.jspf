@@ -88,16 +88,6 @@
 	<dd>
 		<liferay-ui:message key="the-user-id" />
 	</dd>
-
-	<c:if test='<%= !(sectionName.equals("email-verification-notification") || sectionName.equals("password-reset-notification")) %>'>
-		<dt>
-			[$USER_PASSWORD$]
-		</dt>
-		<dd>
-			<liferay-ui:message key="the-user-password" />
-		</dd>
-	</c:if>
-
 	<dt>
 		[$USER_SCREENNAME$]
 	</dt>

@@ -517,8 +517,6 @@
 			var closed = $.type(force) === 'boolean' ? force : $container.hasClass('closed');
 			var sidenavRight = instance._isSidenavRight();
 
-			var widthMethod = closed ? 'showSidenav' : 'hideSidenav';
-
 			if (closed) {
 				$container.trigger({
 					toggler: $toggler,
@@ -580,7 +578,11 @@
 			addClass($container, 'sidenav-transition');
 			addClass($toggler, 'sidenav-transition');
 
-			instance[widthMethod]($container);
+			if (closed) {
+				instance.showSidenav();
+			} else {
+				instance.hideSidenav();
+			}
 
 			setClasses($container, {
 				closed: !closed,

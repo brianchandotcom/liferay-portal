@@ -73,7 +73,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	@Override
 	public boolean isEnabled(String absolutePath) {
-		return isAttributeValue("enabled", absolutePath, true);
+		return isAttributeValue(
+			SourceFormatterCheckUtil.ENABLED_KEY, absolutePath, true);
 	}
 
 	@Override

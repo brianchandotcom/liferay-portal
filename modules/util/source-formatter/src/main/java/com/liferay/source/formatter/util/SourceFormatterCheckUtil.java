@@ -39,6 +39,8 @@ import java.util.Set;
  */
 public class SourceFormatterCheckUtil {
 
+	public static final String ENABLED_KEY = "enabled";
+
 	public static JSONObject addPropertiesAttributes(
 		JSONObject attributesJSONObject, Map<String, Properties> propertiesMap,
 		CheckType checkType, String checkName) {

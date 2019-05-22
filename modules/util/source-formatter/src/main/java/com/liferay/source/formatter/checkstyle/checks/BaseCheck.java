@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 
@@ -59,11 +60,11 @@ public abstract class BaseCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		if (!isAttributeValue("enabled", true)) {
+		if (!isAttributeValue(SourceFormatterCheckUtil.ENABLED_KEY, true)) {
 			return;
 		}
 
-		if (!isAttributeValue("showDebugInformation")) {
+		if (!isAttributeValue(CheckstyleUtil.SHOW_DEBUG_INFORMATION_KEY)) {
 			doVisitToken(detailAST);
 
 			return;
@@ -112,8 +113,9 @@ public abstract class BaseCheck extends AbstractCheck {
 
 	protected String getBaseDirName() {
 		return SourceFormatterCheckUtil.getJSONObjectValue(
-			_attributesJSONObject, _attributeValueMap, "baseDirName",
-			StringPool.BLANK, null, null, true);
+			_attributesJSONObject, _attributeValueMap,
+			CheckstyleUtil.BASE_DIR_NAME_KEY, StringPool.BLANK, null, null,
+			true);
 	}
 
 	protected boolean isAttributeValue(String attributeKey) {

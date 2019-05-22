@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
 /**
  * @author Hugo Huijser
@@ -42,7 +43,8 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 	}
 
 	protected int getMaxLineLength() {
-		return GetterUtil.getInteger(getAttributeValue("maxLineLength"));
+		return GetterUtil.getInteger(
+			getAttributeValue(CheckstyleUtil.MAX_LINE_LENGTH_KEY));
 	}
 
 	protected int getStringBreakPos(String s1, String s2, int i) {

@@ -5,25 +5,8 @@
 	<short-name>liferay-data-engine</short-name>
 	<uri>http://liferay.com/tld/data-engine</uri>
 	<tag>
-		<name>data-layout-renderer</name>
-		<tag-class>com.liferay.data.engine.taglib.servlet.taglib.DataLayoutRendererTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>dataLayoutId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Long</type>
-		</attribute>
-		<attribute>
-			<name>namespace</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
-		<name>layout-builder</name>
-		<tag-class>com.liferay.data.engine.taglib.servlet.taglib.LayoutBuilderTag</tag-class>
+		<name>data-layout-builder</name>
+		<tag-class>com.liferay.data.engine.taglib.servlet.taglib.DataLayoutBuilderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>dataDefinitionInputId</name>
@@ -44,6 +27,23 @@
 		<attribute>
 			<name>namespace</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>data-layout-renderer</name>
+		<tag-class>com.liferay.data.engine.taglib.servlet.taglib.DataLayoutRendererTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>dataLayoutId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Long</type>
+		</attribute>
+		<attribute>
+			<name>namespace</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>

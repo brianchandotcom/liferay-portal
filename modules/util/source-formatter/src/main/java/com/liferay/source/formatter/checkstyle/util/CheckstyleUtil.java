@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -168,11 +169,11 @@ public class CheckstyleUtil {
 			SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
 			configurationAttributesJSONObject);
 
-		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
+		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap,
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
 
-		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
+		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap, CheckType.CHECKSTYLE,
 			checkName);
 

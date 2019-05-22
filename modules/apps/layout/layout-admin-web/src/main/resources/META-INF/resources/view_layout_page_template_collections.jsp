@@ -124,7 +124,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
 				<div class="sheet">
-					<h3 class="sheet-title">
+					<h2 class="sheet-title">
 						<div class="autofit-row autofit-row-center">
 							<div class="autofit-col autofit-col-expand">
 								<span class="text-uppercase">
@@ -136,7 +136,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 								<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
 							</div>
 						</div>
-					</h3>
+					</h2>
 
 					<div class="sheet-section">
 						<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />

@@ -92,7 +92,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3 class="sheet-title">
+				<h2 class="sheet-title">
 					<c:choose>
 						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 
@@ -111,7 +111,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 							<liferay-ui:message key="global-templates" />
 						</c:when>
 					</c:choose>
-				</h3>
+				</h2>
 
 				<c:choose>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">

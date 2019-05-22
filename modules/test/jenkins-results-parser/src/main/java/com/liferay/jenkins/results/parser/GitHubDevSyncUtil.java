@@ -870,8 +870,7 @@ public class GitHubDevSyncUtil {
 					gitWorkingDirectory.getGitRepositoryName(), ".git"));
 		}
 
-		return validateGitHubDevRemoteURLs(
-			gitHubDevRemoteURLs, gitWorkingDirectory);
+		return gitHubDevRemoteURLs;
 	}
 
 	protected static String getGitHubRemoteURL(
@@ -1337,45 +1336,6 @@ public class GitHubDevSyncUtil {
 		}
 
 		return upstreamLocalGitBranch;
-	}
-
-	protected static List<String> validateGitHubDevRemoteURLs(
-		List<String> gitHubDevRemoteURLs,
-		final GitWorkingDirectory gitWorkingDirectory) {
-
-		List<Callable<String>> callables = new ArrayList<>();
-
-		for (final String gitHubDevRemoteURL : gitHubDevRemoteURLs) {
-			Callable<String> callable = new SafeCallable<String>() {
-
-				@Override
-				public String safeCall() {
-					if (gitWorkingDirectory.isRemoteGitRepositoryAlive(
-							gitHubDevRemoteURL)) {
-
-						return gitHubDevRemoteURL;
-					}
-
-					return null;
-				}
-
-			};
-
-			callables.add(callable);
-		}
-
-		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
-
-		List<String> validatedGitHubDevRemoteURLs = new ArrayList<>();
-
-		for (String validatedGitHubDevRemoteURL : parallelExecutor.execute()) {
-			if (validatedGitHubDevRemoteURL != null) {
-				validatedGitHubDevRemoteURLs.add(validatedGitHubDevRemoteURL);
-			}
-		}
-
-		return validatedGitHubDevRemoteURLs;
 	}
 
 	protected static List<String> gitHubDevNodeHostnames;

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.ArrayList;
@@ -340,6 +341,62 @@ public class SourceFormatterCheckUtil {
 		}
 
 		return values;
+	}
+
+	public static boolean isExcludedPath(
+		JSONObject jsonObject, Map<String, List<String>> cachedExcludesMap,
+		String key, String path, int lineNumber, String parameter,
+		String baseDirName) {
+
+		List<String> excludes = SourceFormatterCheckUtil.getJSONObjectValues(
+			jsonObject, key, cachedExcludesMap, path, baseDirName);
+
+		if (ListUtil.isEmpty(excludes)) {
+			return false;
+		}
+
+		String pathWithParameter = null;
+
+		if (Validator.isNotNull(parameter)) {
+			pathWithParameter = path + StringPool.AT + parameter;
+		}
+
+		String pathWithLineNumber = null;
+
+		if (lineNumber > 0) {
+			pathWithLineNumber = path + StringPool.AT + lineNumber;
+		}
+
+		for (String exclude : excludes) {
+			if (Validator.isNull(exclude)) {
+				continue;
+			}
+
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithParameter != null) &&
+				 pathWithParameter.endsWith(exclude)) ||
+				((pathWithLineNumber != null) &&
+				 pathWithLineNumber.endsWith(exclude))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static String _getJSONObjectValue(

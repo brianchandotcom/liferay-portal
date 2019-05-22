@@ -98,13 +98,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 						definition2);
 
 					if (trimmedDefinition1.startsWith("{{") ||
-						trimmedDefinition2.startsWith("{{")) {
-
-						return 0;
-					}
-
-					if (Validator.isNull(definition1) ||
-						Validator.isNull(definition2)) {
+						trimmedDefinition2.startsWith("{{") ||
+						Validator.isNull(trimmedDefinition1) ||
+						Validator.isNull(trimmedDefinition2)) {
 
 						return 0;
 					}

@@ -87,6 +87,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
@@ -112,6 +113,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -2116,6 +2118,25 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public boolean isGroupAccessible(Group group, Group fromGroup) {
+		if (fromGroup == null) {
+			long companyId = group.getCompanyId();
+
+			try {
+				Company company = _companyLocalService.getCompany(companyId);
+
+				Group companyGroup = company.getGroup();
+
+				if (group.equals(companyGroup)) {
+					return true;
+				}
+			}
+			catch (PortalException e) {
+				_log.warn("Couldn't find Global group.");
+			}
+
+			return false;
+		}
+
 		if (group.equals(fromGroup)) {
 			return true;
 		}
@@ -4189,6 +4210,9 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

@@ -44,7 +44,14 @@ import org.xml.sax.InputSource;
  */
 public class CheckstyleUtil {
 
+	public static final String BASE_DIR_NAME_KEY = "baseDirName";
+
 	public static final int BATCH_SIZE = 1000;
+
+	public static final String MAX_LINE_LENGTH_KEY = "maxLineLength";
+
+	public static final String SHOW_DEBUG_INFORMATION_KEY =
+		"showDebugInformation";
 
 	public static Configuration getConfiguration(
 			String configurationFileName, Map<String, Properties> propertiesMap,
@@ -162,13 +169,13 @@ public class CheckstyleUtil {
 		configurationAttributesJSONObject = _addCustomAttributes(
 			configurationAttributesJSONObject,
 			new String[][] {
-				{"baseDirName", sourceFormatterArgs.getBaseDirName()},
+				{BASE_DIR_NAME_KEY, sourceFormatterArgs.getBaseDirName()},
 				{
-					"maxLineLength",
+					MAX_LINE_LENGTH_KEY,
 					String.valueOf(sourceFormatterArgs.getMaxLineLength())
 				},
 				{
-					"showDebugInformation",
+					SHOW_DEBUG_INFORMATION_KEY,
 					String.valueOf(sourceFormatterArgs.isShowDebugInformation())
 				}
 			});

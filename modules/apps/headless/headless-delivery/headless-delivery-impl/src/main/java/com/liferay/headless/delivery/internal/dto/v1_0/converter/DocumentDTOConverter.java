@@ -29,6 +29,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
@@ -36,6 +37,7 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
@@ -88,6 +90,11 @@ public class DocumentDTOConverter implements DTOConverter {
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);
+				customFields = CustomFieldsUtil.toCustomFields(
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						fileEntry.getCompanyId(), DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId()),
+					dtoConverterContext.getLocale());
 				dateCreated = fileEntry.getCreateDate();
 				dateModified = fileEntry.getModifiedDate();
 				description = fileEntry.getDescription();

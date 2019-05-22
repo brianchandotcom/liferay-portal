@@ -17,6 +17,8 @@ package com.liferay.talend.avro;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.avro.constants.AvroConstants;
+import com.liferay.talend.openapi.OpenAPIFormat;
+import com.liferay.talend.openapi.OpenAPIType;
 import com.liferay.talend.openapi.constants.OpenApiConstants;
 import com.liferay.talend.tliferayoutput.Action;
 
@@ -152,6 +154,95 @@ public class EndpointSchemaInferrer {
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
+	private static Schema.Field _getDesignField(
+		String fieldName, Map.Entry<String, JsonNode> propertyEntry,
+		Set<String> requiredPropertyNames) {
+
+		Schema.Field designField = new Schema.Field(
+			fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+			(Object)null);
+
+		designField = _processFieldRequirements(
+			designField, propertyEntry, requiredPropertyNames);
+
+		JsonNode propertyJsonNode = propertyEntry.getValue();
+
+		OpenAPIType openAPIType = OpenAPIType.fromDefinition(
+			propertyJsonNode.path(
+				OpenApiConstants.TYPE
+			).asText());
+
+		if ((openAPIType == OpenAPIType.ARRAY) ||
+			(openAPIType == OpenAPIType.OBJECT)) {
+
+			return designField;
+		}
+
+		JsonNode openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
+			OpenApiConstants.FORMAT);
+
+		String openAPIFormatDefinition = null;
+
+		if (!openAPIFormatDefinitionJsonNode.isMissingNode()) {
+			openAPIFormatDefinition = openAPIFormatDefinitionJsonNode.asText();
+		}
+
+		OpenAPIFormat openAPIFormat = OpenAPIFormat.fromOpenAPITypeAndFormat(
+			openAPIType, openAPIFormatDefinition);
+
+		if (openAPIFormat == OpenAPIFormat.BOOLEAN) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.BINARY) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._bytes()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.DATE) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._date()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.DATE_TIME) {
+			designField = new Schema.Field(
+				fieldName,
+				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.DOUBLE) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._double()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.FLOAT) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._float()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.INT32) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._int()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.INT64) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._long()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.STRING) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
+		}
+
+		designField = _processFieldRequirements(
+			designField, propertyEntry, requiredPropertyNames);
+
+		return designField;
+	}
+
 	private static Set<String> _getRequiredPropertyNames(
 		JsonNode schemaJsonNode) {
 
@@ -195,6 +286,40 @@ public class EndpointSchemaInferrer {
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
+	private static Schema.Field _processFieldRequirements(
+		Schema.Field designField, Map.Entry<String, JsonNode> propertyEntry,
+		Set<String> requiredPropertyNames) {
+
+		if (requiredPropertyNames.contains(propertyEntry.getKey())) {
+			designField = new Schema.Field(
+				designField.name(),
+				AvroUtils.unwrapIfNullable(designField.schema()), null,
+				(Object)null);
+
+			designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+		}
+
+		return designField;
+	}
+
+	/**
+	 * Creates the list of {@link Schema.Field} {@param schemaFields} which is
+	 * used to create the Schema record for the endpoint
+	 *
+	 * @param parentPropertyName If the property has reference to another schema
+	 *                           this parameter is used to pass the parent
+	 *                           property's name
+	 * @param schemaJsonNode It contains the actual OAS Schema object where the
+	 *                       processing happens on its properties
+	 * @param index It is used for generating Column / Field names in case there
+	 *              are too many forbidden characters in the generated field
+	 *              name
+	 * @param previousFieldNames Contains all the unique field names which is
+	 *                              being processed
+	 * @param schemaFields The list of schema fields from which the Schema
+	 *                     record is created at the end
+	 * @param apiSpecJsonNode Holds the entire API Specification object
+	 */
 	private static void _processSchemaJsonNode(
 		String parentPropertyName, JsonNode schemaJsonNode, AtomicInteger index,
 		Set<String> previousFieldNames, List<Schema.Field> schemaFields,
@@ -244,13 +369,8 @@ public class EndpointSchemaInferrer {
 
 			previousFieldNames.add(fieldName);
 
-			Schema.Field designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
-				(Object)null);
-
-			if (requiredPropertyNames.contains(propertyEntry.getKey())) {
-				designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-			}
+			Schema.Field designField = _getDesignField(
+				fieldName, propertyEntry, requiredPropertyNames);
 
 			schemaFields.add(designField);
 		}

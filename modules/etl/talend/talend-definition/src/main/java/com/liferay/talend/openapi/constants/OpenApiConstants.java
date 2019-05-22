@@ -27,6 +27,8 @@ public class OpenApiConstants {
 
 	public static final String DEFAULT = "default";
 
+	public static final String FORMAT = "format";
+
 	public static final String ITEMS = "items";
 
 	public static final String PATH_SCHEMA_REFERENCE = "#/components/schemas/";
@@ -44,6 +46,8 @@ public class OpenApiConstants {
 	public static final String SCHEMA = "schema";
 
 	public static final String SCHEMAS = "schemas";
+
+	public static final String TYPE = "type";
 
 	private OpenApiConstants() {
 	}

@@ -150,7 +150,7 @@ class RuleEditor extends Component {
 			)
 		).internal().setter('_setConditions').value([]),
 
-		conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsFn'),
+		conditionsFieldOptions: Config.arrayOf(fieldOptionStructure).internal().valueFn('_conditionsFieldOptionsValueFn'),
 
 		dataProvider: Config.arrayOf(
 			Config.shapeOf(
@@ -652,7 +652,7 @@ class RuleEditor extends Component {
 				actionsFieldOptions: this._actionsFieldOptionsValueFn(),
 				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
 				conditions,
-				conditionsFieldOptions: this._conditionsFieldOptionsFn(['paragraph']),
+				conditionsFieldOptions: this._conditionsFieldOptionsValueFn(['paragraph']),
 				deletedFields: this._getDeletedFields(visitor),
 				pageOptions: pageOptions(pages, maxPage),
 				roles: this._rolesValueFn()
@@ -809,7 +809,7 @@ class RuleEditor extends Component {
 		return this._getFieldOptions();
 	}
 
-	_conditionsFieldOptionsFn(omittedFieldsList) {
+	_conditionsFieldOptionsValueFn(omittedFieldsList) {
 		return this._getFieldOptions(omittedFieldsList);
 	}
 

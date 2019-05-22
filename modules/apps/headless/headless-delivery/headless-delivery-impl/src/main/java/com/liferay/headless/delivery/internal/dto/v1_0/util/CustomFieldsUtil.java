@@ -27,7 +27,6 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class CustomFieldsUtil {
 	public static void addCustomFields(
 			long companyId, Class<?> clazz, long classPK,
 			Map<String, Object> expandoAttributes, Locale locale)
-		throws ParseException {
+		throws Exception {
 
 		if (expandoAttributes == null) {
 			return;

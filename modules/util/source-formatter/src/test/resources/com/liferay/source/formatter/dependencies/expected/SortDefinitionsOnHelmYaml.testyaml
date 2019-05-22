@@ -12,7 +12,9 @@ spec:
     selector:
         app: {{ $masterPodName }}
     type: NodePort
+
 ---
+
 {{- if $.Values.master.ports.vnc.enabled }}
 {{- if $.Values.slave.ports.vnc.enabled }}
 apiVersion: extensions/v1beta1

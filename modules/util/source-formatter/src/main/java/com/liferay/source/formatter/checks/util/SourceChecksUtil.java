@@ -39,6 +39,7 @@ import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
@@ -208,11 +209,11 @@ public class SourceChecksUtil {
 				configurationAttributesJSONObject);
 		}
 
-		attributesJSONObject = SourceFormatterUtil.addPropertiesAttributes(
+		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap,
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
 
-		return SourceFormatterUtil.addPropertiesAttributes(
+		return SourceFormatterCheckUtil.addPropertiesAttributes(
 			attributesJSONObject, propertiesMap, CheckType.SOURCE_CHECK,
 			checkName);
 	}

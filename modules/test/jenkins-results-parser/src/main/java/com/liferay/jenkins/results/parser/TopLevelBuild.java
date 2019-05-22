@@ -1533,8 +1533,8 @@ public class TopLevelBuild extends BaseBuild {
 			new JenkinsRegenFailureMessageGenerator(),
 			new JenkinsSourceFormatFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
-			new CIFailureMessageGenerator(),
 			new CITestSuiteValidationFailureMessageGenerator(),
+			new CIFailureMessageGenerator(),
 			new DownstreamFailureMessageGenerator(),
 			new GenericFailureMessageGenerator()
 		};

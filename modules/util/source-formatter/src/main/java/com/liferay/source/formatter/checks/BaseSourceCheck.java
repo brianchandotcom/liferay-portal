@@ -195,82 +195,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected String getAttributeValue(
 		String attributeKey, String absolutePath, String defaultValue) {
 
-		if (_attributesJSONObject == null) {
-			return defaultValue;
-		}
-
-		String value = _attributeValueMap.get(attributeKey);
-
-		if (value != null) {
-			return value;
-		}
-
-		value = _attributeValueMap.get(absolutePath + ":" + attributeKey);
-
-		if (value != null) {
-			return value;
-		}
-
-		String closestPropertiesFileLocation = null;
-		boolean hasSubdirectoryAttributeValue = false;
-
-		Iterator<String> keys = _attributesJSONObject.keys();
-
-		while (keys.hasNext()) {
-			String fileLocation = keys.next();
-
-			String curValue = _getJSONObjectValue(
-				_attributesJSONObject.getJSONObject(fileLocation),
-				attributeKey);
-
-			if (curValue == null) {
-				continue;
-			}
-
-			if (fileLocation.equals(
-					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
-
-				if (value == null) {
-					value = curValue;
-				}
-
-				continue;
-			}
-
-			String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
-				_baseDirName);
-
-			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-				hasSubdirectoryAttributeValue = true;
-			}
-
-			if (!absolutePath.startsWith(fileLocation) &&
-				!fileLocation.equals(baseDirNameAbsolutePath)) {
-
-				continue;
-			}
-
-			if ((closestPropertiesFileLocation == null) ||
-				(closestPropertiesFileLocation.length() <
-					fileLocation.length())) {
-
-				value = curValue;
-
-				closestPropertiesFileLocation = fileLocation;
-			}
-		}
-
-		if (value == null) {
-			value = defaultValue;
-		}
-
-		_attributeValueMap.put(absolutePath + ":" + attributeKey, value);
-
-		if (!hasSubdirectoryAttributeValue) {
-			_attributeValueMap.put(attributeKey, value);
-		}
-
-		return value;
+		return _getJSONObjectValue(
+			_attributesJSONObject, _attributeValueMap, attributeKey,
+			defaultValue, absolutePath, _baseDirName);
 	}
 
 	protected List<String> getAttributeValues(
@@ -766,6 +693,87 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private String _getJSONObjectValue(
+		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
+		String defaultValue, String absolutePath, String baseDirName) {
+
+		if (jsonObject == null) {
+			return defaultValue;
+		}
+
+		String value = cachedValuesMap.get(key);
+
+		if (value != null) {
+			return value;
+		}
+
+		value = cachedValuesMap.get(absolutePath + ":" + key);
+
+		if (value != null) {
+			return value;
+		}
+
+		String closestPropertiesFileLocation = null;
+		boolean hasSubdirectoryValue = false;
+
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext()) {
+			String fileLocation = keys.next();
+
+			String curValue = _getJSONObjectValue(
+				jsonObject.getJSONObject(fileLocation), key);
+
+			if (curValue == null) {
+				continue;
+			}
+
+			if (fileLocation.equals(
+					SourceFormatterUtil.CONFIGURATION_FILE_LOCATION)) {
+
+				if (value == null) {
+					value = curValue;
+				}
+
+				continue;
+			}
+
+			String baseDirNameAbsolutePath = SourceUtil.getAbsolutePath(
+				baseDirName);
+
+			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
+				hasSubdirectoryValue = true;
+			}
+
+			if (!absolutePath.startsWith(fileLocation) &&
+				!fileLocation.equals(baseDirNameAbsolutePath)) {
+
+				continue;
+			}
+
+			if ((closestPropertiesFileLocation == null) ||
+				(closestPropertiesFileLocation.length() <
+					fileLocation.length())) {
+
+				value = curValue;
+
+				closestPropertiesFileLocation = fileLocation;
+			}
+		}
+
+		if (value == null) {
+			value = defaultValue;
+		}
+
+		cachedValuesMap.put(absolutePath + ":" + key, value);
+
+		if (!hasSubdirectoryValue) {
+			cachedValuesMap.put(key, value);
+		}
+
+		return value;
+	}
 
 	private String _getJSONObjectValue(JSONObject jsonObject, String key) {
 		JSONArray jsonArray = jsonObject.getJSONArray(key);

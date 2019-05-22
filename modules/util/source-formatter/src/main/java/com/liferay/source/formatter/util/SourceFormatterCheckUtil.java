@@ -143,6 +143,44 @@ public class SourceFormatterCheckUtil {
 		return ListUtil.fromCollection(attributeNames);
 	}
 
+	public static JSONObject getExcludesJSONObject(
+		Map<String, Properties> propertiesMap) {
+
+		JSONObject excludesJSONObject = new JSONObjectImpl();
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			JSONObject propertiesExcludesJSONObject = new JSONObjectImpl();
+
+			Properties properties = entry.getValue();
+
+			for (Object obj : properties.keySet()) {
+				String key = (String)obj;
+
+				if (!key.endsWith(".excludes")) {
+					continue;
+				}
+
+				JSONArray jsonArray = new JSONArrayImpl();
+
+				for (String value :
+						StringUtil.split(
+							properties.getProperty(key), StringPool.COMMA)) {
+
+					jsonArray.put(value);
+				}
+
+				propertiesExcludesJSONObject.put(key, jsonArray);
+			}
+
+			if (propertiesExcludesJSONObject.length() != 0) {
+				excludesJSONObject.put(
+					entry.getKey(), propertiesExcludesJSONObject);
+			}
+		}
+
+		return excludesJSONObject;
+	}
+
 	public static String getJSONObjectValue(
 		JSONObject jsonObject, Map<String, String> cachedValuesMap, String key,
 		String defaultValue, String absolutePath, String baseDirName) {

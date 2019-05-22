@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1948,8 +1950,7 @@ public class LayoutModelImpl
 	@Override
 	public Layout toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Layout)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -2416,11 +2417,9 @@ public class LayoutModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Layout.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Layout.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Layout>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Layout.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -611,8 +613,7 @@ public class FriendlyURLEntryModelImpl
 	@Override
 	public FriendlyURLEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (FriendlyURLEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -840,11 +841,9 @@ public class FriendlyURLEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		FriendlyURLEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		FriendlyURLEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, FriendlyURLEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FriendlyURLEntry.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

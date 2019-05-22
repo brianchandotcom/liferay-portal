@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1116,8 +1118,7 @@ public class DDMTemplateVersionModelImpl
 	@Override
 	public DDMTemplateVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMTemplateVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1388,11 +1389,9 @@ public class DDMTemplateVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMTemplateVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMTemplateVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMTemplateVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DDMTemplateVersion.class, ModelWrapper.class);
 
 	private long _templateVersionId;
 	private long _groupId;

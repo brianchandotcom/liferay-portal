@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoLogModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -925,8 +927,7 @@ public class KaleoLogModelImpl
 	@Override
 	public KaleoLog toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoLog)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1318,11 +1319,9 @@ public class KaleoLogModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoLog.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoLog.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoLog>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			KaleoLog.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _kaleoLogId;

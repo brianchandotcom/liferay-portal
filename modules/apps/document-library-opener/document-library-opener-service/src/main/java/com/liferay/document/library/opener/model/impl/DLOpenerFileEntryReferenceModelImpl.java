@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -463,10 +465,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 	@Override
 	public DLOpenerFileEntryReference toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DLOpenerFileEntryReference)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -689,11 +689,9 @@ public class DLOpenerFileEntryReferenceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLOpenerFileEntryReference.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLOpenerFileEntryReference.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLOpenerFileEntryReference>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLOpenerFileEntryReference.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

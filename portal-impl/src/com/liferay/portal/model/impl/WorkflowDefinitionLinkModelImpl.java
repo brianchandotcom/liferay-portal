@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -627,8 +629,7 @@ public class WorkflowDefinitionLinkModelImpl
 	@Override
 	public WorkflowDefinitionLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WorkflowDefinitionLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -889,11 +890,9 @@ public class WorkflowDefinitionLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WorkflowDefinitionLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WorkflowDefinitionLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WorkflowDefinitionLink>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			WorkflowDefinitionLink.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _workflowDefinitionLinkId;

@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -370,8 +372,7 @@ public class AssetTagStatsModelImpl
 	@Override
 	public AssetTagStats toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetTagStats)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -550,11 +551,9 @@ public class AssetTagStatsModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetTagStats.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetTagStats.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetTagStats>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			AssetTagStats.class, ModelWrapper.class);
 
 	private long _tagStatsId;
 	private long _companyId;

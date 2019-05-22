@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -765,8 +767,7 @@ public class FragmentEntryLinkModelImpl
 	@Override
 	public FragmentEntryLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (FragmentEntryLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1122,11 +1123,9 @@ public class FragmentEntryLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		FragmentEntryLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		FragmentEntryLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, FragmentEntryLink>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FragmentEntryLink.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceTokenModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -763,8 +765,7 @@ public class KaleoTimerInstanceTokenModelImpl
 	@Override
 	public KaleoTimerInstanceToken toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoTimerInstanceToken)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1078,11 +1079,9 @@ public class KaleoTimerInstanceTokenModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoTimerInstanceToken.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoTimerInstanceToken.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoTimerInstanceToken>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			KaleoTimerInstanceToken.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _kaleoTimerInstanceTokenId;

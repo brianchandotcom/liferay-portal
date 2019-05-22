@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -351,8 +353,7 @@ public class DLSyncEventModelImpl
 	@Override
 	public DLSyncEvent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLSyncEvent)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -544,11 +545,9 @@ public class DLSyncEventModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLSyncEvent.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLSyncEvent.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLSyncEvent>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLSyncEvent.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

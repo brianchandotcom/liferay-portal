@@ -41,6 +41,8 @@ import com.liferay.wiki.model.WikiNodeSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -940,8 +942,7 @@ public class WikiNodeModelImpl
 	@Override
 	public WikiNode toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiNode)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1216,11 +1217,9 @@ public class WikiNodeModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiNode.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiNode.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WikiNode>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			WikiNode.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

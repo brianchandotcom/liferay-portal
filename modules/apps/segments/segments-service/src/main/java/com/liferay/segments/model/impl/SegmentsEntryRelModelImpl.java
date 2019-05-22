@@ -36,6 +36,8 @@ import com.liferay.segments.model.SegmentsEntryRelSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -578,8 +580,7 @@ public class SegmentsEntryRelModelImpl
 	@Override
 	public SegmentsEntryRel toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SegmentsEntryRel)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -798,11 +799,9 @@ public class SegmentsEntryRelModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SegmentsEntryRel.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SegmentsEntryRel.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SegmentsEntryRel>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SegmentsEntryRel.class, ModelWrapper.class);
 
 	private long _segmentsEntryRelId;
 	private long _groupId;

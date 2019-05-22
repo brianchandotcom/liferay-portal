@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -347,10 +349,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 	@Override
 	public DDMDataProviderInstanceLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DDMDataProviderInstanceLink)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -533,11 +533,11 @@ public class DDMDataProviderInstanceLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMDataProviderInstanceLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMDataProviderInstanceLink.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, DDMDataProviderInstanceLink>
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					DDMDataProviderInstanceLink.class, ModelWrapper.class);
 
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;

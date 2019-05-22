@@ -35,6 +35,8 @@ import com.liferay.powwow.model.PowwowMeetingSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -666,8 +668,7 @@ public class PowwowMeetingModelImpl
 	@Override
 	public PowwowMeeting toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PowwowMeeting)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -934,11 +935,9 @@ public class PowwowMeetingModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PowwowMeeting.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PowwowMeeting.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PowwowMeeting>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			PowwowMeeting.class, ModelWrapper.class);
 
 	private long _powwowMeetingId;
 	private long _groupId;

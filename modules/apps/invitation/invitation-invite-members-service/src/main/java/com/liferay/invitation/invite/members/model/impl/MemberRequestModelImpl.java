@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -535,8 +537,7 @@ public class MemberRequestModelImpl
 	@Override
 	public MemberRequest toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MemberRequest)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -764,11 +765,9 @@ public class MemberRequestModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MemberRequest.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MemberRequest.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MemberRequest>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			MemberRequest.class, ModelWrapper.class);
 
 	private long _memberRequestId;
 	private long _groupId;

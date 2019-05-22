@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1506,8 +1508,7 @@ public class JournalArticleModelImpl
 	@Override
 	public JournalArticle toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalArticle)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1973,11 +1974,9 @@ public class JournalArticleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalArticle.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalArticle.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, JournalArticle>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			JournalArticle.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

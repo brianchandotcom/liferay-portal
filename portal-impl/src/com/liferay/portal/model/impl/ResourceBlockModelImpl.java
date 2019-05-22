@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -469,8 +471,7 @@ public class ResourceBlockModelImpl
 	@Override
 	public ResourceBlock toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ResourceBlock)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -665,11 +666,9 @@ public class ResourceBlockModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ResourceBlock.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ResourceBlock.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ResourceBlock>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ResourceBlock.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _resourceBlockId;

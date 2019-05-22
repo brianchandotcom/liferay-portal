@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -606,8 +608,7 @@ public class ResourcePermissionModelImpl
 	@Override
 	public ResourcePermission toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ResourcePermission)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -833,11 +834,9 @@ public class ResourcePermissionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ResourcePermission.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ResourcePermission.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ResourcePermission>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ResourcePermission.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _resourcePermissionId;

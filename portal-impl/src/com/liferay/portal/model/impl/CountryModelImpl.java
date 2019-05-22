@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -508,8 +510,7 @@ public class CountryModelImpl
 	@Override
 	public Country toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Country)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -720,11 +721,9 @@ public class CountryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Country.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Country.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Country>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Country.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _countryId;

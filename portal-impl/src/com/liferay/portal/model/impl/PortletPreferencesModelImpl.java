@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -517,8 +519,7 @@ public class PortletPreferencesModelImpl
 	@Override
 	public PortletPreferences toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PortletPreferences)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -727,11 +728,9 @@ public class PortletPreferencesModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PortletPreferences.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PortletPreferences.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PortletPreferences>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			PortletPreferences.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _portletPreferencesId;

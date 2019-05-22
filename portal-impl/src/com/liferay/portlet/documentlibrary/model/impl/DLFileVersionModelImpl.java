@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1096,8 +1098,7 @@ public class DLFileVersionModelImpl
 	@Override
 	public DLFileVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1487,11 +1488,9 @@ public class DLFileVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFileVersion.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

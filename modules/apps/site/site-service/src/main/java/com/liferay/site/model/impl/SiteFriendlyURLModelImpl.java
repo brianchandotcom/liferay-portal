@@ -34,6 +34,8 @@ import com.liferay.site.model.SiteFriendlyURLModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -537,8 +539,7 @@ public class SiteFriendlyURLModelImpl
 	@Override
 	public SiteFriendlyURL toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SiteFriendlyURL)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -784,11 +785,9 @@ public class SiteFriendlyURLModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SiteFriendlyURL.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SiteFriendlyURL.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SiteFriendlyURL>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SiteFriendlyURL.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

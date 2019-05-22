@@ -31,6 +31,8 @@ import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntryModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.math.BigDecimal;
 
 import java.sql.Types;
@@ -376,8 +378,7 @@ public class BigDecimalEntryModelImpl
 	@Override
 	public BigDecimalEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BigDecimalEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -535,11 +536,9 @@ public class BigDecimalEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BigDecimalEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BigDecimalEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BigDecimalEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			BigDecimalEntry.class, ModelWrapper.class);
 
 	private long _bigDecimalEntryId;
 	private long _companyId;

@@ -34,6 +34,8 @@ import com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocal
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -458,8 +460,7 @@ public class LocalizedEntryModelImpl
 	@Override
 	public LocalizedEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LocalizedEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -615,11 +616,9 @@ public class LocalizedEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LocalizedEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LocalizedEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LocalizedEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			LocalizedEntry.class, ModelWrapper.class);
 
 	private String _defaultLanguageId;
 	private long _localizedEntryId;

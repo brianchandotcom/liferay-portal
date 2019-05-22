@@ -31,6 +31,8 @@ import com.liferay.trash.model.TrashVersionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -415,8 +417,7 @@ public class TrashVersionModelImpl
 	@Override
 	public TrashVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TrashVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -603,11 +604,9 @@ public class TrashVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TrashVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TrashVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TrashVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			TrashVersion.class, ModelWrapper.class);
 
 	private long _versionId;
 	private long _companyId;

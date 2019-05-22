@@ -32,6 +32,8 @@ import com.liferay.powwow.model.PowwowServerModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -509,8 +511,7 @@ public class PowwowServerModelImpl
 	@Override
 	public PowwowServer toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PowwowServer)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -750,11 +751,9 @@ public class PowwowServerModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PowwowServer.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PowwowServer.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PowwowServer>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			PowwowServer.class, ModelWrapper.class);
 
 	private long _powwowServerId;
 	private long _companyId;

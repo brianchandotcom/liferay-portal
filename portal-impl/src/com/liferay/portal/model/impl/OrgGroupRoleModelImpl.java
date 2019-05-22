@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -329,8 +331,7 @@ public class OrgGroupRoleModelImpl
 	@Override
 	public OrgGroupRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (OrgGroupRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -494,11 +495,9 @@ public class OrgGroupRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OrgGroupRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OrgGroupRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, OrgGroupRole>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			OrgGroupRole.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _organizationId;

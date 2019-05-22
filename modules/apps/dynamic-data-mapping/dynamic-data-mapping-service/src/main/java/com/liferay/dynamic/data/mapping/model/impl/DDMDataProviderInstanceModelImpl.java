@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -901,8 +903,7 @@ public class DDMDataProviderInstanceModelImpl
 	@Override
 	public DDMDataProviderInstance toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMDataProviderInstance)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1158,11 +1159,9 @@ public class DDMDataProviderInstanceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMDataProviderInstance.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMDataProviderInstance.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMDataProviderInstance>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DDMDataProviderInstance.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

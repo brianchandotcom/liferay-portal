@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -362,8 +364,7 @@ public class DLFileVersionPreviewModelImpl
 	@Override
 	public DLFileVersionPreview toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileVersionPreview)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -557,11 +558,9 @@ public class DLFileVersionPreviewModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileVersionPreview.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileVersionPreview.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileVersionPreview>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFileVersionPreview.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -606,8 +608,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	@Override
 	public Team toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Team)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -844,10 +845,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Team.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Team.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Team>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Team.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

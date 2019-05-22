@@ -31,6 +31,8 @@ import com.liferay.social.kernel.model.SocialActivityCounterModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -598,8 +600,7 @@ public class SocialActivityCounterModelImpl
 	@Override
 	public SocialActivityCounter toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityCounter)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -829,11 +830,9 @@ public class SocialActivityCounterModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivityCounter.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivityCounter.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivityCounter>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SocialActivityCounter.class, ModelWrapper.class);
 
 	private long _activityCounterId;
 	private long _groupId;

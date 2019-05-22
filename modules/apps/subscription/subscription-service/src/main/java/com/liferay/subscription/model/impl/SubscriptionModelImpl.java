@@ -34,6 +34,8 @@ import com.liferay.subscription.model.SubscriptionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -537,8 +539,7 @@ public class SubscriptionModelImpl
 	@Override
 	public Subscription toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Subscription)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -768,11 +769,9 @@ public class SubscriptionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Subscription.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Subscription.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Subscription>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Subscription.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _subscriptionId;

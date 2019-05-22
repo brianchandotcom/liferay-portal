@@ -31,6 +31,8 @@ import com.liferay.ratings.kernel.model.RatingsStatsModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -397,8 +399,7 @@ public class RatingsStatsModelImpl
 	@Override
 	public RatingsStats toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RatingsStats)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -575,11 +576,9 @@ public class RatingsStatsModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RatingsStats.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RatingsStats.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RatingsStats>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			RatingsStats.class, ModelWrapper.class);
 
 	private long _statsId;
 	private long _companyId;

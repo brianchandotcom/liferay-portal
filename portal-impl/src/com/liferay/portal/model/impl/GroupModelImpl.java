@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1278,8 +1280,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	@Override
 	public Group toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Group)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1579,11 +1580,9 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Group.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Group.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Group>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Group.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

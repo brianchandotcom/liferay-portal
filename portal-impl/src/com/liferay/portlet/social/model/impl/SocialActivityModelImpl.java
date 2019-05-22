@@ -36,6 +36,8 @@ import com.liferay.social.kernel.model.SocialActivitySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -736,8 +738,7 @@ public class SocialActivityModelImpl
 	@Override
 	public SocialActivity toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivity)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -989,11 +990,9 @@ public class SocialActivityModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivity.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivity.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivity>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SocialActivity.class, ModelWrapper.class);
 
 	private long _activityId;
 	private long _groupId;

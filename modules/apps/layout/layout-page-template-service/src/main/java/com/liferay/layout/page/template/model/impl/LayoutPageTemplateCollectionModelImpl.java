@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -621,10 +623,8 @@ public class LayoutPageTemplateCollectionModelImpl
 	@Override
 	public LayoutPageTemplateCollection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(LayoutPageTemplateCollection)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -882,11 +882,11 @@ public class LayoutPageTemplateCollectionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LayoutPageTemplateCollection.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LayoutPageTemplateCollection.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, LayoutPageTemplateCollection>
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					LayoutPageTemplateCollection.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

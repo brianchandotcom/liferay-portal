@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -564,8 +566,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	@Override
 	public MBBan toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBBan)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -792,11 +793,9 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBBan.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBBan.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBBan>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			MBBan.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

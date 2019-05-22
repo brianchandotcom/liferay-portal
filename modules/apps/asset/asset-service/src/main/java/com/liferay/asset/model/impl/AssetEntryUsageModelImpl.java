@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -520,8 +522,7 @@ public class AssetEntryUsageModelImpl
 	@Override
 	public AssetEntryUsage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetEntryUsage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -765,11 +766,9 @@ public class AssetEntryUsageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetEntryUsage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetEntryUsage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetEntryUsage>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			AssetEntryUsage.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

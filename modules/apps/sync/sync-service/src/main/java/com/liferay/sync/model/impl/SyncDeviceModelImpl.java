@@ -36,6 +36,8 @@ import com.liferay.sync.model.SyncDeviceSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -590,8 +592,7 @@ public class SyncDeviceModelImpl
 	@Override
 	public SyncDevice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDevice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -825,11 +826,9 @@ public class SyncDeviceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDevice.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDevice.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SyncDevice>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SyncDevice.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

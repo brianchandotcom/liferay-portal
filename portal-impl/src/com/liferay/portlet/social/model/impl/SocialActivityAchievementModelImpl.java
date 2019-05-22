@@ -32,6 +32,8 @@ import com.liferay.social.kernel.model.SocialActivityAchievementModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -452,10 +454,8 @@ public class SocialActivityAchievementModelImpl
 	@Override
 	public SocialActivityAchievement toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(SocialActivityAchievement)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -654,11 +654,9 @@ public class SocialActivityAchievementModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivityAchievement.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivityAchievement.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivityAchievement>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SocialActivityAchievement.class, ModelWrapper.class);
 
 	private long _activityAchievementId;
 	private long _groupId;

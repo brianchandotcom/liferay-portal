@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -706,8 +708,7 @@ public class RepositoryModelImpl
 	@Override
 	public Repository toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Repository)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -974,11 +975,9 @@ public class RepositoryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Repository.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Repository.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Repository>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Repository.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

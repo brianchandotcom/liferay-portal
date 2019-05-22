@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -367,8 +369,7 @@ public class ClassNameModelImpl
 	@Override
 	public ClassName toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ClassName)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -531,11 +532,9 @@ public class ClassNameModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ClassName.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ClassName.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ClassName>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ClassName.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _classNameId;

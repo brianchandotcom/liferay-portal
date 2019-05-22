@@ -34,6 +34,8 @@ import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -554,8 +556,7 @@ public class WeDeployAuthAppModelImpl
 	@Override
 	public WeDeployAuthApp toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WeDeployAuthApp)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -787,11 +788,9 @@ public class WeDeployAuthAppModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WeDeployAuthApp.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WeDeployAuthApp.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WeDeployAuthApp>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			WeDeployAuthApp.class, ModelWrapper.class);
 
 	private long _weDeployAuthAppId;
 	private long _companyId;

@@ -40,6 +40,8 @@ import com.liferay.segments.model.SegmentsExperienceSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -917,8 +919,7 @@ public class SegmentsExperienceModelImpl
 	@Override
 	public SegmentsExperience toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SegmentsExperience)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1201,11 +1202,9 @@ public class SegmentsExperienceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SegmentsExperience.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SegmentsExperience.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SegmentsExperience>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SegmentsExperience.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -705,8 +707,7 @@ public class BackgroundTaskModelImpl
 	@Override
 	public BackgroundTask toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BackgroundTask)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -985,11 +986,9 @@ public class BackgroundTaskModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BackgroundTask.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BackgroundTask.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BackgroundTask>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			BackgroundTask.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

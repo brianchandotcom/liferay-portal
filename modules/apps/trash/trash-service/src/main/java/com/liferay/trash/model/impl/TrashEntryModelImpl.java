@@ -37,6 +37,8 @@ import com.liferay.trash.model.TrashEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -585,8 +587,7 @@ public class TrashEntryModelImpl
 	@Override
 	public TrashEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TrashEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -804,11 +805,9 @@ public class TrashEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TrashEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TrashEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TrashEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			TrashEntry.class, ModelWrapper.class);
 
 	private long _entryId;
 	private long _groupId;

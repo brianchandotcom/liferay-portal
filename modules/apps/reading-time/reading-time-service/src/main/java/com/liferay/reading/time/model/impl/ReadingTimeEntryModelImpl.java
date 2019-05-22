@@ -40,6 +40,8 @@ import com.liferay.reading.time.model.ReadingTimeEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -719,8 +721,7 @@ public class ReadingTimeEntryModelImpl
 	@Override
 	public ReadingTimeEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ReadingTimeEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -940,11 +941,9 @@ public class ReadingTimeEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ReadingTimeEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ReadingTimeEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ReadingTimeEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ReadingTimeEntry.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

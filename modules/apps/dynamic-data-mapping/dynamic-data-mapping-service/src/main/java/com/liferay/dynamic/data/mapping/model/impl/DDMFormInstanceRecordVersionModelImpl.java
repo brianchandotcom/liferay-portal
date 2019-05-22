@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -812,10 +814,8 @@ public class DDMFormInstanceRecordVersionModelImpl
 	@Override
 	public DDMFormInstanceRecordVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DDMFormInstanceRecordVersion)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1098,11 +1098,11 @@ public class DDMFormInstanceRecordVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMFormInstanceRecordVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMFormInstanceRecordVersion.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, DDMFormInstanceRecordVersion>
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					DDMFormInstanceRecordVersion.class, ModelWrapper.class);
 
 	private long _formInstanceRecordVersionId;
 	private long _groupId;

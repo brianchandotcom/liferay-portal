@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -772,8 +774,7 @@ public class LayoutSetBranchModelImpl
 	@Override
 	public LayoutSetBranch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LayoutSetBranch)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1063,11 +1064,9 @@ public class LayoutSetBranchModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LayoutSetBranch.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LayoutSetBranch.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LayoutSetBranch>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			LayoutSetBranch.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _layoutSetBranchId;

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -482,8 +484,7 @@ public class ChangesetCollectionModelImpl
 	@Override
 	public ChangesetCollection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ChangesetCollection)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -712,11 +713,9 @@ public class ChangesetCollectionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ChangesetCollection.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ChangesetCollection.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ChangesetCollection>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ChangesetCollection.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

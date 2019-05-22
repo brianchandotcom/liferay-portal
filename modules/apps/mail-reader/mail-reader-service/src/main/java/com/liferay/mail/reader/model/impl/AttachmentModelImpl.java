@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -415,8 +417,7 @@ public class AttachmentModelImpl
 	@Override
 	public Attachment toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Attachment)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -605,11 +606,9 @@ public class AttachmentModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Attachment.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Attachment.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Attachment>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Attachment.class, ModelWrapper.class);
 
 	private long _attachmentId;
 	private long _companyId;

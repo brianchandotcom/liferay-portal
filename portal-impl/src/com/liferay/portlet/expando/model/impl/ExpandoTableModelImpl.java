@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -354,8 +356,7 @@ public class ExpandoTableModelImpl
 	@Override
 	public ExpandoTable toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ExpandoTable)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -532,11 +533,9 @@ public class ExpandoTableModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ExpandoTable.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ExpandoTable.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ExpandoTable>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ExpandoTable.class, ModelWrapper.class);
 
 	private long _tableId;
 	private long _companyId;

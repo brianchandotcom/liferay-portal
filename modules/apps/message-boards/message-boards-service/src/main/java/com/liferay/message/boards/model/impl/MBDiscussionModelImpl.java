@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -571,8 +573,7 @@ public class MBDiscussionModelImpl
 	@Override
 	public MBDiscussion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBDiscussion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -815,11 +816,9 @@ public class MBDiscussionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBDiscussion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBDiscussion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBDiscussion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			MBDiscussion.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

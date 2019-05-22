@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -965,10 +967,8 @@ public class ExportImportConfigurationModelImpl
 	@Override
 	public ExportImportConfiguration toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(ExportImportConfiguration)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1249,11 +1249,9 @@ public class ExportImportConfigurationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ExportImportConfiguration.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ExportImportConfiguration.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ExportImportConfiguration>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ExportImportConfiguration.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;

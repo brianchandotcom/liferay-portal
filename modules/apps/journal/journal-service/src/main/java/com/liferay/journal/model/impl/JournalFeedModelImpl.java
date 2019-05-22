@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -832,8 +834,7 @@ public class JournalFeedModelImpl
 	@Override
 	public JournalFeed toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalFeed)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1176,11 +1177,9 @@ public class JournalFeedModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalFeed.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalFeed.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, JournalFeed>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			JournalFeed.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

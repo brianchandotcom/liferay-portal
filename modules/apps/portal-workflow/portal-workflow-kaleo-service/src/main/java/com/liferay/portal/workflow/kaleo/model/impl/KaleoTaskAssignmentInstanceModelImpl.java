@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -716,10 +718,8 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	@Override
 	public KaleoTaskAssignmentInstance toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(KaleoTaskAssignmentInstance)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1040,11 +1040,11 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoTaskAssignmentInstance.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoTaskAssignmentInstance.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, KaleoTaskAssignmentInstance>
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					KaleoTaskAssignmentInstance.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _kaleoTaskAssignmentInstanceId;

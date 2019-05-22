@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -509,8 +511,7 @@ public class ChangesetEntryModelImpl
 	@Override
 	public ChangesetEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ChangesetEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -735,11 +736,9 @@ public class ChangesetEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ChangesetEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ChangesetEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ChangesetEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ChangesetEntry.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

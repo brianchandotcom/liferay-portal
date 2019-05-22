@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -523,10 +525,8 @@ public class UserNotificationDeliveryModelImpl
 	@Override
 	public UserNotificationDelivery toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(UserNotificationDelivery)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -736,11 +736,9 @@ public class UserNotificationDeliveryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserNotificationDelivery.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserNotificationDelivery.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserNotificationDelivery>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			UserNotificationDelivery.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;

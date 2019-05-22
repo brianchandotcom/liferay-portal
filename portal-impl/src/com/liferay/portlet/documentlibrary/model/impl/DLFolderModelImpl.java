@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1186,8 +1188,7 @@ public class DLFolderModelImpl
 	@Override
 	public DLFolder toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFolder)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1527,11 +1528,9 @@ public class DLFolderModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFolder.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFolder.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFolder>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFolder.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

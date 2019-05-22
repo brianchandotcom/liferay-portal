@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1024,8 +1026,7 @@ public class CalendarResourceModelImpl
 	@Override
 	public CalendarResource toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (CalendarResource)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1309,11 +1310,9 @@ public class CalendarResourceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		CalendarResource.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		CalendarResource.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, CalendarResource>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			CalendarResource.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

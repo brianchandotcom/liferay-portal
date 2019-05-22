@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -291,8 +293,7 @@ public class TestEntityModelImpl
 	@Override
 	public TestEntity toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TestEntity)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -447,11 +448,9 @@ public class TestEntityModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TestEntity.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TestEntity.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TestEntity>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			TestEntity.class, ModelWrapper.class);
 
 	private long _id;
 	private String _data;

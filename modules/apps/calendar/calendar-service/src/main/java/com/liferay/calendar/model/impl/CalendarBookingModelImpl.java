@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1556,8 +1558,7 @@ public class CalendarBookingModelImpl
 	@Override
 	public CalendarBooking toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (CalendarBooking)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1941,11 +1942,9 @@ public class CalendarBookingModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		CalendarBooking.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		CalendarBooking.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, CalendarBooking>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			CalendarBooking.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

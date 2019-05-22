@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -627,8 +629,7 @@ public class FragmentCollectionModelImpl
 	@Override
 	public FragmentCollection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (FragmentCollection)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -890,11 +891,9 @@ public class FragmentCollectionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		FragmentCollection.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		FragmentCollection.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, FragmentCollection>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FragmentCollection.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

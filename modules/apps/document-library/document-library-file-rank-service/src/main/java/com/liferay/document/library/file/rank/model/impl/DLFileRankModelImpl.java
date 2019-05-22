@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -426,8 +428,7 @@ public class DLFileRankModelImpl
 	@Override
 	public DLFileRank toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileRank)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -622,11 +623,9 @@ public class DLFileRankModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileRank.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileRank.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileRank>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFileRank.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

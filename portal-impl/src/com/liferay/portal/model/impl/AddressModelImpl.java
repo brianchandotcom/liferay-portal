@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -809,8 +811,7 @@ public class AddressModelImpl
 	@Override
 	public Address toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Address)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1098,11 +1099,9 @@ public class AddressModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Address.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Address.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Address>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Address.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

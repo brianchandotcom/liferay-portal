@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -578,8 +580,7 @@ public class OAuthTokenModelImpl
 	@Override
 	public OAuthToken toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (OAuthToken)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -840,11 +841,9 @@ public class OAuthTokenModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OAuthToken.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OAuthToken.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, OAuthToken>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			OAuthToken.class, ModelWrapper.class);
 
 	private long _oAuthTokenId;
 	private long _companyId;

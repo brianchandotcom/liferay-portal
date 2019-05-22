@@ -35,6 +35,8 @@ import com.liferay.tasks.model.TasksEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -669,8 +671,7 @@ public class TasksEntryModelImpl
 	@Override
 	public TasksEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TasksEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -940,11 +941,9 @@ public class TasksEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TasksEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TasksEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TasksEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			TasksEntry.class, ModelWrapper.class);
 
 	private long _tasksEntryId;
 	private long _groupId;

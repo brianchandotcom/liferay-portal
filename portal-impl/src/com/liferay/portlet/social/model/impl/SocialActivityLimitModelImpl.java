@@ -34,6 +34,8 @@ import com.liferay.social.kernel.model.SocialActivityLimitModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -530,8 +532,7 @@ public class SocialActivityLimitModelImpl
 	@Override
 	public SocialActivityLimit toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityLimit)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -751,11 +752,9 @@ public class SocialActivityLimitModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivityLimit.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivityLimit.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivityLimit>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SocialActivityLimit.class, ModelWrapper.class);
 
 	private long _activityLimitId;
 	private long _groupId;

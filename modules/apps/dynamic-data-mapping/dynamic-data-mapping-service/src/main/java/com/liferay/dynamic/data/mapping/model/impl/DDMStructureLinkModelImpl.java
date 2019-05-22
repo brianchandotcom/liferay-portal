@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -386,8 +388,7 @@ public class DDMStructureLinkModelImpl
 	@Override
 	public DDMStructureLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStructureLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -564,11 +565,9 @@ public class DDMStructureLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStructureLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStructureLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMStructureLink>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DDMStructureLink.class, ModelWrapper.class);
 
 	private long _structureLinkId;
 	private long _companyId;

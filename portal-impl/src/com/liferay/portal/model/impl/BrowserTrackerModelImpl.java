@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -350,8 +352,7 @@ public class BrowserTrackerModelImpl
 	@Override
 	public BrowserTracker toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BrowserTracker)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -518,11 +519,9 @@ public class BrowserTrackerModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BrowserTracker.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BrowserTracker.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BrowserTracker>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			BrowserTracker.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _browserTrackerId;

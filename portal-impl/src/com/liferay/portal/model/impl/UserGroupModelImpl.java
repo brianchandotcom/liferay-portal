@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -693,8 +695,7 @@ public class UserGroupModelImpl
 	@Override
 	public UserGroup toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserGroup)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -947,11 +948,9 @@ public class UserGroupModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserGroup.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserGroup.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserGroup>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			UserGroup.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

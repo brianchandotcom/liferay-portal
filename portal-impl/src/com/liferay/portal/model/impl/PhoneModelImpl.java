@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -666,8 +668,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	@Override
 	public Phone toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Phone)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -913,11 +914,9 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Phone.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Phone.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Phone>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Phone.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

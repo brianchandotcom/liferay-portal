@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipientModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -681,10 +683,8 @@ public class KaleoNotificationRecipientModelImpl
 	@Override
 	public KaleoNotificationRecipient toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(KaleoNotificationRecipient)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1015,11 +1015,9 @@ public class KaleoNotificationRecipientModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoNotificationRecipient.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoNotificationRecipient.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoNotificationRecipient>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			KaleoNotificationRecipient.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _kaleoNotificationRecipientId;

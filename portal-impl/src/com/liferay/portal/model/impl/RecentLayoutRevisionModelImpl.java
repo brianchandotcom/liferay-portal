@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -470,8 +472,7 @@ public class RecentLayoutRevisionModelImpl
 	@Override
 	public RecentLayoutRevision toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RecentLayoutRevision)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -673,11 +674,9 @@ public class RecentLayoutRevisionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RecentLayoutRevision.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RecentLayoutRevision.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RecentLayoutRevision>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			RecentLayoutRevision.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _recentLayoutRevisionId;

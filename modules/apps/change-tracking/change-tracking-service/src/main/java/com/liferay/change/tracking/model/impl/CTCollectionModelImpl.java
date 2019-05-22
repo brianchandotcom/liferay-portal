@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -613,8 +615,7 @@ public class CTCollectionModelImpl
 	@Override
 	public CTCollection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (CTCollection)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -850,11 +851,9 @@ public class CTCollectionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		CTCollection.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		CTCollection.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, CTCollection>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			CTCollection.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

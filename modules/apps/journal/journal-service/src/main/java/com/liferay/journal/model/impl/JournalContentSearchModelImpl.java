@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -449,8 +451,7 @@ public class JournalContentSearchModelImpl
 	@Override
 	public JournalContentSearch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (JournalContentSearch)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -659,11 +660,9 @@ public class JournalContentSearchModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		JournalContentSearch.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		JournalContentSearch.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, JournalContentSearch>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			JournalContentSearch.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

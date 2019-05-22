@@ -41,6 +41,8 @@ import com.liferay.wiki.model.WikiPageSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1220,8 +1222,7 @@ public class WikiPageModelImpl
 	@Override
 	public WikiPage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiPage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1595,11 +1596,9 @@ public class WikiPageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiPage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiPage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WikiPage>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			WikiPage.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

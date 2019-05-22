@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1232,8 +1234,7 @@ public class MBMessageModelImpl
 	@Override
 	public MBMessage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBMessage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1579,11 +1580,9 @@ public class MBMessageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBMessage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBMessage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBMessage>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			MBMessage.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

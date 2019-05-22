@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -601,8 +603,7 @@ public class SystemEventModelImpl
 	@Override
 	public SystemEvent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SystemEvent)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -842,11 +843,9 @@ public class SystemEventModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SystemEvent.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SystemEvent.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SystemEvent>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SystemEvent.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _systemEventId;

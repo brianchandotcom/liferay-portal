@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1095,8 +1097,7 @@ public class PasswordPolicyModelImpl
 	@Override
 	public PasswordPolicy toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PasswordPolicy)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1409,11 +1410,9 @@ public class PasswordPolicyModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PasswordPolicy.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PasswordPolicy.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PasswordPolicy>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			PasswordPolicy.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

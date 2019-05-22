@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -653,8 +655,7 @@ public class MicroblogsEntryModelImpl
 	@Override
 	public MicroblogsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MicroblogsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -905,11 +906,9 @@ public class MicroblogsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MicroblogsEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MicroblogsEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MicroblogsEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			MicroblogsEntry.class, ModelWrapper.class);
 
 	private long _microblogsEntryId;
 	private long _companyId;

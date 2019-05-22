@@ -36,6 +36,8 @@ import com.liferay.portal.tools.service.builder.test.model.UADPartialEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -447,8 +449,7 @@ public class UADPartialEntryModelImpl
 	@Override
 	public UADPartialEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UADPartialEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -616,11 +617,9 @@ public class UADPartialEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UADPartialEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UADPartialEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UADPartialEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			UADPartialEntry.class, ModelWrapper.class);
 
 	private long _uadPartialEntryId;
 	private long _userId;

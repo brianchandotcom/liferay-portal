@@ -34,6 +34,8 @@ import com.liferay.push.notifications.model.PushNotificationsDeviceSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -479,8 +481,7 @@ public class PushNotificationsDeviceModelImpl
 	@Override
 	public PushNotificationsDevice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PushNotificationsDevice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -682,11 +683,9 @@ public class PushNotificationsDeviceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PushNotificationsDevice.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PushNotificationsDevice.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PushNotificationsDevice>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			PushNotificationsDevice.class, ModelWrapper.class);
 
 	private long _pushNotificationsDeviceId;
 	private long _companyId;

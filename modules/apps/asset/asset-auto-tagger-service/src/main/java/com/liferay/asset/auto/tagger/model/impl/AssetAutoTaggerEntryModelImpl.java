@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -392,8 +394,7 @@ public class AssetAutoTaggerEntryModelImpl
 	@Override
 	public AssetAutoTaggerEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetAutoTaggerEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -594,11 +595,9 @@ public class AssetAutoTaggerEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetAutoTaggerEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetAutoTaggerEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetAutoTaggerEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			AssetAutoTaggerEntry.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

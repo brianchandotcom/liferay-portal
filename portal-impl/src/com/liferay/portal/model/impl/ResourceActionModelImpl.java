@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -353,8 +355,7 @@ public class ResourceActionModelImpl
 	@Override
 	public ResourceAction toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ResourceAction)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -545,11 +546,9 @@ public class ResourceActionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ResourceAction.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ResourceAction.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ResourceAction>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ResourceAction.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _resourceActionId;

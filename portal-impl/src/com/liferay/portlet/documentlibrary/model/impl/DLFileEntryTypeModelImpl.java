@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -907,8 +909,7 @@ public class DLFileEntryTypeModelImpl
 	@Override
 	public DLFileEntryType toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileEntryType)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1160,11 +1161,9 @@ public class DLFileEntryTypeModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileEntryType.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileEntryType.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileEntryType>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFileEntryType.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

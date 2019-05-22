@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -808,8 +810,7 @@ public class DDLRecordVersionModelImpl
 	@Override
 	public DDLRecordVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDLRecordVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1071,11 +1072,9 @@ public class DDLRecordVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDLRecordVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDLRecordVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDLRecordVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DDLRecordVersion.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

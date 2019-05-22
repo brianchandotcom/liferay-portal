@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoConditionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -542,8 +544,7 @@ public class KaleoConditionModelImpl
 	@Override
 	public KaleoCondition toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoCondition)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -797,11 +798,9 @@ public class KaleoConditionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoCondition.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoCondition.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoCondition>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			KaleoCondition.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _kaleoConditionId;

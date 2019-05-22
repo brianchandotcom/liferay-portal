@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1109,8 +1111,7 @@ public class DDMStructureVersionModelImpl
 	@Override
 	public DDMStructureVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMStructureVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1388,11 +1389,9 @@ public class DDMStructureVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMStructureVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMStructureVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMStructureVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DDMStructureVersion.class, ModelWrapper.class);
 
 	private long _structureVersionId;
 	private long _groupId;

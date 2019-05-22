@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -577,8 +579,7 @@ public class AssetTagModelImpl
 	@Override
 	public AssetTag toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetTag)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -808,11 +809,9 @@ public class AssetTagModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetTag.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetTag.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AssetTag>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			AssetTag.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -457,8 +459,7 @@ public class UserTrackerModelImpl
 	@Override
 	public UserTracker toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserTracker)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -675,11 +676,9 @@ public class UserTrackerModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserTracker.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserTracker.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserTracker>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			UserTracker.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _userTrackerId;

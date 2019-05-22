@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -424,8 +426,7 @@ public class ExpandoColumnModelImpl
 	@Override
 	public ExpandoColumn toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ExpandoColumn)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -616,11 +617,9 @@ public class ExpandoColumnModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ExpandoColumn.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ExpandoColumn.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ExpandoColumn>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			ExpandoColumn.class, ModelWrapper.class);
 
 	private long _columnId;
 	private long _companyId;

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1002,8 +1004,7 @@ public class BookmarksFolderModelImpl
 	@Override
 	public BookmarksFolder toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BookmarksFolder)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1307,11 +1308,9 @@ public class BookmarksFolderModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BookmarksFolder.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BookmarksFolder.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BookmarksFolder>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			BookmarksFolder.class, ModelWrapper.class);
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -629,8 +631,7 @@ public class UserNotificationEventModelImpl
 	@Override
 	public UserNotificationEvent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserNotificationEvent)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -884,11 +885,9 @@ public class UserNotificationEventModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserNotificationEvent.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserNotificationEvent.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserNotificationEvent>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			UserNotificationEvent.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private String _uuid;

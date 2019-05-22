@@ -37,6 +37,8 @@ import com.liferay.ratings.kernel.model.RatingsEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -600,8 +602,7 @@ public class RatingsEntryModelImpl
 	@Override
 	public RatingsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RatingsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -830,11 +831,9 @@ public class RatingsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RatingsEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RatingsEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RatingsEntry>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			RatingsEntry.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

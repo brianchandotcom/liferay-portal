@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -674,8 +676,7 @@ public class LayoutSetVersionModelImpl
 	@Override
 	public LayoutSetVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LayoutSetVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -959,11 +960,9 @@ public class LayoutSetVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LayoutSetVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LayoutSetVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LayoutSetVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			LayoutSetVersion.class, ModelWrapper.class);
 
 	private long _layoutSetVersionId;
 	private int _version;

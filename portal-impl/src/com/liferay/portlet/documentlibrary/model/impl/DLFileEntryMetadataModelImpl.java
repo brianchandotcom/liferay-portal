@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -436,8 +438,7 @@ public class DLFileEntryMetadataModelImpl
 	@Override
 	public DLFileEntryMetadata toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileEntryMetadata)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -637,11 +638,9 @@ public class DLFileEntryMetadataModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileEntryMetadata.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileEntryMetadata.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileEntryMetadata>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			DLFileEntryMetadata.class, ModelWrapper.class);
 
 	private String _uuid;
 	private String _originalUuid;

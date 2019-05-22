@@ -34,6 +34,8 @@ import com.liferay.sync.model.SyncDLObjectSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -990,8 +992,7 @@ public class SyncDLObjectModelImpl
 	@Override
 	public SyncDLObject toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDLObject)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1377,11 +1378,9 @@ public class SyncDLObjectModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDLObject.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDLObject.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SyncDLObject>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			SyncDLObject.class, ModelWrapper.class);
 
 	private long _syncDLObjectId;
 	private long _companyId;

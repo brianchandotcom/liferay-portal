@@ -32,6 +32,8 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -462,8 +464,7 @@ public class VersionedEntryVersionModelImpl
 	@Override
 	public VersionedEntryVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (VersionedEntryVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -652,11 +653,9 @@ public class VersionedEntryVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		VersionedEntryVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		VersionedEntryVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, VersionedEntryVersion>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			VersionedEntryVersion.class, ModelWrapper.class);
 
 	private long _versionedEntryVersionId;
 	private int _version;

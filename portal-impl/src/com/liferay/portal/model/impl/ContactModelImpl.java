@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -952,8 +954,7 @@ public class ContactModelImpl
 	@Override
 	public Contact toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Contact)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1321,11 +1322,9 @@ public class ContactModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Contact.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Contact.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Contact>
+		_escapedModelProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Contact.class, ModelWrapper.class);
 
 	private long _mvccVersion;
 	private long _contactId;

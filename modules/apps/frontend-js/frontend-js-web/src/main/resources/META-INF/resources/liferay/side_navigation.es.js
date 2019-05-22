@@ -757,26 +757,30 @@
 		_loadUrl: function($sidenav, url) {
 			var instance = this;
 
-			var urlLoaded = $sidenav.data('url-loaded');
-
-			var readyState = urlLoaded ? urlLoaded.readyState : 0;
-
 			var $sidebarBody = $sidenav.find('.sidebar-body').first();
 
-			if (!readyState && $sidebarBody.length) {
+			if (!instance._fetchPromise && $sidebarBody.length) {
 				$sidebarBody.append('<div class="sidenav-loading">' + instance.options.loadingIndicatorTPL + '</div>');
 
-				urlLoaded = $.ajax(url).done(
-					function(response) {
-						$sidebarBody.append(response);
+				instance._fetchPromise = fetch(url);
+
+				instance._fetchPromise
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(`Failed to fetch ${url}`);
+						}
+						return response.text();
+					})
+					.then(text => {
+						$sidebarBody.append(text);
 
 						$sidebarBody.find('.sidenav-loading').remove();
 
 						instance.setHeight();
-					}
-				);
-
-				$sidenav.data('url-loaded', urlLoaded);
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			}
 		},
 

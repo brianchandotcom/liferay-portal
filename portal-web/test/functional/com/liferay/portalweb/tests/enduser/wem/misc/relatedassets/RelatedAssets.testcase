@@ -31,25 +31,13 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Web Content Display Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
@@ -58,6 +46,8 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		Pause(locator1 = "3000");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -83,14 +73,7 @@ definition {
 			categoryNameList = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -99,12 +82,7 @@ definition {
 			assetType = "Basic Web Content",
 			siteName = "Site Name");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPrivatePage(pageName = "Private Page Name");
 

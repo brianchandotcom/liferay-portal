@@ -15,15 +15,12 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Hugo Huijser
  */
 public abstract class StringConcatenationCheck extends BaseCheck {
-
-	public void setMaxLineLength(int maxLineLength) {
-		this.maxLineLength = maxLineLength;
-	}
 
 	protected void checkLiteralStringStartAndEndCharacter(
 		String literalString1, String literalString2, int lineNumber) {
@@ -42,6 +39,10 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 				lineNumber + 1, _MSG_INVALID_START_CHARACTER,
 				literalString2.charAt(0));
 		}
+	}
+
+	protected int getMaxLineLength() {
+		return GetterUtil.getInteger(getAttributeValue("maxLineLength"));
 	}
 
 	protected int getStringBreakPos(String s1, String s2, int i) {
@@ -79,8 +80,6 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 
 	protected static final String MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
-
-	protected int maxLineLength = 80;
 
 	private static final String _MSG_INVALID_END_CHARACTER =
 		"end.character.invalid";

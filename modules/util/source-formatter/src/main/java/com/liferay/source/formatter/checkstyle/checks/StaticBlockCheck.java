@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -35,11 +33,6 @@ public class StaticBlockCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.STATIC_INIT};
-	}
-
-	public void setImmutableFieldTypes(String immutableFieldTypes) {
-		_immutableFieldTypes = ArrayUtil.append(
-			_immutableFieldTypes, StringUtil.split(immutableFieldTypes));
 	}
 
 	@Override
@@ -120,6 +113,9 @@ public class StaticBlockCheck extends BaseCheck {
 	private List<String> _getClassObjectNames(DetailAST staticInitDetailAST) {
 		List<String> staticObjectNames = new ArrayList<>();
 
+		List<String> immutableFieldTypes = getAttributeValues(
+			_IMMUTABLE_FIELD_TYPES_KEY);
+
 		DetailAST previousSiblingDetailAST =
 			staticInitDetailAST.getPreviousSibling();
 
@@ -146,7 +142,7 @@ public class StaticBlockCheck extends BaseCheck {
 				String typeName = DetailASTUtil.getTypeName(
 					previousSiblingDetailAST, true);
 
-				if (!ArrayUtil.contains(_immutableFieldTypes, typeName)) {
+				if (!immutableFieldTypes.contains(typeName)) {
 					staticObjectNames.add(name);
 				}
 			}
@@ -316,9 +312,10 @@ public class StaticBlockCheck extends BaseCheck {
 		return false;
 	}
 
+	private static final String _IMMUTABLE_FIELD_TYPES_KEY =
+		"immutableFieldTypes";
+
 	private static final String _MSG_UNNEEDED_STATIC_BLOCK =
 		"static.block.unneeded";
-
-	private String[] _immutableFieldTypes = new String[0];
 
 }

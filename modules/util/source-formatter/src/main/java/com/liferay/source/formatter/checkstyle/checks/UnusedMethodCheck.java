@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -37,11 +35,6 @@ public class UnusedMethodCheck extends BaseCheck {
 		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
-	public void setAllowedMethodNames(String allowedMethodNames) {
-		_allowedMethodNames = ArrayUtil.append(
-			_allowedMethodNames, StringUtil.split(allowedMethodNames));
-	}
-
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
@@ -57,6 +50,9 @@ public class UnusedMethodCheck extends BaseCheck {
 		if (methodDefinitionDetailASTList.isEmpty()) {
 			return;
 		}
+
+		List<String> allowedMethodNames = getAttributeValues(
+			_ALLOWED_METHOD_NAMES_KEY);
 
 		List<String> referencedMethodNames = _getReferencedMethodNames(
 			detailAST);
@@ -82,7 +78,7 @@ public class UnusedMethodCheck extends BaseCheck {
 
 			String name = nameDetailAST.getText();
 
-			if (!ArrayUtil.contains(_allowedMethodNames, name) &&
+			if (!allowedMethodNames.contains(name) &&
 				!referencedMethodNames.contains(nameDetailAST.getText())) {
 
 				log(methodDefinitionDetailAST, _MSG_UNUSED_METHOD, name);
@@ -235,8 +231,9 @@ public class UnusedMethodCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _MSG_UNUSED_METHOD = "method.unused";
+	private static final String _ALLOWED_METHOD_NAMES_KEY =
+		"allowedMethodNames";
 
-	private String[] _allowedMethodNames = new String[0];
+	private static final String _MSG_UNUSED_METHOD = "method.unused";
 
 }

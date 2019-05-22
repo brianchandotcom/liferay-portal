@@ -84,9 +84,9 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 		"/array.fill.js", "/array.find.js", "/array.findindex.js",
 		"/array.from.js", "/array.includes.js", "/array.of.js",
 		"/element.classlist.js", "/fetch.js", "/formdata.js",
-		"/object.assign.js", "/object.entries.js", "/object.values.js",
-		"/promise.js", "/string.endswith.js", "/string.includes.js",
-		"/uint16array.slice.js", "/url.search.params.js"
+		"/nodelist.foreach.js", "/object.assign.js", "/object.entries.js",
+		"/object.values.js", "/promise.js", "/string.endswith.js",
+		"/string.includes.js", "/uint16array.slice.js", "/url.search.params.js"
 	};
 
 	@Reference

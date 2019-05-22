@@ -14,4 +14,21 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/data_layout_builder/init.jsp" %>
+
+<div id="<%= namespace + "container" %>"></div>
+
+<aui:script require='<%= fieldTypesModules + ", " + layoutBuilderModule + " as LayoutBuilder" %>'>
+	new LayoutBuilder.default(
+		{
+			context: <%= dataLayout %>,
+			dataDefinitionInputId: '<%= namespace + dataDefinitionInputId %>',
+			dataLayoutInputId: '<%= namespace + dataLayoutInputId %>',
+			editingLanguageId: '<%= themeDisplay.getLanguageId() %>',
+			fieldTypes: <%= fieldTypes %>,
+			namespace: '<%= namespace %>',
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+		},
+		'#<%= namespace %>container'
+	);
+</aui:script>

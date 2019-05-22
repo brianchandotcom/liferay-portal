@@ -34,7 +34,7 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (isRunOutsidePortalExclude()) {
+		if (isExcludedPath(_RUN_OUTSIDE_PORTAL_EXCLUDES)) {
 			return;
 		}
 
@@ -118,5 +118,8 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 
 	private static final String _MSG_USE_GETTER_UTIL_METHOD =
 		"getter.util.method.use";
+
+	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
+		"run.outside.portal.excludes";
 
 }

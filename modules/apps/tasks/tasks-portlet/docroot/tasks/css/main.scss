@@ -4,7 +4,8 @@
 	.taglib-search-iterator-page-iterator-bottom {
 		padding: 0;
 
-		.delta-selector, .search-results {
+		.delta-selector,
+		.search-results {
 			display: none;
 		}
 
@@ -31,7 +32,7 @@
 	/* ---------- Controls ---------- */
 
 	.control-wrapper {
-		border: 1px solid #C8C9CA;
+		border: 1px solid #c8c9ca;
 		margin: 0.5em 0;
 		padding: 6px;
 
@@ -44,22 +45,22 @@
 	/* ---------- Filter ---------- */
 
 	.filter-wrapper {
-		background: #DFF4FF;
-		border: 1px solid #A7CEDF;
+		background: #dff4ff;
+		border: 1px solid #a7cedf;
 		margin: 0 0 1em;
 		position: relative;
 
 		&:after {
 			border: 10px solid;
-			border-color: transparent transparent #A7CEDF;
-			content: "";
+			border-color: transparent transparent #a7cedf;
+			content: '';
 			position: absolute;
 			right: 10px;
 			top: -20px;
 		}
 
 		h3 {
-			background: #A7CEDF;
+			background: #a7cedf;
 			font-size: 11px;
 			margin: 0;
 			padding: 2px 5px;
@@ -88,14 +89,15 @@
 	/* ---------- Progress ---------- */
 
 	.progress-wrapper {
-		background: #FFF;
-		border: 1px solid #CCC;
+		background: #fff;
+		border: 1px solid #ccc;
 		font-size: 11px;
 		position: relative;
 	}
 
-	.new-progress, .progress {
-		background: #E8EFF4;
+	.new-progress,
+	.progress {
+		background: #e8eff4;
 	}
 
 	.progress {
@@ -103,7 +105,8 @@
 	}
 
 	.progress-wrapper {
-		&, div {
+		&,
+		div {
 			height: 15px;
 			width: 100px;
 		}
@@ -114,18 +117,22 @@
 		}
 	}
 
-	.progress-wrapper .due-date, .progress-indicator, .progress-selector, .progress-wrapper .new-progress {
+	.progress-wrapper .due-date,
+	.progress-indicator,
+	.progress-selector,
+	.progress-wrapper .new-progress {
 		left: 0;
 		position: absolute;
 		top: 0;
 	}
 
-	.progress-wrapper .due-date, .progress-indicator {
+	.progress-wrapper .due-date,
+	.progress-indicator {
 		text-align: center;
 	}
 
 	.past-due {
-		color: #F00;
+		color: #f00;
 	}
 
 	.progress-wrapper .due-date {
@@ -174,8 +181,8 @@
 	/* ---------- Tags ---------- */
 
 	.tags {
-		background: #E5F6FF;
-		border: 1px solid #B5D7E5;
+		background: #e5f6ff;
+		border: 1px solid #b5d7e5;
 		max-width: 350px;
 		min-width: 150px;
 		padding: 0 4px;
@@ -251,7 +258,8 @@
 }
 
 .upcoming-tasks-portlet .tasks-entries-container {
-	ul, li {
+	ul,
+	li {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -263,23 +271,29 @@
 	}
 }
 
-.tasks-portlet .task-data-table .high, .tasks-portlet .tasks-title.high, .upcoming-tasks-portlet .tasks-entries-container .high a {
+.tasks-portlet .task-data-table .high,
+.tasks-portlet .tasks-title.high,
+.upcoming-tasks-portlet .tasks-entries-container .high a {
 	.icon-circle {
-		color: #F00;
+		color: #f00;
 		text-decoration: none;
 	}
 }
 
-.tasks-portlet .task-data-table .normal, .tasks-portlet .tasks-title.normal, .upcoming-tasks-portlet .tasks-entries-container .normal a {
+.tasks-portlet .task-data-table .normal,
+.tasks-portlet .tasks-title.normal,
+.upcoming-tasks-portlet .tasks-entries-container .normal a {
 	.icon-circle {
-		color: #89C435;
+		color: #89c435;
 		text-decoration: none;
 	}
 }
 
-.tasks-portlet .task-data-table .low, .tasks-portlet .tasks-title.low, .upcoming-tasks-portlet .tasks-entries-container .low a {
+.tasks-portlet .task-data-table .low,
+.tasks-portlet .tasks-title.low,
+.upcoming-tasks-portlet .tasks-entries-container .low a {
 	.icon-circle {
-		color: #CCC;
+		color: #ccc;
 		text-decoration: none;
 	}
 }
@@ -287,7 +301,8 @@
 /* ---------- Extras ---------- */
 
 .tasks-portlet {
-	.control-wrapper, .filter-wrapper {
+	.control-wrapper,
+	.filter-wrapper {
 		border-radius: 4px;
 	}
 }

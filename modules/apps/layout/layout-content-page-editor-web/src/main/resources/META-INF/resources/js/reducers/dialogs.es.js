@@ -1,4 +1,10 @@
-import {HIDE_MAPPING_DIALOG, HIDE_MAPPING_TYPE_DIALOG, OPEN_ASSET_TYPE_DIALOG, OPEN_MAPPING_FIELDS_DIALOG, SELECT_MAPPEABLE_TYPE} from '../actions/actions.es';
+import {
+	HIDE_MAPPING_DIALOG,
+	HIDE_MAPPING_TYPE_DIALOG,
+	OPEN_ASSET_TYPE_DIALOG,
+	OPEN_MAPPING_FIELDS_DIALOG,
+	SELECT_MAPPEABLE_TYPE
+} from '../actions/actions.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
@@ -57,12 +63,12 @@ function openMappingFieldsDialogReducer(state, action) {
 			action.fragmentEntryLinkId
 		);
 
-		if (nextState.selectedMappingTypes &&
-			nextState.selectedMappingTypes.type) {
-
+		if (
+			nextState.selectedMappingTypes &&
+			nextState.selectedMappingTypes.type
+		) {
 			nextState = setIn(nextState, ['selectMappingDialogVisible'], true);
-		}
-		else {
+		} else {
 			nextState = setIn(
 				nextState,
 				['selectMappingTypeDialogVisible'],
@@ -85,47 +91,44 @@ function openMappingFieldsDialogReducer(state, action) {
  * @review
  */
 function selectMappeableTypeReducer(state, action) {
-	return new Promise(
-		resolve => {
-			let nextState = state;
+	return new Promise(resolve => {
+		let nextState = state;
 
-			if (action.type === SELECT_MAPPEABLE_TYPE) {
-				_selectMappingType(
-					nextState.classPK,
-					nextState.portletNamespace,
-					action.selectedMappingSubtypeId,
-					action.selectedMappingTypeId,
-					nextState.updateLayoutPageTemplateEntryAssetTypeURL
-				)
-					.then(
-						() => {
-							nextState = setIn(
-								nextState,
-								['selectedMappingTypes'],
-								action.mappingTypes
-							);
-
-							if (
-								nextState.selectMappingDialogFragmentEntryLinkId &&
-								nextState.selectMappingDialogEditableId
-							) {
-								nextState = setIn(nextState, ['selectMappingDialogVisible'], true);
-							}
-
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
+		if (action.type === SELECT_MAPPEABLE_TYPE) {
+			_selectMappingType(
+				nextState.classPK,
+				nextState.portletNamespace,
+				action.selectedMappingSubtypeId,
+				action.selectedMappingTypeId,
+				nextState.updateLayoutPageTemplateEntryAssetTypeURL
+			)
+				.then(() => {
+					nextState = setIn(
+						nextState,
+						['selectedMappingTypes'],
+						action.mappingTypes
 					);
-			}
-			else {
-				resolve(nextState);
-			}
+
+					if (
+						nextState.selectMappingDialogFragmentEntryLinkId &&
+						nextState.selectMappingDialogEditableId
+					) {
+						nextState = setIn(
+							nextState,
+							['selectMappingDialogVisible'],
+							true
+						);
+					}
+
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(nextState);
+				});
+		} else {
+			resolve(nextState);
 		}
-	);
+	});
 }
 
 /**
@@ -184,16 +187,11 @@ function _selectMappingType(
 	formData.append(`${portletNamespace}classNameId`, selectedMappingTypeId);
 	formData.append(`${portletNamespace}classPK`, classPK);
 
-	return fetch(
-		updateLayoutPageTemplateEntryAssetTypeURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	).then(
-		response => response.json()
-	);
+	return fetch(updateLayoutPageTemplateEntryAssetTypeURL, {
+		body: formData,
+		credentials: 'include',
+		method: 'POST'
+	}).then(response => response.json());
 }
 
 export {

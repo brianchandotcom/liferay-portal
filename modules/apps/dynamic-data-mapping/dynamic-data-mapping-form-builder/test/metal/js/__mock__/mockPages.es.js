@@ -19,35 +19,49 @@ export default [
 									}
 								],
 								settingsContext: {
-									pages: [{
-										rows: [{
-											columns: [{
-												fields: [
-													{
-														fieldName: 'label',
-														localizable: true,
-														settingsContext: {
-															pages: [{
-																rows: [{
-																	columns: []
-																}]
-															}]
+									pages: [
+										{
+											rows: [
+												{
+													columns: [
+														{
+															fields: [
+																{
+																	fieldName:
+																		'label',
+																	localizable: true,
+																	settingsContext: {
+																		pages: [
+																			{
+																				rows: [
+																					{
+																						columns: []
+																					}
+																				]
+																			}
+																		]
+																	}
+																},
+																{
+																	fieldName:
+																		'name'
+																},
+																{
+																	fieldName:
+																		'required'
+																},
+																{
+																	fieldName:
+																		'type'
+																}
+															],
+															size: 12
 														}
-													},
-													{
-														fieldName: 'name'
-													},
-													{
-														fieldName: 'required'
-													},
-													{
-														fieldName: 'type'
-													}
-												],
-												size: 12
-											}]
-										}]
-									}]
+													]
+												}
+											]
+										}
+									]
 								},
 								type: 'radio'
 							}

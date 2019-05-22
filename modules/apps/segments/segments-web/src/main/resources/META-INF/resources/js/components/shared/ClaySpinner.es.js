@@ -12,7 +12,7 @@ class ClaySpinner extends Component {
 
 	static defaultProps = {
 		loading: false
-	}
+	};
 
 	render() {
 		const {className, light, loading, size} = this.props;
@@ -26,12 +26,7 @@ class ClaySpinner extends Component {
 			className
 		);
 
-		return loading && (
-			<span
-				className={classes}
-				data-testid="spinner"
-			/>
-		);
+		return loading && <span className={classes} data-testid='spinner' />;
 	}
 }
 

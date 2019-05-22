@@ -1,4 +1,7 @@
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
+import {
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_TYPES
+} from '../utils/constants';
 
 const ARROW_DOWN_KEYCODE = 40;
 
@@ -18,20 +21,13 @@ function deepClone(objectToClone) {
 
 	if (typeof cloned == 'object' && cloned !== null) {
 		if (Array.isArray(cloned)) {
-			cloned = objectToClone.map(
-				arrayItem => deepClone(arrayItem)
-			);
-		}
-		else {
+			cloned = objectToClone.map(arrayItem => deepClone(arrayItem));
+		} else {
 			cloned = Object.assign({}, cloned);
 
-			Object
-				.keys(cloned)
-				.forEach(
-					clonedKey => {
-						cloned[clonedKey] = deepClone(cloned[clonedKey]);
-					}
-				);
+			Object.keys(cloned).forEach(clonedKey => {
+				cloned[clonedKey] = deepClone(cloned[clonedKey]);
+			});
 		}
 	}
 
@@ -46,11 +42,7 @@ function deepClone(objectToClone) {
  */
 function getColumn(structure, columnId) {
 	return structure
-		.map(
-			row => row.columns.find(
-				_column => _column.columnId === columnId
-			)
-		)
+		.map(row => row.columns.find(_column => _column.columnId === columnId))
 		.filter(column => column)
 		.find(column => column);
 }
@@ -62,11 +54,7 @@ function getColumn(structure, columnId) {
  * @param {string} targetBorder
  * @return {number}
  */
-function getDropRowPosition(
-	structure,
-	targetRowId,
-	targetBorder
-) {
+function getDropRowPosition(structure, targetRowId, targetBorder) {
 	let position = structure.length;
 
 	const targetPosition = structure.findIndex(
@@ -76,8 +64,7 @@ function getDropRowPosition(
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === FRAGMENTS_EDITOR_ITEM_BORDERS.top) {
 			position = targetPosition;
-		}
-		else {
+		} else {
 			position = targetPosition + 1;
 		}
 	}
@@ -95,9 +82,9 @@ function getDropRowPosition(
  */
 function getFragmentColumn(structure, fragmentEntryLinkId) {
 	return structure
-		.map(
-			row => row.columns.find(
-				_column => _column.fragmentEntryLinkIds.find(
+		.map(row =>
+			row.columns.find(_column =>
+				_column.fragmentEntryLinkIds.find(
 					fragmentId => fragmentId === fragmentEntryLinkId
 				)
 			)
@@ -115,12 +102,11 @@ function getFragmentColumn(structure, fragmentEntryLinkId) {
  * @return {number}
  */
 function getFragmentRowIndex(structure, fragmentEntryLinkId) {
-	return structure.findIndex(
-		row => row.columns.find(
-			column => column.fragmentEntryLinkIds.find(
-				_fragmentEntryLinkId => (
+	return structure.findIndex(row =>
+		row.columns.find(column =>
+			column.fragmentEntryLinkIds.find(
+				_fragmentEntryLinkId =>
 					_fragmentEntryLinkId === fragmentEntryLinkId
-				)
 			)
 		)
 	);
@@ -136,8 +122,7 @@ function getItemMoveDirection(keycode) {
 
 	if (keycode === ARROW_UP_KEYCODE) {
 		direction = MOVE_ITEM_DIRECTIONS.UP;
-	}
-	else if (keycode === ARROW_DOWN_KEYCODE) {
+	} else if (keycode === ARROW_DOWN_KEYCODE) {
 		direction = MOVE_ITEM_DIRECTIONS.DOWN;
 	}
 
@@ -176,13 +161,13 @@ function getItemPath(itemId, itemType, structure) {
 					)
 				];
 			}
-		}
-		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			const column = [].concat(
-				...structure.map(row => row.columns)
-			).find(
-				_column => _column.fragmentEntryLinkIds.indexOf(itemId) !== -1
-			);
+		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+			const column = []
+				.concat(...structure.map(row => row.columns))
+				.find(
+					_column =>
+						_column.fragmentEntryLinkIds.indexOf(itemId) !== -1
+				);
 
 			if (column) {
 				itemPath = [
@@ -194,12 +179,9 @@ function getItemPath(itemId, itemType, structure) {
 					)
 				];
 			}
-		}
-		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
-			const row = structure.find(
-				row => row.columns.find(
-					column => column.columnId === itemId
-				)
+		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
+			const row = structure.find(row =>
+				row.columns.find(column => column.columnId === itemId)
 			);
 
 			if (row) {
@@ -227,13 +209,11 @@ function getItemPath(itemId, itemType, structure) {
 function getRowFragmentEntryLinkIds(row) {
 	let fragmentEntryLinkIds = [];
 
-	row.columns.forEach(
-		column => {
-			fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
-				column.fragmentEntryLinkIds
-			);
-		}
-	);
+	row.columns.forEach(column => {
+		fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
+			column.fragmentEntryLinkIds
+		);
+	});
 
 	return fragmentEntryLinkIds;
 }
@@ -245,9 +225,7 @@ function getRowFragmentEntryLinkIds(row) {
  * @return {number}
  */
 function getRowIndex(structure, rowId) {
-	return structure.findIndex(
-		row => (row.rowId === rowId)
-	);
+	return structure.findIndex(row => row.rowId === rowId);
 }
 
 /**
@@ -261,8 +239,7 @@ function getTargetBorder(direction) {
 
 	if (direction === MOVE_ITEM_DIRECTIONS.UP) {
 		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
-	}
-	else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+	} else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
 		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 	}
 
@@ -281,7 +258,9 @@ function getWidget(widgets, portletId) {
 
 	for (const widgetCategory of widgets) {
 		const {categories = [], portlets = []} = widgetCategory;
-		const categoryPortlet = portlets.find(_portlet => _portlet.portletId === portletId);
+		const categoryPortlet = portlets.find(
+			_portlet => _portlet.portletId === portletId
+		);
 		const subCategoryPortlet = getWidget(categories, portletId);
 
 		if (categoryPortlet) {
@@ -307,22 +286,22 @@ function getWidget(widgets, portletId) {
 function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 	let widgetPath = null;
 
-	for (let categoryIndex = 0; categoryIndex < widgets.length; categoryIndex += 1) {
+	for (
+		let categoryIndex = 0;
+		categoryIndex < widgets.length;
+		categoryIndex += 1
+	) {
 		const {categories = [], portlets = []} = widgets[categoryIndex];
 
 		const categoryPortletIndex = portlets.findIndex(
 			_portlet => _portlet.portletId === portletId
 		);
 
-		const subCategoryPortletPath = getWidgetPath(
-			categories,
-			portletId,
-			[
-				..._path,
-				categoryIndex.toString(),
-				'categories'
-			]
-		);
+		const subCategoryPortletPath = getWidgetPath(categories, portletId, [
+			..._path,
+			categoryIndex.toString(),
+			'categories'
+		]);
 
 		if (categoryPortletIndex !== -1) {
 			widgetPath = [

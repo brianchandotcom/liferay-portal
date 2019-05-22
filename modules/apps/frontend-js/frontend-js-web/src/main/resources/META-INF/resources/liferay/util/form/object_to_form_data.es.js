@@ -9,31 +9,29 @@ import {isObject} from 'metal';
  * @review
  */
 
-export default function objectToFormData(obj = {}, formData = new FormData(), namespace) {
-	Object.entries(obj).forEach(
-		([key, value]) => {
-			const formKey = namespace ? `${namespace}[${key}]` : key;
+export default function objectToFormData(
+	obj = {},
+	formData = new FormData(),
+	namespace
+) {
+	Object.entries(obj).forEach(([key, value]) => {
+		const formKey = namespace ? `${namespace}[${key}]` : key;
 
-			if (Array.isArray(value)) {
-				value.forEach(
-					item => {
-						objectToFormData(
-							{
-								[formKey]: item
-							},
-							formData
-						);
-					}
+		if (Array.isArray(value)) {
+			value.forEach(item => {
+				objectToFormData(
+					{
+						[formKey]: item
+					},
+					formData
 				);
-			}
-			else if (isObject(value) && !(value instanceof File)) {
-				objectToFormData(value, formData, formKey);
-			}
-			else {
-				formData.append(formKey, value);
-			}
+			});
+		} else if (isObject(value) && !(value instanceof File)) {
+			objectToFormData(value, formData, formKey);
+		} else {
+			formData.append(formKey, value);
 		}
-	);
+	});
 
 	return formData;
 }

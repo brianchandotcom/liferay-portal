@@ -11,16 +11,11 @@ const applicationId = 'Page';
 function scrolling(analytics) {
 	let scrollTracker = new ScrollTracker();
 
-	const onScroll = debounce(
-		() => {
-			scrollTracker.onDepthReached(
-				depth => {
-					analytics.send('pageDepthReached', applicationId, {depth});
-				}
-			);
-		},
-		DEBOUNCE
-	);
+	const onScroll = debounce(() => {
+		scrollTracker.onDepthReached(depth => {
+			analytics.send('pageDepthReached', applicationId, {depth});
+		});
+	}, DEBOUNCE);
 
 	document.addEventListener('scroll', onScroll);
 

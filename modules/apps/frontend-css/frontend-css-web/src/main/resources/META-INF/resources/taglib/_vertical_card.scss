@@ -1,4 +1,4 @@
-@import "bourbon";
+@import 'bourbon';
 
 .card-row-layout-fixed .lfr-card-actions-column {
 	width: 32px;
@@ -29,8 +29,9 @@
 }
 
 .taglib-vertical-card {
-	.icon-vertical-card-container, .vertical-card-container {
-		background-color: #F1F5FA;
+	.icon-vertical-card-container,
+	.vertical-card-container {
+		background-color: #f1f5fa;
 	}
 
 	.icon-vertical-card-image .lexicon-icon {

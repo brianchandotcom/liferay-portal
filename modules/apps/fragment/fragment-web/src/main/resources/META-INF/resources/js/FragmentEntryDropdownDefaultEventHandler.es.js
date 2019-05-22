@@ -11,7 +11,11 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	deleteFragmentEntry(itemData) {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			this._send(itemData.deleteFragmentEntryURL);
 		}
 	}
@@ -36,61 +40,60 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			function(selectedItem) {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
-					this.one('#fragmentEntryIds').value = itemData.fragmentEntryId;
+					this.one('#fragmentEntryIds').value =
+						itemData.fragmentEntryId;
 
-					submitForm(this.one('#fragmentEntryFm'), itemData.moveFragmentEntryURL);
+					submitForm(
+						this.one('#fragmentEntryFm'),
+						itemData.moveFragmentEntryURL
+					);
 				}
 			}.bind(this)
 		);
 	}
 
 	renameFragmentEntry(itemData) {
-		OpenSimpleInputModal(
-			{
-				dialogTitle: Liferay.Language.get('rename-fragment'),
-				formSubmitURL: itemData.updateFragmentEntryURL,
-				idFieldName: 'id',
-				idFieldValue: itemData.fragmentEntryId,
-				mainFieldLabel: Liferay.Language.get('name'),
-				mainFieldName: 'name',
-				mainFieldPlaceholder: Liferay.Language.get('name'),
-				mainFieldValue: itemData.fragmentEntryName,
-				namespace: this.namespace,
-				spritemap: this.spritemap
-			}
-		);
+		OpenSimpleInputModal({
+			dialogTitle: Liferay.Language.get('rename-fragment'),
+			formSubmitURL: itemData.updateFragmentEntryURL,
+			idFieldName: 'id',
+			idFieldValue: itemData.fragmentEntryId,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			mainFieldPlaceholder: Liferay.Language.get('name'),
+			mainFieldValue: itemData.fragmentEntryName,
+			namespace: this.namespace,
+			spritemap: this.spritemap
+		});
 	}
 
 	updateFragmentEntryPreview(itemData) {
-		AUI().use(
-			'liferay-item-selector-dialog',
-			A => {
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: this.ns('changePreview'),
-						on: {
-							selectedItemChange: function(event) {
-								const selectedItem = event.newVal;
+		AUI().use('liferay-item-selector-dialog', A => {
+			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: this.ns('changePreview'),
+				on: {
+					selectedItemChange: function(event) {
+						const selectedItem = event.newVal;
 
-								if (selectedItem) {
-									const itemValue = JSON.parse(selectedItem.value);
+						if (selectedItem) {
+							const itemValue = JSON.parse(selectedItem.value);
 
-									this.one('#fragmentEntryId').value = itemData.fragmentEntryId;
-									this.one('#fileEntryId').value = itemValue.fileEntryId;
+							this.one('#fragmentEntryId').value =
+								itemData.fragmentEntryId;
+							this.one('#fileEntryId').value =
+								itemValue.fileEntryId;
 
-									submitForm(this.one('#fragmentEntryPreviewFm'));
-								}
-							}.bind(this)
-						},
-						'strings.add': Liferay.Language.get('ok'),
-						title: Liferay.Language.get('fragment-thumbnail'),
-						url: itemData.itemSelectorURL
-					}
-				);
+							submitForm(this.one('#fragmentEntryPreviewFm'));
+						}
+					}.bind(this)
+				},
+				'strings.add': Liferay.Language.get('ok'),
+				title: Liferay.Language.get('fragment-thumbnail'),
+				url: itemData.itemSelectorURL
+			});
 
-				itemSelectorDialog.open();
-			}
-		);
+			itemSelectorDialog.open();
+		});
 	}
 
 	_send(url) {

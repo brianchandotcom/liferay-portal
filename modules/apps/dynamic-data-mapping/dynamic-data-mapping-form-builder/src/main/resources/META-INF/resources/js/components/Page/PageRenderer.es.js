@@ -15,7 +15,6 @@ import {pageStructure} from '../../util/config.es';
 
 class PageRenderer extends Component {
 	static STATE = {
-
 		/**
 		 * @instance
 		 * @memberof FormPage
@@ -57,7 +56,7 @@ class PageRenderer extends Component {
 		 */
 
 		spritemap: Config.string().required()
-	}
+	};
 
 	getPage(page) {
 		const {editingLanguageId} = this;
@@ -83,21 +82,17 @@ class PageRenderer extends Component {
 
 		if (!rows || !rows.length) {
 			empty = true;
-		}
-		else {
-			empty = !rows.some(
-				({columns}) => {
-					let hasFields = true;
+		} else {
+			empty = !rows.some(({columns}) => {
+				let hasFields = true;
 
-					if (!columns) {
-						hasFields = false;
-					}
-					else {
-						hasFields = columns.some(column => column.fields.length);
-					}
-					return hasFields;
+				if (!columns) {
+					hasFields = false;
+				} else {
+					hasFields = columns.some(column => column.fields.length);
 				}
-			);
+				return hasFields;
+			});
 		}
 		return empty;
 	}
@@ -118,12 +113,9 @@ class PageRenderer extends Component {
 		const fieldNode = delegateTarget.parentElement.parentElement;
 		const indexes = FormSupport.getIndexes(fieldNode);
 
-		this.emit(
-			'fieldClicked',
-			{
-				...indexes
-			}
-		);
+		this.emit('fieldClicked', {
+			...indexes
+		});
 	}
 
 	_handleFieldEdited(event) {

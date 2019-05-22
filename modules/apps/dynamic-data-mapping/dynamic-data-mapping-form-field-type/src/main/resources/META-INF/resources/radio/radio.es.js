@@ -14,9 +14,7 @@ class Radio extends Component {}
 Soy.register(Radio, templates, 'render');
 
 if (!window.DDMRadio) {
-	window.DDMRadio = {
-
-	};
+	window.DDMRadio = {};
 }
 
 window.DDMRadio.render = Radio;

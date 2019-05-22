@@ -9,17 +9,11 @@ import {setIn} from './FragmentsEditorUpdateUtils.es';
 function _addEncodedId(obj, ids) {
 	let idObj = {};
 
-	ids.forEach(
-		id => {
-			idObj[id] = obj[id];
-		}
-	);
+	ids.forEach(id => {
+		idObj[id] = obj[id];
+	});
 
-	return setIn(
-		obj,
-		['encodedId'],
-		_encodeId(idObj)
-	);
+	return setIn(obj, ['encodedId'], _encodeId(idObj));
 }
 
 /**
@@ -41,21 +35,11 @@ const decodeId = str => JSON.parse(atob(str));
 function encodeAssetId(asset) {
 	if (!(asset && typeof asset === 'object')) {
 		throw new TypeError('Expect input to be an object');
-	}
-	else if (!(asset.classNameId && asset.classPK)) {
+	} else if (!(asset.classNameId && asset.classPK)) {
 		throw new Error('Expect input to be an asset');
 	}
 
-	return _addEncodedId(
-		asset,
-		[
-			'classNameId',
-			'classPK'
-		]
-	);
+	return _addEncodedId(asset, ['classNameId', 'classPK']);
 }
 
-export {
-	decodeId,
-	encodeAssetId
-};
+export {decodeId, encodeAssetId};

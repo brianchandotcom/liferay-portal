@@ -42,34 +42,30 @@ AUI.add(
 
 					instance.set(STR_ID, id);
 
-					delegate.dd.plug(
-						A.Plugin.DDProxy,
-						{
-							cloneNode: true,
-							moveOnEnd: false
-						}
-					);
+					delegate.dd.plug(A.Plugin.DDProxy, {
+						cloneNode: true,
+						moveOnEnd: false
+					});
 
-					instance.drop = new A.DD.Drop(
-						{
-							bubbleTarget: delegate,
-							groups: delegate.dd.get('groups'),
-							node: instance.get(STR_CONT)
-						}
-					);
+					instance.drop = new A.DD.Drop({
+						bubbleTarget: delegate,
+						groups: delegate.dd.get('groups'),
+						node: instance.get(STR_CONT)
+					});
 
-					instance.drop.on('drop:enter', A.bind('_onDropEnter', instance));
+					instance.drop.on(
+						'drop:enter',
+						A.bind('_onDropEnter', instance)
+					);
 
 					instance._setDragMethod();
 
-					delegate.on(
-						{
-							'drag:drag': A.bind('_dragMethod', instance),
-							'drag:end': A.bind('_onDragEnd', instance),
-							'drag:over': A.bind('_onDragOver', instance),
-							'drag:start': A.bind('_onDragStart', instance)
-						}
-					);
+					delegate.on({
+						'drag:drag': A.bind('_dragMethod', instance),
+						'drag:end': A.bind('_onDragEnd', instance),
+						'drag:over': A.bind('_onDragOver', instance),
+						'drag:start': A.bind('_onDragStart', instance)
+					});
 
 					instance.delegate = delegate;
 
@@ -93,14 +89,15 @@ AUI.add(
 
 					var dragMethod;
 
-					var node = instance.get(STR_CONT).one(instance.get(STR_NODES));
+					var node = instance
+						.get(STR_CONT)
+						.one(instance.get(STR_NODES));
 
 					var floated = node ? node.getStyle('float') : 'none';
 
 					if (floated === 'left' || floated === 'right') {
 						dragMethod = '_onDragHorizontal';
-					}
-					else {
+					} else {
 						dragMethod = '_onDrag';
 					}
 

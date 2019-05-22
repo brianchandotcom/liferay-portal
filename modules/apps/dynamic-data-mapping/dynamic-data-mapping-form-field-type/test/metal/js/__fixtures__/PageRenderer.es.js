@@ -7,11 +7,9 @@ class PageRenderer extends Component {}
 
 PageRenderer.STATE = {
 	items: Config.arrayOf(
-		Config.shapeOf(
-			{
-				type: Config.string()
-			}
-		)
+		Config.shapeOf({
+			type: Config.string()
+		})
 	)
 };
 

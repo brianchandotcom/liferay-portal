@@ -144,7 +144,9 @@ export function isKeyInSet(keyCode, array) {
 
 	while (i--) {
 		keyName = array[i];
-		key = keyName && (KeyMap[keyName] || KeyMap[String(keyName).toUpperCase()]);
+		key =
+			keyName &&
+			(KeyMap[keyName] || KeyMap[String(keyName).toUpperCase()]);
 
 		if (keyCode === key) {
 			result = true;

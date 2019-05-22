@@ -1,7 +1,7 @@
-$color-default: #CDCED9;
-$color-disabled: #A7A9BC;
-$color-hover: #FFF;
-$dark: #393A4A;
+$color-default: #cdced9;
+$color-disabled: #a7a9bc;
+$color-hover: #fff;
+$dark: #393a4a;
 
 .floating-bar {
 	background: $dark;
@@ -25,7 +25,7 @@ $dark: #393A4A;
 	background-color: rgba(0, 0, 0, 0.001);
 	border-radius: 0;
 	border-width: 0;
-	color: #CDCED9;
+	color: #cdced9;
 
 	&.active,
 	&:hover {

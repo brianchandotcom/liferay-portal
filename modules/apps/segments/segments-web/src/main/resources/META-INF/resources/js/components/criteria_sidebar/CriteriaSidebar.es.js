@@ -16,7 +16,7 @@ class CriteriaSidebar extends Component {
 
 	_handleOnSearchChange = value => {
 		this.setState({searchValue: value});
-	}
+	};
 
 	render() {
 		const {onTitleClicked, propertyGroups, propertyKey} = this.props;
@@ -24,20 +24,19 @@ class CriteriaSidebar extends Component {
 		const {searchValue} = this.state;
 
 		return (
-			<div className="criteria-sidebar-root">
-
-				<div className="sidebar-header">
+			<div className='criteria-sidebar-root'>
+				<div className='sidebar-header'>
 					{Liferay.Language.get('properties')}
 				</div>
 
-				<div className="sidebar-search">
+				<div className='sidebar-search'>
 					<CriteriaSidebarSearchBar
 						onChange={this._handleOnSearchChange}
 						searchValue={searchValue}
 					/>
 				</div>
 
-				<div className="sidebar-collapse">
+				<div className='sidebar-collapse'>
 					<CriteriaSidebarCollapse
 						onCollapseClick={onTitleClicked}
 						propertyGroups={propertyGroups}

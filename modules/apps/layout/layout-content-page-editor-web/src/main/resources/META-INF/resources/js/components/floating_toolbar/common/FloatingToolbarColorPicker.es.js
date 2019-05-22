@@ -8,7 +8,6 @@ import templates from './FloatingToolbarColorPicker.soy';
  * FloatingToolbarColorPicker
  */
 class FloatingToolbarColorPicker extends Component {
-
 	/**
 	 * Continues the propagation of the color button clicked event
 	 * @param {Event} event
@@ -16,12 +15,9 @@ class FloatingToolbarColorPicker extends Component {
 	 * @review
 	 */
 	_handleColorButtonClick(event) {
-		this.emit(
-			'colorClicked',
-			{
-				color: event.delegateTarget.dataset.backgroundColorCssClass
-			}
-		);
+		this.emit('colorClicked', {
+			color: event.delegateTarget.dataset.backgroundColorCssClass
+		});
 	}
 }
 
@@ -32,7 +28,6 @@ class FloatingToolbarColorPicker extends Component {
  * @type {!Object}
  */
 FloatingToolbarColorPicker.STATE = {
-
 	/**
 	 * Available colors
 	 * @instance

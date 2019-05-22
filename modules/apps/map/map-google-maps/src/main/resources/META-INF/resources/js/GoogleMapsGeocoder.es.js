@@ -5,7 +5,6 @@ import State from 'metal-state';
  * @review
  */
 class GoogleMapsGeocoder extends State {
-
 	/**
 	 * Creates a new geocoder using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
@@ -20,7 +19,7 @@ class GoogleMapsGeocoder extends State {
 	/**
 	 * Handles the server response of a successfull address/location resolution
 	 * @param {function} callback Callback that will be executed on success
-  	 * @param {Object} location Raw location information
+	 * @param {Object} location Raw location information
 	 * @param {Object} response Server response
 	 * @param {Object} status Server response status
 	 * @protected
@@ -43,8 +42,7 @@ class GoogleMapsGeocoder extends State {
 					lng: geolocation.lng()
 				}
 			};
-		}
-		else {
+		} else {
 			result.data = {
 				address: '',
 				location: location

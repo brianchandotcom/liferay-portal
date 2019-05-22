@@ -1,15 +1,18 @@
 AUI.add(
 	'liferay-ddm-form-renderer-field-events',
 	function(A) {
-		var FieldEventsSupport = function() {
-		};
+		var FieldEventsSupport = function() {};
 
 		FieldEventsSupport.prototype = {
 			initializer: function() {
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after(instance._afterEventsRender, instance, 'render')
+					instance.after(
+						instance._afterEventsRender,
+						instance,
+						'render'
+					)
 				);
 
 				instance._domEvents = [];
@@ -18,16 +21,19 @@ AUI.add(
 			destructor: function() {
 				var instance = this;
 
-				instance._domEvents.forEach(
-					function(domEvent) {
-						domEvent.handler.detach();
-					}
-				);
+				instance._domEvents.forEach(function(domEvent) {
+					domEvent.handler.detach();
+				});
 
 				instance._domEvents = null;
 			},
 
-			bindContainerEvent: function(eventName, callback, selector, volatile) {
+			bindContainerEvent: function(
+				eventName,
+				callback,
+				selector,
+				volatile
+			) {
 				var instance = this;
 
 				var container = instance.get('container');
@@ -38,17 +44,19 @@ AUI.add(
 					query = query.call(instance);
 				}
 
-				var handler = container.delegate(eventName, A.bind(callback, instance), query);
-
-				instance._domEvents.push(
-					{
-						callback: callback,
-						handler: handler,
-						name: eventName,
-						selector: selector,
-						volatile: volatile
-					}
+				var handler = container.delegate(
+					eventName,
+					A.bind(callback, instance),
+					query
 				);
+
+				instance._domEvents.push({
+					callback: callback,
+					handler: handler,
+					name: eventName,
+					selector: selector,
+					volatile: volatile
+				});
 
 				return handler;
 			},
@@ -56,7 +64,12 @@ AUI.add(
 			bindInputEvent: function(eventName, callback, volatile) {
 				var instance = this;
 
-				return instance.bindContainerEvent(eventName, callback, instance.getInputSelector, volatile);
+				return instance.bindContainerEvent(
+					eventName,
+					callback,
+					instance.getInputSelector,
+					volatile
+				);
 			},
 
 			getChangeEventName: function() {
@@ -78,7 +91,11 @@ AUI.add(
 					event.handler.detach();
 
 					if (!event.volatile) {
-						instance.bindContainerEvent(event.name, event.callback, event.selector);
+						instance.bindContainerEvent(
+							event.name,
+							event.callback,
+							event.selector
+						);
 					}
 				}
 
@@ -90,7 +107,11 @@ AUI.add(
 
 				instance.bindInputEvent('blur', instance._onInputBlur, true);
 				instance.bindInputEvent('focus', instance._onInputFocus, true);
-				instance.bindInputEvent(instance.getChangeEventName(), instance._onValueChange, true);
+				instance.bindInputEvent(
+					instance.getChangeEventName(),
+					instance._onValueChange,
+					true
+				);
 			},
 
 			_fireBlurEvent: function() {
@@ -101,15 +122,13 @@ AUI.add(
 				if (root) {
 					var now = new Date();
 
-					Liferay.fire(
-						'ddmFieldBlur',
-						{
-							fieldName: instance.get('fieldName'),
-							focusDuration: (now - (instance.get('fieldFocusDate') || now)),
-							formId: root.getFormId(),
-							page: root.getCurrentPage() || 1
-						}
-					);
+					Liferay.fire('ddmFieldBlur', {
+						fieldName: instance.get('fieldName'),
+						focusDuration:
+							now - (instance.get('fieldFocusDate') || now),
+						formId: root.getFormId(),
+						page: root.getCurrentPage() || 1
+					});
 				}
 			},
 
@@ -121,14 +140,11 @@ AUI.add(
 				if (root) {
 					instance.set('fieldFocusDate', new Date());
 
-					Liferay.fire(
-						'ddmFieldFocus',
-						{
-							fieldName: instance.get('fieldName'),
-							formId: root.getFormId(),
-							page: root.getCurrentPage() || 1
-						}
-					);
+					Liferay.fire('ddmFieldFocus', {
+						fieldName: instance.get('fieldName'),
+						formId: root.getFormId(),
+						page: root.getCurrentPage() || 1
+					});
 				}
 			},
 
@@ -141,14 +157,11 @@ AUI.add(
 					var root = instance.getRoot();
 
 					if (root) {
-						Liferay.fire(
-							'ddmFieldStartedFilling',
-							{
-								fieldName: instance.get('fieldName'),
-								formId: root.getFormId(),
-								page: root.getCurrentPage() || 1
-							}
-						);
+						Liferay.fire('ddmFieldStartedFilling', {
+							fieldName: instance.get('fieldName'),
+							formId: root.getFormId(),
+							page: root.getCurrentPage() || 1
+						});
 					}
 				}
 			},
@@ -189,7 +202,9 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldEventsSupport = FieldEventsSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldEventsSupport = FieldEventsSupport;
 	},
 	'',
 	{

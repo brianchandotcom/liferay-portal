@@ -18,9 +18,20 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.bindContainerEvent('input', A.debounce(instance._afterStartSearching, 400), '.' + CSS_SEARCH_INPUT),
-					instance.after('closeList', A.bind('_afterCloseList', instance)),
-					instance.after(A.bind('_afterOpenList', instance), instance, 'openList')
+					instance.bindContainerEvent(
+						'input',
+						A.debounce(instance._afterStartSearching, 400),
+						'.' + CSS_SEARCH_INPUT
+					),
+					instance.after(
+						'closeList',
+						A.bind('_afterCloseList', instance)
+					),
+					instance.after(
+						A.bind('_afterOpenList', instance),
+						instance,
+						'openList'
+					)
 				);
 			},
 
@@ -94,7 +105,9 @@ AUI.add(
 			_getTemplate: function(context) {
 				var instance = this;
 
-				var renderer = SoyTemplateUtil.getTemplateRenderer('DDMSelect.select_options');
+				var renderer = SoyTemplateUtil.getTemplateRenderer(
+					'DDMSelect.select_options'
+				);
 
 				var container = document.createDocumentFragment();
 
@@ -106,18 +119,18 @@ AUI.add(
 			_renderList: function(options, showPlaceholderOption) {
 				var instance = this;
 
-				var template = instance._getTemplate(
-					{
-						fixedOptions: instance.get('fixedOptions'),
-						multiple: instance.get('multiple'),
-						options: options,
-						showPlaceholderOption: showPlaceholderOption,
-						strings: instance.get('strings'),
-						value: instance.getValue()
-					}
-				);
+				var template = instance._getTemplate({
+					fixedOptions: instance.get('fixedOptions'),
+					multiple: instance.get('multiple'),
+					options: options,
+					showPlaceholderOption: showPlaceholderOption,
+					strings: instance.get('strings'),
+					value: instance.getValue()
+				});
 
-				var optionsList = instance.get('container').one('.dropdown-visible');
+				var optionsList = instance
+					.get('container')
+					.one('.dropdown-visible');
 
 				if (optionsList) {
 					optionsList.setHTML(template);
@@ -127,13 +140,18 @@ AUI.add(
 			_visitDOMListItems: function(callBack) {
 				var instance = this;
 
-				instance.get('container').all('li.select-option-item.unfixed').each(callBack);
+				instance
+					.get('container')
+					.all('li.select-option-item.unfixed')
+					.each(callBack);
 
 				return instance;
 			}
 		};
 
-		Liferay.namespace('DDM.Field').SelectFieldSearchSupport = SelectFieldSearchSupport;
+		Liferay.namespace(
+			'DDM.Field'
+		).SelectFieldSearchSupport = SelectFieldSearchSupport;
 	},
 	'',
 	{

@@ -1,4 +1,4 @@
-;(function() {
+(function() {
 	var adjustScrollTop = function() {
 		var controlMenu;
 		var controlMenuId;
@@ -6,10 +6,12 @@
 		var errorFieldLabel;
 		var labelScroll;
 
-		errorFieldLabel = document.querySelector('.form-group.has-error .control-label');
+		errorFieldLabel = document.querySelector(
+			'.form-group.has-error .control-label'
+		);
 
 		if (errorFieldLabel) {
-			labelScroll = (errorFieldLabel.clientHeight || 0);
+			labelScroll = errorFieldLabel.clientHeight || 0;
 
 			window.scrollBy(0, -labelScroll);
 		}
@@ -19,7 +21,7 @@
 			controlMenu = document.getElementById(controlMenuId);
 
 			if (controlMenu) {
-				controlMenuScroll = (controlMenu.offsetHeight || 0);
+				controlMenuScroll = controlMenu.offsetHeight || 0;
 
 				window.scrollBy(0, -controlMenuScroll);
 			}
@@ -37,4 +39,4 @@
 	};
 
 	Liferay.on('form:registered', handleFormRegistered);
-}());
+})();

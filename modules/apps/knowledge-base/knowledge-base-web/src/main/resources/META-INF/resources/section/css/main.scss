@@ -1,7 +1,8 @@
 /* ---------- Portlet ---------- */
 
 .knowledge-base-portlet-section {
-	.kb-article-content, .kb-article-title {
+	.kb-article-content,
+	.kb-article-title {
 		margin: 5px 0 0;
 	}
 
@@ -19,7 +20,7 @@
 	}
 
 	.kb-articles-sections-title {
-		border-bottom: 1px solid #CCC;
+		border-bottom: 1px solid #ccc;
 		font-size: 1.2em;
 		font-weight: bold;
 		margin: 0 -5px 5px;

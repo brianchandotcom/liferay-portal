@@ -13,7 +13,6 @@ import templates from './ChangeListsHistory.soy';
  * Handles the tags of the selected file entries inside a modal.
  */
 class ChangeListsHistory extends PortletBase {
-
 	created() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -30,15 +29,30 @@ class ChangeListsHistory extends PortletBase {
 
 		let sort = '&' + this.orderByCol + ':' + this.orderByType;
 
-		let urlProcesses = this.urlProcesses + '&type=' + this.filterStatus + '&offset=0&limit=5' + sort;
+		let urlProcesses =
+			this.urlProcesses +
+			'&type=' +
+			this.filterStatus +
+			'&offset=0&limit=5' +
+			sort;
 
 		this._fetchProcesses(urlProcesses, init);
 
 		let instance = this;
 
-		setTimeout(() => instance._fetchProcesses(urlProcesses, init), firstTimeout, urlProcesses, init);
+		setTimeout(
+			() => instance._fetchProcesses(urlProcesses, init),
+			firstTimeout,
+			urlProcesses,
+			init
+		);
 
-		setInterval(() => instance._fetchProcesses(urlProcesses, init), intervalTimeout, urlProcesses, init);
+		setInterval(
+			() => instance._fetchProcesses(urlProcesses, init),
+			intervalTimeout,
+			urlProcesses,
+			init
+		);
 	}
 
 	static _getState(processEntryStatus) {
@@ -55,68 +69,69 @@ class ChangeListsHistory extends PortletBase {
 		fetch(urlProcesses, init)
 			.then(r => r.json())
 			.then(response => this._populateProcessEntries(response))
-			.catch(
-				error => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), this.urlProcesses);
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Util.sub(
+								Liferay.Language.get(
+									'an-error-occured-while-getting-data-from-x'
+								),
+								this.urlProcesses
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 
 	_populateProcessEntries(processEntries) {
-		AUI().use(
-			'liferay-portlet-url',
-			A => {
-				this.processEntries = [];
+		AUI().use('liferay-portlet-url', A => {
+			this.processEntries = [];
 
-				processEntries.forEach(
-					processEntry => {
-						const detailsLink = Liferay.PortletURL.createURL(this.baseURL);
+			processEntries.forEach(processEntry => {
+				const detailsLink = Liferay.PortletURL.createURL(this.baseURL);
 
-						detailsLink.setParameter('mvcRenderCommandName', '/change_lists_history/view_details');
-						detailsLink.setParameter('ctProcessId', processEntry.ctprocessId);
-
-						const viewLink = Liferay.PortletURL.createURL(this.baseURL);
-
-						detailsLink.setParameter('backURL', viewLink.toString());
-
-						this.processEntries.push(
-							{
-								description: processEntry.ctcollection.description,
-								detailsLink: detailsLink.toString(),
-								name: processEntry.ctcollection.name,
-								percentage: processEntry.percentage,
-								state: ChangeListsHistory._getState(processEntry.status),
-								timestamp: new Intl.DateTimeFormat(
-									Liferay.ThemeDisplay.getBCP47LanguageId(),
-									{
-										day: 'numeric',
-										hour: 'numeric',
-										minute: 'numeric',
-										month: 'numeric',
-										year: 'numeric'
-									}).format(new Date(processEntry.date)),
-								userInitials: processEntry.userInitials,
-								userName: processEntry.userName
-							}
-						);
-					}
+				detailsLink.setParameter(
+					'mvcRenderCommandName',
+					'/change_lists_history/view_details'
 				);
-			}
-		);
+				detailsLink.setParameter(
+					'ctProcessId',
+					processEntry.ctprocessId
+				);
+
+				const viewLink = Liferay.PortletURL.createURL(this.baseURL);
+
+				detailsLink.setParameter('backURL', viewLink.toString());
+
+				this.processEntries.push({
+					description: processEntry.ctcollection.description,
+					detailsLink: detailsLink.toString(),
+					name: processEntry.ctcollection.name,
+					percentage: processEntry.percentage,
+					state: ChangeListsHistory._getState(processEntry.status),
+					timestamp: new Intl.DateTimeFormat(
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+						{
+							day: 'numeric',
+							hour: 'numeric',
+							minute: 'numeric',
+							month: 'numeric',
+							year: 'numeric'
+						}
+					).format(new Date(processEntry.date)),
+					userInitials: processEntry.userInitials,
+					userName: processEntry.userName
+				});
+			});
+		});
 
 		this.loaded = true;
 	}
-
 }
 
 /**
@@ -127,7 +142,6 @@ class ChangeListsHistory extends PortletBase {
  * @type {!Object}
  */
 ChangeListsHistory.STATE = {
-
 	baseURL: Config.string(),
 
 	filterStatus: Config.string(),
@@ -141,18 +155,16 @@ ChangeListsHistory.STATE = {
 	urlProcesses: Config.string(),
 
 	processEntries: Config.arrayOf(
-		Config.shapeOf(
-			{
-				description: Config.string(),
-				detailsLink: Config.string(),
-				name: Config.string(),
-				percentage: Config.number(),
-				state: Config.string(),
-				timestamp: Config.string(),
-				userInitials: Config.string(),
-				userName: Config.string()
-			}
-		)
+		Config.shapeOf({
+			description: Config.string(),
+			detailsLink: Config.string(),
+			name: Config.string(),
+			percentage: Config.number(),
+			state: Config.string(),
+			timestamp: Config.string(),
+			userInitials: Config.string(),
+			userName: Config.string()
+		})
 	),
 
 	loaded: Config.bool().value(false),
@@ -166,7 +178,6 @@ ChangeListsHistory.STATE = {
 	 * @type {String}
 	 */
 	spritemap: Config.string().required()
-
 };
 
 // Register component

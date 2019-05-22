@@ -12,7 +12,6 @@ import ClayButton from 'clay-button';
  */
 
 class Flags extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -30,9 +29,10 @@ class Flags extends PortletBase {
 		let reason;
 
 		if (this.refs.modal.refs.otherReason) {
-			reason = this.refs.modal.refs.otherReason.value || Liferay.Language.get('no-reason-specified');
-		}
-		else {
+			reason =
+				this.refs.modal.refs.otherReason.value ||
+				Liferay.Language.get('no-reason-specified');
+		} else {
 			reason = this.refs.modal.refs.reason.value;
 		}
 
@@ -86,7 +86,9 @@ class Flags extends PortletBase {
 
 	_sendReport() {
 		this.formData[this.ns('reason')] = this._getReason();
-		this.formData[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
+		this.formData[
+			this.ns('reporterEmailAddress')
+		] = this.refs.modal.refs.reporterEmailAddress.value;
 
 		let formData = new FormData();
 
@@ -94,24 +96,19 @@ class Flags extends PortletBase {
 			formData.append(name, this.formData[name]);
 		}
 
-		fetch(
-			this.uri,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'post'
-			}
-		).then(
-			(xhr) => {
+		fetch(this.uri, {
+			body: formData,
+			credentials: 'include',
+			method: 'post'
+		})
+			.then(xhr => {
 				if (xhr.status === Liferay.STATUS_CODE.OK) {
 					this._showConfirmationMessage = true;
 				}
-			}
-		).catch(
-			() => {
+			})
+			.catch(() => {
 				this._showErrorMessage = true;
-			}
-		);
+			});
 	}
 }
 
@@ -123,7 +120,6 @@ class Flags extends PortletBase {
  */
 
 Flags.STATE = {
-
 	/**
 	 * Flag to indicate if dialog should be open.
 	 * @default false
@@ -132,7 +128,9 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_reportDialogOpen: Config.bool().internal().value(false),
+	_reportDialogOpen: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Flag to indicate if dialog should show the confirmation message.
@@ -142,7 +140,9 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_showConfirmationMessage: Config.bool().internal().value(false),
+	_showConfirmationMessage: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Flag to indicate if dialog should show the error message.
@@ -152,7 +152,9 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_showErrorMessage: Config.bool().internal().value(false),
+	_showErrorMessage: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Selected reason to flag.

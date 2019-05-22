@@ -1,18 +1,15 @@
 AUI.add(
 	'liferay-product-navigation-control-menu-add-content-search',
 	function(A) {
-		var AddContentSearch = function() {
-		};
+		var AddContentSearch = function() {};
 
 		AddContentSearch.prototype = {
 			initializer: function(config) {
 				var instance = this;
 
-				var contentSearch = new Liferay.SearchFilter(
-					{
-						inputNode: instance.get('inputNode')
-					}
-				);
+				var contentSearch = new Liferay.SearchFilter({
+					inputNode: instance.get('inputNode')
+				});
 
 				instance._search = contentSearch;
 
@@ -25,8 +22,14 @@ AUI.add(
 				instance._eventHandles = instance._eventHandles || [];
 
 				instance._eventHandles.push(
-					instance._search.after('query', instance._refreshContentList, instance),
-					instance.get('inputNode').on('keydown', instance._onSearchInputKeyDown, instance)
+					instance._search.after(
+						'query',
+						instance._refreshContentList,
+						instance
+					),
+					instance
+						.get('inputNode')
+						.on('keydown', instance._onSearchInputKeyDown, instance)
 				);
 			},
 
@@ -41,6 +44,10 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-product-navigation-control-menu', 'liferay-search-filter']
+		requires: [
+			'aui-base',
+			'liferay-product-navigation-control-menu',
+			'liferay-search-filter'
+		]
 	}
 );

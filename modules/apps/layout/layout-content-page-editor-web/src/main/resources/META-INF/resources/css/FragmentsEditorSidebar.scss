@@ -1,8 +1,8 @@
-@import "./FragmentsEditorSidebarSection";
+@import './FragmentsEditorSidebarSection';
 
-@import "./FragmentsEditorSidebarSectionsButtons.scss";
+@import './FragmentsEditorSidebarSectionsButtons.scss';
 
-@import "./variables";
+@import './variables';
 
 .fragments-editor-sidebar {
 	box-shadow: none;
@@ -42,7 +42,8 @@
 	}
 
 	&--collapsed > &-content > &-section {
-		transform: translateX(100%) translateX(#{$sidebarButtonsWidth + $sidebarLeftBorderWidth});
+		transform: translateX(100%)
+			translateX(#{$sidebarButtonsWidth + $sidebarLeftBorderWidth});
 	}
 
 	@media (min-width: 768px) {
@@ -56,7 +57,10 @@
 		top: $controlMenuHeight + $managementBarHeight;
 
 		@media (min-width: 768px) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $desktopManagementBarHeight});
+			height: calc(
+				100vh - #{$desktopControlMenuHeight +
+					$desktopManagementBarHeight}
+			);
 			top: $desktopControlMenuHeight + $desktopManagementBarHeight;
 		}
 	}

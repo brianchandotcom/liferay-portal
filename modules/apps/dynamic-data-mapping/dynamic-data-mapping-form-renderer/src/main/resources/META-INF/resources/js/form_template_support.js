@@ -3,8 +3,7 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 
-		var FormTemplateSupport = function() {
-		};
+		var FormTemplateSupport = function() {};
 
 		FormTemplateSupport.ATTRS = {
 			templateNamespace: {
@@ -34,10 +33,16 @@ AUI.add(
 
 				var templateNamespace = instance.get('templateNamespace');
 
-				var renderer = AObject.getValue(window, templateNamespace.split('.'));
+				var renderer = AObject.getValue(
+					window,
+					templateNamespace.split('.')
+				);
 
 				if (!renderer) {
-					throw new Error('Form template renderer is not defined: "' + templateNamespace);
+					throw new Error(
+						'Form template renderer is not defined: "' +
+							templateNamespace
+					);
 				}
 
 				return renderer;
@@ -50,11 +55,9 @@ AUI.add(
 
 				container.html(instance.getTemplate());
 
-				instance.eachNestedField(
-					function(field) {
-						field.updateContainer();
-					}
-				);
+				instance.eachNestedField(function(field) {
+					field.updateContainer();
+				});
 
 				instance.fire('render');
 
@@ -85,7 +88,9 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormTemplateSupport = FormTemplateSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormTemplateSupport = FormTemplateSupport;
 	},
 	'',
 	{

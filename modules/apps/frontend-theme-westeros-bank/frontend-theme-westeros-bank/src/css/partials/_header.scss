@@ -10,12 +10,13 @@
 		min-height: 28px;
 
 		.navbar-nav > li > a {
-			color: #858E93;
+			color: #858e93;
 			font-size: 12px;
 			padding: 6px 15px;
 			text-transform: uppercase;
 
-			&:hover, &:focus {
+			&:hover,
+			&:focus {
 				color: $brand-color-3;
 			}
 		}
@@ -49,7 +50,7 @@
 
 .user-area {
 	a {
-		color: #858E93;
+		color: #858e93;
 		display: block;
 		font-size: 12px;
 		padding: 6px 24px 6px 0;
@@ -59,7 +60,8 @@
 			padding: 6px;
 		}
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			color: $brand-color-3;
 			text-decoration: initial;
 		}
@@ -72,7 +74,7 @@
 	}
 
 	.lexicon-icon {
-		fill: #858E93;
+		fill: #858e93;
 	}
 }
 
@@ -80,7 +82,8 @@
 	font-weight: bold;
 	min-height: 44px;
 
-	.navbar, .portlet {
+	.navbar,
+	.portlet {
 		margin-bottom: 0;
 		min-height: 0;
 	}
@@ -95,7 +98,9 @@
 	padding-bottom: 10px;
 	position: relative;
 
-	a:active, a:hover, a:focus {
+	a:active,
+	a:hover,
+	a:focus {
 		text-decoration: none;
 	}
 
@@ -136,7 +141,7 @@
 
 		.nav > li {
 			& > a {
-				border-top: 1px solid #EDEDED;
+				border-top: 1px solid #ededed;
 				color: $default-text-dark;
 				text-align: left;
 
@@ -164,7 +169,9 @@
 				margin-right: 0;
 			}
 
-			&:hover > a, &.hover > a, &.active > a {
+			&:hover > a,
+			&.hover > a,
+			&.active > a {
 				background-color: none;
 				color: $main-black;
 			}
@@ -192,13 +199,15 @@
 	.dropdown-menu > li > a {
 		color: #969696;
 
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			background-color: $brand-bg-color-3;
 			color: $main-black;
 		}
 	}
 
-	.navbar, .portlet {
+	.navbar,
+	.portlet {
 		margin-bottom: 0;
 	}
 
@@ -215,7 +224,7 @@
 
 		& > li {
 			& > a {
-				color: #2B4259;
+				color: #2b4259;
 				line-height: 2.2;
 				margin: 0 15px;
 				text-transform: uppercase;
@@ -227,7 +236,8 @@
 				}
 			}
 
-			&.active, &.open {
+			&.active,
+			&.open {
 				a {
 					border-bottom: 1px solid $brand-color-1;
 					color: $brand-color-1;

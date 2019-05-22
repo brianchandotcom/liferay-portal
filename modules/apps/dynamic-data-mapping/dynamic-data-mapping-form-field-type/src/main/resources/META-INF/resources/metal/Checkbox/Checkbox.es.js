@@ -16,27 +16,21 @@ class Checkbox extends Component {
 	handleInputChangeEvent(event) {
 		const value = event.delegateTarget.checked;
 
-		this.setState(
-			{
-				value
-			}
-		);
+		this.setState({
+			value
+		});
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent: event,
+			value
+		});
 	}
 }
 
 Soy.register(Checkbox, templates);
 
 Checkbox.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance

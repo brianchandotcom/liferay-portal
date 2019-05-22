@@ -3,103 +3,112 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CaptchaField = A.Component.create(
-			{
-				ATTRS: {
-					context: {
-						getter: '_getContext'
-					},
-
-					html: {
-						value: ''
-					},
-
-					type: {
-						value: 'captcha'
-					}
+		var CaptchaField = A.Component.create({
+			ATTRS: {
+				context: {
+					getter: '_getContext'
 				},
 
-				EXTENDS: Liferay.DDM.Renderer.Field,
+				html: {
+					value: ''
+				},
 
-				NAME: 'liferay-ddm-form-field-captcha',
+				type: {
+					value: 'captcha'
+				}
+			},
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			EXTENDS: Liferay.DDM.Renderer.Field,
 
-						instance._eventHandlers.push(
-							instance.bindContainerEvent('click', instance._onClickRefresh, '.icon-refresh')
-						);
-					},
+			NAME: 'liferay-ddm-form-field-captcha',
 
-					getChangeEventName: function() {
-						return 'input';
-					},
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-					getInputSelector: function() {
-						var instance = this;
+					instance._eventHandlers.push(
+						instance.bindContainerEvent(
+							'click',
+							instance._onClickRefresh,
+							'.icon-refresh'
+						)
+					);
+				},
 
-						var container = instance.get('container');
+				getChangeEventName: function() {
+					return 'input';
+				},
 
-						return '#' + container.one('input').attr('id');
-					},
+				getInputSelector: function() {
+					var instance = this;
 
-					hasErrors: function() {
-						var instance = this;
+					var container = instance.get('container');
 
-						var hasErrors = CaptchaField.superclass.hasErrors.apply(instance, arguments);
+					return '#' + container.one('input').attr('id');
+				},
 
-						var inputNode = instance.getInputNode();
+				hasErrors: function() {
+					var instance = this;
 
-						return inputNode && !inputNode.val() || hasErrors;
-					},
+					var hasErrors = CaptchaField.superclass.hasErrors.apply(
+						instance,
+						arguments
+					);
 
-					render: function() {
-						var instance = this;
+					var inputNode = instance.getInputNode();
 
-						var container = instance.get('container');
+					return (inputNode && !inputNode.val()) || hasErrors;
+				},
 
-						container.plug(A.Plugin.ParseContent);
+				render: function() {
+					var instance = this;
 
-						return CaptchaField.superclass.render.apply(instance, arguments);
-					},
+					var container = instance.get('container');
 
-					showErrorMessage: Lang.emptyFn,
+					container.plug(A.Plugin.ParseContent);
 
-					_getContext: function(context) {
-						var instance = this;
+					return CaptchaField.superclass.render.apply(
+						instance,
+						arguments
+					);
+				},
 
-						if (!context) {
-							context = {};
-						}
-						else if (context.html) {
-							context = A.merge(
-								context,
-								{
-									html: window.DDMCaptcha.render.Soy.toIncDom(context.html.content)
-								}
-							);
-						}
+				showErrorMessage: Lang.emptyFn,
 
-						return context;
-					},
+				_getContext: function(context) {
+					var instance = this;
 
-					_onClickRefresh: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var captchaNode = container.one('.captcha');
-
-						var baseURL = captchaNode.attr('src');
-
-						var url = Liferay.Util.addParams('t=' + Date.now(), baseURL);
-
-						captchaNode.attr('src', url);
+					if (!context) {
+						context = {};
+					} else if (context.html) {
+						context = A.merge(context, {
+							html: window.DDMCaptcha.render.Soy.toIncDom(
+								context.html.content
+							)
+						});
 					}
+
+					return context;
+				},
+
+				_onClickRefresh: function() {
+					var instance = this;
+
+					var container = instance.get('container');
+
+					var captchaNode = container.one('.captcha');
+
+					var baseURL = captchaNode.attr('src');
+
+					var url = Liferay.Util.addParams(
+						't=' + Date.now(),
+						baseURL
+					);
+
+					captchaNode.attr('src', url);
 				}
 			}
-		);
+		});
 
 		Liferay.namespace('DDM.Field').Captcha = CaptchaField;
 	},

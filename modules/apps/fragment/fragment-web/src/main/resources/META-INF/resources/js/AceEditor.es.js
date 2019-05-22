@@ -15,13 +15,14 @@ const FragmentAutocompleteProcessor = function(...args) {
  * Creates an Ace Editor component to use for code editing.
  */
 class AceEditor extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
 		this._editorDocument = null;
-		this._getAutocompleteSuggestion = this._getAutocompleteSuggestion.bind(this);
+		this._getAutocompleteSuggestion = this._getAutocompleteSuggestion.bind(
+			this
+		);
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
 		AUI().use(
@@ -30,14 +31,12 @@ class AceEditor extends Component {
 			'aui-ace-autocomplete-templateprocessor',
 
 			A => {
-				const editor = new A.AceEditor(
-					{
-						boundingBox: this.refs.wrapper,
-						highlightActiveLine: false,
-						mode: this.syntax,
-						tabSize: 2
-					}
-				);
+				const editor = new A.AceEditor({
+					boundingBox: this.refs.wrapper,
+					highlightActiveLine: false,
+					mode: this.syntax,
+					tabSize: 2
+				});
 
 				this._overrideSetAnnotations(editor.getSession());
 				this._editorSession = editor.getSession();
@@ -48,7 +47,9 @@ class AceEditor extends Component {
 
 				this._editorDocument.on('change', this._handleDocumentChanged);
 
-				editor.getSession().on('changeAnnotation', this._handleDocumentChanged);
+				editor
+					.getSession()
+					.on('changeAnnotation', this._handleDocumentChanged);
 
 				if (this.initialContent) {
 					this._editorDocument.setValue(this.initialContent);
@@ -87,21 +88,16 @@ class AceEditor extends Component {
 			}
 		);
 
-		const autocompleteProcessor = new FragmentAutocompleteProcessor(
-			{
-				directives: this.autocompleteTags.map(tag => tag.name)
-			}
-		);
+		const autocompleteProcessor = new FragmentAutocompleteProcessor({
+			directives: this.autocompleteTags.map(tag => tag.name)
+		});
 
-		editor.plug(
-			A.Plugin.AceAutoComplete,
-			{
-				processor: autocompleteProcessor,
-				render: true,
-				visible: false,
-				zIndex: 10000
-			}
-		);
+		editor.plug(A.Plugin.AceAutoComplete, {
+			processor: autocompleteProcessor,
+			render: true,
+			visible: false,
+			zIndex: 10000
+		});
 	}
 
 	/**
@@ -158,22 +154,16 @@ class AceEditor extends Component {
 	 * @private
 	 */
 	_handleDocumentChanged() {
-		const valid = this._editorSession.getAnnotations().reduce(
-			(acc, annotation) => {
-				return (!acc || (annotation.type === 'error')) ?
-					false :
-					acc;
-			},
-			true
-		);
+		const valid = this._editorSession
+			.getAnnotations()
+			.reduce((acc, annotation) => {
+				return !acc || annotation.type === 'error' ? false : acc;
+			}, true);
 
-		this.emit(
-			'contentChanged',
-			{
-				content: this._editorDocument.getValue(),
-				valid
-			}
-		);
+		this.emit('contentChanged', {
+			content: this._editorDocument.getValue(),
+			valid
+		});
 	}
 
 	/**
@@ -192,7 +182,6 @@ class AceEditor extends Component {
 			);
 		};
 	}
-
 }
 
 /**
@@ -214,7 +203,6 @@ AceEditor.SYNTAX = {
  * @type {!Object}
  */
 AceEditor.STATE = {
-
 	/**
 	 * List of tags for custom autocompletion in the HTML editor.
 	 *
@@ -224,12 +212,10 @@ AceEditor.STATE = {
 	 * @type Array
 	 */
 	autocompleteTags: Config.arrayOf(
-		Config.shapeOf(
-			{
-				attributes: Config.arrayOf(Config.string()),
-				name: Config.string()
-			}
-		)
+		Config.shapeOf({
+			attributes: Config.arrayOf(Config.string()),
+			name: Config.string()
+		})
 	),
 
 	/**

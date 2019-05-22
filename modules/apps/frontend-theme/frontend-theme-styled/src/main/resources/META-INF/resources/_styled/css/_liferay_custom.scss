@@ -1,10 +1,17 @@
 /* ---------- Help messages, general additional information, etc. ---------- */
 
-.portlet-msg-alert, .portlet-msg-error, .portlet-msg-help, .portlet-msg-info, .portlet-msg-progress, .portlet-msg-success {
+.portlet-msg-alert,
+.portlet-msg-error,
+.portlet-msg-help,
+.portlet-msg-info,
+.portlet-msg-progress,
+.portlet-msg-success {
 	@extend .alert;
 }
 
-.portlet-msg-help, .portlet-msg-info, .portlet-msg-progress {
+.portlet-msg-help,
+.portlet-msg-info,
+.portlet-msg-progress {
 	@extend .alert-info;
 }
 

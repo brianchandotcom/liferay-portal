@@ -2,12 +2,15 @@ import Component from 'metal-jsx';
 import Position from 'metal-position';
 import {Config} from 'metal-state';
 import {Drag} from 'metal-drag-drop';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 
 const withResizeableColumns = ChildComponent => {
 	class ResizeableColumns extends Component {
 		static PROPS = {
-
 			/**
 			 * @default
 			 * @instance
@@ -86,7 +89,7 @@ const withResizeableColumns = ChildComponent => {
 			 */
 
 			spritemap: Config.string().required()
-		}
+		};
 
 		attached() {
 			this._createResizeDrag();
@@ -117,31 +120,33 @@ const withResizeableColumns = ChildComponent => {
 		}
 
 		renderResizeReferences() {
-			return [...Array(12)].map(
-				(element, index) => {
-					return (
-						<div
-							class="ddm-resize-column"
-							data-resize-column={index}
-							key={index}
-							ref={`resizeColumn${index}`}
-						/>
-					);
-				}
-			);
+			return [...Array(12)].map((element, index) => {
+				return (
+					<div
+						class='ddm-resize-column'
+						data-resize-column={index}
+						key={index}
+						ref={`resizeColumn${index}`}
+					/>
+				);
+			});
 		}
 
 		_createResizeDrag() {
-			this._resizeDrag = new Drag(
-				{
-					axis: 'x',
-					sources: '.resizeable .ddm-resize-handle',
-					useShim: true
-				}
-			);
+			this._resizeDrag = new Drag({
+				axis: 'x',
+				sources: '.resizeable .ddm-resize-handle',
+				useShim: true
+			});
 
-			this._resizeDrag.on(Drag.Events.START, this._handleResizeDragStartEvent.bind(this));
-			this._resizeDrag.on(Drag.Events.DRAG, this._handleResizeDragEvent.bind(this));
+			this._resizeDrag.on(
+				Drag.Events.START,
+				this._handleResizeDragStartEvent.bind(this)
+			);
+			this._resizeDrag.on(
+				Drag.Events.DRAG,
+				this._handleResizeDragEvent.bind(this)
+			);
 		}
 
 		_handleResizeDragEvent(event) {
@@ -154,34 +159,33 @@ const withResizeableColumns = ChildComponent => {
 			let distance = Infinity;
 			let nearest;
 
-			columnNodes.forEach(
-				node => {
-					const region = Position.getRegion(node);
+			columnNodes.forEach(node => {
+				const region = Position.getRegion(node);
 
-					const currentDistance = Math.abs(x - region.left);
+				const currentDistance = Math.abs(x - region.left);
 
-					if (currentDistance < distance) {
-						distance = currentDistance;
-						nearest = node;
-					}
+				if (currentDistance < distance) {
+					distance = currentDistance;
+					nearest = node;
 				}
-			);
+			});
 
 			if (nearest) {
 				const column = Number(nearest.dataset.resizeColumn);
-				const direction = source.classList.contains('ddm-resize-handle-left') ? 'left' : 'right';
+				const direction = source.classList.contains(
+					'ddm-resize-handle-left'
+				)
+					? 'left'
+					: 'right';
 
 				if (this._lastResizeColumn !== column) {
 					this._lastResizeColumn = column;
 
-					store.emit(
-						'columnResized',
-						{
-							column,
-							direction,
-							source
-						}
-					);
+					store.emit('columnResized', {
+						column,
+						direction,
+						source
+					});
 				}
 			}
 		}

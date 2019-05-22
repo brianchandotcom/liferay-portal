@@ -37,12 +37,12 @@ module.exports = function(config) {
 
 			if (fileName === 'form.soy.js') {
 				content = [
-					'AUI.add(\'liferay-ddm-form-soy\', function(A) {',
+					"AUI.add('liferay-ddm-form-soy', function(A) {",
 					content.replace(
-						'(typeof ddm == \'undefined\') { var ddm = {}; }',
-						'(typeof ddm == \'undefined\') { window.ddm = {}; }'
+						"(typeof ddm == 'undefined') { var ddm = {}; }",
+						"(typeof ddm == 'undefined') { window.ddm = {}; }"
 					),
-					'}, \'\', {requires: []});'
+					"}, '', {requires: []});"
 				].join('');
 			}
 

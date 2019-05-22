@@ -49,35 +49,33 @@ class Select extends Component {
 		const predefinedValueArray = this._getArrayValue(predefinedValue);
 		let valueArray = this._getArrayValue(value);
 
-		valueArray = this._isEmptyArray(valueArray) ? predefinedValueArray : valueArray;
+		valueArray = this._isEmptyArray(valueArray)
+			? predefinedValueArray
+			: valueArray;
 
-		valueArray = valueArray.filter(
-			(value, index) => {
-				return (multiple ? true : index === 0);
-			}
-		);
+		valueArray = valueArray.filter((value, index) => {
+			return multiple ? true : index === 0;
+		});
 
 		const emptyOption = {
 			label: Liferay.Language.get('choose-an-option'),
 			value: ''
 		};
 
-		let newOptions = [
-			...options
-		].map(
-			(option, index) => {
+		let newOptions = [...options]
+			.map((option, index) => {
 				return {
 					...this._prepareOption(option, valueArray),
-					separator: (fixedOptions.length > 0) && (index === options.length - 1)
+					separator:
+						fixedOptions.length > 0 && index === options.length - 1
 				};
-			}
-		).concat(
-			fixedOptions.map(
-				option => this._prepareOption(option, valueArray)
+			})
+			.concat(
+				fixedOptions.map(option =>
+					this._prepareOption(option, valueArray)
+				)
 			)
-		).filter(
-			({value}) => value !== ''
-		);
+			.filter(({value}) => value !== '');
 
 		if (!multiple) {
 			newOptions = [emptyOption, ...newOptions];
@@ -86,10 +84,8 @@ class Select extends Component {
 		return {
 			...state,
 			options: newOptions,
-			value: valueArray.filter(
-				value => newOptions.some(
-					option => value === option.value
-				)
+			value: valueArray.filter(value =>
+				newOptions.some(option => value === option.value)
 			)
 		};
 	}
@@ -120,7 +116,12 @@ class Select extends Component {
 		const {menu} = dropdown.refs.portal.refs;
 		const {expanded} = this;
 
-		if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
+		if (
+			expanded &&
+			!this.element.contains(target) &&
+			!dropdown.element.contains(target) &&
+			!menu.contains(target)
+		) {
 			this.setState({expanded: false});
 		}
 	}
@@ -139,12 +140,10 @@ class Select extends Component {
 				if (document.activeElement) {
 					document.activeElement.blur();
 				}
-			}
-			else {
+			} else {
 				newValue = this.addValue(itemValue);
 			}
-		}
-		else {
+		} else {
 			newValue = this.setValue(itemValue);
 		}
 
@@ -155,13 +154,11 @@ class Select extends Component {
 				expanded: multiple,
 				value: newValue
 			},
-			() => this.emit(
-				'fieldEdited',
-				{
+			() =>
+				this.emit('fieldEdited', {
 					fieldInstance: this,
 					value: newValue
-				}
-			)
+				})
 		);
 	}
 
@@ -177,13 +174,11 @@ class Select extends Component {
 			{
 				value: newValue
 			},
-			() => this.emit(
-				'fieldEdited',
-				{
+			() =>
+				this.emit('fieldEdited', {
 					fieldInstance: this,
 					value: newValue
-				}
-			)
+				})
 		);
 	}
 
@@ -205,7 +200,6 @@ class Select extends Component {
 }
 
 Select.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance
@@ -240,7 +234,9 @@ Select.STATE = {
 	 * @type {?bool}
 	 */
 
-	expanded: Config.bool().internal().value(false),
+	expanded: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * @default undefined
@@ -252,18 +248,16 @@ Select.STATE = {
 	fieldName: Config.string(),
 
 	fixedOptions: Config.arrayOf(
-		Config.shapeOf(
-			{
-				active: Config.bool().value(false),
-				disabled: Config.bool().value(false),
-				id: Config.string(),
-				inline: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				showLabel: Config.bool().value(true),
-				value: Config.string()
-			}
-		)
+		Config.shapeOf({
+			active: Config.bool().value(false),
+			disabled: Config.bool().value(false),
+			id: Config.string(),
+			inline: Config.bool().value(false),
+			label: Config.string(),
+			name: Config.string(),
+			showLabel: Config.bool().value(true),
+			value: Config.string()
+		})
 	).value([]),
 
 	/**
@@ -292,18 +286,16 @@ Select.STATE = {
 	 */
 
 	options: Config.arrayOf(
-		Config.shapeOf(
-			{
-				active: Config.bool().value(false),
-				disabled: Config.bool().value(false),
-				id: Config.string(),
-				inline: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				showLabel: Config.bool().value(true),
-				value: Config.string()
-			}
-		)
+		Config.shapeOf({
+			active: Config.bool().value(false),
+			disabled: Config.bool().value(false),
+			id: Config.string(),
+			inline: Config.bool().value(false),
+			label: Config.string(),
+			name: Config.string(),
+			showLabel: Config.bool().value(true),
+			value: Config.string()
+		})
 	).value([]),
 
 	/**
@@ -322,7 +314,9 @@ Select.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.oneOfType([Config.array(), Config.string()]).value([]),
+	predefinedValue: Config.oneOfType([Config.array(), Config.string()]).value(
+		[]
+	),
 
 	/**
 	 * @default false

@@ -3,7 +3,8 @@
 	padding-top: 0.907rem;
 
 	.portlet {
-		&:hover, &.open {
+		&:hover,
+		&.open {
 			z-index: 1035;
 		}
 	}
@@ -14,7 +15,7 @@
 }
 
 .navbar-classic {
-	background-color: #FFF;
+	background-color: #fff;
 
 	&.navbar-light {
 		border-bottom: 1px solid $light-color;
@@ -34,7 +35,7 @@
 			top: 0;
 
 			.lfr-icon-item {
-				color: #6B6C7E;
+				color: #6b6c7e;
 			}
 		}
 	}
@@ -64,7 +65,7 @@
 	}
 
 	.nav-link {
-		color: #6B6C7E;
+		color: #6b6c7e;
 		font-size: 0.9375rem;
 		font-weight: 600;
 	}

@@ -8,23 +8,18 @@ import {Config} from 'metal-state';
 class Text extends Component {
 	willReceiveState(changes) {
 		if (changes.value) {
-			this.setState(
-				{
-					_value: changes.value.newVal
-				}
-			);
+			this.setState({
+				_value: changes.value.newVal
+			});
 		}
 	}
 
 	_handleFieldBlurred(event) {
-		this.emit(
-			'fieldBlurred',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.target.value
-			}
-		);
+		this.emit('fieldBlurred', {
+			fieldInstance: this,
+			originalEvent: event,
+			value: event.target.value
+		});
 	}
 
 	_handleFieldChanged(event) {
@@ -33,27 +28,21 @@ class Text extends Component {
 				value: event.target.value
 			},
 			() => {
-				this.emit(
-					'fieldEdited',
-					{
-						fieldInstance: this,
-						originalEvent: event,
-						value: event.target.value
-					}
-				);
+				this.emit('fieldEdited', {
+					fieldInstance: this,
+					originalEvent: event,
+					value: event.target.value
+				});
 			}
 		);
 	}
 
 	_handleFieldFocused(event) {
-		this.emit(
-			'fieldFocused',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.target.value
-			}
-		);
+		this.emit('fieldFocused', {
+			fieldInstance: this,
+			originalEvent: event,
+			value: event.target.value
+		});
 	}
 
 	_internalValueFn() {
@@ -64,7 +53,6 @@ class Text extends Component {
 }
 
 Text.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -72,7 +60,9 @@ Text.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	_value: Config.string().internal().valueFn('_internalValueFn'),
+	_value: Config.string()
+		.internal()
+		.valueFn('_internalValueFn'),
 
 	/**
 	 * @default 'string'

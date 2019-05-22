@@ -18,31 +18,25 @@ const CRITERION_SHAPE = {
 	displayValue: PropTypes.string,
 	operatorName: PropTypes.string,
 	propertyName: PropTypes.string,
-	value: PropTypes.oneOfType(
-		[
-			PropTypes.array,
-			PropTypes.number,
-			PropTypes.string
-		]
-	)
+	value: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.number,
+		PropTypes.string
+	])
 };
 
 class CriteriaBuilder extends Component {
 	static propTypes = {
-		criteria: PropTypes.shape(
-			{
-				conjunctionName: PropTypes.string,
-				groupId: PropTypes.string,
-				items: PropTypes.arrayOf(
-					PropTypes.oneOfType(
-						[
-							PropTypes.shape(CRITERIA_GROUP_SHAPE),
-							PropTypes.shape(CRITERION_SHAPE)
-						]
-					)
-				)
-			}
-		),
+		criteria: PropTypes.shape({
+			conjunctionName: PropTypes.string,
+			groupId: PropTypes.string,
+			items: PropTypes.arrayOf(
+				PropTypes.oneOfType([
+					PropTypes.shape(CRITERIA_GROUP_SHAPE),
+					PropTypes.shape(CRITERION_SHAPE)
+				])
+			)
+		}),
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
 
@@ -64,24 +58,20 @@ class CriteriaBuilder extends Component {
 		onChange: PropTypes.func,
 		propertyKey: PropTypes.string.isRequired,
 		supportedConjunctions: PropTypes.arrayOf(
-			PropTypes.shape(
-				{
-					label: PropTypes.string,
-					name: PropTypes.string.isRequired
-				}
-			)
+			PropTypes.shape({
+				label: PropTypes.string,
+				name: PropTypes.string.isRequired
+			})
 		),
 		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.arrayOf(
-			PropTypes.shape(
-				{
-					entityUrl: PropTypes.string,
-					label: PropTypes.string,
-					name: PropTypes.string.isRequired,
-					options: PropTypes.array,
-					type: PropTypes.string.isRequired
-				}
-			)
+			PropTypes.shape({
+				entityUrl: PropTypes.string,
+				label: PropTypes.string,
+				name: PropTypes.string.isRequired,
+				options: PropTypes.array,
+				type: PropTypes.string.isRequired
+			})
 		).isRequired,
 		supportedPropertyTypes: PropTypes.object
 	};
@@ -98,41 +88,37 @@ class CriteriaBuilder extends Component {
 	 */
 	_cleanCriteriaMapItems(criteriaItems, root) {
 		const criteria = criteriaItems
-			.filter(
-				({items}) => {
-					return items ? items.length : true;
-				}
-			)
-			.map(
-				item => {
-					let cleanedItem = item;
+			.filter(({items}) => {
+				return items ? items.length : true;
+			})
+			.map(item => {
+				let cleanedItem = item;
 
-					if (item.items) {
-						if (item.items.length === 1) {
-							const soloItem = item.items[0];
+				if (item.items) {
+					if (item.items.length === 1) {
+						const soloItem = item.items[0];
 
-							if (soloItem.items) {
-								cleanedItem = {
-									conjunctionName: soloItem.conjunctionName,
-									groupId: soloItem.groupId,
-									items: this._cleanCriteriaMapItems(soloItem.items)
-								};
-							}
-							else {
-								cleanedItem = root ? item : soloItem;
-							}
-						}
-						else {
+						if (soloItem.items) {
 							cleanedItem = {
-								...item,
-								items: this._cleanCriteriaMapItems(item.items)
+								conjunctionName: soloItem.conjunctionName,
+								groupId: soloItem.groupId,
+								items: this._cleanCriteriaMapItems(
+									soloItem.items
+								)
 							};
+						} else {
+							cleanedItem = root ? item : soloItem;
 						}
+					} else {
+						cleanedItem = {
+							...item,
+							items: this._cleanCriteriaMapItems(item.items)
+						};
 					}
-
-					return cleanedItem;
 				}
-			);
+
+				return cleanedItem;
+			});
 
 		return criteria;
 	}
@@ -145,7 +131,7 @@ class CriteriaBuilder extends Component {
 		const items = this._cleanCriteriaMapItems([newCriteria], true);
 
 		this.props.onChange(items[items.length - 1], this.props.propertyKey);
-	}
+	};
 
 	/**
 	 * Moves the criterion to the specified index by removing and adding, and
@@ -166,7 +152,7 @@ class CriteriaBuilder extends Component {
 		);
 
 		this._handleCriteriaChange(newCriteria);
-	}
+	};
 
 	/**
 	 * Checks if an item is a group item by checking if it contains an items
@@ -207,34 +193,27 @@ class CriteriaBuilder extends Component {
 		let updatedCriteriaItems = criteria.items;
 
 		if (criteria.groupId === destGroupId) {
-			updatedCriteriaItems = replace ?
-				replaceAtIndex(
-					addCriterion,
-					updatedCriteriaItems,
-					destIndex
-				) :
-				insertAtIndex(
-					addCriterion,
-					updatedCriteriaItems,
-					destIndex
-				);
+			updatedCriteriaItems = replace
+				? replaceAtIndex(addCriterion, updatedCriteriaItems, destIndex)
+				: insertAtIndex(addCriterion, updatedCriteriaItems, destIndex);
 		}
 
 		if (criteria.groupId === startGroupId) {
 			updatedCriteriaItems = removeAtIndex(
 				updatedCriteriaItems,
-				destGroupId === startGroupId && destIndex < startIndex && !replace ?
-					startIndex + 1 :
-					startIndex
+				destGroupId === startGroupId &&
+					destIndex < startIndex &&
+					!replace
+					? startIndex + 1
+					: startIndex
 			);
 		}
 
 		return {
 			...criteria,
-			items: updatedCriteriaItems.map(
-				item => {
-					return this._isGroupItem(item) ?
-						this._searchAndUpdateCriteria(
+			items: updatedCriteriaItems.map(item => {
+				return this._isGroupItem(item)
+					? this._searchAndUpdateCriteria(
 							item,
 							startGroupId,
 							startIndex,
@@ -242,12 +221,11 @@ class CriteriaBuilder extends Component {
 							destIndex,
 							addCriterion,
 							replace
-						) :
-						item;
-				}
-			)
+					  )
+					: item;
+			})
 		};
-	}
+	};
 
 	render() {
 		const {
@@ -264,19 +242,16 @@ class CriteriaBuilder extends Component {
 		} = this.props;
 
 		return (
-			<div className="criteria-builder-root">
-				<h4 className="sheet-subtitle">
+			<div className='criteria-builder-root'>
+				<h4 className='sheet-subtitle'>
 					{sub(
 						Liferay.Language.get('x-with-property-x'),
-						[
-							modelLabel,
-							''
-						],
+						[modelLabel, ''],
 						false
 					)}
 				</h4>
 
-				{(!emptyContributors || editing) &&
+				{(!emptyContributors || editing) && (
 					<CriteriaGroup
 						criteria={criteria}
 						editing={editing}
@@ -293,7 +268,7 @@ class CriteriaBuilder extends Component {
 						supportedProperties={supportedProperties}
 						supportedPropertyTypes={supportedPropertyTypes}
 					/>
-				}
+				)}
 			</div>
 		);
 	}

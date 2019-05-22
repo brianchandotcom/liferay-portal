@@ -1,4 +1,7 @@
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from './actions.es';
+import {
+	UPDATE_LAST_SAVE_DATE,
+	UPDATE_SAVING_CHANGES_STATUS
+} from './actions.es';
 
 /**
  * @return {object}

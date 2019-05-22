@@ -20,79 +20,87 @@ import RenderURLScreen from './screen/RenderURLScreen.es';
 let initSPA = function() {
 	let app = new App();
 
-	app.addRoutes(
-		[
-			{
-				handler: ActionURLScreen,
-				path: function(url) {
-					let match = false;
+	app.addRoutes([
+		{
+			handler: ActionURLScreen,
+			path: function(url) {
+				let match = false;
 
-					const uri = new Uri(url);
+				const uri = new Uri(url);
 
-					const loginRedirect = new Uri(Liferay.SPA.loginRedirect);
+				const loginRedirect = new Uri(Liferay.SPA.loginRedirect);
 
-					const host = loginRedirect.getHost() || window.location.host;
+				const host = loginRedirect.getHost() || window.location.host;
 
-					if (app.isLinkSameOrigin_(host)) {
-						match = uri.getParameterValue('p_p_lifecycle') === '1';
-					}
-
-					return match;
+				if (app.isLinkSameOrigin_(host)) {
+					match = uri.getParameterValue('p_p_lifecycle') === '1';
 				}
-			},
-			{
-				handler: RenderURLScreen,
-				path: function(url) {
-					let match = false;
 
-					if ((url + '/').indexOf(themeDisplay.getPathMain() + '/') !== 0) {
-						const excluded = Liferay.SPA.excludedPaths.some(
-							(excludedPath) => url.indexOf(excludedPath) === 0
+				return match;
+			}
+		},
+		{
+			handler: RenderURLScreen,
+			path: function(url) {
+				let match = false;
+
+				if (
+					(url + '/').indexOf(themeDisplay.getPathMain() + '/') !== 0
+				) {
+					const excluded = Liferay.SPA.excludedPaths.some(
+						excludedPath => url.indexOf(excludedPath) === 0
+					);
+
+					if (!excluded) {
+						const uri = new Uri(url);
+
+						const lifecycle = uri.getParameterValue(
+							'p_p_lifecycle'
 						);
 
-						if (!excluded) {
-							const uri = new Uri(url);
-
-							const lifecycle = uri.getParameterValue('p_p_lifecycle');
-
-							match = lifecycle === '0' || !lifecycle;
-						}
+						match = lifecycle === '0' || !lifecycle;
 					}
-
-					return match;
 				}
+
+				return match;
 			}
-		]
-	);
+		}
+	]);
 
 	Liferay.Util.submitForm = function(form) {
-		async.nextTick(
-			() => {
-				let formElement = form.getDOM();
-				let formSelector = 'form' + Liferay.SPA.navigationExceptionSelectors;
-				let url = formElement.action;
+		async.nextTick(() => {
+			let formElement = form.getDOM();
+			let formSelector =
+				'form' + Liferay.SPA.navigationExceptionSelectors;
+			let url = formElement.action;
 
-				if (match(formElement, formSelector) && app.canNavigate(url) && (formElement.method !== 'get') && !app.isInPortletBlacklist(formElement)) {
-					Liferay.Util._submitLocked = false;
+			if (
+				match(formElement, formSelector) &&
+				app.canNavigate(url) &&
+				formElement.method !== 'get' &&
+				!app.isInPortletBlacklist(formElement)
+			) {
+				Liferay.Util._submitLocked = false;
 
-					globals.capturedFormElement = formElement;
+				globals.capturedFormElement = formElement;
 
-					const buttonSelector = 'button:not([type]),button[type=submit],input[type=submit]';
+				const buttonSelector =
+					'button:not([type]),button[type=submit],input[type=submit]';
 
-					if (match(globals.document.activeElement, buttonSelector)) {
-						globals.capturedFormButtonElement = globals.document.activeElement;
-					}
-					else {
-						globals.capturedFormButtonElement = form.one(buttonSelector);
-					}
-
-					app.navigate(utils.getUrlPath(url));
+				if (match(globals.document.activeElement, buttonSelector)) {
+					globals.capturedFormButtonElement =
+						globals.document.activeElement;
+				} else {
+					globals.capturedFormButtonElement = form.one(
+						buttonSelector
+					);
 				}
-				else {
-					formElement.submit();
-				}
+
+				app.navigate(utils.getUrlPath(url));
+			} else {
+				formElement.submit();
 			}
-		);
+		});
 	};
 
 	Liferay.initComponentCache();
@@ -108,14 +116,10 @@ let initSPA = function() {
 export default {
 	init: function(callback) {
 		if (globals.document.readyState == 'loading') {
-			globals.document.addEventListener(
-				'DOMContentLoaded',
-				() => {
-					callback.call(this, initSPA());
-				}
-			);
-		}
-		else {
+			globals.document.addEventListener('DOMContentLoaded', () => {
+				callback.call(this, initSPA());
+			});
+		} else {
 			callback.call(this, initSPA());
 		}
 	}

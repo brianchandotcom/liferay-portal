@@ -7,7 +7,11 @@
 		$className: nth($a, 1);
 		$color: nth($a, 2);
 
-		@include generatePropertyGroup($color, $cssProperty, #{$classPrefix + $className});
+		@include generatePropertyGroup(
+			$color,
+			$cssProperty,
+			#{$classPrefix + $className}
+		);
 	}
 }
 

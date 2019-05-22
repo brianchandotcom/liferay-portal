@@ -9,12 +9,13 @@ const handleFieldDuplicated = (state, editingLanguageId, event) => {
 
 	const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 
-	const localizedLabel = getFieldLocalizedValue(field.settingsContext.pages, 'label', editingLanguageId);
-
-	const label = sub(
-		Liferay.Language.get('copy-of-x'),
-		[localizedLabel]
+	const localizedLabel = getFieldLocalizedValue(
+		field.settingsContext.pages,
+		'label',
+		editingLanguageId
 	);
+
+	const label = sub(Liferay.Language.get('copy-of-x'), [localizedLabel]);
 	const newFieldName = generateFieldName(pages, label);
 	const visitor = new PagesVisitor(field.settingsContext.pages);
 
@@ -25,29 +26,26 @@ const handleFieldDuplicated = (state, editingLanguageId, event) => {
 		name: newFieldName,
 		settingsContext: {
 			...field.settingsContext,
-			pages: visitor.mapFields(
-				field => {
-					if (field.fieldName === 'name') {
-						field = {
-							...field,
-							value: newFieldName
-						};
-					}
-					else if (field.fieldName === 'label') {
-						field = {
-							...field,
-							localizedValue: {
-								...field.localizedValue,
-								[editingLanguageId]: label
-							},
-							value: label
-						};
-					}
-					return {
-						...field
+			pages: visitor.mapFields(field => {
+				if (field.fieldName === 'name') {
+					field = {
+						...field,
+						value: newFieldName
+					};
+				} else if (field.fieldName === 'label') {
+					field = {
+						...field,
+						localizedValue: {
+							...field.localizedValue,
+							[editingLanguageId]: label
+						},
+						value: label
 					};
 				}
-			)
+				return {
+					...field
+				};
+			})
 		}
 	};
 	const newRowIndex = rowIndex + 1;

@@ -11,275 +11,301 @@ AUI.add(
 
 		var STR_HOST = 'host';
 
-		var TPL_IMAGE_CONTAINER = '<div class="uploading-image-container"></div>';
+		var TPL_IMAGE_CONTAINER =
+			'<div class="uploading-image-container"></div>';
 
 		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
-		var EditorImageUploader = A.Component.create(
-			{
-				ATTRS: {
-					strings: {
-						validator: Lang.isObject,
-						value: {
-							uploadingFileError: Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file')
-						}
-					},
-
-					timeout: {
-						validator: Lang.isNumber,
-						value: 10000
-					},
-
-					uploadItemReturnType: {
-						validator: Lang.isString,
-						value: STR_BLANK
-					},
-
-					uploadUrl: {
-						validator: Lang.isString,
-						value: STR_BLANK
+		var EditorImageUploader = A.Component.create({
+			ATTRS: {
+				strings: {
+					validator: Lang.isObject,
+					value: {
+						uploadingFileError: Liferay.Language.get(
+							'an-unexpected-error-occurred-while-uploading-your-file'
+						)
 					}
 				},
 
-				EXTENDS: A.Plugin.Base,
+				timeout: {
+					validator: Lang.isNumber,
+					value: 10000
+				},
 
-				NAME: NAME,
+				uploadItemReturnType: {
+					validator: Lang.isString,
+					value: STR_BLANK
+				},
+
+				uploadUrl: {
+					validator: Lang.isString,
+					value: STR_BLANK
+				}
+			},
 
-				NS: NAME,
+			EXTENDS: A.Plugin.Base,
+
+			NAME: NAME,
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			NS: NAME,
 
-						var host = instance.get(STR_HOST);
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-						var editor = host.getNativeEditor();
+					var host = instance.get(STR_HOST);
 
-						editor.on('imageAdd', instance._onImageAdd, instance);
+					var editor = host.getNativeEditor();
 
-						instance._editor = editor;
+					editor.on('imageAdd', instance._onImageAdd, instance);
 
-						var uploader = instance._getUploader();
+					instance._editor = editor;
 
-						instance._eventHandles = [
-							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
-							uploader.on('uploaderror', instance._onUploadError, instance),
-							uploader.on('uploadprogress', instance._onUploadProgress, instance)
-						];
-					},
+					var uploader = instance._getUploader();
 
-					destructor: function() {
-						var instance = this;
+					instance._eventHandles = [
+						uploader.on(
+							'uploadcomplete',
+							instance._onUploadComplete,
+							instance
+						),
+						uploader.on(
+							'uploaderror',
+							instance._onUploadError,
+							instance
+						),
+						uploader.on(
+							'uploadprogress',
+							instance._onUploadProgress,
+							instance
+						)
+					];
+				},
 
-						if (instance._uploader) {
-							instance._uploader.destroy();
-						}
+				destructor: function() {
+					var instance = this;
 
-						if (instance._alert) {
-							instance._alert.destroy();
-						}
+					if (instance._uploader) {
+						instance._uploader.destroy();
+					}
 
-						instance._editor.removeListener('imageAdd', instance._uploadImage);
+					if (instance._alert) {
+						instance._alert.destroy();
+					}
 
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
+					instance._editor.removeListener(
+						'imageAdd',
+						instance._uploadImage
+					);
 
-					_createProgressBar: function(image) {
-						var instance = this;
+					new A.EventHandle(instance._eventHandles).detach();
+				},
 
-						var imageContainerNode = A.Node.create(TPL_IMAGE_CONTAINER);
-						var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
+				_createProgressBar: function(image) {
+					var instance = this;
 
-						image.wrap(imageContainerNode);
+					var imageContainerNode = A.Node.create(TPL_IMAGE_CONTAINER);
+					var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
 
-						imageContainerNode.appendChild(progressBarNode);
+					image.wrap(imageContainerNode);
 
-						var progressbar = new A.ProgressBar(
-							{
-								boundingBox: progressBarNode
-							}
-						).render();
+					imageContainerNode.appendChild(progressBarNode);
 
-						return progressbar;
-					},
+					var progressbar = new A.ProgressBar({
+						boundingBox: progressBarNode
+					}).render();
 
-					_getAlert: function() {
-						var instance = this;
+					return progressbar;
+				},
 
-						if (!instance._alert) {
-							instance._alert = new A.Alert(
-								{
-									animated: true,
-									closeable: true,
-									cssClass: null,
-									duration: instance.get('timeout'),
-									render: true
-								}
-							);
-						}
+				_getAlert: function() {
+					var instance = this;
 
-						return instance._alert;
-					},
+					if (!instance._alert) {
+						instance._alert = new A.Alert({
+							animated: true,
+							closeable: true,
+							cssClass: null,
+							duration: instance.get('timeout'),
+							render: true
+						});
+					}
 
-					_getUploader: function() {
-						var instance = this;
+					return instance._alert;
+				},
 
-						var uploader = instance._uploader;
+				_getUploader: function() {
+					var instance = this;
 
-						if (!uploader) {
-							uploader = new A.Uploader(
-								{
-									fileFieldName: 'imageSelectorFileName',
-									uploadURL: instance.get('uploadUrl')
-								}
-							);
+					var uploader = instance._uploader;
 
-							instance._uploader = uploader;
-						}
+					if (!uploader) {
+						uploader = new A.Uploader({
+							fileFieldName: 'imageSelectorFileName',
+							uploadURL: instance.get('uploadUrl')
+						});
 
-						return uploader;
-					},
+						instance._uploader = uploader;
+					}
 
-					_onImageAdd: function(event) {
-						var instance = this;
+					return uploader;
+				},
 
-						var eventData = event.data;
+				_onImageAdd: function(event) {
+					var instance = this;
 
-						var file = eventData.file;
-						var image = eventData.el.$;
+					var eventData = event.data;
 
-						image = A.one(image);
+					var file = eventData.file;
+					var image = eventData.el.$;
 
-						var randomId = eventData.randomId || A.guid();
+					image = A.one(image);
 
-						image.attr('data-random-id', randomId);
+					var randomId = eventData.randomId || A.guid();
 
-						image.addClass(CSS_UPLOADING_IMAGE);
+					image.attr('data-random-id', randomId);
 
-						var uploader = eventData.uploader;
+					image.addClass(CSS_UPLOADING_IMAGE);
 
-						if (uploader) {
-							uploader.on('uploadcomplete', instance._onUploadComplete, instance);
-							uploader.on('uploaderror', instance._onUploadError, instance);
-							uploader.on('uploadprogress', instance._onUploadProgress, instance);
-						}
-						else {
-							file = new A.FileHTML5(file);
+					var uploader = eventData.uploader;
 
-							instance._uploadImage(file, randomId);
-						}
+					if (uploader) {
+						uploader.on(
+							'uploadcomplete',
+							instance._onUploadComplete,
+							instance
+						);
+						uploader.on(
+							'uploaderror',
+							instance._onUploadError,
+							instance
+						);
+						uploader.on(
+							'uploadprogress',
+							instance._onUploadProgress,
+							instance
+						);
+					} else {
+						file = new A.FileHTML5(file);
 
-						file.progressbar = instance._createProgressBar(image);
-					},
+						instance._uploadImage(file, randomId);
+					}
 
-					_onUploadComplete: function(event) {
-						var instance = this;
+					file.progressbar = instance._createProgressBar(image);
+				},
 
-						var target = event.details[0].target;
+				_onUploadComplete: function(event) {
+					var instance = this;
 
-						var progressbar = target.progressbar;
+					var target = event.details[0].target;
 
-						if (progressbar) {
-							progressbar.destroy();
-						}
+					var progressbar = target.progressbar;
 
-						var data = JSON.parse(event.data);
+					if (progressbar) {
+						progressbar.destroy();
+					}
 
-						if (data.success) {
-							var image = A.one(instance._editor.element.$).one('[data-random-id="' + data.file.randomId + '"]');
+					var data = JSON.parse(event.data);
 
-							if (image) {
-								image.removeAttribute('data-random-id');
-								image.removeClass(CSS_UPLOADING_IMAGE);
-
-								image.attr(data.file.attributeDataImageId, data.file.fileEntryId);
-
-								var editor = instance._editor;
-
-								var imageSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + data.file.title : data.file.url;
-
-								image.attr('src', imageSrc);
-
-								var imageContainer = image.ancestor();
-
-								image.unwrap(imageContainer);
-
-								imageContainer.remove();
-
-								editor.fire(
-									'imageUploaded',
-									{
-										el: image,
-										fileEntryId: data.file.fileEntryId,
-										uploadImageReturnType: instance.get('uploadItemReturnType')
-									}
-								);
-							}
-						}
-						else {
-							instance._removeTempImage(data.file);
-						}
-					},
-
-					_onUploadError: function(event) {
-						var instance = this;
-
-						event.target.cancelUpload();
-
-						instance._removeTempImage(event);
-					},
-
-					_onUploadProgress: function(event) {
-						var instance = this;
-
-						var percentLoaded = Math.round(event.percentLoaded);
-
-						var target = event.details[0].target;
-
-						var progressbar = target.progressbar;
-
-						if (progressbar) {
-							progressbar.set('label', percentLoaded + ' %');
-
-							progressbar.set('value', Math.ceil(percentLoaded));
-						}
-					},
-
-					_removeTempImage: function(imageData) {
-						var instance = this;
-
-						if (imageData && imageData.randomId) {
-							var imageId = imageData.randomId;
-
-							var image = A.one(instance._editor.element.$).one('[data-random-id="' + imageId + '"]');
-
-							image.ancestor().remove();
-						}
-
-						var strings = instance.get('strings');
-
-						var alert = instance._getAlert();
-
-						alert.set('bodyContent', strings.uploadingFileError).show();
-					},
-
-					_uploadImage: function(file, randomId) {
-						var instance = this;
-
-						var uploader = instance._getUploader();
-
-						uploader.set(
-							'postVarsPerFile',
-							{
-								randomId: randomId
-							}
+					if (data.success) {
+						var image = A.one(instance._editor.element.$).one(
+							'[data-random-id="' + data.file.randomId + '"]'
 						);
 
-						uploader.upload(file);
+						if (image) {
+							image.removeAttribute('data-random-id');
+							image.removeClass(CSS_UPLOADING_IMAGE);
+
+							image.attr(
+								data.file.attributeDataImageId,
+								data.file.fileEntryId
+							);
+
+							var editor = instance._editor;
+
+							var imageSrc = editor.config.attachmentURLPrefix
+								? editor.config.attachmentURLPrefix +
+								  data.file.title
+								: data.file.url;
+
+							image.attr('src', imageSrc);
+
+							var imageContainer = image.ancestor();
+
+							image.unwrap(imageContainer);
+
+							imageContainer.remove();
+
+							editor.fire('imageUploaded', {
+								el: image,
+								fileEntryId: data.file.fileEntryId,
+								uploadImageReturnType: instance.get(
+									'uploadItemReturnType'
+								)
+							});
+						}
+					} else {
+						instance._removeTempImage(data.file);
 					}
+				},
+
+				_onUploadError: function(event) {
+					var instance = this;
+
+					event.target.cancelUpload();
+
+					instance._removeTempImage(event);
+				},
+
+				_onUploadProgress: function(event) {
+					var instance = this;
+
+					var percentLoaded = Math.round(event.percentLoaded);
+
+					var target = event.details[0].target;
+
+					var progressbar = target.progressbar;
+
+					if (progressbar) {
+						progressbar.set('label', percentLoaded + ' %');
+
+						progressbar.set('value', Math.ceil(percentLoaded));
+					}
+				},
+
+				_removeTempImage: function(imageData) {
+					var instance = this;
+
+					if (imageData && imageData.randomId) {
+						var imageId = imageData.randomId;
+
+						var image = A.one(instance._editor.element.$).one(
+							'[data-random-id="' + imageId + '"]'
+						);
+
+						image.ancestor().remove();
+					}
+
+					var strings = instance.get('strings');
+
+					var alert = instance._getAlert();
+
+					alert.set('bodyContent', strings.uploadingFileError).show();
+				},
+
+				_uploadImage: function(file, randomId) {
+					var instance = this;
+
+					var uploader = instance._getUploader();
+
+					uploader.set('postVarsPerFile', {
+						randomId: randomId
+					});
+
+					uploader.upload(file);
 				}
 			}
-		);
+		});
 
 		A.Plugin.LiferayBlogsUploader = EditorImageUploader;
 		A.Plugin.LiferayEditorImageUploader = EditorImageUploader;

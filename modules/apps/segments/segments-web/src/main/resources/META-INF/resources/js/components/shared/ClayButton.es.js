@@ -12,25 +12,19 @@ class ClayButton extends Component {
 		iconName: PropTypes.string,
 		label: PropTypes.string,
 		monospaced: PropTypes.bool,
-		size: PropTypes.oneOf(
-			[
-				'sm'
-			]
-		),
-		style: PropTypes.oneOf(
-			[
-				'primary',
-				'secondary',
-				'info',
-				'success',
-				'warning',
-				'danger',
-				'dark',
-				'light',
-				'unstyled',
-				'outline-danger'
-			]
-		),
+		size: PropTypes.oneOf(['sm']),
+		style: PropTypes.oneOf([
+			'primary',
+			'secondary',
+			'info',
+			'success',
+			'warning',
+			'danger',
+			'dark',
+			'light',
+			'unstyled',
+			'outline-danger'
+		]),
 		type: PropTypes.string
 	};
 
@@ -65,13 +59,15 @@ class ClayButton extends Component {
 				[`btn-${size}`]: size,
 				'btn-monospaced': monospaced,
 				'btn-outline-borderless': borderless,
-				'disabled': href && disabled
+				disabled: href && disabled
 			},
 			className
 		);
 
 		return href ? (
-			<a className={classes} href={href} {...otherProps}>{label}</a>
+			<a className={classes} href={href} {...otherProps}>
+				{label}
+			</a>
 		) : (
 			<button
 				className={classes}
@@ -81,7 +77,9 @@ class ClayButton extends Component {
 			>
 				{iconName && (
 					<ClayIcon
-						className={label ? 'inline-item inline-item-before' : 'icon'}
+						className={
+							label ? 'inline-item inline-item-before' : 'icon'
+						}
 						iconName={iconName}
 					/>
 				)}

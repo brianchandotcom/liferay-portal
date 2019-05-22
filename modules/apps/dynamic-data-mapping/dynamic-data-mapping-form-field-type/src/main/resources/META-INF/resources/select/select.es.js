@@ -7,9 +7,7 @@ import templates from './select.soy';
 const SelectTemplates = [];
 
 if (!window.DDMSelect) {
-	window.DDMSelect = {
-
-	};
+	window.DDMSelect = {};
 }
 
 for (const template in templates) {
@@ -17,12 +15,10 @@ for (const template in templates) {
 		class C extends Component {}
 		Soy.register(C, templates, template);
 		C.Soy = Soy;
-		SelectTemplates.push(
-			{
-				component: C,
-				key: template
-			}
-		);
+		SelectTemplates.push({
+			component: C,
+			key: template
+		});
 		window.DDMSelect[template] = C;
 	}
 }

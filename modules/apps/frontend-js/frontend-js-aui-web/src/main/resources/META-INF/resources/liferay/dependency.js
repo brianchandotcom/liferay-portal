@@ -45,7 +45,12 @@
 
 				if (modules.length == 1) {
 					if (modules[0] in usedModules) {
-						Dependency._replaceMethod(obj, methodName, methodFn, context);
+						Dependency._replaceMethod(
+							obj,
+							methodName,
+							methodFn,
+							context
+						);
 
 						methodFn.apply(context, args);
 
@@ -68,7 +73,18 @@
 				queue.add(args);
 
 				if (firstLoad) {
-					modules.push(A.bind(Dependency._proxy, Liferay, obj, methodName, methodFn, context, guid, modules));
+					modules.push(
+						A.bind(
+							Dependency._proxy,
+							Liferay,
+							obj,
+							methodName,
+							methodFn,
+							context,
+							guid,
+							modules
+						)
+					);
 
 					A.use.apply(A, modules);
 				}
@@ -114,8 +130,7 @@
 				proxy = AOP.method;
 
 				AOP.method = methodFn;
-			}
-			else {
+			} else {
 				obj[methodName] = methodFn;
 			}
 

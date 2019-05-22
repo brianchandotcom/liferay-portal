@@ -1,5 +1,6 @@
 .has-control-menu {
-	.affix, #wrapper {
+	.affix,
+	#wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;
 
 		.portlet-boundary > span:first-child {
@@ -30,39 +31,57 @@
 		}
 	}
 
-	&.has-customization-menu .affix, &.has-customization-menu #wrapper {
-		margin-top: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
+	&.has-customization-menu .affix,
+	&.has-customization-menu #wrapper {
+		margin-top: (
+			$has-control-menu-margin-top-mobile +
+				$has-customization-menu-margin-top-mobile
+		);
 
 		.portlet-boundary > span:first-child {
 			display: block;
 			position: relative;
-			top: -($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
+			top: -($has-control-menu-margin-top-mobile +
+						$has-customization-menu-margin-top-mobile);
 			visibility: hidden;
 		}
 
 		:target::before {
 			content: '';
 			display: block;
-			height: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
-			margin-top: -($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
+			height: (
+				$has-control-menu-margin-top-mobile +
+					$has-customization-menu-margin-top-mobile
+			);
+			margin-top: -($has-control-menu-margin-top-mobile +
+						$has-customization-menu-margin-top-mobile);
 		}
 
 		@include sm() {
-			margin-top: ($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+			margin-top: (
+				$has-control-menu-margin-top-desktop +
+					$has-customization-menu-margin-top-desktop
+			);
 
 			.portlet-boundary > span:first-child {
-				top: -($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+				top: -($has-control-menu-margin-top-desktop +
+							$has-customization-menu-margin-top-desktop);
 			}
 
 			:target::before {
-				height: ($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
-				margin-top: -($has-control-menu-margin-top-desktop + $has-customization-menu-margin-top-desktop);
+				height: (
+					$has-control-menu-margin-top-desktop +
+						$has-customization-menu-margin-top-desktop
+				);
+				margin-top: -($has-control-menu-margin-top-desktop +
+							$has-customization-menu-margin-top-desktop);
 			}
 		}
 	}
 }
 
-.affix, .control-menu {
+.affix,
+.control-menu {
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -97,10 +116,12 @@ a.control-menu-icon,
 		}
 	}
 
-	a, button {
+	a,
+	button {
 		color: $control-menu-level-1-link-color;
 
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			color: $control-menu-level-1-link-hover-color;
 			text-decoration: none;
 		}
@@ -118,7 +139,7 @@ a.control-menu-icon,
 }
 
 .control-menu-level-1-heading {
-	color: #FFF;
+	color: #fff;
 	font-size: 1rem;
 	font-weight: bold;
 }
@@ -147,12 +168,14 @@ a.control-menu-icon,
 
 .control-menu-level-2 {
 	background-color: $control-menu-level-2-bg;
-	border-bottom: 1px solid #E7E7ED;
+	border-bottom: 1px solid #e7e7ed;
 	color: $control-menu-level-2-color;
 	padding-bottom: 7px;
 	padding-top: 6px;
 
-	a, a:focus, a:hover {
+	a,
+	a:focus,
+	a:hover {
 		color: $control-menu-level-2-link-color;
 	}
 
@@ -190,7 +213,7 @@ a.control-menu-icon,
 		z-index: 1;
 
 		&.open {
-			background-color: transparentize(#29343D, 0.1);
+			background-color: transparentize(#29343d, 0.1);
 			display: block;
 			overflow: auto;
 		}
@@ -280,9 +303,11 @@ a.control-menu-icon,
 	@include flex(0 1 auto);
 }
 
-.live-link, .staging-link {
-	a, a:focus {
-		color: #869CAD;
+.live-link,
+.staging-link {
+	a,
+	a:focus {
+		color: #869cad;
 	}
 
 	&.active {
@@ -297,7 +322,7 @@ a.control-menu-icon,
 		}
 
 		a {
-			color: #FFF;
+			color: #fff;
 		}
 	}
 }

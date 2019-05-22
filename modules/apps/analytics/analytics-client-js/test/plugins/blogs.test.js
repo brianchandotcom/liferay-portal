@@ -14,7 +14,8 @@ const createBlogElement = () => {
 	blogElement.dataset.analyticsAssetId = 'assetId';
 	blogElement.dataset.analyticsAssetTitle = 'Blog Title 1';
 	blogElement.dataset.analyticsAssetType = 'blog';
-	blogElement.innerText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+	blogElement.innerText =
+		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
 	document.body.appendChild(blogElement);
 	return blogElement;
 };
@@ -29,7 +30,7 @@ describe('Blogs Plugin', () => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
-			writable: false,
+			writable: false
 		});
 
 		fetchMock.mock('*', () => 200);
@@ -47,11 +48,14 @@ describe('Blogs Plugin', () => {
 				({eventId}) => eventId === 'blogViewed'
 			);
 
-			expect(events.length).to.be.at.least(1, 'At least one event should have been fired');
+			expect(events.length).to.be.at.least(
+				1,
+				'At least one event should have been fired'
+			);
 
 			events[0].should.deep.include({
 				applicationId,
-				eventId: 'blogViewed',
+				eventId: 'blogViewed'
 			});
 			expect(events[0].properties.entryId).to.equal('assetId');
 
@@ -72,7 +76,7 @@ describe('Blogs Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'blogClicked',
+				eventId: 'blogClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
@@ -98,14 +102,14 @@ describe('Blogs Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'blogClicked',
+				eventId: 'blogClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				entryId: 'assetId',
 				href: googleUrl,
 				tagName: 'a',
-				text,
+				text
 			});
 
 			document.body.removeChild(blogElement);
@@ -124,12 +128,12 @@ describe('Blogs Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'blogClicked',
+				eventId: 'blogClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				entryId: 'assetId',
-				tagName: 'p',
+				tagName: 'p'
 			});
 
 			document.body.removeChild(blogElement);

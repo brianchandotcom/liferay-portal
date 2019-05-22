@@ -3,7 +3,10 @@
 import Component from 'metal-jsx';
 import objectHash from 'object-hash';
 import {Config} from 'metal-state';
-import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/js/util/fetch.es';
+import {
+	convertToSearchParams,
+	makeFetch
+} from 'dynamic-data-mapping-form-builder/js/util/fetch.es';
 
 class AutoSave extends Component {
 	static PROPS = {
@@ -36,13 +39,10 @@ class AutoSave extends Component {
 	}
 
 	getStateHash(state) {
-		return objectHash(
-			state,
-			{
-				algorithm: 'md5',
-				unorderedObjects: true
-			}
-		);
+		return objectHash(state, {
+			algorithm: 'md5',
+			unorderedObjects: true
+		});
 	}
 
 	hasUnsavedChanges() {
@@ -58,37 +58,29 @@ class AutoSave extends Component {
 
 		stateSyncronizer.syncInputs();
 
-		this._pendingRequest = makeFetch(
-			{
-				body: this._getFormData(saveAsDraft),
-				url: this.props.url
-			}
-		).then(
-			responseData => {
+		this._pendingRequest = makeFetch({
+			body: this._getFormData(saveAsDraft),
+			url: this.props.url
+		})
+			.then(responseData => {
 				this._pendingRequest = null;
 
 				this._defineIds(responseData);
 
 				this.saveStateHash(currentState);
 
-				this.emit(
-					'autosaved',
-					{
-						modifiedDate: responseData.modifiedDate,
-						savedAsDraft: saveAsDraft
-					}
-				);
+				this.emit('autosaved', {
+					modifiedDate: responseData.modifiedDate,
+					savedAsDraft: saveAsDraft
+				});
 
 				return responseData;
-			}
-		)
-			.catch(
-				reason => {
-					this._pendingRequest = null;
+			})
+			.catch(reason => {
+				this._pendingRequest = null;
 
-					throw reason;
-				}
-			);
+				throw reason;
+			});
 
 		return this._pendingRequest;
 	}
@@ -98,9 +90,13 @@ class AutoSave extends Component {
 			const {stateSyncronizer} = this.props;
 
 			if (this._pendingRequest) {
-				this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
-			}
-			else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
+				this._pendingRequest
+					.then(() => this.saveIfNeeded())
+					.catch(() => {});
+			} else if (
+				this.hasUnsavedChanges() &&
+				!stateSyncronizer.isEmpty()
+			) {
 				this.save();
 			}
 		}
@@ -129,13 +125,17 @@ class AutoSave extends Component {
 	_defineIds(response) {
 		const {namespace} = this.props;
 
-		const formInstanceIdNode = document.querySelector(`#${namespace}formInstanceId`);
+		const formInstanceIdNode = document.querySelector(
+			`#${namespace}formInstanceId`
+		);
 
 		if (formInstanceIdNode && formInstanceIdNode.value === '0') {
 			formInstanceIdNode.value = response.formInstanceId;
 		}
 
-		const ddmStructureIdNode = document.querySelector(`#${namespace}ddmStructureId`);
+		const ddmStructureIdNode = document.querySelector(
+			`#${namespace}ddmStructureId`
+		);
 
 		if (ddmStructureIdNode && ddmStructureIdNode.value === '0') {
 			ddmStructureIdNode.value = response.ddmStructureId;

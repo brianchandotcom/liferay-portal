@@ -35,7 +35,6 @@ import templates from './ImageEditor.soy';
  * </ul>
  */
 class ImageEditor extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -59,32 +58,27 @@ class ImageEditor extends PortletBase {
 		 * @type {Array.<Object>}
 		 */
 		this.history_ = [
-			new ImageEditorHistoryEntry(
-				{
-					url: this.image
-				}
-			)
+			new ImageEditorHistoryEntry({
+				url: this.image
+			})
 		];
 
 		// Polyfill svg usage for lexicon icons
 
-		svg4everybody(
-			{
-				attributeName: 'data-href',
-				polyfill: true
-			}
-		);
+		svg4everybody({
+			attributeName: 'data-href',
+			polyfill: true
+		});
 
 		// Load the first entry imageData and render it on the app.
 
-		this.history_[0].getImageData()
-			.then((imageData) => {
-				async.nextTick(() => {
-					this.imageEditorReady = true;
+		this.history_[0].getImageData().then(imageData => {
+			async.nextTick(() => {
+				this.imageEditorReady = true;
 
-					this.syncImageData_(imageData);
-				});
+				this.syncImageData_(imageData);
 			});
+		});
 	}
 
 	/**
@@ -92,11 +86,14 @@ class ImageEditor extends PortletBase {
 	 * a new entry in the history stack. This wipes out any stale redo states.
 	 */
 	accept() {
-		let selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
+		let selectedControl = this.components[
+			this.id + '_selected_control_' + this.selectedControl.variant
+		];
 
-		this.history_[this.historyIndex_].getImageData()
-			.then((imageData) => selectedControl.process(imageData))
-			.then((imageData) => this.createHistoryEntry_(imageData))
+		this.history_[this.historyIndex_]
+			.getImageData()
+			.then(imageData => selectedControl.process(imageData))
+			.then(imageData => this.createHistoryEntry_(imageData))
 			.then(() => this.syncHistory_())
 			.then(() => {
 				this.selectedControl = null;
@@ -123,7 +120,9 @@ class ImageEditor extends PortletBase {
 	createHistoryEntry_(imageData) {
 		this.historyIndex_++;
 		this.history_.length = this.historyIndex_ + 1;
-		this.history_[this.historyIndex_] = new ImageEditorHistoryEntry({data: imageData});
+		this.history_[this.historyIndex_] = new ImageEditorHistoryEntry({
+			data: imageData
+		});
 
 		return CancellablePromise.resolve();
 	}
@@ -144,7 +143,9 @@ class ImageEditor extends PortletBase {
 	 * @return {Element} The canvas element
 	 */
 	getImageEditorCanvas() {
-		return this.element.querySelector('.lfr-image-editor-image-container canvas');
+		return this.element.querySelector(
+			'.lfr-image-editor-image-container canvas'
+		);
 	}
 
 	/**
@@ -154,29 +155,29 @@ class ImageEditor extends PortletBase {
 	 */
 	getImageEditorImageBlob() {
 		return new CancellablePromise((resolve, reject) => {
-			this.getImageEditorImageData()
-				.then(imageData => {
-					let canvas = document.createElement('canvas');
-					canvas.width = imageData.width;
-					canvas.height = imageData.height;
+			this.getImageEditorImageData().then(imageData => {
+				let canvas = document.createElement('canvas');
+				canvas.width = imageData.width;
+				canvas.height = imageData.height;
 
-					canvas.getContext('2d').putImageData(imageData, 0, 0);
+				canvas.getContext('2d').putImageData(imageData, 0, 0);
 
-					if (canvas.toBlob) {
-						canvas.toBlob(resolve, this.saveMimeType);
+				if (canvas.toBlob) {
+					canvas.toBlob(resolve, this.saveMimeType);
+				} else {
+					let data = atob(
+						canvas.toDataURL(this.saveMimeType).split(',')[1]
+					);
+					let length = data.length;
+					let bytes = new Uint8Array(length);
+
+					for (let i = 0; i < length; i++) {
+						bytes[i] = data.charCodeAt(i);
 					}
-					else {
-						let data = atob(canvas.toDataURL(this.saveMimeType).split(',')[1]);
-						let length = data.length;
-						let bytes = new Uint8Array(length);
 
-						for (let i = 0; i < length; i++) {
-							bytes[i] = data.charCodeAt(i);
-						}
-
-						resolve(new Blob([bytes], {type: this.saveMimeType}));
-					}
-				});
+					resolve(new Blob([bytes], {type: this.saveMimeType}));
+				}
+			});
 		});
 	}
 
@@ -195,7 +196,10 @@ class ImageEditor extends PortletBase {
 	 * @return {Array<{Object}>}
 	 */
 	getPossibleControls() {
-		return this.imageEditorCapabilities.tools.reduce((prev, curr) => prev.concat(curr.controls), []);
+		return this.imageEditorCapabilities.tools.reduce(
+			(prev, curr) => prev.concat(curr.controls),
+			[]
+		);
 	}
 
 	/**
@@ -220,16 +224,12 @@ class ImageEditor extends PortletBase {
 		this.components.loading.show = false;
 
 		if (result && result.success) {
-			Liferay.Util.getOpener().Liferay.fire(
-				this.saveEventName,
-				{
-					data: result
-				}
-			);
+			Liferay.Util.getOpener().Liferay.fire(this.saveEventName, {
+				data: result
+			});
 
 			Liferay.Util.getWindow().hide();
-		}
-		else if (result.error) {
+		} else if (result.error) {
 			this.showError_(result.error.message);
 		}
 	}
@@ -256,11 +256,12 @@ class ImageEditor extends PortletBase {
 		let targetControl = target.getAttribute('data-control');
 		let targetTool = target.getAttribute('data-tool');
 
-		this.syncHistory_()
-			.then(() => {
-				this.selectedControl = controls.filter(tool => tool.variant === targetControl)[0];
-				this.selectedTool = targetTool;
-			});
+		this.syncHistory_().then(() => {
+			this.selectedControl = controls.filter(
+				tool => tool.variant === targetControl
+			)[0];
+			this.selectedTool = targetTool;
+		});
 	}
 
 	/**
@@ -275,11 +276,12 @@ class ImageEditor extends PortletBase {
 		let targetControl = event.data.item.variant;
 		let targetTool = target.getAttribute('data-tool');
 
-		this.syncHistory_()
-			.then(() => {
-				this.selectedControl = controls.filter(tool => tool.variant === targetControl)[0];
-				this.selectedTool = targetTool;
-			});
+		this.syncHistory_().then(() => {
+			this.selectedControl = controls.filter(
+				tool => tool.variant === targetControl
+			)[0];
+			this.selectedTool = targetTool;
+		});
 	}
 
 	/**
@@ -287,11 +289,14 @@ class ImageEditor extends PortletBase {
 	 * currently selected control.
 	 */
 	requestImageEditorPreview() {
-		let selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
+		let selectedControl = this.components[
+			this.id + '_selected_control_' + this.selectedControl.variant
+		];
 
-		this.history_[this.historyIndex_].getImageData()
-			.then((imageData) => selectedControl.preview(imageData))
-			.then((imageData) => this.syncImageData_(imageData));
+		this.history_[this.historyIndex_]
+			.getImageData()
+			.then(imageData => selectedControl.preview(imageData))
+			.then(imageData => this.syncImageData_(imageData));
 
 		this.components.loading.show = true;
 	}
@@ -316,9 +321,9 @@ class ImageEditor extends PortletBase {
 	save_(event) {
 		if (!event.delegateTarget.disabled) {
 			this.getImageEditorImageBlob()
-				.then((imageBlob) => this.submitBlob_(imageBlob))
-				.then((result) => this.notifySaveResult_(result))
-				.catch((error) => this.showError_(error));
+				.then(imageBlob => this.submitBlob_(imageBlob))
+				.then(result => this.notifySaveResult_(result))
+				.catch(error => this.showError_(error));
 		}
 	}
 
@@ -348,18 +353,16 @@ class ImageEditor extends PortletBase {
 		this.components.loading.show = false;
 
 		AUI().use('liferay-alert', () => {
-			new Liferay.Alert(
-				{
-					delay: {
-						hide: 2000,
-						show: 0
-					},
-					duration: 3000,
-					icon: 'exclamation-circle',
-					message: message.message,
-					type: 'danger'
-				}
-			).render(this.element);
+			new Liferay.Alert({
+				delay: {
+					hide: 2000,
+					show: 0
+				},
+				duration: 3000,
+				icon: 'exclamation-circle',
+				message: message.message,
+				type: 'danger'
+			}).render(this.element);
 		});
 	}
 
@@ -396,18 +399,17 @@ class ImageEditor extends PortletBase {
 	 */
 	syncHistory_() {
 		return new CancellablePromise((resolve, reject) => {
-			this.history_[this.historyIndex_].getImageData()
-				.then((imageData) => {
-					this.syncImageData_(imageData);
+			this.history_[this.historyIndex_].getImageData().then(imageData => {
+				this.syncImageData_(imageData);
 
-					this.history = {
-						canRedo: this.historyIndex_ < this.history_.length - 1,
-						canReset: this.history_.length > 1,
-						canUndo: this.historyIndex_ > 0
-					};
+				this.history = {
+					canRedo: this.historyIndex_ < this.history_.length - 1,
+					canReset: this.history_.length > 1,
+					canUndo: this.historyIndex_ > 0
+				};
 
-					resolve();
-				});
+				resolve();
+			});
 		});
 	}
 
@@ -443,21 +445,31 @@ class ImageEditor extends PortletBase {
 			dialogFooterHeight = dialogFooter.offsetHeight;
 		}
 
-		let availableHeight = boundingBox.offsetHeight - 142 - 40 - dialogFooterHeight;
+		let availableHeight =
+			boundingBox.offsetHeight - 142 - 40 - dialogFooterHeight;
 		let availableAspectRatio = availableWidth / availableHeight;
 
 		if (availableAspectRatio > 1) {
 			canvas.height = availableHeight;
 			canvas.width = aspectRatio * availableHeight;
-		}
-		else {
+		} else {
 			canvas.width = availableWidth;
 			canvas.height = availableWidth / aspectRatio;
 		}
 
 		let context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
-		context.drawImage(offscreenCanvas, 0, 0, width, height, 0, 0, canvas.width, canvas.height);
+		context.drawImage(
+			offscreenCanvas,
+			0,
+			0,
+			width,
+			height,
+			0,
+			0,
+			canvas.width,
+			canvas.height
+		);
 
 		canvas.style.width = canvas.width + 'px';
 		canvas.style.height = canvas.height + 'px';
@@ -482,7 +494,6 @@ class ImageEditor extends PortletBase {
  * @type {!Object}
  */
 ImageEditor.STATE = {
-
 	/**
 	 * Whether the editor is ready for user interaction.
 	 * @type {Object}

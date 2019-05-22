@@ -30,21 +30,19 @@ function _handleImageEditorChange(
  * destroyed on hide.
  * @review
  */
-function destroy() {
-}
+function destroy() {}
 
 /**
  * @param {object} editableValues
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	return editableValues.mappedField ? [
-		FLOATING_TOOLBAR_BUTTONS.imageLink,
-		FLOATING_TOOLBAR_BUTTONS.map
-	] : [
-		FLOATING_TOOLBAR_BUTTONS.imageProperties,
-		FLOATING_TOOLBAR_BUTTONS.map
-	];
+	return editableValues.mappedField
+		? [FLOATING_TOOLBAR_BUTTONS.imageLink, FLOATING_TOOLBAR_BUTTONS.map]
+		: [
+				FLOATING_TOOLBAR_BUTTONS.imageProperties,
+				FLOATING_TOOLBAR_BUTTONS.map
+		  ];
 }
 
 /**
@@ -68,21 +66,19 @@ function init(
 ) {
 	const {imageSelectorURL} = options;
 
-	openImageSelector(
-		{
-			callback: url => {
-				_handleImageEditorChange(
-					url,
-					editableElement,
-					fragmentEntryLinkId,
-					changedCallback
-				);
-			},
-			destroyedCallback,
-			imageSelectorURL,
-			portletNamespace
-		}
-	);
+	openImageSelector({
+		callback: url => {
+			_handleImageEditorChange(
+				url,
+				editableElement,
+				fragmentEntryLinkId,
+				changedCallback
+			);
+		},
+		destroyedCallback,
+		imageSelectorURL,
+		portletNamespace
+	});
 }
 
 /**

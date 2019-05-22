@@ -16,14 +16,18 @@ const WRAPPER_PADDED_CLASS = 'fragment-entry-link-list-wrapper--padded';
  * @review
  */
 class EditModeWrapper extends Component {
-
 	/**
 	 * @inheritdoc
 	 */
 	created() {
-		this._handleSelectedSidebarPanelIdChanged = this._handleSelectedSidebarPanelIdChanged.bind(this);
+		this._handleSelectedSidebarPanelIdChanged = this._handleSelectedSidebarPanelIdChanged.bind(
+			this
+		);
 
-		this.on('selectedSidebarPanelIdChanged', this._handleSelectedSidebarPanelIdChanged);
+		this.on(
+			'selectedSidebarPanelIdChanged',
+			this._handleSelectedSidebarPanelIdChanged
+		);
 
 		this._handleSelectedSidebarPanelIdChanged();
 	}
@@ -39,19 +43,16 @@ class EditModeWrapper extends Component {
 
 			if (this.selectedSidebarPanelId) {
 				wrapper.classList.add(WRAPPER_PADDED_CLASS);
-			}
-			else {
+			} else {
 				wrapper.classList.remove(WRAPPER_PADDED_CLASS);
 			}
 		}
 	}
-
 }
 
-const ConnectedEditModeWrapper = getConnectedComponent(
-	EditModeWrapper,
-	['selectedSidebarPanelId']
-);
+const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
+	'selectedSidebarPanelId'
+]);
 
 export {ConnectedEditModeWrapper, EditModeWrapper};
 export default ConnectedEditModeWrapper;

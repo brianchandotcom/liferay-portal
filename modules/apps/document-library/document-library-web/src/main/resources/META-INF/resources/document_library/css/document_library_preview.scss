@@ -1,9 +1,9 @@
-@import "mixins";
+@import 'mixins';
 
-@import "upper_tbar";
+@import 'upper_tbar';
 
 .preview-file {
-	@import "floating_bar";
+	@import 'floating_bar';
 
 	margin: 1.5rem auto;
 	position: relative;
@@ -36,7 +36,7 @@
 
 .sidebar-preview {
 	.sidebar-panel {
-		background-color: #FFF;
+		background-color: #fff;
 	}
 
 	@include sm {

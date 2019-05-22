@@ -1,18 +1,18 @@
 .layouts-selector {
 	.card {
-		border: 1px solid #E7E7ED;
+		border: 1px solid #e7e7ed;
 		box-shadow: none;
-		color: #6B6C7E;
+		color: #6b6c7e;
 		margin-bottom: 0;
 
 		&:hover {
-			background-color: #F7F8F9;
-			border-color: #CDCED9;
+			background-color: #f7f8f9;
+			border-color: #cdced9;
 			color: #272833;
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 2px white, 0 0 0 4px #80AFFF;
+			box-shadow: 0 0 0 2px white, 0 0 0 4px #80afff;
 			color: #272833;
 		}
 	}
@@ -22,15 +22,17 @@
 	}
 
 	.selected .card {
-		background-color: #80ACFF;
-		border-color: #80ACFF;
+		background-color: #80acff;
+		border-color: #80acff;
 		color: #272833;
 	}
 
 	.disabled {
-		.card, .card:hover, .card:focus {
-			background-color: #E7E7ED;
-			border: 1px solid #E7E7ED;
+		.card,
+		.card:hover,
+		.card:focus {
+			background-color: #e7e7ed;
+			border: 1px solid #e7e7ed;
 			box-shadow: none;
 			color: #272833;
 			cursor: not-allowed;
@@ -67,7 +69,7 @@
 	}
 
 	.treeview-nodes {
-		border-left: 2px solid #869CAD;
+		border-left: 2px solid #869cad;
 		list-style: none;
 		margin-left: 15px;
 		padding-left: 0;
@@ -87,7 +89,7 @@
 	}
 
 	.treeview-node-toggler {
-		background-color: #869CAD;
+		background-color: #869cad;
 		border-radius: 3px;
 		display: inline-block;
 		height: 14px;
@@ -100,7 +102,7 @@
 		width: 14px;
 
 		&:before {
-			color: #FFF;
+			color: #fff;
 			content: '+';
 			display: block;
 			line-height: 11px;
@@ -167,18 +169,18 @@
 	}
 
 	.tree-container {
-		border-left: 2px solid #869CAD;
+		border-left: 2px solid #869cad;
 		margin-left: 10px;
 
 		.tree-container {
-			border-left: 1px dashed #869CAD;
+			border-left: 1px dashed #869cad;
 			margin-left: 20px;
 
 			.tree-node-content {
 				&:not(.tree-node-selected) {
 					.tree-node-hidden-hitarea {
 						&:before {
-							color: #869CAD;
+							color: #869cad;
 							content: '\e00d';
 							font-size: 0.7em;
 							visibility: visible;
@@ -190,7 +192,7 @@
 	}
 
 	.tree-hitarea {
-		background-color: #869CAD;
+		background-color: #869cad;
 		border-radius: 3px;
 		display: inline-block;
 		line-height: 14px;
@@ -206,7 +208,7 @@
 		line-height: normal;
 	}
 
-	.tree-node [class^="icon-"] {
+	.tree-node [class^='icon-'] {
 		margin-right: 0;
 	}
 
@@ -223,7 +225,7 @@
 		}
 
 		.tree-hitarea {
-			color: #1A2126;
+			color: #1a2126;
 			padding-right: 0;
 		}
 
@@ -234,10 +236,11 @@
 
 	.tree-pages .tree-node-selected .tree-label {
 		.layout-tree {
-			color: #65B6F0;
+			color: #65b6f0;
 		}
 
-		.layout-tree, .icon-monospaced {
+		.layout-tree,
+		.icon-monospaced {
 			cursor: pointer;
 		}
 	}

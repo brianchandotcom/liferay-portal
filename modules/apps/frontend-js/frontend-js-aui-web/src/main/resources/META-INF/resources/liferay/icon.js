@@ -19,19 +19,27 @@ AUI.add(
 				_ICON_REGISTRY[config.id] = config;
 
 				if (!instance._docClickHandler) {
-					instance._docClickHandler = doc.delegate('click', instance._handleDocClick, '.lfr-icon-item', instance);
+					instance._docClickHandler = doc.delegate(
+						'click',
+						instance._handleDocClick,
+						'.lfr-icon-item',
+						instance
+					);
 				}
 
 				if (!instance._docHoverHandler) {
-					instance._docHoverHandler = doc.delegate('hover', instance._handleDocMouseOver, instance._handleDocMouseOut, '.lfr-icon-item', instance);
+					instance._docHoverHandler = doc.delegate(
+						'hover',
+						instance._handleDocMouseOver,
+						instance._handleDocMouseOut,
+						'.lfr-icon-item',
+						instance
+					);
 				}
 
-				Liferay.once(
-					'screenLoad',
-					function() {
-						delete _ICON_REGISTRY[config.id];
-					}
-				);
+				Liferay.once('screenLoad', function() {
+					delete _ICON_REGISTRY[config.id];
+				});
 			},
 
 			_forcePost: function(event) {
@@ -60,8 +68,7 @@ AUI.add(
 
 					if (config.useDialog) {
 						instance._useDialog(event);
-					}
-					else {
+					} else {
 						instance._forcePost(event);
 					}
 				}
@@ -98,17 +105,14 @@ AUI.add(
 			},
 
 			_useDialog: function(event) {
-				Liferay.Util.openInDialog(
-					event,
-					{
-						dialog: {
-							destroyOnHide: true
-						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						}
+				Liferay.Util.openInDialog(event, {
+					dialog: {
+						destroyOnHide: true
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
 					}
-				);
+				});
 			}
 		};
 

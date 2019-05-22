@@ -11,11 +11,11 @@
 
 	.modal-footer > .btn-toolbar {
 		& > :not(:first-child) {
-			margin-left: .25rem;
+			margin-left: 0.25rem;
 		}
 
 		& > :not(:last-child) {
-			margin-right: .25rem;
+			margin-right: 0.25rem;
 		}
 	}
 }

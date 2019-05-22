@@ -1,4 +1,4 @@
-;(function(A, Liferay) {
+(function(A, Liferay) {
 	var Tabs = Liferay.namespace('Portal.Tabs');
 	var ToolTip = Liferay.namespace('Portal.ToolTip');
 
@@ -41,7 +41,12 @@
 		var el;
 
 		for (var i = 0; i < names.length; i++) {
-			el = A.one('#' + namespace + Liferay.Util.toCharCode(names[i]) + 'TabsSection');
+			el = A.one(
+				'#' +
+					namespace +
+					Liferay.Util.toCharCode(names[i]) +
+					'TabsSection'
+			);
 
 			if (el) {
 				el.hide();
@@ -78,12 +83,9 @@
 		['aui-base']
 	);
 
-	Liferay.publish(
-		'showTab',
-		{
-			defaultFn: Liferay.Portal.Tabs._show
-		}
-	);
+	Liferay.publish('showTab', {
+		defaultFn: Liferay.Portal.Tabs._show
+	});
 
 	ToolTip._getText = function(id) {
 		var node = A.one('#' + id);
@@ -140,13 +142,16 @@
 					A.bind('_syncUIPosAlign', cached)
 				);
 
-				hideTooltipTask = A.debounce('_onBoundingBoxMouseleave', cached.get('stickDuration'), cached);
+				hideTooltipTask = A.debounce(
+					'_onBoundingBoxMouseleave',
+					cached.get('stickDuration'),
+					cached
+				);
 
 				instance._hideTooltipTask = hideTooltipTask;
 
 				instance._cached = cached;
-			}
-			else {
+			} else {
 				cached.setAttrs(tooltipConfig);
 			}
 

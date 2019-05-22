@@ -8,7 +8,6 @@ import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 
 class ShareFormPopover extends Component {
 	static PROPS = {
-
 		/**
 		 * The element to align with.
 		 * @default ""
@@ -45,15 +44,16 @@ class ShareFormPopover extends Component {
 	};
 
 	attached() {
-		this._clipboard = new Clipboard(
-			{
-				selector: '.ddm-copy-clipboard'
-			}
-		);
+		this._clipboard = new Clipboard({
+			selector: '.ddm-copy-clipboard'
+		});
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			this._clipboard.on('success', this._handleClipboardSuccess.bind(this))
+			this._clipboard.on(
+				'success',
+				this._handleClipboardSuccess.bind(this)
+			)
 		);
 	}
 
@@ -68,20 +68,14 @@ class ShareFormPopover extends Component {
 		const {alignElement, spritemap, url, visible} = this.props;
 		const {success} = this.state;
 
-		const buttonClasses = getCN(
-			'btn ddm-copy-clipboard',
-			{
-				'btn-default': true,
-				'btn-success': success
-			}
-		);
+		const buttonClasses = getCN('btn ddm-copy-clipboard', {
+			'btn-default': true,
+			'btn-success': success
+		});
 
-		const formClasses = getCN(
-			'form-group m-0',
-			{
-				'has-success': success
-			}
-		);
+		const formClasses = getCN('form-group m-0', {
+			'has-success': success
+		});
 
 		return (
 			<Popover
@@ -96,22 +90,39 @@ class ShareFormPopover extends Component {
 				visible={visible}
 			>
 				<div class={formClasses}>
-					<div class="input-group">
-						<div class="input-group-item input-group-prepend">
-							<input class="form-control" readOnly={true} ref="shareFieldURL" type="text" value={url} />
+					<div class='input-group'>
+						<div class='input-group-item input-group-prepend'>
+							<input
+								class='form-control'
+								readOnly={true}
+								ref='shareFieldURL'
+								type='text'
+								value={url}
+							/>
 							{success && (
-								<div class="form-feedback-group">
-									<div class="form-feedback-item">{Liferay.Language.get('copied-to-clipboard')}</div>
+								<div class='form-feedback-group'>
+									<div class='form-feedback-item'>
+										{Liferay.Language.get(
+											'copied-to-clipboard'
+										)}
+									</div>
 								</div>
 							)}
 						</div>
-						<span class="input-group-append input-group-item input-group-item-shrink">
-							<button class={buttonClasses} data-clipboard data-text={url} type="button">
+						<span class='input-group-append input-group-item input-group-item-shrink'>
+							<button
+								class={buttonClasses}
+								data-clipboard
+								data-text={url}
+								type='button'
+							>
 								{success ? (
-									<span class="publish-button-success-icon pl-2 pr-2">
+									<span class='publish-button-success-icon pl-2 pr-2'>
 										<svg
-											aria-hidden="true"
-											class={'lexicon-icon lexicon-icon-check'}
+											aria-hidden='true'
+											class={
+												'lexicon-icon lexicon-icon-check'
+											}
 										>
 											<use
 												xlinkHref={`${spritemap}#check`}
@@ -119,7 +130,9 @@ class ShareFormPopover extends Component {
 										</svg>
 									</span>
 								) : (
-									<span class="publish-button-text">{Liferay.Language.get('copy')}</span>
+									<span class='publish-button-text'>
+										{Liferay.Language.get('copy')}
+									</span>
 								)}
 							</button>
 						</span>
@@ -133,31 +146,24 @@ class ShareFormPopover extends Component {
 		const {success} = this.state;
 
 		if (success) {
-			setTimeout(
-				() => {
-					const shareFieldURL = this.element.querySelector('input');
+			setTimeout(() => {
+				const shareFieldURL = this.element.querySelector('input');
 
-					selectText(shareFieldURL);
-				},
-				30
-			);
+				selectText(shareFieldURL);
+			}, 30);
 		}
 	}
 
 	_handleClipboardSuccess() {
-		this.setState(
-			{
-				success: true
-			}
-		);
+		this.setState({
+			success: true
+		});
 	}
 
 	_handlePopoverClosed() {
-		this.setState(
-			{
-				success: false
-			}
-		);
+		this.setState({
+			success: false
+		});
 
 		this.emit('popoverClosed');
 	}

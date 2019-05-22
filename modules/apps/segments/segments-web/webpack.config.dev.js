@@ -15,7 +15,16 @@ module.exports = {
 		publicPath: '/o/segments-web/'
 	},
 	entry: {
-		'index.dev': path.resolve(__dirname, 'src', 'main', 'resources', 'META-INF', 'resources', 'js', 'index.dev.es.js')
+		'index.dev': path.resolve(
+			__dirname,
+			'src',
+			'main',
+			'resources',
+			'META-INF',
+			'resources',
+			'js',
+			'index.dev.es.js'
+		)
 	},
 	mode: 'development',
 	module: {
@@ -30,7 +39,8 @@ module.exports = {
 					{
 						loader: 'liferay-lang-key-dev-loader',
 						options: {
-							path: '../segments-lang/src/main/resources/content/Language.properties'
+							path:
+								'../segments-lang/src/main/resources/content/Language.properties'
 						}
 					}
 				]
@@ -59,7 +69,7 @@ module.exports = {
 		new webpack.NormalModuleReplacementPlugin(
 			/\.\.\/libs\/odata-parser/,
 			'../libs/ODataParser.es.js'
-		),
+		)
 	],
 	resolve: {
 		extensions: ['.js', '.jsx', '.svg']

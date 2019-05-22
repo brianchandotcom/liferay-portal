@@ -3,11 +3,9 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var FormValidationSupport = function() {
-		};
+		var FormValidationSupport = function() {};
 
-		FormValidationSupport.ATTRS = {
-		};
+		FormValidationSupport.ATTRS = {};
 
 		FormValidationSupport.prototype = {
 			hasErrors: function() {
@@ -15,18 +13,15 @@ AUI.add(
 
 				var hasErrors = false;
 
-				instance.eachNestedField(
-					function(field) {
-						if (field.hasErrors()) {
-							hasErrors = true;
+				instance.eachNestedField(function(field) {
+					if (field.hasErrors()) {
+						hasErrors = true;
 
-							field.showErrorMessage();
-						}
-						else {
-							field.hideErrorMessage();
-						}
+						field.showErrorMessage();
+					} else {
+						field.hideErrorMessage();
 					}
-				);
+				});
 
 				return hasErrors;
 			},
@@ -36,20 +31,17 @@ AUI.add(
 
 				var hasPageErrors = false;
 
-				instance.eachNestedField(
-					function(field) {
-						var container = field.get('container');
+				instance.eachNestedField(function(field) {
+					var container = field.get('container');
 
-						if (pageNode.contains(container) && field.hasErrors()) {
-							hasPageErrors = true;
+					if (pageNode.contains(container) && field.hasErrors()) {
+						hasPageErrors = true;
 
-							field.showErrorMessage();
-						}
-						else {
-							field.hideErrorMessage();
-						}
+						field.showErrorMessage();
+					} else {
+						field.hideErrorMessage();
 					}
-				);
+				});
 
 				return hasPageErrors;
 			},
@@ -59,24 +51,20 @@ AUI.add(
 
 				if (instance.get('readOnly')) {
 					callback.call(instance, false, null);
-				}
-				else {
+				} else {
 					var evaluator = instance.get('evaluator');
 
-					evaluator.evaluate(
-						instance,
-						function(result) {
-							var hasErrors = true;
+					evaluator.evaluate(instance, function(result) {
+						var hasErrors = true;
 
-							if (result && Lang.isObject(result)) {
-								hasErrors = instance.hasErrors();
-							}
-
-							if (callback) {
-								callback.call(instance, hasErrors, result);
-							}
+						if (result && Lang.isObject(result)) {
+							hasErrors = instance.hasErrors();
 						}
-					);
+
+						if (callback) {
+							callback.call(instance, hasErrors, result);
+						}
+					});
 				}
 			},
 
@@ -85,29 +73,30 @@ AUI.add(
 
 				if (instance.get('readOnly')) {
 					callback.call(instance, false, null);
-				}
-				else {
+				} else {
 					var evaluator = instance.get('evaluator');
 
-					evaluator.evaluate(
-						instance,
-						function(result) {
-							var hasPageErrors = true;
+					evaluator.evaluate(instance, function(result) {
+						var hasPageErrors = true;
 
-							if (result && Lang.isObject(result)) {
-								hasPageErrors = instance.hasPageErrors(pageNode, result);
-							}
-
-							if (callback) {
-								callback.call(instance, hasPageErrors, result);
-							}
+						if (result && Lang.isObject(result)) {
+							hasPageErrors = instance.hasPageErrors(
+								pageNode,
+								result
+							);
 						}
-					);
+
+						if (callback) {
+							callback.call(instance, hasPageErrors, result);
+						}
+					});
 				}
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormValidationSupport = FormValidationSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormValidationSupport = FormValidationSupport;
 	},
 	'',
 	{

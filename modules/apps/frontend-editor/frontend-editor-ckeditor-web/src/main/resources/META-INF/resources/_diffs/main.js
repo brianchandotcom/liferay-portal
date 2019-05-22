@@ -26,185 +26,220 @@ AUI.add(
 
 		var WIN = A.config.win;
 
-		var CKEditorInline = A.Component.create(
-			{
-				AUGMENTS: [Liferay.InlineEditorBase],
+		var CKEditorInline = A.Component.create({
+			AUGMENTS: [Liferay.InlineEditorBase],
 
-				EXTENDS: A.Base,
+			EXTENDS: A.Base,
 
-				NAME: 'inline-editor-ckeditor',
+			NAME: 'inline-editor-ckeditor',
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-						var editor = instance.get(EDITOR);
+					var editor = instance.get(EDITOR);
 
-						instance._eventHandles = [
-							editor.on('blur', instance._onEditorBlur, instance),
-							editor.on('focus', instance._onEditorFocus, instance),
-							editor.on('restoreContent', instance._restoreContent, instance),
-							editor.on('saveContent', A.fn(0, 'save', instance))
-						];
+					instance._eventHandles = [
+						editor.on('blur', instance._onEditorBlur, instance),
+						editor.on('focus', instance._onEditorFocus, instance),
+						editor.on(
+							'restoreContent',
+							instance._restoreContent,
+							instance
+						),
+						editor.on('saveContent', A.fn(0, 'save', instance))
+					];
 
-						instance.after('destroy', instance._destructor, instance);
+					instance.after('destroy', instance._destructor, instance);
 
-						instance.after(['saveFailure', 'saveSuccess'], instance._updateNoticePosition, instance);
+					instance.after(
+						['saveFailure', 'saveSuccess'],
+						instance._updateNoticePosition,
+						instance
+					);
 
-						A.one('#' + instance.get(EDITOR_NAME)).delegate(
-							'click',
-							function(event) {
-								if (event.shiftKey) {
-									var clone = event.currentTarget.clone();
+					A.one('#' + instance.get(EDITOR_NAME)).delegate(
+						'click',
+						function(event) {
+							if (event.shiftKey) {
+								var clone = event.currentTarget.clone();
 
-									A.getBody().append(clone);
+								A.getBody().append(clone);
 
-									clone.simulate('click');
-								}
-							},
-							'a'
+								clone.simulate('click');
+							}
+						},
+						'a'
+					);
+				},
+
+				isContentDirty: function() {
+					var instance = this;
+
+					return instance.get(EDITOR).checkDirty();
+				},
+
+				resetDirty: function() {
+					var instance = this;
+
+					instance.get(EDITOR).resetDirty();
+				},
+
+				_attachScrollListener: function() {
+					var instance = this;
+
+					var notice = instance.getEditNotice();
+
+					if (!instance._scrollHandle) {
+						instance._scrollHandle = A.getWin().on(
+							'scroll',
+							instance._updateNoticePosition,
+							instance
 						);
-					},
+					}
+				},
 
-					isContentDirty: function() {
-						var instance = this;
+				_destructor: function() {
+					var instance = this;
 
-						return instance.get(EDITOR).checkDirty();
-					},
+					A.Array.invoke(instance._eventHandles, 'removeListener');
 
-					resetDirty: function() {
-						var instance = this;
+					if (instance._scrollHandle) {
+						instance._scrollHandle.detach();
+					}
+				},
 
-						instance.get(EDITOR).resetDirty();
-					},
+				_getAutoSaveTimeout: function() {
+					var instance = this;
 
-					_attachScrollListener: function() {
-						var instance = this;
+					var editor = instance.get(EDITOR);
 
-						var notice = instance.getEditNotice();
+					return editor.config.autoSaveTimeout;
+				},
 
-						if (!instance._scrollHandle) {
-							instance._scrollHandle = A.getWin().on('scroll', instance._updateNoticePosition, instance);
-						}
-					},
+				_getCloseNoticeTimeout: function() {
+					var instance = this;
 
-					_destructor: function() {
-						var instance = this;
+					var editor = instance.get(EDITOR);
 
-						A.Array.invoke(instance._eventHandles, 'removeListener');
+					return editor.config.closeNoticeTimeout;
+				},
+
+				_onEditorBlur: function() {
+					var instance = this;
+
+					instance.stopSaveTask();
+
+					if (instance.isContentDirty()) {
+						instance.save();
+					}
+				},
+
+				_onEditorFocus: function() {
+					var instance = this;
+
+					var originalContentNode = A.one(
+						'#' +
+							instance.get(EDITOR_NAME) +
+							instance.get(EDITOR_SUFFIX)
+					);
+
+					if (!originalContentNode.text()) {
+						originalContentNode.text(this.get(EDITOR).getData());
+					}
+
+					var notice = instance.getEditNotice();
+
+					if (
+						notice.get(VISIBLE) &&
+						notice.get(BOUNDING_BOX).getData(EDITOR) !==
+							instance.get(EDITOR_NAME)
+					) {
+						notice.hide();
 
 						if (instance._scrollHandle) {
 							instance._scrollHandle.detach();
+
+							instance._scrollHandle = null;
 						}
-					},
+					}
 
-					_getAutoSaveTimeout: function() {
-						var instance = this;
+					instance.startSaveTask();
 
-						var editor = instance.get(EDITOR);
+					instance._attachScrollListener();
 
-						return editor.config.autoSaveTimeout;
-					},
+					instance.resetDirty();
+				},
 
-					_getCloseNoticeTimeout: function() {
-						var instance = this;
+				_restoreContent: function() {
+					var instance = this;
 
-						var editor = instance.get(EDITOR);
+					var originalContentNode = A.one(
+						'#' +
+							instance.get(EDITOR_NAME) +
+							instance.get(EDITOR_SUFFIX)
+					);
 
-						return editor.config.closeNoticeTimeout;
-					},
+					var originalContent = originalContentNode.text();
 
-					_onEditorBlur: function() {
-						var instance = this;
+					instance.get(EDITOR).setData(originalContent);
 
-						instance.stopSaveTask();
+					if (instance.isContentDirty()) {
+						instance.save();
+					}
+				},
 
-						if (instance.isContentDirty()) {
-							instance.save();
-						}
-					},
+				_updateNoticePosition: function() {
+					var instance = this;
 
-					_onEditorFocus: function() {
-						var instance = this;
+					var notice = instance.getEditNotice();
 
-						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(EDITOR_SUFFIX));
+					if (notice.get(VISIBLE)) {
+						var editorToolbarNode = A.one(
+							instance.get(EDITOR_PREFIX) +
+								instance.get(EDITOR_NAME)
+						);
 
-						if (!originalContentNode.text()) {
-							originalContentNode.text(this.get(EDITOR).getData());
-						}
+						var editorToolbarVisible =
+							editorToolbarNode.getStyle('display') !== 'none';
 
-						var notice = instance.getEditNotice();
+						var align = {
+							node: WIN,
+							points: POINTS_WINDOW_CENTER
+						};
 
-						if (notice.get(VISIBLE) && notice.get(BOUNDING_BOX).getData(EDITOR) !== instance.get(EDITOR_NAME)) {
-							notice.hide();
+						if (editorToolbarVisible) {
+							var noticePosition = POINT_TL;
+							var containerPostion = POINT_BL;
 
-							if (instance._scrollHandle) {
-								instance._scrollHandle.detach();
-
-								instance._scrollHandle = null;
-							}
-						}
-
-						instance.startSaveTask();
-
-						instance._attachScrollListener();
-
-						instance.resetDirty();
-					},
-
-					_restoreContent: function() {
-						var instance = this;
-
-						var originalContentNode = A.one('#' + instance.get(EDITOR_NAME) + instance.get(EDITOR_SUFFIX));
-
-						var originalContent = originalContentNode.text();
-
-						instance.get(EDITOR).setData(originalContent);
-
-						if (instance.isContentDirty()) {
-							instance.save();
-						}
-					},
-
-					_updateNoticePosition: function() {
-						var instance = this;
-
-						var notice = instance.getEditNotice();
-
-						if (notice.get(VISIBLE)) {
-							var editorToolbarNode = A.one(instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME));
-
-							var editorToolbarVisible = editorToolbarNode.getStyle('display') !== 'none';
-
-							var align = {
-								node: WIN,
-								points: POINTS_WINDOW_CENTER
-							};
-
-							if (editorToolbarVisible) {
-								var noticePosition = POINT_TL;
-								var containerPostion = POINT_BL;
-
-								if (Lang.toInt(editorToolbarNode.getStyle('top')) > instance.get('toolbarTopOffset')) {
-									noticePosition = POINT_BL;
-									containerPostion = POINT_TL;
-								}
-
-								align.node = editorToolbarNode;
-								align.points = [noticePosition, containerPostion];
+							if (
+								Lang.toInt(editorToolbarNode.getStyle('top')) >
+								instance.get('toolbarTopOffset')
+							) {
+								noticePosition = POINT_BL;
+								containerPostion = POINT_TL;
 							}
 
-							notice.set(ALIGN, align);
+							align.node = editorToolbarNode;
+							align.points = [noticePosition, containerPostion];
 						}
+
+						notice.set(ALIGN, align);
 					}
 				}
 			}
-		);
+		});
 
 		Liferay.CKEditorInline = CKEditorInline;
 	},
 	'',
 	{
-		requires: ['array-invoke', 'liferay-inline-editor-base', 'node-event-simulate', 'overlay', 'yui-later']
+		requires: [
+			'array-invoke',
+			'liferay-inline-editor-base',
+			'node-event-simulate',
+			'overlay',
+			'yui-later'
+		]
 	}
 );

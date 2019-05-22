@@ -6,25 +6,25 @@ AUI.add(
 		var prefix = A.Lang.String.prefix;
 
 		var formatSelectorNS = function(ns, selector) {
-			return selector.replace(getRegExp('(#|\\[id=(\\\"|\\\'))(?!' + ns + ')', 'g'), '$1' + ns);
+			return selector.replace(
+				getRegExp('(#|\\[id=(\\"|\\\'))(?!' + ns + ')', 'g'),
+				'$1' + ns
+			);
 		};
 
-		A.mix(
-			A.Node.prototype,
-			{
-				allNS: function(ns, selector) {
-					var instance = this;
+		A.mix(A.Node.prototype, {
+			allNS: function(ns, selector) {
+				var instance = this;
 
-					return instance.all(formatSelectorNS(ns, selector));
-				},
+				return instance.all(formatSelectorNS(ns, selector));
+			},
 
-				oneNS: function(ns, selector) {
-					var instance = this;
+			oneNS: function(ns, selector) {
+				var instance = this;
 
-					return instance.one(formatSelectorNS(ns, selector));
-				}
+				return instance.one(formatSelectorNS(ns, selector));
 			}
-		);
+		});
 
 		A.Node.formatSelectorNS = formatSelectorNS;
 

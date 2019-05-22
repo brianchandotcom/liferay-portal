@@ -52,17 +52,17 @@ class EmptyDropZone extends Component {
 			hover
 		} = this.props;
 
-		const emptyZoneClasses = getCN(
-			'empty-drop-zone-root',
-			{
-				'empty-drop-zone-dashed border-primary rounded': !canDrop || !hover
-			}
-		);
+		const emptyZoneClasses = getCN('empty-drop-zone-root', {
+			'empty-drop-zone-dashed border-primary rounded': !canDrop || !hover
+		});
 
 		const targetClasses = getCN(
-			emptyContributors ? 'empty-drop-zone-target' : 'drop-zone-target p-5',
+			emptyContributors
+				? 'empty-drop-zone-target'
+				: 'drop-zone-target p-5',
 			{
-				'empty-drop-zone-target-solid dnd-hover border-primary rounded': canDrop && hover
+				'empty-drop-zone-target-solid dnd-hover border-primary rounded':
+					canDrop && hover
 			}
 		);
 
@@ -70,7 +70,7 @@ class EmptyDropZone extends Component {
 			<div className={emptyZoneClasses}>
 				{connectDropTarget(
 					<div className={targetClasses}>
-						<div className="empty-drop-zone-indicator" />
+						<div className='empty-drop-zone-indicator' />
 					</div>
 				)}
 			</div>

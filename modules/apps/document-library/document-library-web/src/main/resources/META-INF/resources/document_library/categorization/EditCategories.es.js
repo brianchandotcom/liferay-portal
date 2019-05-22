@@ -12,14 +12,15 @@ import templates from './EditCategories.soy';
  * fileEntries inside a modal.
  */
 class EditCategories extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
 		this._assetVocabularyCategories = new Map();
 
-		this._bulkStatusComponent =	Liferay.component(this.namespace + 'BulkStatus');
+		this._bulkStatusComponent = Liferay.component(
+			this.namespace + 'BulkStatus'
+		);
 	}
 
 	/**
@@ -35,10 +36,17 @@ class EditCategories extends Component {
 	created() {
 		this.append = true;
 		this.dataSource = [];
-		this.urlCategories = `/bulk-rest/v1.0/sites/${this.groupIds[0]}/taxonomy-vocabularies/common`;
+		this.urlCategories = `/bulk-rest/v1.0/sites/${
+			this.groupIds[0]
+		}/taxonomy-vocabularies/common`;
 
 		this._feedbackErrorClass = 'form-feedback-item';
-		this._requiredVocabularyErrorMarkupText = '<div class="' + this._feedbackErrorClass + '">' + Liferay.Language.get('this-field-is-required') + '</div>';
+		this._requiredVocabularyErrorMarkupText =
+			'<div class="' +
+			this._feedbackErrorClass +
+			'">' +
+			Liferay.Language.get('this-field-is-required') +
+			'</div>';
 	}
 
 	/**
@@ -66,11 +74,12 @@ class EditCategories extends Component {
 
 		if (inputNode.value) {
 			inputNode.parentElement.parentElement.classList.remove('has-error');
-		}
-		else {
+		} else {
 			inputNode.parentElement.parentElement.classList.add('has-error');
 
-			let feedbackErrorNode = inputNode.parentElement.querySelector('.' + this._feedbackErrorClass);
+			let feedbackErrorNode = inputNode.parentElement.querySelector(
+				'.' + this._feedbackErrorClass
+			);
 
 			if (!feedbackErrorNode) {
 				inputNode.parentElement.insertAdjacentHTML(
@@ -118,14 +127,10 @@ class EditCategories extends Component {
 		};
 
 		return fetch(this.pathModule + url, request)
-			.then(
-				response => response.json()
-			)
-			.catch(
-				(xhr) => {
-					this.close();
-				}
-			);
+			.then(response => response.json())
+			.catch(xhr => {
+				this.close();
+			});
 	}
 
 	/**
@@ -140,30 +145,32 @@ class EditCategories extends Component {
 
 		let selection = this._getSelection();
 
-		Promise.all(
-			[
-				this._fetchCategoriesRequest(this.urlCategories, 'POST', selection),
-				this._fetchCategoriesRequest(this.urlSelection, 'POST', selection)
-			]
-		).then(
-			([responseCategories, responseSelection]) => {
-				if (responseCategories && responseSelection) {
-					this.loading = false;
-					this.description = this._getDescription(responseSelection.size);
-					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
-					this.vocabularies = this._parseVocabularies(responseCategories.items || []);
-				}
+		Promise.all([
+			this._fetchCategoriesRequest(this.urlCategories, 'POST', selection),
+			this._fetchCategoriesRequest(this.urlSelection, 'POST', selection)
+		]).then(([responseCategories, responseSelection]) => {
+			if (responseCategories && responseSelection) {
+				this.loading = false;
+				this.description = this._getDescription(responseSelection.size);
+				this.multiple = this.fileEntries.length > 1 || this.selectAll;
+				this.vocabularies = this._parseVocabularies(
+					responseCategories.items || []
+				);
 			}
-		);
+		});
 	}
 
 	_getDescription(size) {
 		if (size === 1) {
-			return Liferay.Language.get('you-are-editing-the-categories-for-the-selected-item');
+			return Liferay.Language.get(
+				'you-are-editing-the-categories-for-the-selected-item'
+			);
 		}
 
 		return Liferay.Util.sub(
-			Liferay.Language.get('you-are-editing-the-common-categories-for-x-items.-select-edit-or-replace-current-categories'),
+			Liferay.Language.get(
+				'you-are-editing-the-common-categories-for-x-items.-select-edit-or-replace-current-categories'
+			),
 			size
 		);
 	}
@@ -177,12 +184,10 @@ class EditCategories extends Component {
 	_getFinalCategories() {
 		let finalCategories = [];
 
-		this._assetVocabularyCategories.forEach(
-			category => {
-				const categoryIds = category.map(item => item.value);
-				finalCategories = finalCategories.concat(categoryIds);
-			}
-		);
+		this._assetVocabularyCategories.forEach(category => {
+			const categoryIds = category.map(item => item.value);
+			finalCategories = finalCategories.concat(categoryIds);
+		});
 
 		return finalCategories;
 	}
@@ -205,7 +210,9 @@ class EditCategories extends Component {
 	 * @return {DOMElement} input node.
 	 */
 	_getVocabularyInputNode(vocabularyId) {
-		return document.getElementById(this.namespace + this.hiddenInput + vocabularyId);
+		return document.getElementById(
+			this.namespace + this.hiddenInput + vocabularyId
+		);
 	}
 
 	_handleInputFocus(event) {
@@ -233,12 +240,9 @@ class EditCategories extends Component {
 		this._assetVocabularyCategories.set(vocabularyId, event.selectedItems);
 
 		if (this._requiredVocabularies.includes(parseInt(vocabularyId, 10))) {
-			setTimeout(
-				() => {
-					this._checkRequiredVocabulary(vocabularyId);
-				},
-				0
-			);
+			setTimeout(() => {
+				this._checkRequiredVocabulary(vocabularyId);
+			}, 0);
 		}
 	}
 
@@ -253,51 +257,46 @@ class EditCategories extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-		setTimeout(
-			() => {
-				if (this._checkErrors()) {
-					return;
-				}
+		setTimeout(() => {
+			if (this._checkErrors()) {
+				return;
+			}
 
-				let finalCategories = this._getFinalCategories();
+			let finalCategories = this._getFinalCategories();
 
-				let addedCategories = [];
+			let addedCategories = [];
 
-				if (!this.append) {
-					addedCategories = finalCategories;
-				}
-				else {
-					addedCategories = finalCategories.filter(
-						categoryId => this.initialCategories.indexOf(categoryId) == -1
-					);
-				}
-
-				let removedCategories = this.initialCategories.filter(
-					category => finalCategories.indexOf(category) == -1
+			if (!this.append) {
+				addedCategories = finalCategories;
+			} else {
+				addedCategories = finalCategories.filter(
+					categoryId =>
+						this.initialCategories.indexOf(categoryId) == -1
 				);
+			}
 
-				let instance = this;
+			let removedCategories = this.initialCategories.filter(
+				category => finalCategories.indexOf(category) == -1
+			);
 
-				this._fetchCategoriesRequest(
-					this.urlUpdateCategories,
-					this.append ? 'PATCH' : 'PUT',
-					{
-						documentBulkSelection: this._getSelection(),
-						taxonomyCategoryIdsToAdd: addedCategories,
-						taxonomyCategoryIdsToRemove: removedCategories
-					}
-				).then(
-					response => {
-						instance.close();
+			let instance = this;
 
-						if (instance._bulkStatusComponent) {
-							instance._bulkStatusComponent.startWatch();
-						}
-					}
-				);
-			},
-			250
-		);
+			this._fetchCategoriesRequest(
+				this.urlUpdateCategories,
+				this.append ? 'PATCH' : 'PUT',
+				{
+					documentBulkSelection: this._getSelection(),
+					taxonomyCategoryIdsToAdd: addedCategories,
+					taxonomyCategoryIdsToRemove: removedCategories
+				}
+			).then(response => {
+				instance.close();
+
+				if (instance._bulkStatusComponent) {
+					instance._bulkStatusComponent.startWatch();
+				}
+			});
+		}, 250);
 	}
 
 	_parseVocabularies(vocabularies) {
@@ -305,30 +304,30 @@ class EditCategories extends Component {
 		let requiredVocabularies = [];
 		let vocabulariesList = [];
 
-		vocabularies.forEach(
-			vocabulary => {
-				let categories = this._parseCategories(vocabulary.taxonomyCategories || []);
+		vocabularies.forEach(vocabulary => {
+			let categories = this._parseCategories(
+				vocabulary.taxonomyCategories || []
+			);
 
-				let categoryIds = categories.map(item => item.value);
+			let categoryIds = categories.map(item => item.value);
 
-				let obj = {
-					id: vocabulary.taxonomyVocabularyId.toString(),
-					required: vocabulary.required,
-					selectedCategoryIds: categoryIds.join(','),
-					selectedItems: categories,
-					singleSelect: !vocabulary.multiValued,
-					title: vocabulary.name
-				};
+			let obj = {
+				id: vocabulary.taxonomyVocabularyId.toString(),
+				required: vocabulary.required,
+				selectedCategoryIds: categoryIds.join(','),
+				selectedItems: categories,
+				singleSelect: !vocabulary.multiValued,
+				title: vocabulary.name
+			};
 
-				vocabulariesList.push(obj);
+			vocabulariesList.push(obj);
 
-				if (vocabulary.required) {
-					requiredVocabularies.push(vocabulary.taxonomyVocabularyId);
-				}
-
-				initialCategories = initialCategories.concat(categoryIds);
+			if (vocabulary.required) {
+				requiredVocabularies.push(vocabulary.taxonomyVocabularyId);
 			}
-		);
+
+			initialCategories = initialCategories.concat(categoryIds);
+		});
 
 		this.initialCategories = initialCategories;
 		this._requiredVocabularies = requiredVocabularies;
@@ -347,16 +346,14 @@ class EditCategories extends Component {
 		let categoriesObjList = [];
 
 		if (categories.length > 0) {
-			categories.forEach(
-				item => {
-					let itemObj = {
-						'label': item.taxonomyCategoryName,
-						'value': item.taxonomyCategoryId
-					};
+			categories.forEach(item => {
+				let itemObj = {
+					label: item.taxonomyCategoryName,
+					value: item.taxonomyCategoryId
+				};
 
-					categoriesObjList.push(itemObj);
-				}
-			);
+				categoriesObjList.push(itemObj);
+			});
 		}
 
 		return categoriesObjList;
@@ -370,7 +367,6 @@ class EditCategories extends Component {
  * @type {!Object}
  */
 EditCategories.STATE = {
-
 	/**
 	 * Description
 	 *
@@ -409,11 +405,13 @@ EditCategories.STATE = {
 	groupIds: Config.array().required(),
 
 	/**
-	* Hidden input name
-	*
-	* @type {String}
+	 * Hidden input name
+	 *
+	 * @type {String}
 	 */
-	hiddenInput: Config.string().value('assetCategoryIds_').internal(),
+	hiddenInput: Config.string()
+		.value('assetCategoryIds_')
+		.internal(),
 
 	/**
 	 * Original categoryIds
@@ -431,7 +429,9 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {Boolean}
 	 */
-	loading: Config.bool().value(false).internal(),
+	loading: Config.bool()
+		.value(false)
+		.internal(),
 
 	/**
 	 * Flag that indicate if multiple
@@ -500,7 +500,9 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {Boolean}
 	 */
-	showModal: Config.bool().value(false).internal(),
+	showModal: Config.bool()
+		.value(false)
+		.internal(),
 
 	/**
 	 * Path to images.
@@ -543,7 +545,9 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlUpdateCategories: Config.string().value('/bulk-rest/v1.0/taxonomy-categories/batch'),
+	urlUpdateCategories: Config.string().value(
+		'/bulk-rest/v1.0/taxonomy-categories/batch'
+	),
 
 	/**
 	 * List of vocabularies

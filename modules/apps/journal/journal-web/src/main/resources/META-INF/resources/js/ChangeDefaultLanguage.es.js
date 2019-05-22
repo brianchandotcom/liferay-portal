@@ -15,27 +15,20 @@ class ChangeDefaultLanguage extends Component {
 		const defaultLanguage = event.data.item.label;
 
 		this.defaultLanguage = defaultLanguage;
-		this.languages = this.languages.map(
-			language => {
-				return Object.assign(
-					{},
-					language,
-					{
-						checked: language.label === defaultLanguage
-					}
-				);
-			}
-		);
+		this.languages = this.languages.map(language => {
+			return Object.assign({}, language, {
+				checked: language.label === defaultLanguage
+			});
+		});
 
 		const dropdown = event.target.refs.dropdown.refs.portal.element;
-		const item = dropdown.querySelector(`li[data-value="${defaultLanguage}"]`);
-
-		Liferay.fire(
-			'inputLocalized:defaultLocaleChanged',
-			{
-				item: item
-			}
+		const item = dropdown.querySelector(
+			`li[data-value="${defaultLanguage}"]`
 		);
+
+		Liferay.fire('inputLocalized:defaultLocaleChanged', {
+			item: item
+		});
 	}
 }
 

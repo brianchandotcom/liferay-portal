@@ -20,27 +20,22 @@ AUI.add(
 
 		var RESPONSE_DATA = 'responseData';
 
-		var TPL_NOTICE = '<div class="alert alert-success lfr-editable-notice">' +
-				'<span class="lfr-editable-notice-text yui3-widget-bd"></span>' +
-				'<a class="lfr-editable-notice-close yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
+		var TPL_NOTICE =
+			'<div class="alert alert-success lfr-editable-notice">' +
+			'<span class="lfr-editable-notice-text yui3-widget-bd"></span>' +
+			'<a class="lfr-editable-notice-close yui3-widget-ft" href="javascript:;" tabindex="0"></a>' +
 			'</div>';
 
 		function InlineEditorBase(config) {
 			var instance = this;
 
-			instance.publish(
-				'saveFailure',
-				{
-					defaultFn: instance._defSaveFailureFn
-				}
-			);
+			instance.publish('saveFailure', {
+				defaultFn: instance._defSaveFailureFn
+			});
 
-			instance.publish(
-				'saveSuccess',
-				{
-					defaultFn: instance._defSaveSuccessFn
-				}
-			);
+			instance.publish('saveSuccess', {
+				defaultFn: instance._defSaveSuccessFn
+			});
 		}
 
 		InlineEditorBase.ATTRS = {
@@ -109,15 +104,18 @@ AUI.add(
 				var closeNoticeTask = instance._closeNoticeTask;
 
 				if (!closeNoticeTask) {
-					closeNoticeTask = A.debounce(instance._closeNoticeFn, instance.get('closeNoticeTimeout'), instance);
+					closeNoticeTask = A.debounce(
+						instance._closeNoticeFn,
+						instance.get('closeNoticeTimeout'),
+						instance
+					);
 
 					instance._closeNoticeTask = closeNoticeTask;
 				}
 
 				if (Lang.isNumber(delay)) {
 					closeNoticeTask.delay(delay);
-				}
-				else {
+				} else {
 					closeNoticeTask();
 				}
 			},
@@ -128,18 +126,18 @@ AUI.add(
 				var editNotice = instance._editNotice;
 
 				if (!editNotice) {
-					var triggerNode = A.one(instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME));
+					var triggerNode = A.one(
+						instance.get(EDITOR_PREFIX) + instance.get(EDITOR_NAME)
+					);
 
 					var editNoticeNode = A.Node.create(TPL_NOTICE);
 
-					editNotice = new A.OverlayBase(
-						{
-							contentBox: editNoticeNode,
-							footerContent: Liferay.Language.get('close'),
-							visible: false,
-							zIndex: triggerNode.getStyle('zIndex') + 2
-						}
-					).render();
+					editNotice = new A.OverlayBase({
+						contentBox: editNoticeNode,
+						footerContent: Liferay.Language.get('close'),
+						visible: false,
+						zIndex: triggerNode.getStyle('zIndex') + 2
+					}).render();
 
 					instance._editNoticeNode = editNoticeNode;
 					instance._editNotice = editNotice;
@@ -153,35 +151,40 @@ AUI.add(
 			save: function(autosaved) {
 				var instance = this;
 
-				A.io.request(
-					instance.get('saveURL'),
-					{
-						after: {
-							failure: function() {
-								var responseData = this.get(RESPONSE_DATA);
+				A.io.request(instance.get('saveURL'), {
+					after: {
+						failure: function() {
+							var responseData = this.get(RESPONSE_DATA);
 
-								instance.fire('saveFailure', responseData, autosaved);
-							},
-							success: function() {
-								var responseData = this.get(RESPONSE_DATA);
-
-								if (responseData.success) {
-									instance.fire('saveSuccess', responseData, autosaved);
-								}
-								else {
-									instance.fire('saveFailure', responseData, autosaved);
-								}
-							}
+							instance.fire(
+								'saveFailure',
+								responseData,
+								autosaved
+							);
 						},
-						data: Liferay.Util.ns(
-							instance.get('namespace'),
-							{
-								content: instance.get(EDITOR).getData()
+						success: function() {
+							var responseData = this.get(RESPONSE_DATA);
+
+							if (responseData.success) {
+								instance.fire(
+									'saveSuccess',
+									responseData,
+									autosaved
+								);
+							} else {
+								instance.fire(
+									'saveFailure',
+									responseData,
+									autosaved
+								);
 							}
-						),
-						dataType: 'JSON'
-					}
-				);
+						}
+					},
+					data: Liferay.Util.ns(instance.get('namespace'), {
+						content: instance.get(EDITOR).getData()
+					}),
+					dataType: 'JSON'
+				});
 			},
 
 			startSaveTask: function() {
@@ -193,7 +196,13 @@ AUI.add(
 					saveTask.cancel();
 				}
 
-				saveTask = A.later(instance.get('autoSaveTimeout'), instance, instance._saveFn, [true], true);
+				saveTask = A.later(
+					instance.get('autoSaveTimeout'),
+					instance,
+					instance._saveFn,
+					[true],
+					true
+				);
 
 				instance._saveTask = saveTask;
 
@@ -235,7 +244,10 @@ AUI.add(
 
 				instance._editNoticeNode.replaceClass(CSS_SUCCESS, CSS_ERROR);
 
-				notice.set(BODY_CONTENT, Liferay.Language.get('the-draft-was-not-saved-successfully'));
+				notice.set(
+					BODY_CONTENT,
+					Liferay.Language.get('the-draft-was-not-saved-successfully')
+				);
 
 				notice.show();
 
@@ -251,10 +263,14 @@ AUI.add(
 
 				instance._editNoticeNode.replaceClass(CSS_ERROR, CSS_SUCCESS);
 
-				var message = Liferay.Language.get('the-draft-was-saved-successfully-at-x');
+				var message = Liferay.Language.get(
+					'the-draft-was-saved-successfully-at-x'
+				);
 
 				if (autosaved) {
-					message = Liferay.Language.get('the-draft-was-autosaved-successfully-at-x');
+					message = Liferay.Language.get(
+						'the-draft-was-autosaved-successfully-at-x'
+					);
 				}
 
 				message = Lang.sub(message, [new Date().toLocaleTimeString()]);

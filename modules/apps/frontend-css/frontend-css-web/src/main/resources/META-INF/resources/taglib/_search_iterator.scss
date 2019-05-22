@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .lfr-search-container {
 	margin-top: 1.5em;
@@ -61,7 +61,8 @@
 				float: left;
 				width: 50%;
 
-				&.first, &.last {
+				&.first,
+				&.last {
 					display: none;
 				}
 
@@ -89,7 +90,8 @@
 			}
 		}
 
-		.lfr-pagination-delta-selector, .lfr-pagination-page-selector {
+		.lfr-pagination-delta-selector,
+		.lfr-pagination-page-selector {
 			display: inline;
 		}
 
@@ -114,7 +116,8 @@
 }
 
 .display-style-icon {
-	.lfr-asset-folder, .lfr-asset-item {
+	.lfr-asset-folder,
+	.lfr-asset-item {
 		float: left;
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;

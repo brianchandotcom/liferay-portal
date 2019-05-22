@@ -1,5 +1,5 @@
 .list-group-card {
-	background-color: #FFF;
+	background-color: #fff;
 	border: 1px solid rgba(220, 220, 220, 0.5);
 	display: block;
 	margin-bottom: -1px;
@@ -55,7 +55,8 @@
 		display: block;
 		padding: 0.5rem;
 
-		&:hover, &:active {
+		&:hover,
+		&:active {
 			color: $dark;
 			text-decoration: none;
 

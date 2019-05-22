@@ -17,7 +17,6 @@ const WINDOW_RESIZE_DEBOUNCE_DELAY = 100;
  * Creates a Fragment Editable Field Tooltip component.
  */
 class FragmentEditableFieldTooltip extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -30,7 +29,9 @@ class FragmentEditableFieldTooltip extends Component {
 	 */
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
-		this._handleFragmentEntryLinkListWrapperScroll = this._handleFragmentEntryLinkListWrapperScroll.bind(this);
+		this._handleFragmentEntryLinkListWrapperScroll = this._handleFragmentEntryLinkListWrapperScroll.bind(
+			this
+		);
 
 		this._handleWindowResize = debounce(
 			this._handleWindowResize.bind(this),
@@ -94,12 +95,7 @@ class FragmentEditableFieldTooltip extends Component {
 	 */
 	_alignTooltip() {
 		if (this.refs.tooltip) {
-			Align.align(
-				this.refs.tooltip,
-				this.alignElement,
-				Align.Top,
-				false
-			);
+			Align.align(this.refs.tooltip, this.alignElement, Align.Top, false);
 		}
 	}
 
@@ -112,12 +108,9 @@ class FragmentEditableFieldTooltip extends Component {
 		const button = event.delegateTarget;
 		const buttonId = button.dataset.tooltipButtonId;
 
-		this.emit(
-			'buttonClick',
-			{
-				buttonId
-			}
-		);
+		this.emit('buttonClick', {
+			buttonId
+		});
 	}
 
 	/**
@@ -150,7 +143,6 @@ class FragmentEditableFieldTooltip extends Component {
 	_handleFragmentEntryLinkListWrapperScroll() {
 		this._alignTooltip();
 	}
-
 }
 
 /**
@@ -160,7 +152,6 @@ class FragmentEditableFieldTooltip extends Component {
  * @type {!Object}
  */
 FragmentEditableFieldTooltip.STATE = {
-
 	/**
 	 * Reference element the tooltip alignment is based on.
 	 *
@@ -183,13 +174,11 @@ FragmentEditableFieldTooltip.STATE = {
 	 * }>}
 	 */
 	buttons: Config.arrayOf(
-		Config.shapeOf(
-			{
-				icon: Config.string().required(),
-				id: Config.string().required(),
-				label: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			icon: Config.string().required(),
+			id: Config.string().required(),
+			label: Config.string().required()
+		})
 	)
 };
 

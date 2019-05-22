@@ -15,12 +15,14 @@
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
 		"liferay-npm-scripts": "1.7.2",
-		"liferay-theme-es2015-hook": "8.0.0-rc.2"
+		"liferay-theme-es2015-hook": "8.0.0-rc.2",
+		"prettier": "1.17.1"
 	},
 	"private": true,
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts lint",
-		"format": "liferay-npm-scripts format"
+		"format": "liferay-npm-scripts format",
+		"prettier": "prettier --write apps/**/*.js apps/**/*.scss"
 	},
 	"workspaces": {
 		"packages": [

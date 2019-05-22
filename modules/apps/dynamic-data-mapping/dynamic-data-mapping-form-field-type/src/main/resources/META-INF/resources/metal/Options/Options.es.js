@@ -8,9 +8,7 @@ import Soy from 'metal-soy';
 import templates from './Options.soy.js';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
-import {
-	normalizeFieldName
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
 
 /**
  * Options.
@@ -24,15 +22,16 @@ class Options extends Component {
 
 		const options = this.getCurrentLocaleValue();
 
-		if ((options.length == 1) && (options[0].label.toLowerCase() == defaultOptionLabel)) {
+		if (
+			options.length == 1 &&
+			options[0].label.toLowerCase() == defaultOptionLabel
+		) {
 			defaultOption = true;
 		}
 
-		this.setState(
-			{
-				defaultOption
-			}
-		);
+		this.setState({
+			defaultOption
+		});
 
 		this._createDragDrop();
 	}
@@ -71,11 +70,9 @@ class Options extends Component {
 	}
 
 	findOptionByValue(options, name, limit = options.length) {
-		return options.find(
-			({value}, index) => {
-				return index < limit && value === name;
-			}
-		);
+		return options.find(({value}, index) => {
+			return index < limit && value === name;
+		});
 	}
 
 	getCurrentLocaleValue() {
@@ -84,8 +81,7 @@ class Options extends Component {
 
 		if (this.value && this.value[editingLanguageId]) {
 			value = this.value[editingLanguageId];
-		}
-		else if (this.value && this.value[defaultLanguageId]) {
+		} else if (this.value && this.value[defaultLanguageId]) {
 			value = this.value[defaultLanguageId];
 		}
 
@@ -93,7 +89,10 @@ class Options extends Component {
 	}
 
 	getFieldIndex(element) {
-		return parseInt(dom.closest(element, '.ddm-field-options').dataset.index, 10);
+		return parseInt(
+			dom.closest(element, '.ddm-field-options').dataset.index,
+			10
+		);
 	}
 
 	getItems(options = []) {
@@ -101,22 +100,18 @@ class Options extends Component {
 		const items = options.filter(({value}) => !!value);
 
 		if (defaultLanguageId === editingLanguageId) {
-			items.push(
-				{
-					label: '',
-					value: ''
-				}
-			);
+			items.push({
+				label: '',
+				value: ''
+			});
 		}
 
-		return items.map(
-			option => {
-				return {
-					...option,
-					generateKeyword: this.shouldGenerateOptionValue(option)
-				};
-			}
-		);
+		return items.map(option => {
+			return {
+				...option,
+				generateKeyword: this.shouldGenerateOptionValue(option)
+			};
+		});
 	}
 
 	moveOption(sourceIndex, targetIndex) {
@@ -127,23 +122,17 @@ class Options extends Component {
 			const options = [...value[languageId]];
 
 			if (sourceIndex < options.length) {
-				options.splice(
-					targetIndex,
-					0,
-					{
-						...options[sourceIndex]
-					}
-				);
+				options.splice(targetIndex, 0, {
+					...options[sourceIndex]
+				});
 
 				value = {
 					...value,
-					[languageId]: options.filter(
-						(option, index) => {
-							return sourceIndex > targetIndex ?
-								index != (sourceIndex + 1) :
-								index != sourceIndex;
-						}
-					)
+					[languageId]: options.filter((option, index) => {
+						return sourceIndex > targetIndex
+							? index != sourceIndex + 1
+							: index != sourceIndex;
+					})
 				};
 			}
 		}
@@ -158,7 +147,8 @@ class Options extends Component {
 
 	normalizeOption(options, option, force) {
 		const {label, value} = option;
-		const desiredValue = value || label || (force ? Liferay.Language.get('option') : '');
+		const desiredValue =
+			value || label || (force ? Liferay.Language.get('option') : '');
 		let normalizedValue = desiredValue;
 
 		if (this.shouldGenerateOptionValue(option)) {
@@ -171,7 +161,9 @@ class Options extends Component {
 				}
 
 				counter++;
-			} while (this.findOptionByValue(options, normalizedValue, optionIndex));
+			} while (
+				this.findOptionByValue(options, normalizedValue, optionIndex)
+			);
 
 			normalizedValue = normalizeFieldName(normalizedValue);
 		}
@@ -183,7 +175,9 @@ class Options extends Component {
 	}
 
 	normalizeOptions(options, force) {
-		return options.map(option => this.normalizeOption(options, option, force));
+		return options.map(option =>
+			this.normalizeOption(options, option, force)
+		);
 	}
 
 	normalizeValue(value, force = false) {
@@ -203,10 +197,10 @@ class Options extends Component {
 
 		return (
 			defaultLanguageId === editingLanguageId &&
-			(
-				option.value === '' ||
-				(new RegExp(`^${normalizeFieldName(option.label)}\\d*$`)).test(option.value)
-			)
+			(option.value === '' ||
+				new RegExp(`^${normalizeFieldName(option.label)}\\d*$`).test(
+					option.value
+				))
 		);
 	}
 
@@ -221,8 +215,9 @@ class Options extends Component {
 				{
 					value: {
 						...this.value,
-						[editingLanguageId]: this.value[defaultLanguageId]
-							.filter(({value}) => !!value)
+						[editingLanguageId]: this.value[
+							defaultLanguageId
+						].filter(({value}) => !!value)
 					}
 				},
 				() => this._handleFieldEdited({}, this.value)
@@ -231,27 +226,29 @@ class Options extends Component {
 	}
 
 	syncValue() {
-		this.setState(
-			{
-				items: this.getItems(this.getCurrentLocaleValue())
-			}
-		);
+		this.setState({
+			items: this.getItems(this.getCurrentLocaleValue())
+		});
 	}
 
 	_createDragDrop() {
-		this._dragAndDrop = new DragDrop(
-			{
-				container: this.element,
-				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.ddm-options-drag:not(.disabled)',
-				sources: '.ddm-field-options',
-				targets: '.ddm-options-target',
-				useShim: false
-			}
-		);
+		this._dragAndDrop = new DragDrop({
+			container: this.element,
+			dragPlaceholder: Drag.Placeholder.CLONE,
+			handles: '.ddm-options-drag:not(.disabled)',
+			sources: '.ddm-field-options',
+			targets: '.ddm-options-target',
+			useShim: false
+		});
 
-		this._dragAndDrop.on(DragDrop.Events.END, this._handleDragDropEvent.bind(this));
-		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragEvent.bind(this));
+		this._dragAndDrop.on(
+			DragDrop.Events.END,
+			this._handleDragDropEvent.bind(this)
+		);
+		this._dragAndDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDragEvent.bind(this)
+		);
 	}
 
 	_getOptionIndex({name}) {
@@ -278,14 +275,11 @@ class Options extends Component {
 	}
 
 	_handleFieldEdited({originalEvent}, value) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent,
-				value
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent,
+			value
+		});
 	}
 
 	_handleOptionBlurred(event) {
@@ -307,26 +301,21 @@ class Options extends Component {
 		const {fieldInstance, value} = event;
 		let options = this.getCurrentLocaleValue();
 
-		const optionExists = options.some(
-			(option, index) => {
-				return index === this._getOptionIndex(fieldInstance);
-			}
-		);
+		const optionExists = options.some((option, index) => {
+			return index === this._getOptionIndex(fieldInstance);
+		});
 
 		if (optionExists) {
-			options = options.map(
-				(option, index) => {
-					return index === this._getOptionIndex(fieldInstance) ? (
-						{
+			options = options.map((option, index) => {
+				return index === this._getOptionIndex(fieldInstance)
+					? {
 							...option,
 							edited: property === 'label',
 							[property]: value
-						}
-					) : option;
-				}
-			);
-		}
-		else {
+					  }
+					: option;
+			});
+		} else {
 			options = [
 				...options,
 				{
@@ -347,21 +336,19 @@ class Options extends Component {
 
 		if (defaultLanguageId === editingLanguageId) {
 			const generateLabels = (languageId, options) => {
-				return options.map(
-					({label, value}, index) => {
-						const option = newValue[languageId][index];
+				return options.map(({label, value}, index) => {
+					const option = newValue[languageId][index];
 
-						if (option && option.edited) {
-							label = option.label;
-						}
-
-						return {
-							edited: option && option.edited,
-							label,
-							value
-						};
+					if (option && option.edited) {
+						label = option.label;
 					}
-				);
+
+					return {
+						edited: option && option.edited,
+						label,
+						value
+					};
+				});
 			};
 
 			for (const languageId in this.value) {
@@ -388,11 +375,9 @@ class Options extends Component {
 		if (this.defaultOption) {
 			target.value = '';
 
-			this.setState(
-				{
-					defaultOption: false
-				}
-			);
+			this.setState({
+				defaultOption: false
+			});
 		}
 	}
 
@@ -416,8 +401,9 @@ class Options extends Component {
 
 		for (const languageId in value) {
 			if (defaultLanguageId !== languageId) {
-				formattedValue[languageId] = formattedValue[languageId]
-					.filter(({value}) => !!value);
+				formattedValue[languageId] = formattedValue[languageId].filter(
+					({value}) => !!value
+				);
 			}
 		}
 
@@ -426,7 +412,6 @@ class Options extends Component {
 }
 
 Options.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -443,7 +428,9 @@ Options.STATE = {
 	 * @type {?bool}
 	 */
 
-	defaultOption: Config.bool().internal().value(false),
+	defaultOption: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * @default undefined
@@ -480,15 +467,15 @@ Options.STATE = {
 	 */
 
 	items: Config.arrayOf(
-		Config.shapeOf(
-			{
-				disabled: Config.bool().value(false),
-				label: Config.string(),
-				name: Config.string(),
-				value: Config.string()
-			}
-		)
-	).internal().valueFn('_internalItemsValueFn'),
+		Config.shapeOf({
+			disabled: Config.bool().value(false),
+			label: Config.string(),
+			name: Config.string(),
+			value: Config.string()
+		})
+	)
+		.internal()
+		.valueFn('_internalItemsValueFn'),
 
 	/**
 	 * @default undefined
@@ -578,7 +565,9 @@ Options.STATE = {
 	 * @type {?string}
 	 */
 
-	value: Config.object().setter('_setValue').value({})
+	value: Config.object()
+		.setter('_setValue')
+		.value({})
 };
 
 Soy.register(Options, templates);

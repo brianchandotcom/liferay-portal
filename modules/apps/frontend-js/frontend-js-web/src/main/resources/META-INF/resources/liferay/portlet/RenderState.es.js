@@ -3,12 +3,10 @@ import {isObject, isString} from 'metal';
 import PortletConstants from './portlet_constants.es';
 
 class RenderState {
-
 	constructor(state) {
 		if (isObject(state)) {
 			this.from(state);
-		}
-		else {
+		} else {
 			this.parameters = {};
 			this.portletMode = PortletConstants.VIEW;
 			this.windowState = PortletConstants.NORMAL;
@@ -36,7 +34,10 @@ class RenderState {
 		this.parameters = {};
 
 		for (let name in renderState.parameters) {
-			if (renderState.parameters.hasOwnProperty(name) && Array.isArray(renderState.parameters[name])) {
+			if (
+				renderState.parameters.hasOwnProperty(name) &&
+				Array.isArray(renderState.parameters[name])
+			) {
 				this.parameters[name] = renderState.parameters[name].slice(0);
 			}
 		}
@@ -148,7 +149,11 @@ class RenderState {
 			throw new TypeError('Portlet Mode must be a string');
 		}
 
-		if (portletMode === PortletConstants.EDIT || portletMode === PortletConstants.HELP || portletMode === PortletConstants.VIEW) {
+		if (
+			portletMode === PortletConstants.EDIT ||
+			portletMode === PortletConstants.HELP ||
+			portletMode === PortletConstants.VIEW
+		) {
 			this.portletMode = portletMode;
 		}
 	}
@@ -168,7 +173,9 @@ class RenderState {
 		}
 
 		if (!isString(value) && value !== null && !Array.isArray(value)) {
-			throw new TypeError('Parameter value must be a string, an array or null');
+			throw new TypeError(
+				'Parameter value must be a string, an array or null'
+			);
 		}
 
 		if (!Array.isArray(value)) {
@@ -205,7 +212,11 @@ class RenderState {
 			throw new TypeError('Window State must be a string');
 		}
 
-		if (windowState === PortletConstants.MAXIMIZED || windowState === PortletConstants.MINIMIZED || windowState === PortletConstants.NORMAL) {
+		if (
+			windowState === PortletConstants.MAXIMIZED ||
+			windowState === PortletConstants.MINIMIZED ||
+			windowState === PortletConstants.NORMAL
+		) {
 			this.windowState = windowState;
 		}
 	}

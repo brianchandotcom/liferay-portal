@@ -14,9 +14,7 @@ class DocumentLibrary extends Component {}
 Soy.register(DocumentLibrary, templates, 'render');
 
 if (!window.DDMDocumentLibrary) {
-	window.DDMDocumentLibrary = {
-
-	};
+	window.DDMDocumentLibrary = {};
 }
 
 window.DDMDocumentLibrary.render = DocumentLibrary;

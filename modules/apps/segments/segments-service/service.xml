@@ -199,6 +199,8 @@
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
+		<exception>SegmentsEntryName</exception>
+		<exception>SegmentsExperienceName</exception>
 		<exception>SegmentsExperiencePriority</exception>
 	</exceptions>
 </service-builder>

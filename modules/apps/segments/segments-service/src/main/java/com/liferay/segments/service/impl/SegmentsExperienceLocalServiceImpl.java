@@ -69,7 +69,7 @@ public class SegmentsExperienceLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
-		_validate(groupId, classNameId, publishedClassPK, priority);
+		_validatePriority(groupId, classNameId, publishedClassPK, priority);
 
 		long segmentsExperienceId = counterLocalService.increment();
 
@@ -340,7 +340,7 @@ public class SegmentsExperienceLocalServiceImpl
 		return classPK;
 	}
 
-	private void _validate(
+	private void _validatePriority(
 			long groupId, long classNameId, long classPK, int priority)
 		throws PortalException {
 

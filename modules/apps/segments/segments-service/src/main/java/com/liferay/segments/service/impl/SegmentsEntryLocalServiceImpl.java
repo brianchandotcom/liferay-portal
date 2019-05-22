@@ -81,7 +81,7 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
 		}
 
-		validate(0, groupId, segmentsEntryKey);
+		validateKey(0, groupId, segmentsEntryKey);
 
 		long segmentsEntryId = counterLocalService.increment();
 
@@ -314,7 +314,8 @@ public class SegmentsEntryLocalServiceImpl
 
 		segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
 
-		validate(segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
+		validateKey(
+			segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
 		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
@@ -406,7 +407,7 @@ public class SegmentsEntryLocalServiceImpl
 		return segmentsEntries;
 	}
 
-	protected void validate(
+	protected void validateKey(
 			long segmentsEntryId, long groupId, String segmentsEntryKey)
 		throws PortalException {
 

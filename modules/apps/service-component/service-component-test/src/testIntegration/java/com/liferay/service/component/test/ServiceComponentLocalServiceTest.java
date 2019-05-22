@@ -15,21 +15,22 @@
 package com.liferay.service.component.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -65,12 +66,12 @@ public class ServiceComponentLocalServiceTest {
 	@Before
 	public void setUp() {
 		_serviceComponentsCount =
-			ServiceComponentLocalServiceUtil.getServiceComponentsCount();
+			_serviceComponentLocalService.getServiceComponentsCount();
 
 		_serviceComponent1 = addServiceComponent(_SERVICE_COMPONENT_1, 1);
 		_serviceComponent2 = addServiceComponent(_SERVICE_COMPONENT_2, 1);
 
-		_release = ReleaseLocalServiceUtil.addRelease(
+		_release = _releaseLocalService.addRelease(
 			"ServiceComponentLocalServiceTest", "0.0.0");
 	}
 
@@ -82,7 +83,7 @@ public class ServiceComponentLocalServiceTest {
 			_SERVICE_COMPONENT_1, 2);
 
 		List<ServiceComponent> serviceComponents =
-			ServiceComponentLocalServiceUtil.getLatestServiceComponents();
+			_serviceComponentLocalService.getLatestServiceComponents();
 
 		Assert.assertEquals(
 			2, serviceComponents.size() - _serviceComponentsCount);
@@ -97,8 +98,7 @@ public class ServiceComponentLocalServiceTest {
 
 		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
 
-		ServiceComponentLocalServiceUtil.deleteServiceComponent(
-			serviceComponent);
+		_serviceComponentLocalService.deleteServiceComponent(serviceComponent);
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class ServiceComponentLocalServiceTest {
 		throws Exception {
 
 		List<ServiceComponent> serviceComponents =
-			ServiceComponentLocalServiceUtil.getLatestServiceComponents();
+			_serviceComponentLocalService.getLatestServiceComponents();
 
 		Assert.assertEquals(
 			2, serviceComponents.size() - _serviceComponentsCount);
@@ -149,7 +149,7 @@ public class ServiceComponentLocalServiceTest {
 		String tableName = _TEST_TABLE;
 
 		try {
-			ServiceComponentLocalServiceUtil.verifyDB();
+			_serviceComponentLocalService.verifyDB();
 
 			try (Connection conn = DataAccess.getConnection()) {
 				DatabaseMetaData metadata = conn.getMetaData();
@@ -195,7 +195,7 @@ public class ServiceComponentLocalServiceTest {
 				});
 
 		try {
-			ServiceComponentLocalServiceUtil.verifyDB();
+			_serviceComponentLocalService.verifyDB();
 
 			try (Connection connection = DataAccess.getConnection()) {
 				DatabaseMetaData metadata = connection.getMetaData();
@@ -239,7 +239,7 @@ public class ServiceComponentLocalServiceTest {
 				});
 
 		try {
-			ServiceComponentLocalServiceUtil.verifyDB();
+			_serviceComponentLocalService.verifyDB();
 
 			try (Connection connection = DataAccess.getConnection()) {
 				DatabaseMetaData metadata = connection.getMetaData();
@@ -289,16 +289,16 @@ public class ServiceComponentLocalServiceTest {
 	protected ServiceComponent addServiceComponent(
 		String buildNameSpace, long buildNumber) {
 
-		long serviceComponentId = CounterLocalServiceUtil.increment();
+		long serviceComponentId = _counterLocalService.increment();
 
 		ServiceComponent serviceComponent =
-			ServiceComponentLocalServiceUtil.createServiceComponent(
+			_serviceComponentLocalService.createServiceComponent(
 				serviceComponentId);
 
 		serviceComponent.setBuildNamespace(buildNameSpace);
 		serviceComponent.setBuildNumber(buildNumber);
 
-		return ServiceComponentLocalServiceUtil.updateServiceComponent(
+		return _serviceComponentLocalService.updateServiceComponent(
 			serviceComponent);
 	}
 
@@ -334,14 +334,23 @@ public class ServiceComponentLocalServiceTest {
 
 	private static final String _TEST_TABLE = "TestVerifyDB";
 
+	@Inject
+	private CounterLocalService _counterLocalService;
+
 	@DeleteAfterTestRun
 	private Release _release;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 	@DeleteAfterTestRun
 	private ServiceComponent _serviceComponent1;
 
 	@DeleteAfterTestRun
 	private ServiceComponent _serviceComponent2;
+
+	@Inject
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 	private int _serviceComponentsCount;
 

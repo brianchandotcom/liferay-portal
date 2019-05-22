@@ -83,9 +83,9 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 							</c:when>
 							<c:when test="<%= Validator.isNotNull(latestFileVersion.getExtension()) %>">
 								<liferay-ui:search-container-column-text>
-									<div class="sticker sticker-secondary <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-										<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
-									</div>
+									<liferay-document-library:mime-type-sticker
+										fileVersion="<%= fileEntry.getFileVersion() %>"
+									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:otherwise>

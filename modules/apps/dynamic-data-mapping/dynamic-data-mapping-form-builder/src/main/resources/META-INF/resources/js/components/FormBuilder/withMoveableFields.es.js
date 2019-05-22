@@ -89,7 +89,24 @@ const withMoveableFields = ChildComponent => {
 		}
 
 		attached() {
-			this._createDragAndDrop();
+			this.createDragAndDrop();
+		}
+
+		createDragAndDrop() {
+			this._dragAndDrop = new DragDrop(
+				{
+					sources: '.moveable .ddm-drag',
+					targets: '.moveable .ddm-target',
+					useShim: false
+				}
+			);
+
+			this._dragAndDrop.on(
+				DragDrop.Events.END,
+				this._handleDragAndDropEnd.bind(this)
+			);
+
+			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 		}
 
 		disposeDragAndDrop() {
@@ -126,23 +143,6 @@ const withMoveableFields = ChildComponent => {
 			);
 		}
 
-		_createDragAndDrop() {
-			this._dragAndDrop = new DragDrop(
-				{
-					sources: '.moveable .ddm-drag',
-					targets: '.moveable .ddm-target',
-					useShim: false
-				}
-			);
-
-			this._dragAndDrop.on(
-				DragDrop.Events.END,
-				this._handleDragAndDropEnd.bind(this)
-			);
-
-			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
-		}
-
 		_handleDragAndDropEnd({source, target}) {
 			const lastParent = document.querySelector('.ddm-parent-dragging');
 
@@ -176,6 +176,7 @@ const withMoveableFields = ChildComponent => {
 		_handleDragStarted({source}) {
 			const {height} = source.getBoundingClientRect();
 			const {parentElement} = source;
+
 			parentElement.setAttribute('style', `height: ${height}px !important;`);
 			parentElement.classList.add('ddm-parent-dragging');
 		}
@@ -188,7 +189,7 @@ const withMoveableFields = ChildComponent => {
 
 		_refreshDragAndDrop() {
 			this.disposeDragAndDrop();
-			this.attached();
+			this.createDragAndDrop();
 		}
 	}
 

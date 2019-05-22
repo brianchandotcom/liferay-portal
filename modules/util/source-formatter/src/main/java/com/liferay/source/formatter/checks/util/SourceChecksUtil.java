@@ -213,8 +213,8 @@ public class SourceChecksUtil {
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
 
 		return SourceFormatterUtil.addPropertiesAttributes(
-			attributesJSONObject, CheckType.SOURCE_CHECK, checkName,
-			propertiesMap);
+			attributesJSONObject, propertiesMap, CheckType.SOURCE_CHECK,
+			checkName);
 	}
 
 	private static JSONObject _getExcludesJSONObject(

@@ -89,6 +89,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			_getInfoDisplayObjectProvider(journalArticle);
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
+			(infoDisplayObjectProvider != null) &&
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				groupId, infoDisplayObjectProvider.getClassNameId(),
 				infoDisplayObjectProvider.getClassPK(),
@@ -123,6 +124,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			_getInfoDisplayObjectProvider(journalArticle);
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
+			(infoDisplayObjectProvider != null) &&
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				groupId, infoDisplayObjectProvider.getClassNameId(),
 				infoDisplayObjectProvider.getClassPK(),
@@ -269,6 +271,10 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			_getInfoDisplayObjectProvider(journalArticle);
+
+		if (infoDisplayObjectProvider == null) {
+			return layoutActualURL;
+		}
 
 		String keywords = infoDisplayObjectProvider.getKeywords(locale);
 

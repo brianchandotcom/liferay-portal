@@ -72,9 +72,11 @@ public class AssetInfoDisplayRequestAttributesContributor
 				infoDisplayContributor.getInfoDisplayObjectProvider(
 					assetEntry.getClassPK());
 
-			httpServletRequest.setAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-				infoDisplayObjectProvider);
+			if (infoDisplayObjectProvider != null) {
+				httpServletRequest.setAttribute(
+					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
+					infoDisplayObjectProvider);
+			}
 		}
 		catch (Exception e) {
 			_log.error("Unable to get info display object provider", e);

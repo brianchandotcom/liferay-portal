@@ -111,7 +111,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	}
 
 	protected String getAllowedContentText() {
-		return "b code em h1 h2 h3 h4 h5 h6 hr i p pre strong u [*]{*};";
+		return "b code em h1 h2 h3 h4 h5 h6 hr i p pre strong u [*](*){*};";
 	}
 
 	protected String getExtraPluginsLists() {

@@ -14,15 +14,12 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -47,24 +44,6 @@ import org.xml.sax.InputSource;
 public class CheckstyleUtil {
 
 	public static final int BATCH_SIZE = 1000;
-
-	public static List<String> getCheckNames(Configuration configuration) {
-		List<String> checkNames = new ArrayList<>();
-
-		String name = configuration.getName();
-
-		if (name.startsWith("com.liferay.")) {
-			int pos = name.lastIndexOf(CharPool.PERIOD);
-
-			checkNames.add(name.substring(pos + 1));
-		}
-
-		for (Configuration childConfiguration : configuration.getChildren()) {
-			checkNames.addAll(getCheckNames(childConfiguration));
-		}
-
-		return checkNames;
-	}
 
 	public static Configuration getConfiguration(
 			String configurationFileName, Map<String, Properties> propertiesMap,
@@ -140,39 +119,7 @@ public class CheckstyleUtil {
 		}
 
 		if (sourceFormatterArgs.isShowDebugInformation()) {
-			DebugUtil.addCheckNames(
-				CheckType.CHECKSTYLE, getCheckNames(configuration));
-		}
-
-		return configuration;
-	}
-
-	private static Configuration _addAttribute(
-		Configuration configuration, String key, String value,
-		String... regexChecks) {
-
-		Configuration[] checkConfigurations = _getCheckConfigurations(
-			configuration);
-
-		if (checkConfigurations == null) {
-			return configuration;
-		}
-
-		for (Configuration checkConfiguration : checkConfigurations) {
-			if (!(checkConfiguration instanceof DefaultConfiguration)) {
-				continue;
-			}
-
-			String name = checkConfiguration.getName();
-
-			for (String regexCheck : regexChecks) {
-				if (name.matches(regexCheck)) {
-					DefaultConfiguration defaultChildConfiguration =
-						(DefaultConfiguration)checkConfiguration;
-
-					defaultChildConfiguration.addAttribute(key, value);
-				}
-			}
+			DebugUtil.addCheckNames(CheckType.CHECKSTYLE, checkNames);
 		}
 
 		return configuration;
@@ -190,87 +137,6 @@ public class CheckstyleUtil {
 		}
 
 		return jsonObject;
-	}
-
-	private static Configuration _addPropertiesAttributes(
-			Configuration configuration, Map<String, Properties> propertiesMap)
-		throws CheckstyleException {
-
-		Configuration[] checkConfigurations = _getCheckConfigurations(
-			configuration);
-
-		if (checkConfigurations == null) {
-			return configuration;
-		}
-
-		for (Configuration checkConfiguration : checkConfigurations) {
-			if (!(checkConfiguration instanceof DefaultConfiguration)) {
-				continue;
-			}
-
-			String checkName = SourceFormatterUtil.getSimpleName(
-				checkConfiguration.getName());
-
-			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
-				CheckType.CHECKSTYLE, checkName, propertiesMap);
-
-			for (String attributeName : attributeNames) {
-				String value = SourceFormatterUtil.getPropertyValue(
-					attributeName, CheckType.CHECKSTYLE, checkName,
-					propertiesMap);
-
-				if (Validator.isNull(value)) {
-					continue;
-				}
-
-				DefaultConfiguration defaultChildConfiguration =
-					(DefaultConfiguration)checkConfiguration;
-
-				if (Validator.isBoolean(value) || Validator.isNumber(value)) {
-					configuration = _overrideAttributeValue(
-						configuration, defaultChildConfiguration, attributeName,
-						value);
-				}
-				else {
-					defaultChildConfiguration.addAttribute(
-						attributeName, value);
-				}
-			}
-		}
-
-		return configuration;
-	}
-
-	private static Configuration _filterCheck(
-		Configuration configuration, String checkName) {
-
-		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
-			configuration, "TreeWalker");
-
-		Configuration[] checkConfigurations =
-			treeWalkerConfiguration.getChildren();
-
-		if (checkConfigurations == null) {
-			return configuration;
-		}
-
-		for (Configuration checkConfiguration : checkConfigurations) {
-			if (!(checkConfiguration instanceof DefaultConfiguration)) {
-				continue;
-			}
-
-			if (!checkName.equals(
-					SourceFormatterUtil.getSimpleName(
-						checkConfiguration.getName()))) {
-
-				DefaultConfiguration defaultChildConfiguration =
-					(DefaultConfiguration)checkConfiguration;
-
-				treeWalkerConfiguration.removeChild(defaultChildConfiguration);
-			}
-		}
-
-		return configuration;
 	}
 
 	private static JSONObject _getAttributesJSONObject(
@@ -311,19 +177,6 @@ public class CheckstyleUtil {
 			checkName);
 
 		return attributesJSONObject;
-	}
-
-	private static Configuration[] _getCheckConfigurations(
-		Configuration configuration) {
-
-		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
-			configuration, "TreeWalker");
-
-		if (treeWalkerConfiguration == null) {
-			return null;
-		}
-
-		return treeWalkerConfiguration.getChildren();
 	}
 
 	private static DefaultConfiguration _getChildConfiguration(
@@ -371,47 +224,6 @@ public class CheckstyleUtil {
 		}
 
 		return configurationAttributesJSONObject;
-	}
-
-	private static Configuration _overrideAttributeValue(
-			Configuration configuration,
-			DefaultConfiguration defaultChildConfiguration,
-			String attributeName, String value)
-		throws CheckstyleException {
-
-		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
-			configuration, "TreeWalker");
-
-		DefaultConfiguration copyConfiguration = new DefaultConfiguration(
-			defaultChildConfiguration.getName());
-
-		Map<String, String> messages = defaultChildConfiguration.getMessages();
-
-		for (Map.Entry<String, String> entry : messages.entrySet()) {
-			copyConfiguration.addMessage(entry.getKey(), entry.getValue());
-		}
-
-		String[] attributeNames = defaultChildConfiguration.getAttributeNames();
-
-		for (String name : attributeNames) {
-			if (name.equals(attributeName)) {
-				copyConfiguration.addAttribute(name, value);
-			}
-			else {
-				copyConfiguration.addAttribute(
-					name, defaultChildConfiguration.getAttribute(name));
-			}
-		}
-
-		if (!ArrayUtil.contains(attributeNames, attributeName)) {
-			copyConfiguration.addAttribute(attributeName, value);
-		}
-
-		treeWalkerConfiguration.removeChild(defaultChildConfiguration);
-
-		treeWalkerConfiguration.addChild(copyConfiguration);
-
-		return configuration;
 	}
 
 	private static final String _ATTRIBUTES_KEY = "attributes";

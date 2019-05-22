@@ -1207,9 +1207,9 @@ public class GitHubDevSyncUtil {
 					_MILLIS_BRANCH_UPDATE_AGE) {
 
 				oldTimestampCachedRemoteGitBranch = cachedRemoteGitBranch;
-
-				break;
 			}
+
+			break;
 		}
 
 		if (oldTimestampCachedRemoteGitBranch == null) {

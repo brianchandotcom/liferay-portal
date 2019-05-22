@@ -2444,9 +2444,11 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
 			"-DliferayVersion=7.0");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
 	}
 
 	@Test
@@ -2502,9 +2504,11 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
 			"-DliferayVersion=7.2");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
 	}
 
 	@Ignore
@@ -2584,9 +2588,11 @@ public class ProjectTemplatesTest {
 			"service-builder", "sample", "com.test",
 			"-Dpackage=com.test.sample", "-DliferayVersion=7.0");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, workspaceProjectDir, "sample",
-			"com.test.sample", ":modules:nested:path:sample");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, workspaceProjectDir,
+				"sample", "com.test.sample", ":modules:nested:path:sample");
+		}
 	}
 
 	@Test
@@ -2611,9 +2617,11 @@ public class ProjectTemplatesTest {
 			"service-builder", "sample", "com.test",
 			"-Dpackage=com.test.sample", "-DliferayVersion=7.1");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, workspaceProjectDir, "sample",
-			"com.test.sample", ":modules:nested:path:sample");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, workspaceProjectDir,
+				"sample", "com.test.sample", ":modules:nested:path:sample");
+		}
 	}
 
 	@Test
@@ -2638,9 +2646,11 @@ public class ProjectTemplatesTest {
 			"service-builder", "sample", "com.test",
 			"-Dpackage=com.test.sample", "-DliferayVersion=7.2");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, workspaceProjectDir, "sample",
-			"com.test.sample", ":modules:nested:path:sample");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, workspaceProjectDir,
+				"sample", "com.test.sample", ":modules:nested:path:sample");
+		}
 	}
 
 	@Test
@@ -2723,9 +2733,11 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
 			"-DliferayVersion=7.0");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
 	}
 
 	@Test
@@ -2748,9 +2760,11 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
 			"-DliferayVersion=7.1");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
 	}
 
 	@Test
@@ -2773,9 +2787,11 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
 			"-DliferayVersion=7.2");
 
-		_testBuildTemplateServiceBuilder(
-			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-			packageName, "");
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
 	}
 
 	@Test
@@ -2804,14 +2820,17 @@ public class ProjectTemplatesTest {
 
 		_writeServiceClass(workspaceProjectDir);
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_testExists(gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+			_testExists(
+				gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
 
-		_executeGradle(workspaceDir, ":modules:servicepreaction:build");
+			_executeGradle(workspaceDir, ":modules:servicepreaction:build");
 
-		_testExists(
-			workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+			_testExists(
+				workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+		}
 	}
 
 	@Test
@@ -2923,14 +2942,17 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_testExists(gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+			_testExists(
+				gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
 
-		_executeGradle(workspaceDir, ":modules:serviceoverride:build");
+			_executeGradle(workspaceDir, ":modules:serviceoverride:build");
 
-		_testExists(
-			workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+			_testExists(
+				workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+		}
 	}
 
 	@Test

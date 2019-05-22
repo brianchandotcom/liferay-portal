@@ -1,116 +1,115 @@
-CKEDITOR.dialog.add(
-	'audio',
-	function(editor) {
-		var TPL_SCRIPT = 'boundingBox: "#" + mediaId,' +
-						'oggUrl: "{oggUrl}",' +
-						'url: "{url}"';
+CKEDITOR.dialog.add('audio', function(editor) {
+	var TPL_SCRIPT =
+		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 
-		function commitValue(audioNode) {
-			var instance = this;
+	function commitValue(audioNode) {
+		var instance = this;
 
-			var id = instance.id;
-			var value = instance.getValue();
+		var id = instance.id;
+		var value = instance.getValue();
 
-			var scriptTPL = null;
-			var textScript = null;
+		var scriptTPL = null;
+		var textScript = null;
 
-			var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
-			var audioUrl = audioNode.getAttribute('data-audio-url');
+		var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
+		var audioUrl = audioNode.getAttribute('data-audio-url');
+
+		if (id === 'url') {
+			audioNode.setAttribute('data-document-url', value);
+
+			audioUrl = Liferay.Util.addParams('audioPreview=1&type=mp3', value);
+
+			audioNode.setAttribute('data-audio-url', audioUrl);
+
+			audioOggUrl = Liferay.Util.addParams(
+				'audioPreview=1&type=ogg',
+				value
+			);
+
+			audioNode.setAttribute('data-audio-ogg-url', audioOggUrl);
+
+			scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
+
+			textScript = scriptTPL.output({
+				oggUrl: audioOggUrl,
+				url: audioUrl
+			});
+
+			editor.plugins.media.applyMediaScript(
+				audioNode,
+				'audio',
+				textScript
+			);
+		}
+	}
+
+	function loadValue(audioNode) {
+		var instance = this;
+
+		var id = instance.id;
+
+		if (audioNode) {
+			var value = null;
 
 			if (id === 'url') {
-				audioNode.setAttribute('data-document-url', value);
+				value = audioNode.getAttribute('data-document-url');
+			}
 
-				audioUrl = Liferay.Util.addParams('audioPreview=1&type=mp3', value);
-
-				audioNode.setAttribute('data-audio-url', audioUrl);
-
-				audioOggUrl = Liferay.Util.addParams('audioPreview=1&type=ogg', value);
-
-				audioNode.setAttribute('data-audio-ogg-url', audioOggUrl);
-
-				scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
-
-				textScript = scriptTPL.output(
-					{
-						oggUrl: audioOggUrl,
-						url: audioUrl
-					}
-				);
-
-				editor.plugins.media.applyMediaScript(audioNode, 'audio', textScript);
+			if (value !== null) {
+				instance.setValue(value);
 			}
 		}
+	}
 
-		function loadValue(audioNode) {
+	return {
+		minHeight: 200,
+		minWidth: 400,
+
+		contents: [
+			{
+				elements: [
+					{
+						children: [
+							{
+								commit: commitValue,
+								id: 'url',
+								label: Liferay.Language.get('audio'),
+								setup: loadValue,
+								type: 'text'
+							},
+							{
+								filebrowser: {
+									action: 'Browse',
+									target: 'info:url',
+									url: editor.config.filebrowserAudioBrowseUrl
+								},
+								hidden: 'true',
+								id: 'browse',
+								label: editor.lang.common.browseServer,
+								style: 'display:inline-block;margin-top:10px;',
+								type: 'button'
+							}
+						],
+						type: 'hbox',
+						widths: ['', '100px']
+					}
+				],
+				id: 'info'
+			}
+		],
+
+		title: Liferay.Language.get('audio-properties'),
+
+		onOk: function() {
 			var instance = this;
 
-			var id = instance.id;
+			editor.plugins.media.onOkCallback(instance, editor, 'audio');
+		},
 
-			if (audioNode) {
-				var value = null;
+		onShow: function() {
+			var instance = this;
 
-				if (id === 'url') {
-					value = audioNode.getAttribute('data-document-url');
-				}
-
-				if (value !== null) {
-					instance.setValue(value);
-				}
-			}
+			editor.plugins.media.onShowCallback(instance, editor, 'audio');
 		}
-
-		return {
-			minHeight: 200,
-			minWidth: 400,
-
-			contents: [
-				{
-					elements:
-					[
-						{
-							children: [
-								{
-									commit: commitValue,
-									id: 'url',
-									label: Liferay.Language.get('audio'),
-									setup: loadValue,
-									type: 'text'
-								},
-								{
-									filebrowser:
-									{
-										action: 'Browse',
-										target: 'info:url',
-										url: editor.config.filebrowserAudioBrowseUrl
-									},
-									hidden: 'true',
-									id: 'browse',
-									label: editor.lang.common.browseServer,
-									style: 'display:inline-block;margin-top:10px;',
-									type: 'button'
-								}
-							],
-							type: 'hbox',
-							widths: ['', '100px']
-						}
-					],
-					id: 'info'
-				}
-			],
-
-			title: Liferay.Language.get('audio-properties'),
-
-			onOk: function() {
-				var instance = this;
-
-				editor.plugins.media.onOkCallback(instance, editor, 'audio');
-			},
-
-			onShow: function() {
-				var instance = this;
-
-				editor.plugins.media.onShowCallback(instance, editor, 'audio');
-			}
-		};
-	}
-);
+	};
+});

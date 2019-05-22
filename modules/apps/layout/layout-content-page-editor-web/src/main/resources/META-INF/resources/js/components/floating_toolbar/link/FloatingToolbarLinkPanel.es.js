@@ -4,7 +4,11 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
 import {BUTTON_TYPES, TARGET_TYPES} from '../../../utils/constants';
-import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from '../../../actions/saveChanges.es';
 import templates from './FloatingToolbarLinkPanel.soy';
 import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 
@@ -12,7 +16,6 @@ import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
  * FloatingToolbarLinkPanel
  */
 class FloatingToolbarLinkPanel extends Component {
-
 	/**
 	 * @inheritdoc
 	 * @review
@@ -60,14 +63,12 @@ class FloatingToolbarLinkPanel extends Component {
 	_updateRowConfig(config) {
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
-			.dispatch(
-				{
-					config,
-					editableId: this.item.editableId,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-					type: UPDATE_CONFIG_ATTRIBUTES
-				}
-			)
+			.dispatch({
+				config,
+				editableId: this.item.editableId,
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				type: UPDATE_CONFIG_ATTRIBUTES
+			})
 			.dispatch(updateLastSaveDateAction())
 			.dispatch(disableSavingChangesStatusAction());
 	}
@@ -78,7 +79,8 @@ class FloatingToolbarLinkPanel extends Component {
 	 */
 	_handleButtonTypeOptionChange(event) {
 		const buttonElement = event.delegateTarget;
-		const buttonElementValue = buttonElement.options[buttonElement.selectedIndex].value;
+		const buttonElementValue =
+			buttonElement.options[buttonElement.selectedIndex].value;
 
 		let buttonType = this._buttonTypes.find(
 			type => type.buttonTypeId === buttonElementValue
@@ -113,7 +115,6 @@ class FloatingToolbarLinkPanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarLinkPanel.STATE = {
-
 	/**
 	 * @default BUTTON_TYPES
 	 * @memberOf FloatingToolbarLinkPanel
@@ -121,8 +122,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	_buttonTypes: Config
-		.array()
+	_buttonTypes: Config.array()
 		.internal()
 		.value(BUTTON_TYPES),
 
@@ -133,8 +133,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	_targetTypes: Config
-		.array()
+	_targetTypes: Config.array()
 		.internal()
 		.value(TARGET_TYPES),
 
@@ -144,9 +143,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	item: Config
-		.object()
-		.value(null),
+	item: Config.object().value(null),
 
 	/**
 	 * @default undefined
@@ -154,9 +151,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	itemId: Config
-		.string()
-		.required(),
+	itemId: Config.string().required(),
 
 	/**
 	 * @default undefined
@@ -164,9 +159,7 @@ FloatingToolbarLinkPanel.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	store: Config
-		.object()
-		.value(null)
+	store: Config.object().value(null)
 };
 
 Soy.register(FloatingToolbarLinkPanel, templates);

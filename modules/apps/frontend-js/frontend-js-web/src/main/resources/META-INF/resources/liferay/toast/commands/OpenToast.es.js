@@ -13,30 +13,30 @@ import {ClayToast} from 'clay-alert';
  * @review
  */
 
-function openToast(
-	{
-		events = {},
-		message = '',
-		title = Liferay.Language.get('success'),
-		type = 'success'
-	} = {}
-) {
+function openToast({
+	events = {},
+	message = '',
+	title = Liferay.Language.get('success'),
+	type = 'success'
+} = {}) {
 	var alertContainer = document.getElementById('alertContainer');
 
 	if (!alertContainer) {
 		alertContainer = document.createElement('div');
 		alertContainer.id = 'alertContainer';
 
-		dom.addClasses(alertContainer, 'alert-notifications alert-notifications-fixed');
+		dom.addClasses(
+			alertContainer,
+			'alert-notifications alert-notifications-fixed'
+		);
 		dom.enterDocument(alertContainer);
-	}
-	else {
+	} else {
 		dom.removeChildren(alertContainer);
 	}
 
 	const mergedEvents = Object.assign(
 		{
-			'disposed': function(event) {
+			disposed: function(event) {
 				if (!alertContainer.hasChildNodes()) {
 					dom.exitDocument(alertContainer);
 				}
@@ -60,11 +60,9 @@ function openToast(
 
 	dom.removeClasses(clayToast.element, 'show');
 
-	requestAnimationFrame(
-		function() {
-			dom.addClasses(clayToast.element, 'show');
-		}
-	);
+	requestAnimationFrame(function() {
+		dom.addClasses(clayToast.element, 'show');
+	});
 
 	return clayToast;
 }

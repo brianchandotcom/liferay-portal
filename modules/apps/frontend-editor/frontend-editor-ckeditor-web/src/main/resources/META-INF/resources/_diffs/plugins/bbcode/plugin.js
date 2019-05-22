@@ -4,15 +4,15 @@
 			editor.focus();
 			editor.fire('saveSnapshot');
 
-			var elementPath = new CKEDITOR.dom.elementPath(editor.getSelection().getStartElement());
+			var elementPath = new CKEDITOR.dom.elementPath(
+				editor.getSelection().getStartElement()
+			);
 
 			var elementAction = 'apply';
 
-			var preElement = new CKEDITOR.style(
-				{
-					element: 'pre'
-				}
-			);
+			var preElement = new CKEDITOR.style({
+				element: 'pre'
+			});
 
 			preElement._.enterMode = editor.config.enterMode;
 
@@ -28,12 +28,9 @@
 				preBlock.appendBogus();
 			}
 
-			setTimeout(
-				function() {
-					editor.fire('saveSnapshot');
-				},
-				0
-			);
+			setTimeout(function() {
+				editor.fire('saveSnapshot');
+			}, 0);
 		},
 
 		refresh: function(editor, path) {
@@ -53,30 +50,26 @@
 		context: 'pre'
 	};
 
-	CKEDITOR.plugins.add(
-	'bbcode',
-		{
-			init: function(editor) {
-				var instance = this;
+	CKEDITOR.plugins.add('bbcode', {
+		init: function(editor) {
+			var instance = this;
 
-				var path = instance.path;
+			var path = instance.path;
 
-				var dependencies = [
-					CKEDITOR.getUrl(path + 'bbcode_data_processor.js'),
-					CKEDITOR.getUrl(path + 'bbcode_parser.js')
-				];
+			var dependencies = [
+				CKEDITOR.getUrl(path + 'bbcode_data_processor.js'),
+				CKEDITOR.getUrl(path + 'bbcode_parser.js')
+			];
 
-				CKEDITOR.scriptLoader.load(
-					dependencies,
-					function() {
-						var bbcodeDataProcessor = CKEDITOR.plugins.get('bbcode_data_processor');
-
-						bbcodeDataProcessor.init(editor);
-					}
+			CKEDITOR.scriptLoader.load(dependencies, function() {
+				var bbcodeDataProcessor = CKEDITOR.plugins.get(
+					'bbcode_data_processor'
 				);
 
-				editor.addCommand('bbcode', commandObject);
-			}
+				bbcodeDataProcessor.init(editor);
+			});
+
+			editor.addCommand('bbcode', commandObject);
 		}
-	);
+	});
 })();

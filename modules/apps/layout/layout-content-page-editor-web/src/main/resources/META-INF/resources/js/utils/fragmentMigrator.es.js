@@ -7,13 +7,11 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from './constants';
 function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 	let alternativeObject = null;
 	let defaultSegment = {};
-	Object.keys(object).forEach(
-		oKey => {
-			if (oKey !== 'defaultValue' && typeof object[oKey] === 'string') {
-				defaultSegment[oKey] = object[oKey];
-			}
+	Object.keys(object).forEach(oKey => {
+		if (oKey !== 'defaultValue' && typeof object[oKey] === 'string') {
+			defaultSegment[oKey] = object[oKey];
 		}
-	);
+	});
 	if (Object.keys(defaultSegment).length > 0) {
 		alternativeObject = {
 			[defaultSegmentsExperienceKey]: defaultSegment,
@@ -33,20 +31,22 @@ function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
 
 	if (!defaultSegmentsExperienceKey) {
 		result = jsonEditableValues;
-	}
-	else {
+	} else {
 		result = {
 			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {}
 		};
-		Object.keys(jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR])
-			.forEach(
-				editableFragmentKey => {
-					result[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey] = _editableFragmentMigrator(
-						jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableFragmentKey],
-						defaultSegmentsExperienceKey
-					);
-				}
+		Object.keys(
+			jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+		).forEach(editableFragmentKey => {
+			result[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+				editableFragmentKey
+			] = _editableFragmentMigrator(
+				jsonEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+					editableFragmentKey
+				],
+				defaultSegmentsExperienceKey
 			);
+		});
 	}
 	return result;
 }

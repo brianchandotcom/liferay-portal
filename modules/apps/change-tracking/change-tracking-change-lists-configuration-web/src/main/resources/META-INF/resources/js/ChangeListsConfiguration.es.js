@@ -10,34 +10,31 @@ import templates from './ChangeListsConfiguration.soy';
  * Provides the component for the Change Lists configuration screen.
  */
 class ChangeListsConfiguration extends PortletBase {
-
 	created() {
-		this._getDataRequest(
-			this.urlChangeTrackingConfiguration,
-			response => {
-				if (response) {
-					this.changeTrackingAllowed = response.changeTrackingAllowed;
-					this.changeTrackingEnabled = response.changeTrackingEnabled;
-					this.currentPage = 'Global Settings';
-					this.initialFetch = true;
-					this.tooltipBody = '';
+		this._getDataRequest(this.urlChangeTrackingConfiguration, response => {
+			if (response) {
+				this.changeTrackingAllowed = response.changeTrackingAllowed;
+				this.changeTrackingEnabled = response.changeTrackingEnabled;
+				this.currentPage = 'Global Settings';
+				this.initialFetch = true;
+				this.tooltipBody = '';
 
-					response.supportedContentTypes.forEach(
-						(supportedContentType) => {
-							if (this.tooltipBody.length > 0) {
-								this.tooltipBody = this.tooltipBody.concat(' ');
-							}
-							this.tooltipBody = this.tooltipBody.concat(supportedContentType);
-						}
+				response.supportedContentTypes.forEach(supportedContentType => {
+					if (this.tooltipBody.length > 0) {
+						this.tooltipBody = this.tooltipBody.concat(' ');
+					}
+					this.tooltipBody = this.tooltipBody.concat(
+						supportedContentType
 					);
-				}
+				});
 			}
-		);
+		});
 		this._getDataRequest(
 			this.urlChangeTrackingUserConfiguration,
 			response => {
 				if (response) {
-					this.checkoutCTCollectionConfirmationEnabled = response.checkoutCTCollectionConfirmationEnabled;
+					this.checkoutCTCollectionConfirmationEnabled =
+						response.checkoutCTCollectionConfirmationEnabled;
 				}
 			}
 		);
@@ -61,28 +58,17 @@ class ChangeListsConfiguration extends PortletBase {
 	 */
 	_handleNavItemClicked(event) {
 		this.currentPage = event.data.item.label;
-		this.navigationItems = this.navigationItems.map(
-			item => {
-				if (item.label === this.currentPage) {
-					return Object.assign(
-						{},
-						item,
-						{
-							active: true
-						}
-					);
-				}
-				else {
-					return Object.assign(
-						{},
-						item,
-						{
-							active: false
-						}
-					);
-				}
+		this.navigationItems = this.navigationItems.map(item => {
+			if (item.label === this.currentPage) {
+				return Object.assign({}, item, {
+					active: true
+				});
+			} else {
+				return Object.assign({}, item, {
+					active: false
+				});
 			}
-		);
+		});
 	}
 
 	_handleUserConfigCheck(event) {
@@ -93,7 +79,8 @@ class ChangeListsConfiguration extends PortletBase {
 		event.preventDefault();
 
 		let data = {
-			checkoutCTCollectionConfirmationEnabled: this.checkoutCTCollectionConfirmationEnabled
+			checkoutCTCollectionConfirmationEnabled: this
+				.checkoutCTCollectionConfirmationEnabled
 		};
 
 		this._putDataRequest(
@@ -101,15 +88,15 @@ class ChangeListsConfiguration extends PortletBase {
 			data,
 			response => {
 				if (response) {
-					const message = Liferay.Language.get('the-configuration-has-been-saved');
-
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('success'),
-							type: 'success'
-						}
+					const message = Liferay.Language.get(
+						'the-configuration-has-been-saved'
 					);
+
+					openToast({
+						message,
+						title: Liferay.Language.get('success'),
+						type: 'success'
+					});
 				}
 			}
 		);
@@ -153,15 +140,15 @@ class ChangeListsConfiguration extends PortletBase {
 			data,
 			response => {
 				if (response) {
-					const message = Liferay.Language.get('the-configuration-has-been-saved');
-
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('success'),
-							type: 'success'
-						}
+					const message = Liferay.Language.get(
+						'the-configuration-has-been-saved'
 					);
+
+					openToast({
+						message,
+						title: Liferay.Language.get('success'),
+						type: 'success'
+					});
 
 					Liferay.Util.navigate(this.urlOverview);
 				}
@@ -183,21 +170,20 @@ class ChangeListsConfiguration extends PortletBase {
 		fetch(url, request)
 			.then(response => response.json())
 			.then(response => callback(response))
-			.catch(
-				(error) => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Language.get('an-error-occured-while-saving-configuration');
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Language.get(
+								'an-error-occured-while-saving-configuration'
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 
 	_putDataRequest(url, bodyData, callback) {
@@ -217,21 +203,20 @@ class ChangeListsConfiguration extends PortletBase {
 		fetch(url, request)
 			.then(response => response.json())
 			.then(response => callback(response))
-			.catch(
-				(error) => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Language.get('an-error-occured-while-saving-configuration');
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Language.get(
+								'an-error-occured-while-saving-configuration'
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 }
 
@@ -242,7 +227,6 @@ class ChangeListsConfiguration extends PortletBase {
  * @type {!Object}
  */
 ChangeListsConfiguration.STATE = {
-
 	/**
 	 * If <code>true</code>, change tracking is allowed.
 	 *
@@ -298,13 +282,11 @@ ChangeListsConfiguration.STATE = {
 	 * @type {!array}
 	 */
 	navigationItems: Config.arrayOf(
-		Config.shapeOf(
-			{
-				active: Config.bool().value(false),
-				href: Config.string(),
-				label: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			active: Config.bool().value(false),
+			href: Config.string(),
+			label: Config.string().required()
+		})
 	).required(),
 
 	/**

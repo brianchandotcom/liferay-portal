@@ -5,8 +5,7 @@
 	@if $min != null {
 		@if map-has-key($media-query-sizes, $min) {
 			$minWidth: map-get($media-query-sizes, $min);
-		}
-		@else {
+		} @else {
 			$minWidth: $min;
 		}
 	}
@@ -14,26 +13,22 @@
 	@if $max != null {
 		@if map-has-key($media-query-sizes, $max) {
 			$maxWidth: map-get($media-query-sizes, $max);
-		}
-		@else {
+		} @else {
 			$maxWidth: $max;
 		}
 	}
 
 	@if $maxWidth <= 0 and $minWidth <= 0 {
 		@content;
-	}
-	@else if $maxWidth <= 0 {
+	} @else if $maxWidth <= 0 {
 		@media (min-width: $minWidth) {
 			@content;
 		}
-	}
-	@else if $minWidth <= 0 {
+	} @else if $minWidth <= 0 {
 		@media (max-width: $maxWidth) {
 			@content;
 		}
-	}
-	@else {
+	} @else {
 		@media (min-width: $minWidth) and (max-width: $maxWidth) {
 			@content;
 		}
@@ -44,24 +39,24 @@
 
 @mixin xs {
 	@include media-query(xs) {
-		@content
-	};
+		@content;
+	}
 }
 
 @mixin sm {
 	@include media-query(sm) {
-		@content
-	};
+		@content;
+	}
 }
 
 @mixin md {
 	@include media-query(md) {
-		@content
-	};
+		@content;
+	}
 }
 
 @mixin lg {
 	@include media-query(lg) {
-		@content
-	};
+		@content;
+	}
 }

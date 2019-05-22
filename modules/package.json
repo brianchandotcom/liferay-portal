@@ -22,7 +22,7 @@
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
-		"prettier": "prettier"
+		"prettier": "prettier --write apps/**/*.js apps/**/*.scss"
 	},
 	"workspaces": {
 		"packages": [

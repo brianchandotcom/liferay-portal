@@ -11,7 +11,6 @@ import State from 'metal-state/src/State';
  * Porygon theme.
  */
 class TopSearch extends State {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -26,13 +25,14 @@ class TopSearch extends State {
 		if (this.searchInput_) {
 			dom.addClasses(this.searchInput_, 'visible-xs');
 
-			dom.on(this.searchIcon_, 'click', (e) => this.onSearchIconClick_(e));
-			dom.on(this.searchInput_, 'blur', (e) => this.onSearchInputBlur_(e));
-			dom.on(this.searchInput_, 'keydown', (e) => this.onSearchInputKeyDown_(e));
+			dom.on(this.searchIcon_, 'click', e => this.onSearchIconClick_(e));
+			dom.on(this.searchInput_, 'blur', e => this.onSearchInputBlur_(e));
+			dom.on(this.searchInput_, 'keydown', e =>
+				this.onSearchInputKeyDown_(e)
+			);
 
-			this.on('visibleChanged', (e) => this.onVisibleChanged_(e));
-		}
-		else {
+			this.on('visibleChanged', e => this.onVisibleChanged_(e));
+		} else {
 			this.searchIcon_.setAttribute('disabled', 'disabled');
 
 			dom.addClasses(this.searchIcon_, 'disabled');
@@ -57,15 +57,19 @@ class TopSearch extends State {
 	 * @protected
 	 */
 	onSearchInputBlur_(event) {
-		async.nextTick(
-			() => {
-				let stateActiveElementBlur = document.activeElement !== this.searchIcon_ && document.activeElement !== this.searchInput_ && document.activeElement !== this.searchOptions_;
+		async.nextTick(() => {
+			let stateActiveElementBlur =
+				document.activeElement !== this.searchIcon_ &&
+				document.activeElement !== this.searchInput_ &&
+				document.activeElement !== this.searchOptions_;
 
-				if (stateActiveElementBlur && (!this.searchInput_.value || this.searchInput_.value === '')) {
-					this.visible = false;
-				}
+			if (
+				stateActiveElementBlur &&
+				(!this.searchInput_.value || this.searchInput_.value === '')
+			) {
+				this.visible = false;
 			}
-		);
+		});
 	}
 
 	/**
@@ -105,7 +109,6 @@ class TopSearch extends State {
  * @static
  */
 TopSearch.STATE = {
-
 	/**
 	 * Indicates if the component is visible or not.
 	 * @type {Object}

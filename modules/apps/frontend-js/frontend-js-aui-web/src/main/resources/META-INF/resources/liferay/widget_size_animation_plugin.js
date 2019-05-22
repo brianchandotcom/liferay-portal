@@ -13,107 +13,109 @@ AUI.add(
 
 		var STR_START = 'start';
 
-		var SizeAnim = A.Component.create(
-			{
-				ATTRS: {
-					align: {
-						validator: Lang.isBoolean
-					},
-					duration: {
-						validator: Lang.isNumber,
-						value: 0.3
-					},
-					easing: {
-						validator: Lang.isString,
-						value: 'easeBoth'
-					},
-					preventTransition: {
-						validator: Lang.isBoolean
+		var SizeAnim = A.Component.create({
+			ATTRS: {
+				align: {
+					validator: Lang.isBoolean
+				},
+				duration: {
+					validator: Lang.isNumber,
+					value: 0.3
+				},
+				easing: {
+					validator: Lang.isString,
+					value: 'easeBoth'
+				},
+				preventTransition: {
+					validator: Lang.isBoolean
+				}
+			},
+
+			EXTENDS: A.Plugin.Base,
+
+			NAME: NAME,
+
+			NS: NAME,
+
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
+
+					var host = instance.get(STR_HOST);
+
+					host.addAttr(STR_SIZE, {
+						setter: A.bind('_animWidgetSize', instance)
+					});
+
+					instance._anim = new A.Anim({
+						duration: instance.get('duration'),
+						easing: instance.get('easing'),
+						node: host
+					});
+
+					var eventHandles = [
+						instance._anim.after(
+							STR_END,
+							A.bind('fire', instance, STR_END)
+						),
+						instance._anim.after(
+							STR_START,
+							A.bind('fire', instance, STR_START)
+						),
+						instance._anim.after(
+							'tween',
+							instance._alignWidget,
+							instance
+						)
+					];
+
+					instance._eventHandles = eventHandles;
+				},
+
+				destructor: function() {
+					var instance = this;
+
+					instance.get(STR_HOST).removeAttr(STR_SIZE);
+
+					new A.EventHandle(instance._eventHandles).detach();
+				},
+
+				_alignWidget: function() {
+					var instance = this;
+
+					if (instance.get('align')) {
+						instance.get(STR_HOST).align();
 					}
 				},
 
-				EXTENDS: A.Plugin.Base,
+				_animWidgetSize: function(size) {
+					var instance = this;
 
-				NAME: NAME,
+					var host = instance.get(STR_HOST);
 
-				NS: NAME,
+					instance._anim.stop();
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+					var attrs = {
+						height: size.height,
+						width: size.width
+					};
 
-						var host = instance.get(STR_HOST);
+					if (!instance.get('preventTransition')) {
+						instance._anim.set('to', attrs);
 
-						host.addAttr(
-							STR_SIZE,
-							{
-								setter: A.bind('_animWidgetSize', instance)
-							}
-						);
+						instance._anim.run();
+					} else {
+						instance.fire(STR_START);
 
-						instance._anim = new A.Anim(
-							{
-								duration: instance.get('duration'),
-								easing: instance.get('easing'),
-								node: host
-							}
-						);
+						host.setAttrs(attrs);
 
-						var eventHandles = [
-							instance._anim.after(STR_END, A.bind('fire', instance, STR_END)),
-							instance._anim.after(STR_START, A.bind('fire', instance, STR_START)),
-							instance._anim.after('tween', instance._alignWidget, instance)
-						];
+						instance._alignWidget();
 
-						instance._eventHandles = eventHandles;
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						instance.get(STR_HOST).removeAttr(STR_SIZE);
-
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
-
-					_alignWidget: function() {
-						var instance = this;
-
-						if (instance.get('align')) {
-							instance.get(STR_HOST).align();
-						}
-					},
-
-					_animWidgetSize: function(size) {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-
-						instance._anim.stop();
-
-						var attrs = {
-							height: size.height,
-							width: size.width
-						};
-
-						if (!instance.get('preventTransition')) {
-							instance._anim.set('to', attrs);
-
-							instance._anim.run();
-						}
-						else {
-							instance.fire(STR_START);
-
-							host.setAttrs(attrs);
-
-							instance._alignWidget();
-
-							instance.fire(STR_END);
-						}
+						instance.fire(STR_END);
 					}
 				}
 			}
-		);
+		});
 
 		A.Plugin.SizeAnim = SizeAnim;
 	},

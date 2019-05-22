@@ -19,13 +19,11 @@ const getFieldValue = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 	let fieldValue;
 
-	visitor.mapFields(
-		field => {
-			if (field.fieldName === fieldName) {
-				fieldValue = field.value;
-			}
+	visitor.mapFields(field => {
+		if (field.fieldName === fieldName) {
+			fieldValue = field.value;
 		}
-	);
+	});
 
 	return fieldValue;
 };
@@ -33,18 +31,16 @@ const getFieldValue = (pages, fieldName) => {
 const fillField = (pages, fieldName, value) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(
-		field => {
-			if (field.fieldName === fieldName) {
-				field = {
-					...field,
-					value
-				};
-			}
-
-			return field;
+	return visitor.mapFields(field => {
+		if (field.fieldName === fieldName) {
+			field = {
+				...field,
+				value
+			};
 		}
-	);
+
+		return field;
+	});
 };
 
 const mockFieldType = {
@@ -152,538 +148,423 @@ const fieldTypes = [
 		label: 'Multiple Selection',
 		name: 'checkbox'
 	}
-].map(
-	fieldType => (
-		{
-			...mockFieldType,
-			...fieldType
+].map(fieldType => ({
+	...mockFieldType,
+	...fieldType
+}));
+
+describe('Sidebar', () => {
+	beforeEach(() => jest.useFakeTimers());
+
+	afterEach(() => {
+		if (component) {
+			component.dispose();
 		}
-	)
-);
+	});
 
-describe(
-	'Sidebar',
-	() => {
-		beforeEach(() => jest.useFakeTimers());
+	it('should render the default markup', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
 
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should render a Sidebar open', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+		component.open();
+
+		jest.runAllTimers();
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should render a Sidebar closed', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+
+		component.open();
+		component.close();
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should render a Sidebar with fieldTypes', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should close the sidebar when the mouse down event is not on it', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+
+		jest.runAllTimers();
+
+		component.open();
+
+		component._handleDocumentMouseDown({
+			target: null
+		});
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should emit fieldMoved when the dragEnd method is called', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+
+		const spy = jest.spyOn(component, 'emit');
+
+		const event = {
+			preventDefault: jest.fn()
+		};
+
+		const data = {
+			source: {
+				dataset: {
+					fieldTypeName: 'paragraph'
+				}
+			},
+			target: {
+				parentElement: {
+					dataset: {
+						ddmFieldColumn: 0,
+						ddmFieldPage: 0,
+						ddmFieldRow: 0
+					}
 				}
 			}
-		);
+		};
 
-		it(
-			'should render the default markup',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
-					}
-				);
+		jest.runAllTimers();
 
-				expect(component).toMatchSnapshot();
+		component.open();
+
+		component._handleDragEnded(data, event);
+
+		jest.runAllTimers();
+
+		expect(component).toMatchSnapshot();
+
+		expect(spy).toHaveBeenCalledWith('fieldAdded', expect.anything());
+	});
+
+	it('should emit the fieldDuplicated event when the duplicate field option is clicked on the sidebar settings', () => {
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		const spy = jest.spyOn(component, 'emit');
+
+		const data = {
+			item: {
+				settingsItem: 'duplicate-field'
 			}
-		);
+		};
 
-		it(
-			'should render a Sidebar open',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
-					}
-				);
-				component.open();
+		jest.runAllTimers();
 
-				jest.runAllTimers();
+		component.open();
 
-				expect(component).toMatchSnapshot();
+		component._handleFieldSettingsClicked({data});
+
+		expect(spy).toHaveBeenCalledWith('fieldDuplicated', expect.anything());
+	});
+
+	it('should emit the fieldDeleted event when the delete field option is clicked on the sidebar settings', () => {
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		const spy = jest.spyOn(component, 'emit');
+
+		const data = {
+			item: {
+				settingsItem: 'delete-field'
 			}
-		);
+		};
 
-		it(
-			'should render a Sidebar closed',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
-					}
-				);
+		jest.runAllTimers();
 
-				component.open();
-				component.close();
+		component.open();
 
-				expect(component).toMatchSnapshot();
+		component._handleFieldSettingsClicked({data});
+
+		expect(spy).toHaveBeenCalled();
+	});
+
+	it('should emit the fieldChangesCanceled event when the cancel field chages option is clicked on the sidebar settings', () => {
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		const spy = jest.spyOn(component, 'emit');
+
+		const data = {
+			item: {
+				settingsItem: 'cancel-field-changes'
 			}
+		};
+
+		jest.runAllTimers();
+
+		component.open();
+
+		component._handleFieldSettingsClicked({data});
+
+		expect(spy).toHaveBeenCalled();
+	});
+
+	it('should render a Sidebar with spritemap', () => {
+		component = new Sidebar({
+			fieldTypes,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should close the sidebar in edition mode', () => {
+		const focusedField = mockFieldType;
+
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should close the sidebar in edition mode', () => {
+		const focusedField = mockFieldType;
+
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		MetalTestUtil.triggerEvent(
+			component.refs.previousButton.element,
+			'click',
+			{}
 		);
 
-		it(
-			'should render a Sidebar with fieldTypes',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
+		jest.runAllTimers();
+
+		expect(component.state.open).toBeFalsy();
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should propagates evaluator changed event', () => {
+		const focusedField = mockFieldType;
+
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		const {FormRenderer} = component.refs;
+		const spy = jest.spyOn(component, 'emit');
+
+		FormRenderer.emit('evaluated', {
+			focusedField
+		});
+
+		expect(spy).toHaveBeenCalled();
+	});
+
+	it('should propagates field edited event', () => {
+		const focusedField = mockFieldType;
+
+		component = new Sidebar({
+			fieldTypes,
+			focusedField,
+			spritemap
+		});
+
+		component.open();
+
+		jest.runAllTimers();
+
+		const {FormRenderer} = component.refs;
+		const spy = jest.spyOn(component, 'emit');
+
+		FormRenderer.emit('fieldEdited', {});
+
+		expect(spy).toHaveBeenCalled();
+	});
+
+	describe('Interaction with markup', () => {
+		it('should close Sidebar when click the button close', () => {
+			component = new Sidebar({
+				fieldTypes,
+				spritemap
+			});
+
+			component.open();
+
+			expect(component.state.open).toBeTruthy();
+
+			const spy = jest.spyOn(component, 'close');
+			const {closeButton} = component.refs;
+
+			closeButton.click();
+
+			jest.runAllTimers();
+
+			expect(component.state.open).toBeFalsy();
+			expect(spy).toHaveBeenCalled();
+		});
+	});
+
+	describe('Changing field type', () => {
+		it('should always be enabled', () => {
+			component = new Sidebar({
+				fieldTypes,
+				focusedField: mockFieldType,
+				spritemap
+			});
+
+			jest.runAllTimers();
+
+			expect(component.isChangeFieldTypeEnabled()).toBeTruthy();
+		});
+
+		it('should keep basic properties after changing field type', done => {
+			const {settingsContext} = mockFieldType;
+			let {pages} = settingsContext;
+
+			pages = fillField(pages, 'label', 'my field');
+			pages = fillField(pages, 'showLabel', false);
+
+			component = new Sidebar({
+				fieldTypes,
+				focusedField: {
+					...mockFieldType,
+					settingsContext: {
+						...mockFieldType.settingsContext,
+						pages
 					}
+				},
+				spritemap
+			});
+
+			jest.runAllTimers();
+
+			component.once('focusedFieldUpdated', ({type, settingsContext}) => {
+				expect(type).toBe('checkbox');
+				expect(getFieldValue(settingsContext.pages, 'type')).toBe(
+					'checkbox'
+				);
+				expect(getFieldValue(settingsContext.pages, 'label')).toBe(
+					'my field'
+				);
+				expect(getFieldValue(settingsContext.pages, 'showLabel')).toBe(
+					false
 				);
 
-				component.open();
+				done();
+			});
 
-				jest.runAllTimers();
+			component.changeFieldType('checkbox');
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		it('should not keep validation settings between field type', done => {
+			const {settingsContext} = mockFieldType;
+			let {pages} = settingsContext;
 
-		it(
-			'should close the sidebar when the mouse down event is not on it',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
+			pages = fillField(pages, 'validation', 'a=b');
+
+			expect(getFieldValue(pages, 'validation')).toEqual('a=b');
+
+			component = new Sidebar({
+				fieldTypes,
+				focusedField: {
+					...mockFieldType,
+					settingsContext: {
+						...mockFieldType.settingsContext,
+						pages
 					}
-				);
+				},
+				spritemap
+			});
 
-				jest.runAllTimers();
+			jest.runAllTimers();
 
-				component.open();
+			component.once('focusedFieldUpdated', ({settingsContext}) => {
+				expect(
+					getFieldValue(settingsContext.pages, 'validation')
+				).not.toEqual('a=b');
 
-				component._handleDocumentMouseDown(
-					{
-						target: null
-					}
-				);
+				done();
+			});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+			component.changeFieldType('checkbox');
+		});
 
-		it(
-			'should emit fieldMoved when the dragEnd method is called',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
-					}
-				);
+		it('should emit an event with new field type settings', done => {
+			component = new Sidebar({
+				fieldTypes,
+				focusedField: mockFieldType,
+				spritemap
+			});
 
-				const spy = jest.spyOn(component, 'emit');
+			jest.runAllTimers();
 
-				const event = {
-					preventDefault: jest.fn()
-				};
+			component.once('focusedFieldUpdated', ({type, settingsContext}) => {
+				expect(type).toBe('checkbox');
 
-				const data = {
-					source: {
-						dataset: {
-							fieldTypeName: 'paragraph'
-						}
-					},
-					target: {
-						parentElement: {
-							dataset: {
-								ddmFieldColumn: 0,
-								ddmFieldPage: 0,
-								ddmFieldRow: 0
-							}
-						}
-					}
-				};
+				expect(settingsContext).toMatchSnapshot();
 
-				jest.runAllTimers();
+				done();
+			});
 
-				component.open();
+			component.changeFieldType('checkbox');
 
-				component._handleDragEnded(data, event);
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-
-				expect(spy).toHaveBeenCalledWith('fieldAdded', expect.anything());
-			}
-		);
-
-		it(
-			'should emit the fieldDuplicated event when the duplicate field option is clicked on the sidebar settings',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				const data = {
-					item: {
-						settingsItem: 'duplicate-field'
-					}
-				};
-
-				jest.runAllTimers();
-
-				component.open();
-
-				component._handleFieldSettingsClicked({data});
-
-				expect(spy).toHaveBeenCalledWith('fieldDuplicated', expect.anything());
-			}
-		);
-
-		it(
-			'should emit the fieldDeleted event when the delete field option is clicked on the sidebar settings',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				const data = {
-					item: {
-						settingsItem: 'delete-field'
-					}
-				};
-
-				jest.runAllTimers();
-
-				component.open();
-
-				component._handleFieldSettingsClicked({data});
-
-				expect(spy).toHaveBeenCalled();
-			}
-		);
-
-		it(
-			'should emit the fieldChangesCanceled event when the cancel field chages option is clicked on the sidebar settings',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				const data = {
-					item: {
-						settingsItem: 'cancel-field-changes'
-					}
-				};
-
-				jest.runAllTimers();
-
-				component.open();
-
-				component._handleFieldSettingsClicked({data});
-
-				expect(spy).toHaveBeenCalled();
-			}
-		);
-
-		it(
-			'should render a Sidebar with spritemap',
-			() => {
-				component = new Sidebar(
-					{
-						fieldTypes,
-						spritemap
-					}
-				);
-
-				component.open();
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should close the sidebar in edition mode',
-			() => {
-				const focusedField = mockFieldType;
-
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				component.open();
-
-				jest.runAllTimers();
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should close the sidebar in edition mode',
-			() => {
-				const focusedField = mockFieldType;
-
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				component.open();
-
-				jest.runAllTimers();
-
-				MetalTestUtil.triggerEvent(component.refs.previousButton.element, 'click', {});
-
-				jest.runAllTimers();
-
-				expect(component.state.open).toBeFalsy();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should propagates evaluator changed event',
-			() => {
-				const focusedField = mockFieldType;
-
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				component.open();
-
-				jest.runAllTimers();
-
-				const {FormRenderer} = component.refs;
-				const spy = jest.spyOn(component, 'emit');
-
-				FormRenderer.emit(
-					'evaluated',
-					{
-						focusedField
-					},
-				);
-
-				expect(spy).toHaveBeenCalled();
-			}
-		);
-
-		it(
-			'should propagates field edited event',
-			() => {
-				const focusedField = mockFieldType;
-
-				component = new Sidebar(
-					{
-						fieldTypes,
-						focusedField,
-						spritemap
-					}
-				);
-
-				component.open();
-
-				jest.runAllTimers();
-
-				const {FormRenderer} = component.refs;
-				const spy = jest.spyOn(component, 'emit');
-
-				FormRenderer.emit(
-					'fieldEdited',
-					{},
-				);
-
-				expect(spy).toHaveBeenCalled();
-			}
-		);
-
-		describe(
-			'Interaction with markup',
-			() => {
-				it(
-					'should close Sidebar when click the button close',
-					() => {
-						component = new Sidebar(
-							{
-								fieldTypes,
-								spritemap
-							}
-						);
-
-						component.open();
-
-						expect(component.state.open).toBeTruthy();
-
-						const spy = jest.spyOn(component, 'close');
-						const {closeButton} = component.refs;
-
-						closeButton.click();
-
-						jest.runAllTimers();
-
-						expect(component.state.open).toBeFalsy();
-						expect(spy).toHaveBeenCalled();
-					}
-				);
-			}
-		);
-
-		describe(
-			'Changing field type',
-			() => {
-				it(
-					'should always be enabled',
-					() => {
-						component = new Sidebar(
-							{
-								fieldTypes,
-								focusedField: mockFieldType,
-								spritemap
-							}
-						);
-
-						jest.runAllTimers();
-
-						expect(component.isChangeFieldTypeEnabled()).toBeTruthy();
-					}
-				);
-
-				it(
-					'should keep basic properties after changing field type',
-					done => {
-						const {settingsContext} = mockFieldType;
-						let {pages} = settingsContext;
-
-						pages = fillField(pages, 'label', 'my field');
-						pages = fillField(pages, 'showLabel', false);
-
-						component = new Sidebar(
-							{
-								fieldTypes,
-								focusedField: {
-									...mockFieldType,
-									settingsContext: {
-										...mockFieldType.settingsContext,
-										pages
-									}
-								},
-								spritemap
-							}
-						);
-
-						jest.runAllTimers();
-
-						component.once(
-							'focusedFieldUpdated',
-							({type, settingsContext}) => {
-								expect(type).toBe('checkbox');
-								expect(getFieldValue(settingsContext.pages, 'type')).toBe('checkbox');
-								expect(getFieldValue(settingsContext.pages, 'label')).toBe('my field');
-								expect(getFieldValue(settingsContext.pages, 'showLabel')).toBe(false);
-
-								done();
-							}
-						);
-
-						component.changeFieldType('checkbox');
-					}
-				);
-
-				it(
-					'should not keep validation settings between field type',
-					done => {
-						const {settingsContext} = mockFieldType;
-						let {pages} = settingsContext;
-
-						pages = fillField(pages, 'validation', 'a=b');
-
-						expect(getFieldValue(pages, 'validation')).toEqual('a=b');
-
-						component = new Sidebar(
-							{
-								fieldTypes,
-								focusedField: {
-									...mockFieldType,
-									settingsContext: {
-										...mockFieldType.settingsContext,
-										pages
-									}
-								},
-								spritemap
-							}
-						);
-
-						jest.runAllTimers();
-
-						component.once(
-							'focusedFieldUpdated',
-							({settingsContext}) => {
-								expect(getFieldValue(settingsContext.pages, 'validation')).not.toEqual('a=b');
-
-								done();
-							}
-						);
-
-						component.changeFieldType('checkbox');
-					}
-				);
-
-				it(
-					'should emit an event with new field type settings',
-					done => {
-						component = new Sidebar(
-							{
-								fieldTypes,
-								focusedField: mockFieldType,
-								spritemap
-							}
-						);
-
-						jest.runAllTimers();
-
-						component.once(
-							'focusedFieldUpdated',
-							({type, settingsContext}) => {
-								expect(type).toBe('checkbox');
-
-								expect(settingsContext).toMatchSnapshot();
-
-								done();
-							}
-						);
-
-						component.changeFieldType('checkbox');
-
-						jest.runAllTimers();
-					}
-				);
-			}
-		);
-	}
-);
+			jest.runAllTimers();
+		});
+	});
+});

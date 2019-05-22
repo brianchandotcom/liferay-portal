@@ -18,7 +18,7 @@
 	}
 
 	.lfr-add-content h2 span {
-		background-color: #D3DADD;
+		background-color: #d3dadd;
 	}
 }
 
@@ -27,25 +27,27 @@
 }
 
 .restricted {
-	&, & td {
-		background: #FDD;
+	&,
+	& td {
+		background: #fdd;
 		border-width: 0;
 	}
 
 	* {
-		color: #727C81;
+		color: #727c81;
 	}
 }
 
 .alt.restricted td {
-	background-color: #FFC0C0;
+	background-color: #ffc0c0;
 }
 
 .hover.restricted td {
-	background-color: #D3BDC0;
+	background-color: #d3bdc0;
 }
 
-.alt.restricted, .restricted {
+.alt.restricted,
+.restricted {
 	td.first {
 		background-image: url(../images/messages/error.png);
 		background-position: 5px 50%;

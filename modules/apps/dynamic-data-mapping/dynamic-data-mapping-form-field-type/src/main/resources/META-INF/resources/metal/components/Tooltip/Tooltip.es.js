@@ -25,7 +25,11 @@ class Tooltip extends Component {
 	_handleTooltipRendered() {
 		const {tooltipSource, tooltipTarget} = this.refs;
 		const {element} = tooltipSource;
-		const suggestedPosition = Align.align(element, tooltipTarget, Align.Right);
+		const suggestedPosition = Align.align(
+			element,
+			tooltipTarget,
+			Align.Right
+		);
 
 		this.position = POSITIONS[suggestedPosition];
 	}
@@ -34,7 +38,6 @@ class Tooltip extends Component {
 Soy.register(Tooltip, templates);
 
 Tooltip.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance

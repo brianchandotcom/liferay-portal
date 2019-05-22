@@ -3,12 +3,13 @@
 
 	.lfr-device-size-status-content {
 		border-radius: 3px;
-		box-shadow: 0 0 1px #FFF;
+		box-shadow: 0 0 1px #fff;
 		opacity: 0.9;
 	}
 
 	.lfr-device {
-		&:after, &:before {
+		&:after,
+		&:before {
 			box-shadow: #111 0 1px 0;
 		}
 
@@ -17,12 +18,14 @@
 		}
 
 		&.rotated {
-			&:after, &:before {
+			&:after,
+			&:before {
 				box-shadow: #111 -1px 1px 0;
 			}
 		}
 
-		&.smartphone, &.tablet {
+		&.smartphone,
+		&.tablet {
 			border-radius: 25px;
 		}
 
@@ -46,15 +49,17 @@
 	.lfr-device-size-status {
 		.lfr-device-size-status-content {
 			background-color: #000;
-			color: #FFF;
+			color: #fff;
 		}
 	}
 
-	&:after, &:before {
+	&:after,
+	&:before {
 		background: #666;
 	}
 
-	&.smartphone, &.tablet {
+	&.smartphone,
+	&.tablet {
 		background: #333;
 	}
 }

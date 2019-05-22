@@ -1,5 +1,5 @@
 .html-editor.portlet {
-	background: #FFF;
+	background: #fff;
 	color: #000;
 	line-height: 1;
 	padding: 1em;
@@ -12,12 +12,14 @@
 	word-wrap: break-word;
 
 	blockquote {
-		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+		background: #eef0f2 url(../images/message_boards/quoteleft.png)
+			no-repeat 5px 5px;
 		border: 1px solid #777;
 		padding: 5px 45px;
 
 		&:after {
-			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+			background: url(../images/message_boards/quoteright.png) no-repeat
+				50%;
 			content: '';
 			display: block;
 			float: right;
@@ -35,7 +37,7 @@
 	}
 
 	pre {
-		background: #F9F9F9;
+		background: #f9f9f9;
 		border: 1px solid #777;
 		padding: 0.5em;
 	}

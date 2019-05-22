@@ -11,7 +11,6 @@ import './SourceEditorToolbar.es';
  * Creates a Source Editor component to use for source code editing.
  */
 class SourceEditor extends Component {
-
 	/**
 	 * Callback that propagates the <code>contentChanged</code> event when the
 	 * internal Ace Editor is modified.
@@ -19,13 +18,10 @@ class SourceEditor extends Component {
 	 * @param {!Event} event
 	 */
 	_handleContentChanged(event) {
-		this.emit(
-			'contentChanged',
-			{
-				content: event.content,
-				valid: event.valid
-			}
-		);
+		this.emit('contentChanged', {
+			content: event.content,
+			valid: event.valid
+		});
 	}
 }
 
@@ -36,7 +32,6 @@ class SourceEditor extends Component {
  * @type {!Object}
  */
 SourceEditor.STATE = {
-
 	/**
 	 * List of tags for custom autocompletion in the HTML editor.
 	 *
@@ -46,12 +41,10 @@ SourceEditor.STATE = {
 	 * @type Array
 	 */
 	autocompleteTags: Config.arrayOf(
-		Config.shapeOf(
-			{
-				content: Config.string(),
-				name: Config.string()
-			}
-		)
+		Config.shapeOf({
+			content: Config.string(),
+			name: Config.string()
+		})
 	),
 
 	/**

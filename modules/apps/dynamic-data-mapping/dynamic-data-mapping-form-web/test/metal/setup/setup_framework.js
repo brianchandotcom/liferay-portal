@@ -1,7 +1,8 @@
 const strings = {
 	'copied-to-clipboard': 'Copied to clipboard.',
 	'publish-form': 'Publish Form',
-	'the-form-was-published-successfully-access-it-with-this-url-x': 'the-form-was-published-successfully-access-it-with-this-url-x',
+	'the-form-was-published-successfully-access-it-with-this-url-x':
+		'the-form-was-published-successfully-access-it-with-this-url-x',
 	'unpublish-form': 'Unpublish Form'
 };
 

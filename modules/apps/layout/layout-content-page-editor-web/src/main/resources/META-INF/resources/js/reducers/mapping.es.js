@@ -14,10 +14,9 @@ function addMappingAssetEntry(state, action) {
 
 	if (action.type === ADD_MAPPED_ASSET_ENTRY) {
 		const hasAssetEntry = nextState.mappedAssetEntries.some(
-			assetEntry => (
-				(assetEntry.classNameId === action.classNameId) &&
-				(assetEntry.classPK === action.classPK)
-			)
+			assetEntry =>
+				assetEntry.classNameId === action.classNameId &&
+				assetEntry.classPK === action.classPK
 		);
 
 		if (!hasAssetEntry) {

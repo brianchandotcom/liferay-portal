@@ -22,7 +22,7 @@
 }
 
 .menu-content {
-	background: #FFF;
+	background: #fff;
 	list-style: none;
 	min-width: 150px;
 
@@ -37,18 +37,18 @@
 }
 
 .menu-content {
-	background: #CCC9C9 url(../images/application/menu_bg.png) repeat-x 0 0;
+	background: #ccc9c9 url(../images/application/menu_bg.png) repeat-x 0 0;
 	border: 1px solid;
-	border-color: #AEAFB1 #777879 #777879 #AEAFB1;
+	border-color: #aeafb1 #777879 #777879 #aeafb1;
 	padding: 2px 0;
 }
 
 .menugroup-content .menu-label {
-	background: #D2D6DE;
-	color: #5B677D;
+	background: #d2d6de;
+	color: #5b677d;
 	display: block;
 	padding: 5px 3px;
-	text-shadow: 1px 1px #FFF;
+	text-shadow: 1px 1px #fff;
 }
 
 .menugroup-content ul {
@@ -57,8 +57,8 @@
 }
 
 .menu-content li {
-	border-bottom: 1px solid #BCBBBB;
-	border-top: 1px solid #EEE;
+	border-bottom: 1px solid #bcbbbb;
+	border-top: 1px solid #eee;
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -72,15 +72,17 @@
 	}
 }
 
-.menu-content li a, .menu-content li .disabled {
-	color: #2C2F34;
+.menu-content li a,
+.menu-content li .disabled {
+	color: #2c2f34;
 	display: block;
 	padding: 4px 5px;
 	text-decoration: none;
 }
 
-.menu-content li a.focus, .lfr-menu-expanded li a:focus {
-	background-color: #5B677D;
-	color: #FFF;
-	text-shadow: -1px -1px #2C2F34;
+.menu-content li a.focus,
+.lfr-menu-expanded li a:focus {
+	background-color: #5b677d;
+	color: #fff;
+	text-shadow: -1px -1px #2c2f34;
 }

@@ -5,11 +5,14 @@
 		overflow: hidden;
 		text-align: center;
 
-		.paginator-page-container, .lfr-paginator-next, .lfr-paginator-prev {
+		.paginator-page-container,
+		.lfr-paginator-next,
+		.lfr-paginator-prev {
 			display: inline-block;
 		}
 
-		.lfr-paginator-next, .lfr-paginator-prev {
+		.lfr-paginator-next,
+		.lfr-paginator-prev {
 			padding: 8px;
 		}
 	}

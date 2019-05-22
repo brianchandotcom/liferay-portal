@@ -17,65 +17,70 @@ AUI.add(
 
 				var fieldClassName = fieldType.get('className');
 
-				var fieldClass = AObject.getValue(window, fieldClassName.split('.'));
+				var fieldClass = AObject.getValue(
+					window,
+					fieldClassName.split('.')
+				);
 
-				return A.Component.create(
-					{
-						EXTENDS: fieldClass,
+				return A.Component.create({
+					EXTENDS: fieldClass,
 
-						NAME: 'liferay-ddm-form-field-fieldset-nestedfield',
+					NAME: 'liferay-ddm-form-field-fieldset-nestedfield',
 
-						prototype: {
-							fetchContainer: function() {
-								var instance = this;
+					prototype: {
+						fetchContainer: function() {
+							var instance = this;
 
-								var instanceId = instance.get('instanceId');
+							var instanceId = instance.get('instanceId');
 
-								var container = instance._getContainerByInstanceId(instanceId);
+							var container = instance._getContainerByInstanceId(
+								instanceId
+							);
 
-								if (!container) {
-									var name = instance.get('fieldName');
-
-									var parent = instance.get('parent');
-
-									container = parent.filterNodes(
-										function(qualifiedName) {
-											var nodeFieldName = Util.getFieldNameFromQualifiedName(qualifiedName);
-
-											return name === nodeFieldName;
-										}
-									).item(0);
-								}
-
-								return container;
-							},
-
-							getQualifiedName: function() {
-								var instance = this;
+							if (!container) {
+								var name = instance.get('fieldName');
 
 								var parent = instance.get('parent');
 
-								return [
-									instance.get('portletNamespace'),
-									'ddm$$',
-									parent.get('fieldName'),
-									'$',
-									parent.get('instanceId'),
-									'$',
-									parent.get('repeatedIndex'),
-									'#',
-									instance.get('fieldName'),
-									'$',
-									instance.get('instanceId'),
-									'$',
-									instance.get('repeatedIndex'),
-									'$$',
-									instance.get('locale')
-								].join('');
+								container = parent
+									.filterNodes(function(qualifiedName) {
+										var nodeFieldName = Util.getFieldNameFromQualifiedName(
+											qualifiedName
+										);
+
+										return name === nodeFieldName;
+									})
+									.item(0);
 							}
+
+							return container;
+						},
+
+						getQualifiedName: function() {
+							var instance = this;
+
+							var parent = instance.get('parent');
+
+							return [
+								instance.get('portletNamespace'),
+								'ddm$$',
+								parent.get('fieldName'),
+								'$',
+								parent.get('instanceId'),
+								'$',
+								parent.get('repeatedIndex'),
+								'#',
+								instance.get('fieldName'),
+								'$',
+								instance.get('instanceId'),
+								'$',
+								instance.get('repeatedIndex'),
+								'$$',
+								instance.get('locale')
+							].join('');
 						}
 					}
-				);
+				});
 			}
 		};
 

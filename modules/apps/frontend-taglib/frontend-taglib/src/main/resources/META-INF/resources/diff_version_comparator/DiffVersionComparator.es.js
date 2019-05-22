@@ -15,7 +15,6 @@ import templates from './DiffVersionComparator.soy';
  * @review
  */
 class DiffVersionComparator extends Component {
-
 	/**
 	 * Returns diffVerson object of passed version.
 	 * @param {String} version
@@ -24,11 +23,9 @@ class DiffVersionComparator extends Component {
 	 * @review
 	 */
 	findDiffVersion_(version) {
-		return this.diffVersions.find(
-			diffVersion => {
-				return diffVersion.version === version;
-			}
-		);
+		return this.diffVersions.find(diffVersion => {
+			return diffVersion.version === version;
+		});
 	}
 
 	/**
@@ -64,26 +61,21 @@ class DiffVersionComparator extends Component {
 
 		let resultsLength = 0;
 
-		const diffVersions = this.diffVersions.map(
-			diffVersion => {
-				const {label, userName} = diffVersion;
+		const diffVersions = this.diffVersions.map(diffVersion => {
+			const {label, userName} = diffVersion;
 
-				const hidden = label.toLowerCase().indexOf(query) === -1 &&
-					userName.toLowerCase().indexOf(query) === -1;
+			const hidden =
+				label.toLowerCase().indexOf(query) === -1 &&
+				userName.toLowerCase().indexOf(query) === -1;
 
-				if (!hidden) {
-					resultsLength++;
-				}
-
-				return Object.assign(
-					{},
-					diffVersion,
-					{
-						hidden
-					}
-				);
+			if (!hidden) {
+				resultsLength++;
 			}
-		);
+
+			return Object.assign({}, diffVersion, {
+				hidden
+			});
+		});
 
 		this.diffVersions = diffVersions;
 		this.resultsLength = resultsLength;
@@ -117,20 +109,21 @@ class DiffVersionComparator extends Component {
 
 		const params = new MultiMap();
 
-		params.add(`${portletNamespace}filterSourceVersion`, this.sourceVersion);
+		params.add(
+			`${portletNamespace}filterSourceVersion`,
+			this.sourceVersion
+		);
 		params.add(`${portletNamespace}filterTargetVersion`, targetVersion);
 
 		Ajax.request(this.resourceURL, 'get', null, null, params)
-			.then(
-				xhrResponse => {
-					this.diffHtmlResults = xhrResponse.response;
-				}
-			)
-			.catch(
-				() => {
-					this.diffHtmlResults = Liferay.Language.get('an-error-occurred-while-processing-the-requested-resource');
-				}
-			);
+			.then(xhrResponse => {
+				this.diffHtmlResults = xhrResponse.response;
+			})
+			.catch(() => {
+				this.diffHtmlResults = Liferay.Language.get(
+					'an-error-occurred-while-processing-the-requested-resource'
+				);
+			});
 	}
 
 	/**
@@ -150,7 +143,6 @@ class DiffVersionComparator extends Component {
 }
 
 DiffVersionComparator.STATE = {
-
 	/**
 	 * List of locales that are available for the current asset. Used to render
 	 * locale selector.

@@ -1,8 +1,8 @@
-$grayLineColor: #E7E7ED;
-$grayTextColor: #6B6C7E;
+$grayLineColor: #e7e7ed;
+$grayTextColor: #6b6c7e;
 
-$removedItemHighlightColor: #FFEEF0;
-$addedItemHighlightColor: #E6FFED;
+$removedItemHighlightColor: #ffeef0;
+$addedItemHighlightColor: #e6ffed;
 
 .modal-full-screen {
 	max-height: 80vh !important;
@@ -37,14 +37,14 @@ $addedItemHighlightColor: #E6FFED;
 }
 
 .badge.removed-scope-alias {
-	background-color: #FFEEF0 !important;
-	border-color: #FF0000 !important;
+	background-color: #ffeef0 !important;
+	border-color: #ff0000 !important;
 	border-width: 1px !important;
 }
 
 .badge.added-scope-alias {
-	background-color: #E6FFED !important;
-	border-color: #00FF00 !important;
+	background-color: #e6ffed !important;
+	border-color: #00ff00 !important;
 	border-width: 1px !important;
 }
 
@@ -90,7 +90,8 @@ $addedItemHighlightColor: #E6FFED;
 			padding: 1.25rem;
 		}
 
-		.app-icon, .user-icon {
+		.app-icon,
+		.user-icon {
 			display: inline-block;
 			height: 80px;
 			margin-bottom: 1.25rem;
@@ -146,7 +147,9 @@ $addedItemHighlightColor: #E6FFED;
 			}
 		}
 
-		.application-information, .last-access, .authorization {
+		.application-information,
+		.last-access,
+		.authorization {
 			span {
 				color: $grayTextColor;
 			}
@@ -171,7 +174,8 @@ $addedItemHighlightColor: #E6FFED;
 			padding: 1.25rem;
 		}
 
-		.activity, .permissions {
+		.activity,
+		.permissions {
 			border-bottom: 1px solid $grayLineColor;
 			margin-bottom: 1rem;
 			margin-top: 2rem;
@@ -183,8 +187,8 @@ $addedItemHighlightColor: #E6FFED;
 		}
 
 		.remove-access {
-			border-color: #DA1414;
-			color: #DA1414;
+			border-color: #da1414;
+			color: #da1414;
 		}
 	}
 }

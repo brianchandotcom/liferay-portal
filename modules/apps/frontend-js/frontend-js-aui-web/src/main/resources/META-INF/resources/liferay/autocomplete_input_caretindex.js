@@ -10,8 +10,7 @@ AUI.add(
 	function(A) {
 		var STR_INPUT_NODE = 'inputNode';
 
-		var AutcompleteInputCaretIndex = function() {
-		};
+		var AutcompleteInputCaretIndex = function() {};
 
 		AutcompleteInputCaretIndex.prototype = {
 			_getCaretIndex: function(node) {

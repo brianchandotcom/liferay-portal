@@ -12,12 +12,14 @@ import controlsTemplates from './ContrastControls.soy';
  * Creates a Contrast component.
  */
 class ContrastComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this.requestImageEditorPreview_ = debounce(this.requestImageEditorPreview, 50);
+		this.requestImageEditorPreview_ = debounce(
+			this.requestImageEditorPreview,
+			50
+		);
 
 		this.cache_ = {};
 	}
@@ -83,7 +85,7 @@ class ContrastComponent extends Component {
 			let workerURI = this.modulePath + '/ContrastWorker.js';
 			let processWorker = new Worker(workerURI);
 
-			processWorker.onmessage = (event) => resolve(event.data);
+			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});
 	}
@@ -96,7 +98,6 @@ class ContrastComponent extends Component {
  * @type {!Object}
  */
 ContrastComponent.STATE = {
-
 	/**
 	 * Path of this module.
 	 *

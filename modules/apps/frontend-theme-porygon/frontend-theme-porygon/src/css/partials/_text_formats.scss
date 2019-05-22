@@ -8,14 +8,15 @@ a.small.text-uppercase {
 	font-size: 12px;
 	text-decoration: underline;
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		text-decoration: none;
 	}
 }
 
 .theme-alert {
 	background-color: $brand-bg-color-3;
-	border: 1px solid #EDEDED;
+	border: 1px solid #ededed;
 	color: $brand-color-1;
 	font-weight: bold;
 	margin: 30px 0;

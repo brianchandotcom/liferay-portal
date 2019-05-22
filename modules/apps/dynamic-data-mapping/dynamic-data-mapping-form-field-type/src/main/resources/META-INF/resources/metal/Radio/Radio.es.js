@@ -43,20 +43,15 @@ class Radio extends Component {
 	}
 
 	_handleValueChanged(event) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.delegateTarget.value
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent: event,
+			value: event.delegateTarget.value
+		});
 	}
-
 }
 
 Radio.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance
@@ -110,23 +105,19 @@ Radio.STATE = {
 	 */
 
 	options: Config.arrayOf(
-		Config.shapeOf(
-			{
-				label: Config.string(),
-				name: Config.string(),
-				value: Config.string()
-			}
-		)
-	).value(
-		[
-			{
-				label: 'Option 1'
-			},
-			{
-				label: 'Option 2'
-			}
-		]
-	),
+		Config.shapeOf({
+			label: Config.string(),
+			name: Config.string(),
+			value: Config.string()
+		})
+	).value([
+		{
+			label: 'Option 1'
+		},
+		{
+			label: 'Option 2'
+		}
+	]),
 
 	/**
 	 * @default Choose an Option

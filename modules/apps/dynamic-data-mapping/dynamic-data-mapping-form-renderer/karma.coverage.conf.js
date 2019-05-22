@@ -22,7 +22,10 @@ module.exports = function(config) {
 
 	var resourcesPath = 'src/main/resources/META-INF/resources';
 
-	config.preprocessors[resourcesPath + '/**/!(*soy)*.js'] = ['replacer', 'coverage'];
+	config.preprocessors[resourcesPath + '/**/!(*soy)*.js'] = [
+		'replacer',
+		'coverage'
+	];
 
 	config.reporters.push('coverage');
 };

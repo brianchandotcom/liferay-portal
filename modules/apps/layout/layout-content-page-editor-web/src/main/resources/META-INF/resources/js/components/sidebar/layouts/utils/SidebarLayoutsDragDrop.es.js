@@ -10,7 +10,6 @@ import {setDraggingItemPosition} from '../../../../utils/FragmentsEditorUpdateUt
  * SidebarLayoutsDragDrop
  */
 class SidebarLayoutsDragDrop extends State {
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -56,13 +55,10 @@ class SidebarLayoutsDragDrop extends State {
 				nearestBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 			}
 
-			this.emit(
-				'dragLayout',
-				{
-					hoveredRowBorder: nearestBorder,
-					hoveredRowId: targetItem.dataset.layoutRowId
-				}
-			);
+			this.emit('dragLayout', {
+				hoveredRowBorder: nearestBorder,
+				hoveredRowId: targetItem.dataset.layoutRowId
+			});
 		}
 	}
 
@@ -87,12 +83,9 @@ class SidebarLayoutsDragDrop extends State {
 		event.preventDefault();
 
 		if (data.target) {
-			this.emit(
-				'dropLayout',
-				{
-					layoutIndex: data.source.dataset.layoutIndex
-				}
-			);
+			this.emit('dropLayout', {
+				layoutIndex: data.source.dataset.layoutIndex
+			});
 		}
 	}
 
@@ -101,29 +94,20 @@ class SidebarLayoutsDragDrop extends State {
 	 * @review
 	 */
 	_initializeDragAndDrop() {
-		this._dragDrop = initializeDragDrop(
-			{
-				sources: '.fragments-editor__drag-source--sidebar-layout',
-				targets: '.fragments-editor__drop-target--sidebar-layout'
-			}
-		);
+		this._dragDrop = initializeDragDrop({
+			sources: '.fragments-editor__drag-source--sidebar-layout',
+			targets: '.fragments-editor__drop-target--sidebar-layout'
+		});
 
-		this._dragDrop.on(
-			DragDrop.Events.DRAG,
-			this._handleDrag.bind(this)
-		);
+		this._dragDrop.on(DragDrop.Events.DRAG, this._handleDrag.bind(this));
 
-		this._dragDrop.on(
-			DragDrop.Events.END,
-			this._handleDrop.bind(this)
-		);
+		this._dragDrop.on(DragDrop.Events.END, this._handleDrop.bind(this));
 
 		this._dragDrop.on(
 			DragDrop.Events.TARGET_LEAVE,
 			this._handleDragEnd.bind(this)
 		);
 	}
-
 }
 
 export default SidebarLayoutsDragDrop;

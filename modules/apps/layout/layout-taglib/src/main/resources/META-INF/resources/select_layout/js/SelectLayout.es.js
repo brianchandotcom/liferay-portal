@@ -23,7 +23,6 @@ const ENTER_KEY = 'Enter';
  */
 
 class SelectLayout extends Component {
-
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
@@ -36,19 +35,17 @@ class SelectLayout extends Component {
 	_filterSiblingNodes(nodes, filterValue) {
 		let filteredNodes = [];
 
-		nodes.forEach(
-			node => {
-				if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-					filteredNodes.push(node);
-				}
-
-				if (node.children) {
-					filteredNodes = filteredNodes.concat(
-						this._filterSiblingNodes(node.children, filterValue)
-					);
-				}
+		nodes.forEach(node => {
+			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
+				filteredNodes.push(node);
 			}
-		);
+
+			if (node.children) {
+				filteredNodes = filteredNodes.concat(
+					this._filterSiblingNodes(node.children, filterValue)
+				);
+			}
+		});
 
 		return filteredNodes;
 	}
@@ -79,8 +76,7 @@ class SelectLayout extends Component {
 	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		}
-		else {
+		} else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -89,8 +85,7 @@ class SelectLayout extends Component {
 		if (filterValue !== '') {
 			this.viewType = SelectLayout.VIEW_TYPES.flat;
 			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
-		}
-		else {
+		} else {
 			this.viewType = SelectLayout.VIEW_TYPES.tree;
 		}
 	}
@@ -104,18 +99,16 @@ class SelectLayout extends Component {
 	 */
 
 	_selectedNodeChange(event) {
-		var data = event.newVal.map(
-			function(node) {
-				return {
-					groupId: node.groupId,
-					id: node.id,
-					layoutId: node.layoutId,
-					name: node.value,
-					privateLayout: node.privateLayout,
-					value: node.url
-				};
-			}
-		);
+		var data = event.newVal.map(function(node) {
+			return {
+				groupId: node.groupId,
+				id: node.id,
+				layoutId: node.layoutId,
+				name: node.value,
+				privateLayout: node.privateLayout,
+				value: node.url
+			};
+		});
 
 		if (!this.multiSelection) {
 			data = data[0];
@@ -123,21 +116,14 @@ class SelectLayout extends Component {
 
 		if (this.followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = data.url;
-		}
-		else {
-			this.emit(
-				this.itemSelectorSaveEvent,
-				{
-					data: data
-				}
-			);
+		} else {
+			this.emit(this.itemSelectorSaveEvent, {
+				data: data
+			});
 
-			Liferay.Util.getOpener().Liferay.fire(
-				this.itemSelectorSaveEvent,
-				{
-					data: data
-				}
-			);
+			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+				data: data
+			});
 		}
 	}
 }
@@ -162,7 +148,6 @@ SelectLayout.VIEW_TYPES = {
  */
 
 SelectLayout.STATE = {
-
 	/**
 	 * Enables URL following on the title click
 	 * @default false
@@ -228,9 +213,9 @@ SelectLayout.STATE = {
 	 * @type {string}
 	 */
 
-	viewType: Config
-		.oneOf(Object.values(SelectLayout.VIEW_TYPES))
-		.value(SelectLayout.VIEW_TYPES.tree)
+	viewType: Config.oneOf(Object.values(SelectLayout.VIEW_TYPES)).value(
+		SelectLayout.VIEW_TYPES.tree
+	)
 };
 
 Soy.register(SelectLayout, templates);

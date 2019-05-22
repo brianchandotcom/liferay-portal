@@ -27,34 +27,48 @@ function _stopInterceptGetRegion() {
  * @see {_stopInterceptGetRegion}
  */
 function _interceptGetRegion() {
-	_getRegionInterceptor = _getRegionInterceptor || AOP.after(
-		target => {
-			let newReturnVal;
+	_getRegionInterceptor =
+		_getRegionInterceptor ||
+		AOP.after(
+			target => {
+				let newReturnVal;
 
-			if ((target instanceof HTMLElement) &&
-				target.classList.contains('col') &&
-				target.parentElement &&
-				target.parentElement.classList.contains('row')) {
+				if (
+					target instanceof HTMLElement &&
+					target.classList.contains('col') &&
+					target.parentElement &&
+					target.parentElement.classList.contains('row')
+				) {
+					const currentRetVal = Object.assign({}, AOP.currentRetVal);
 
-				const currentRetVal = Object.assign({}, AOP.currentRetVal);
+					const parentComputedStyle = window.getComputedStyle(
+						target.parentElement
+					);
 
-				const parentComputedStyle = window.getComputedStyle(target.parentElement);
+					const negativeLeftMargin = Math.min(
+						parseInt(parentComputedStyle.marginLeft, 10) || 0,
+						0
+					);
+					const negativeRightMargin = Math.min(
+						parseInt(parentComputedStyle.marginRight, 10) || 0,
+						0
+					);
 
-				const negativeLeftMargin = Math.min(parseInt(parentComputedStyle.marginLeft, 10) || 0, 0);
-				const negativeRightMargin = Math.min(parseInt(parentComputedStyle.marginRight, 10) || 0, 0);
+					currentRetVal.width =
+						currentRetVal.width +
+						negativeLeftMargin +
+						negativeRightMargin;
+					currentRetVal.left -= negativeLeftMargin;
+					currentRetVal.right += negativeRightMargin;
 
-				currentRetVal.width = currentRetVal.width + negativeLeftMargin + negativeRightMargin;
-				currentRetVal.left -= negativeLeftMargin;
-				currentRetVal.right += negativeRightMargin;
+					newReturnVal = AOP.alterReturn(currentRetVal);
+				}
 
-				newReturnVal = AOP.alterReturn(currentRetVal);
-			}
-
-			return newReturnVal;
-		},
-		Position,
-		'getRegion'
-	);
+				return newReturnVal;
+			},
+			Position,
+			'getRegion'
+		);
 }
 
 /**

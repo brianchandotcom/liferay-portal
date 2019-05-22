@@ -35,13 +35,16 @@ $transition-timing-function: ease;
 		top: $management-bar-height;
 
 		body.has-control-menu & {
-			height: calc(100vh - #{$control-menu-height + $management-bar-height});
+			height: calc(
+				100vh - #{$control-menu-height + $management-bar-height}
+			);
 			top: $control-menu-height + $management-bar-height;
 		}
 	}
 
 	.contextual-sidebar-content {
-		transition: padding-right $transition-timing-function $transition-duration;
+		transition: padding-right $transition-timing-function
+			$transition-duration;
 		will-change: padding-right;
 	}
 

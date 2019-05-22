@@ -1,7 +1,6 @@
 import {ClayAlert} from 'clay-alert';
 
 class Notifications {
-
 	static closeAlert() {
 		if (this._alert && !this._alert.isDisposed()) {
 			this._alert.emit('hide');
@@ -11,7 +10,12 @@ class Notifications {
 		clearTimeout(this._hideTimeout);
 	}
 
-	static showAlert(message = '', title = '', style = 'success', hideDelay = 3000) {
+	static showAlert(
+		message = '',
+		title = '',
+		style = 'success',
+		hideDelay = 3000
+	) {
 		const {portletNamespace, spritemap} = Liferay.DDM.FormSettings;
 
 		this.closeAlert();
@@ -26,7 +30,9 @@ class Notifications {
 				title,
 				visible: true
 			},
-			document.querySelector(`#p_p_id${portletNamespace} .lfr-alert-wrapper`)
+			document.querySelector(
+				`#p_p_id${portletNamespace} .lfr-alert-wrapper`
+			)
 		);
 
 		this._hideTimeout = setTimeout(() => this.closeAlert(), hideDelay);
@@ -35,7 +41,6 @@ class Notifications {
 	static showError(message) {
 		this.showAlert(message, Liferay.Language.get('error'), 'danger');
 	}
-
 }
 
 export default Notifications;

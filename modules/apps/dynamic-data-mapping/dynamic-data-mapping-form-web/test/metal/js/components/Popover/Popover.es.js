@@ -10,133 +10,100 @@ const props = {
 
 let alignElement;
 
-describe(
-	'Popover',
-	() => {
-		let component;
+describe('Popover', () => {
+	let component;
 
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
-				}
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
+
+	beforeEach(() => {
+		alignElement = document.createElement('div');
+		alignElement.classList.add('align-element');
+
+		document.querySelector('body').appendChild(alignElement);
+
+		props.alignElement = alignElement;
+
+		jest.useFakeTimers();
+		fetch.resetMocks();
+	});
+
+	it('should render the default markup', () => {
+		component = new Popover(props);
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should render popover opened', () => {
+		component = new Popover({
+			...props,
+			visible: true
+		});
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should open when the visible property changes', () => {
+		component = new Popover(props);
+
+		jest.runAllTimers();
+
+		jest.useFakeTimers();
+
+		component.willReceiveProps({
+			visible: {
+				newVal: true
 			}
-		);
+		});
 
-		beforeEach(
-			() => {
-				alignElement = document.createElement('div');
-				alignElement.classList.add('align-element');
+		jest.runAllTimers();
 
-				document.querySelector('body').appendChild(alignElement);
+		expect(component.state.displayed).toBeTruthy();
+		expect(component).toMatchSnapshot();
+	});
 
-				props.alignElement = alignElement;
+	it('should open when alignedElement is clicked', () => {
+		component = new Popover(props);
 
-				jest.useFakeTimers();
-				fetch.resetMocks();
-			}
-		);
+		jest.runAllTimers();
 
-		it(
-			'should render the default markup',
-			() => {
-				component = new Popover(props);
-				expect(component).toMatchSnapshot();
-			}
-		);
+		MetalTestUtil.triggerEvent(alignElement, 'click');
 
-		it(
-			'should render popover opened',
-			() => {
-				component = new Popover(
-					{
-						...props,
-						visible: true
-					}
-				);
+		expect(component.state.displayed).toBeTruthy();
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should close when it is already opened and the alignedElement is clicked', () => {
+		component = new Popover({
+			...props,
+			visible: true
+		});
 
-		it(
-			'should open when the visible property changes',
-			() => {
-				component = new Popover(props);
+		jest.runAllTimers();
 
-				jest.runAllTimers();
+		MetalTestUtil.triggerEvent(alignElement, 'click');
 
-				jest.useFakeTimers();
+		expect(component.state.displayed).toBeFalsy();
+		expect(component).toMatchSnapshot();
+	});
 
-				component.willReceiveProps(
-					{
-						visible: {
-							newVal: true
-						}
-					}
-				);
+	it('should close when document has mousedown event', () => {
+		component = new Popover({
+			...props,
+			visible: true
+		});
 
-				jest.runAllTimers();
+		jest.runAllTimers();
 
-				expect(component.state.displayed).toBeTruthy();
-				expect(component).toMatchSnapshot();
-			}
-		);
+		jest.useFakeTimers();
 
-		it(
-			'should open when alignedElement is clicked',
-			() => {
-				component = new Popover(props);
+		MetalTestUtil.triggerEvent(document, 'mousedown');
 
-				jest.runAllTimers();
+		jest.runAllTimers();
 
-				MetalTestUtil.triggerEvent(alignElement, 'click');
-
-				expect(component.state.displayed).toBeTruthy();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should close when it is already opened and the alignedElement is clicked',
-			() => {
-				component = new Popover(
-					{
-						...props,
-						visible: true
-					}
-				);
-
-				jest.runAllTimers();
-
-				MetalTestUtil.triggerEvent(alignElement, 'click');
-
-				expect(component.state.displayed).toBeFalsy();
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should close when document has mousedown event',
-			() => {
-				component = new Popover(
-					{
-						...props,
-						visible: true
-					}
-				);
-
-				jest.runAllTimers();
-
-				jest.useFakeTimers();
-
-				MetalTestUtil.triggerEvent(document, 'mousedown');
-
-				jest.runAllTimers();
-
-				expect(component.state.displayed).toBeFalsy();
-				expect(component).toMatchSnapshot();
-			}
-		);
-	}
-);
+		expect(component.state.displayed).toBeFalsy();
+		expect(component).toMatchSnapshot();
+	});
+});

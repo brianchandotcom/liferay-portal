@@ -46,8 +46,17 @@ class Popover extends Component {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true),
-			dom.on(alignElement, 'click', this._handleAlignElementClicked.bind(this))
+			dom.on(
+				document,
+				'mousedown',
+				this._handleDocumentMouseDown.bind(this),
+				true
+			),
+			dom.on(
+				alignElement,
+				'click',
+				this._handleAlignElementClicked.bind(this)
+			)
 		);
 
 		return this.setPopoverWidth();
@@ -60,25 +69,12 @@ class Popover extends Component {
 	}
 
 	render() {
-		const {
-			alignElement,
-			children,
-			content,
-			placement,
-			title
-		} = this.props;
-		const {
-			displayed,
-			position,
-			width
-		} = this.state;
+		const {alignElement, children, content, placement, title} = this.props;
+		const {displayed, position, width} = this.state;
 
-		const classes = getCN(
-			CLASSNAME,
-			{
-				'popover-large': width > 600
-			}
-		);
+		const classes = getCN(CLASSNAME, {
+			'popover-large': width > 600
+		});
 
 		return (
 			<PopoverBase
@@ -88,29 +84,23 @@ class Popover extends Component {
 						if (!displayed) {
 							return;
 						}
-						this.setState(
-							{
-								position: getAlignPosition(
-									this.refs.popover.element,
-									alignElement,
-									placement
-								)
-							}
-						);
+						this.setState({
+							position: getAlignPosition(
+								this.refs.popover.element,
+								alignElement,
+								placement
+							)
+						});
 					}
 				}}
 				placement={position}
-				ref="popover"
+				ref='popover'
 				visible={displayed}
 			>
-				{title && (
-					<PopoverBase.Header>{title}</PopoverBase.Header>
-				)}
+				{title && <PopoverBase.Header>{title}</PopoverBase.Header>}
 
 				<PopoverBase.Body>
-					{content && (
-						<span class="text-secondary">{content}</span>
-					)}
+					{content && <span class='text-secondary'>{content}</span>}
 
 					{children.length && children}
 				</PopoverBase.Body>
@@ -129,20 +119,16 @@ class Popover extends Component {
 		element.style.visibility = 'visible';
 		element.style.display = 'none';
 
-		this.setState(
-			{
-				width
-			}
-		);
+		this.setState({
+			width
+		});
 	}
 
 	willReceiveProps({visible}) {
 		if (visible) {
-			this.setState(
-				{
-					displayed: !!visible.newVal
-				}
-			);
+			this.setState({
+				displayed: !!visible.newVal
+			});
 		}
 	}
 
@@ -153,23 +139,23 @@ class Popover extends Component {
 			this.emit('popoverClosed');
 		}
 
-		this.setState(
-			{
-				displayed: !displayed
-			}
-		);
+		this.setState({
+			displayed: !displayed
+		});
 	}
 
 	_handleDocumentMouseDown({target}) {
 		const {alignElement} = this.props;
 		const {displayed} = this.state;
 
-		if ((!this.element.contains(target) && !alignElement.contains(target)) && displayed) {
-			this.setState(
-				{
-					displayed: false
-				}
-			);
+		if (
+			!this.element.contains(target) &&
+			!alignElement.contains(target) &&
+			displayed
+		) {
+			this.setState({
+				displayed: false
+			});
 
 			this.emit('popoverClosed');
 		}

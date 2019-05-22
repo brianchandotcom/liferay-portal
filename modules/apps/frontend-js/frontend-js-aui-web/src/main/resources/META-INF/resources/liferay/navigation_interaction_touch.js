@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var ANDROID = A.UA.android;
 
-		var ANDROID_LEGACY = (ANDROID && ANDROID < 4.4);
+		var ANDROID_LEGACY = ANDROID && ANDROID < 4.4;
 
 		var STR_OPEN = 'open';
 
@@ -32,23 +32,16 @@ AUI.add(
 							outsideEvents = outsideEvents[0];
 						}
 
-						handle = menuNew.on(
-							outsideEvents,
-							function() {
-								Liferay.fire(
-									'hideNavigationMenu',
-									{
-										menu: menuNew
-									}
-								);
+						handle = menuNew.on(outsideEvents, function() {
+							Liferay.fire('hideNavigationMenu', {
+								menu: menuNew
+							});
 
-								Liferay.Data[handleId] = null;
+							Liferay.Data[handleId] = null;
 
-								handle.detach();
-							}
-						);
-					}
-					else {
+							handle.detach();
+						});
+					} else {
 						Liferay.fire('hideNavigationMenu', mapHover);
 
 						if (handle) {
@@ -67,7 +60,12 @@ AUI.add(
 					if (navigation) {
 						A.Event.defineOutside('touchend');
 
-						navigation.delegate('tap', instance._onTouchClick, '.lfr-nav-child-toggle', instance);
+						navigation.delegate(
+							'tap',
+							instance._onTouchClick,
+							'.lfr-nav-child-toggle',
+							instance
+						);
 
 						if (ANDROID_LEGACY) {
 							navigation.delegate(
@@ -80,9 +78,19 @@ AUI.add(
 						}
 
 						if (!A.UA.mobile) {
-							navigation.delegate(['mouseenter', 'mouseleave'], instance._onMouseToggle, '> li', instance);
+							navigation.delegate(
+								['mouseenter', 'mouseleave'],
+								instance._onMouseToggle,
+								'> li',
+								instance
+							);
 
-							navigation.delegate('keydown', instance._handleKeyDown, 'a', instance);
+							navigation.delegate(
+								'keydown',
+								instance._handleKeyDown,
+								'a',
+								instance
+							);
 						}
 					}
 				},
@@ -92,12 +100,18 @@ AUI.add(
 				_onTouchClick: function(event) {
 					var instance = this;
 
-					var menuNew = event.currentTarget.ancestor(instance._directChildLi);
+					var menuNew = event.currentTarget.ancestor(
+						instance._directChildLi
+					);
 
 					if (menuNew.one('.child-menu')) {
 						event.preventDefault();
 
-						instance._handleShowNavigationMenu(menuNew, instance.MAP_HOVER.menu, event);
+						instance._handleShowNavigationMenu(
+							menuNew,
+							instance.MAP_HOVER.menu,
+							event
+						);
 					}
 				}
 			},
@@ -106,6 +120,11 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-outside', 'event-tap', 'event-touch', 'liferay-navigation-interaction']
+		requires: [
+			'event-outside',
+			'event-tap',
+			'event-touch',
+			'liferay-navigation-interaction'
+		]
 	}
 );

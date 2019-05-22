@@ -27,7 +27,10 @@ AUI.add(
 
 				var fieldClassName = fieldType.get('className');
 
-				var fieldClass = A.Object.getValue(window, fieldClassName.split('.'));
+				var fieldClass = A.Object.getValue(
+					window,
+					fieldClassName.split('.')
+				);
 
 				instance._eventHandlers = [];
 
@@ -41,47 +44,81 @@ AUI.add(
 
 				var context = instance.get('context');
 
-				var setAttributeChangeEvent = function(attributes, attributeName) {
+				var setAttributeChangeEvent = function(
+					attributes,
+					attributeName
+				) {
 					if (context.hasOwnProperty(attributeName)) {
 						var attributeValue = instance.get('value');
 
-						if (!Util.compare(attributeValue, context[attributeName])) {
+						if (
+							!Util.compare(
+								attributeValue,
+								context[attributeName]
+							)
+						) {
 							instance.set(attributeName, context[attributeName]);
 						}
 
-						instance._eventHandlers.push(instance.after(attributeName + 'Change', A.bind(instance._afterAttributeChange, instance, attributeName)));
+						instance._eventHandlers.push(
+							instance.after(
+								attributeName + 'Change',
+								A.bind(
+									instance._afterAttributeChange,
+									instance,
+									attributeName
+								)
+							)
+						);
 					}
 
-					instance._setStateRepaintableAttributeValue(attributeName, !!attributes[attributeName].state);
+					instance._setStateRepaintableAttributeValue(
+						attributeName,
+						!!attributes[attributeName].state
+					);
 				};
 
 				var classAttrs = instance.getAttrs();
 
-				AObject.keys(context).forEach(
-					function(attr) {
-						if (!classAttrs.hasOwnProperty(attr)) {
-							var config = {
-								state: true,
-								value: context[attr]
-							};
+				AObject.keys(context).forEach(function(attr) {
+					if (!classAttrs.hasOwnProperty(attr)) {
+						var config = {
+							state: true,
+							value: context[attr]
+						};
 
-							instance.addAttr(attr, config);
-							instance._eventHandlers.push(instance.after(attr + 'Change', A.bind(instance._afterAttributeChange, instance, attr)));
-						}
+						instance.addAttr(attr, config);
+						instance._eventHandlers.push(
+							instance.after(
+								attr + 'Change',
+								A.bind(
+									instance._afterAttributeChange,
+									instance,
+									attr
+								)
+							)
+						);
 					}
-				);
+				});
 
 				var parentClass = fieldClass;
 
 				while (parentClass) {
 					var attrs = parentClass.ATTRS;
 
-					AObject.keys(attrs).forEach(A.bind(setAttributeChangeEvent, instance, attrs));
+					AObject.keys(attrs).forEach(
+						A.bind(setAttributeChangeEvent, instance, attrs)
+					);
 
 					parentClass = parentClass.EXTENDS;
 				}
 
-				instance._eventHandlers.push(instance.after('contextChange', instance._afterContextChange));
+				instance._eventHandlers.push(
+					instance.after(
+						'contextChange',
+						instance._afterContextChange
+					)
+				);
 			},
 
 			isRepaintable: function(attributeName) {
@@ -89,7 +126,11 @@ AUI.add(
 
 				var context = instance.get('context');
 
-				return context && context.hasOwnProperty(attributeName) && instance._stateRepaintableAttributes[attributeName];
+				return (
+					context &&
+					context.hasOwnProperty(attributeName) &&
+					instance._stateRepaintableAttributes[attributeName]
+				);
 			},
 
 			_afterAttributeChange: function(name) {
@@ -145,7 +186,9 @@ AUI.add(
 			_isStateRepaintableAttributeDefined: function(attributeName) {
 				var instance = this;
 
-				return instance._stateRepaintableAttributes.hasOwnProperty(attributeName);
+				return instance._stateRepaintableAttributes.hasOwnProperty(
+					attributeName
+				);
 			},
 
 			_setContext: function(val) {
@@ -157,16 +200,23 @@ AUI.add(
 			_setStateRepaintableAttributeValue: function(attributeName, value) {
 				var instance = this;
 
-				if (!instance._isStateRepaintableAttributeDefined(attributeName)) {
+				if (
+					!instance._isStateRepaintableAttributeDefined(attributeName)
+				) {
 					instance._stateRepaintableAttributes[attributeName] = value;
 				}
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldContextSupport = FieldContextSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldContextSupport = FieldContextSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: [
+			'liferay-ddm-form-renderer-types',
+			'liferay-ddm-form-renderer-util'
+		]
 	}
 );

@@ -14,9 +14,7 @@ class CheckboxMultiple extends Component {}
 Soy.register(CheckboxMultiple, templates, 'render');
 
 if (!window.DDMCheckboxMultiple) {
-	window.DDMCheckboxMultiple = {
-
-	};
+	window.DDMCheckboxMultiple = {};
 }
 
 window.DDMCheckboxMultiple.render = CheckboxMultiple;

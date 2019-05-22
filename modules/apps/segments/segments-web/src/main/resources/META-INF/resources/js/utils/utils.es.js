@@ -51,14 +51,11 @@ export function getChildGroupIds(criteria) {
 	let childGroupIds = [];
 
 	if (criteria.items && criteria.items.length) {
-		childGroupIds = criteria.items.reduce(
-			(groupIdList, item) => {
-				return item.groupId ?
-					[...groupIdList, item.groupId, ...getChildGroupIds(item)] :
-					groupIdList;
-			},
-			[]
-		);
+		childGroupIds = criteria.items.reduce((groupIdList, item) => {
+			return item.groupId
+				? [...groupIdList, item.groupId, ...getChildGroupIds(item)]
+				: groupIdList;
+		}, []);
 	}
 
 	return childGroupIds;
@@ -73,13 +70,11 @@ export function getChildGroupIds(criteria) {
  * @param {string} type The type to get the supported operators for.
  */
 export function getSupportedOperatorsFromType(operators, propertyTypes, type) {
-	return operators.filter(
-		operator => {
-			const validOperators = propertyTypes[type];
+	return operators.filter(operator => {
+		const validOperators = propertyTypes[type];
 
-			return validOperators && validOperators.includes(operator.name);
-		}
-	);
+		return validOperators && validOperators.includes(operator.name);
+	});
 }
 
 /**
@@ -101,11 +96,9 @@ export function insertAtIndex(item, list, index) {
 export function objectToFormData(dataObject) {
 	const formData = new FormData();
 
-	Object.keys(dataObject).forEach(
-		key => {
-			formData.set(key, dataObject[key]);
-		}
-	);
+	Object.keys(dataObject).forEach(key => {
+		formData.set(key, dataObject[key]);
+	});
 
 	return formData;
 }
@@ -117,9 +110,7 @@ export function objectToFormData(dataObject) {
  * @return {Array}
  */
 export function removeAtIndex(list, index) {
-	return list.filter(
-		(fItem, fIndex) => fIndex !== index
-	);
+	return list.filter((fItem, fIndex) => fIndex !== index);
 }
 
 /**
@@ -130,12 +121,9 @@ export function removeAtIndex(list, index) {
  * @return {Array}
  */
 export function replaceAtIndex(item, list, index) {
-	return Object.assign(
-		list,
-		{
-			[index]: item
-		}
-	);
+	return Object.assign(list, {
+		[index]: item
+	});
 }
 
 /**

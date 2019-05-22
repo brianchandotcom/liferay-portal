@@ -7,7 +7,6 @@ const MAX_TIMEOUT = Math.pow(2, 31) - 1;
  */
 
 class Utils {
-
 	/**
 	 * Returns the maximum number allowed by the `setTimeout` function
 	 * @return {!Number} The number
@@ -34,11 +33,9 @@ class Utils {
 	 */
 
 	static getPortletBoundaryIds(portletIds) {
-		return portletIds.map(
-			function(portletId) {
-				return Utils.getPortletBoundaryId(portletId);
-			}
-		);
+		return portletIds.map(function(portletId) {
+			return Utils.getPortletBoundaryId(portletId);
+		});
 	}
 
 	/**
@@ -46,27 +43,26 @@ class Utils {
 	 */
 
 	static resetAllPortlets() {
-		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(
-			function(value, index, collection) {
-				let portlet = document.querySelector('#' + value);
+		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(function(
+			value,
+			index,
+			collection
+		) {
+			let portlet = document.querySelector('#' + value);
 
-				if (portlet) {
-					Liferay.Portlet.destroy(portlet);
+			if (portlet) {
+				Liferay.Portlet.destroy(portlet);
 
-					portlet.portletProcessed = false;
-				}
+				portlet.portletProcessed = false;
 			}
-		);
+		});
 
 		Liferay.Portlet.readyCounter = 0;
 
-		Liferay.destroyComponents(
-			function(component, componentConfig) {
-				return componentConfig.destroyOnNavigate;
-			}
-		);
+		Liferay.destroyComponents(function(component, componentConfig) {
+			return componentConfig.destroyOnNavigate;
+		});
 	}
-
 }
 
 export default Utils;

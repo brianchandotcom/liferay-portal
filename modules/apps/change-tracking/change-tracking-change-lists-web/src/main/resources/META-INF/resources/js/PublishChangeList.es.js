@@ -11,7 +11,6 @@ import templates from './PublishChangeList.soy';
  * Handles the Change Lists publication dialog.
  */
 class PublishChangeList extends Component {
-
 	_handleCloseDialogClick(event) {
 		this.refs.modal.visible = false;
 	}
@@ -33,14 +32,11 @@ class PublishChangeList extends Component {
 			method: 'POST'
 		};
 
-		fetch(this.urlCheckoutProduction, body)
-			.then(
-				response => {
-					if (response.status === 202) {
-						Liferay.Util.navigate(this.urlChangeListsHistory);
-					}
-				}
-			);
+		fetch(this.urlCheckoutProduction, body).then(response => {
+			if (response.status === 202) {
+				Liferay.Util.navigate(this.urlChangeListsHistory);
+			}
+		});
 	}
 
 	_publishChangeList() {
@@ -54,64 +50,74 @@ class PublishChangeList extends Component {
 			method: this.urlPublishChangeList.type
 		};
 
-		let url = this.urlPublishChangeList.href + '?userId=' + Liferay.ThemeDisplay.getUserId() + '&ignoreCollision=' + this.ignoreCollision;
+		let url =
+			this.urlPublishChangeList.href +
+			'?userId=' +
+			Liferay.ThemeDisplay.getUserId() +
+			'&ignoreCollision=' +
+			this.ignoreCollision;
 
 		fetch(url, init)
-			.then(
-				response => {
-					if (response.status === 202) {
-						openToast(
-							{
-								message: Liferay.Util.sub(Liferay.Language.get('publishing-x-has-started-successfully'), AUI().Lang.String.escapeHTML(this.changeListName)),
-								title: Liferay.Language.get('success'),
-								type: 'success'
-							}
-						);
+			.then(response => {
+				if (response.status === 202) {
+					openToast({
+						message: Liferay.Util.sub(
+							Liferay.Language.get(
+								'publishing-x-has-started-successfully'
+							),
+							AUI().Lang.String.escapeHTML(this.changeListName)
+						),
+						title: Liferay.Language.get('success'),
+						type: 'success'
+					});
 
-						this._checkoutProduction();
-					}
-					else if (response.status === 400) {
-						response.json()
-							.then(
-								data => {
-									openToast(
-										{
-											message: Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-publishing-x-x'), AUI().Lang.String.escapeHTML(this.changeListName), data.message),
-											title: Liferay.Language.get('error'),
-											type: 'danger'
-										}
-									);
-								}
-							);
-					}
-				}
-			)
-			.catch(
-				error => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-publishing-x'), AUI().Lang.String.escapeHTML(this.changeListName));
-
-					openToast(
-						{
-							message,
+					this._checkoutProduction();
+				} else if (response.status === 400) {
+					response.json().then(data => {
+						openToast({
+							message: Liferay.Util.sub(
+								Liferay.Language.get(
+									'an-error-occured-when-trying-publishing-x-x'
+								),
+								AUI().Lang.String.escapeHTML(
+									this.changeListName
+								),
+								data.message
+							),
 							title: Liferay.Language.get('error'),
 							type: 'danger'
-						}
-					);
+						});
+					});
 				}
-			);
+			})
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Util.sub(
+								Liferay.Language.get(
+									'an-error-occured-when-trying-publishing-x'
+								),
+								AUI().Lang.String.escapeHTML(
+									this.changeListName
+								)
+						  );
+
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 
 	_handleIgnoreCollisionChange(event) {
 		if (event.target.checked) {
 			this.ignoreCollision = true;
-		}
-		else {
+		} else {
 			this.ignoreCollision = false;
 		}
 	}
-
 }
 
 /**
@@ -122,7 +128,6 @@ class PublishChangeList extends Component {
  * @type {!Object}
  */
 PublishChangeList.STATE = {
-
 	changeListDescription: Config.string(),
 
 	changeListName: Config.string(),
@@ -143,7 +148,6 @@ PublishChangeList.STATE = {
 	urlCheckoutProduction: Config.string().required(),
 
 	urlPublishChangeList: Config.object()
-
 };
 
 // Register component

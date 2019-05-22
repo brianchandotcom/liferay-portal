@@ -9,128 +9,126 @@ AUI.add(
 
 		var STR_VALUE = 'value';
 
-		var TPL_FRAME = '<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
+		var TPL_FRAME =
+			'<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
 
-		var TPL_URL_UPDATE = themeDisplay.getPathMain() + '/portal/progress_poller?progressId={0}&sessionKey={1}&updatePeriod={2}';
+		var TPL_URL_UPDATE =
+			themeDisplay.getPathMain() +
+			'/portal/progress_poller?progressId={0}&sessionKey={1}&updatePeriod={2}';
 
-		var Progress = A.Component.create(
-			{
-				ATTRS: {
-					message: {
-						validator: Lang.isString,
-						value: STR_EMPTY
-					},
-
-					sessionKey: {
-						validator: Lang.isString,
-						value: STR_EMPTY
-					},
-
-					updatePeriod: {
-						validator: Lang.isNumber,
-						value: 1000
-					}
+		var Progress = A.Component.create({
+			ATTRS: {
+				message: {
+					validator: Lang.isString,
+					value: STR_EMPTY
 				},
 
-				EXTENDS: A.ProgressBar,
+				sessionKey: {
+					validator: Lang.isString,
+					value: STR_EMPTY
+				},
 
-				NAME: 'progress',
+				updatePeriod: {
+					validator: Lang.isNumber,
+					value: 1000
+				}
+			},
 
-				prototype: {
-					renderUI: function() {
-						var instance = this;
+			EXTENDS: A.ProgressBar,
 
-						Progress.superclass.renderUI.call(instance, arguments);
+			NAME: 'progress',
 
-						var tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
+			prototype: {
+				renderUI: function() {
+					var instance = this;
 
-						var frame = A.Node.create(tplFrame);
+					Progress.superclass.renderUI.call(instance, arguments);
 
-						instance.get('boundingBox').placeBefore(frame);
+					var tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
 
-						instance._frame = frame;
-					},
+					var frame = A.Node.create(tplFrame);
 
-					bindUI: function() {
-						var instance = this;
+					instance.get('boundingBox').placeBefore(frame);
 
-						Progress.superclass.bindUI.call(instance, arguments);
+					instance._frame = frame;
+				},
 
-						instance.after('complete', instance._afterComplete);
-						instance.after('valueChange', instance._afterValueChange);
+				bindUI: function() {
+					var instance = this;
 
-						instance._iframeLoadHandle = instance._frame.on('load', instance._onIframeLoad, instance);
-					},
+					Progress.superclass.bindUI.call(instance, arguments);
 
-					startProgress: function() {
-						var instance = this;
+					instance.after('complete', instance._afterComplete);
+					instance.after('valueChange', instance._afterValueChange);
 
-						if (!instance.get('rendered')) {
-							instance.render();
-						}
+					instance._iframeLoadHandle = instance._frame.on(
+						'load',
+						instance._onIframeLoad,
+						instance
+					);
+				},
 
-						instance.set(STR_VALUE, 0);
+				startProgress: function() {
+					var instance = this;
 
-						instance.get('boundingBox').addClass('lfr-progress-active');
-
-						setTimeout(
-							function() {
-								instance.updateProgress();
-							},
-							instance.get(STR_UPDATE_PERIOD)
-						);
-					},
-
-					updateProgress: function() {
-						var instance = this;
-
-						var url = Lang.sub(
-							TPL_URL_UPDATE,
-							[
-								instance.get('id'),
-								instance.get('sessionKey'),
-								instance.get(STR_UPDATE_PERIOD)
-							]
-						);
-
-						instance._frame.attr('src', url);
-					},
-
-					_afterComplete: function(event) {
-						var instance = this;
-
-						instance.get('boundingBox').removeClass('lfr-progress-active');
-
-						instance.set('label', instance.get('strings.complete'));
-
-						instance._iframeLoadHandle.detach();
-					},
-
-					_afterValueChange: function(event) {
-						var instance = this;
-
-						var label = instance.get('message');
-
-						if (!label) {
-							label = event.newVal + '%';
-						}
-
-						instance.set('label', label);
-					},
-
-					_onIframeLoad: function(event) {
-						var instance = this;
-
-						setTimeout(
-							function() {
-								instance._frame.get('contentWindow.location').reload();
-							},
-							instance.get(STR_UPDATE_PERIOD)
-						);
+					if (!instance.get('rendered')) {
+						instance.render();
 					}
+
+					instance.set(STR_VALUE, 0);
+
+					instance.get('boundingBox').addClass('lfr-progress-active');
+
+					setTimeout(function() {
+						instance.updateProgress();
+					}, instance.get(STR_UPDATE_PERIOD));
+				},
+
+				updateProgress: function() {
+					var instance = this;
+
+					var url = Lang.sub(TPL_URL_UPDATE, [
+						instance.get('id'),
+						instance.get('sessionKey'),
+						instance.get(STR_UPDATE_PERIOD)
+					]);
+
+					instance._frame.attr('src', url);
+				},
+
+				_afterComplete: function(event) {
+					var instance = this;
+
+					instance
+						.get('boundingBox')
+						.removeClass('lfr-progress-active');
+
+					instance.set('label', instance.get('strings.complete'));
+
+					instance._iframeLoadHandle.detach();
+				},
+
+				_afterValueChange: function(event) {
+					var instance = this;
+
+					var label = instance.get('message');
+
+					if (!label) {
+						label = event.newVal + '%';
+					}
+
+					instance.set('label', label);
+				},
+
+				_onIframeLoad: function(event) {
+					var instance = this;
+
+					setTimeout(function() {
+						instance._frame.get('contentWindow.location').reload();
+					}, instance.get(STR_UPDATE_PERIOD));
 				}
 			}
-		);
+		});
 
 		Liferay.Progress = Progress;
 	},

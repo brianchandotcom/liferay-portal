@@ -1,6 +1,6 @@
 .portlet-decorate .portlet-content {
 	background-color: $brand-bg-color-3;
-	border: 1px solid #DEEEEE;
+	border: 1px solid #deeeee;
 }
 
 .portlet-barebone .portlet-content {
@@ -13,7 +13,8 @@
 	margin-top: 40px;
 	padding: 50px 20px 20px;
 
-	h3, .h3 {
+	h3,
+	.h3 {
 		font-size: 1rem;
 		font-weight: 300;
 		margin-bottom: 24px;
@@ -44,7 +45,7 @@
 	}
 
 	.user-icon-porygon {
-		color: #FFF;
+		color: #fff;
 		margin: -74px auto 0;
 		position: relative;
 	}

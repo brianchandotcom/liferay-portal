@@ -5,10 +5,19 @@ const portlet = {
 			portlets: {
 				PortletA: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_templateSearch%26p_p_lifecycle%3D2',
 					pubParms: {},
 					renderData: {
 						content: '',
@@ -22,13 +31,24 @@ const portlet = {
 				},
 				PortletB: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D2',
 					pubParms: {
-						color: 'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_color',
-						imgName: 'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_imgName'
+						color:
+							'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_color',
+						imgName:
+							'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_imgName'
 					},
 					renderData: {
 						content: '',
@@ -42,10 +62,19 @@ const portlet = {
 				},
 				PortletC: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_chat_web_portlet_ChatPortlet%26p_p_lifecycle%3D2',
 					pubParms: {},
 					renderData: {
 						content: '',
@@ -59,10 +88,19 @@ const portlet = {
 				},
 				PortletD: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_portal_search_web_portlet_SearchPortlet%26p_p_lifecycle%3D2',
 					pubParms: {},
 					renderData: {
 						content: 'PortletD content',
@@ -76,10 +114,19 @@ const portlet = {
 				},
 				PortletE: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet%26p_p_lifecycle%3D2',
 					pubParms: {},
 					renderData: {
 						content: '',
@@ -93,10 +140,19 @@ const portlet = {
 				},
 				PortletF: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet%26p_p_lifecycle%3D2',
 					pubParms: {
 						layoutSetBranchId: 'p_r_p_layoutSetBranchId',
 						privateLayout: 'p_r_p_privateLayout',
@@ -114,10 +170,19 @@ const portlet = {
 				},
 				PortletG: {
 					allowedPM: ['view'],
-					allowedWS: ['exclusive', 'maximized', 'minimized', 'normal', 'pop_up'],
-					encodedActionURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
-					encodedRenderURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D0',
-					encodedResourceURL: 'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D2',
+					allowedWS: [
+						'exclusive',
+						'maximized',
+						'minimized',
+						'normal',
+						'pop_up'
+					],
+					encodedActionURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D1%26p_auth%3DXcc0kyXi',
+					encodedRenderURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D0',
+					encodedResourceURL:
+						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3Dcom_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationUserPersonalBarPortlet%26p_p_lifecycle%3D2',
 					renderData: {
 						content: '',
 						mimeType: ''
@@ -142,7 +207,6 @@ const portlet = {
 	getIds() {
 		return Object.keys(portlet.data.pageRenderState.portlets);
 	},
-
 
 	resource: {
 		getCacheability(url) {

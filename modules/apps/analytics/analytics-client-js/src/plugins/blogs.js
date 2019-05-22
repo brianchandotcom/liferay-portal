@@ -45,29 +45,17 @@ function trackBlogsScroll(analytics, blogElements) {
 	const scrollSessionId = new Date().toISOString();
 	const scrollTracker = new ScrollTracker();
 
-	const onScroll = debounce(
-		() => {
-			blogElements.forEach(
-				element => {
-					scrollTracker.onDepthReached(
-						depth => {
-							analytics.send(
-								'blogDepthReached',
-								applicationId,
-								{
-									...getBlogPayload(element),
-									depth,
-									sessionId: scrollSessionId
-								}
-							);
-						},
-						element
-					);
-				}
-			);
-		},
-		DEBOUNCE
-	);
+	const onScroll = debounce(() => {
+		blogElements.forEach(element => {
+			scrollTracker.onDepthReached(depth => {
+				analytics.send('blogDepthReached', applicationId, {
+					...getBlogPayload(element),
+					depth,
+					sessionId: scrollSessionId
+				});
+			}, element);
+		});
+	}, DEBOUNCE);
 
 	document.addEventListener('scroll', onScroll);
 
@@ -82,30 +70,27 @@ function trackBlogsScroll(analytics, blogElements) {
  */
 function trackBlogViewed(analytics) {
 	const blogElements = [];
-	const stopTrackingOnReady = onReady(
-		() => {
-			Array.prototype.slice.call(
+	const stopTrackingOnReady = onReady(() => {
+		Array.prototype.slice
+			.call(
 				document.querySelectorAll('[data-analytics-asset-type="blog"]')
-			).filter(
-				element => isTrackableBlog(element)
-			).forEach(
-				element => {
-					const numberOfWords = getNumberOfWords(element);
+			)
+			.filter(element => isTrackableBlog(element))
+			.forEach(element => {
+				const numberOfWords = getNumberOfWords(element);
 
-					let payload = getBlogPayload(element);
+				let payload = getBlogPayload(element);
 
-					payload = {
-						numberOfWords,
-						...payload
-					};
+				payload = {
+					numberOfWords,
+					...payload
+				};
 
-					blogElements.push(element);
+				blogElements.push(element);
 
-					analytics.send('blogViewed', applicationId, payload);
-				}
-			);
-		}
-	);
+				analytics.send('blogViewed', applicationId, payload);
+			});
+	});
 	const stopTrackingBlogsScroll = trackBlogsScroll(analytics, blogElements);
 	return () => {
 		stopTrackingBlogsScroll();
@@ -135,8 +120,7 @@ function trackBlogClicked(analytics) {
 		if (tagName === 'a') {
 			payload.href = target.href;
 			payload.text = target.innerText;
-		}
-		else if (tagName === 'img') {
+		} else if (tagName === 'img') {
 			payload.src = target.src;
 		}
 

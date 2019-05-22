@@ -13,7 +13,6 @@ import PortletBase from './PortletBase.es';
  */
 
 class DynamicInlineScroll extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -91,9 +90,7 @@ class DynamicInlineScroll extends PortletBase {
 	getHREF_(pageIndex) {
 		const {curParam, formName, jsCall, namespace, url, urlAnchor} = this;
 
-		let href = `javascript:document.${formName}.${namespace}${curParam}.value = "${
-			pageIndex
-		}; ${jsCall}`;
+		let href = `javascript:document.${formName}.${namespace}${curParam}.value = "${pageIndex}; ${jsCall}`;
 
 		if (this.url !== null) {
 			href = `${url}${namespace}${curParam}=${pageIndex}${urlAnchor}`;
@@ -128,9 +125,12 @@ class DynamicInlineScroll extends PortletBase {
 
 			const {curParam, namespace, randomNamespace} = this;
 
-			const form = document.getElementById(randomNamespace + namespace + 'pageIteratorFm');
+			const form = document.getElementById(
+				randomNamespace + namespace + 'pageIteratorFm'
+			);
 
-			form.elements[namespace + curParam].value = event.currentTarget.textContent;
+			form.elements[namespace + curParam].value =
+				event.currentTarget.textContent;
 
 			form.submit();
 		}
@@ -150,7 +150,9 @@ class DynamicInlineScroll extends PortletBase {
 		const {target} = event;
 
 		let pageIndex = this.getNumber_(target.getAttribute('data-page-index'));
-		let pageIndexMax = this.getNumber_(target.getAttribute('data-max-index'));
+		let pageIndexMax = this.getNumber_(
+			target.getAttribute('data-max-index')
+		);
 
 		if (pageIndex === 0) {
 			let pageIndexCurrent = this.getNumber_(
@@ -159,8 +161,7 @@ class DynamicInlineScroll extends PortletBase {
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
-			}
-			else {
+			} else {
 				pageIndex = pageIndexCurrent + initialPages;
 			}
 		}
@@ -189,7 +190,6 @@ class DynamicInlineScroll extends PortletBase {
  */
 
 DynamicInlineScroll.STATE = {
-
 	/**
 	 * Current page
 	 * @instance

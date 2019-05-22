@@ -25,37 +25,37 @@ class Validation extends Component {
 		return {
 			...state,
 			...parsedState,
-			dataType: state.validation ? state.validation.dataType : state.dataType
+			dataType: state.validation
+				? state.validation.dataType
+				: state.dataType
 		};
 	}
 
 	willReceiveState({dataType, validation}) {
 		if (
 			(dataType && dataType.newVal !== dataType.prevVal) ||
-			(validation && validation.newVal.dataType !== validation.prevVal.dataType)
+			(validation &&
+				validation.newVal.dataType !== validation.prevVal.dataType)
 		) {
-			this.setState(
-				{
-					dataType: this._dataTypeValueFn(),
-					validations: this._validationsValueFn()
-				}
-			);
+			this.setState({
+				dataType: this._dataTypeValueFn(),
+				validations: this._validationsValueFn()
+			});
 		}
 	}
 
 	_dataTypeValueFn() {
-		return this.validation.dataType ? this.validation.dataType : this.dataType;
+		return this.validation.dataType
+			? this.validation.dataType
+			: this.dataType;
 	}
 
 	_emitFieldEdited(value) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: null,
-				value
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent: null,
+			value
+		});
 	}
 
 	_enableValidationValueFn() {
@@ -89,12 +89,16 @@ class Validation extends Component {
 		const enableValidation = !!expression;
 
 		if (enableValidation) {
-			selectedValidation = this._parseValidationFromExpression(expression);
+			selectedValidation = this._parseValidationFromExpression(
+				expression
+			);
 
 			if (selectedValidation) {
-				parameterMessage = this._parseParameterMessageFromExpression(expression, selectedValidation);
-			}
-			else {
+				parameterMessage = this._parseParameterMessageFromExpression(
+					expression,
+					selectedValidation
+				);
+			} else {
 				selectedValidation = {
 					parameterMessage: this.validations[0].parameterMessage,
 					value: this.validations[0].name
@@ -125,9 +129,13 @@ class Validation extends Component {
 		const enableValidation = this.refs.enableValidation.value;
 		let selectedValidation = this._getSelectedValidation();
 
-		if (enableValidation && !this.value.expression && this.context.validation) {
-			selectedValidation = this.validations.find(
-				validation => validation.regex.test(this.context.validation.expression)
+		if (
+			enableValidation &&
+			!this.value.expression &&
+			this.context.validation
+		) {
+			selectedValidation = this.validations.find(validation =>
+				validation.regex.test(this.context.validation.expression)
 			);
 			parameterMessage = this.context.validation.parameterMessage;
 		}
@@ -135,13 +143,10 @@ class Validation extends Component {
 		const {template} = selectedValidation;
 
 		if (enableValidation) {
-			expression = subWords(
-				template,
-				{
-					name,
-					parameter: parameterMessage
-				}
-			);
+			expression = subWords(template, {
+				name,
+				parameter: parameterMessage
+			});
 		}
 
 		return {
@@ -152,15 +157,13 @@ class Validation extends Component {
 	}
 
 	_normalizeValidationsOptions(validations) {
-		return validations.map(
-			validation => {
-				return {
-					...validation,
-					checked: false,
-					value: validation.name
-				};
-			}
-		);
+		return validations.map(validation => {
+			return {
+				...validation,
+				checked: false,
+				value: validation.name
+			};
+		});
 	}
 
 	_parseParameterMessageFromExpression(expression, validation) {
@@ -178,7 +181,9 @@ class Validation extends Component {
 		}
 
 		if (expression) {
-			validation = validations.find(validation => validation.regex.test(expression));
+			validation = validations.find(validation =>
+				validation.regex.test(expression)
+			);
 		}
 
 		return validation;
@@ -205,7 +210,6 @@ class Validation extends Component {
 }
 
 Validation.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -291,7 +295,9 @@ Validation.STATE = {
 	 * @type {String}
 	 */
 
-	parameterMessage: Config.string().internal().value(''),
+	parameterMessage: Config.string()
+		.internal()
+		.value(''),
 
 	/**
 	 * @default false
@@ -345,12 +351,10 @@ Validation.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.shapeOf(
-		{
-			errorMessage: Config.string(),
-			expression: Config.string()
-		}
-	).value({})
+	value: Config.shapeOf({
+		errorMessage: Config.string(),
+		expression: Config.string()
+	}).value({})
 };
 
 Soy.register(Validation, templates);

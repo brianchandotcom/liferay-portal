@@ -8,137 +8,89 @@ const defaultParagraphConfig = {
 	spritemap
 };
 
-describe(
-	'Field Paragraph',
-	() => {
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
-				}
-			}
-		);
+describe('Field Paragraph', () => {
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
 
-		it(
-			'should be readOnly',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						readOnly: true
-					}
-				);
+	it('should be readOnly', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			readOnly: true
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have an id',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						id: 'ID'
-					}
-				);
+	it('should have an id', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			id: 'ID'
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have a label',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						label: 'label'
-					}
-				);
+	it('should have a label', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			label: 'label'
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have a placeholder',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						placeholder: 'Placeholder'
-					}
-				);
+	it('should have a placeholder', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			placeholder: 'Placeholder'
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should not be required',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						required: false
-					}
-				);
+	it('should not be required', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			required: false
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should render Label if showLabel is true',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						label: 'text',
-						showLabel: true
-					}
-				);
+	it('should render Label if showLabel is true', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			label: 'text',
+			showLabel: true
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have a spritemap',
-			() => {
-				component = new Paragraph(defaultParagraphConfig);
+	it('should have a spritemap', () => {
+		component = new Paragraph(defaultParagraphConfig);
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have a value',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						value: 'value'
-					}
-				);
+	it('should have a value', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			value: 'value'
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should have a key',
-			() => {
-				component = new Paragraph(
-					{
-						...defaultParagraphConfig,
-						key: 'key'
-					}
-				);
+	it('should have a key', () => {
+		component = new Paragraph({
+			...defaultParagraphConfig,
+			key: 'key'
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
-	}
-);
+		expect(component).toMatchSnapshot();
+	});
+});

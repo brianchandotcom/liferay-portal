@@ -1,56 +1,36 @@
 /* globals expect */
 import editableValuesMigrator from '../../../src/main/resources/META-INF/resources/js/utils/fragmentMigrator.es';
 
-describe(
-	'fragmentMigrator',
-	() => {
-		test(
-			'should migrate single editable fragment',
-			() => {
-				const inputData = JSON.stringify(singleEditableFragmentInput);
+describe('fragmentMigrator', () => {
+	test('should migrate single editable fragment', () => {
+		const inputData = JSON.stringify(singleEditableFragmentInput);
 
-				expect(
-					editableValuesMigrator(inputData, DEFAULT_SEGMENTS_EXPERIENCE_ID)
-				).toEqual(
-					singleEditableFragmentExpected
-				);
-			}
+		expect(
+			editableValuesMigrator(inputData, DEFAULT_SEGMENTS_EXPERIENCE_ID)
+		).toEqual(singleEditableFragmentExpected);
+	});
+
+	test('should migrate double editable fragment', () => {
+		const inputData = JSON.stringify(doubleEditableFragmentInput);
+
+		expect(
+			editableValuesMigrator(inputData, DEFAULT_SEGMENTS_EXPERIENCE_ID)
+		).toEqual(doubleEditableFragmentExpected);
+	});
+
+	test('should leave already migrated segments as they are', () => {
+		const doubleInputData = JSON.stringify(doubleEditableFragmentExpected);
+		const singleInputData = JSON.stringify(singleEditableFragmentExpected);
+
+		expect(editableValuesMigrator(doubleInputData)).toEqual(
+			doubleEditableFragmentExpected
 		);
 
-		test(
-			'should migrate double editable fragment',
-			() => {
-				const inputData = JSON.stringify(doubleEditableFragmentInput);
-
-				expect(
-					editableValuesMigrator(inputData, DEFAULT_SEGMENTS_EXPERIENCE_ID)
-				).toEqual(
-					doubleEditableFragmentExpected
-				);
-			}
+		expect(editableValuesMigrator(singleInputData)).toEqual(
+			singleEditableFragmentExpected
 		);
-
-		test(
-			'should leave already migrated segments as they are',
-			() => {
-				const doubleInputData = JSON.stringify(doubleEditableFragmentExpected);
-				const singleInputData = JSON.stringify(singleEditableFragmentExpected);
-
-				expect(
-					editableValuesMigrator(doubleInputData)
-				).toEqual(
-					doubleEditableFragmentExpected
-				);
-
-				expect(
-					editableValuesMigrator(singleInputData)
-				).toEqual(
-					singleEditableFragmentExpected
-				);
-			}
-		);
-	}
-);
+	});
+});
 
 const DEFAULT_SEGMENTS_EXPERIENCE_ID = 'defaultSegmentsExperienceId';
 

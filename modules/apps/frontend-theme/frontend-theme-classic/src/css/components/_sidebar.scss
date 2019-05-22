@@ -24,7 +24,7 @@
 			background-color: transparent;
 
 			.navbar-nav {
-				border-bottom: 1px solid #CDCED9;
+				border-bottom: 1px solid #cdced9;
 				width: 100%;
 			}
 		}
@@ -43,10 +43,13 @@
 	}
 
 	.navbar-collapse {
-		border-bottom: 1px solid #CDCED9;
+		border-bottom: 1px solid #cdced9;
 	}
 
-	.navigation-bar-light, .sidebar-block > .list-group-item, .panel, .panel-group .panel {
+	.navigation-bar-light,
+	.sidebar-block > .list-group-item,
+	.panel,
+	.panel-group .panel {
 		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 			border-color: transparent;

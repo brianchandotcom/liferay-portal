@@ -9,9 +9,9 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						compact: false,
-					},
-				},
+						compact: false
+					}
+				}
 			},
 			{
 				test: /\.js$/,
@@ -21,7 +21,7 @@ module.exports = {
 					query: {
 						esModules: true
 					}
-				},
+				}
 			}
 		]
 	}

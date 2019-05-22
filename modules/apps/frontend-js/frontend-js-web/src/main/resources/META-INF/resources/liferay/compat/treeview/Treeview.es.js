@@ -10,7 +10,6 @@ import Soy from 'metal-soy';
  */
 
 class Treeview extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -87,8 +86,7 @@ class Treeview extends Component {
 		if (obj.expanded) {
 			obj.expanded = false;
 			this.nodes = this.nodes;
-		}
-		else if (path.length > 1) {
+		} else if (path.length > 1) {
 			path.pop();
 			return Treeview.NODE_REF_PREFIX + path.join('-');
 		}
@@ -107,15 +105,14 @@ class Treeview extends Component {
 		const path = this.getPath_(event.delegateTarget);
 		const obj = this.getNodeObj(path);
 		switch (event.keyCode) {
-		case 37:
-			return this.handleLeftArrow_(path, obj);
-		case 39:
-			return this.handleRightArrow_(path, obj);
-		default:
+			case 37:
+				return this.handleLeftArrow_(path, obj);
+			case 39:
+				return this.handleRightArrow_(path, obj);
+			default:
+				// Use default behavior for other keys (like up/down arrows).
 
-			// Use default behavior for other keys (like up/down arrows).
-
-			return true;
+				return true;
 		}
 	}
 
@@ -157,8 +154,7 @@ class Treeview extends Component {
 		if (obj.expanded) {
 			path.push(0);
 			return Treeview.NODE_REF_PREFIX + path.join('-');
-		}
-		else if (obj.children) {
+		} else if (obj.children) {
 			obj.expanded = true;
 			this.nodes = this.nodes;
 		}
@@ -189,7 +185,6 @@ Treeview.NODE_REF_PREFIX = 'node-';
  */
 
 Treeview.STATE = {
-
 	/**
 	 * The ref of the last item that has been focused, so that we can retain only
 	 * that node in the tab order.

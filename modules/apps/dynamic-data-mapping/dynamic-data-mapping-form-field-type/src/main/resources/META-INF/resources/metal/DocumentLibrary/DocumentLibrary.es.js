@@ -8,7 +8,6 @@ import {Config} from 'metal-state';
 class DocumentLibrary extends Component {}
 
 DocumentLibrary.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance

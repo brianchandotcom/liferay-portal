@@ -3,100 +3,94 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var SearchImpl = A.Component.create(
-			{
-				AUGMENTS: [A.AutoCompleteBase],
+		var SearchImpl = A.Component.create({
+			AUGMENTS: [A.AutoCompleteBase],
 
-				EXTENDS: A.Base,
+			EXTENDS: A.Base,
 
-				NAME: 'searchimpl',
+			NAME: 'searchimpl',
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-						this._bindUIACBase();
-						this._syncUIACBase();
-					}
+					this._bindUIACBase();
+					this._syncUIACBase();
 				}
 			}
-		);
+		});
 
-		var SearchFilter = A.Component.create(
-			{
-				ATTRS: {
-					minQueryLength: {
-						validator: Lang.isNumber,
-						value: 0
-					},
-
-					nodeList: {
-						setter: A.one
-					},
-
-					nodeSelector: {
-						validator: Lang.isString
-					},
-
-					queryDelay: {
-						validator: Lang.isNumber,
-						value: 300
-					},
-
-					resultFilters: {
-						setter: '_setResultFilters',
-						value: 'phraseMatch'
-					},
-
-					resultTextLocator: {
-						setter: '_setLocator',
-						value: 'search'
-					},
-
-					searchDataLocator: {
-						value: 'data-search'
-					}
+		var SearchFilter = A.Component.create({
+			ATTRS: {
+				minQueryLength: {
+					validator: Lang.isNumber,
+					value: 0
 				},
 
-				EXTENDS: SearchImpl,
+				nodeList: {
+					setter: A.one
+				},
 
-				NAME: 'searchfilter',
+				nodeSelector: {
+					validator: Lang.isString
+				},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+				queryDelay: {
+					validator: Lang.isNumber,
+					value: 300
+				},
 
-						var nodeList = instance.get('nodeList');
+				resultFilters: {
+					setter: '_setResultFilters',
+					value: 'phraseMatch'
+				},
 
-						if (nodeList) {
-							var nodeSelector = instance.get('nodeSelector');
+				resultTextLocator: {
+					setter: '_setLocator',
+					value: 'search'
+				},
 
-							var nodes = nodeList.all(nodeSelector);
+				searchDataLocator: {
+					value: 'data-search'
+				}
+			},
 
-							var searchDataLocator = instance.get('searchDataLocator');
+			EXTENDS: SearchImpl,
 
-							var searchData = [];
+			NAME: 'searchfilter',
 
-							nodes.each(
-								function(item, index) {
-									searchData.push(
-										{
-											node: item,
-											search: item.attr(searchDataLocator)
-										}
-									);
-								}
-							);
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-							instance.set('source', searchData);
+					var nodeList = instance.get('nodeList');
 
-							instance._nodes = nodes;
-							instance._searchData = searchData;
-						}
+					if (nodeList) {
+						var nodeSelector = instance.get('nodeSelector');
+
+						var nodes = nodeList.all(nodeSelector);
+
+						var searchDataLocator = instance.get(
+							'searchDataLocator'
+						);
+
+						var searchData = [];
+
+						nodes.each(function(item, index) {
+							searchData.push({
+								node: item,
+								search: item.attr(searchDataLocator)
+							});
+						});
+
+						instance.set('source', searchData);
+
+						instance._nodes = nodes;
+						instance._searchData = searchData;
 					}
 				}
 			}
-		);
+		});
 
 		Liferay.SearchFilter = SearchFilter;
 	},

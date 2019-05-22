@@ -122,7 +122,7 @@ describe('Forms Plugin', () => {
 	});
 
 	describe('fieldBlurred event', () => {
-		it('should be fired whenever a field is blurred', (done) => {
+		it('should be fired whenever a field is blurred', done => {
 			const form = document.createElement('form');
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';

@@ -27,7 +27,9 @@ export function sub(langKey, args) {
 }
 
 export function subWords(langKey, args) {
-	const keyArray = langKey.split(SPLIT_WORDS_REGEX).filter(val => val.length !== 0);
+	const keyArray = langKey
+		.split(SPLIT_WORDS_REGEX)
+		.filter(val => val.length !== 0);
 
 	for (const arg in args) {
 		if (args.hasOwnProperty(arg)) {

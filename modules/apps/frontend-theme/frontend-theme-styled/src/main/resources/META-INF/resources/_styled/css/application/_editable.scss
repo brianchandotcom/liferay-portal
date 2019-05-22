@@ -1,13 +1,14 @@
 .lfr-editable {
-	$edit-color: #68BB30;
-	$edit-color-hover: darken(#68BB30, 10);
+	$edit-color: #68bb30;
+	$edit-color-hover: darken(#68bb30, 10);
 
 	outline: 1px dashed $edit-color;
 	outline-offset: 2px;
 	position: relative;
 
 	&:after {
-		background: $edit-color url(../images/common/edit_white.png) no-repeat 50%;
+		background: $edit-color url(../images/common/edit_white.png) no-repeat
+			50%;
 		content: '';
 		display: block;
 		height: 20px;

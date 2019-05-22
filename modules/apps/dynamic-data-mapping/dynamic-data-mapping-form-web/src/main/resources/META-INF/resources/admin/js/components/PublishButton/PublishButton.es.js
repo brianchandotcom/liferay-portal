@@ -23,12 +23,14 @@ class PublishButton extends Component {
 		return (
 			<ClayButton
 				elementClasses={'btn-default'}
-				events={
-					{
-						click: this._handleButtonClicked.bind(this)
-					}
+				events={{
+					click: this._handleButtonClicked.bind(this)
+				}}
+				label={
+					published
+						? Liferay.Language.get('unpublish-form')
+						: Liferay.Language.get('publish-form')
 				}
-				label={published ? Liferay.Language.get('unpublish-form') : Liferay.Language.get('publish-form')}
 				ref={'button'}
 				spritemap={spritemap}
 			/>
@@ -41,8 +43,7 @@ class PublishButton extends Component {
 
 		if (published) {
 			promise = this.unpublish(event);
-		}
-		else {
+		} else {
 			promise = this.publish(event);
 		}
 

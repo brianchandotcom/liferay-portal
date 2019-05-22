@@ -1,18 +1,18 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
-@import "globals";
+@import 'globals';
 
 .segments-root {
-	@import "clay_button";
-	@import "conjunction";
-	@import "contributor_builder";
-	@import "criteria_builder";
-	@import "criteria_group";
-	@import "criteria_row";
-	@import "criteria_sidebar";
-	@import "drop_zone";
-	@import "empty_drop_zone";
-	@import "segment_edit";
-	@import "localized_title";
+	@import 'clay_button';
+	@import 'conjunction';
+	@import 'contributor_builder';
+	@import 'criteria_builder';
+	@import 'criteria_group';
+	@import 'criteria_row';
+	@import 'criteria_sidebar';
+	@import 'drop_zone';
+	@import 'empty_drop_zone';
+	@import 'segment_edit';
+	@import 'localized_title';
 }

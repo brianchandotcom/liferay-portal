@@ -45,23 +45,19 @@ const clearAllConditionFieldValues = condition => {
 const syncActions = (pages, actions) => {
 	const visitor = new PagesVisitor(pages);
 
-	actions.forEach(
-		(action, index) => {
-			let targetFieldExists = false;
+	actions.forEach((action, index) => {
+		let targetFieldExists = false;
 
-			visitor.mapFields(
-				({fieldName}) => {
-					if (action.target === fieldName) {
-						targetFieldExists = true;
-					}
-				}
-			);
-
-			if (!targetFieldExists) {
-				actions = clearTargetValue(actions, index);
+		visitor.mapFields(({fieldName}) => {
+			if (action.target === fieldName) {
+				targetFieldExists = true;
 			}
+		});
+
+		if (!targetFieldExists) {
+			actions = clearTargetValue(actions, index);
 		}
-	);
+	});
 
 	return actions;
 };

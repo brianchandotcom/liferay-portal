@@ -19,6 +19,7 @@
 	visibility: hidden !important;
 }
 
-.unselectable, .unselectable * {
+.unselectable,
+.unselectable * {
 	@include user-select(none);
 }

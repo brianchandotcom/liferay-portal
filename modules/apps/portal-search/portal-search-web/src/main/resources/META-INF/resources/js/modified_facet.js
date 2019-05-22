@@ -1,52 +1,74 @@
 AUI.add(
 	'liferay-search-modified-facet',
 	function(A) {
-		var ModifiedFacetFilter = function(form, fromInputDatePicker, toInputDatePicker) {
+		var ModifiedFacetFilter = function(
+			form,
+			fromInputDatePicker,
+			toInputDatePicker
+		) {
 			var instance = this;
 
 			instance.form = form;
 			instance.fromInputDatePicker = fromInputDatePicker;
 			instance.toInputDatePicker = toInputDatePicker;
 
-			var filterButton = instance.form.one('.modified-facet-custom-range-filter-button');
+			var filterButton = instance.form.one(
+				'.modified-facet-custom-range-filter-button'
+			);
 
 			filterButton.on('click', A.bind(instance.filter, instance));
 		};
 
-		A.mix(
-			ModifiedFacetFilter.prototype,
-			{
-				filter: function() {
-					var instance = this;
+		A.mix(ModifiedFacetFilter.prototype, {
+			filter: function() {
+				var instance = this;
 
-					var fromDate = instance.fromInputDatePicker.getDate();
+				var fromDate = instance.fromInputDatePicker.getDate();
 
-					var toDate = instance.toInputDatePicker.getDate();
+				var toDate = instance.toInputDatePicker.getDate();
 
-					var modifiedFromParameter = fromDate.toISOString().slice(0, 10);
+				var modifiedFromParameter = fromDate.toISOString().slice(0, 10);
 
-					var modifiedToParameter = toDate.toISOString().slice(0, 10);
+				var modifiedToParameter = toDate.toISOString().slice(0, 10);
 
-					var param = Liferay.Search.ModifiedFacetFilterUtil.getParameterName();
-					var paramFrom = param + 'From';
-					var paramTo = param + 'To';
+				var param = Liferay.Search.ModifiedFacetFilterUtil.getParameterName();
+				var paramFrom = param + 'From';
+				var paramTo = param + 'To';
 
-					var parameterArray = document.location.search.substr(1).split('&');
+				var parameterArray = document.location.search
+					.substr(1)
+					.split('&');
 
-					parameterArray = Liferay.Search.FacetUtil.removeURLParameters(param, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					param,
+					parameterArray
+				);
 
-					parameterArray = Liferay.Search.FacetUtil.removeURLParameters(paramFrom, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					paramFrom,
+					parameterArray
+				);
 
-					parameterArray = Liferay.Search.FacetUtil.removeURLParameters(paramTo, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					paramTo,
+					parameterArray
+				);
 
-					parameterArray = Liferay.Search.FacetUtil.addURLParameter(paramFrom, modifiedFromParameter, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.addURLParameter(
+					paramFrom,
+					modifiedFromParameter,
+					parameterArray
+				);
 
-					parameterArray = Liferay.Search.FacetUtil.addURLParameter(paramTo, modifiedToParameter, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.addURLParameter(
+					paramTo,
+					modifiedToParameter,
+					parameterArray
+				);
 
-					document.location.search = parameterArray.join('&');
-				}
+				document.location.search = parameterArray.join('&');
 			}
-		);
+		});
 
 		Liferay.namespace('Search').ModifiedFacetFilter = ModifiedFacetFilter;
 
@@ -56,13 +78,24 @@ AUI.add(
 				var paramFrom = param + 'From';
 				var paramTo = param + 'To';
 
-				var parameterArray = document.location.search.substr(1).split('&');
+				var parameterArray = document.location.search
+					.substr(1)
+					.split('&');
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(param, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					param,
+					parameterArray
+				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(paramFrom, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					paramFrom,
+					parameterArray
+				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(paramTo, parameterArray);
+				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+					paramTo,
+					parameterArray
+				);
 
 				document.location.search = parameterArray.join('&');
 			},
@@ -72,7 +105,9 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('Search').ModifiedFacetFilterUtil = ModifiedFacetFilterUtil;
+		Liferay.namespace(
+			'Search'
+		).ModifiedFacetFilterUtil = ModifiedFacetFilterUtil;
 	},
 	'',
 	{

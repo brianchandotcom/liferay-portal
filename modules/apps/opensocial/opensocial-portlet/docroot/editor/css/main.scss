@@ -1,6 +1,6 @@
 .opensocial-portlet-editor {
 	.tree-view-editor {
-		background: #FFF;
+		background: #fff;
 		height: 100%;
 	}
 
@@ -19,12 +19,12 @@
 	.tree-view-editor {
 		.tree-node {
 			.tree-node-loaded {
-				color: #06C;
+				color: #06c;
 				font-weight: bold;
 			}
 
 			.tree-label:hover {
-				color: #06C;
+				color: #06c;
 			}
 
 			.tree-node-loaded .tree-label {
@@ -33,14 +33,15 @@
 		}
 
 		.tree-node-selected {
-			background: #E4F5FC;
+			background: #e4f5fc;
 
 			.tree-label {
 				font-weight: normal;
 			}
 		}
 
-		.tree-node-content:hover .gadget-editor-tree-node-contextmenuicon, .gadget-editor-tree-node-contextmenuicon-open {
+		.tree-node-content:hover .gadget-editor-tree-node-contextmenuicon,
+		.gadget-editor-tree-node-contextmenuicon-open {
 			background-repeat: no-repeat;
 			color: #555;
 			float: right;
@@ -74,7 +75,7 @@
 	}
 
 	.panel-bd {
-		background: #FFF;
+		background: #fff;
 		overflow: auto;
 	}
 
@@ -106,7 +107,7 @@
 }
 
 .gadget-editor-contextmenu-toolbar {
-	background: #EEF0F2;
+	background: #eef0f2;
 
 	.btn {
 		text-align: left;

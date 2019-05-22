@@ -10,7 +10,6 @@ import templates from './AssetVocabularyCategoriesSelector.soy';
  * a categories selection input.
  */
 class AssetVocabularyCategoriesSelector extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -30,41 +29,36 @@ class AssetVocabularyCategoriesSelector extends Component {
 		AUI().use(
 			'liferay-item-selector-dialog',
 			function(A) {
-				var uri = A.Lang.sub(
-					decodeURIComponent(this.portletURL),
-					{
-						selectedCategories: this.selectedItems.map(
-							item => item.value
-						).join(),
-						singleSelect: this.singleSelect,
-						vocabularyIds: this.vocabularyIds.concat()
-					}
-				);
+				var uri = A.Lang.sub(decodeURIComponent(this.portletURL), {
+					selectedCategories: this.selectedItems
+						.map(item => item.value)
+						.join(),
+					singleSelect: this.singleSelect,
+					vocabularyIds: this.vocabularyIds.concat()
+				});
 
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: this.eventName,
-						on: {
-							selectedItemChange: function(event) {
-								const selectedItems = event.newVal;
+				const itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: this.eventName,
+					on: {
+						selectedItemChange: function(event) {
+							const selectedItems = event.newVal;
 
-								if (selectedItems) {
-									this.selectedItems = Object.keys(selectedItems).map(
-										itemKey => {
-											return {
-												label: selectedItems[itemKey].value,
-												value: selectedItems[itemKey].categoryId
-											};
-										}
-									);
-								}
-							}.bind(this)
-						},
-						'strings.add': Liferay.Language.get('add'),
-						title: Liferay.Language.get('select-categories'),
-						url: uri
-					}
-				);
+							if (selectedItems) {
+								this.selectedItems = Object.keys(
+									selectedItems
+								).map(itemKey => {
+									return {
+										label: selectedItems[itemKey].value,
+										value: selectedItems[itemKey].categoryId
+									};
+								});
+							}
+						}.bind(this)
+					},
+					'strings.add': Liferay.Language.get('add'),
+					title: Liferay.Language.get('select-categories'),
+					url: uri
+				});
 
 				itemSelectorDialog.open();
 			}.bind(this)
@@ -83,7 +77,9 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @return {string} The serialized, comma-separated version of the selected items.
 	 */
 	_getCategoryIds() {
-		return this.selectedItems.map(selectedItem => selectedItem.value).join();
+		return this.selectedItems
+			.map(selectedItem => selectedItem.value)
+			.join();
 	}
 
 	/**
@@ -110,13 +106,22 @@ class AssetVocabularyCategoriesSelector extends Component {
 		const inputValue = event.target.inputValue;
 
 		if (inputValue) {
-			if (!filteredItems || (filteredItems && filteredItems.length === 0)) {
+			if (
+				!filteredItems ||
+				(filteredItems && filteredItems.length === 0)
+			) {
 				this._typedCategory = inputValue;
 				this._unexistingCategoryError = true;
 			}
 
-			if (filteredItems && filteredItems.length > 0 && filteredItems[0].data.label === inputValue) {
-				const existingCategory = this.selectedItems.find(category => category.label === inputValue);
+			if (
+				filteredItems &&
+				filteredItems.length > 0 &&
+				filteredItems[0].data.label === inputValue
+			) {
+				const existingCategory = this.selectedItems.find(
+					category => category.label === inputValue
+				);
 
 				if (!existingCategory) {
 					const item = {
@@ -165,13 +170,10 @@ class AssetVocabularyCategoriesSelector extends Component {
 	syncSelectedItems(event) {
 		this.categoryIds = this._getCategoryIds();
 
-		this.emit(
-			'selectedItemsChange',
-			{
-				selectedItems: event,
-				vocabularyId: this.vocabularyIds[0]
-			}
-		);
+		this.emit('selectedItemsChange', {
+			selectedItems: event,
+			vocabularyId: this.vocabularyIds[0]
+		});
 	}
 
 	/**
@@ -182,34 +184,31 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @private
 	 */
 	_handleQuery(query) {
-		return new Promise(
-			(resolve, reject) => {
-				const serviceOptions = {
-					end: 20,
-					groupIds: this.groupIds,
-					name: `%${query}%`,
-					start: 0,
-					vocabularyIds: this.vocabularyIds
-				};
+		return new Promise((resolve, reject) => {
+			const serviceOptions = {
+				end: 20,
+				groupIds: this.groupIds,
+				name: `%${query}%`,
+				start: 0,
+				vocabularyIds: this.vocabularyIds
+			};
 
-				serviceOptions['-obc'] = null;
+			serviceOptions['-obc'] = null;
 
-				Liferay.Service(
-					'/assetcategory/search',
-					serviceOptions,
-					categories => resolve(
-						categories.map(
-							category => {
-								return {
-									label: category.titleCurrentValue,
-									value: category.categoryId
-								};
-							}
-						)
+			Liferay.Service(
+				'/assetcategory/search',
+				serviceOptions,
+				categories =>
+					resolve(
+						categories.map(category => {
+							return {
+								label: category.titleCurrentValue,
+								value: category.categoryId
+							};
+						})
 					)
-				);
-			}
-		);
+			);
+		});
 	}
 }
 
@@ -220,7 +219,6 @@ class AssetVocabularyCategoriesSelector extends Component {
  * @type {!Object}
  */
 AssetVocabularyCategoriesSelector.STATE = {
-
 	/**
 	 * <code>MultiSelect</code> component's input value.
 	 *

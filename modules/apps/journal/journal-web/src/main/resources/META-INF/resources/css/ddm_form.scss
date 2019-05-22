@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .color-cell-editor-hidden {
 	display: none;
@@ -26,7 +26,8 @@
 			margin-top: -7px;
 		}
 
-		.property-builder-drop-container, .tab-pane {
+		.property-builder-drop-container,
+		.tab-pane {
 			min-height: 500px;
 
 			@include respond-to(phone) {
@@ -66,7 +67,9 @@
 		margin-bottom: 10px;
 	}
 
-	.lfr-template-editor-container .lfr-template-palette-container .lfr-template-palette {
+	.lfr-template-editor-container
+		.lfr-template-palette-container
+		.lfr-template-palette {
 		overflow: auto;
 		width: 100%;
 
@@ -111,9 +114,13 @@
 	}
 }
 
-.ltr .form-builder-rtl-inputs, .rtl .form-builder-ltr-inputs {
-	.portlet-dynamic-data-mapping .form-builder-content, .textcelleditor, .textareacelleditor {
-		input[type="text"], textarea {
+.ltr .form-builder-rtl-inputs,
+.rtl .form-builder-ltr-inputs {
+	.portlet-dynamic-data-mapping .form-builder-content,
+	.textcelleditor,
+	.textareacelleditor {
+		input[type='text'],
+		textarea {
 			direction: rtl;
 		}
 	}

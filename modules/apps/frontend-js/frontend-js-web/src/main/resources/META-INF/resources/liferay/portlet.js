@@ -1,4 +1,4 @@
-;(function(A, Liferay) {
+(function(A, Liferay) {
 	var Lang = A.Lang;
 
 	var Util = Liferay.Util;
@@ -13,11 +13,9 @@
 		readyCounter: 0,
 
 		destroyComponents: function(portletId) {
-			Liferay.destroyComponents(
-				function(component, componentConfig) {
-					return portletId === componentConfig.portletId;
-				}
-			);
+			Liferay.destroyComponents(function(component, componentConfig) {
+				return portletId === componentConfig.portletId;
+			});
 		},
 
 		isStatic: function(portletId) {
@@ -28,8 +26,7 @@
 			return id in instance._staticPortlets;
 		},
 
-		refreshLayout: function(portletBoundary) {
-		},
+		refreshLayout: function(portletBoundary) {},
 
 		register: function(portletId) {
 			var instance = this;
@@ -88,45 +85,37 @@
 
 			var javascriptPaths = response.headerJavaScriptPaths || [];
 
-			javascriptPaths = javascriptPaths.concat(response.footerJavaScriptPaths || []);
+			javascriptPaths = javascriptPaths.concat(
+				response.footerJavaScriptPaths || []
+			);
 
 			var body = A.getBody();
 
 			var head = A.one(STR_HEAD);
 
 			if (headerCssPaths.length) {
-				A.Get.css(
-					headerCssPaths,
-					{
-						insertBefore: head.get('firstChild').getDOM()
-					}
-				);
+				A.Get.css(headerCssPaths, {
+					insertBefore: head.get('firstChild').getDOM()
+				});
 			}
 
 			var lastChild = body.get('lastChild').getDOM();
 
 			if (footerCssPaths.length) {
-				A.Get.css(
-					footerCssPaths,
-					{
-						insertBefore: lastChild
-					}
-				);
+				A.Get.css(footerCssPaths, {
+					insertBefore: lastChild
+				});
 			}
 
 			var responseHTML = response.portletHTML;
 
 			if (javascriptPaths.length) {
-				A.Get.script(
-					javascriptPaths,
-					{
-						onEnd: function(obj) {
-							loadHTML(responseHTML);
-						}
+				A.Get.script(javascriptPaths, {
+					onEnd: function(obj) {
+						loadHTML(responseHTML);
 					}
-				);
-			}
-			else {
+				});
+			} else {
 				loadHTML(responseHTML);
 			}
 		},
@@ -134,7 +123,8 @@
 		_mergeOptions: function(portlet, options) {
 			options = options || {};
 
-			options.doAsUserId = options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
+			options.doAsUserId =
+				options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
 			options.plid = options.plid || themeDisplay.getPlid();
 			options.portlet = portlet;
 			options.portletId = portlet.portletId;
@@ -153,7 +143,8 @@
 
 			Liferay.fire('initLayout');
 
-			var doAsUserId = options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
+			var doAsUserId =
+				options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
 			var plid = options.plid || themeDisplay.getPlid();
 			var portletData = options.portletData;
 			var portletId = options.portletId;
@@ -162,9 +153,10 @@
 			var placeHolder = options.placeHolder;
 
 			if (!placeHolder) {
-				placeHolder = A.Node.create('<div class="loading-animation" />');
-			}
-			else {
+				placeHolder = A.Node.create(
+					'<div class="loading-animation" />'
+				);
+			} else {
 				placeHolder = A.one(placeHolder);
 			}
 
@@ -182,12 +174,9 @@
 					portlet.attr('data-qa-id', 'app-loaded');
 				}
 
-				Liferay.fire(
-					'addPortlet',
-					{
-						portlet: portlet
-					}
-				);
+				Liferay.fire('addPortlet', {
+					portlet: portlet
+				});
 			};
 
 			var container = null;
@@ -220,18 +209,22 @@
 
 				var nestedPortletOffset = 0;
 
-				nestedPortlets.some(
-					function(nestedPortlet) {
-						var nestedPortletIndex = columnPortlets.indexOf(nestedPortlet);
+				nestedPortlets.some(function(nestedPortlet) {
+					var nestedPortletIndex = columnPortlets.indexOf(
+						nestedPortlet
+					);
 
-						if ((nestedPortletIndex !== -1) && (nestedPortletIndex < portletPosition)) {
-							nestedPortletOffset += nestedPortlet.all('.portlet-boundary').size();
-						}
-						else if (nestedPortletIndex >= portletPosition) {
-							return true;
-						}
+					if (
+						nestedPortletIndex !== -1 &&
+						nestedPortletIndex < portletPosition
+					) {
+						nestedPortletOffset += nestedPortlet
+							.all('.portlet-boundary')
+							.size();
+					} else if (nestedPortletIndex >= portletPosition) {
+						return true;
 					}
-				);
+				});
 
 				portletPosition -= nestedPortletOffset;
 
@@ -261,23 +254,20 @@
 			if (!options.placeHolder && !options.plid) {
 				if (!hasStaticPortlet) {
 					container.prepend(placeHolder);
-				}
-				else {
+				} else {
 					firstPortlet.placeAfter(placeHolder);
 				}
 			}
 
 			data.currentURL = Liferay.currentURL;
 
-			instance.addHTML(
-				{
-					beforePortletLoaded: beforePortletLoaded,
-					data: data,
-					onComplete: onComplete,
-					placeHolder: placeHolder,
-					url: url
-				}
-			);
+			instance.addHTML({
+				beforePortletLoaded: beforePortletLoaded,
+				data: data,
+				onComplete: onComplete,
+				placeHolder: placeHolder,
+				url: url
+			});
 		},
 		['aui-base']
 	);
@@ -352,8 +342,7 @@
 					if (onComplete) {
 						onComplete(portletBoundary, portletId);
 					}
-				}
-				else {
+				} else {
 					placeHolder.remove();
 				}
 
@@ -364,53 +353,59 @@
 				beforePortletLoaded(placeHolder);
 			}
 
-			A.io.request(
-				url,
-				{
-					after: {
-						success: function() {
-							if (!data || !data.preventNotification) {
-								Liferay.fire('updatedLayout');
+			A.io.request(url, {
+				after: {
+					success: function() {
+						if (!data || !data.preventNotification) {
+							Liferay.fire('updatedLayout');
+						}
+					}
+				},
+				data: data,
+				dataType: dataType,
+				on: {
+					failure: function(event, id, obj) {
+						var statusText = obj.statusText;
+
+						if (statusText) {
+							var status = Liferay.Language.get(
+								'there-was-an-unexpected-error.-please-refresh-the-current-page'
+							);
+
+							if (statusText == 'timeout') {
+								status = Liferay.Language.get(
+									'request-timeout'
+								);
 							}
+
+							placeHolder.hide();
+
+							placeHolder.placeAfter(
+								'<div class="alert alert-danger">' +
+									status +
+									'</div>'
+							);
 						}
 					},
-					data: data,
-					dataType: dataType,
-					on: {
-						failure: function(event, id, obj) {
-							var statusText = obj.statusText;
+					success: function(event, id, obj) {
+						var instance = this;
 
-							if (statusText) {
-								var status = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
+						var response = instance.get('responseData');
 
-								if (statusText == 'timeout') {
-									status = Liferay.Language.get('request-timeout');
-								}
-
-								placeHolder.hide();
-
-								placeHolder.placeAfter('<div class="alert alert-danger">' + status + '</div>');
-							}
-						},
-						success: function(event, id, obj) {
-							var instance = this;
-
-							var response = instance.get('responseData');
-
-							if (dataType == 'HTML') {
-								addPortletReturn(response);
-							}
-							else if (response.refresh) {
-								addPortletReturn(response.portletHTML);
-							}
-							else {
-								Portlet._loadMarkupHeadElements(response);
-								Portlet._loadPortletFiles(response, addPortletReturn);
-							}
+						if (dataType == 'HTML') {
+							addPortletReturn(response);
+						} else if (response.refresh) {
+							addPortletReturn(response.portletHTML);
+						} else {
+							Portlet._loadMarkupHeadElements(response);
+							Portlet._loadPortletFiles(
+								response,
+								addPortletReturn
+							);
 						}
 					}
 				}
-			);
+			});
 		},
 		['aui-io-request', 'aui-parse-content']
 	);
@@ -423,7 +418,15 @@
 
 			portlet = A.one(portlet);
 
-			if (portlet && (skipConfirm || confirm(Liferay.Language.get('are-you-sure-you-want-to-remove-this-component')))) {
+			if (
+				portlet &&
+				(skipConfirm ||
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-remove-this-component'
+						)
+					))
+			) {
 				var portletId = portlet.portletId;
 
 				var portletIndex = instance.list.indexOf(portletId);
@@ -439,8 +442,7 @@
 				Liferay.fire('destroyPortlet', options);
 
 				Liferay.fire('closePortlet', options);
-			}
-			else {
+			} else {
 				A.config.win.focus();
 			}
 		},
@@ -454,11 +456,15 @@
 			portlet = A.one(portlet);
 
 			if (portlet) {
-				var portletId = portlet.portletId || Util.getPortletId(portlet.attr('id'));
+				var portletId =
+					portlet.portletId || Util.getPortletId(portlet.attr('id'));
 
 				Portlet.destroyComponents(portletId);
 
-				Liferay.fire('destroyPortlet', Portlet._mergeOptions(portlet, options));
+				Liferay.fire(
+					'destroyPortlet',
+					Portlet._mergeOptions(portlet, options)
+				);
 			}
 		},
 		['aui-node-base']
@@ -472,7 +478,8 @@
 
 			options = options || {};
 
-			var doAsUserId = options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
+			var doAsUserId =
+				options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
 			var plid = options.plid || themeDisplay.getPlid();
 
 			portlet = A.one(portlet);
@@ -489,7 +496,9 @@
 					var link = A.one(el);
 
 					if (link) {
-						var title = restore ? Liferay.Language.get('minimize') : Liferay.Language.get('restore');
+						var title = restore
+							? Liferay.Language.get('minimize')
+							: Liferay.Language.get('restore');
 
 						link.attr('alt', title);
 						link.attr('title', title);
@@ -507,8 +516,7 @@
 
 							if (restore) {
 								icon.addClass('icon-minus');
-							}
-							else {
+							} else {
 								icon.addClass('icon-resize-vertical');
 							}
 						}
@@ -530,7 +538,11 @@
 
 										portlet.plug(A.Plugin.ParseContent);
 
-										portlet.load(themeDisplay.getPathMain() + '/portal/render_portlet?' + A.QueryString.stringify(data));
+										portlet.load(
+											themeDisplay.getPathMain() +
+												'/portal/render_portlet?' +
+												A.QueryString.stringify(data)
+										);
 									}
 								}
 							},
@@ -582,7 +594,6 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
-
 					// https://github.com/yui/yui3/issues/1808
 
 					var events = 'focus';
@@ -591,41 +602,30 @@
 						events = ['focus', 'mousemove'];
 					}
 
-					var handle = portlet.on(
-						events,
-						function(event) {
-							Util.portletTitleEdit(
-								{
-									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-									obj: portlet,
-									plid: themeDisplay.getPlid(),
-									portletId: portletId
-								}
-							);
+					var handle = portlet.on(events, function(event) {
+						Util.portletTitleEdit({
+							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+							obj: portlet,
+							plid: themeDisplay.getPlid(),
+							portletId: portletId
+						});
 
-							handle.detach();
-						}
-					);
+						handle.detach();
+					});
 				}
 			}
 
-			Liferay.fire(
-				'portletReady',
-				{
-					portlet: portlet,
-					portletId: portletId
-				}
-			);
+			Liferay.fire('portletReady', {
+				portlet: portlet,
+				portletId: portletId
+			});
 
 			instance.readyCounter++;
 
 			if (instance.readyCounter === instance.list.length) {
-				Liferay.fire(
-					'allPortletsReady',
-					{
-						portletId: portletId
-					}
-				);
+				Liferay.fire('allPortletsReady', {
+					portletId: portletId
+				});
 			}
 		},
 		['aui-base', 'aui-timer', 'event-move']
@@ -650,7 +650,9 @@
 
 				var url = portlet.refreshURL;
 
-				var placeHolder = A.Node.create('<div class="loading-animation" id="p_p_id' + id + '" />');
+				var placeHolder = A.Node.create(
+					'<div class="loading-animation" id="p_p_id' + id + '" />'
+				);
 
 				if (data.portletAjaxable && url) {
 					portlet.placeBefore(placeHolder);
@@ -671,36 +673,34 @@
 						url = urlPieces[0];
 					}
 
-					instance.addHTML(
-						{
-							data: A.mix(params, data, true),
-							onComplete: function(portlet, portletId) {
-								portlet.refreshURL = url;
+					instance.addHTML({
+						data: A.mix(params, data, true),
+						onComplete: function(portlet, portletId) {
+							portlet.refreshURL = url;
 
-								if (portlet) {
-									portlet.attr('data-qa-id', 'app-refreshed');
+							if (portlet) {
+								portlet.attr('data-qa-id', 'app-refreshed');
+							}
+
+							Liferay.fire(
+								portlet.portletId + ':portletRefreshed',
+								{
+									portlet: portlet,
+									portletId: portletId
 								}
-
-								Liferay.fire(
-									portlet.portletId + ':portletRefreshed',
-									{
-										portlet: portlet,
-										portletId: portletId
-									}
-								);
-							},
-							placeHolder: placeHolder,
-							url: url
-						}
-					);
-				}
-				else if (!portlet.getData('pendingRefresh')) {
+							);
+						},
+						placeHolder: placeHolder,
+						url: url
+					});
+				} else if (!portlet.getData('pendingRefresh')) {
 					portlet.setData('pendingRefresh', true);
 
-					var nonAjaxableContentMessage = Lang.sub(
-						TPL_NOT_AJAXABLE,
-						[Liferay.Language.get('this-change-will-only-be-shown-after-you-refresh-the-page')]
-					);
+					var nonAjaxableContentMessage = Lang.sub(TPL_NOT_AJAXABLE, [
+						Liferay.Language.get(
+							'this-change-will-only-be-shown-after-you-refresh-the-page'
+						)
+					]);
 
 					var portletBody = portlet.one('.portlet-body');
 
@@ -723,8 +723,7 @@
 
 			if (Node && portletId instanceof Node) {
 				portletId = portletId.attr('id');
-			}
-			else if (portletId.id) {
+			} else if (portletId.id) {
 				portletId = portletId.id;
 			}
 
@@ -752,21 +751,30 @@
 			portlet = A.one(portlet);
 
 			if (portlet && uri) {
-				var portletTitle = portlet.one('.portlet-title') || portlet.one('.portlet-title-default');
+				var portletTitle =
+					portlet.one('.portlet-title') ||
+					portlet.one('.portlet-title-default');
 
 				var titleHtml = title;
 
 				if (portletTitle) {
 					if (portlet.one('#cpPortletTitle')) {
-						titleHtml = portletTitle.one('.portlet-title-text').outerHTML() + ' - ' + titleHtml;
-					}
-					else {
+						titleHtml =
+							portletTitle
+								.one('.portlet-title-text')
+								.outerHTML() +
+							' - ' +
+							titleHtml;
+					} else {
 						titleHtml = portletTitle.text() + ' - ' + titleHtml;
 					}
 				}
 
 				if (subTitle) {
-					titleHtml += '<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' + subTitle + '</span></div>';
+					titleHtml +=
+						'<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' +
+						subTitle +
+						'</span></div>';
 				}
 
 				Liferay.Util.openWindow(
@@ -785,12 +793,11 @@
 						uri: uri
 					},
 					function(dialog) {
-						dialog.once(
-							'drag:init',
-							function() {
-								dialog.dd.addInvalid('.portlet-configuration-subtitle-text');
-							}
-						);
+						dialog.once('drag:init', function() {
+							dialog.dd.addInvalid(
+								'.portlet-configuration-subtitle-text'
+							);
+						});
 					}
 				);
 			}
@@ -798,29 +805,20 @@
 		['liferay-util-window']
 	);
 
-	Liferay.publish(
-		'closePortlet',
-		{
-			defaultFn: Portlet._defCloseFn
-		}
-	);
+	Liferay.publish('closePortlet', {
+		defaultFn: Portlet._defCloseFn
+	});
 
-	Liferay.publish(
-		'allPortletsReady',
-		{
-			fireOnce: true
-		}
-	);
+	Liferay.publish('allPortletsReady', {
+		fireOnce: true
+	});
 
 	// Backwards compatability
 
 	Portlet.ready = function(fn) {
-		Liferay.on(
-			'portletReady',
-			function(event) {
-				fn(event.portletId, event.portlet);
-			}
-		);
+		Liferay.on('portletReady', function(event) {
+			fn(event.portletId, event.portlet);
+		});
 	};
 
 	Liferay.Portlet = Portlet;

@@ -12,8 +12,7 @@ AUI.add(
 
 		var DOC = A.config.doc;
 
-		var AutcompleteInputCaretOffset = function() {
-		};
+		var AutcompleteInputCaretOffset = function() {};
 
 		AutcompleteInputCaretOffset.prototype = {
 			_getCaretOffset: function(node) {
@@ -29,7 +28,11 @@ AUI.add(
 
 				return {
 					x: range.boundingLeft - xy[0],
-					y: Lang.toInt(range.boundingTop) - xy[1] + node.get('scrollTop') + DOC.documentElement.scrollTop
+					y:
+						Lang.toInt(range.boundingTop) -
+						xy[1] +
+						node.get('scrollTop') +
+						DOC.documentElement.scrollTop
 				};
 			}
 		};

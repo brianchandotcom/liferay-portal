@@ -11,34 +11,28 @@ export default class LocalizedInput extends React.Component {
 		initialValues: PropTypes.object,
 		onChange: PropTypes.func,
 		readOnly: PropTypes.bool
-	}
+	};
 	static defaultProps = {
 		initialOpen: false,
 		initialValues: {},
 		onChange: () => {},
 		readOnly: false
-	}
+	};
 
 	constructor(props) {
 		super(props);
 
-		const {
-			availableLanguages,
-			initialLanguageId,
-			initialValues
-		} = props;
+		const {availableLanguages, initialLanguageId, initialValues} = props;
 		this.state = {
-			availableLanguages: Object.keys(availableLanguages).map(
-				key => {
-					const value = availableLanguages[key];
+			availableLanguages: Object.keys(availableLanguages).map(key => {
+				const value = availableLanguages[key];
 
-					return {
-						hasValue: !!initialValues[key],
-						key,
-						value
-					};
-				}
-			),
+				return {
+					hasValue: !!initialValues[key],
+					key,
+					value
+				};
+			}),
 			currentLang: initialLanguageId,
 			currentValue: initialValues[initialLanguageId] || '',
 			values: initialValues
@@ -46,21 +40,15 @@ export default class LocalizedInput extends React.Component {
 	}
 
 	_handleLanguageChange = langKey => {
-		this.setState(
-			prevState => ({
-				currentLang: langKey,
-				currentValue: prevState.values[langKey] || ''
-			})
-		);
-	}
+		this.setState(prevState => ({
+			currentLang: langKey,
+			currentValue: prevState.values[langKey] || ''
+		}));
+	};
 
 	_onChange = (event, hasError) => {
-		this.props.onChange(
-			event,
-			this.state.values,
-			hasError
-		);
-	}
+		this.props.onChange(event, this.state.values, hasError);
+	};
 
 	_handleInputChange = event => {
 		event.persist();
@@ -96,12 +84,13 @@ export default class LocalizedInput extends React.Component {
 			},
 			() => this._onChange(event, hasError)
 		);
-	}
+	};
 
 	_validateValues(values) {
 		const {defaultLang} = this.props;
 
-		const parsedValue = values[defaultLang] && values[defaultLang].replace(/\s/g, '');
+		const parsedValue =
+			values[defaultLang] && values[defaultLang].replace(/\s/g, '');
 
 		return !!parsedValue;
 	}
@@ -114,21 +103,14 @@ export default class LocalizedInput extends React.Component {
 			readOnly
 		} = this.props;
 
-		const {
-			availableLanguages,
-			currentValue,
-			hasError
-		} = this.state;
+		const {availableLanguages, currentValue, hasError} = this.state;
 
-		const inputGroupItemClasses = getCN(
-			'input-group-item ml-3',
-			{
-				'has-error': hasError
-			}
-		);
+		const inputGroupItemClasses = getCN('input-group-item ml-3', {
+			'has-error': hasError
+		});
 
 		return (
-			<div className="input-group input-localized input-localized-input">
+			<div className='input-group input-localized input-localized-input'>
 				<LocalizedDropdown
 					availableLanguages={availableLanguages}
 					defaultLang={defaultLang}
@@ -138,16 +120,13 @@ export default class LocalizedInput extends React.Component {
 				/>
 				<div className={inputGroupItemClasses}>
 					<input
-						className="rounded form-control language-value field form-control-inline form-control"
-						data-testid="localized-main-input"
-						onChange={
-							this._handleInputChange
-						}
+						className='rounded form-control language-value field form-control-inline form-control'
+						data-testid='localized-main-input'
+						onChange={this._handleInputChange}
 						readOnly={readOnly}
-						type="text"
+						type='text'
 						value={currentValue}
 					/>
-
 				</div>
 			</div>
 		);

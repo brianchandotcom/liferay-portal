@@ -12,25 +12,19 @@ const npmbundlerrc = fs.readFileSync('.npmbundlerrc');
 const parsedBundlerConfig = JSON.parse(npmbundlerrc);
 
 function compile(fileName, callback) {
-	const optsManager = new babel.OptionManager;
-	optsManager.mergeOptions(
-		{
-			alias: 'base',
-			loc: path.dirname(fileName)
-		}
-	);
-	const opts = optsManager.init({ filename: fileName });
+	const optsManager = new babel.OptionManager();
+	optsManager.mergeOptions({
+		alias: 'base',
+		loc: path.dirname(fileName)
+	});
+	const opts = optsManager.init({filename: fileName});
 	opts.babelrc = true;
 	opts.sourceMap = true;
 	opts.ast = false;
 
-	return babel.transformFile(
-		fileName,
-		opts,
-		(error, result) => {
-			callback(error, result);
-		}
-	);
+	return babel.transformFile(fileName, opts, (error, result) => {
+		callback(error, result);
+	});
 }
 
 function buildSoy(fileName, callback) {
@@ -45,8 +39,7 @@ function buildSoy(fileName, callback) {
 				console.log(stdout);
 				console.log(stderr);
 				callback(stderr);
-			}
-			else {
+			} else {
 				callback();
 			}
 		}
@@ -56,28 +49,19 @@ function buildSoy(fileName, callback) {
 function buildJS(fileName, callback) {
 	const relativeFilename = path.relative(src, fileName);
 	const destinationName = path.join(dest, relativeFilename);
-	compile(
-		fileName,
-		(error, result) => {
-			if (error) {
-				console.log(error);
-				return callback(error);
-			}
-			fs.writeFileSync(destinationName, result.code);
-			parsedBundlerConfig.ignore = [
-				'**/*.js',
-				`!${relativeFilename}`
-			];
-			fs.writeFileSync('.npmbundlerrc', JSON.stringify(parsedBundlerConfig));
-			exec(
-				'npm run bundler -- --no-tracking',
-				function() {
-					fs.writeFileSync('.npmbundlerrc', npmbundlerrc);
-					callback(null, result);
-				}
-			);
+	compile(fileName, (error, result) => {
+		if (error) {
+			console.log(error);
+			return callback(error);
 		}
-	);
+		fs.writeFileSync(destinationName, result.code);
+		parsedBundlerConfig.ignore = ['**/*.js', `!${relativeFilename}`];
+		fs.writeFileSync('.npmbundlerrc', JSON.stringify(parsedBundlerConfig));
+		exec('npm run bundler -- --no-tracking', function() {
+			fs.writeFileSync('.npmbundlerrc', npmbundlerrc);
+			callback(null, result);
+		});
+	});
 }
 
 function sendEvent(instance, eventName, data) {
@@ -100,7 +84,7 @@ bs.init(
 				hooks: {
 					'client:js': fs.readFileSync('reloader.js', 'utf-8')
 				},
-				plugin: function() { }
+				plugin: function() {}
 			}
 		],
 		port: 3000,
@@ -113,34 +97,26 @@ bs.init(
 		],
 		watch: false
 	},
-	function (error, instance) {
+	function(error, instance) {
 		if (error) {
 			console.error(error);
-		}
-		else {
+		} else {
 			let buildingSoy = false;
-			bs.watch('src/**/*.soy').on(
-				'change',
-				fileName => {
-					if (buildingSoy) {
-						return;
-					}
-					buildingSoy = true;
-					sendEvent(instance, 'building', {fileName});
-					buildSoy(
-						fileName,
-						(error) => {
-							buildingSoy = false;
-							if (error) {
-								sendEvent(instance, 'error', {fileName, error});
-							}
-							else {
-								sendEvent(instance, 'done', {fileName});
-							}
-						}
-					);
+			bs.watch('src/**/*.soy').on('change', fileName => {
+				if (buildingSoy) {
+					return;
 				}
-			);
+				buildingSoy = true;
+				sendEvent(instance, 'building', {fileName});
+				buildSoy(fileName, error => {
+					buildingSoy = false;
+					if (error) {
+						sendEvent(instance, 'error', {fileName, error});
+					} else {
+						sendEvent(instance, 'done', {fileName});
+					}
+				});
+			});
 			let buildingJS = false;
 			bs.watch('src/main/resources/META-INF/resources/**/*.js').on(
 				'change',
@@ -149,19 +125,15 @@ bs.init(
 						return;
 					}
 					buildingJS = true;
-					sendEvent(instance, 'building', {fileName})
-					buildJS(
-						fileName,
-						(error) => {
-							buildingJS = false;
-							if (error) {
-								sendEvent(instance, 'error', {fileName, error});
-							}
-							else {
-								sendEvent(instance, 'done', {fileName});
-							}
+					sendEvent(instance, 'building', {fileName});
+					buildJS(fileName, error => {
+						buildingJS = false;
+						if (error) {
+							sendEvent(instance, 'error', {fileName, error});
+						} else {
+							sendEvent(instance, 'done', {fileName});
 						}
-					);
+					});
 				}
 			);
 		}

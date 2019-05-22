@@ -15,7 +15,8 @@ const createCustomAssetElement = () => {
 	customAssetElement.dataset.analyticsAssetId = 'assetId';
 	customAssetElement.dataset.analyticsAssetTitle = 'Custom Asset Title 1';
 	customAssetElement.dataset.analyticsAssetType = 'custom';
-	customAssetElement.innerText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+	customAssetElement.innerText =
+		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
 
 	document.body.appendChild(customAssetElement);
 
@@ -47,7 +48,7 @@ describe('Custom Asset Plugin', () => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
-			writable: false,
+			writable: false
 		});
 
 		fetchMock.mock('*', () => 200);
@@ -65,11 +66,14 @@ describe('Custom Asset Plugin', () => {
 				({eventId}) => eventId === 'assetViewed'
 			);
 
-			expect(events.length).to.be.at.least(1, 'At least one event should have been fired');
+			expect(events.length).to.be.at.least(
+				1,
+				'At least one event should have been fired'
+			);
 
 			events[0].should.deep.include({
 				applicationId,
-				eventId: 'assetViewed',
+				eventId: 'assetViewed'
 			});
 			expect(events[0].properties.assetId).to.equal('assetId');
 
@@ -86,11 +90,14 @@ describe('Custom Asset Plugin', () => {
 				({eventId}) => eventId === 'assetViewed'
 			);
 
-			expect(events.length).to.be.at.least(1, 'At least one event should have been fired');
+			expect(events.length).to.be.at.least(
+				1,
+				'At least one event should have been fired'
+			);
 
 			events[0].should.deep.include({
 				applicationId,
-				eventId: 'assetViewed',
+				eventId: 'assetViewed'
 			});
 
 			expect(events[0].properties.assetId).to.equal('assetId');
@@ -113,13 +120,13 @@ describe('Custom Asset Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'assetClicked',
+				eventId: 'assetClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				assetId: 'assetId',
 				src: googleUrl,
-				tagName: 'img',
+				tagName: 'img'
 			});
 
 			document.body.removeChild(customAssetElement);
@@ -139,14 +146,14 @@ describe('Custom Asset Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'assetClicked',
+				eventId: 'assetClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				assetId: 'assetId',
 				href: googleUrl,
 				tagName: 'a',
-				text,
+				text
 			});
 
 			document.body.removeChild(customAssetElement);
@@ -157,7 +164,8 @@ describe('Custom Asset Plugin', () => {
 
 			const paragraphInsideCustomAsset = document.createElement('p');
 			paragraphInsideCustomAsset.href = googleUrl;
-			paragraphInsideCustomAsset.innerHTML = 'Paragraph inside a Custom Asset';
+			paragraphInsideCustomAsset.innerHTML =
+				'Paragraph inside a Custom Asset';
 			customAssetElement.appendChild(paragraphInsideCustomAsset);
 			dom.triggerEvent(paragraphInsideCustomAsset, 'click');
 
@@ -165,12 +173,12 @@ describe('Custom Asset Plugin', () => {
 
 			Analytics.events[0].should.deep.include({
 				applicationId,
-				eventId: 'assetClicked',
+				eventId: 'assetClicked'
 			});
 
 			Analytics.events[0].properties.should.deep.include({
 				assetId: 'assetId',
-				tagName: 'p',
+				tagName: 'p'
 			});
 
 			document.body.removeChild(customAssetElement);
@@ -185,7 +193,10 @@ describe('Custom Asset Plugin', () => {
 			const linkInsideCustomAsset = document.createElement('a');
 			linkInsideCustomAsset.href = '#';
 			linkInsideCustomAsset.innerHTML = text;
-			linkInsideCustomAsset.setAttribute('data-analytics-asset-action', 'download');
+			linkInsideCustomAsset.setAttribute(
+				'data-analytics-asset-action',
+				'download'
+			);
 			customAssetElement.appendChild(linkInsideCustomAsset);
 			dom.triggerEvent(linkInsideCustomAsset, 'click');
 
@@ -193,7 +204,7 @@ describe('Custom Asset Plugin', () => {
 
 			Analytics.events[1].should.deep.include({
 				applicationId,
-				eventId: 'assetDownloaded',
+				eventId: 'assetDownloaded'
 			});
 
 			document.body.removeChild(customAssetElement);

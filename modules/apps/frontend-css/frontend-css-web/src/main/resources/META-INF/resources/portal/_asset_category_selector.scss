@@ -45,7 +45,8 @@
 }
 
 .lfr-asset-vocabulary-container {
-	.lfr-asset-category-message, &.no-matches .lfr-asset-category-list {
+	.lfr-asset-category-message,
+	&.no-matches .lfr-asset-category-list {
 		display: none;
 	}
 
@@ -86,7 +87,8 @@
 	margin-left: 29px;
 }
 
-.lfr-categories-selector-category-name, .lfr-categories-selector-search-results-path {
+.lfr-categories-selector-category-name,
+.lfr-categories-selector-search-results-path {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

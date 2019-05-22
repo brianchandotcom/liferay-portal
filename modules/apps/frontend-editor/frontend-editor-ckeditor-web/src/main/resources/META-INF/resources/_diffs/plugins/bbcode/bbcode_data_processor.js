@@ -1,4 +1,4 @@
-;(function() {
+(function() {
 	var toHex = function(val) {
 		val = parseInt(val, 10).toString(16);
 
@@ -81,7 +81,7 @@
 
 	var REGEX_PERCENT = /%$/i;
 
-	var REGEX_PRE = /<pre>/ig;
+	var REGEX_PRE = /<pre>/gi;
 
 	var REGEX_PX = /px$/i;
 
@@ -142,7 +142,9 @@
 					emoticonSymbols: editorConfig.smiley_symbols
 				};
 
-				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);
+				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(
+					converterConfig
+				);
 			}
 
 			if (config) {
@@ -155,8 +157,7 @@
 				fragment.writeHtml(writer);
 
 				data = writer.getHtml();
-			}
-			else {
+			} else {
 				data = instance._bbcodeConverter.convert(data);
 			}
 
@@ -177,9 +178,15 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						if (parentTagName === TAG_PARAGRAPH && parentNode.style.cssText ||
-							CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() === TAG_BR && parentTagName === TAG_TD && !element.nextSibling) {
-
+						if (
+							(parentTagName === TAG_PARAGRAPH &&
+								parentNode.style.cssText) ||
+							(CKEDITOR.env.gecko &&
+								element.tagName &&
+								element.tagName.toLowerCase() === TAG_BR &&
+								parentTagName === TAG_TD &&
+								!element.nextSibling)
+						) {
 							allowNewLine = false;
 						}
 					}
@@ -192,7 +199,11 @@
 		_checkParentElement: function(element, tagName) {
 			var parentNode = element.parentNode;
 
-			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() === tagName;
+			return (
+				parentNode &&
+				parentNode.tagName &&
+				parentNode.tagName.toLowerCase() === tagName
+			);
 		},
 
 		_convert: function(data) {
@@ -212,18 +223,22 @@
 		},
 
 		_convertRGBToHex: function(color) {
-			color = color.replace(
-				REGEX_COLOR_RGB,
-				function(match, red, green, blue, offset, string) {
-					var b = toHex(blue);
-					var g = toHex(green);
-					var r = toHex(red);
+			color = color.replace(REGEX_COLOR_RGB, function(
+				match,
+				red,
+				green,
+				blue,
+				offset,
+				string
+			) {
+				var b = toHex(blue);
+				var g = toHex(green);
+				var r = toHex(red);
 
-					color = '#' + r + g + b;
+				color = '#' + r + g + b;
 
-					return color;
-				}
-			);
+				return color;
+			});
 
 			return color;
 		},
@@ -235,8 +250,7 @@
 
 			if (document.defaultView.getComputedStyle) {
 				style = document.defaultView.getComputedStyle(body, null);
-			}
-			else if (body.currentStyle) {
+			} else if (body.currentStyle) {
 				style = body.currentStyle;
 			}
 
@@ -255,7 +269,10 @@
 
 				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
 
-				var imageIndex = instance._getImageIndex(editorConfig.smiley_images, image);
+				var imageIndex = instance._getImageIndex(
+					editorConfig.smiley_images,
+					image
+				);
 
 				if (imageIndex >= 0) {
 					emoticonSymbol = editorConfig.smiley_symbols[imageIndex];
@@ -272,8 +289,7 @@
 
 			if (REGEX_PX.test(fontSize)) {
 				fontSize = instance._getFontSizePX(fontSize);
-			}
-			else if (REGEX_EM.test(fontSize)) {
+			} else if (REGEX_EM.test(fontSize)) {
 				bodySize = instance._getBodySize();
 
 				fontSize = parseFloat(fontSize, 10);
@@ -281,12 +297,11 @@
 				fontSize = Math.round(fontSize * bodySize) + 'px';
 
 				fontSize = instance._getFontSize(fontSize);
-			}
-			else if (REGEX_PERCENT.test(fontSize)) {
+			} else if (REGEX_PERCENT.test(fontSize)) {
 				bodySize = instance._getBodySize();
 
 				fontSize = parseFloat(fontSize, 10);
-				fontSize = Math.round(fontSize * bodySize / 100) + 'px';
+				fontSize = Math.round((fontSize * bodySize) / 100) + 'px';
 
 				fontSize = instance._getFontSize(fontSize);
 			}
@@ -299,26 +314,19 @@
 
 			if (sizeValue <= 10) {
 				sizeValue = '1';
-			}
-			else if (sizeValue <= 12) {
+			} else if (sizeValue <= 12) {
 				sizeValue = '2';
-			}
-			else if (sizeValue <= 14) {
+			} else if (sizeValue <= 14) {
 				sizeValue = '3';
-			}
-			else if (sizeValue <= 16) {
+			} else if (sizeValue <= 16) {
 				sizeValue = '4';
-			}
-			else if (sizeValue <= 18) {
+			} else if (sizeValue <= 18) {
 				sizeValue = '5';
-			}
-			else if (sizeValue <= 24) {
+			} else if (sizeValue <= 24) {
 				sizeValue = '6';
-			}
-			else if (sizeValue <= 32) {
+			} else if (sizeValue <= 32) {
 				sizeValue = '7';
-			}
-			else {
+			} else {
 				sizeValue = '8';
 			}
 
@@ -330,8 +338,7 @@
 
 			if (array.lastIndexOf) {
 				index = array.lastIndexOf(image);
-			}
-			else {
+			} else {
 				for (var i = array.length - 1; i >= 0; i--) {
 					var item = array[i];
 
@@ -390,8 +397,7 @@
 
 			if (instance._inPRE) {
 				listTagsIn.push(NEW_LINE);
-			}
-			else if (instance._allowNewLine(element)) {
+			} else if (instance._allowNewLine(element)) {
 				listTagsIn.push(NEW_LINE);
 			}
 		},
@@ -401,11 +407,12 @@
 
 			var parentNode = element.parentNode;
 
-			if (parentNode &&
+			if (
+				parentNode &&
 				parentNode.tagName &&
 				parentNode.tagName.toLowerCase() === TAG_BLOCKQUOTE &&
-				!parentNode.getAttribute(TAG_CITE)) {
-
+				!parentNode.getAttribute(TAG_CITE)
+			) {
 				var endResult = instance._endResult;
 
 				for (var i = endResult.length - 1; i >= 0; i--) {
@@ -426,13 +433,12 @@
 			if (data) {
 				if (!instance._allowNewLine(element)) {
 					data = data.replace(REGEX_NEWLINE, STR_EMPTY);
-				}
-				else if (instance._checkParentElement(element, TAG_LINK) &&
-					data.indexOf(STR_MAILTO) === 0) {
-
+				} else if (
+					instance._checkParentElement(element, TAG_LINK) &&
+					data.indexOf(STR_MAILTO) === 0
+				) {
 					data = data.substring(STR_MAILTO.length);
-				}
-				else if (instance._checkParentElement(element, TAG_CITE)) {
+				} else if (instance._checkParentElement(element, TAG_CITE)) {
 					data = Liferay.BBCodeUtil.escape(data);
 				}
 
@@ -452,8 +458,7 @@
 					if (!instance._isLastItemNewLine()) {
 						instance._endResult.push(NEW_LINE);
 					}
-				}
-				else if (tagName === TAG_PRE || tagName === TAG_CODE) {
+				} else if (tagName === TAG_PRE || tagName === TAG_CODE) {
 					instance._inPRE = false;
 				}
 			}
@@ -514,11 +519,11 @@
 
 			if (emoticonSymbol) {
 				instance._endResult.push(emoticonSymbol);
-			}
-			else {
+			} else {
 				var attrSrc = element.getAttribute('src');
 
-				var openTag = '[img' + instance._handleImageAttributes(element) + ']';
+				var openTag =
+					'[img' + instance._handleImageAttributes(element) + ']';
 
 				listTagsIn.push(openTag);
 				listTagsIn.push(attrSrc);
@@ -561,7 +566,9 @@
 					hrefAttribute = editorConfig.newThreadURL;
 				}
 
-				var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
+				var linkHandler =
+					MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] ||
+					'url';
 
 				listTagsIn.push('[' + linkHandler + '=', hrefAttribute, ']');
 
@@ -586,17 +593,13 @@
 
 			if (REGEX_LIST_LOWER_ALPHA.test(listStyleType)) {
 				listTagsIn.push(' type="a"');
-			}
-			else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
+			} else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
 				listTagsIn.push(' type="i"');
-			}
-			else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
+			} else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
 				listTagsIn.push(' type="A"');
-			}
-			else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
+			} else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
 				listTagsIn.push(' type="I"');
-			}
-			else {
+			} else {
 				listTagsIn.push(' type="1"');
 			}
 
@@ -641,7 +644,11 @@
 			listTagsOut.push('[/b]');
 		},
 
-		_handleStyleAlignCenter: function(element, stylesTagsIn, stylesTagsOut) {
+		_handleStyleAlignCenter: function(
+			element,
+			stylesTagsIn,
+			stylesTagsOut
+		) {
 			var style = element.style;
 
 			var alignment = style.textAlign.toLowerCase();
@@ -653,7 +660,11 @@
 			}
 		},
 
-		_handleStyleAlignJustify: function(element, stylesTagsIn, stylesTagsOut) {
+		_handleStyleAlignJustify: function(
+			element,
+			stylesTagsIn,
+			stylesTagsOut
+		) {
 			var style = element.style;
 
 			var alignment = style.textAlign.toLowerCase();
@@ -723,7 +734,11 @@
 			var fontFamily = style.fontFamily;
 
 			if (fontFamily) {
-				stylesTagsIn.push('[font=', fontFamily.replace(REGEX_SINGLE_QUOTE, STR_EMPTY), ']');
+				stylesTagsIn.push(
+					'[font=',
+					fontFamily.replace(REGEX_SINGLE_QUOTE, STR_EMPTY),
+					']'
+				);
 
 				stylesTagsOut.push('[/font]');
 			}
@@ -762,21 +777,64 @@
 
 			var tagName = element.tagName;
 
-			if ((!tagName || tagName.toLowerCase() !== TAG_LINK) && element.style) {
-				instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleAlignRight(element, stylesTagsIn, stylesTagsOut);
+			if (
+				(!tagName || tagName.toLowerCase() !== TAG_LINK) &&
+				element.style
+			) {
+				instance._handleStyleAlignCenter(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleAlignJustify(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleAlignLeft(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleAlignRight(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
 				instance._handleStyleBold(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleColor(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleFontFamily(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleFontSize(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleItalic(element, stylesTagsIn, stylesTagsOut);
-				instance._handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleColor(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleFontFamily(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleFontSize(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleItalic(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
+				instance._handleStyleTextDecoration(
+					element,
+					stylesTagsIn,
+					stylesTagsOut
+				);
 			}
 		},
 
-		_handleStyleTextDecoration: function(element, stylesTagsIn, stylesTagsOut) {
+		_handleStyleTextDecoration: function(
+			element,
+			stylesTagsIn,
+			stylesTagsOut
+		) {
 			var style = element.style;
 
 			var textDecoration = style.textDecoration.toLowerCase();
@@ -785,8 +843,7 @@
 				stylesTagsIn.push('[s]');
 
 				stylesTagsOut.push('[/s]');
-			}
-			else if (textDecoration === 'underline') {
+			} else if (textDecoration === 'underline') {
 				stylesTagsIn.push('[u]');
 
 				stylesTagsOut.push('[/u]');
@@ -840,11 +897,9 @@
 
 			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
 				listTagsIn.push(' type="circle"]');
-			}
-			else if (REGEX_LIST_SQUARE.test(listStyleType)) {
+			} else if (REGEX_LIST_SQUARE.test(listStyleType)) {
 				listTagsIn.push(' type="square"]');
-			}
-			else {
+			} else {
 				listTagsIn.push(' type="disc"]');
 			}
 
@@ -856,7 +911,10 @@
 
 			var endResult = instance._endResult;
 
-			return endResult && REGEX_LASTCHAR_NEWLINE_WHITESPACE.test(endResult.slice(-1));
+			return (
+				endResult &&
+				REGEX_LASTCHAR_NEWLINE_WHITESPACE.test(endResult.slice(-1))
+			);
 		},
 
 		_pushTagList: function(tagsList) {
@@ -878,16 +936,13 @@
 		_inPRE: false
 	};
 
-	CKEDITOR.plugins.add(
-		'bbcode_data_processor',
-		{
-			requires: ['htmlwriter'],
+	CKEDITOR.plugins.add('bbcode_data_processor', {
+		requires: ['htmlwriter'],
 
-			init: function(editor) {
-				editor.dataProcessor = new BBCodeDataProcessor(editor);
+		init: function(editor) {
+			editor.dataProcessor = new BBCodeDataProcessor(editor);
 
-				editor.fire('customDataProcessorLoaded');
-			}
+			editor.fire('customDataProcessorLoaded');
 		}
-	);
+	});
 })();

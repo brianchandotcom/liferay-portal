@@ -348,7 +348,7 @@ public class SourceFormatterCheckUtil {
 		String key, String path, int lineNumber, String parameter,
 		String baseDirName) {
 
-		List<String> excludes = SourceFormatterCheckUtil.getJSONObjectValues(
+		List<String> excludes = getJSONObjectValues(
 			jsonObject, key, cachedExcludesMap, path, baseDirName);
 
 		if (ListUtil.isEmpty(excludes)) {

@@ -108,14 +108,6 @@ public class ChangeListsConfigurationPortlet extends MVCPortlet {
 		String[] administratorRoleNames =
 			_ctPortalConfiguration.administratorRoleNames();
 
-		if ((administratorRoleNames == null) ||
-			(administratorRoleNames.length == 0)) {
-
-			if (permissionChecker.isOmniadmin()) {
-				return;
-			}
-		}
-
 		UserBag userBag = permissionChecker.getUserBag();
 
 		for (Role role : userBag.getRoles()) {

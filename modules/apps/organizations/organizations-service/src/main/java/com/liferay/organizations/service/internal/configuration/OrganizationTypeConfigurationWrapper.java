@@ -15,6 +15,8 @@
 package com.liferay.organizations.service.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -32,7 +34,9 @@ import org.osgi.service.component.annotations.Modified;
 public class OrganizationTypeConfigurationWrapper {
 
 	public String[] getChildrenTypes() {
-		return _organizationTypeConfiguration.childrenTypes();
+		return ArrayUtil.filter(
+			_organizationTypeConfiguration.childrenTypes(),
+			Validator::isNotNull);
 	}
 
 	public String getName() {

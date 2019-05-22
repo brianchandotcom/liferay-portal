@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
@@ -152,6 +154,11 @@ public class MessageBoardSectionResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			messageBoardSectionId);
 
+		CustomFieldsUtil.addCustomFields(
+			mbCategory.getCompanyId(), MBCategory.class,
+			mbCategory.getCategoryId(), messageBoardSection.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
 		return _toMessageBoardSection(
 			_mbCategoryService.updateCategory(
 				messageBoardSectionId, mbCategory.getParentCategoryId(),
@@ -167,13 +174,19 @@ public class MessageBoardSectionResourceImpl
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return _toMessageBoardSection(
-			_mbCategoryService.addCategory(
-				_user.getUserId(), parentMessageBoardSectionId,
-				messageBoardSection.getTitle(),
-				messageBoardSection.getDescription(),
-				ServiceContextUtil.createServiceContext(
-					siteId, messageBoardSection.getViewableByAsString())));
+		MBCategory mbCategory = _mbCategoryService.addCategory(
+			_user.getUserId(), parentMessageBoardSectionId,
+			messageBoardSection.getTitle(),
+			messageBoardSection.getDescription(),
+			ServiceContextUtil.createServiceContext(
+				siteId, messageBoardSection.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			mbCategory.getCompanyId(), MBCategory.class,
+			mbCategory.getCategoryId(), messageBoardSection.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toMessageBoardSection(mbCategory);
 	}
 
 	private Page<MessageBoardSection> _getSiteMessageBoardSectionsPage(
@@ -205,6 +218,11 @@ public class MessageBoardSectionResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						mbCategory.getCompanyId(), MBCategory.class.getName(),
+						mbCategory.getCategoryId()),
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbCategory.getCreateDate();
 				dateModified = mbCategory.getModifiedDate();
 				description = mbCategory.getDescription();

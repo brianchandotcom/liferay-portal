@@ -18,6 +18,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentFolderDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
@@ -142,6 +143,12 @@ public class StructuredContentFolderResourceImpl
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			structuredContentFolderId);
 
+		CustomFieldsUtil.addCustomFields(
+			journalFolder.getCompanyId(), JournalFolder.class,
+			journalFolder.getFolderId(),
+			structuredContentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
 		return _toStructuredContentFolder(
 			_journalFolderService.updateFolder(
 				journalFolder.getGroupId(), structuredContentFolderId,
@@ -158,12 +165,19 @@ public class StructuredContentFolderResourceImpl
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return _toStructuredContentFolder(
-			_journalFolderService.addFolder(
-				siteId, parentFolderId, structuredContentFolder.getName(),
-				structuredContentFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
-					siteId, structuredContentFolder.getViewableByAsString())));
+		JournalFolder journalFolder = _journalFolderService.addFolder(
+			siteId, parentFolderId, structuredContentFolder.getName(),
+			structuredContentFolder.getDescription(),
+			ServiceContextUtil.createServiceContext(
+				siteId, structuredContentFolder.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			journalFolder.getCompanyId(), JournalFolder.class,
+			journalFolder.getFolderId(),
+			structuredContentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toStructuredContentFolder(journalFolder);
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(

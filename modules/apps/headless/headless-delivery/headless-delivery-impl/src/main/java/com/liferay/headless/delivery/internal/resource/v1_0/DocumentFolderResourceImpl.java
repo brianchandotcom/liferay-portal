@@ -21,6 +21,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -110,6 +111,11 @@ public class DocumentFolderResourceImpl
 
 		Folder existingFolder = _dlAppService.getFolder(documentFolderId);
 
+		CustomFieldsUtil.addCustomFields(
+			existingFolder.getCompanyId(), DLFolder.class,
+			existingFolder.getFolderId(), documentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
 		return _updateDocumentFolder(
 			documentFolderId,
 			Optional.ofNullable(
@@ -150,6 +156,13 @@ public class DocumentFolderResourceImpl
 			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
+		Folder folder = _dlAppService.getFolder(documentFolderId);
+
+		CustomFieldsUtil.addCustomFields(
+			folder.getCompanyId(), DLFolder.class, folder.getFolderId(),
+			documentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
 		return _updateDocumentFolder(
 			documentFolderId, documentFolder.getName(),
 			documentFolder.getDescription());
@@ -160,12 +173,18 @@ public class DocumentFolderResourceImpl
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return _toDocumentFolder(
-			_dlAppService.addFolder(
-				siteId, parentDocumentFolderId, documentFolder.getName(),
-				documentFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
-					siteId, documentFolder.getViewableByAsString())));
+		Folder folder = _dlAppService.addFolder(
+			siteId, parentDocumentFolderId, documentFolder.getName(),
+			documentFolder.getDescription(),
+			ServiceContextUtil.createServiceContext(
+				siteId, documentFolder.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			folder.getCompanyId(), DLFolder.class, folder.getFolderId(),
+			documentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toDocumentFolder(folder);
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(

@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -98,17 +100,23 @@ public class KnowledgeBaseFolderResourceImpl
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(
+		KBFolder parentKBFolder = _kbFolderService.getKBFolder(
 			parentKnowledgeBaseFolderId);
 
-		return _toKnowledgeBaseFolder(
-			_kbFolderService.addKBFolder(
-				kbFolder.getGroupId(), _getClassNameId(),
-				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
-					kbFolder.getGroupId(),
-					knowledgeBaseFolder.getViewableByAsString())));
+		KBFolder kbFolder = _kbFolderService.addKBFolder(
+			parentKBFolder.getGroupId(), _getClassNameId(),
+			parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
+			knowledgeBaseFolder.getDescription(),
+			ServiceContextUtil.createServiceContext(
+				parentKBFolder.getGroupId(),
+				knowledgeBaseFolder.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			kbFolder.getCompanyId(), KBFolder.class, kbFolder.getKbFolderId(),
+			knowledgeBaseFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toKnowledgeBaseFolder(kbFolder);
 	}
 
 	@Override
@@ -116,12 +124,18 @@ public class KnowledgeBaseFolderResourceImpl
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return _toKnowledgeBaseFolder(
-			_kbFolderService.addKBFolder(
-				siteId, _getClassNameId(), 0, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(),
-				ServiceContextUtil.createServiceContext(
-					siteId, knowledgeBaseFolder.getViewableByAsString())));
+		KBFolder kbFolder = _kbFolderService.addKBFolder(
+			siteId, _getClassNameId(), 0, knowledgeBaseFolder.getName(),
+			knowledgeBaseFolder.getDescription(),
+			ServiceContextUtil.createServiceContext(
+				siteId, knowledgeBaseFolder.getViewableByAsString()));
+
+		CustomFieldsUtil.addCustomFields(
+			kbFolder.getCompanyId(), KBFolder.class, kbFolder.getKbFolderId(),
+			knowledgeBaseFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toKnowledgeBaseFolder(kbFolder);
 	}
 
 	@Override
@@ -136,11 +150,17 @@ public class KnowledgeBaseFolderResourceImpl
 			parentKnowledgeBaseFolderId = 0L;
 		}
 
-		return _toKnowledgeBaseFolder(
-			_kbFolderService.updateKBFolder(
-				_getClassNameId(), parentKnowledgeBaseFolderId,
-				knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(), new ServiceContext()));
+		KBFolder kbFolder = _kbFolderService.updateKBFolder(
+			_getClassNameId(), parentKnowledgeBaseFolderId,
+			knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
+			knowledgeBaseFolder.getDescription(), new ServiceContext());
+
+		CustomFieldsUtil.addCustomFields(
+			kbFolder.getCompanyId(), KBFolder.class, kbFolder.getKbFolderId(),
+			knowledgeBaseFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toKnowledgeBaseFolder(kbFolder);
 	}
 
 	private long _getClassNameId() {
@@ -158,6 +178,11 @@ public class KnowledgeBaseFolderResourceImpl
 			{
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						kbFolder.getCompanyId(), KBFolder.class.getName(),
+						kbFolder.getKbFolderId()),
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();
 				description = kbFolder.getDescription();

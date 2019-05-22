@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -60,7 +59,7 @@ public class ServiceComponentLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before
@@ -76,9 +75,7 @@ public class ServiceComponentLocalServiceTest {
 	}
 
 	@Test
-	public void testGetLatestServiceComponentsWithMultipleVersions()
-		throws Exception {
-
+	public void testGetLatestServiceComponentsWithMultipleVersions() {
 		ServiceComponent serviceComponent = addServiceComponent(
 			_SERVICE_COMPONENT_1, 2);
 
@@ -102,9 +99,7 @@ public class ServiceComponentLocalServiceTest {
 	}
 
 	@Test
-	public void testGetLatestServiceComponentsWithSingleVersion()
-		throws Exception {
-
+	public void testGetLatestServiceComponentsWithSingleVersion() {
 		List<ServiceComponent> serviceComponents =
 			_serviceComponentLocalService.getLatestServiceComponents();
 

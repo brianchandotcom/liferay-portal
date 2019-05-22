@@ -180,17 +180,17 @@ public class BlogPostingResourceImpl
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			blogPosting.getDatePublished());
-		Optional<Image> imageOptional = Optional.ofNullable(
-			blogPosting.getImage());
-
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		CustomFieldsUtil.addCustomFields(
 			blogsEntry.getCompanyId(), BlogsEntry.class,
 			blogsEntry.getEntryId(), blogPosting.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			blogPosting.getDatePublished());
+		Optional<Image> imageOptional = Optional.ofNullable(
+			blogPosting.getImage());
 
 		return _toBlogPosting(
 			_blogsEntryService.updateEntry(

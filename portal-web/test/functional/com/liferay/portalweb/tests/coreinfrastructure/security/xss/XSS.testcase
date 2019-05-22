@@ -248,7 +248,7 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
-		Type.typeAceEditor(
+		Type(
 			key_editor = "title",
 			locator1 = "AlloyEditor#EDITOR",
 			value1 = "${entryTitle}");

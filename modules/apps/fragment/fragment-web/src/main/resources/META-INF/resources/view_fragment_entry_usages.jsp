@@ -94,7 +94,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3 class="sheet-title">
+				<h2 class="sheet-title">
 					<c:choose>
 						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
 							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
@@ -109,7 +109,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
 						</c:otherwise>
 					</c:choose>
-				</h3>
+				</h2>
 
 				<%
 				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentEntryLinkDisplayContext.getSearchContainer());

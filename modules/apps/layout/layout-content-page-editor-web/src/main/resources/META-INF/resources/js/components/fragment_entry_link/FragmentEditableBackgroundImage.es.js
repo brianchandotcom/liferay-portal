@@ -183,6 +183,12 @@ class FragmentEditableBackgroundImage extends Component {
 		}
 		else if (event.buttonId === TOOLTIP_BUTTON_IDS.remove) {
 			this._updateBackgroundImage('');
+
+			requestAnimationFrame(
+				() => {
+					this._disposeTooltip();
+				}
+			);
 		}
 	}
 

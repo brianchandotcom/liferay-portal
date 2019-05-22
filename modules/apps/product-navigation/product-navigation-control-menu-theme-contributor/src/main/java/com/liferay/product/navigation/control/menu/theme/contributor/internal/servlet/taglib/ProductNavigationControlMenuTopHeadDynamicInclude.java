@@ -67,7 +67,9 @@ public class ProductNavigationControlMenuTopHeadDynamicInclude
 
 		sb.append(
 			absolutePortalURLBuilder.forModule(
-				_bundle, "/product_navigation_control_menu.css"
+				_bundle,
+				"/product_navigation_control_menu.css?languageId=" +
+					themeDisplay.getLanguageId()
 			).build());
 
 		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");

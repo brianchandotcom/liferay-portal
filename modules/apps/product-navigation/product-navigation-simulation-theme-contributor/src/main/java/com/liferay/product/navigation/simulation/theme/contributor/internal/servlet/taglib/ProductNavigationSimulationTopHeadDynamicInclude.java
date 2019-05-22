@@ -74,7 +74,9 @@ public class ProductNavigationSimulationTopHeadDynamicInclude
 
 		sb.append(
 			absolutePortalURLBuilder.forModule(
-				_bundle, "/css/simulation_panel.css"
+				_bundle,
+				"/css/simulation_panel.css?languageId=" +
+					themeDisplay.getLanguageId()
 			).build());
 
 		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />\n");

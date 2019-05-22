@@ -565,7 +565,7 @@
 
 			var width = options.width;
 
-			var closed = $.type(force) === 'boolean' ? force : hasClass($container, 'closed');
+			var closed = typeof force === 'boolean' ? force : hasClass($container, 'closed');
 			var sidenavRight = instance._isSidenavRight();
 
 			if (closed) {

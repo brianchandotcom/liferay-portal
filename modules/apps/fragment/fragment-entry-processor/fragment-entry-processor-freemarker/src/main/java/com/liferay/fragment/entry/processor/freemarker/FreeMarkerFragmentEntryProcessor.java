@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -131,6 +132,16 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
+		FreeMarkerFragmentEntryProcessorConfiguration
+			freeMarkerFragmentEntryProcessorConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FreeMarkerFragmentEntryProcessorConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+		if (!freeMarkerFragmentEntryProcessorConfiguration.enable()) {
+			return;
+		}
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource("template_id", "[#ftl]\n" + html),

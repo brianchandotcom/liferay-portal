@@ -229,10 +229,11 @@ public class SourceFormatterCheckUtil {
 			value = defaultValue;
 		}
 
-		cachedValuesMap.put(absolutePath + ":" + key, value);
-
 		if (!hasSubdirectoryValue) {
 			cachedValuesMap.put(key, value);
+		}
+		else {
+			cachedValuesMap.put(absolutePath + ":" + key, value);
 		}
 
 		return value;

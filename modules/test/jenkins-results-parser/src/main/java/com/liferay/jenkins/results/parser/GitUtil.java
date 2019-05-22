@@ -210,7 +210,9 @@ public class GitUtil {
 
 		List<RemoteGitRef> remoteGitRefs = new ArrayList<>();
 
-		Matcher remoteURLMatcher = getRemoteURLMatcher(remoteURL);
+		Matcher remoteURLMatcher = GitRemote.getRemoteURLMatcher(remoteURL);
+
+		remoteURLMatcher.find();
 
 		String username = "liferay";
 
@@ -248,10 +250,6 @@ public class GitUtil {
 		return remoteGitRefs;
 	}
 
-	public static Matcher getRemoteURLMatcher(String remoteURL) {
-		return _remoteURLMultiPattern.matches(remoteURL);
-	}
-
 	public static boolean isValidGitHubRefURL(String gitHubURL) {
 		Matcher matcher = _gitHubRefURLPattern.matcher(gitHubURL);
 
@@ -263,7 +261,7 @@ public class GitUtil {
 	}
 
 	public static boolean isValidRemoteURL(String remoteURL) {
-		Matcher matcher = getRemoteURLMatcher(remoteURL);
+		Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
 
 		if (matcher != null) {
 			return true;
@@ -275,14 +273,17 @@ public class GitUtil {
 	public static String toSlaveGitHubDevNodeRemoteURL(
 		String gitHubDevRemoteURL, String slaveGitHubDevNodeHostname) {
 
-		Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
-			gitHubDevRemoteURL);
+		Matcher matcher = GitRemote.getRemoteURLMatcher(gitHubDevRemoteURL);
 
-		if (matcher.find()) {
-			return JenkinsResultsParserUtil.combine(
-				"root@", slaveGitHubDevNodeHostname,
-				":/opt/dev/projects/github/",
-				matcher.group("gitRepositoryName"));
+		if ((matcher != null) && matcher.find()) {
+			String hostname = matcher.group("hostname");
+
+			if ((hostname != null) && hostname.endsWith("github-dev")) {
+				return JenkinsResultsParserUtil.combine(
+					"root@", slaveGitHubDevNodeHostname,
+					":/opt/dev/projects/github/",
+					matcher.group("gitRepositoryName"));
+			}
 		}
 
 		throw new IllegalArgumentException(
@@ -348,16 +349,18 @@ public class GitUtil {
 				gitHubDevNodeHostname = gitHubDevNodeHostname.substring(6);
 
 				for (int i = 0; i < modifiedCommands.length; i++) {
-					Matcher matcher = _gitHubDevRemoteURLPattern.matcher(
+					Matcher matcher = GitRemote.getRemoteURLMatcher(
 						modifiedCommands[i]);
 
 					String modifiedCommand = modifiedCommands[i];
 
-					while (matcher.find()) {
-						modifiedCommand = modifiedCommand.replaceFirst(
-							matcher.group(0),
-							toSlaveGitHubDevNodeRemoteURL(
-								matcher.group(0), gitHubDevNodeHostname));
+					if (matcher != null) {
+						while (matcher.find()) {
+							modifiedCommand = modifiedCommand.replaceFirst(
+								matcher.group(0),
+								toSlaveGitHubDevNodeRemoteURL(
+									matcher.group(0), gitHubDevNodeHostname));
+						}
 					}
 
 					modifiedCommands[i] = modifiedCommand;
@@ -453,21 +456,9 @@ public class GitUtil {
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
-	private static final Pattern _gitHubDevRemoteURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"git@(?<hostname>github-dev)^[:]:",
-			"(?<username>[^/]+)/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?",
-			"+\\s*"));
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",
 			"(?<gitRepositoryName>[^/]+)/tree/(?<refName>[^/]+)"));
-	private static final MultiPattern _remoteURLMultiPattern = new MultiPattern(
-		"git@(?<hostname>[^:]+):(?<username>[^/]+)" +
-			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
-		"https://(?<hostname>[^/]+)/(?<username>[^/]+)" +
-			"/(?<gitRepositoryName>[^\\.^\\s]+)(\\.git)?+\\s*",
-		"root@(?<hostname>[^:]+):/opt/dev/projects/github" +
-			"/(?<gitRepositoryName>[^\\\\.]+)");
 
 }

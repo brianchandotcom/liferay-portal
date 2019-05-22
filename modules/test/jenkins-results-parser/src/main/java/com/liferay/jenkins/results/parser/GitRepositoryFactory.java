@@ -88,6 +88,24 @@ public class GitRepositoryFactory {
 		return new DefaultRemoteGitRepository(gitRemote);
 	}
 
+	public static RemoteGitRepository getRemoteGitRepository(String remoteURL) {
+		Matcher matcher = GitRemote.getRemoteURLMatcher(remoteURL);
+
+		if ((matcher == null) || !matcher.find()) {
+			throw new RuntimeException("Invalid remote URL " + remoteURL);
+		}
+
+		String username = matcher.group("username");
+
+		if (username == null) {
+			username = "liferay";
+		}
+
+		return getRemoteGitRepository(
+			matcher.group("hostname"), matcher.group("gitRepositoryName"),
+			username);
+	}
+
 	public static RemoteGitRepository getRemoteGitRepository(
 		String hostname, String gitRepositoryName, String username) {
 

@@ -126,136 +126,21 @@ public class ServiceComponentLocalServiceTest {
 	public void testVerifyFromSchemaVersion000WithInitialDatabaseCreation()
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ServiceComponentLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		final DB db = DBManagerUtil.getDB();
-
-		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			bundleContext.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db),
-				new HashMapDictionary<String, Object>() {
-					{
-						put(
-							"upgrade.bundle.symbolic.name",
-							"ServiceComponentLocalServiceTest");
-						put("upgrade.from.schema.version", "0.0.0");
-						put("upgrade.initial.database.creation", true);
-					}
-				});
-
-		String tableName = _TEST_TABLE;
-
-		try {
-			_serviceComponentLocalService.verifyDB();
-
-			try (Connection conn = DataAccess.getConnection()) {
-				DatabaseMetaData metadata = conn.getMetaData();
-
-				tableName = normalizeTableName(metadata, _TEST_TABLE);
-
-				try (ResultSet rs = metadata.getTables(
-						null, null, tableName, new String[] {"TABLE"})) {
-
-					Assert.assertTrue(rs.next());
-				}
-			}
-		}
-		finally {
-			db.runSQL("drop table " + tableName);
-
-			upgradeStepServiceRegistration.unregister();
-		}
+		_testVerify(true, "0.0.0", true);
 	}
 
 	@Test
 	public void testVerifyFromSchemaVersion000WitouthInitialDatabaseCreation()
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ServiceComponentLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		final DB db = DBManagerUtil.getDB();
-
-		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			bundleContext.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db),
-				new HashMapDictionary<String, Object>() {
-					{
-						put(
-							"upgrade.bundle.symbolic.name",
-							"ServiceComponentLocalServiceTest");
-						put("upgrade.from.schema.version", "0.0.0");
-						put("upgrade.initial.database.creation", false);
-					}
-				});
-
-		try {
-			_serviceComponentLocalService.verifyDB();
-
-			try (Connection connection = DataAccess.getConnection()) {
-				DatabaseMetaData metadata = connection.getMetaData();
-
-				String tableName = normalizeTableName(metadata, _TEST_TABLE);
-
-				try (ResultSet verifyTable = metadata.getTables(
-						null, null, tableName, new String[] {"TABLE"})) {
-
-					Assert.assertFalse(verifyTable.next());
-				}
-			}
-		}
-		finally {
-			upgradeStepServiceRegistration.unregister();
-		}
+		_testVerify(false, "0.0.0", false);
 	}
 
 	@Test
 	public void testVerifyFromSchemaVersion001WithInitialDatabaseCreation()
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ServiceComponentLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		final DB db = DBManagerUtil.getDB();
-
-		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			bundleContext.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db),
-				new HashMapDictionary<String, Object>() {
-					{
-						put(
-							"upgrade.bundle.symbolic.name",
-							"ServiceComponentLocalServiceTest");
-						put("upgrade.from.schema.version", "0.0.1");
-						put("upgrade.initial.database.creation", true);
-					}
-				});
-
-		try {
-			_serviceComponentLocalService.verifyDB();
-
-			try (Connection connection = DataAccess.getConnection()) {
-				DatabaseMetaData metadata = connection.getMetaData();
-
-				String tableName = normalizeTableName(metadata, _TEST_TABLE);
-
-				try (ResultSet verifyTable = metadata.getTables(
-						null, null, tableName, new String[] {"TABLE"})) {
-
-					Assert.assertFalse(verifyTable.next());
-				}
-			}
-		}
-		finally {
-			upgradeStepServiceRegistration.unregister();
-		}
+		_testVerify(false, "0.0.1", true);
 	}
 
 	public class TestUpgradeStep implements UpgradeStep {
@@ -326,6 +211,58 @@ public class ServiceComponentLocalServiceTest {
 		}
 
 		return tableName;
+	}
+
+	private void _testVerify(
+			boolean expected, String schemaVersion, boolean databaseCreation)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ServiceComponentLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		final DB db = DBManagerUtil.getDB();
+
+		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
+			bundleContext.registerService(
+				UpgradeStep.class, new TestUpgradeStep(db),
+				new HashMapDictionary<String, Object>() {
+					{
+						put(
+							"upgrade.bundle.symbolic.name",
+							"ServiceComponentLocalServiceTest");
+						put("upgrade.from.schema.version", schemaVersion);
+						put(
+							"upgrade.initial.database.creation",
+							databaseCreation);
+					}
+				});
+
+		String tableName = _TEST_TABLE;
+
+		try {
+			_serviceComponentLocalService.verifyDB();
+
+			try (Connection conn = DataAccess.getConnection()) {
+				DatabaseMetaData metadata = conn.getMetaData();
+
+				tableName = normalizeTableName(metadata, _TEST_TABLE);
+
+				try (ResultSet rs = metadata.getTables(
+						null, null, tableName, new String[] {"TABLE"})) {
+
+					Assert.assertEquals(expected, rs.next());
+				}
+			}
+		}
+		finally {
+			if (expected) {
+				db.runSQL("drop table " + tableName);
+			}
+
+			upgradeStepServiceRegistration.unregister();
+		}
 	}
 
 	private static final String _SERVICE_COMPONENT_1 = "SERVICE_COMPONENT_1";

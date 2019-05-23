@@ -34,13 +34,13 @@
 			<validator name="required" />
 		</field>
 		<field name="css" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="html" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="js" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="previewFileEntryId" type="long" />
 		<field name="type" type="int" />
@@ -64,16 +64,16 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="css" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="html" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="js" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="editableValues" type="String">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="namespace" type="String" />
 		<field name="position" type="int" />

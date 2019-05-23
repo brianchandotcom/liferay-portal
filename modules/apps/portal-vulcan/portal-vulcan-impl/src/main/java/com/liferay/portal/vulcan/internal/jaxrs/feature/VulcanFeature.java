@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ServiceEventsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.SiteValidatorContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.TransactionContainerRequestFilter;
@@ -54,6 +55,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReade
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -96,6 +98,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(JsonParseExceptionMapper.class);
 		featureContext.register(InvalidFormatExceptionMapper.class);
 		featureContext.register(MultipartBodyMessageBodyReader.class);
+		featureContext.register(NestedFieldsContainerRequestFilter.class);
 		featureContext.register(NoSuchModelExceptionMapper.class);
 		featureContext.register(ObjectMapperContextResolver.class);
 		featureContext.register(PaginationContextProvider.class);
@@ -117,6 +120,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));
+		featureContext.register(
+			new NestedFieldsWriterInterceptor(_bundleContext));
 		featureContext.register(
 			new SiteValidatorContainerRequestFilter(_groupLocalService));
 

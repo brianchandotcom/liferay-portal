@@ -51,6 +51,8 @@ public interface SearchRequest {
 
 	public List<Class<?>> getModelIndexerClasses();
 
+	public String getPaginationStartParameterName();
+
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap();
 
 	public Query getPostFilterQuery();

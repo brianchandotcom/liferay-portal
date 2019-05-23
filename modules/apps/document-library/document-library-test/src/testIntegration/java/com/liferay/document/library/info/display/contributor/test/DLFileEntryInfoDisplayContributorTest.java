@@ -159,13 +159,9 @@ public class DLFileEntryInfoDisplayContributorTest {
 					infoDisplayFieldsValues.get("version"));
 				Assert.assertEquals(
 					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
-
-				JSONObject authorProfileImageJSONObject =
-					(JSONObject)infoDisplayFieldsValues.get(
-						"authorProfileImage");
-
-				Assert.assertEquals(0, authorProfileImageJSONObject.length());
-
+				Assert.assertEquals(
+					StringPool.BLANK,
+					infoDisplayFieldsValues.get("authorProfileImage"));
 				Assert.assertEquals(
 					TextFormatter.formatStorageSize(
 						fileEntry.getSize(), LocaleUtil.getDefault()),

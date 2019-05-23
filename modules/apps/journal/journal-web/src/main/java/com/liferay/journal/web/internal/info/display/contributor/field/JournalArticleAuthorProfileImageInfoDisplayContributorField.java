@@ -20,9 +20,9 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTyp
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,16 +77,15 @@ public class JournalArticleAuthorProfileImageInfoDisplayContributorField
 		User user = _userLocalService.fetchUser(article.getUserId());
 
 		if (user == null) {
-			return JSONFactoryUtil.createJSONObject();
+			return StringPool.BLANK;
 		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
 			try {
-				jsonObject.put("url", user.getPortraitURL(getThemeDisplay()));
+				return JSONUtil.put(
+					"url", user.getPortraitURL(getThemeDisplay()));
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
@@ -95,7 +94,7 @@ public class JournalArticleAuthorProfileImageInfoDisplayContributorField
 			}
 		}
 
-		return jsonObject;
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

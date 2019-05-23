@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <clay:management-toolbar
 	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminManagementToolbarDisplayContext.getClearResultsURL() %>"

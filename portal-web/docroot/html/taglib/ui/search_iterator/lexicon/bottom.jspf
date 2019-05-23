@@ -102,10 +102,10 @@
 			var fixedHeaderScrollEvent = function(event) {
 				fixedHeaderElement.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - tableElement.offsetTop - theadBoundingClientRectangle.height) + 'px)';
 
-				if (fixedHeaderElement.classList.contains('hide') && (scrollingContainer.scrollTop >= theadBoundingClientRectangle.bottom)) {
+				if (fixedHeaderElement.classList.contains('hide') && (scrollingContainer.scrollTop >= theadBoundingClientRectangle.top)) {
 					fixedHeaderElement.classList.remove('hide');
 				}
-				else if (scrollingContainer.scrollTop < theadBoundingClientRectangle.bottom) {
+				else if (scrollingContainer.scrollTop < theadBoundingClientRectangle.top) {
 					fixedHeaderElement.classList.add('hide');
 				}
 			};

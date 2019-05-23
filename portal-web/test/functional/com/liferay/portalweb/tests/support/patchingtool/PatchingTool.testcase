@@ -1,5 +1,6 @@
 @component-name = "support-qa"
 definition {
+
 	property deploy.latest.marketplace.app.disabled = "true";
 	property portal.fixpack.release = "true";
 	property test.ignore.tomcat.ext.environment = "true";
@@ -51,4 +52,5 @@ definition {
 			GogoShell.viewOutput(outputContent = "${outputContent}");
 		}
 	}
+
 }

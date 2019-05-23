@@ -1,4 +1,5 @@
 definition {
+
 	var ddlDataDefinitionDescription = "Data Definition Description";
 	var ddlDataDefinitionName = "Data Definition Name";
 	var ddlListName = "List Name";
@@ -1043,4 +1044,5 @@ definition {
 				value1 = "${ddlRecordFieldData}");
 		}
 	}
+
 }

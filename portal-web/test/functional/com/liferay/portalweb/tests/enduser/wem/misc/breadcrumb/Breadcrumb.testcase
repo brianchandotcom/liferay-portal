@@ -1,5 +1,6 @@
 @component-name = "portal-breadcrumb"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Breadcrumb";
@@ -549,4 +550,5 @@ definition {
 			breadcrumbListVisible = "${siteName},Home,Child Page Name",
 			pathLocator = "PAGE");
 	}
+
 }

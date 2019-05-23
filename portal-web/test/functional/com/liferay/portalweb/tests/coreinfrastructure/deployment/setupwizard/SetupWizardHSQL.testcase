@@ -1,5 +1,6 @@
 @component-name = "portal-deployment-hypersonic"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property setup.wizard.enabled = "true";
@@ -270,4 +271,5 @@ definition {
 
 		Smoke.runSmoke();
 	}
+
 }

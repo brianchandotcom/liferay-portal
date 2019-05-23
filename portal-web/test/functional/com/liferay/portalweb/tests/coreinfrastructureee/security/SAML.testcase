@@ -1,5 +1,6 @@
 @component-name = "portal-authentication-ee"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property app.server.bundles.size = "1";
@@ -1234,4 +1235,5 @@ definition {
 			locator1 = "Portlet#PORTLET_CONTENT",
 			value1 = "No identity provider is available to sign you in.");
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Recycle Bin,Web Content Administration";
@@ -503,4 +504,5 @@ definition {
 
 		RecycleBin.viewEntry(assetName = "WC WebContent Title");
 	}
+
 }

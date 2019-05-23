@@ -1,5 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
+
 	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -28,4 +29,5 @@ definition {
 
 		Upgrade.addDataDefinitionWithDB2();
 	}
+
 }

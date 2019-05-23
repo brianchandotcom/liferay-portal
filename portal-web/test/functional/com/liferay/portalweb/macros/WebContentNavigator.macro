@@ -1,4 +1,5 @@
 definition {
+
 	macro _openDescriptiveMenulistCP {
 		if (!(contains("${webContentTitleEscapeCharacter}", "{webContentTitleEscapeCharacter}"))) {
 			var key_webContentTitle = "${webContentTitleEscapeCharacter}";
@@ -185,4 +186,5 @@ definition {
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
 			value1 = "${templateName}");
 	}
+
 }

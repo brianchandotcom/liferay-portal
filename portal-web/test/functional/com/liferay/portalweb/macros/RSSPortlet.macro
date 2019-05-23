@@ -1,4 +1,5 @@
 definition {
+
 	macro addFeed {
 		var key_buttonRowIndexNumber = "${buttonRowIndexNumber}";
 		var key_feedRowIndexNumber = "${feedRowIndexNumber}";
@@ -212,4 +213,5 @@ definition {
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "RSS Publisher");
 	}
+
 }

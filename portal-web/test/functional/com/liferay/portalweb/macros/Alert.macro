@@ -1,4 +1,5 @@
 definition {
+
 	macro closeMessage {
 		if ((IsElementPresent(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Icon#CLOSE"))) {
 			Click(locator1 = "Icon#CLOSE");
@@ -91,4 +92,5 @@ definition {
 			key_warningMessage = "${warningMessage}",
 			locator1 = "Message#WARNING_SPECIFIC");
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
@@ -2127,4 +2128,5 @@ definition {
 			orgName = "Organization3 Name",
 			parentOrgName = "Organization1 Name");
 	}
+
 }

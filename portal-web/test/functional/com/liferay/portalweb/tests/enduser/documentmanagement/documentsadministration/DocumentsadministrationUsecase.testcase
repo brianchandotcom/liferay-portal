@@ -1,5 +1,6 @@
 @component-name = "portal-document-management"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
@@ -1855,4 +1856,5 @@ definition {
 
 		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CHECKED");
 	}
+
 }

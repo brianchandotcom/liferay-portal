@@ -1,5 +1,6 @@
 @component-name = "portal-util-misc"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Util";
@@ -36,4 +37,5 @@ definition {
 
 		QuickNote.addPG(noteContent = "Test Note Content");
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "mouseUp"
 definition {
+
 	function mouseUp {
 		WaitForSPARefresh();
 
@@ -9,4 +10,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

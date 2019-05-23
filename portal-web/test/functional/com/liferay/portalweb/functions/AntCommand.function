@@ -1,6 +1,7 @@
 @default = "antCommand"
 @summary = "ant -f ${locator1} ${value1}"
 definition {
+
 	function antCommand {
 		selenium.antCommand();
 
@@ -8,4 +9,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

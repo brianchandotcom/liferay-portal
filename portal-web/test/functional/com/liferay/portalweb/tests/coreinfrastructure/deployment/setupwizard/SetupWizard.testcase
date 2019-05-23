@@ -1,5 +1,6 @@
 @component-name = "portal-deployment-hypersonic"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.prepare.bundle.properties = "false";
@@ -187,4 +188,5 @@ definition {
 			fail("Fail to save the configuration in portal file portal-setup-wizard.properties.");
 		}
 	}
+
 }

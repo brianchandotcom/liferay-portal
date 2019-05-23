@@ -1,5 +1,6 @@
 @component-name = "portal-web-forms-and-data-lists"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Dynamic Data Lists";
@@ -171,4 +172,5 @@ definition {
 			ddlRecordRow = "3",
 			fieldName = "WhatAreYouBringing");
 	}
+
 }

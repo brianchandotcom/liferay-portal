@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "LDAP";
@@ -211,4 +212,5 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
 	}
+
 }

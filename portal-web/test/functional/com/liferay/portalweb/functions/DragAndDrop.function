@@ -1,5 +1,6 @@
 @default = "dragAndDropToObject"
 definition {
+
 	function dragAndDrop {
 		WaitForSPARefresh();
 
@@ -61,4 +62,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

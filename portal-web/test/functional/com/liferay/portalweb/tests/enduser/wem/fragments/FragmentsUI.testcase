@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Fragments";
@@ -198,4 +199,5 @@ definition {
 			AssertLocation(value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli");
 		}
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change Lists";
@@ -117,4 +118,5 @@ definition {
 
 		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
+
 }

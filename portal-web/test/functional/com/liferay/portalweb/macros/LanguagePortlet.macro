@@ -1,4 +1,5 @@
 definition {
+
 	macro configureViewCurrentLanguages {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -136,4 +137,5 @@ definition {
 			key_portletName = "LanguagePortlet",
 			locator1 = "Language#DROPDOWN");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro addDataDefinitionWithDB2 {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1248,4 +1249,5 @@ definition {
 
 		SignIn.signIn();
 	}
+
 }

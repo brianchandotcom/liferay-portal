@@ -1,4 +1,5 @@
 definition {
+
 	macro _gotoAddCollection {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
 			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
@@ -146,4 +147,5 @@ definition {
 			card = "${entry}",
 			cardLabel = "${workflowStatus}");
 	}
+
 }

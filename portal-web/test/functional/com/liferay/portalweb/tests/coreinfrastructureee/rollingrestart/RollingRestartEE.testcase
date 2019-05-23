@@ -1,5 +1,6 @@
 @component-name = "portal-performance-and-fault-tolerance-ee"
 definition {
+
 	property app.server.bundles.size = "1";
 	property cluster.enabled = "true";
 	property remote.elasticsearch.enabled = "true";
@@ -1099,4 +1100,5 @@ definition {
 			User.logoutPG(nodePort = "${nodePort}");
 		}
 	}
+
 }

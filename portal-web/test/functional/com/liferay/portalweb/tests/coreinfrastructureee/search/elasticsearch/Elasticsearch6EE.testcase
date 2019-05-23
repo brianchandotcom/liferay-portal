@@ -1,5 +1,6 @@
 @component-name = "portal-search-ee"
 definition {
+
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch6";
 	property portal.upstream = "true";
@@ -151,4 +152,5 @@ definition {
 
 		XPackMonitoring.viewAsGuestPG();
 	}
+
 }

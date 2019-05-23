@@ -1,5 +1,6 @@
 @default = "assertVisible"
 definition {
+
 	function assertVisible {
 		WaitForSPARefresh();
 
@@ -21,4 +22,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

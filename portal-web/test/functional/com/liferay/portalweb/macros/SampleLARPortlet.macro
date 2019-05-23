@@ -1,4 +1,5 @@
 definition {
+
 	macro addSampleBooking {
 		AssertClick(
 			locator1 = "Samplelarportlet#ADD_SAMPLE_BOOKING_BUTTON",
@@ -18,4 +19,5 @@ definition {
 			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER",
 			value1 = "${bookingNumber}");
 	}
+
 }

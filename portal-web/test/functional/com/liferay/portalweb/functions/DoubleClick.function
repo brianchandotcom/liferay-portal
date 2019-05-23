@@ -1,5 +1,6 @@
 @default = "doubleClick"
 definition {
+
 	function doubleClick {
 		WaitForSPARefresh();
 
@@ -27,4 +28,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

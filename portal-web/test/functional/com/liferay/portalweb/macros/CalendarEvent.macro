@@ -1,4 +1,5 @@
 definition {
+
 	var siteName = "Liferay";
 
 	macro _expandPanel {
@@ -1807,4 +1808,5 @@ definition {
 
 		CalendarScheduler.viewAgenda(eventTitle = "${eventTitle}");
 	}
+
 }

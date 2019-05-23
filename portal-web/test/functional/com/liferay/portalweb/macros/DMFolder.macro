@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Documents Folder";
 
 	macro addCP {
@@ -496,4 +497,5 @@ definition {
 			locator1 = "MediaGallery#FOLDER_HEADER_TITLE",
 			value1 = "${mgFolderName}");
 	}
+
 }

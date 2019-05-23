@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Bookmarks";
@@ -693,4 +694,5 @@ definition {
 			bookmarkName = "Test Bookmark",
 			nullBookmarkName = "Test1");
 	}
+
 }

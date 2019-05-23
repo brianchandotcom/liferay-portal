@@ -1,4 +1,5 @@
 definition {
+
 	macro checkContentNameList {
 		for (var contentName : list "${checkContentNameList}") {
 			var key_contentName = "${contentName}";
@@ -165,4 +166,5 @@ definition {
 			locator1 = "Button#OK",
 			value1 = "OK");
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Login";
@@ -112,4 +113,5 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro _editCP {
 		PortletEntry.inputName(name = "${teamName}");
 
@@ -282,4 +283,5 @@ definition {
 				value1 = "No ${lowercaseNavItem} were found.");
 		}
 	}
+
 }

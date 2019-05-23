@@ -1,5 +1,6 @@
 @default = "assertCssValue"
 definition {
+
 	function assertCssValue {
 		WaitForSPARefresh();
 
@@ -11,4 +12,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

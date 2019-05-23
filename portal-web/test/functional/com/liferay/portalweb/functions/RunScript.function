@@ -1,5 +1,6 @@
 @default = "runScript"
 definition {
+
 	function runScript {
 		WaitForSPARefresh();
 
@@ -9,4 +10,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

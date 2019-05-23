@@ -1,4 +1,5 @@
 definition {
+
 	macro configureDisplaySettings {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -101,4 +102,5 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
 	}
+
 }

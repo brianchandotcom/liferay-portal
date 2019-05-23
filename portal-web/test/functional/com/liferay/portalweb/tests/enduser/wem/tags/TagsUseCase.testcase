@@ -1,5 +1,6 @@
 @component-name = "portal-tags"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Tags";
@@ -782,4 +783,5 @@ definition {
 			tagName = "second tag (2)",
 			tagPopularityLevel = "4");
 	}
+
 }

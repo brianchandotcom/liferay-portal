@@ -1,4 +1,5 @@
 definition {
+
 	var ddlDataDefinitionDescription = "Data Definition Description";
 	var ddlDataDefinitionName = "Data Definition Name";
 	var ddlListName = "List Name";
@@ -197,4 +198,5 @@ definition {
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "${ddlListName}");
 	}
+
 }

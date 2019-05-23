@@ -1,4 +1,5 @@
 definition {
+
 	macro addNewChangeList {
 		Click(locator1 = "Button#PLUS");
 
@@ -265,4 +266,5 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 
 	}
+
 }

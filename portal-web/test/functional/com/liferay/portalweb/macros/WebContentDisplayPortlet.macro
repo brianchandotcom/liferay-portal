@@ -1,4 +1,5 @@
 definition {
+
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
@@ -424,4 +425,5 @@ definition {
 			locator1 = "Message#ERROR_3",
 			value1 = "The web content article ${webContentTitle} was moved to the Recycle Bin");
 	}
+
 }

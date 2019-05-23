@@ -1,4 +1,5 @@
 definition {
+
 	macro getCssValue {
 		WaitForSPARefresh();
 
@@ -19,4 +20,5 @@ return cssValue
 
 		return "${cssValue}";
 	}
+
 }

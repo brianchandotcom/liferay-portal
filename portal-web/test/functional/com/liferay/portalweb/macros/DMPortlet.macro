@@ -1,4 +1,5 @@
 definition {
+
 	macro configureDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
@@ -175,4 +176,5 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
+
 }

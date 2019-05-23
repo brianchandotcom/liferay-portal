@@ -1,4 +1,5 @@
 definition {
+
 	@summary = "Sign out of Liferay Portal"
 	macro signOut {
 		Navigator.openURL();
@@ -11,4 +12,5 @@ definition {
 
 		UserBar.signOut();
 	}
+
 }

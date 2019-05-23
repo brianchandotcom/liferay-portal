@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change Lists";
@@ -345,4 +346,5 @@ definition {
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
 			value1 = "Change List Name");
 	}
+
 }

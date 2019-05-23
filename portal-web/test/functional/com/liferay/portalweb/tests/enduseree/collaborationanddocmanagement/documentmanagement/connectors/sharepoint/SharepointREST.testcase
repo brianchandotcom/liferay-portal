@@ -1,5 +1,6 @@
 @component-name = "portal-document-management-ee"
 definition {
+
 	property osgi.app.includes = "sharepoint-rest";
 	property portal.ssl.enabled = "true";
 	property portal.upstream = "false";
@@ -623,4 +624,5 @@ definition {
 
 		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application");
 	}
+
 }

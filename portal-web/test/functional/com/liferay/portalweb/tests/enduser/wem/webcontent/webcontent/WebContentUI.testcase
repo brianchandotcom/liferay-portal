@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Web Content Administration";
@@ -180,4 +181,5 @@ definition {
 			webContentContent = "WC Contenido de la web Contenido",
 			webContentTitle = "WC Contenido de la web Titulo");
 	}
+
 }

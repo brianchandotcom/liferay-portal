@@ -1,4 +1,5 @@
 definition {
+
 	macro configure {
 		if ("${enableSpamModerationFor}" == "Message Boards") {
 			Check(locator1 = "Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX");
@@ -43,4 +44,5 @@ definition {
 
 		Button.clickSave();
 	}
+
 }

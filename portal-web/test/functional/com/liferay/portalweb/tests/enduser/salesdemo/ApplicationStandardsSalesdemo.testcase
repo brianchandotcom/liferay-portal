@@ -1,6 +1,7 @@
 @component-name = "portal-application-standards"
 @ignore = "true"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Application Standards";
@@ -56,4 +57,5 @@ definition {
 
 		SikuliAssertElementPresent(locator1 = "WebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG");
 	}
+
 }

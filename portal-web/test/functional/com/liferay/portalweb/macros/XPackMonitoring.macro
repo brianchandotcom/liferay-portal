@@ -1,4 +1,5 @@
 definition {
+
 	macro viewAsGuestPG {
 		Navigator.openSpecificURL(url = "http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring");
 
@@ -28,4 +29,5 @@ definition {
 			key_title = "Kibana",
 			locator1 = "Header#H2_TITLE");
 	}
+
 }

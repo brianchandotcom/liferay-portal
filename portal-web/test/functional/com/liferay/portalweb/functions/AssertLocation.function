@@ -1,5 +1,6 @@
 @default = "assertLocation"
 definition {
+
 	function assertLocation {
 		WaitForSPARefresh();
 
@@ -19,4 +20,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

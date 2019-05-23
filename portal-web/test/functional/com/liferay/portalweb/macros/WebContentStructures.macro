@@ -1,4 +1,5 @@
 definition {
+
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
@@ -259,4 +260,5 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION",
 			value1 = "${structureDescription}");
 	}
+
 }

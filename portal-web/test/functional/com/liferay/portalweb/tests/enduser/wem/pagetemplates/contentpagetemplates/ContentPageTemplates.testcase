@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Layout Page Templates";
@@ -214,4 +215,5 @@ definition {
 			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
 		}
 	}
+
 }

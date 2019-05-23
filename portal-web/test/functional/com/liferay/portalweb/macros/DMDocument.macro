@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Document";
 	var dmDocumentTypeName = "File Upload";
 
@@ -1960,4 +1961,5 @@ definition {
 				value1 = "${tagName}");
 		}
 	}
+
 }

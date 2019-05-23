@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Message Boards Category";
 
 	macro addCP {
@@ -449,4 +450,5 @@ definition {
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
 			value1 = "${subCategoryName}");
 	}
+
 }

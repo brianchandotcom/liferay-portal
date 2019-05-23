@@ -1,4 +1,5 @@
 definition {
+
 	macro addMentionViaBlogsEntry {
 		var key_entryContent = "${entryContent}";
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
@@ -135,4 +136,5 @@ definition {
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
 			value1 = "${mentionsUserFullName}");
 	}
+
 }

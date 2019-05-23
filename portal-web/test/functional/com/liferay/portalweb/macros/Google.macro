@@ -1,4 +1,5 @@
 definition {
+
 	macro signIn {
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
@@ -34,4 +35,5 @@ definition {
 			key_text = "Save and Return to Liferay",
 			locator1 = "Button#ANY");
 	}
+
 }

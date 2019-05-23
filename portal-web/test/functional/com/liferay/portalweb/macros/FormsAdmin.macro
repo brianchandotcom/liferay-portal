@@ -1,4 +1,5 @@
 definition {
+
 	var formDescription = "Created Form Description";
 	var formName = "Created Form Name";
 
@@ -253,4 +254,5 @@ definition {
 
 		AssertElementPresent(locator1 = "FormFields#UPLOAD_DOWNLOAD_ICON");
 	}
+
 }

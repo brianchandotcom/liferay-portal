@@ -1,5 +1,6 @@
 @component-name = "portal-document-management"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Auto Tagging";
@@ -315,4 +316,5 @@ definition {
 
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 	}
+
 }

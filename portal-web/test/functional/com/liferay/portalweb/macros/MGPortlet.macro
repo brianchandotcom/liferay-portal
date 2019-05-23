@@ -1,4 +1,5 @@
 definition {
+
 	macro configureShowAllPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Media Gallery",
@@ -30,4 +31,5 @@ definition {
 			MenuItem.viewPresent(menuItem = "${menuItem}");
 		}
 	}
+
 }

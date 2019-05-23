@@ -1,4 +1,5 @@
 definition {
+
 	macro addComment {
 		Click(
 			key_editor = "postReply",
@@ -22,4 +23,5 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+
 }

@@ -1,5 +1,6 @@
 @default = "assertNotChecked"
 definition {
+
 	function assertNotChecked {
 		WaitForSPARefresh();
 
@@ -35,4 +36,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

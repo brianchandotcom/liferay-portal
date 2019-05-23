@@ -1,4 +1,5 @@
 definition {
+
 	macro renameEntry {
 		Type(
 			locator1 = "TextInput#NEW_NAME",
@@ -8,4 +9,5 @@ definition {
 	macro selectRename {
 		Check(locator1 = "Radio#KEEP");
 	}
+
 }

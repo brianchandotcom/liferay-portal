@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Asset Publisher";
@@ -68,4 +69,5 @@ definition {
 			locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
 			value1 = "View in Context");
 	}
+
 }

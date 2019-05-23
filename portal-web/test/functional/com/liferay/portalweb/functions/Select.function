@@ -1,5 +1,6 @@
 @default = "select"
 definition {
+
 	function pauseSelect {
 		WaitForSPARefresh();
 
@@ -25,4 +26,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-test-plugins"
 definition {
+
 	property custom.properties = "web.server.display.node=true";
 	property ext.plugins.includes = "sample-ext";
 	property portal.release = "true";
@@ -87,4 +88,5 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 	}
+
 }

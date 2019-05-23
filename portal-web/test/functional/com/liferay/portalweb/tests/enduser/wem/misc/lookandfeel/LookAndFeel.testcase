@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Look And Feel";
@@ -83,4 +84,5 @@ definition {
 
 		Portlet.viewApplicationDecorator(decorator = "Barebone");
 	}
+
 }

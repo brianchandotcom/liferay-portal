@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Documents Management";
@@ -170,4 +171,5 @@ definition {
 
 		DMDocument.viewDocumentTypePG(textContent = "Text");
 	}
+
 }

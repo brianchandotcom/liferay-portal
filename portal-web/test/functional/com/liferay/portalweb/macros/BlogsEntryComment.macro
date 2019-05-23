@@ -1,4 +1,5 @@
 definition {
+
 	macro add {
 		Type.typeEditor(
 			locator1 = "Comments#COMMENT_FIELD",
@@ -147,4 +148,5 @@ definition {
 			locator1 = "Button#UNSUBSCRIBE",
 			value1 = "Unsubscribe");
 	}
+
 }

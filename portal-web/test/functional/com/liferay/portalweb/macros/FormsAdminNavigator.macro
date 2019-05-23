@@ -1,4 +1,5 @@
 definition {
+
 	var formName = "Created Form Name";
 	var rowIndexNumber = "1";
 
@@ -122,4 +123,5 @@ definition {
 
 		Navigator.openSpecificURL(url = "${publishFormURL}");
 	}
+
 }

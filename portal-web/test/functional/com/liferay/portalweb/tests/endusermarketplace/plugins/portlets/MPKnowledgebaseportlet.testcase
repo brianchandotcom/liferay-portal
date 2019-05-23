@@ -1,5 +1,6 @@
 @component-name = "portal-plugins-deployment"
 definition {
+
 	property testray.main.component.name = "Plugin Installer";
 	var appName = "Knowledge Base";
 
@@ -59,4 +60,5 @@ definition {
 
 		AppManager.viewUninstallAppCP(appName = "Knowledge Base");
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Site Templates";
@@ -749,4 +750,5 @@ definition {
 			permissionFlagged = "true",
 			roleTitle = "Guest");
 	}
+
 }

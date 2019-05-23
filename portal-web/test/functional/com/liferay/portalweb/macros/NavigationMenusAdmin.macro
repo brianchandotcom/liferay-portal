@@ -1,4 +1,5 @@
 definition {
+
 	macro _addItemPage {
 		IFrame.selectConfigurationFrame();
 
@@ -245,4 +246,5 @@ definition {
 			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 	}
+
 }

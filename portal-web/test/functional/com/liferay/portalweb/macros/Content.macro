@@ -1,4 +1,5 @@
 definition {
+
 	macro addNewPG {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
@@ -43,4 +44,5 @@ definition {
 			locator2 = "Home#PAGE_COLUMN_1",
 			value1 = "${assetTitle}");
 	}
+
 }

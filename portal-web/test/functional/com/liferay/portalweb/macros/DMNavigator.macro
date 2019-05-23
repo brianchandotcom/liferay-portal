@@ -1,4 +1,5 @@
 definition {
+
 	var dmDocumentTypeName = "File Upload";
 
 	macro gotoAddDocumentType {
@@ -176,4 +177,5 @@ definition {
 
 		Click(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
 	}
+
 }

@@ -37,16 +37,23 @@ class ManagementToolbar extends ClayComponent {
 				this._searchContainer = searchContainer;
 
 				const select = searchContainer.select;
-				const bulkSelection = this.supportsBulkActions && select.get('bulkSelection');
 
-				this._setActiveStatus(
-					{
-						allSelectedElements: select.getAllSelectedElements(),
-						currentPageElements: select.getCurrentPageElements(),
-						currentPageSelectedElements: select.getCurrentPageSelectedElements()
-					},
-					bulkSelection
-				);
+				if (
+					select.getAllSelectedElements &&
+					select.getCurrentPageElements &&
+					select.getCurrentPageSelectedElements
+				) {
+					const bulkSelection = this.supportsBulkActions && select.get('bulkSelection');
+
+					this._setActiveStatus(
+						{
+							allSelectedElements: select.getAllSelectedElements(),
+							currentPageElements: select.getCurrentPageElements(),
+							currentPageSelectedElements: select.getCurrentPageSelectedElements()
+						},
+						bulkSelection
+					);
+				}
 			}
 		);
 

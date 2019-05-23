@@ -62,7 +62,7 @@ public class ScopedServiceTrackerMapFactoryImpl
 			String companyIdString = String.valueOf(companyId);
 
 			List<T> services = _servicesByCompanyAndKey.getService(
-				String.join("-", companyIdString, key));
+				StringBundler.concat(companyIdString, "-", key));
 
 			if (ListUtil.isNotEmpty(services)) {
 				return services.get(0);
@@ -110,7 +110,7 @@ public class ScopedServiceTrackerMapFactoryImpl
 							key1 -> nameMapper.map(
 								serviceReference,
 								key2 -> emitter.emit(
-									String.join("-", key1, key2))));
+									StringBundler.concat(key1, "-", key2))));
 					},
 					new ServiceTrackerMapListenerImpl());
 			_servicesByKey = ServiceTrackerMapFactory.openMultiValueMap(

@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.suggestions.display.context;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
@@ -154,8 +155,8 @@ public class SuggestionsPortletDisplayBuilder {
 		List<String> suggestedKeywords =
 			keywordsSuggestionHolder.getSuggestedKeywords();
 
-		String parameterValue = String.join(
-			StringPool.SPACE, suggestedKeywords);
+		String parameterValue = StringUtil.merge(
+			suggestedKeywords, StringPool.SPACE);
 
 		return _http.setParameter(
 			_searchURL, _keywordsParameterName, parameterValue);

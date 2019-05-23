@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,7 +89,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 			conditionStrings[i] = sb.toString();
 		}
 
-		return Optional.of(String.join(" and ", conditionStrings));
+		return Optional.of(StringUtil.merge(conditionStrings, " and "));
 	}
 
 	private String _getSourceElement(MediaQuery mediaQuery) {

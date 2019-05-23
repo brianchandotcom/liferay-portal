@@ -55,7 +55,7 @@ for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
 rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 %>
 
-<aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= String.join(StringPool.COMMA, types) %>" />
+<aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
 
 <liferay-ui:input-move-boxes
 	leftBoxName="currentTypes"

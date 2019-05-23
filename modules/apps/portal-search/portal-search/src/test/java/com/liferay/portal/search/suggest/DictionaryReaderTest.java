@@ -137,7 +137,7 @@ public class DictionaryReaderTest {
 	protected DictionaryReader createDictionaryReader(String... lines)
 		throws Exception {
 
-		String content = String.join(StringPool.NEW_LINE, lines);
+		String content = StringUtil.merge(lines, StringPool.NEW_LINE);
 
 		return new DictionaryReader(
 			new ByteArrayInputStream(content.getBytes()));

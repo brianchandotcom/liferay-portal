@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = InfoDisplayContributorField.class
 )
-public class BlogsEntrySmallImageAssetDisplayContributorField
+public class BlogsEntrySmallImageDisplayContributorField
 	extends BaseInfoDisplayContributorField<BlogsEntry> {
 
 	@Override
@@ -84,6 +84,6 @@ public class BlogsEntrySmallImageAssetDisplayContributorField
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntrySmallImageAssetDisplayContributorField.class);
+		BlogsEntrySmallImageDisplayContributorField.class);
 
 }

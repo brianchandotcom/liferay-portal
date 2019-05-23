@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -430,11 +431,11 @@ public class StructuredContentResource {
 	}
 
 	public static StructuredContent getStructuredContent(
-			Long structuredContentId)
+			Long structuredContentId, Locale locale)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
-			getStructuredContentHttpResponse(structuredContentId);
+			getStructuredContentHttpResponse(structuredContentId, locale);
 
 		String content = httpResponse.getContent();
 
@@ -457,10 +458,12 @@ public class StructuredContentResource {
 	}
 
 	public static HttpInvoker.HttpResponse getStructuredContentHttpResponse(
-			Long structuredContentId)
+			Long structuredContentId, Locale locale)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.header("Accept-Language", locale.toLanguageTag());
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -521,12 +524,13 @@ public class StructuredContentResource {
 	}
 
 	public static StructuredContent putStructuredContent(
-			Long structuredContentId, StructuredContent structuredContent)
+			Long structuredContentId, StructuredContent structuredContent,
+			Locale locale)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
 			putStructuredContentHttpResponse(
-				structuredContentId, structuredContent);
+				structuredContentId, structuredContent, locale);
 
 		String content = httpResponse.getContent();
 
@@ -549,12 +553,15 @@ public class StructuredContentResource {
 	}
 
 	public static HttpInvoker.HttpResponse putStructuredContentHttpResponse(
-			Long structuredContentId, StructuredContent structuredContent)
+			Long structuredContentId, StructuredContent structuredContent,
+			Locale locale)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.body(structuredContent.toString(), "application/json");
+
+		httpInvoker.header("Accept-Language", locale.toLanguageTag());
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 

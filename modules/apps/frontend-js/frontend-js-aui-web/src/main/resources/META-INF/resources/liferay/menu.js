@@ -170,6 +170,10 @@ AUI.add(
 					var triggerVertical =
 						MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
 
+					if (direction === 'down') {
+						overlayHorizontal = STR_LEFT;
+					}
+
 					alignPoints = [
 						overlayVertical + overlayHorizontal,
 						triggerVertical + triggerHorizontal

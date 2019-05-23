@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,6 +52,7 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
@@ -203,17 +203,26 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				portletInstanceKey,
 				httpServletRequest.getParameter("p_p_id"))) {
 
-			parameterMap = MapUtil.filterByKeys(
-				parameterMap, key -> !key.startsWith("p_p_"));
+			Set<String> keySet = parameterMap.keySet();
+
+			keySet.removeIf(key -> key.startsWith("p_p_"));
 		}
 
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			portletInstanceKey);
 
-		parameterMap.putAll(
-			MapUtil.filterByKeys(
-				originalHttpServletRequest.getParameterMap(),
-				key -> key.startsWith(portletNamespace)));
+		Map<String, String[]> originalParameterMap =
+			originalHttpServletRequest.getParameterMap();
+
+		for (Map.Entry<String, String[]> entry :
+				originalParameterMap.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (key.startsWith(portletNamespace)) {
+				parameterMap.put(key, entry.getValue());
+			}
+		}
 
 		queryString = PortletParameterUtil.addNamespace(
 			portletInstanceKey, queryString);

@@ -45,7 +45,6 @@ import java.io.InputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -89,7 +88,6 @@ public class StructuredContentResourceTest
 		super.tearDown();
 	}
 
-	@Ignore
 	@Test
 	public void testGetSiteStructuredContentWithDifferentLocale()
 		throws Exception {
@@ -107,17 +105,17 @@ public class StructuredContentResourceTest
 		structuredContent.setTitle(frenchTitle);
 
 		StructuredContentResource.putStructuredContent(
-			structuredContent.getId(), structuredContent);
+			structuredContent.getId(), structuredContent, testLocale);
 
 		structuredContent = StructuredContentResource.getStructuredContent(
-			structuredContent.getId());
+			structuredContent.getId(), testLocale);
 
 		Assert.assertEquals(frenchTitle, structuredContent.getTitle());
 
 		testLocale = LocaleUtil.getDefault();
 
 		structuredContent = StructuredContentResource.getStructuredContent(
-			structuredContent.getId());
+			structuredContent.getId(), testLocale);
 
 		Assert.assertEquals(title, structuredContent.getTitle());
 	}

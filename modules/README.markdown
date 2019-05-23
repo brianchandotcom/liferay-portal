@@ -60,7 +60,7 @@ something like this to your `build.gradle`:
 
 ```gradle
 liferay {
-   deployDir = file("${liferayHome}/osgi/test")
+   deployDir = file("${liferayHome}/osgi/test")
 }
 ```
 

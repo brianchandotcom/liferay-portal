@@ -6,7 +6,7 @@ rules are obeyed by your OSGi bundle.
 When you run the [`baseline`](#baseline) task, the plugin *baselines* the new
 bundle against the latest released non-snapshot bundle (i.e., the *baseline*).
 That is, it compares the public exported API of the new bundle with
-the baseline. If there are any changes, it uses the OSGi semantic versioning
+the baseline. If there are any changes, it uses the OSGi semantic versioning
 rules to calculate the minimum new version. If the new bundle has a lower
 version, errors are thrown.
 

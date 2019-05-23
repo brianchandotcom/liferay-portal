@@ -103,13 +103,13 @@ files and creates a configuration file in the location specified by the
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`configVariable` | `String` | `null` | The configuration variable to which the modules should be added. It sets the `--config` argument.
+`configVariable` | `String` | `null` | The configuration variable to which the modules should be added. It sets the `--config` argument.
 `customDefine` | `String` | `"Liferay.Loader"` | The namespace of the `define(...)` call to use in the JS files. It sets the `--namespace` argument.
 `ignorePath` | `boolean` | `false` | Whether not to create module `path` and `fullPath` properties. It sets the `--ignorePath` argument.
 `keepFileExtension` | `boolean` | `false` | Whether to keep the file extension when generating the module name. It sets the `--keepExtension` argument.
 `lowerCase` | `boolean` | `false` | Whether to convert file name to lower case before using it as the module name. It sets the `--lowerCase` argument.
 <a name="moduleconfigfile"></a>`moduleConfigFile` | `File` | `null` | The JSON file which contains configuration data for the modules. It sets the `--moduleConfig` argument.
-`moduleExtension` | `String` | `null` | The extension for the module file (e.g., `.js`). If specified, use the provided string as an extension instead to get it automatically from the file name. It sets the `--extension` argument.
+`moduleExtension` | `String` | `null` | The extension for the module file (e.g., `.js`). If specified, use the provided string as an extension instead to get it automatically from the file name. It sets the `--extension` argument.
 `moduleFormat` | `String` | `null` | The regular expression and value to apply to the file name when generating the module name. It sets the `--format` argument.
 <a name="outputfile"></a>`outputFile` | `File` | `null` | The file where the generated configuration is stored. It sets the `--output` argument.
 <a name="sourcedir"></a>`sourceDir` | `File` | `null` | The directory that contains the files to process.

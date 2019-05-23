@@ -45,7 +45,7 @@ definition {
 		Segmentation.fillTitle(titleField = "AddSegment Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 		Segmentation.fillEmailAddress(emailAddressField = "liferay");
-		
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();

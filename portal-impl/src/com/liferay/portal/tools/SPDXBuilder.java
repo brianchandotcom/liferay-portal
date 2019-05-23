@@ -318,10 +318,10 @@ public class SPDXBuilder {
 
 	private QName _getQName(String name) {
 		if (!_qNameMap.containsKey(name)) {
-			QName qName = new QName(name, _SPDX_NAMESPACE, "spdx:" + name);
+			QName qName = new QName(name, _NAMESPACE_SPDX, "spdx:" + name);
 
 			if (Objects.equals(name, "resource")) {
-				qName = new QName(name, _RDF_NAMESPACE, "rdf:" + name);
+				qName = new QName(name, _NAMESPACE_RDF, "rdf:" + name);
 			}
 
 			_qNameMap.put(name, qName);
@@ -380,10 +380,10 @@ public class SPDXBuilder {
 		Files.write(file.toPath(), s.getBytes(StandardCharsets.UTF_8));
 	}
 
-	private static final Namespace _RDF_NAMESPACE = new Namespace(
+	private static final Namespace _NAMESPACE_RDF = new Namespace(
 		"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 
-	private static final Namespace _SPDX_NAMESPACE = new Namespace(
+	private static final Namespace _NAMESPACE_SPDX = new Namespace(
 		"spdx", "http://spdx.org/rdf/terms#");
 
 	private static final Map<String, QName> _qNameMap = new HashMap<>();

@@ -39,14 +39,13 @@ public class DLAdminDisplayContextProvider {
 
 	public DLAdminManagementToolbarDisplayContext
 			getDLAdminManagementToolbarDisplayContext(
-				DLRequestHelper dlRequestHelper,
-				DLAdminDisplayContext dlAdminDisplayContext)
+				DLRequestHelper dlRequestHelper)
 		throws PortalException {
 
 		return new DLAdminManagementToolbarDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
 			dlRequestHelper.getLiferayPortletResponse(), dlRequestHelper,
-			dlAdminDisplayContext);
+			getDLAdminDisplayContext(dlRequestHelper));
 	}
 
 	@Reference(

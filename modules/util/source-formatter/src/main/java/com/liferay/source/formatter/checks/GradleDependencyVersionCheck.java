@@ -45,9 +45,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (absolutePath.contains("/modules/apps/")) {
-			content = _fixDependencyVersions(absolutePath, content);
-		}
+		content = _fixDependencyVersions(absolutePath, content);
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 			return content;

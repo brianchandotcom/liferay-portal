@@ -421,11 +421,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		Set<Map.Entry<String, Object>> entrySet = parametersMap.entrySet();
 
-		Stream<Map.Entry<String, Object>> entryStream = entrySet.stream();
-
 		Map<String, String> parameters = new HashMap<>();
 
-		entryStream.forEach(
+		entrySet.forEach(
 			entry -> {
 				String key = entry.getKey();
 

@@ -72,10 +72,6 @@ public class UserAccountResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		if (search != null) {
-			httpInvoker.parameter("search", String.valueOf(search));
-		}
-
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);
 		}
@@ -116,10 +112,6 @@ public class UserAccountResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (search != null) {
-			httpInvoker.parameter("search", String.valueOf(search));
-		}
 
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);
@@ -192,10 +184,6 @@ public class UserAccountResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		if (search != null) {
-			httpInvoker.parameter("search", String.valueOf(search));
-		}
 
 		if (filterString != null) {
 			httpInvoker.parameter("filter", filterString);

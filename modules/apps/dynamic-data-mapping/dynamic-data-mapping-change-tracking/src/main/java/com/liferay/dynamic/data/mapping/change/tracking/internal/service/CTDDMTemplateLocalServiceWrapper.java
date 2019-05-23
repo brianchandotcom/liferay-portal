@@ -174,13 +174,24 @@ public class CTDDMTemplateLocalServiceWrapper
 	}
 
 	private boolean _isClassNameChangeTracked(long classNameId) {
-		String className = _portal.getClassName(classNameId);
+		String className;
 
-		if (className == null) {
+		try {
+			className = _portal.getClassName(classNameId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get class name from id " + classNameId, e);
+			}
+
 			return false;
 		}
 
-		return ArrayUtil.contains(_CHANGE_TRACKED_CLASS_NAMES, className);
+		if (ArrayUtil.contains(_CHANGE_TRACKED_CLASS_NAMES, className)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isRetrievable(DDMTemplate ddmTemplate) {

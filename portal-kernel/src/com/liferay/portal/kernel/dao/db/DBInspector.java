@@ -109,8 +109,11 @@ public class DBInspector {
 				return false;
 			}
 
-			int expectedColumnDataType = _getColumnDataType(
-				tableClass, columnName);
+			Integer expectedColumnDataType = _getColumnDataType(columnType);
+
+			if (expectedColumnDataType == null) {
+				return false;
+			}
 
 			int actualColumnDataType = rs.getInt("DATA_TYPE");
 
@@ -196,23 +199,16 @@ public class DBInspector {
 		return name;
 	}
 
-	private int _getColumnDataType(Class<?> tableClass, String columnName)
-		throws Exception {
+	private Integer _getColumnDataType(String columnType) {
+		Matcher matcher = _columnTypePattern.matcher(columnType);
 
-		Field tableColumnsField = tableClass.getField("TABLE_COLUMNS");
-
-		Object[][] tableColumns = (Object[][])tableColumnsField.get(null);
-
-		for (Object[] tableColumn : tableColumns) {
-			if (tableColumn[0].equals(columnName)) {
-				return (int)tableColumn[1];
-			}
+		if (!matcher.matches()) {
+			return null;
 		}
 
-		throw new UpgradeException(
-			StringBundler.concat(
-				"Table class ", tableClass, " does not have column ",
-				columnName));
+		DB db = DBManagerUtil.getDB();
+
+		return db.getTemplateFieldType(matcher.group(1));
 	}
 
 	private int _getColumnSize(String columnType) throws UpgradeException {
@@ -278,6 +274,8 @@ public class DBInspector {
 
 	private static final Pattern _columnSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _columnTypePattern = Pattern.compile(
+		"^\\w+", Pattern.CASE_INSENSITIVE);
 
 	private final Connection _connection;
 

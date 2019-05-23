@@ -1,10 +1,7 @@
 jdk: oraclejdk8
-
 language: java
-
 script:
     - ./gradlew test
-
 deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     bucket: $AWS_S3_BUCKET_NAME

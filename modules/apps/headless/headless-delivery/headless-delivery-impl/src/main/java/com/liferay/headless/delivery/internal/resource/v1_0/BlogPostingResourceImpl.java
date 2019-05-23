@@ -25,7 +25,6 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
@@ -144,35 +143,33 @@ public class BlogPostingResourceImpl
 		Optional<Image> imageOptional = Optional.ofNullable(
 			blogPosting.getImage());
 
-		BlogsEntry blogsEntry = _blogsEntryService.addEntry(
-			blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
-			blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-			blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-			localDateTime.getDayOfMonth(), localDateTime.getYear(),
-			localDateTime.getHour(), localDateTime.getMinute(), true, true,
-			new String[0],
-			imageOptional.map(
-				Image::getCaption
-			).orElse(
-				null
-			),
-			_getImageSelector(
+		return _toBlogPosting(
+			_blogsEntryService.addEntry(
+				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0],
 				imageOptional.map(
-					Image::getImageId
+					Image::getCaption
 				).orElse(
 					null
-				)),
-			null,
-			ServiceContextUtil.createServiceContext(
-				blogPosting.getKeywords(), blogPosting.getTaxonomyCategoryIds(),
-				siteId, blogPosting.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			blogsEntry.getCompanyId(), BlogsEntry.class,
-			blogsEntry.getEntryId(), blogPosting.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toBlogPosting(blogsEntry);
+				),
+				_getImageSelector(
+					imageOptional.map(
+						Image::getImageId
+					).orElse(
+						null
+					)),
+				null,
+				ServiceContextUtil.createServiceContext(
+					blogPosting.getKeywords(),
+					blogPosting.getTaxonomyCategoryIds(), BlogsEntry.class,
+					contextCompany.getCompanyId(),
+					blogPosting.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
+					blogPosting.getViewableByAsString())));
 	}
 
 	@Override
@@ -181,11 +178,6 @@ public class BlogPostingResourceImpl
 		throws Exception {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
-
-		CustomFieldsUtil.addCustomFields(
-			blogsEntry.getCompanyId(), BlogsEntry.class,
-			blogsEntry.getEntryId(), blogPosting.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			blogPosting.getDatePublished());
@@ -215,8 +207,10 @@ public class BlogPostingResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
-					blogPosting.getTaxonomyCategoryIds(),
-					blogsEntry.getGroupId(),
+					blogPosting.getTaxonomyCategoryIds(), BlogsEntry.class,
+					contextCompany.getCompanyId(),
+					blogPosting.getCustomFields(), blogsEntry.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					blogPosting.getViewableByAsString())));
 	}
 

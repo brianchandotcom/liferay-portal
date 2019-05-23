@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class DataDefinitionUtil {
 
-	public static SPIDataDefinition toDataDefinition(
+	public static SPIDataDefinition toSPIDataDefinition(
 			FieldTypeTracker fieldTypeTracker, String json)
 		throws Exception {
 
@@ -38,14 +38,14 @@ public class DataDefinitionUtil {
 				setDataDefinitionFields(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("fields"),
-						fieldJSONObject -> _toDataDefinitionField(
+						fieldJSONObject -> _toSPIDataDefinitionField(
 							fieldTypeTracker, fieldJSONObject),
 						SPIDataDefinitionField.class));
 			}
 		};
 	}
 
-	private static SPIDataDefinitionField _toDataDefinitionField(
+	private static SPIDataDefinitionField _toSPIDataDefinitionField(
 			FieldTypeTracker fieldTypeTracker, JSONObject jsonObject)
 		throws Exception {
 

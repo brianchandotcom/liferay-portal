@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class DataLayoutUtil {
 
-	public static SPIDataLayout toDataLayout(String json) throws Exception {
+	public static SPIDataLayout toSPIDataLayout(String json) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 		return new SPIDataLayout() {
@@ -36,7 +36,7 @@ public class DataLayoutUtil {
 				setDataLayoutPages(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("pages"),
-						pageJSONObject -> _toDataLayoutPage(pageJSONObject),
+						pageJSONObject -> _toSPIDataLayoutPage(pageJSONObject),
 						SPIDataLayoutPage.class));
 				setDefaultLanguageId(jsonObject.getString("defaultLanguageId"));
 				setPaginationMode(jsonObject.getString("paginationMode"));
@@ -44,7 +44,7 @@ public class DataLayoutUtil {
 		};
 	}
 
-	private static SPIDataLayoutColumn _toDataLayoutColumn(
+	private static SPIDataLayoutColumn _toSPIDataLayoutColumn(
 		JSONObject jsonObject) {
 
 		return new SPIDataLayoutColumn() {
@@ -56,7 +56,7 @@ public class DataLayoutUtil {
 		};
 	}
 
-	private static SPIDataLayoutPage _toDataLayoutPage(JSONObject jsonObject)
+	private static SPIDataLayoutPage _toSPIDataLayoutPage(JSONObject jsonObject)
 		throws Exception {
 
 		return new SPIDataLayoutPage() {
@@ -64,7 +64,7 @@ public class DataLayoutUtil {
 				setDataLayoutRows(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("rows"),
-						rowJSONObject -> _toDataLayoutRow(rowJSONObject),
+						rowJSONObject -> _toSPIDataLayoutRow(rowJSONObject),
 						SPIDataLayoutRow.class));
 				setDescription(
 					LocalizedValueUtil.toLocalizedValues(
@@ -76,7 +76,7 @@ public class DataLayoutUtil {
 		};
 	}
 
-	private static SPIDataLayoutRow _toDataLayoutRow(JSONObject jsonObject)
+	private static SPIDataLayoutRow _toSPIDataLayoutRow(JSONObject jsonObject)
 		throws Exception {
 
 		return new SPIDataLayoutRow() {
@@ -84,7 +84,7 @@ public class DataLayoutUtil {
 				setDataLayoutColums(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("columns"),
-						columnJSONObject -> _toDataLayoutColumn(
+						columnJSONObject -> _toSPIDataLayoutColumn(
 							columnJSONObject),
 						SPIDataLayoutColumn.class));
 			}

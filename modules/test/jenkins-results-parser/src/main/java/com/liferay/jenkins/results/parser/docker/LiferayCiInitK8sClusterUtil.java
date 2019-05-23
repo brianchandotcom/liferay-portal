@@ -24,7 +24,6 @@ import com.liferay.jenkins.results.parser.TGZUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Arrays;
@@ -174,8 +173,8 @@ public class LiferayCiInitK8sClusterUtil {
 
 			return true;
 		}
-		catch (MalformedURLException murle) {
-			murle.printStackTrace();
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 
 			return false;
 		}
@@ -250,10 +249,10 @@ public class LiferayCiInitK8sClusterUtil {
 			File gitRepositoryLocalArtifactNew = new File(
 				gitArtifactsLocalDir, gitRepositoryName + ".new.tar.gz");
 
-			TGZUtil.archive(
-				gitRepositoryLocalDir, gitRepositoryLocalArtifactNew);
-
 			try {
+				TGZUtil.archive(
+					gitRepositoryLocalDir, gitRepositoryLocalArtifactNew);
+
 				JenkinsResultsParserUtil.move(
 					gitRepositoryLocalArtifactNew,
 					gitRepositoryClusterArtifact);

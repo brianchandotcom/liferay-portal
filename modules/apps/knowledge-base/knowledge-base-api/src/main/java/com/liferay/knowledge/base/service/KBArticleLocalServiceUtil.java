@@ -342,9 +342,8 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle
-			fetchKBArticleByUrlTitle(
-				long groupId, String kbFolderUrlTitle, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		fetchKBArticleByUrlTitle(
+			long groupId, String kbFolderUrlTitle, String urlTitle) {
 
 		return getService().fetchKBArticleByUrlTitle(
 			groupId, kbFolderUrlTitle, urlTitle);

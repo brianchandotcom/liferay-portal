@@ -364,8 +364,7 @@ public class KBArticleLocalServiceWrapper
 
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
-			long groupId, String kbFolderUrlTitle, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, String kbFolderUrlTitle, String urlTitle) {
 
 		return _kbArticleLocalService.fetchKBArticleByUrlTitle(
 			groupId, kbFolderUrlTitle, urlTitle);

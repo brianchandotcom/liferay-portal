@@ -67,8 +67,8 @@ public class ServiceComponentLocalServiceTest {
 		_serviceComponentsCount =
 			_serviceComponentLocalService.getServiceComponentsCount();
 
-		_serviceComponent1 = addServiceComponent(_SERVICE_COMPONENT_1, 1);
-		_serviceComponent2 = addServiceComponent(_SERVICE_COMPONENT_2, 1);
+		_serviceComponent1 = _addServiceComponent(_SERVICE_COMPONENT_1, 1);
+		_serviceComponent2 = _addServiceComponent(_SERVICE_COMPONENT_2, 1);
 
 		_release = _releaseLocalService.addRelease(
 			"ServiceComponentLocalServiceTest", "0.0.0");
@@ -76,7 +76,7 @@ public class ServiceComponentLocalServiceTest {
 
 	@Test
 	public void testGetLatestServiceComponentsWithMultipleVersions() {
-		ServiceComponent serviceComponent = addServiceComponent(
+		ServiceComponent serviceComponent = _addServiceComponent(
 			_SERVICE_COMPONENT_1, 2);
 
 		try {
@@ -86,12 +86,12 @@ public class ServiceComponentLocalServiceTest {
 			Assert.assertEquals(
 				2, serviceComponents.size() - _serviceComponentsCount);
 
-			ServiceComponent latestServiceComponent1 = getServiceComponent(
+			ServiceComponent latestServiceComponent1 = _getServiceComponent(
 				serviceComponents, _SERVICE_COMPONENT_1);
 
 			Assert.assertEquals(2, latestServiceComponent1.getBuildNumber());
 
-			ServiceComponent latestServiceComponent2 = getServiceComponent(
+			ServiceComponent latestServiceComponent2 = _getServiceComponent(
 				serviceComponents, _SERVICE_COMPONENT_2);
 
 			Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
@@ -110,12 +110,12 @@ public class ServiceComponentLocalServiceTest {
 		Assert.assertEquals(
 			2, serviceComponents.size() - _serviceComponentsCount);
 
-		ServiceComponent latestServiceComponent1 = getServiceComponent(
+		ServiceComponent latestServiceComponent1 = _getServiceComponent(
 			serviceComponents, _SERVICE_COMPONENT_1);
 
 		Assert.assertEquals(1, latestServiceComponent1.getBuildNumber());
 
-		ServiceComponent latestServiceComponent2 = getServiceComponent(
+		ServiceComponent latestServiceComponent2 = _getServiceComponent(
 			serviceComponents, _SERVICE_COMPONENT_2);
 
 		Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
@@ -142,35 +142,7 @@ public class ServiceComponentLocalServiceTest {
 		_testVerify(false, "0.0.1", true);
 	}
 
-	public class TestUpgradeStep implements UpgradeStep {
-
-		public TestUpgradeStep(DB db) {
-			_db = db;
-		}
-
-		@Override
-		public String toString() {
-			return "Test Upgrade Step";
-		}
-
-		@Override
-		public void upgrade(DBProcessContext dbProcessContext)
-			throws UpgradeException {
-
-			try {
-				_db.runSQL(
-					"create table " + _TEST_TABLE + " (name VARCHAR(20))");
-			}
-			catch (Exception e) {
-				throw new UpgradeException(e);
-			}
-		}
-
-		private final DB _db;
-
-	}
-
-	protected ServiceComponent addServiceComponent(
+	private ServiceComponent _addServiceComponent(
 		String buildNameSpace, long buildNumber) {
 
 		long serviceComponentId = _counterLocalService.increment();
@@ -186,7 +158,7 @@ public class ServiceComponentLocalServiceTest {
 			serviceComponent);
 	}
 
-	protected ServiceComponent getServiceComponent(
+	private ServiceComponent _getServiceComponent(
 		List<ServiceComponent> serviceComponents, String buildNamespace) {
 
 		for (ServiceComponent serviceComponent : serviceComponents) {
@@ -198,7 +170,7 @@ public class ServiceComponentLocalServiceTest {
 		return null;
 	}
 
-	protected String normalizeTableName(
+	private String _normalizeTableName(
 			DatabaseMetaData databaseMetaData, String tableName)
 		throws SQLException {
 
@@ -246,7 +218,7 @@ public class ServiceComponentLocalServiceTest {
 			try (Connection conn = DataAccess.getConnection()) {
 				DatabaseMetaData metadata = conn.getMetaData();
 
-				tableName = normalizeTableName(metadata, _TEST_TABLE);
+				tableName = _normalizeTableName(metadata, _TEST_TABLE);
 
 				try (ResultSet rs = metadata.getTables(
 						null, null, tableName, new String[] {"TABLE"})) {
@@ -289,5 +261,33 @@ public class ServiceComponentLocalServiceTest {
 	private ServiceComponentLocalService _serviceComponentLocalService;
 
 	private int _serviceComponentsCount;
+
+	private class TestUpgradeStep implements UpgradeStep {
+
+		public TestUpgradeStep(DB db) {
+			_db = db;
+		}
+
+		@Override
+		public String toString() {
+			return "Test Upgrade Step";
+		}
+
+		@Override
+		public void upgrade(DBProcessContext dbProcessContext)
+			throws UpgradeException {
+
+			try {
+				_db.runSQL(
+					"create table " + _TEST_TABLE + " (name VARCHAR(20))");
+			}
+			catch (Exception e) {
+				throw new UpgradeException(e);
+			}
+		}
+
+		private final DB _db;
+
+	}
 
 }

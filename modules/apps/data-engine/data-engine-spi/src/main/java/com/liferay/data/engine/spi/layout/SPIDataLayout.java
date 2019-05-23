@@ -14,6 +14,8 @@
 
 package com.liferay.data.engine.spi.layout;
 
+import com.liferay.petra.lang.HashUtil;
+
 import java.util.Objects;
 
 /**
@@ -54,6 +56,15 @@ public class SPIDataLayout {
 
 	public String getPaginationMode() {
 		return _paginationMode;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _dataLayoutPages);
+
+		hash = HashUtil.hash(hash, _defaultLanguageId);
+
+		return HashUtil.hash(hash, _paginationMode);
 	}
 
 	public void setDataLayoutPages(SPIDataLayoutPage[] dataLayoutPages) {

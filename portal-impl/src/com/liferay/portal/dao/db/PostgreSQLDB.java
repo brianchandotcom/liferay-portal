@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,5 +276,27 @@ public class PostgreSQLDB extends BaseDB {
 	};
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
+
+	static {
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.BLOB);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.BLOB);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BOOLEAN);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[9]), Types.DOUBLE);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[10]), Types.INTEGER);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[11]), Types.BIGINT);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.VARCHAR);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.VARCHAR);
+
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[14]), Types.VARCHAR);
+	}
 
 }

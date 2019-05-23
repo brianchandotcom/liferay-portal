@@ -67,6 +67,8 @@ public interface DB {
 
 	public String getTemplateFalse();
 
+	public Integer getTemplateFieldType(String templateType);
+
 	public String getTemplateTrue();
 
 	public String getVersionString();

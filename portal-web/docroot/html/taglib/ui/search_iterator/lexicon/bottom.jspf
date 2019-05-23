@@ -96,7 +96,7 @@
 			var fixedHeaderElement = document.getElementById('<%= namespace + id %>fixedHeader');
 			var scrollingContainer = window === Liferay.Util.getOpener() ? window : searchContainer.get('contentBox').ancestor('#main-content')._node;
 
-			var tableElement = fixedHeaderElement.parentElement;
+			var tableElement = fixedHeaderElement.parentElement.parentElement;
 			var theadBoundingClientRectangle = fixedHeaderElement.previousElementSibling.getBoundingClientRect();
 
 			var fixedHeaderScrollEvent = function(event) {

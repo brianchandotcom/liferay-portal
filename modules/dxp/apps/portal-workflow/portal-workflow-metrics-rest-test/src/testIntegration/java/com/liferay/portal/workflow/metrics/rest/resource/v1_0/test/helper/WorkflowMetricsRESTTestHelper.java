@@ -332,7 +332,7 @@ public class WorkflowMetricsRESTTestHelper {
 		Bundle bundle = FrameworkUtil.getBundle(
 			WorkflowMetricsRESTTestHelper.class);
 
-		BundleContext _bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		int count = 0;
 
@@ -340,7 +340,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		do {
 			ServiceReference<?>[] serviceReferences =
-				_bundleContext.getServiceReferences(
+				bundleContext.getServiceReferences(
 					className, "(objectClass=" + className + ")");
 
 			if (ArrayUtil.isEmpty(serviceReferences)) {
@@ -358,7 +358,7 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 		while (serviceReference == null);
 
-		Object indexer = _bundleContext.getService(serviceReference);
+		Object indexer = bundleContext.getService(serviceReference);
 
 		_indexers.put(className, indexer);
 

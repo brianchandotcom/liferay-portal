@@ -32,6 +32,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.ConnectException;
@@ -61,6 +64,8 @@ import java.util.stream.Stream;
 import jodd.http.HttpException;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
+import jodd.http.ProxyInfo;
+import jodd.http.net.SocketHttpConnectionProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -273,7 +278,32 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			return ddmDataProviderResponse;
 		}
 
-		HttpResponse httpResponse = httpRequest.send();
+		HttpResponse httpResponse;
+
+		Map<String, Object> proxySettings = getProxySettings();
+
+		if (proxySettings.isEmpty()) {
+			httpResponse = httpRequest.send();
+		}
+		else {
+			SocketHttpConnectionProvider socketHttpConnectionProvider =
+				new SocketHttpConnectionProvider();
+
+			String proxyAddress = GetterUtil.getString(
+				proxySettings.get("proxyAddress"));
+
+			int proxyPort = GetterUtil.getInteger(
+				proxySettings.get("proxyPort"));
+
+			socketHttpConnectionProvider.useProxy(
+				ProxyInfo.httpProxy(proxyAddress, proxyPort, null, null));
+
+			HttpRequest httpRequestWithProxy =
+				httpRequest.withConnectionProvider(
+					socketHttpConnectionProvider);
+
+			httpResponse = httpRequestWithProxy.send();
+		}
 
 		DocumentContext documentContext = JsonPath.parse(
 			httpResponse.bodyText());
@@ -354,6 +384,32 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 
 		return pathParameters;
+	}
+
+	protected Map<String, Object> getProxySettings() {
+		Map<String, Object> proxySettings = new HashMap<>(2);
+
+		try {
+			String proxyAddress = SystemProperties.get("http.proxyHost");
+			String proxyPort = SystemProperties.get("http.proxyPort");
+
+			if (Validator.isNotNull(proxyAddress) &&
+				Validator.isNotNull(proxyPort)) {
+
+				proxySettings.put("proxyAddress", proxyAddress);
+				proxySettings.put("proxyPort", Integer.valueOf(proxyPort));
+			}
+		}
+		catch (Exception e) {
+			proxySettings.clear();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get proxy settings from system properties", e);
+			}
+		}
+
+		return proxySettings;
 	}
 
 	protected Map<String, String> getQueryParameters(
@@ -454,6 +510,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMRESTDataProvider.class);
 
 	private static final Pattern _pathParameterPattern = Pattern.compile(
 		"\\{(.*)\\}");

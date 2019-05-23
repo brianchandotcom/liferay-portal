@@ -1054,18 +1054,26 @@ public class GitHubDevSyncUtil {
 						gitWorkingDirectory, gitHubDevGitRemotes);
 				}
 
-				if (remoteGitBranchExists(
-						cachedBranchName, gitWorkingDirectory,
-						gitHubDevGitRemotes)) {
+				RemoteGitBranch cachedRemoteGitBranch = null;
+
+				try {
+					cachedRemoteGitBranch = fetchCachedBranchFromGitHubDev(
+						gitWorkingDirectory, cachedBranchName);
+				}
+				catch (Exception e) {
+					cachedRemoteGitBranch = null;
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Cache branch ", cachedBranchName,
-							" already exists"));
+							" does not exist"));
+				}
 
-					RemoteGitBranch cachedRemoteGitBranch =
-						fetchCachedBranchFromGitHubDev(
-							gitWorkingDirectory, cachedBranchName);
+				if (cachedRemoteGitBranch != null) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Cache branch ", cachedBranchName,
+							" already exists"));
 
 					gitWorkingDirectory.deleteLocalGitBranch(cachedBranchName);
 

@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -165,7 +166,9 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 					sla.getDuration(), sla.getCalendarKey(),
 					_toStringArray(pauseNodeKeys.getNodeKeys()),
 					_toStringArray(startNodeKeys.getNodeKeys()),
-					_toStringArray(stopNodeKeys.getNodeKeys()), sla.getStatus(),
+					_toStringArray(stopNodeKeys.getNodeKeys()),
+					GetterUtil.getInteger(
+						sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
 					_createServiceContext()));
 	}
 

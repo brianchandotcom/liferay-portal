@@ -86,15 +86,15 @@ public class ServiceComponentLocalServiceTest {
 			Assert.assertEquals(
 				2, serviceComponents.size() - _serviceComponentsCount);
 
-			ServiceComponent latestServiceComponent = getServiceComponent(
+			ServiceComponent latestServiceComponent1 = getServiceComponent(
 				serviceComponents, _SERVICE_COMPONENT_1);
 
-			Assert.assertEquals(2, latestServiceComponent.getBuildNumber());
+			Assert.assertEquals(2, latestServiceComponent1.getBuildNumber());
 
-			latestServiceComponent = getServiceComponent(
+			ServiceComponent latestServiceComponent2 = getServiceComponent(
 				serviceComponents, _SERVICE_COMPONENT_2);
 
-			Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+			Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(
@@ -110,15 +110,15 @@ public class ServiceComponentLocalServiceTest {
 		Assert.assertEquals(
 			2, serviceComponents.size() - _serviceComponentsCount);
 
-		ServiceComponent latestServiceComponent = getServiceComponent(
+		ServiceComponent latestServiceComponent1 = getServiceComponent(
 			serviceComponents, _SERVICE_COMPONENT_1);
 
-		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+		Assert.assertEquals(1, latestServiceComponent1.getBuildNumber());
 
-		latestServiceComponent = getServiceComponent(
+		ServiceComponent latestServiceComponent2 = getServiceComponent(
 			serviceComponents, _SERVICE_COMPONENT_2);
 
-		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+		Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
 	}
 
 	@Test

@@ -31,6 +31,7 @@
 			<div class="sharing-modal-form-content">
 				<div class="form-group {$emailAddressErrorMessage ? ' has-error' : '' }">
 					{call ClayMultiSelect.render}
+						{param autocompleteFilterCondition: 'label' /}
 						{param contentRenderer: 'sharingUser' /}
 						{param dataSource: $_dataSource ? $_dataSource : [] /}
 						{param elementClasses: 'clay-multi-select' /}

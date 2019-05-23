@@ -3,9 +3,9 @@ import {isObject} from 'metal';
 /**
  * Returns dimensions and coordinates representing a cropped region
  * @param {!Element} imagePreview Image that will be cropped
- * @param {!Object} region Object representing the coordinates which should be 
+ * @param {!Object} region Object representing the coordinates which should be
  * cropped
- * @return {!Object} Object representing dimensions and coordinates of the 
+ * @return {!Object} Object representing dimensions and coordinates of the
  * cropped image
  * @review
  */
@@ -28,5 +28,10 @@ export default function getCropRegion(imagePreview, region) {
 	const x = region.x ? Math.max(region.x * scaleX, 0) : 0;
 	const y = region.y ? Math.max(region.y * scaleY, 0) : 0;
 
-	return {height,	width, x,	y};
+	return {
+		height,
+		width,
+		x,
+		y
+	};
 }

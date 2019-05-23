@@ -61,7 +61,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 
 	<div class="col-6 col-sm-8">
 		<c:if test="<%= Validator.isNotNull(selTheme.getName()) %>">
-			<h4><liferay-ui:message key="name" /></h4>
+			<h2 class="h4"><liferay-ui:message key="name" /></h2>
 
 			<p class="text-default">
 				<%= HtmlUtil.escape(selTheme.getName()) %>
@@ -69,7 +69,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		</c:if>
 
 		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
-			<h4><liferay-ui:message key="author" /></h4>
+			<h2 class="h4"><liferay-ui:message key="author" /></h2>
 
 			<p class="text-default">
 				<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
@@ -91,7 +91,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 %>
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">
-	<h4><liferay-ui:message key="color-schemes" /></h4>
+	<h2 class="h4"><liferay-ui:message key="color-schemes" /></h2>
 
 	<div class="clearfix" id="<portlet:namespace />colorSchemesContainer">
 		<aui:row>
@@ -131,7 +131,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 %>
 
 <c:if test="<%= !configurableSettings.isEmpty() %>">
-	<h4><liferay-ui:message key="settings" /></h4>
+	<h2 class="h4"><liferay-ui:message key="settings" /></h2>
 
 	<%
 	ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());

@@ -20,7 +20,6 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardMessageDTOConverter;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
@@ -193,13 +192,10 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
 			ServiceContextUtil.createServiceContext(
-				mbMessage.getGroupId(),
+				MBMessage.class, contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(), mbMessage.getGroupId(),
+				contextAcceptLanguage.getPreferredLocale(),
 				messageBoardMessage.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			mbMessage.getCompanyId(), MBMessage.class, mbMessage.getMessageId(),
-			messageBoardMessage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 
@@ -239,13 +235,11 @@ public class MessageBoardMessageResourceImpl
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
 			false,
 			ServiceContextUtil.createServiceContext(
+				MBMessage.class, contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(),
 				parentMBMessage.getGroupId(),
+				contextAcceptLanguage.getPreferredLocale(),
 				messageBoardMessage.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			mbMessage.getCompanyId(), MBMessage.class, mbMessage.getMessageId(),
-			messageBoardMessage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 

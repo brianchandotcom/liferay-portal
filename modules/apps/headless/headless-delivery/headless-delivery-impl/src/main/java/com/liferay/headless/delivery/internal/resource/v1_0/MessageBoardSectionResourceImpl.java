@@ -15,9 +15,9 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -153,11 +152,6 @@ public class MessageBoardSectionResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			messageBoardSectionId);
 
-		CustomFieldsUtil.addCustomFields(
-			mbCategory.getCompanyId(), MBCategory.class,
-			mbCategory.getCategoryId(), messageBoardSection.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-
 		return _toMessageBoardSection(
 			_mbCategoryService.updateCategory(
 				messageBoardSectionId, mbCategory.getParentCategoryId(),
@@ -165,7 +159,11 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getDescription(),
 				mbCategory.getDisplayStyle(), "", "", "", 0, false, "", "", 0,
 				"", false, "", 0, false, "", "", false, false, false,
-				new ServiceContext()));
+				ServiceContextUtil.createServiceContext(
+					MBCategory.class, contextCompany.getCompanyId(),
+					messageBoardSection.getCustomFields(),
+					mbCategory.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(), null)));
 	}
 
 	private MessageBoardSection _addMessageBoardSection(
@@ -173,19 +171,16 @@ public class MessageBoardSectionResourceImpl
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		MBCategory mbCategory = _mbCategoryService.addCategory(
-			_user.getUserId(), parentMessageBoardSectionId,
-			messageBoardSection.getTitle(),
-			messageBoardSection.getDescription(),
-			ServiceContextUtil.createServiceContext(
-				siteId, messageBoardSection.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			mbCategory.getCompanyId(), MBCategory.class,
-			mbCategory.getCategoryId(), messageBoardSection.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toMessageBoardSection(mbCategory);
+		return _toMessageBoardSection(
+			_mbCategoryService.addCategory(
+				_user.getUserId(), parentMessageBoardSectionId,
+				messageBoardSection.getTitle(),
+				messageBoardSection.getDescription(),
+				ServiceContextUtil.createServiceContext(
+					MBCategory.class, contextCompany.getCompanyId(),
+					messageBoardSection.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
+					messageBoardSection.getViewableByAsString())));
 	}
 
 	private Page<MessageBoardSection> _getSiteMessageBoardSectionsPage(
@@ -218,8 +213,8 @@ public class MessageBoardSectionResourceImpl
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					mbCategory.getCompanyId(), MBCategory.class,
-					mbCategory.getCategoryId(),
+					mbCategory.getCompanyId(), mbCategory.getCategoryId(),
+					MBCategory.class,
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbCategory.getCreateDate();
 				dateModified = mbCategory.getModifiedDate();

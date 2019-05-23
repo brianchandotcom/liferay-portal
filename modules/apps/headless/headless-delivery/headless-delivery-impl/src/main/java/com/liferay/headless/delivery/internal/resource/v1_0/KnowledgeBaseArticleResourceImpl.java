@@ -20,7 +20,6 @@ import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.KnowledgeBaseArticleDTOConverter;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.KnowledgeBaseArticleEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -243,30 +242,27 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.updateKBArticle(
-			knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
-			knowledgeBaseArticle.getArticleBody(),
-			knowledgeBaseArticle.getDescription(), null, null, null, null,
-			ServiceContextUtil.createServiceContext(
-				Optional.ofNullable(
-					knowledgeBaseArticle.getKeywords()
-				).orElse(
-					new String[0]
-				),
-				Optional.ofNullable(
-					knowledgeBaseArticle.getTaxonomyCategoryIds()
-				).orElse(
-					new Long[0]
-				),
-				knowledgeBaseArticle.getSiteId(),
-				knowledgeBaseArticle.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			kbArticle.getCompanyId(), KBArticle.class,
-			kbArticle.getKbArticleId(), knowledgeBaseArticle.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toKBArticle(kbArticle);
+		return _toKBArticle(
+			_kbArticleService.updateKBArticle(
+				knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null, null,
+				ServiceContextUtil.createServiceContext(
+					Optional.ofNullable(
+						knowledgeBaseArticle.getKeywords()
+					).orElse(
+						new String[0]
+					),
+					Optional.ofNullable(
+						knowledgeBaseArticle.getTaxonomyCategoryIds()
+					).orElse(
+						new Long[0]
+					),
+					KBArticle.class, contextCompany.getCompanyId(),
+					knowledgeBaseArticle.getCustomFields(),
+					knowledgeBaseArticle.getSiteId(),
+					contextAcceptLanguage.getPreferredLocale(),
+					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
 	@Override
@@ -286,23 +282,20 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleService.addKBArticle(
-			KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, parentResourceClassNameId,
-			parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
-			knowledgeBaseArticle.getFriendlyUrlPath(),
-			knowledgeBaseArticle.getArticleBody(),
-			knowledgeBaseArticle.getDescription(), null, null, null,
-			ServiceContextUtil.createServiceContext(
-				knowledgeBaseArticle.getKeywords(),
-				knowledgeBaseArticle.getTaxonomyCategoryIds(), siteId,
-				knowledgeBaseArticle.getViewableByAsString()));
-
-		CustomFieldsUtil.addCustomFields(
-			kbArticle.getCompanyId(), KBArticle.class,
-			kbArticle.getKbArticleId(), knowledgeBaseArticle.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toKBArticle(kbArticle);
+		return _toKBArticle(
+			_kbArticleService.addKBArticle(
+				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, parentResourceClassNameId,
+				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getFriendlyUrlPath(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null,
+				ServiceContextUtil.createServiceContext(
+					knowledgeBaseArticle.getKeywords(),
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					KBArticle.class, contextCompany.getCompanyId(),
+					knowledgeBaseArticle.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
+					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(

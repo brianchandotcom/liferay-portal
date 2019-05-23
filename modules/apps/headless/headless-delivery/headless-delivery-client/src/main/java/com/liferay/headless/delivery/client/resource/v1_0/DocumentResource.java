@@ -178,6 +178,25 @@ public class DocumentResource {
 		return httpInvoker.invoke();
 	}
 
+	public static String getContent(String contentURL) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path("http://localhost:8080" + contentURL);
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
+
+		return content;
+	}
+
 	public static Document getDocument(Long documentId) throws Exception {
 		HttpInvoker.HttpResponse httpResponse = getDocumentHttpResponse(
 			documentId);

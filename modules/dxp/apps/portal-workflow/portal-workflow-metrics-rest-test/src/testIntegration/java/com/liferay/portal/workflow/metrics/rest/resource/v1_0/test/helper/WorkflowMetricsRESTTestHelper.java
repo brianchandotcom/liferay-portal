@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Hits;
@@ -40,6 +41,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -64,25 +66,35 @@ public class WorkflowMetricsRESTTestHelper {
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
+	public Instance addInstance(
+			long companyId, boolean completed, long processId)
+		throws Exception {
+
+		Instance instance = new Instance();
+
+		if (completed) {
+			instance.setDateCompletion(RandomTestUtil.nextDate());
+		}
+
+		instance.setId(RandomTestUtil.randomLong());
+		instance.setProcessId(processId);
+
+		return addInstance(companyId, instance);
+	}
+
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
-				companyId, instance.getId(), instance.getProcessId()));
+				companyId, instance.getDateCompletion() != null,
+				instance.getId(), instance.getProcessId()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "instanceId", instance.getId());
 
-		return new Instance() {
-			{
-				id = instance.getId();
-				processId = instance.getProcessId();
-				slaStatus = instance.getSLAStatus();
-				status = instance.getStatus();
-			}
-		};
+		return instance;
 	}
 
 	public Node addNode(
@@ -97,22 +109,18 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_retryAssertCount("workflow-metrics-nodes", "nodeId", node.getId());
 
-		return new Node() {
-			{
-				id = node.getId();
-				initial = false;
-				name = node.getName();
-				terminal = false;
-				type = "STATE";
-			}
-		};
+		return node;
 	}
 
 	public Process addProcess(long companyId) throws Exception {
 		Process process = new Process() {
 			{
 				id = RandomTestUtil.randomLong();
+				instanceCount = 0L;
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
 				title = RandomTestUtil.randomString();
+				untrackedInstanceCount = 0L;
 			}
 		};
 
@@ -125,26 +133,48 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
-				companyId, process.getId(), "1.0"));
+				companyId, process.getId(), "1.0", process.getTitle()));
 
-		_retryAssertCount(
-			"workflow-metrics-instances", "processId", process.getId());
+		Long onTimeInstanceCount = process.getOnTimeInstanceCount();
+
+		Long overdueInstanceCount = process.getOverdueInstanceCount();
+
+		for (int i = 0; i < process.getInstanceCount(); i++) {
+			Instance instance = addInstance(companyId, false, process.getId());
+
+			if (onTimeInstanceCount > 0) {
+				addSLAProcessResult(companyId, instance, true);
+
+				onTimeInstanceCount--;
+			}
+			else if (overdueInstanceCount > 0) {
+				addSLAProcessResult(companyId, instance, false);
+
+				overdueInstanceCount--;
+			}
+		}
+
 		_retryAssertCount(
 			"workflow-metrics-processes", "processId", process.getId());
-		_retryAssertCount(
-			"workflow-metrics-sla-process-results", "processId",
-			process.getId());
 
-		return new Process() {
-			{
-				id = process.getId();
-				instanceCount = 0L;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-				title = process.getTitle();
-				untrackedInstanceCount = 0L;
-			}
-		};
+		return process;
+	}
+
+	public void addSLAProcessResult(
+			long companyId, Instance instance, boolean onTime)
+		throws Exception {
+
+		long slaDefinitionId = RandomTestUtil.randomLong();
+
+		_invokeAddDocument(
+			_getIndexer(_CLASS_NAME_SLA_PROCESS_RESULT_INDEXER),
+			_creatWorkflowMetricsSLAProcessResultDocument(
+				companyId, instance.getProcessId(), instance.getId(),
+				slaDefinitionId, onTime));
+
+		_retryAssertCount(
+			"workflow-metrics-sla-process-results", "slaDefinitionId",
+			slaDefinitionId);
 	}
 
 	public Task addTask(long companyId, long processId, Task task)
@@ -162,15 +192,7 @@ public class WorkflowMetricsRESTTestHelper {
 			"workflow-metrics-sla-task-results", "taskId", taskId);
 		_retryAssertCount("workflow-metrics-tokens", "taskId", taskId);
 
-		return new Task() {
-			{
-				instanceCount = 0L;
-				key = task.getKey();
-				name = task.getName();
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
+		return task;
 	}
 
 	public void deleteInstance(long companyId, long instanceId, long processId)
@@ -179,7 +201,7 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeDeleteDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
-				companyId, instanceId, processId));
+				companyId, false, instanceId, processId));
 	}
 
 	public void deleteNode(long companyId, long processId, String name)
@@ -198,7 +220,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public void deleteProcess(long companyId, long processId) throws Exception {
 		deleteProcess(
-			_createWorkflowMetricsProcessDocument(companyId, processId, "1.0"));
+			_createWorkflowMetricsProcessDocument(
+				companyId, processId, "1.0", null));
 	}
 
 	public void deleteTask(long companyId, long processId, String taskName)
@@ -252,13 +275,23 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeUpdateDocument(
 			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
-				companyId, processId, version));
+				companyId, processId, version, null));
 
 		_retryAssertCount("workflow-metrics-processes", "processId", processId);
 	}
 
+	private Map<Locale, String> _createLocalizationMap(String title) {
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			localizationMap.put(availableLocale, title);
+		}
+
+		return localizationMap;
+	}
+
 	private Document _createWorkflowMetricsInstanceDocument(
-		long companyId, long instanceId, long processId) {
+		long companyId, boolean completed, long instanceId, long processId) {
 
 		Document document = new DocumentImpl();
 
@@ -266,7 +299,7 @@ public class WorkflowMetricsRESTTestHelper {
 			"WorkflowMetricsInstance",
 			_digest(companyId, processId, instanceId));
 		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", false);
+		document.addKeyword("completed", completed);
 		document.addDate("createDate", new Date());
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", instanceId);
@@ -298,7 +331,7 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _createWorkflowMetricsProcessDocument(
-		long companyId, long processId, String version) {
+		long companyId, long processId, String version, String title) {
 
 		Document document = new DocumentImpl();
 
@@ -309,7 +342,30 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("deleted", false);
 		document.addKeyword("name", RandomTestUtil.randomString());
 		document.addKeyword("processId", processId);
+		document.addLocalizedKeyword(
+			"title", _createLocalizationMap(title), false, true);
 		document.addKeyword("version", version);
+
+		return document;
+	}
+
+	private Document _creatWorkflowMetricsSLAProcessResultDocument(
+		long companyId, long processId, long instanceId, long slaDefinitionId,
+		boolean onTime) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsSLAProcessResult",
+			_digest(companyId, instanceId, processId, processId));
+		document.addKeyword("companyId", companyId);
+		document.addKeyword("deleted", false);
+		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
+		document.addKeyword("instanceId", instanceId);
+		document.addKeyword("onTime", onTime);
+		document.addKeyword("processId", processId);
+		document.addKeyword("slaDefinitionId", slaDefinitionId);
+		document.addKeyword("status", "RUNNING");
 
 		return document;
 	}
@@ -435,6 +491,10 @@ public class WorkflowMetricsRESTTestHelper {
 	private static final String _CLASS_NAME_PROCESS_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"ProcessWorkflowMetricsIndexer";
+
+	private static final String _CLASS_NAME_SLA_PROCESS_RESULT_INDEXER =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"SLAProcessResultWorkflowMetricsIndexer";
 
 	private static Map<String, Object> _indexers = new HashMap<>();
 

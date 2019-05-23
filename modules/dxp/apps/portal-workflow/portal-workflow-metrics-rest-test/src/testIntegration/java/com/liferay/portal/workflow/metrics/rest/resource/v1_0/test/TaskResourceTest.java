@@ -46,6 +46,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

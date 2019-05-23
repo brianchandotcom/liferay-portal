@@ -1,1 +1,7 @@
-[#if field_name??][#if field_name?is_hash][#if field_name.alt??]${field_name.alt}[/#if][/#if][/#if]
+[#if field_name??]
+    [#if field_name?is_hash]
+        [#if field_name.alt??]
+            ${field_name.alt}
+        [/#if]
+    [/#if]
+[/#if]

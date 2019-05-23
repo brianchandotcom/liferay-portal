@@ -67,6 +67,9 @@ class Sharing extends PortletBase {
 		else {
 			e.target.filteredItems = [];
 		}
+
+		e.target.refs.autocomplete._isFetching = false;
+		e.target.refs.autocomplete.refs.dataProvider.isLoading = false;
 	}
 
 	/**

@@ -306,7 +306,7 @@ definition {
 
 		WikiPage.addComment(entryComment = "Wiki Page Comment");
 
-		WikiPage.rateCommentAsGood();
+		LexiconEntry.rate(rateResult = "Thumb Up");
 
 		WikiPage.editComment(
 			entryComment = "Wiki Page Comment",
@@ -322,7 +322,13 @@ definition {
 			entryComment = "Wiki Page Comment Edited",
 			wikiPageTitle = "Wiki Page 1");
 
-		WikiPage.viewCommentRatingGood();
+		LexiconEntry.viewRate(
+			rateResult = "Thumb Up",
+			voteCount = "1");
+
+		LexiconEntry.viewRate(
+			rateResult = "Thumb Down",
+			voteCount = "0");
 	}
 
 	@priority = "5"

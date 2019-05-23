@@ -114,21 +114,6 @@ public class MemberRequestModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.invitation.invite.members.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.invitation.invite.members.model.MemberRequest"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.invitation.invite.members.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.invitation.invite.members.model.MemberRequest"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.invitation.invite.members.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.invitation.invite.members.model.MemberRequest"),
-		true);
-
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
 	public static final long KEY_COLUMN_BITMASK = 2L;
@@ -139,9 +124,13 @@ public class MemberRequestModelImpl
 
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.invitation.invite.members.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.invitation.invite.members.model.MemberRequest"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public MemberRequestModelImpl() {
 	}
@@ -638,12 +627,12 @@ public class MemberRequestModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -794,6 +783,8 @@ public class MemberRequestModelImpl
 
 	private static final Function<InvocationHandler, MemberRequest>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _memberRequestId;
 	private long _groupId;

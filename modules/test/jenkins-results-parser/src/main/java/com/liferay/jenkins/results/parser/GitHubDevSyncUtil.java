@@ -135,13 +135,15 @@ public class GitHubDevSyncUtil {
 					return cachedRemoteGitBranch;
 				}
 				catch (Exception e) {
+					String message = JenkinsResultsParserUtil.combine(
+						"Unable to fetch ", cachedBranchName, " from ",
+						gitHubDevGitRemote.getHostname());
+
 					if (retries == 3) {
-						throw new RuntimeException(
-							JenkinsResultsParserUtil.combine(
-								"Unable to fetch ", cachedBranchName,
-								" from git@github-dev.com"),
-							e);
+						throw new RuntimeException(message, e);
 					}
+
+					System.out.println("Retrying: " + message);
 				}
 				finally {
 					gitWorkingDirectory.removeGitRemote(gitHubDevGitRemote);

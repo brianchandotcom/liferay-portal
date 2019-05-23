@@ -493,12 +493,44 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPutDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document postDocument = testPutDocument_addDocument();
+
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document putDocument = testPutDocument_putDocument(
+			postDocument.getId(), randomDocument,
+			multipartFiles);
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument = DocumentResource.getDocument(
+			postDocument.getId());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+
+		String content = DocumentResource.getContent(
+			getDocument.getContentUrl());
+
+		String expectedContent = new String(
+			FileUtil.getBytes(multipartFiles.get("file")));
+
+		Assert.assertEquals(content, expectedContent);
 	}
 
 	protected Document testPutDocument_addDocument() throws Exception {
 		return DocumentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	protected Document testPutDocument_putDocument(
+			Long documentId, Document document, Map<String, File> files)
+		throws Exception {
+
+		return DocumentResource.putDocument(documentId, document, files);
 	}
 
 	@Test

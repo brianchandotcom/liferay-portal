@@ -3247,7 +3247,7 @@ AUI.add(
 						fields.splice(newIndex, 0, fields.splice(oldIndex, 1)[0]);
 					},
 
-					populateBlankLocalizationMap(defaultLocale, originalField, repeatedField) {
+					populateBlankLocalizationMap: function(defaultLocale, originalField, repeatedField) {
 						var instance = this;
 
 						var newFieldLocalizations = repeatedField.get('localizationMap');

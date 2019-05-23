@@ -7,6 +7,11 @@
 */
 +function($) {
 	/**
+	 * Map from toggler DOM nodes to sidenav instances.
+	 */
+	var INSTANCE_MAP = new WeakMap();
+
+	/**
 	 * Utility function that strips off a possible jQuery and Metal
 	 * component wrappers from a DOM element.
 	 */
@@ -265,7 +270,7 @@
 
 			// Remove Side Navigation
 
-			$container.data('lexicon.sidenav', null);
+			INSTANCE_MAP.delete(this.$toggler.get(0));
 		},
 
 		hide: function() {
@@ -1034,7 +1039,8 @@
 	};
 
 	var initialize = function($toggler, options) {
-		var data = $toggler.data('lexicon.sidenav');
+		var toggler = $toggler.get(0);
+		var data = INSTANCE_MAP.get(toggler);
 
 		if (!data) {
 			if (!options) {
@@ -1043,7 +1049,7 @@
 
 			data = new SideNavigation($toggler, options);
 
-			$toggler.data('lexicon.sidenav', data);
+			INSTANCE_MAP.set(toggler, data);
 		}
 
 		return data;
@@ -1060,9 +1066,7 @@
 		if (methodCall) {
 			this.each(
 				function() {
-					var $this = $(this);
-
-					var data = $this.data('lexicon.sidenav');
+					var data = INSTANCE_MAP.get(this);
 
 					if (data) {
 						if (returnInstance) {

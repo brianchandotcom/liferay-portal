@@ -110,6 +110,10 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), draftLayout,
+				ActionKeys.UPDATE);
+
+			LayoutPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);

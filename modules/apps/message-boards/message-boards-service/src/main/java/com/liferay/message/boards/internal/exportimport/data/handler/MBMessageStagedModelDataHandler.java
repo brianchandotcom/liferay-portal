@@ -56,9 +56,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -341,37 +338,14 @@ public class MBMessageStagedModelDataHandler
 								message.getBody(), serviceContext);
 					}
 					else {
-						Stream<ObjectValuePair<String, InputStream>>
-							objectValuePairStream = inputStreamOVPs.stream();
-
-						Set<String> incomingFileNames =
-							objectValuePairStream.map(
-								ObjectValuePair::getKey
-							).collect(
-								Collectors.toSet()
-							);
-
-						List<FileEntry> portletFileEntries =
+						List<FileEntry> fileEntries =
 							PortletFileRepositoryUtil.getPortletFileEntries(
 								existingMessage.getGroupId(),
 								existingMessage.getAttachmentsFolderId());
 
-						Stream<FileEntry> portletFileEntryStream =
-							portletFileEntries.stream();
-
-						List<Long> updatedFileEntryIds =
-							portletFileEntryStream.filter(
-								fileEntry -> incomingFileNames.contains(
-									fileEntry.getFileName())
-							).map(
-								FileEntry::getFileEntryId
-							).collect(
-								Collectors.toList()
-							);
-
-						for (Long fileEntryId : updatedFileEntryIds) {
+						for (FileEntry fileEntry : fileEntries) {
 							PortletFileRepositoryUtil.deletePortletFileEntry(
-								fileEntryId);
+								fileEntry.getFileEntryId());
 						}
 
 						importedMessage = _mbMessageLocalService.updateMessage(

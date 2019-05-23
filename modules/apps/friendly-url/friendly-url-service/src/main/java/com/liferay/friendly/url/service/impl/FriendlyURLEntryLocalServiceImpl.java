@@ -22,6 +22,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -34,16 +35,22 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	property = "model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry",
+	service = AopService.class
+)
 public class FriendlyURLEntryLocalServiceImpl
 	extends FriendlyURLEntryLocalServiceBaseImpl {
 
@@ -563,7 +570,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

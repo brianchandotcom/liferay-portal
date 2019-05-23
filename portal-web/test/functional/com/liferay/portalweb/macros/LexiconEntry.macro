@@ -136,6 +136,13 @@ definition {
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
+	macro rate {
+		var key_rateResult = StringUtil.replace("${rateResult}", " ", "-");
+		var key_rateResult = StringUtil.lowerCase("${key_rateResult}");
+
+		Click(locator1 = "Ratings#RATE_THUMB");
+	}
+
 	macro selectEntry {
 		Check(
 			key_rowEntry = "${rowEntry}",

@@ -659,8 +659,9 @@ public class MBMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.message.boards.model.MBMessage getLastThreadMessage(
-		long threadId, int status)
+			long threadId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _mbMessageLocalService.getLastThreadMessage(threadId, status);
 	}
 

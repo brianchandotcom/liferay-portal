@@ -58,6 +58,8 @@ public class Context {
 
 	public static final String USER_AGENT = "userAgent";
 
+	public static final String USER_ID = "userId";
+
 	public Serializable get(String key) {
 		return _map.get(key);
 	}

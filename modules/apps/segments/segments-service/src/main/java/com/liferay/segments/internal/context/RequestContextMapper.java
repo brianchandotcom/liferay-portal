@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -141,6 +142,8 @@ public class RequestContextMapper {
 
 		context.put(Context.USER_AGENT, userAgent);
 
+		context.put(Context.USER_ID, _getUserId(httpServletRequest));
+
 		for (RequestContextContributor requestContextContributor :
 				_requestContextContributorServiceTrackerMap.values()) {
 
@@ -186,6 +189,25 @@ public class RequestContextMapper {
 			c -> c.getName() + "=" + c.getValue()
 		).toArray(
 			String[]::new
+		);
+	}
+
+	private String _getUserId(HttpServletRequest httpServletRequest) {
+		Cookie[] cookies = httpServletRequest.getCookies();
+
+		if (ArrayUtil.isEmpty(cookies)) {
+			return StringPool.BLANK;
+		}
+
+		return Stream.of(
+			cookies
+		).filter(
+			cookie -> Objects.equals(cookie.getName(), Context.USER_ID)
+		).map(
+			Cookie::getValue
+		).findFirst(
+		).orElse(
+			StringPool.BLANK
 		);
 	}
 

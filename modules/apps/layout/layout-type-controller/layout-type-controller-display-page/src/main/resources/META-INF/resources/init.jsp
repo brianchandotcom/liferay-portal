@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

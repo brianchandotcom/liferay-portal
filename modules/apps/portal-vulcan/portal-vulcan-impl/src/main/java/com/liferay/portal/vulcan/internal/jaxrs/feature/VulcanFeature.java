@@ -26,6 +26,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.internal.fields.nested.filter.NestedFieldsFilter;
 import com.liferay.portal.vulcan.internal.fields.nested.interceptor.NestedFieldsWriteInterceptor;
+import com.liferay.portal.vulcan.internal.fields.param.converter.provider.DateParameterConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ServiceEventsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.SiteValidatorContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.TransactionContainerRequestFilter;
@@ -86,6 +87,7 @@ public class VulcanFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
+		featureContext.register(DateParameterConverterProvider.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
 		featureContext.register(JacksonJsonProvider.class);
 		featureContext.register(JacksonXMLProvider.class);

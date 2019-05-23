@@ -170,7 +170,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
+			userId, groupId, true, 0, titleMap, titleMap, null, null, null,
 			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 

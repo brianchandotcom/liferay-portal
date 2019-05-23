@@ -398,12 +398,10 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 					for (DDMStructure ddmStructure : ddmStructures) {
 						DDMFormValues ddmFormValues = null;
 
-						try {
-							DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersion.getFileVersionId());
+						DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(ddmStructure.getStructureId(), fileVersion.getFileVersionId());
 
+						if (fileEntryMetadata != null) {
 							ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
-						}
-						catch (Exception e) {
 						}
 
 						if (ddmFormValues != null) {

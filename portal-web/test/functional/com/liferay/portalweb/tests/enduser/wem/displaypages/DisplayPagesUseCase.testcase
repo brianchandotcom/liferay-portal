@@ -21,7 +21,7 @@ definition {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
-		task ("Navigate to Build > Pages > Display Pages") {
+		task ("Navigate to Build > Pages > Display Page Templates") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}

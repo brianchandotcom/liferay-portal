@@ -275,8 +275,7 @@ public interface KBArticleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticleByUrlTitle(
-			long groupId, String kbFolderUrlTitle, String urlTitle)
-		throws PortalException;
+		long groupId, String kbFolderUrlTitle, String urlTitle);
 
 	/**
 	 * Returns the kb article matching the UUID and group.

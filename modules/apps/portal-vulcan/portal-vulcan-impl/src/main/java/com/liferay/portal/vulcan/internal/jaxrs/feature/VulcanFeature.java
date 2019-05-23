@@ -53,6 +53,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessag
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
+import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -85,6 +86,7 @@ public class VulcanFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
+		featureContext.register(DateParamConverterProvider.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
 		featureContext.register(JacksonJsonProvider.class);
 		featureContext.register(JacksonXMLProvider.class);

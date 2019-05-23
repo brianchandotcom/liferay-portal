@@ -116,19 +116,6 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkGreedyOption(
-		DetailAST annotationDetailAST, String policyName) {
-
-		String policyOptionName = _getAnnotationMemberValue(
-			annotationDetailAST, "policyOption", _POLICY_OPTION_RELUCTANT);
-
-		if (policyOptionName.endsWith(_POLICY_OPTION_GREEDY) &&
-			policyName.endsWith(_POLICY_STATIC)) {
-
-			log(annotationDetailAST, _MSG_INCORRECT_GREEDY_POLICY_OPTION);
-		}
-	}
-
 	private void _checkReferenceAnnotation(DetailAST detailAST) {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Reference");
@@ -139,8 +126,6 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		String policyName = _getAnnotationMemberValue(
 			annotationDetailAST, "policy", _POLICY_STATIC);
-
-		_checkGreedyOption(annotationDetailAST, policyName);
 
 		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
 			_checkVolatileVariable(detailAST, policyName);
@@ -304,9 +289,6 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		return sb.toString();
 	}
 
-	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
-		"greedy.policy.option.incorrect";
-
 	private static final String _MSG_MISSING_DYNAMIC_POLICY_UNBIND =
 		"unbind.dynamic.policy.missing";
 
@@ -323,10 +305,6 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private static final String _NO_UNBIND = "\"-\"";
 
 	private static final String _POLICY_DYNAMIC = "DYNAMIC";
-
-	private static final String _POLICY_OPTION_GREEDY = "GREEDY";
-
-	private static final String _POLICY_OPTION_RELUCTANT = "RELUCTANT";
 
 	private static final String _POLICY_STATIC = "STATIC";
 

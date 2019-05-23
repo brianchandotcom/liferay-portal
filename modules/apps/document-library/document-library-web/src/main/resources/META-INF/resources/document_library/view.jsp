@@ -61,7 +61,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 			portletURL="<%= restoreTrashEntriesURL %>"
 		/>
 
-		<%@ include file="/document_library/navigation.jspf" %>
+		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 

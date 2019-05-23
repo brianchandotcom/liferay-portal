@@ -14,8 +14,22 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
-long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId", scopeGroupId);
+long repositoryId = ParamUtil.getLong(request, "repositoryId");
+
+if (repositoryId == 0) {
+	repositoryId = scopeGroupId;
+}
+
+long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId");
+
+if (searchRepositoryId == 0) {
+	searchRepositoryId = scopeGroupId;
+}
+
+long folderId = ParamUtil.getLong(request, "folderId");
 
 String keywords = ParamUtil.getString(request, "keywords");
 

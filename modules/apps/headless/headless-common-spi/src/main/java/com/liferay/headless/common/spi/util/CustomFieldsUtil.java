@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.common.spi.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Array;
 
-import java.text.DateFormat;
-
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -38,48 +33,8 @@ import java.util.Map;
  */
 public class CustomFieldsUtil {
 
-	public static void addCustomFields(
-			long companyId, Class<?> clazz, long classPK,
-			Map<String, Object> expandoAttributes, Locale locale)
-		throws Exception {
-
-		if (expandoAttributes == null) {
-			return;
-		}
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			companyId, clazz.getName(), classPK);
-
-		for (Map.Entry<String, Object> entry : expandoAttributes.entrySet()) {
-			String key = entry.getKey();
-
-			int attributeType = expandoBridge.getAttributeType(key);
-
-			if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
-				expandoBridge.setAttribute(
-					key,
-					(Serializable)LocalizedMapUtil.merge(
-						(Map)expandoBridge.getAttribute(key),
-						new AbstractMap.SimpleEntry<>(
-							locale,
-							String.valueOf(expandoAttributes.get(key)))));
-			}
-			else if (ExpandoColumnConstants.DATE == attributeType) {
-				DateFormat dateFormat =
-					DateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-				expandoBridge.setAttribute(
-					key, dateFormat.parse((String)entry.getValue()));
-			}
-			else {
-				expandoBridge.setAttribute(key, (Serializable)entry.getValue());
-			}
-		}
-	}
-
 	public static Map<String, Object> toCustomFields(
-		long companyId, Class<?> clazz, long classPK, Locale locale) {
+		long companyId, long classPK, Class<?> clazz, Locale locale) {
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, clazz.getName(), classPK);

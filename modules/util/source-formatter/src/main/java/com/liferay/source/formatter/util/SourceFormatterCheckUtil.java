@@ -183,8 +183,8 @@ public class SourceFormatterCheckUtil {
 			return value;
 		}
 
+		boolean cacheValue = true;
 		String closestPropertiesFileLocation = null;
-		boolean hasSubdirectoryValue = false;
 
 		Iterator<String> keys = jsonObject.keys();
 
@@ -214,7 +214,7 @@ public class SourceFormatterCheckUtil {
 				baseDirName);
 
 			if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-				hasSubdirectoryValue = true;
+				cacheValue = false;
 			}
 
 			if (!absolutePath.startsWith(fileLocation) &&
@@ -237,7 +237,7 @@ public class SourceFormatterCheckUtil {
 			value = defaultValue;
 		}
 
-		if (!hasSubdirectoryValue) {
+		if (cacheValue) {
 			cachedValuesMap.put(key, value);
 		}
 
@@ -261,7 +261,7 @@ public class SourceFormatterCheckUtil {
 
 		values = new ArrayList<>();
 
-		boolean hasSubdirectoryValues = false;
+		boolean cacheValues = true;
 
 		Iterator<String> keys = jsonObject.keys();
 
@@ -280,7 +280,7 @@ public class SourceFormatterCheckUtil {
 					baseDirName);
 
 				if (fileLocation.length() > baseDirNameAbsolutePath.length()) {
-					hasSubdirectoryValues = true;
+					cacheValues = false;
 				}
 
 				if (!absolutePath.startsWith(fileLocation)) {
@@ -291,7 +291,7 @@ public class SourceFormatterCheckUtil {
 			values.addAll(curValues);
 		}
 
-		if (!hasSubdirectoryValues) {
+		if (cacheValues) {
 			cachedValuesMap.put(key, values);
 		}
 

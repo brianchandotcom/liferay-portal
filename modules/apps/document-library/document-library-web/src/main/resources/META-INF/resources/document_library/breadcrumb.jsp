@@ -14,7 +14,11 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
+Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+
 DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
 %>
 

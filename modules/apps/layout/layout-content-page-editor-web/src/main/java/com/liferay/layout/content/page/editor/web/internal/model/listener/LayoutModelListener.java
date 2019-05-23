@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
+import com.liferay.asset.model.AssetEntryUsage;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -34,9 +36,11 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,6 +141,22 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 			draftLayout.getLayoutId(), draftLayout.getTypeSettings());
 
+		List<AssetEntryUsage> assetEntryUsages =
+			_assetEntryUsageLocalService.getAssetEntryUsagesByPlid(
+				layoutPageTemplateEntry.getPlid());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		assetEntryUsages.forEach(
+			assetEntryUsage -> {
+				_assetEntryUsageLocalService.addAssetEntryUsage(
+					assetEntryUsage.getGroupId(),
+					assetEntryUsage.getAssetEntryId(),
+					assetEntryUsage.getContainerType(),
+					assetEntryUsage.getContainerKey(), layout.getPlid(),
+					serviceContext);
+			});
+
 		return null;
 	}
 
@@ -177,6 +197,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutModelListener.class);
+
+	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

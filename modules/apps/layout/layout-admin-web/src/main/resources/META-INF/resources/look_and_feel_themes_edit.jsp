@@ -30,7 +30,7 @@ else {
 }
 %>
 
-<h4 class="text-default"><liferay-ui:message key="current-theme" /></h4>
+<h1 class="h4 text-default"><liferay-ui:message key="current-theme" /></h1>
 
 <div class="card-horizontal main-content-card">
 	<div class="card-row card-row-padded">

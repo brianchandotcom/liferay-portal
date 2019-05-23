@@ -179,6 +179,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public JSONArray getStructureJSONArray() throws PortalException {
+		if (_structureJSONArray != null) {
+			return _structureJSONArray;
+		}
+
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			getInfoDisplayObjectProvider();
 
@@ -208,7 +212,9 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-		return dataJSONObject.getJSONArray("structure");
+		_structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+		return _structureJSONArray;
 	}
 
 	private final HttpServletRequest _httpServletRequest;
@@ -216,5 +222,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	private Map<Long, Map<String, Object>> _infoDisplayFieldsValuesMap =
 		new HashMap<>();
 	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
+	private JSONArray _structureJSONArray;
 
 }

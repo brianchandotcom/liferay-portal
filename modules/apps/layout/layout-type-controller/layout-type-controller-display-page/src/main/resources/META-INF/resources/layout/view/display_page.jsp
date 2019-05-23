@@ -55,8 +55,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		AssetRendererFactory assetRendererFactory = displayPageLayoutTypeControllerDisplayContext.getAssetRendererFactory();
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider = displayPageLayoutTypeControllerDisplayContext.getInfoDisplayObjectProvider();
-
-		JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray();
 		%>
 
 		<c:if test="<%= assetRendererFactory != null %>">
@@ -64,7 +62,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= structureJSONArray != null %>">
+			<c:when test="<%= displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray() != null %>">
 
 				<%
 				String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
@@ -76,6 +74,8 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 					<div class="layout-content" id="main-content" role="main">
 
 						<%
+						JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray();
+
 						for (int i = 0; i < structureJSONArray.length(); i++) {
 							JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 

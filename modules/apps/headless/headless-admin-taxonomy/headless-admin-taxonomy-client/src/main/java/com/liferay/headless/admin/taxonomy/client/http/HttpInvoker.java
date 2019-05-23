@@ -63,6 +63,8 @@ public class HttpInvoker {
 		return this;
 	}
 
+	private Map<String, String> _headers = new LinkedHashMap<>();
+
 	public HttpInvoker httpMethod(HttpMethod httpMethod) {
 		_httpMethod = httpMethod;
 
@@ -271,38 +273,10 @@ public class HttpInvoker {
 		return sb.toString();
 	}
 
-	private HttpURLConnection _openHttpURLConnection() throws IOException {
-		String urlString = _path;
+	public HttpInvoker header(String name, String value) {
+		_headers.put(name, value);
 
-		String queryString = _getQueryString();
-
-		if (queryString.length() > 0) {
-			if (!urlString.contains("?")) {
-				urlString += "?";
-			}
-
-			urlString += queryString;
-		}
-
-		URL url = new URL(urlString);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod(_httpMethod.name());
-
-		if (_encodedUserNameAndPassword != null) {
-			httpURLConnection.setRequestProperty(
-				"Authorization", "Basic " + _encodedUserNameAndPassword);
-		}
-
-		if (_contentType != null) {
-			httpURLConnection.setRequestProperty("Content-Type", _contentType);
-		}
-
-		_writeBody(httpURLConnection);
-
-		return httpURLConnection;
+		return this;
 	}
 
 	private String _readResponse(HttpURLConnection httpURLConnection)
@@ -394,6 +368,45 @@ public class HttpInvoker {
 	private String _contentType;
 	private String _encodedUserNameAndPassword;
 	private Map<String, File> _files = new LinkedHashMap<>();
+
+	private HttpURLConnection _openHttpURLConnection() throws IOException {
+		String urlString = _path;
+
+		String queryString = _getQueryString();
+
+		if (queryString.length() > 0) {
+			if (!urlString.contains("?")) {
+				urlString += "?";
+			}
+
+			urlString += queryString;
+		}
+
+		URL url = new URL(urlString);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestMethod(_httpMethod.name());
+
+		for (Map.Entry<String, String> header : _headers.entrySet()) {
+			httpURLConnection.setRequestProperty(
+				header.getKey(), header.getValue());
+		}
+
+		if (_encodedUserNameAndPassword != null) {
+			httpURLConnection.setRequestProperty(
+				"Authorization", "Basic " + _encodedUserNameAndPassword);
+		}
+
+		if (_contentType != null) {
+			httpURLConnection.setRequestProperty("Content-Type", _contentType);
+		}
+
+		_writeBody(httpURLConnection);
+
+		return httpURLConnection;
+	}
 	private HttpMethod _httpMethod = HttpMethod.GET;
 	private String _multipartBoundary;
 	private Map<String, String> _parameters = new LinkedHashMap<>();

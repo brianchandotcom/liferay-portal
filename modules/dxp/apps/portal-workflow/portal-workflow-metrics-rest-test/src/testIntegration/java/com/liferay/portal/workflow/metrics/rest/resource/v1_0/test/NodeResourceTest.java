@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -56,20 +55,12 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		_process = _workflowMetricsRESTTestHelper.addProcess(
 			testGroup.getCompanyId());
-
-		_singleApproverDocument =
-			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
-				testGroup.getCompanyId());
-
-		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
 
 		if (_process == null) {
 			return;
@@ -169,7 +160,6 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	@Inject
 	private static SearchEngineAdapter _searchEngineAdapter;
 
-	private static Document _singleApproverDocument;
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 	private List<Node> _nodes = new ArrayList<>();

@@ -80,13 +80,24 @@ public class DBInspector {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 				#hasColumnType(String, String, String)}
+	 */
+	@Deprecated
 	public boolean hasColumnType(
 			Class<?> tableClass, String columnName, String columnType)
 		throws Exception {
 
 		Field tableNameField = tableClass.getField("TABLE_NAME");
 
-		String tableName = (String)tableNameField.get(null);
+		return hasColumnType(
+			(String)tableNameField.get(null), columnName, columnType);
+	}
+
+	public boolean hasColumnType(
+			String tableName, String columnName, String columnType)
+		throws Exception {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 

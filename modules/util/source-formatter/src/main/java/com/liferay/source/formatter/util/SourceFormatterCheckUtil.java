@@ -27,12 +27,10 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -121,32 +119,6 @@ public class SourceFormatterCheckUtil {
 		}
 
 		return attributesJSONObject;
-	}
-
-	public static List<String> getAttributeNames(
-		CheckType checkType, String checkName,
-		Map<String, Properties> propertiesMap) {
-
-		String keyPrefix = _getKeyPrefix(checkType, checkName);
-
-		Set<String> attributeNames = new HashSet<>();
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			Properties properties = entry.getValue();
-
-			for (Object key : properties.keySet()) {
-				String s = (String)key;
-
-				if (s.startsWith(keyPrefix)) {
-					String attributeName = StringUtil.replaceFirst(
-						s, keyPrefix, StringPool.BLANK);
-
-					attributeNames.add(attributeName);
-				}
-			}
-		}
-
-		return ListUtil.fromCollection(attributeNames);
 	}
 
 	public static JSONObject getExcludesJSONObject(

@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Segmentation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Segmentation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[@data-testid='localized-main-input']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CRITERION_INPUT</td>
+	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CRITERION_INPUT_OPTION</td>
+	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]/option[.='${key_criterionInputOption}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_SEARCH</td>
+	<td>//input[@data-testid='search-input']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_TYPE</td>
+	<td>//*[contains(@class, 'criteria-sidebar-item-root') and contains(text(),'${key_propertyOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION</td>
+	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_LIST</td>
+	<td>//*[@id='_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntriesSearchContainer']//td</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

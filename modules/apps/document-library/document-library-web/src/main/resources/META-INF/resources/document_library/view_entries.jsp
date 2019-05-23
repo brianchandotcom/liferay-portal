@@ -14,16 +14,26 @@
  */
 --%>
 
+<%@ include file="/document_library/init.jsp" %>
+
 <%
+String navigation = ParamUtil.getString(request, "navigation", "home");
+
 String currentFolder = ParamUtil.getString(request, "curFolder");
 String deltaFolder = ParamUtil.getString(request, "deltaFolder");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+
+String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder");
-
-portletURL.setParameter("navigation", GetterUtil.getString(navigation, "home"));
-
+portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -36,6 +46,10 @@ entriesChecker.setRememberCheckBoxStateURLRegex(dlAdminDisplayContext.getRemembe
 
 EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 
+String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
 if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != rootFolderId)) {
 	String redirect = ParamUtil.getString(request, "redirect");
 
@@ -43,6 +57,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
 	}
+
+	Folder folder = DLAppServiceUtil.getFolder(folderId);
 
 	renderResponse.setTitle(folder.getName());
 }

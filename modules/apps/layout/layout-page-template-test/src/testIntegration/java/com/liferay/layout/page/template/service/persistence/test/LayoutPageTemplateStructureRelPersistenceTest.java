@@ -293,7 +293,7 @@ public class LayoutPageTemplateStructureRelPersistenceTest {
 			"layoutPageTemplateStructureRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "layoutPageTemplateStructureId", true,
-			"segmentsExperienceId", true, "data", true);
+			"segmentsExperienceId", true);
 	}
 
 	@Test

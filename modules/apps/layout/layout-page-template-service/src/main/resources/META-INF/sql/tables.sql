@@ -61,5 +61,5 @@ create table LayoutPageTemplateStructureRel (
 	modifiedDate DATE null,
 	layoutPageTemplateStructureId LONG,
 	segmentsExperienceId LONG,
-	data_ STRING null
+	data_ TEXT null
 );

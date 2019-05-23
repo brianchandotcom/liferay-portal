@@ -84,10 +84,10 @@ public class FragmentEntryLinkModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"originalFragmentEntryLinkId", Types.BIGINT},
 		{"fragmentEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"css", Types.VARCHAR},
-		{"html", Types.VARCHAR}, {"js", Types.VARCHAR},
-		{"editableValues", Types.VARCHAR}, {"namespace", Types.VARCHAR},
-		{"position", Types.INTEGER}, {"rendererKey", Types.VARCHAR},
+		{"classPK", Types.BIGINT}, {"css", Types.CLOB}, {"html", Types.CLOB},
+		{"js", Types.CLOB}, {"editableValues", Types.CLOB},
+		{"namespace", Types.VARCHAR}, {"position", Types.INTEGER},
+		{"rendererKey", Types.VARCHAR},
 		{"lastPropagationDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -108,10 +108,10 @@ public class FragmentEntryLinkModelImpl
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("html", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("js", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("editableValues", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("rendererKey", Types.VARCHAR);
@@ -120,7 +120,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css STRING null,html STRING null,js STRING null,editableValues STRING null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
+		"create table FragmentEntryLink (uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 

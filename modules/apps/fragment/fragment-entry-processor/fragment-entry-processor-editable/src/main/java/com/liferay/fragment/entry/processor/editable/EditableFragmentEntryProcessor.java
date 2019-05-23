@@ -351,8 +351,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
-			new StringTemplateResource("template_id", "[#ftl]\n" + html),
-			false);
+			new StringTemplateResource("template_id", "[#ftl]\n" + html), true);
 
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(

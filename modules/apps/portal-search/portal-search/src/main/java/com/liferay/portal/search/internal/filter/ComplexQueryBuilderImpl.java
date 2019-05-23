@@ -142,11 +142,7 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return null;
 			}
 
-			String field = GetterUtil.getString(complexQueryPart.getField());
-			String type = GetterUtil.getString(complexQueryPart.getType());
-			String value = GetterUtil.getString(complexQueryPart.getValue());
-
-			Query query = buildQuery(type, field, value);
+			Query query = getQuery(complexQueryPart);
 
 			if (query == null) {
 				return null;
@@ -299,6 +295,18 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 			}
 
 			return getRootBooleanQuery();
+		}
+
+		protected Query getQuery(ComplexQueryPart complexQueryPart) {
+			if (complexQueryPart.getQuery() != null) {
+				return complexQueryPart.getQuery();
+			}
+
+			String field = GetterUtil.getString(complexQueryPart.getField());
+			String type = GetterUtil.getString(complexQueryPart.getType());
+			String value = GetterUtil.getString(complexQueryPart.getValue());
+
+			return buildQuery(type, field, value);
 		}
 
 		protected BooleanQuery getRootBooleanQuery() {

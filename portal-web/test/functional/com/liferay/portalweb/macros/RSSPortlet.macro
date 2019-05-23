@@ -19,7 +19,7 @@ definition {
 		if ("${feedType}" == "file") {
 			Type(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "file://");
+				value1 = "file:////");
 
 			UploadCommonFile(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",

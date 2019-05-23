@@ -92,6 +92,10 @@ components:
                             type: array
                     readOnly: true
                     type: object
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The organization's creation date.
                     format: date-time
@@ -459,6 +463,10 @@ components:
                                 $ref: "#/components/schemas/WebUrl"
                             readOnly: true
                             type: array
+                    type: object
+                customFields:
+                    additionalProperties:
+                        type: object
                     type: object
                 dashboardURL:
                     description: A relative URL to the user's dashboard.

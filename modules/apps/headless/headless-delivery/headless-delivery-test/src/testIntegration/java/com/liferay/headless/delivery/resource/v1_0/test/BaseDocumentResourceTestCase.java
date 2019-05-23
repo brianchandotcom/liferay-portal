@@ -483,12 +483,46 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPatchDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document postDocument = testPatchDocument_addDocument();
+
+		Document randomPatchDocument = randomPatchDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document patchDocument = testPatchDocument_patchDocument(
+			postDocument.getId(), randomPatchDocument, multipartFiles);
+
+		Document expectedPatchDocument =
+			(Document)BeanUtils.cloneBean(postDocument);
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchDocument, randomPatchDocument);
+
+		Document getDocument = DocumentResource.getDocument(
+			patchDocument.getId());
+
+		assertEquals(expectedPatchDocument, getDocument);
+		assertValid(getDocument);
+
+		String content = DocumentResource.getContent(
+			getDocument.getContentUrl());
+
+		String expectedContent = new String(
+			FileUtil.getBytes(multipartFiles.get("file")));
+
+		Assert.assertEquals(content, expectedContent);
 	}
 
 	protected Document testPatchDocument_addDocument() throws Exception {
 		return DocumentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	protected Document testPatchDocument_patchDocument(
+			Long documentId, Document document, Map<String, File> files)
+		throws Exception {
+
+		return DocumentResource.patchDocument(documentId, document, files);
 	}
 
 	@Test

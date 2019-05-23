@@ -105,7 +105,7 @@ public class CheckstyleUtil {
 				continue;
 			}
 
-			checkNames.add(checkName);
+			checkNames.add(checkSimpleName);
 
 			DefaultConfiguration defaultConfiguration =
 				new DefaultConfiguration(checkName);

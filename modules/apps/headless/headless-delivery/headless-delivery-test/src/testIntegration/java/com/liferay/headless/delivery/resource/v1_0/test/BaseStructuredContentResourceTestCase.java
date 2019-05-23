@@ -1168,11 +1168,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			StructuredContentResource.getStructuredContentHttpResponse(
-				structuredContent.getId()));
+				structuredContent.getId(), testLocale));
 
 		assertHttpResponseStatusCode(
 			404,
-			StructuredContentResource.getStructuredContentHttpResponse(0L));
+			StructuredContentResource.getStructuredContentHttpResponse(
+				0L, testLocale));
 	}
 
 	protected StructuredContent
@@ -1190,7 +1191,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent getStructuredContent =
 			StructuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
+				postStructuredContent.getId(), testLocale);
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
@@ -1223,7 +1224,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent getStructuredContent =
 			StructuredContentResource.getStructuredContent(
-				patchStructuredContent.getId());
+				patchStructuredContent.getId(), testLocale);
 
 		assertEquals(expectedPatchStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
@@ -1246,14 +1247,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent putStructuredContent =
 			StructuredContentResource.putStructuredContent(
-				postStructuredContent.getId(), randomStructuredContent);
+				postStructuredContent.getId(), randomStructuredContent,
+				testLocale);
 
 		assertEquals(randomStructuredContent, putStructuredContent);
 		assertValid(putStructuredContent);
 
 		StructuredContent getStructuredContent =
 			StructuredContentResource.getStructuredContent(
-				putStructuredContent.getId());
+				putStructuredContent.getId(), testLocale);
 
 		assertEquals(randomStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);

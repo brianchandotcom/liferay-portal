@@ -49,6 +49,12 @@ public class HttpInvoker {
 		return this;
 	}
 
+	public HttpInvoker header(String name, String value) {
+		_headers.put(name, value);
+
+		return this;
+	}
+
 	public HttpInvoker httpMethod(HttpMethod httpMethod) {
 		_httpMethod = httpMethod;
 
@@ -270,6 +276,11 @@ public class HttpInvoker {
 
 		httpURLConnection.setRequestMethod(_httpMethod.name());
 
+		for (Map.Entry<String, String> header : _headers.entrySet()) {
+			httpURLConnection.setRequestProperty(
+				header.getKey(), header.getValue());
+		}
+
 		if (_encodedUserNameAndPassword != null) {
 			httpURLConnection.setRequestProperty(
 				"Authorization", "Basic " + _encodedUserNameAndPassword);
@@ -368,6 +379,7 @@ public class HttpInvoker {
 	private String _contentType;
 	private String _encodedUserNameAndPassword;
 	private Map<String, File> _files = new LinkedHashMap<>();
+	private Map<String, String> _headers = new LinkedHashMap<>();
 	private HttpMethod _httpMethod = HttpMethod.GET;
 	private String _multipartBoundary;
 	private Map<String, String> _parameters = new LinkedHashMap<>();

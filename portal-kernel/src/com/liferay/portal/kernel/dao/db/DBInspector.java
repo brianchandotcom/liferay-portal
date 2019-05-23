@@ -111,13 +111,11 @@ public class DBInspector {
 
 			Integer expectedColumnDataType = _getColumnDataType(columnType);
 
-			if (expectedColumnDataType == null) {
-				return false;
-			}
-
 			int actualColumnDataType = rs.getInt("DATA_TYPE");
 
-			if (expectedColumnDataType != actualColumnDataType) {
+			if ((expectedColumnDataType == null) ||
+				(expectedColumnDataType != actualColumnDataType)) {
+
 				return false;
 			}
 

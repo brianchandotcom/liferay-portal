@@ -79,23 +79,27 @@ public class ServiceComponentLocalServiceTest {
 		ServiceComponent serviceComponent = addServiceComponent(
 			_SERVICE_COMPONENT_1, 2);
 
-		List<ServiceComponent> serviceComponents =
-			_serviceComponentLocalService.getLatestServiceComponents();
+		try {
+			List<ServiceComponent> serviceComponents =
+				_serviceComponentLocalService.getLatestServiceComponents();
 
-		Assert.assertEquals(
-			2, serviceComponents.size() - _serviceComponentsCount);
+			Assert.assertEquals(
+				2, serviceComponents.size() - _serviceComponentsCount);
 
-		ServiceComponent latestServiceComponent = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_1);
+			ServiceComponent latestServiceComponent = getServiceComponent(
+				serviceComponents, _SERVICE_COMPONENT_1);
 
-		Assert.assertEquals(2, latestServiceComponent.getBuildNumber());
+			Assert.assertEquals(2, latestServiceComponent.getBuildNumber());
 
-		latestServiceComponent = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_2);
+			latestServiceComponent = getServiceComponent(
+				serviceComponents, _SERVICE_COMPONENT_2);
 
-		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
-
-		_serviceComponentLocalService.deleteServiceComponent(serviceComponent);
+			Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+		}
+		finally {
+			_serviceComponentLocalService.deleteServiceComponent(
+				serviceComponent);
+		}
 	}
 
 	@Test

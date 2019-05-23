@@ -174,6 +174,10 @@ public class ModelListenerRegistrationUtil {
 
 			if (modelListeners != null) {
 				modelListeners.remove(modelListener);
+
+				if (modelListeners.isEmpty()) {
+					_modelListeners.remove(modelClass);
+				}
 			}
 		}
 

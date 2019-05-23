@@ -12,6 +12,7 @@
 	{@param spritemap: string}
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
+	{@param? _handleDataChange: any}
 	{@param? _handleEmailAddressAdded: any}
 	{@param? _handleEmailAddressInputChange: any}
 	{@param? _handleEmailAddressRemoved: any}
@@ -35,6 +36,7 @@
 						{param dataSource: $_dataSource ? $_dataSource : [] /}
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
+							'dataChange': $_handleDataChange,
 							'inputChange': $_handleEmailAddressInputChange,
 							'labelItemAdded': $_handleEmailAddressAdded,
 							'labelItemRemoved': $_handleEmailAddressRemoved

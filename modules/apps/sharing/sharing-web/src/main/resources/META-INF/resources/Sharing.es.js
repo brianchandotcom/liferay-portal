@@ -46,30 +46,6 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * Disables filtering of results
-	 * @private
-	 * @review
-	 */
-	_handleDataChange(e) {
-		e.preventDefault();
-
-		if (e.data && e.target.refs.autocomplete._query) {
-			e.target.filteredItems = e.data.map(
-				(element, index) => ({
-					data: element,
-					index,
-					matches: [],
-					score: 0,
-					value: element
-				})
-			);
-		}
-		else {
-			e.target.filteredItems = [];
-		}
-	}
-
-	/**
 	 * Close the SharingDialog
 	 * @private
 	 * @review

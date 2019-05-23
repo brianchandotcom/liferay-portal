@@ -1339,6 +1339,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (userAccount.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dashboardURL", additionalAssertFieldName)) {
 				if (userAccount.getDashboardURL() == null) {
 					valid = false;
@@ -1531,6 +1539,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getContactInformation(),
 						userAccount2.getContactInformation())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getCustomFields(),
+						userAccount2.getCustomFields())) {
 
 					return false;
 				}
@@ -1825,6 +1844,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("contactInformation")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

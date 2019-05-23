@@ -1,3 +1,5 @@
+import aQute.bnd.osgi.Constants
+
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
 import com.liferay.gradle.plugins.node.internal.util.FileUtil
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
@@ -8,6 +10,9 @@ import com.liferay.gradle.util.StringUtil
 
 import groovy.io.FileType
 import groovy.io.FileVisitResult
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -27,10 +32,12 @@ apply plugin: "com.liferay.source.formatter.defaults"
 
 buildDir = new File(rootDir.parentFile, "build")
 
+task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
+task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
 task setUpYarn(type: ExecuteNpmTask)
@@ -43,6 +50,52 @@ Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntrie
 	Properties properties = GUtil.loadProperties(it)
 
 	[it.parentFile, properties]
+}
+
+appendHotfixQualifier {
+	doLast {
+		String dirNamesString = System.getProperty("patcher.hotfix.dirs")
+		String qualifier = System.getProperty("patcher.hotfix.qualifier")
+
+		for (String dirName : dirNamesString.split(",")) {
+			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
+
+			if (bndBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(bndBndFile)
+
+				String version = properties.getProperty(Constants.BUNDLE_VERSION)
+
+				if ((version != null) && (version.indexOf(qualifier) == -1)) {
+					String newLine = Constants.BUNDLE_VERSION + ": " + version + qualifier + System.lineSeparator()
+					String oldLine = bndBndFile.filterLine {
+						it =~ "^" + Constants.BUNDLE_VERSION + ".*"
+					}
+
+					bndBndFile.text = bndBndFile.text.replace(oldLine, newLine)
+
+					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
+				}
+			}
+
+			for (String jsonFileName in ["package.json", "package-lock.json"]) {
+				File jsonFile = new File(new File(projectDir, dirName), jsonFileName)
+
+				if (jsonFile.exists()) {
+					JsonSlurper jsonSlurper = new JsonSlurper()
+
+					Map<String, Object> map = jsonSlurper.parse(jsonFile, "UTF-8")
+
+					if ((map["version"] != null) && (map["version"].indexOf(qualifier) == -1)) {
+						map.put("version", map["version"] + qualifier)
+
+						jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(map))
+
+						logger.lifecycle "Appended {}:{}", project.relativePath(jsonFile), qualifier
+					}
+				}
+			}
+		}
+	}
 }
 
 formatSourceCurrentBranch {
@@ -74,6 +127,47 @@ printDependencyPath {
 	}
 }
 
+removeHotfixQualifier {
+	doLast {
+		String dirNamesString = System.getProperty("patcher.hotfix.dirs")
+		String qualifier = System.getProperty("patcher.hotfix.qualifier")
+
+		for (String dirName : dirNamesString.split(",")) {
+			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
+
+			if (bndBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(bndBndFile)
+
+				String version = properties.getProperty(Constants.BUNDLE_VERSION)
+
+				if ((version != null) && (version.indexOf(qualifier) != -1)) {
+					bndBndFile.text = bndBndFile.text.replace(version, version.minus(qualifier))
+
+					logger.lifecycle "Removed {}:{}", project.relativePath(bndBndFile), qualifier
+				}
+			}
+
+			for (String jsonFileName in ["package.json", "package-lock.json"]) {
+				File jsonFile = new File(new File(projectDir, dirName), jsonFileName)
+
+				if (jsonFile.exists()) {
+					JsonSlurper jsonSlurper = new JsonSlurper()
+
+					Map<String, Object> map = jsonSlurper.parse(jsonFile, "UTF-8")
+
+					if ((map["version"] != null) && (map["version"].indexOf(qualifier) != -1)) {
+						map.put("version", map["version"].minus(qualifier))
+
+						jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(map))
+
+						logger.lifecycle "Removed {}:{}", project.relativePath(jsonFile), qualifier
+					}
+				}
+			}
+		}
+	}
+}
+
 repositories {
 	mavenLocal()
 
@@ -91,6 +185,14 @@ repositories {
 }
 
 setUpYarn {
+	String dirNamesString = System.getProperty("patcher.hotfix.dirs")
+	String qualifier = System.getProperty("patcher.hotfix.qualifier")
+
+	if (System.getenv("JENKINS_HOME") && dirNamesString?.trim() && qualifier?.trim()) {
+		dependsOn removeHotfixQualifier
+		finalizedBy appendHotfixQualifier
+	}
+
 	args "install"
 	args "--frozen-lockfile"
 

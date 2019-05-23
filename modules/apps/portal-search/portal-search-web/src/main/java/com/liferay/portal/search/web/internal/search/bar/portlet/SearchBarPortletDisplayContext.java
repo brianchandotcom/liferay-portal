@@ -35,6 +35,10 @@ public class SearchBarPortletDisplayContext {
 		return _keywordsParameterName;
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	public String getScopeParameterName() {
 		return _scopeParameterName;
 	}
@@ -117,6 +121,12 @@ public class SearchBarPortletDisplayContext {
 		_letTheUserChooseTheSearchScope = letTheUserChooseTheSearchScope;
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 	}
@@ -153,6 +163,7 @@ public class SearchBarPortletDisplayContext {
 	private String _keywords;
 	private String _keywordsParameterName;
 	private boolean _letTheUserChooseTheSearchScope;
+	private String _paginationStartParameterName;
 	private boolean _renderNothing;
 	private String _scopeParameterName;
 	private String _scopeParameterValue;

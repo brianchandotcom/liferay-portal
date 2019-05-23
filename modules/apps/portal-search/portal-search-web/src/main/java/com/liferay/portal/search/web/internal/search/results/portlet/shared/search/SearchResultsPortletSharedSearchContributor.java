@@ -63,6 +63,9 @@ public class SearchResultsPortletSharedSearchContributor
 
 			searchRequestBuilder.highlightFields(fieldsToDisplay);
 		}
+
+		searchRequestBuilder.paginationStartParameterName(
+			searchResultsPortletPreferences.getPaginationStartParameterName());
 	}
 
 	protected void paginate(

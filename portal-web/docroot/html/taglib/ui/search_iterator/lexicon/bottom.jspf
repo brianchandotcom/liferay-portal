@@ -93,20 +93,20 @@
 		).render();
 
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
-			var fixedHeaderElement = document.getElementById('<%= namespace + id %>fixedHeader');
+			var fixedHeaderRowElement = document.getElementById('<%= namespace + id %>fixedHeader');
 			var scrollingContainer = window === Liferay.Util.getOpener() ? window : searchContainer.get('contentBox').ancestor('#main-content')._node;
 
-			var tableElement = fixedHeaderElement.parentElement.parentElement;
-			var theadBoundingClientRectangle = fixedHeaderElement.previousElementSibling.getBoundingClientRect();
+			var tableElement = fixedHeaderRowElement.parentElement.parentElement;
+			var trBoundingClientRectangle = fixedHeaderRowElement.previousElementSibling.getBoundingClientRect();
 
 			var fixedHeaderScrollEvent = function(event) {
-				fixedHeaderElement.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - tableElement.offsetTop - theadBoundingClientRectangle.height) + 'px)';
+				fixedHeaderRowElement.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - tableElement.offsetTop - trBoundingClientRectangle.height) + 'px)';
 
-				if (fixedHeaderElement.classList.contains('hide') && (scrollingContainer.scrollTop >= theadBoundingClientRectangle.top)) {
-					fixedHeaderElement.classList.remove('hide');
+				if (fixedHeaderRowElement.classList.contains('hide') && (scrollingContainer.scrollTop >= trBoundingClientRectangle.top)) {
+					fixedHeaderRowElement.classList.remove('hide');
 				}
-				else if (scrollingContainer.scrollTop < theadBoundingClientRectangle.top) {
-					fixedHeaderElement.classList.add('hide');
+				else if (scrollingContainer.scrollTop < trBoundingClientRectangle.top) {
+					fixedHeaderRowElement.classList.add('hide');
 				}
 			};
 

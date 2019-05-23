@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.internal.fields.nested.filter.NestedFieldsFilter;
-import com.liferay.portal.vulcan.internal.fields.nested.interceptor.NestedFieldsWriteInterceptor;
+import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ServiceEventsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.SiteValidatorContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.TransactionContainerRequestFilter;
@@ -54,6 +53,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessag
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
+import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -95,7 +95,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(JsonParseExceptionMapper.class);
 		featureContext.register(InvalidFormatExceptionMapper.class);
 		featureContext.register(MultipartBodyMessageBodyReader.class);
-		featureContext.register(NestedFieldsFilter.class);
+		featureContext.register(NestedFieldsContainerRequestFilter.class);
 		featureContext.register(NoSuchModelExceptionMapper.class);
 		featureContext.register(ObjectMapperContextResolver.class);
 		featureContext.register(PaginationContextProvider.class);
@@ -117,7 +117,7 @@ public class VulcanFeature implements Feature {
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));
 		featureContext.register(
-			new NestedFieldsWriteInterceptor(_bundleContext));
+			new NestedFieldsWriterInterceptor(_bundleContext));
 		featureContext.register(
 			new SiteValidatorContainerRequestFilter(_groupLocalService));
 

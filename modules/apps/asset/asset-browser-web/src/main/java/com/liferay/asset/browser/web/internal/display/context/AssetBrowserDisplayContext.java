@@ -126,14 +126,6 @@ public class AssetBrowserDisplayContext {
 			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
 		}
 
-		int total = (int)AssetEntryLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), _getClassNameIds(),
-			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
-			_getStatuses());
-
-		assetBrowserSearch.setTotal(total);
-
 		Hits hits = AssetEntryLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
 			themeDisplay.getUserId(), _getClassNameIds(),
@@ -144,6 +136,8 @@ public class AssetBrowserDisplayContext {
 		List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
 
 		assetBrowserSearch.setResults(assetEntries);
+
+		assetBrowserSearch.setTotal(hits.getLength());
 
 		return assetBrowserSearch;
 	}

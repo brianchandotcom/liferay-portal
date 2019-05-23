@@ -75,6 +75,40 @@ public class MBMessageStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testDeleteAttachment() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		MBMessage mbMessage = (MBMessage)addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		exportImportStagedModel(mbMessage);
+
+		MBMessage importedMBMessage = (MBMessage)getStagedModel(
+			mbMessage.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			1, importedMBMessage.getAttachmentsFileEntriesCount());
+
+		List<FileEntry> attachmentsFileEntries =
+			importedMBMessage.getAttachmentsFileEntries();
+
+		FileEntry attachment = attachmentsFileEntries.get(0);
+
+		MBMessageLocalServiceUtil.moveMessageAttachmentToTrash(
+			mbMessage.getUserId(), mbMessage.getMessageId(),
+			attachment.getFileName());
+
+		exportImportStagedModel(mbMessage);
+
+		importedMBMessage = (MBMessage)getStagedModel(
+			mbMessage.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			0, importedMBMessage.getAttachmentsFileEntriesCount());
+	}
+
+	@Test
 	public void testDoubleExportImport() throws Exception {
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);

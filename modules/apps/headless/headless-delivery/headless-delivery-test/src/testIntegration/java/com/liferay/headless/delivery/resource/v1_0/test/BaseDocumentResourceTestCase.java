@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -767,15 +768,38 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testPostSiteDocument() throws Exception {
-		Assert.assertTrue(true);
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document postDocument =
+			testPostSiteDocument_addDocument(randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+
+		String content = testPostSiteDocument_getContent(
+			postDocument.getContentUrl());
+
+		String expectedContent = new String(
+			FileUtil.getBytes(multipartFiles.get("file")));
+
+		Assert.assertEquals(content, expectedContent);
 	}
 
-	protected Document testPostSiteDocument_addDocument(Document document)
+	protected Document testPostSiteDocument_addDocument(
+		Document document, Map<String, File> multipartFiles)
 		throws Exception {
 
 		return DocumentResource.postSiteDocument(
 			testGetSiteDocumentsPage_getSiteId(), document,
-			getMultipartFiles());
+			multipartFiles);
+	}
+
+	protected String testPostSiteDocument_getContent(String contentURL)
+		throws Exception {
+
+		return DocumentResource.getContent(contentURL);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -1455,6 +1479,7 @@ public abstract class BaseDocumentResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				sizeInBytes = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
+				viewableBy = ViewableBy.ANYONE;
 			}
 		};
 	}

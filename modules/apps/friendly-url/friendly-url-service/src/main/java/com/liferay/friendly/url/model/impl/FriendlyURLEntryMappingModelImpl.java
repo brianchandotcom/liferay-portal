@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -104,30 +103,19 @@ public class FriendlyURLEntryMappingModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntryMapping"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntryMapping"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.friendly.url.model.FriendlyURLEntryMapping"),
-		true);
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
 	public static final long FRIENDLYURLENTRYMAPPINGID_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.friendly.url.model.FriendlyURLEntryMapping"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public FriendlyURLEntryMappingModelImpl() {
 	}
@@ -483,12 +471,12 @@ public class FriendlyURLEntryMappingModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -596,6 +584,8 @@ public class FriendlyURLEntryMappingModelImpl
 
 	private static final Function<InvocationHandler, FriendlyURLEntryMapping>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
 	private long _friendlyURLEntryMappingId;

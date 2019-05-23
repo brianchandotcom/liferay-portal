@@ -115,21 +115,6 @@ public class FriendlyURLEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.friendly.url.model.FriendlyURLEntry"),
-		true);
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
@@ -142,9 +127,13 @@ public class FriendlyURLEntryModelImpl
 
 	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 32L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.friendly.url.model.FriendlyURLEntry"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public FriendlyURLEntryModelImpl() {
 	}
@@ -711,12 +700,12 @@ public class FriendlyURLEntryModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -870,6 +859,8 @@ public class FriendlyURLEntryModelImpl
 
 	private static final Function<InvocationHandler, FriendlyURLEntry>
 		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
 	private String _uuid;

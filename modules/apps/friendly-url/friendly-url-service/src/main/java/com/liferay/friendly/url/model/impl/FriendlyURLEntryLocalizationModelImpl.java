@@ -110,21 +110,6 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntryLocalization"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.friendly.url.model.FriendlyURLEntryLocalization"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.friendly.url.model.FriendlyURLEntryLocalization"),
-		true);
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 2L;
@@ -138,9 +123,13 @@ public class FriendlyURLEntryLocalizationModelImpl
 	public static final long FRIENDLYURLENTRYLOCALIZATIONID_COLUMN_BITMASK =
 		32L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.friendly.url.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.friendly.url.model.FriendlyURLEntryLocalization"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public FriendlyURLEntryLocalizationModelImpl() {
 	}
@@ -614,12 +603,12 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -763,6 +752,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 	private static final Function
 		<InvocationHandler, FriendlyURLEntryLocalization>
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
 	private long _friendlyURLEntryLocalizationId;

@@ -183,12 +183,6 @@ public class SourceFormatterCheckUtil {
 			return value;
 		}
 
-		value = cachedValuesMap.get(absolutePath + ":" + key);
-
-		if (value != null) {
-			return value;
-		}
-
 		String closestPropertiesFileLocation = null;
 		boolean hasSubdirectoryValue = false;
 
@@ -246,9 +240,6 @@ public class SourceFormatterCheckUtil {
 		if (!hasSubdirectoryValue) {
 			cachedValuesMap.put(key, value);
 		}
-		else {
-			cachedValuesMap.put(absolutePath + ":" + key, value);
-		}
 
 		return value;
 	}
@@ -263,12 +254,6 @@ public class SourceFormatterCheckUtil {
 		}
 
 		List<String> values = cachedValuesMap.get(key);
-
-		if (values != null) {
-			return values;
-		}
-
-		values = cachedValuesMap.get(absolutePath + ":" + key);
 
 		if (values != null) {
 			return values;
@@ -308,9 +293,6 @@ public class SourceFormatterCheckUtil {
 
 		if (!hasSubdirectoryValues) {
 			cachedValuesMap.put(key, values);
-		}
-		else {
-			cachedValuesMap.put(absolutePath + ":" + key, values);
 		}
 
 		return values;

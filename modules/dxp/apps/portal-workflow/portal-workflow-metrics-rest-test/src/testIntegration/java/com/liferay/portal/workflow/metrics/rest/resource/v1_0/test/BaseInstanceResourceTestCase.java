@@ -26,45 +26,37 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.InstanceSerDes;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -100,9 +92,6 @@ public abstract class BaseInstanceResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0");
 	}
 
 	@After
@@ -163,7 +152,7 @@ public abstract class BaseInstanceResourceTestCase {
 				testGetProcessInstancesPage_addInstance(
 					irrelevantProcessId, randomIrrelevantInstance());
 
-			Page<Instance> page = invokeGetProcessInstancesPage(
+			Page<Instance> page = InstanceResource.getProcessInstancesPage(
 				irrelevantProcessId, null, null, null, null,
 				Pagination.of(1, 2));
 
@@ -181,7 +170,7 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance instance2 = testGetProcessInstancesPage_addInstance(
 			processId, randomInstance());
 
-		Page<Instance> page = invokeGetProcessInstancesPage(
+		Page<Instance> page = InstanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -205,14 +194,14 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance instance3 = testGetProcessInstancesPage_addInstance(
 			processId, randomInstance());
 
-		Page<Instance> page1 = invokeGetProcessInstancesPage(
+		Page<Instance> page1 = InstanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, Pagination.of(1, 2));
 
 		List<Instance> instances1 = (List<Instance>)page1.getItems();
 
 		Assert.assertEquals(instances1.toString(), 2, instances1.size());
 
-		Page<Instance> page2 = invokeGetProcessInstancesPage(
+		Page<Instance> page2 = InstanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -250,115 +239,11 @@ public abstract class BaseInstanceResourceTestCase {
 		return null;
 	}
 
-	protected Page<Instance> invokeGetProcessInstancesPage(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/processes/{processId}/instances", processId);
-
-		if (slaStatuses != null) {
-			for (int i = 0; i < slaStatuses.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "slaStatuses", slaStatuses[i]);
-			}
-		}
-
-		if (statuses != null) {
-			for (int i = 0; i < statuses.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "statuses", statuses[i]);
-			}
-		}
-
-		if (taskKeys != null) {
-			for (int i = 0; i < taskKeys.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "taskKeys", taskKeys[i]);
-			}
-		}
-
-		if (timeRange != null) {
-			location = HttpUtil.addParameter(location, "timeRange", timeRange);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, InstanceSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetProcessInstancesPageResponse(
-			Long processId, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Integer timeRange, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/processes/{processId}/instances", processId);
-
-		if (slaStatuses != null) {
-			for (int i = 0; i < slaStatuses.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "slaStatuses", slaStatuses[i]);
-			}
-		}
-
-		if (statuses != null) {
-			for (int i = 0; i < statuses.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "statuses", statuses[i]);
-			}
-		}
-
-		if (taskKeys != null) {
-			for (int i = 0; i < taskKeys.length; i++) {
-				location = HttpUtil.addParameter(
-					location, "taskKeys", taskKeys[i]);
-			}
-		}
-
-		if (timeRange != null) {
-			location = HttpUtil.addParameter(location, "timeRange", timeRange);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetProcessInstance() throws Exception {
 		Instance postInstance = testGetProcessInstance_addInstance();
 
-		Instance getInstance = invokeGetProcessInstance(
+		Instance getInstance = InstanceResource.getProcessInstance(
 			postInstance.getProcessId(), postInstance.getId());
 
 		assertEquals(postInstance, getInstance);
@@ -370,61 +255,12 @@ public abstract class BaseInstanceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Instance invokeGetProcessInstance(Long processId, Long instanceId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{processId}/instances/{instanceId}", processId,
-					instanceId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return InstanceSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetProcessInstanceResponse(
-			Long processId, Long instanceId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/processes/{processId}/instances/{instanceId}", processId,
-					instanceId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(Instance instance1, Instance instance2) {
@@ -899,76 +735,9 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseInstanceResourceTestCase.class);
@@ -988,8 +757,8 @@ public abstract class BaseInstanceResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private InstanceResource _instanceResource;
-
-	private URL _resourceURL;
+	private
+		com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource
+			_instanceResource;
 
 }

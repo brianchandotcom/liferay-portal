@@ -26,26 +26,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
@@ -53,19 +48,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -102,9 +94,6 @@ public abstract class BaseProcessResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0");
 	}
 
 	@After
@@ -160,7 +149,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process2 = testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page = invokeGetProcessesPage(
+		Page<Process> page = ProcessResource.getProcessesPage(
 			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -178,14 +167,14 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process3 = testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page1 = invokeGetProcessesPage(
+		Page<Process> page1 = ProcessResource.getProcessesPage(
 			null, Pagination.of(1, 2), null);
 
 		List<Process> processes1 = (List<Process>)page1.getItems();
 
 		Assert.assertEquals(processes1.toString(), 2, processes1.size());
 
-		Page<Process> page2 = invokeGetProcessesPage(
+		Page<Process> page2 = ProcessResource.getProcessesPage(
 			null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -227,14 +216,14 @@ public abstract class BaseProcessResourceTestCase {
 		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Process> ascPage = invokeGetProcessesPage(
+			Page<Process> ascPage = ProcessResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(process1, process2),
 				(List<Process>)ascPage.getItems());
 
-			Page<Process> descPage = invokeGetProcessesPage(
+			Page<Process> descPage = ProcessResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
@@ -265,14 +254,14 @@ public abstract class BaseProcessResourceTestCase {
 		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Process> ascPage = invokeGetProcessesPage(
+			Page<Process> ascPage = ProcessResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(process1, process2),
 				(List<Process>)ascPage.getItems());
 
-			Page<Process> descPage = invokeGetProcessesPage(
+			Page<Process> descPage = ProcessResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
@@ -288,75 +277,12 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Page<Process> invokeGetProcessesPage(
-			String title, Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/processes");
-
-		if (title != null) {
-			location = HttpUtil.addParameter(location, "title", title);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ProcessSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetProcessesPageResponse(
-			String title, Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location = _resourceURL + _toPath("/processes");
-
-		if (title != null) {
-			location = HttpUtil.addParameter(location, "title", title);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
-		Process getProcess = invokeGetProcess(postProcess.getId(), null, null);
+		Process getProcess = ProcessResource.getProcess(
+			postProcess.getId(), null, null);
 
 		assertEquals(postProcess, getProcess);
 		assertValid(getProcess);
@@ -367,109 +293,17 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Process invokeGetProcess(
-			Long processId, Boolean completed, Integer timeRange)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/processes/{processId}", processId);
-
-		if (completed != null) {
-			location = HttpUtil.addParameter(location, "completed", completed);
-		}
-
-		if (timeRange != null) {
-			location = HttpUtil.addParameter(location, "timeRange", timeRange);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ProcessSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetProcessResponse(
-			Long processId, Boolean completed, Integer timeRange)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/processes/{processId}", processId);
-
-		if (completed != null) {
-			location = HttpUtil.addParameter(location, "completed", completed);
-		}
-
-		if (timeRange != null) {
-			location = HttpUtil.addParameter(location, "timeRange", timeRange);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetProcessTitle() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected String invokeGetProcessTitle(Long processId) throws Exception {
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/processes/{processId}/title", processId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return string;
-	}
-
-	protected Http.Response invokeGetProcessTitleResponse(Long processId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/processes/{processId}/title", processId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(Process process1, Process process2) {
@@ -787,76 +621,9 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProcessResourceTestCase.class);
@@ -876,8 +643,8 @@ public abstract class BaseProcessResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private ProcessResource _processResource;
-
-	private URL _resourceURL;
+	private
+		com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource
+			_processResource;
 
 }

@@ -32,13 +32,35 @@ import javax.annotation.Generated;
 @Generated("")
 public class SLAResource {
 
-	public Page<SLA> getProcessSLAsPage(
+	public static Page<SLA> getProcessSLAsPage(
+			Long processId, Integer status, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getProcessSLAsPageHttpResponse(
+			processId, status, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, SLASerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProcessSLAsPageHttpResponse(
 			Long processId, Integer status, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (status != null) {
+			httpInvoker.parameter("status", String.valueOf(status));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
@@ -52,39 +74,20 @@ public class SLAResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, SLASerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(SLASerDes.toJSON(sla), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas",
-			processId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static SLA postProcessSLA(Long processId, SLA sla) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = postProcessSLAHttpResponse(
+			processId, sla);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return SLASerDes.toDTO(content);
@@ -98,7 +101,40 @@ public class SLAResource {
 		}
 	}
 
-	public void deleteSLA(Long slaId) throws Exception {
+	public static HttpInvoker.HttpResponse postProcessSLAHttpResponse(
+			Long processId, SLA sla)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(sla.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas",
+			processId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteSLA(Long slaId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteSLAHttpResponse(slaId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteSLAHttpResponse(Long slaId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -109,17 +145,35 @@ public class SLAResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static SLA getSLA(Long slaId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getSLAHttpResponse(slaId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return SLASerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public SLA getSLA(Long slaId) throws Exception {
+	public static HttpInvoker.HttpResponse getSLAHttpResponse(Long slaId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -130,14 +184,19 @@ public class SLAResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static SLA putSLA(Long slaId, SLA sla) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = putSLAHttpResponse(slaId, sla);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return SLASerDes.toDTO(content);
@@ -151,10 +210,13 @@ public class SLAResource {
 		}
 	}
 
-	public SLA putSLA(Long slaId, SLA sla) throws Exception {
+	public static HttpInvoker.HttpResponse putSLAHttpResponse(
+			Long slaId, SLA sla)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(SLASerDes.toJSON(sla), "application/json");
+		httpInvoker.body(sla.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -164,25 +226,7 @@ public class SLAResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return SLASerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

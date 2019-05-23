@@ -30,7 +30,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class TimeRangeResource {
 
-	public Page<TimeRange> getTimeRangesPage() throws Exception {
+	public static Page<TimeRange> getTimeRangesPage() throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getTimeRangesPageHttpResponse();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, TimeRangeSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getTimeRangesPageHttpResponse()
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -40,16 +56,7 @@ public class TimeRangeResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, TimeRangeSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

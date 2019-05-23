@@ -32,13 +32,35 @@ import javax.annotation.Generated;
 @Generated("")
 public class ProcessResource {
 
-	public Page<Process> getProcessesPage(
+	public static Page<Process> getProcessesPage(
+			String title, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getProcessesPageHttpResponse(
+			title, pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ProcessSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProcessesPageHttpResponse(
 			String title, Pagination pagination, String sortString)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (title != null) {
+			httpInvoker.parameter("title", String.valueOf(title));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
@@ -55,40 +77,23 @@ public class ProcessResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ProcessSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Process getProcess(
+	public static Process getProcess(
 			Long processId, Boolean completed, Integer timeRange)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}",
-			processId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = getProcessHttpResponse(
+			processId, completed, timeRange);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ProcessSerDes.toDTO(content);
@@ -102,7 +107,50 @@ public class ProcessResource {
 		}
 	}
 
-	public String getProcessTitle(Long processId) throws Exception {
+	public static HttpInvoker.HttpResponse getProcessHttpResponse(
+			Long processId, Boolean completed, Integer timeRange)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (completed != null) {
+			httpInvoker.parameter("completed", String.valueOf(completed));
+		}
+
+		if (timeRange != null) {
+			httpInvoker.parameter("timeRange", String.valueOf(timeRange));
+		}
+
+		httpInvoker.path(
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}",
+			processId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static String getProcessTitle(Long processId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getProcessTitleHttpResponse(
+			processId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return content;
+	}
+
+	public static HttpInvoker.HttpResponse getProcessTitleHttpResponse(
+			Long processId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -113,16 +161,7 @@ public class ProcessResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return content;
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

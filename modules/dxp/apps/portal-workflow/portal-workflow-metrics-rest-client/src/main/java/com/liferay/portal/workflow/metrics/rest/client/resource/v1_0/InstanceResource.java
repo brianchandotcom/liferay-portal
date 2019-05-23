@@ -32,7 +32,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class InstanceResource {
 
-	public Page<Instance> getProcessInstancesPage(
+	public static Page<Instance> getProcessInstancesPage(
+			Long processId, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Integer timeRange, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getProcessInstancesPageHttpResponse(
+				processId, slaStatuses, statuses, taskKeys, timeRange,
+				pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, InstanceSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 			Long processId, String[] slaStatuses, String[] statuses,
 			String[] taskKeys, Integer timeRange, Pagination pagination)
 		throws Exception {
@@ -40,6 +61,29 @@ public class InstanceResource {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (slaStatuses != null) {
+			for (int i = 0; i < slaStatuses.length; i++) {
+				httpInvoker.parameter(
+					"slaStatuses", String.valueOf(slaStatuses[i]));
+			}
+		}
+
+		if (statuses != null) {
+			for (int i = 0; i < statuses.length; i++) {
+				httpInvoker.parameter("statuses", String.valueOf(statuses[i]));
+			}
+		}
+
+		if (taskKeys != null) {
+			for (int i = 0; i < taskKeys.length; i++) {
+				httpInvoker.parameter("taskKeys", String.valueOf(taskKeys[i]));
+			}
+		}
+
+		if (timeRange != null) {
+			httpInvoker.parameter("timeRange", String.valueOf(timeRange));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
@@ -53,19 +97,37 @@ public class InstanceResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getProcessInstanceHttpResponse(
+			processId, instanceId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		return Page.of(content, InstanceSerDes::toDTO);
+		try {
+			return InstanceSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public Instance getProcessInstance(Long processId, Long instanceId)
+	public static HttpInvoker.HttpResponse getProcessInstanceHttpResponse(
+			Long processId, Long instanceId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -78,25 +140,7 @@ public class InstanceResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return InstanceSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

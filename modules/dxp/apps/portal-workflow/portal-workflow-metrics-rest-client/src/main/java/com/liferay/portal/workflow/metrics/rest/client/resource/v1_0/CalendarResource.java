@@ -30,7 +30,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class CalendarResource {
 
-	public Page<Calendar> getCalendarsPage() throws Exception {
+	public static Page<Calendar> getCalendarsPage() throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getCalendarsPageHttpResponse();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, CalendarSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getCalendarsPageHttpResponse()
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -40,16 +56,7 @@ public class CalendarResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, CalendarSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

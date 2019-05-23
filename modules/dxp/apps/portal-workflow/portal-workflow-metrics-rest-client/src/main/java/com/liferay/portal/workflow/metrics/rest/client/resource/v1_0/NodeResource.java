@@ -30,7 +30,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class NodeResource {
 
-	public Page<Node> getProcessNodesPage(Long processId) throws Exception {
+	public static Page<Node> getProcessNodesPage(Long processId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getProcessNodesPageHttpResponse(
+			processId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, NodeSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProcessNodesPageHttpResponse(
+			Long processId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -41,16 +61,7 @@ public class NodeResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, NodeSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

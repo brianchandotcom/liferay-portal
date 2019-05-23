@@ -31,7 +31,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class TaskResource {
 
-	public Page<Task> getProcessTasksPage(
+	public static Page<Task> getProcessTasksPage(
+			Long processId, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getProcessTasksPageHttpResponse(
+			processId, pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, TaskSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
 			Long processId, Pagination pagination, String sortString)
 		throws Exception {
 
@@ -55,16 +73,7 @@ public class TaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, TaskSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

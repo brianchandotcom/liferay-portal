@@ -76,7 +76,7 @@ public class HttpInvoker {
 
 		httpResponse.setContent(_readResponse(httpURLConnection));
 		httpResponse.setMessage(httpURLConnection.getResponseMessage());
-		httpResponse.setStatus(httpURLConnection.getResponseCode());
+		httpResponse.setStatusCode(httpURLConnection.getResponseCode());
 
 		httpURLConnection.disconnect();
 
@@ -146,8 +146,8 @@ public class HttpInvoker {
 			return _message;
 		}
 
-		public int getStatus() {
-			return _status;
+		public int getStatusCode() {
+			return _statusCode;
 		}
 
 		public void setContent(String content) {
@@ -158,13 +158,13 @@ public class HttpInvoker {
 			_message = message;
 		}
 
-		public void setStatus(int status) {
-			_status = status;
+		public void setStatusCode(int statusCode) {
+			_statusCode = statusCode;
 		}
 
 		private String _content;
 		private String _message;
-		private int _status;
+		private int _statusCode;
 
 	}
 

@@ -252,10 +252,10 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 
 	<%
-	boolean checkedOut = fileEntry.isCheckedOut();
+	request.setAttribute("edit_file_entry.jsp-checkedOut", fileEntry.isCheckedOut());
 	%>
 
-	<%@ include file="/document_library/version_details.jspf" %>
+	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>

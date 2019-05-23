@@ -22,6 +22,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 			_workflowMetricsRESTTestHelper.addNode(
 				testGroup.getCompanyId(), _process.getId(), "2.0", node2));
 
-		Page<Node> page = invokeGetProcessNodesPage(_process.getId());
+		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
 		Assert.assertEquals(2, page.getTotalCount());
 

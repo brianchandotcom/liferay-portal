@@ -1007,7 +1007,7 @@ definition {
 
 		var key_dmFolderName = "${dmFolderName}";
 
-		if (IsTextNotEqual(locator1 = "Button#SELECT", value1 = "Select")) {
+		if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
 			AssertClick(
 				key_breadcrumbName = "Home",
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",

@@ -899,23 +899,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY_1");
 	}
 
-	macro rateArticlePG {
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#DISPLAY_TITLE",
-			value1 = "${kbArticleTitle}");
-
-		if ("${rateUp}" == "true") {
-			Click(locator1 = "Ratings#THUMB_UP");
-		}
-		else if ("${rateUp}" == "false") {
-			Click(locator1 = "Ratings#THUMB_DOWN");
-		}
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#DISPLAY_VOTES",
-			value1 = "${articleVoteCount}");
-	}
-
 	macro selectAllCP {
 		PortletEntry.selectAll();
 

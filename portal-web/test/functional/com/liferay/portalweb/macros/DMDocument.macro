@@ -73,8 +73,8 @@ definition {
 		IFrame.selectModalFrame();
 
 		AssertClick(
-			locator1 = "SitesSelectSite#CHOOSE_BUTTON",
-			value1 = "Choose");
+			locator1 = "SitesSelectSite#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrameTop(value1 = "relative=top");
 

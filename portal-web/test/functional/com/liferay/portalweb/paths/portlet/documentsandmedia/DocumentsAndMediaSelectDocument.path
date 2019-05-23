@@ -30,8 +30,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_TABLE_FOLDER_CHOOSE</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]//button[contains(.,'Choose')]</td>
+	<td>FOLDER_TABLE_FOLDER_SELECT</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

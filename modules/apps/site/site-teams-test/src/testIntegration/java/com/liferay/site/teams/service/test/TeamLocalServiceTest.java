@@ -17,8 +17,8 @@ package com.liferay.site.teams.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class TeamLocalServiceTest {
 	public void testDeleteTeam() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Team team = TeamLocalServiceUtil.addTeam(
+		Team team = _teamLocalService.addTeam(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
@@ -63,11 +64,11 @@ public class TeamLocalServiceTest {
 		typeSettingsProperties.setProperty(
 			"defaultTeamIds", String.valueOf(team.getTeamId()));
 
-		GroupLocalServiceUtil.updateGroup(_group);
+		_groupLocalService.updateGroup(_group);
 
-		TeamLocalServiceUtil.deleteTeam(team);
+		_teamLocalService.deleteTeam(team);
 
-		_group = GroupLocalServiceUtil.getGroup(_group.getGroupId());
+		_group = _groupLocalService.getGroup(_group.getGroupId());
 
 		typeSettingsProperties = _group.getTypeSettingsProperties();
 
@@ -80,5 +81,11 @@ public class TeamLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private TeamLocalService _teamLocalService;
 
 }

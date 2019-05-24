@@ -1070,18 +1070,6 @@ AUI.add(
 						var selectorInput = container.one('.selector-input');
 						var valueField = container.one('.color-value');
 
-						function validateField() {
-							var liferayForm = instance.get('liferayForm');
-
-							if (liferayForm) {
-								var formValidator = liferayForm.formValidator;
-
-								if (formValidator) {
-									formValidator.validateField(valueField);
-								}
-							}
-						}
-
 						var colorPicker = new A.ColorPickerPopover(
 							{
 								position: 'bottom',
@@ -1097,17 +1085,15 @@ AUI.add(
 
 								valueField.val(event.color);
 
-								validateField();
+								instance.validateField(valueField);
 							}
 						);
 
 						colorPicker.after(
 							'visibleChange',
 							function(event) {
-								var visible = event.newVal;
-
-								if (!visible) {
-									validateField();
+								if (!event.newVal) {
+									instance.validateField(valueField);
 								}
 							}
 						);
@@ -1149,6 +1135,20 @@ AUI.add(
 						selectorInput.setStyle('backgroundColor', value);
 
 						colorPicker.set('color', value);
+					},
+
+					validateField: function(valueField) {
+						var instance = this;
+
+						var liferayForm = instance.get('liferayForm');
+
+						if (liferayForm) {
+							var formValidator = liferayForm.formValidator;
+
+							if (formValidator) {
+								formValidator.validateField(valueField);
+							}
+						}
 					}
 				}
 			}

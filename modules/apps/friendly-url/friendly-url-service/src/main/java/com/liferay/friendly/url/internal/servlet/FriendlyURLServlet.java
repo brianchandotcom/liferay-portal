@@ -247,14 +247,13 @@ public class FriendlyURLServlet extends HttpServlet {
 					String redirect = portal.getLocalizedFriendlyURL(
 						httpServletRequest, layout, locale, originalLocale);
 
-					Boolean forcePermanentRedirect = Boolean.TRUE;
+					boolean forcePermanentRedirect = true;
 
 					if (Validator.isNull(i18nLanguageId)) {
-						forcePermanentRedirect = Boolean.FALSE;
+						forcePermanentRedirect = false;
 					}
 
-					return new Redirect(
-						redirect, Boolean.TRUE, forcePermanentRedirect);
+					return new Redirect(redirect, true, forcePermanentRedirect);
 				}
 			}
 		}

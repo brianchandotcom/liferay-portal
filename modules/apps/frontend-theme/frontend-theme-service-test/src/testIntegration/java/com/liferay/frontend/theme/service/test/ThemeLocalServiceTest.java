@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class ThemeServiceTest {
+public class ThemeLocalServiceTest {
 
 	@ClassRule
 	@Rule

@@ -14,9 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -33,11 +36,8 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = content.replaceAll(
-			"(?m)^(\t(function|macro|test))(?! \\w+ \\{)[\t ]+(\\w+)\\s*(\\{)",
-			"$1 $3 $4");
-
 		content = _formatWhitespace(content);
+		content = _formatWhitespaceOnCommand(content);
 
 		return super.doProcess(fileName, absolutePath, content);
 	}
@@ -56,7 +56,42 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
+	private String _formatWhitespaceOnCommand(String content) {
+		int[] multiLineCommentsPositions =
+			PoshiSourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+			content, _multiLineStringPattern);
+
+		Matcher matcher = _incorrectCommandPattern.matcher(content);
+
+		while (matcher.find()) {
+			int lineNumber = SourceUtil.getLineNumber(content, matcher.start());
+
+			if (!PoshiSourceUtil.isInsideMultiLines(
+					lineNumber, multiLineCommentsPositions) &&
+				!PoshiSourceUtil.isInsideMultiLines(
+					lineNumber, multiLineStringPositions)) {
+
+				content = StringUtil.replaceFirst(
+					content, matcher.group(),
+					StringBundler.concat(
+						matcher.group(1), " ", matcher.group(3), " ",
+						matcher.group(4)),
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
+	private static final Pattern _incorrectCommandPattern = Pattern.compile(
+		"(\n\t*(function|macro|test))(?! \\w+ \\{)[\t ]+(\\w+)\\s*(\\{)");
 	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		"\\)(\\s+);");
+	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
+		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
+	private static final Pattern _multiLineStringPattern = Pattern.compile(
+		"'''.*?'''", Pattern.DOTALL);
 
 }

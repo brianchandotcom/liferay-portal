@@ -476,13 +476,13 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		public boolean isValidForward() {
+			if (isForce()) {
+				return false;
+			}
+
 			String path = getPath();
 
 			if (path.equals(Portal.PATH_MAIN) || path.startsWith("/c/")) {
-				if (isForce()) {
-					return false;
-				}
-
 				return true;
 			}
 

@@ -83,7 +83,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		SearchContainer<CTEntry> searchContainer = new SearchContainer<>(
 			_renderRequest, new DisplayTerms(_renderRequest), null,
 			SearchContainer.DEFAULT_CUR_PARAM, 0, SearchContainer.DEFAULT_DELTA,
-			_getIteratorURL(), null, "there-are-no-change-entries");
+			_getIteratorURL(), null, "no-changes-were-found");
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 

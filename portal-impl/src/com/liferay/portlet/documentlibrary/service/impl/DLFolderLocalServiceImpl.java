@@ -781,15 +781,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNotNull(lockUuid)) {
-			try {
-				Lock lock = LockManagerUtil.getLock(
-					DLFolder.class.getName(), folderId);
+			Lock lock = LockManagerUtil.fetchLock(
+				DLFolder.class.getName(), folderId);
 
-				if (!lockUuid.equals(lock.getUuid())) {
-					throw new InvalidLockException("UUIDs do not match");
-				}
-			}
-			catch (ExpiredLockException | NoSuchLockException e) {
+			if ((lock != null) && !lockUuid.equals(lock.getUuid())) {
+				throw new InvalidLockException("UUIDs do not match");
 			}
 		}
 

@@ -138,6 +138,19 @@ public interface CTEngineManager {
 		QueryDefinition<CTEntry> queryDefinition);
 
 	/**
+	 * Returns all the change tracking entries associated with the given
+	 * ctCollection and keywords.
+	 *
+	 * @param  ctCollection the containing change list
+	 * @param  queryDefinition the settings regarding pagination, order
+	 * @return the change tracking entries
+	 * @review
+	 */
+	public List<CTEntry> getCTEntries(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	/**
 	 * Returns all the change entries associated with the given change
 	 * collection.
 	 *
@@ -176,6 +189,19 @@ public interface CTEngineManager {
 	public int getCTEntriesCount(
 		CTCollection ctCollection, long[] groupIds, long[] userIds,
 		long[] classNameIds, int[] changeTypes, Boolean collision,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	/**
+	 * Returns the number of change tracking entries associated with the given
+	 * ctCollection and keywords.
+	 *
+	 * @param  ctCollection the containing change list
+	 * @param  queryDefinition the settings
+	 * @return the number of change tracking entries
+	 * @review
+	 */
+	public int getCTEntriesCount(
+		CTCollection ctCollection, String keywords,
 		QueryDefinition<CTEntry> queryDefinition);
 
 	/**

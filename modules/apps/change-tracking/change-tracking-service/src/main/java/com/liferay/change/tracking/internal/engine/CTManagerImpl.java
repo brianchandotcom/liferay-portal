@@ -196,15 +196,6 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public List<CTEntry> getCTCollectionCTEntries(
-		CTCollection ctCollection, String keywords,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.search(
-			ctCollection, keywords, queryDefinition);
-	}
-
-	@Override
-	public List<CTEntry> getCTCollectionCTEntries(
 		long companyId, long ctCollectionId, long classNameId) {
 
 		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
@@ -216,15 +207,6 @@ public class CTManagerImpl implements CTManager {
 
 		return _ctEntryLocalService.fetchCTEntriesByModelClassNameId(
 			ctCollectionId, classNameId, new QueryDefinition<>());
-	}
-
-	@Override
-	public int getCTCollectionCTEntriesCount(
-		CTCollection ctCollection, String keywords,
-		QueryDefinition<CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.searchCount(
-			ctCollection, keywords, queryDefinition);
 	}
 
 	@Override

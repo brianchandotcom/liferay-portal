@@ -254,40 +254,12 @@ public class CTProcessLocalServiceUtil {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
 		getCTProcesses(
-			long companyId, int status,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
-				queryDefinition) {
-
-		return getService().getCTProcesses(companyId, status, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			long companyId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
-				queryDefinition) {
-
-		return getService().getCTProcesses(companyId, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			long companyId, String keywords, int status,
+			long companyId, long userId, String keywords,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
 				queryDefinition) {
 
 		return getService().getCTProcesses(
-			companyId, keywords, status, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			long companyId, String keywords,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
-				queryDefinition) {
-
-		return getService().getCTProcesses(
-			companyId, keywords, queryDefinition);
+			companyId, userId, keywords, queryDefinition);
 	}
 
 	/**

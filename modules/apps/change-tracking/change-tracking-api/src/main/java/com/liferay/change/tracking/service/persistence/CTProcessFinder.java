@@ -24,26 +24,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CTProcessFinder {
 
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		findByCompanyId(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator);
-
-	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		findByC_S(
-			long companyId, int status, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator);
-
-	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		findByC_N_D(
-			long companyId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator);
-
-	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		findByC_N_D_S(
-			long companyId, String keywords, int status, int start, int end,
+		findByC_U_S_N_D(
+			long companyId, long userId, int status, String keywords, int start,
+			int end,
 			com.liferay.portal.kernel.util.OrderByComparator<?>
 				orderByComparator);
 

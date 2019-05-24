@@ -75,7 +75,7 @@
 				(CTEntryAggregates_CTEntries.ctEntryId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.change.tracking.service.persistence.CTProcessFinder.findByC_S">
+	<sql id="com.liferay.change.tracking.service.persistence.CTProcessFinder.findByC_U_S_N_D">
 		<![CDATA[
 			SELECT
 				{CTProcess.*}
@@ -89,25 +89,7 @@
 					CTProcess.backgroundTaskId = BackgroundTask.backgroundTaskId
 			WHERE
 				(CTProcess.companyId = ?) AND
-				(BackgroundTask.status = ?)
-			ORDER BY
-				CTProcess.createDate DESC
-		]]>
-	</sql>
-	<sql id="com.liferay.change.tracking.service.persistence.CTProcessFinder.findByC_N_D_S">
-		<![CDATA[
-			SELECT
-				{CTProcess.*}
-			FROM
-				CTProcess
-			INNER JOIN
-				CTCollection ON
-					CTProcess.ctCollectionId = CTCollection.ctCollectionId
-			INNER JOIN
-				BackgroundTask ON
-					CTProcess.backgroundTaskId = BackgroundTask.backgroundTaskId
-			WHERE
-				(CTProcess.companyId = ?) AND
+				(CTProcess.userId = ?) AND
 				(BackgroundTask.status = ?) AND
 				(
 					(LOWER(CTCollection.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

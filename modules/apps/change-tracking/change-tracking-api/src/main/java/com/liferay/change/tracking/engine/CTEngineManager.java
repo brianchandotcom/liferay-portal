@@ -213,8 +213,17 @@ public interface CTEngineManager {
 	 * @return the change tracking processes filtered based on the parameters
 	 */
 	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String[] keywords,
+		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition);
+
+	/**
+	 * Returns the latest change tracking process executed for a given company.
+	 *
+	 * @param  companyId the company ID of the company to return the latest
+	 *         change tracking process for
+	 * @return the latest change tracking process for the given company
+	 */
+	public Optional<CTProcess> getLatestCTProcessOptional(long companyId);
 
 	/**
 	 * Returns the production change tracking collection that contains all the

@@ -343,10 +343,17 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String[] keywords,
+		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition) {
 
+		return _ctProcessLocalService.getCTProcesses(
+			companyId, userId, keywords, queryDefinition);
+	}
 
+	@Override
+	public Optional<CTProcess> getLatestCTProcessOptional(long companyId) {
+		return Optional.ofNullable(
+			_ctProcessLocalService.fetchLatestCTProcess(companyId));
 	}
 
 	@Override

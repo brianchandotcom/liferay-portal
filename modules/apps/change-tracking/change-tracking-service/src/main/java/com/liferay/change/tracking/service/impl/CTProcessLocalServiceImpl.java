@@ -101,46 +101,13 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
 	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String[] keywords,
+		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition) {
 
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, int status, QueryDefinition<?> queryDefinition) {
-
-		return ctProcessFinder.findByC_S(
-			companyId, status, queryDefinition.getStart(),
-			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, QueryDefinition<?> queryDefinition) {
-
-		return ctProcessFinder.findByCompanyId(
-			companyId, queryDefinition.getStart(), queryDefinition.getEnd(),
+		return ctProcessFinder.findByC_U_S_N_D(
+			companyId, userId, queryDefinition.getStatus(), keywords,
+			queryDefinition.getStart(), queryDefinition.getEnd(),
 			queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, String keywords, int status,
-		QueryDefinition<?> queryDefinition) {
-
-		return ctProcessFinder.findByC_N_D_S(
-			companyId, keywords, status, queryDefinition.getStart(),
-			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, String keywords, QueryDefinition<?> queryDefinition) {
-
-		return ctProcessFinder.findByC_N_D(
-			companyId, keywords, queryDefinition.getStart(),
-			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
 	}
 
 	private long _addBackgroundTask(

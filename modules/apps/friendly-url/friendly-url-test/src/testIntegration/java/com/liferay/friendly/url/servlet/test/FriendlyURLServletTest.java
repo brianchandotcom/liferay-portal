@@ -435,10 +435,7 @@ public class FriendlyURLServletTest {
 	private Layout _layout;
 	private Constructor<?> _redirectConstructor1;
 	private Constructor<?> _redirectConstructor2;
-
-	@DeleteAfterTestRun
 	private Layout _redirectLayout;
-
 	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 	private Servlet _servlet;
 

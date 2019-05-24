@@ -16,6 +16,7 @@ package com.liferay.asset.taglib.internal.display.context;
 
 import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
@@ -43,10 +44,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -61,6 +65,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -253,6 +258,51 @@ public class AssetEntryUsagesDisplayContext {
 			_renderRequest, _renderResponse);
 
 		return PortletURLUtil.clone(currentURLObj, _renderResponse);
+	}
+
+	public String getPreviewURL(AssetEntryUsage assetEntryUsage)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String layoutURL = null;
+
+		if (assetEntryUsage.getContainerType() == PortalUtil.getClassNameId(
+				FragmentEntryLink.class)) {
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				assetEntryUsage.getPlid());
+
+			layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+
+			layoutURL = HttpUtil.setParameter(
+				layoutURL, "previewAssetEntryId",
+				String.valueOf(assetEntryUsage.getAssetEntryId()));
+			layoutURL = HttpUtil.setParameter(
+				layoutURL, "previewAssetEntryType",
+				String.valueOf(AssetRendererFactory.TYPE_LATEST));
+		}
+		else {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				_renderRequest, assetEntryUsage.getContainerKey(),
+				assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"previewAssetEntryId",
+				String.valueOf(assetEntryUsage.getAssetEntryId()));
+			portletURL.setParameter(
+				"previewAssetEntryType",
+				String.valueOf(AssetRendererFactory.TYPE_LATEST));
+
+			layoutURL = portletURL.toString();
+		}
+
+		String portletURLString = HttpUtil.addParameter(
+			layoutURL, "p_l_mode", Constants.PREVIEW);
+
+		return portletURLString + "#portlet_" +
+			assetEntryUsage.getContainerKey();
 	}
 
 	public String getRedirect() {

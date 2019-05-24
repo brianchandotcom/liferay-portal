@@ -184,7 +184,7 @@ public class StructuredContentResourceImpl
 			entityFields = Collections.emptyList();
 		}
 
-		return new StructuredContentEntityModel(entityFields);
+		return new StructuredContentEntityModel(entityFields, null);
 	}
 
 	@Override

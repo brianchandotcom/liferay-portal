@@ -211,7 +211,7 @@ else {
 					}
 					%>
 
-					<aui:script require="metal-dom/src/all/dom as dom">
+					<aui:script position="inline" require="metal-dom/src/all/dom as dom">
 						var documentTypeMenuList = document.querySelector('#<portlet:namespace/>documentTypeSelector .lfr-menu-list');
 
 						if (documentTypeMenuList) {

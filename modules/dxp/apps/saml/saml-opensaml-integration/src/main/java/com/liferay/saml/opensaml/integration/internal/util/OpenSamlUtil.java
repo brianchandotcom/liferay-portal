@@ -98,7 +98,6 @@ import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.SignatureSigningConfiguration;
 import org.opensaml.xmlsec.SignatureSigningParameters;
-import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureSigningConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureSigningConfiguration;
@@ -835,29 +834,13 @@ public class OpenSamlUtil {
 
 	public static void prepareSecurityParametersContext(
 			Credential credential,
-			SecurityParametersContext securityParametersContext)
+			SecurityParametersContext securityParametersContext,
+			RoleDescriptor peerRoleDescriptor)
 		throws PortalException {
-
-		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration =
-			DefaultSecurityConfigurationBootstrap.
-				buildDefaultSignatureSigningConfiguration();
-
-		basicSignatureSigningConfiguration.setSigningCredentials(
-			Collections.singletonList(credential));
-
-		SignatureSigningConfigurationCriterion
-			signatureSigningConfigurationCriterion =
-				new SignatureSigningConfigurationCriterion(
-					basicSignatureSigningConfiguration);
-
-		SAMLMetadataSignatureSigningParametersResolver
-			samlMetadataSignatureSigningParametersResolver =
-				new SAMLMetadataSignatureSigningParametersResolver();
 
 		try {
 			SignatureSigningParameters signatureSigningParameters =
-				samlMetadataSignatureSigningParametersResolver.resolveSingle(
-					new CriteriaSet(signatureSigningConfigurationCriterion));
+				_getSignatureSigningParameters(credential, peerRoleDescriptor);
 
 			securityParametersContext.setSignatureSigningParameters(
 				signatureSigningParameters);
@@ -876,43 +859,9 @@ public class OpenSamlUtil {
 
 		Signature signature = buildSignature(credential);
 
-		SAMLMetadataSignatureSigningParametersResolver
-			samlMetadataSignatureSigningParametersResolver =
-				new SAMLMetadataSignatureSigningParametersResolver();
-
 		try {
-			SignatureSigningConfiguration globalSignatureSigningConfiguration =
-				SecurityConfigurationSupport.
-					getGlobalSignatureSigningConfiguration();
-
-			if (globalSignatureSigningConfiguration instanceof
-					BasicSignatureSigningConfiguration) {
-
-				BasicSignatureSigningConfiguration
-					signatureSigningConfiguration =
-						(BasicSignatureSigningConfiguration)
-							globalSignatureSigningConfiguration;
-
-				signatureSigningConfiguration.setSigningCredentials(
-					Collections.singletonList(credential));
-			}
-
-			SignatureSigningConfigurationCriterion
-				signatureSigningConfigurationCriterion =
-					new SignatureSigningConfigurationCriterion(
-						globalSignatureSigningConfiguration);
-
-			CriteriaSet criteriaSet = new CriteriaSet(
-				signatureSigningConfigurationCriterion);
-
-			if (peerRoleDescriptor != null) {
-				criteriaSet.add(
-					new RoleDescriptorCriterion(peerRoleDescriptor));
-			}
-
 			SignatureSigningParameters signatureSigningParameters =
-				samlMetadataSignatureSigningParametersResolver.resolveSingle(
-					criteriaSet);
+				_getSignatureSigningParameters(credential, peerRoleDescriptor);
 
 			SignatureSupport.prepareSignatureParams(
 				signature, signatureSigningParameters);
@@ -952,6 +901,45 @@ public class OpenSamlUtil {
 	@SuppressWarnings("rawtypes")
 	private static XMLObjectBuilder _getBuilder(QName qName) {
 		return _xmlObjectBuilderFactory.getBuilder(qName);
+	}
+
+	private static SignatureSigningParameters _getSignatureSigningParameters(
+			Credential credential, RoleDescriptor peerRoleDescriptor)
+		throws ResolverException {
+
+		SAMLMetadataSignatureSigningParametersResolver
+			samlMetadataSignatureSigningParametersResolver =
+				new SAMLMetadataSignatureSigningParametersResolver();
+
+		SignatureSigningConfiguration globalSignatureSigningConfiguration =
+			SecurityConfigurationSupport.
+				getGlobalSignatureSigningConfiguration();
+
+		if (globalSignatureSigningConfiguration instanceof
+				BasicSignatureSigningConfiguration) {
+
+			BasicSignatureSigningConfiguration signatureSigningConfiguration =
+				(BasicSignatureSigningConfiguration)
+					globalSignatureSigningConfiguration;
+
+			signatureSigningConfiguration.setSigningCredentials(
+				Collections.singletonList(credential));
+		}
+
+		SignatureSigningConfigurationCriterion
+			signatureSigningConfigurationCriterion =
+				new SignatureSigningConfigurationCriterion(
+					globalSignatureSigningConfiguration);
+
+		CriteriaSet criteriaSet = new CriteriaSet(
+			signatureSigningConfigurationCriterion);
+
+		if (peerRoleDescriptor != null) {
+			criteriaSet.add(new RoleDescriptorCriterion(peerRoleDescriptor));
+		}
+
+		return samlMetadataSignatureSigningParametersResolver.resolveSingle(
+			criteriaSet);
 	}
 
 	private static final XMLObjectBuilderFactory _xmlObjectBuilderFactory;

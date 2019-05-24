@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
+import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.rest.internal.model.process.CTProcessModel;
@@ -41,8 +42,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -197,21 +198,11 @@ public class CTProcessResource {
 
 		List<CTProcess> ctProcesses = null;
 
-		if (_TYPE_ALL.equals(type)) {
-			if (Validator.isNull(keywords)) {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, _getQueryDefinition(offset, limit, sort));
-			}
-			else {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, keywords,
-					_getQueryDefinition(offset, limit, sort));
-			}
-		}
-		else if (_TYPE_PUBLISHED_LATEST.equals(type)) {
-			ctProcesses = Optional.ofNullable(
-				_ctProcessLocalService.fetchLatestCTProcess(companyId)
-			).map(
+		if (_TYPE_PUBLISHED_LATEST.equals(type)) {
+			Optional<CTProcess> latestCTProcessOptional =
+				_ctEngineManager.getLatestCTProcessOptional(companyId);
+
+			ctProcesses = latestCTProcessOptional.map(
 				Collections::singletonList
 			).orElse(
 				Collections.emptyList()
@@ -220,16 +211,9 @@ public class CTProcessResource {
 		else {
 			int status = _getStatus(type);
 
-			if (Validator.isNull(keywords)) {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, status,
-					_getQueryDefinition(offset, limit, sort));
-			}
-			else {
-				ctProcesses = _ctProcessLocalService.getCTProcesses(
-					companyId, keywords, status,
-					_getQueryDefinition(offset, limit, sort));
-			}
+			ctProcesses = _ctEngineManager.getCTProcesses(
+				companyId, userId, keywords,
+				_getQueryDefinition(offset, limit, status, sort));
 		}
 
 		return ctProcesses;
@@ -333,7 +317,7 @@ public class CTProcessResource {
 
 	@SuppressWarnings("unchecked")
 	private QueryDefinition _getQueryDefinition(
-		int offset, int limit, String sort) {
+		int offset, int limit, int status, String sort) {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
 
@@ -348,6 +332,8 @@ public class CTProcessResource {
 		if (start > 0) {
 			queryDefinition.setStart(start);
 		}
+
+		queryDefinition.setStatus(status);
 
 		Object[] sortColumns = CTJaxRsUtil.checkSortColumns(
 			sort, _orderByColumnNames);
@@ -375,7 +361,10 @@ public class CTProcessResource {
 	private int _getStatus(String type) {
 		int status = 0;
 
-		if (_TYPE_FAILED.equals(type)) {
+		if (_TYPE_ALL.equals(type)) {
+			status = WorkflowConstants.STATUS_ANY;
+		}
+		else if (_TYPE_FAILED.equals(type)) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
 		}
 		else if (_TYPE_IN_PROGRESS.equals(type)) {
@@ -415,6 +404,9 @@ public class CTProcessResource {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEngineManager _ctEngineManager;
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;

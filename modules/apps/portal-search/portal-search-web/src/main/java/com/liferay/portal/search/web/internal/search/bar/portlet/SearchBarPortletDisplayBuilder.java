@@ -69,7 +69,6 @@ public class SearchBarPortletDisplayBuilder {
 
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			getPaginationStartParameterName());
-
 		searchBarPortletDisplayContext.setScopeParameterName(
 			_scopeParameterName);
 		searchBarPortletDisplayContext.setScopeParameterValue(

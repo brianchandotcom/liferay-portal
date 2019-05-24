@@ -18,7 +18,7 @@ AUI.add(
 			else {
 				instance.emptySearchEnabled = false;
 			}
-			
+
 			instance.resetStartPage = instance.form.one('.search-bar-reset-start-page');
 
 			instance.keywordsInput = instance.form.one('.search-bar-keywords-input');
@@ -81,7 +81,7 @@ AUI.add(
 							queryString
 						);
 					}
-					
+
 					if (instance.resetStartPage) {
 						queryString = FacetUtil.updateQueryString(
 							instance.resetStartPage.get('name'),

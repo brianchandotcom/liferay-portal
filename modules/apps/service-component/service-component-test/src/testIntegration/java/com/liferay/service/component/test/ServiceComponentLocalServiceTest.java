@@ -37,6 +37,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -67,8 +68,8 @@ public class ServiceComponentLocalServiceTest {
 		_serviceComponentsCount =
 			_serviceComponentLocalService.getServiceComponentsCount();
 
-		_serviceComponent1 = _addServiceComponent(_SERVICE_COMPONENT_1, 1);
-		_serviceComponent2 = _addServiceComponent(_SERVICE_COMPONENT_2, 1);
+		_serviceComponents.add(_addServiceComponent(_SERVICE_COMPONENT_1, 1));
+		_serviceComponents.add(_addServiceComponent(_SERVICE_COMPONENT_2, 1));
 
 		_release = _releaseLocalService.addRelease(
 			"ServiceComponentLocalServiceTest", "0.0.0");
@@ -76,30 +77,23 @@ public class ServiceComponentLocalServiceTest {
 
 	@Test
 	public void testGetLatestServiceComponentsWithMultipleVersions() {
-		ServiceComponent serviceComponent = _addServiceComponent(
-			_SERVICE_COMPONENT_1, 2);
+		_serviceComponents.add(_addServiceComponent(_SERVICE_COMPONENT_1, 2));
 
-		try {
-			List<ServiceComponent> serviceComponents =
-				_serviceComponentLocalService.getLatestServiceComponents();
+		List<ServiceComponent> serviceComponents =
+			_serviceComponentLocalService.getLatestServiceComponents();
 
-			Assert.assertEquals(
-				2, serviceComponents.size() - _serviceComponentsCount);
+		Assert.assertEquals(
+			2, serviceComponents.size() - _serviceComponentsCount);
 
-			ServiceComponent latestServiceComponent1 = _getServiceComponent(
-				serviceComponents, _SERVICE_COMPONENT_1);
+		ServiceComponent latestServiceComponent1 = _getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_1);
 
-			Assert.assertEquals(2, latestServiceComponent1.getBuildNumber());
+		Assert.assertEquals(2, latestServiceComponent1.getBuildNumber());
 
-			ServiceComponent latestServiceComponent2 = _getServiceComponent(
-				serviceComponents, _SERVICE_COMPONENT_2);
+		ServiceComponent latestServiceComponent2 = _getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_2);
 
-			Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
-		}
-		finally {
-			_serviceComponentLocalService.deleteServiceComponent(
-				serviceComponent);
-		}
+		Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
 	}
 
 	@Test
@@ -251,14 +245,11 @@ public class ServiceComponentLocalServiceTest {
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
 
-	@DeleteAfterTestRun
-	private ServiceComponent _serviceComponent1;
-
-	@DeleteAfterTestRun
-	private ServiceComponent _serviceComponent2;
-
 	@Inject
 	private ServiceComponentLocalService _serviceComponentLocalService;
+
+	@DeleteAfterTestRun
+	private final List<ServiceComponent> _serviceComponents = new ArrayList<>();
 
 	private int _serviceComponentsCount;
 

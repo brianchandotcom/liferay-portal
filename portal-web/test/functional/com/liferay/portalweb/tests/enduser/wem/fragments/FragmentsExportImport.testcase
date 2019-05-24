@@ -158,4 +158,27 @@ definition {
 		}
 	}
 
+	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."
+	@priority = "5"
+	test ValidateDependenciesFragments {
+		property portal.acceptance = "true";
+
+		task ("Navigate to the fragment import screen") {
+			FragmentsAdmin.gotoImportCollection();
+		}
+
+		task ("Import fragment dependencies") {
+			UploadCommonFile(
+				locator1 = "TextInput#FILE",
+				value1 = "fragment-collection.zip");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Assert that all fragments validated") {
+			AssertElementNotPresent(
+				key_infoMessage = "The following fragments have validation issues",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+	}
 }

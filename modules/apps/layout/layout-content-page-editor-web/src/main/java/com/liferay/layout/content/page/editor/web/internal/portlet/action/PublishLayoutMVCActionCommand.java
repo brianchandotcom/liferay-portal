@@ -19,15 +19,19 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -100,6 +104,17 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			Layout layout = _layoutLocalService.getLayout(
 				draftLayout.getClassPK());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_actionRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), draftLayout,
+				ActionKeys.UPDATE);
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 

@@ -17,16 +17,14 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
-import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingImageSerDes;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.List;
@@ -90,22 +88,14 @@ public class BlogPostingImageResourceTest
 	}
 
 	@Override
-	protected MultipartBody toMultipartBody(BlogPostingImage blogPostingImage) {
-		testContentType = "multipart/form-data;boundary=PART";
-
-		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		Map<String, File> files = new HashMap<>();
 
 		String randomString = RandomTestUtil.randomString();
 
-		binaryFileMap.put(
-			"file",
-			new BinaryFile(
-				testContentType, RandomTestUtil.randomString(),
-				new ByteArrayInputStream(randomString.getBytes()), 0));
+		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
 
-		return MultipartBody.of(
-			binaryFileMap, __ -> null,
-			BlogPostingImageSerDes.toMap(blogPostingImage));
+		return files;
 	}
 
 }

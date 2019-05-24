@@ -51,7 +51,48 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
-	public void testCompileFile() throws Exception {
+	public void testCompileFileClayCss() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies/clay-css");
+
+		File clayCssDir = new File(url.toURI());
+
+		for (File inputFile : clayCssDir.listFiles()) {
+			if (inputFile.isDirectory()) {
+				continue;
+			}
+
+			String fileName = inputFile.getName();
+
+			if (fileName.startsWith("_") || !fileName.endsWith("scss")) {
+				continue;
+			}
+
+			String actualOutput = sassCompiler.compileFile(
+				inputFile.getCanonicalPath(), "", true);
+
+			Assert.assertNotNull("Testing: " + fileName, actualOutput);
+
+			String expectedOutputFileName = fileName.replace("scss", "css");
+
+			File expectedOutputFile = new File(
+				clayCssDir, expectedOutputFileName);
+
+			if (expectedOutputFile.exists()) {
+				String expectedOutput = read(expectedOutputFile.toPath());
+
+				Assert.assertEquals(
+					"Testing: " + fileName, stripNewLines(expectedOutput),
+					stripNewLines(actualOutput));
+			}
+		}
+	}
+
+	@Test
+	public void testCompileFileSassSpec() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
 		Class<?> clazz = getClass();
@@ -63,21 +104,24 @@ public class JniSassCompilerTest {
 		for (File testDir : sassSpecDir.listFiles()) {
 			File inputFile = new File(testDir, "input.scss");
 
-			if (!inputFile.exists()) {
+			String dirName = testDir.getName();
+
+			if (!inputFile.exists() || dirName.endsWith("-4.0")) {
 				continue;
 			}
 
 			String actualOutput = sassCompiler.compileFile(
 				inputFile.getCanonicalPath(), "", false);
 
-			Assert.assertNotNull(actualOutput);
+			Assert.assertNotNull("Testing: " + dirName, actualOutput);
 
 			File expectedOutputFile = new File(testDir, "expected_output.css");
 
 			String expectedOutput = read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
-				stripNewLines(expectedOutput), stripNewLines(actualOutput));
+				"Testing: " + dirName, stripNewLines(expectedOutput),
+				stripNewLines(actualOutput));
 		}
 	}
 
@@ -247,7 +291,7 @@ public class JniSassCompilerTest {
 	protected String stripNewLines(String string) {
 		string = string.replaceAll("\\n|\\r", "");
 
-		return string.replaceAll("\\s+", " ");
+		return string.replaceAll("\\s", "");
 	}
 
 }

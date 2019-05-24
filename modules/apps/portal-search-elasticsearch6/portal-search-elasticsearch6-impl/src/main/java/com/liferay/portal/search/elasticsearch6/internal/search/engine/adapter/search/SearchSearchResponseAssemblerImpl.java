@@ -205,7 +205,7 @@ public class SearchSearchResponseAssemblerImpl
 			searchResponse.getHits();
 
 		SearchHits searchHits = searchHitsTranslator.translate(
-			elasticsearchSearchHits,
+			searchSearchRequest, elasticsearchSearchHits,
 			searchSearchRequest.getAlternateUidFieldName());
 
 		searchSearchResponse.setSearchHits(searchHits);

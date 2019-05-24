@@ -133,7 +133,7 @@ public class FragmentCollectionLocalServiceImpl
 		// Images
 
 		PortletFileRepositoryUtil.deletePortletFolder(
-			fragmentCollection.getResourcesFolderId());
+			fragmentCollection.getResourcesFolderId(false));
 
 		// Fragment entries
 

@@ -11,6 +11,21 @@
 		}
 	}
 
+	&.stacked-stars .liferay-rating-score {
+		> div {
+			display: flex;
+		}
+
+		.rating-element {
+			color: #FFB900;
+			padding-top: 3px;
+		}
+
+		.rating-label {
+			margin-left: 8px;
+		}
+	}
+
 	&.like, &.thumbs {
 		.rating-element * {
 			pointer-events: none;

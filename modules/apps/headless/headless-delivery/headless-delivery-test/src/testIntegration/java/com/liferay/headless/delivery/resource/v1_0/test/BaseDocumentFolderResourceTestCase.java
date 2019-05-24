@@ -21,33 +21,26 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentFolderSerDes;
-import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
@@ -56,19 +49,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -105,9 +95,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/headless-delivery/v1.0");
 	}
 
 	@After
@@ -162,61 +149,25 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testDeleteDocumentFolder_addDocumentFolder();
 
-		assertResponseCode(
-			204, invokeDeleteDocumentFolderResponse(documentFolder.getId()));
+		assertHttpResponseStatusCode(
+			204,
+			DocumentFolderResource.deleteDocumentFolderHttpResponse(
+				documentFolder.getId()));
 
-		assertResponseCode(
-			404, invokeGetDocumentFolderResponse(documentFolder.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			DocumentFolderResource.getDocumentFolderHttpResponse(
+				documentFolder.getId()));
 
-		assertResponseCode(404, invokeGetDocumentFolderResponse(0L));
+		assertHttpResponseStatusCode(
+			404, DocumentFolderResource.getDocumentFolderHttpResponse(0L));
 	}
 
 	protected DocumentFolder testDeleteDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
+		return DocumentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	protected void invokeDeleteDocumentFolder(Long documentFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteDocumentFolderResponse(
-			Long documentFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -224,8 +175,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder postDocumentFolder =
 			testGetDocumentFolder_addDocumentFolder();
 
-		DocumentFolder getDocumentFolder = invokeGetDocumentFolder(
-			postDocumentFolder.getId());
+		DocumentFolder getDocumentFolder =
+			DocumentFolderResource.getDocumentFolder(
+				postDocumentFolder.getId());
 
 		assertEquals(postDocumentFolder, getDocumentFolder);
 		assertValid(getDocumentFolder);
@@ -234,56 +186,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
+		return DocumentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	protected DocumentFolder invokeGetDocumentFolder(Long documentFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetDocumentFolderResponse(
-			Long documentFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -293,8 +197,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		DocumentFolder randomPatchDocumentFolder = randomPatchDocumentFolder();
 
-		DocumentFolder patchDocumentFolder = invokePatchDocumentFolder(
-			postDocumentFolder.getId(), randomPatchDocumentFolder);
+		DocumentFolder patchDocumentFolder =
+			DocumentFolderResource.patchDocumentFolder(
+				postDocumentFolder.getId(), randomPatchDocumentFolder);
 
 		DocumentFolder expectedPatchDocumentFolder =
 			(DocumentFolder)BeanUtils.cloneBean(postDocumentFolder);
@@ -302,8 +207,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		_beanUtilsBean.copyProperties(
 			expectedPatchDocumentFolder, randomPatchDocumentFolder);
 
-		DocumentFolder getDocumentFolder = invokeGetDocumentFolder(
-			patchDocumentFolder.getId());
+		DocumentFolder getDocumentFolder =
+			DocumentFolderResource.getDocumentFolder(
+				patchDocumentFolder.getId());
 
 		assertEquals(expectedPatchDocumentFolder, getDocumentFolder);
 		assertValid(getDocumentFolder);
@@ -312,69 +218,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPatchDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
+		return DocumentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	protected DocumentFolder invokePatchDocumentFolder(
-			Long documentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePatchDocumentFolderResponse(
-			Long documentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -384,14 +229,15 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		DocumentFolder randomDocumentFolder = randomDocumentFolder();
 
-		DocumentFolder putDocumentFolder = invokePutDocumentFolder(
-			postDocumentFolder.getId(), randomDocumentFolder);
+		DocumentFolder putDocumentFolder =
+			DocumentFolderResource.putDocumentFolder(
+				postDocumentFolder.getId(), randomDocumentFolder);
 
 		assertEquals(randomDocumentFolder, putDocumentFolder);
 		assertValid(putDocumentFolder);
 
-		DocumentFolder getDocumentFolder = invokeGetDocumentFolder(
-			putDocumentFolder.getId());
+		DocumentFolder getDocumentFolder =
+			DocumentFolderResource.getDocumentFolder(putDocumentFolder.getId());
 
 		assertEquals(randomDocumentFolder, getDocumentFolder);
 		assertValid(getDocumentFolder);
@@ -400,69 +246,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPutDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
+		return DocumentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	protected DocumentFolder invokePutDocumentFolder(
-			Long documentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutDocumentFolderResponse(
-			Long documentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{documentFolderId}", documentFolderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -479,7 +264,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					randomIrrelevantDocumentFolder());
 
 			Page<DocumentFolder> page =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					irrelevantParentDocumentFolderId, null, null,
 					Pagination.of(1, 2), null);
 
@@ -499,8 +284,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, randomDocumentFolder());
 
-		Page<DocumentFolder> page = invokeGetDocumentFolderDocumentFoldersPage(
-			parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
+		Page<DocumentFolder> page =
+			DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+				parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -532,7 +318,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null,
 					getFilterString(entityField, "between", documentFolder1),
 					Pagination.of(1, 2), null);
@@ -568,7 +354,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null,
 					getFilterString(entityField, "eq", documentFolder1),
 					Pagination.of(1, 2), null);
@@ -598,8 +384,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, randomDocumentFolder());
 
-		Page<DocumentFolder> page1 = invokeGetDocumentFolderDocumentFoldersPage(
-			parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
+		Page<DocumentFolder> page1 =
+			DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+				parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
@@ -607,8 +394,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Assert.assertEquals(
 			documentFolders1.toString(), 2, documentFolders1.size());
 
-		Page<DocumentFolder> page2 = invokeGetDocumentFolderDocumentFoldersPage(
-			parentDocumentFolderId, null, null, Pagination.of(2, 2), null);
+		Page<DocumentFolder> page2 =
+			DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+				parentDocumentFolderId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -661,7 +449,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> ascPage =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
@@ -670,7 +458,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				(List<DocumentFolder>)ascPage.getItems());
 
 			Page<DocumentFolder> descPage =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -714,7 +502,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> ascPage =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
@@ -723,7 +511,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				(List<DocumentFolder>)ascPage.getItems());
 
 			Page<DocumentFolder> descPage =
-				invokeGetDocumentFolderDocumentFoldersPage(
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -738,7 +526,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostDocumentFolderDocumentFolder(
+		return DocumentFolderResource.postDocumentFolderDocumentFolder(
 			parentDocumentFolderId, documentFolder);
 	}
 
@@ -755,88 +543,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<DocumentFolder> invokeGetDocumentFolderDocumentFoldersPage(
-			Long parentDocumentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{parentDocumentFolderId}/document-folders",
-					parentDocumentFolderId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentFolderSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetDocumentFolderDocumentFoldersPageResponse(
-			Long parentDocumentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{parentDocumentFolderId}/document-folders",
-					parentDocumentFolderId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -856,72 +562,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostDocumentFolderDocumentFolder(
+		return DocumentFolderResource.postDocumentFolderDocumentFolder(
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
 			documentFolder);
-	}
-
-	protected DocumentFolder invokePostDocumentFolderDocumentFolder(
-			Long parentDocumentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{parentDocumentFolderId}/document-folders",
-					parentDocumentFolderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostDocumentFolderDocumentFolderResponse(
-			Long parentDocumentFolderId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/document-folders/{parentDocumentFolderId}/document-folders",
-					parentDocumentFolderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -935,8 +578,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				testGetSiteDocumentFoldersPage_addDocumentFolder(
 					irrelevantSiteId, randomIrrelevantDocumentFolder());
 
-			Page<DocumentFolder> page = invokeGetSiteDocumentFoldersPage(
-				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+			Page<DocumentFolder> page =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					irrelevantSiteId, null, null, null, Pagination.of(1, 2),
+					null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -954,8 +599,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFoldersPage_addDocumentFolder(
 				siteId, randomDocumentFolder());
 
-		Page<DocumentFolder> page = invokeGetSiteDocumentFoldersPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+		Page<DocumentFolder> page =
+			DocumentFolderResource.getSiteDocumentFoldersPage(
+				siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -984,10 +630,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			siteId, documentFolder1);
 
 		for (EntityField entityField : entityFields) {
-			Page<DocumentFolder> page = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null,
-				getFilterString(entityField, "between", documentFolder1),
-				Pagination.of(1, 2), null);
+			Page<DocumentFolder> page =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null,
+					getFilterString(entityField, "between", documentFolder1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(documentFolder1),
@@ -1018,10 +665,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				siteId, randomDocumentFolder());
 
 		for (EntityField entityField : entityFields) {
-			Page<DocumentFolder> page = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null,
-				getFilterString(entityField, "eq", documentFolder1),
-				Pagination.of(1, 2), null);
+			Page<DocumentFolder> page =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null,
+					getFilterString(entityField, "eq", documentFolder1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(documentFolder1),
@@ -1047,8 +695,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFoldersPage_addDocumentFolder(
 				siteId, randomDocumentFolder());
 
-		Page<DocumentFolder> page1 = invokeGetSiteDocumentFoldersPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+		Page<DocumentFolder> page1 =
+			DocumentFolderResource.getSiteDocumentFoldersPage(
+				siteId, null, null, null, Pagination.of(1, 2), null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
@@ -1056,8 +705,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Assert.assertEquals(
 			documentFolders1.toString(), 2, documentFolders1.size());
 
-		Page<DocumentFolder> page2 = invokeGetSiteDocumentFoldersPage(
-			siteId, null, null, null, Pagination.of(2, 2), null);
+		Page<DocumentFolder> page2 =
+			DocumentFolderResource.getSiteDocumentFoldersPage(
+				siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1106,17 +756,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			siteId, documentFolder2);
 
 		for (EntityField entityField : entityFields) {
-			Page<DocumentFolder> ascPage = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<DocumentFolder> ascPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(documentFolder1, documentFolder2),
 				(List<DocumentFolder>)ascPage.getItems());
 
-			Page<DocumentFolder> descPage = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":desc");
+			Page<DocumentFolder> descPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(documentFolder2, documentFolder1),
@@ -1154,17 +806,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			siteId, documentFolder2);
 
 		for (EntityField entityField : entityFields) {
-			Page<DocumentFolder> ascPage = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<DocumentFolder> ascPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(documentFolder1, documentFolder2),
 				(List<DocumentFolder>)ascPage.getItems());
 
-			Page<DocumentFolder> descPage = invokeGetSiteDocumentFoldersPage(
-				siteId, null, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":desc");
+			Page<DocumentFolder> descPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(documentFolder2, documentFolder1),
@@ -1176,7 +830,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(siteId, documentFolder);
+		return DocumentFolderResource.postSiteDocumentFolder(
+			siteId, documentFolder);
 	}
 
 	protected Long testGetSiteDocumentFoldersPage_getSiteId() throws Exception {
@@ -1187,90 +842,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
-	}
-
-	protected Page<DocumentFolder> invokeGetSiteDocumentFoldersPage(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/document-folders", siteId);
-
-		if (flatten != null) {
-			location = HttpUtil.addParameter(location, "flatten", flatten);
-		}
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, DocumentFolderSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetSiteDocumentFoldersPageResponse(
-			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/document-folders", siteId);
-
-		if (flatten != null) {
-			location = HttpUtil.addParameter(location, "flatten", flatten);
-		}
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -1288,72 +859,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
+		return DocumentFolderResource.postSiteDocumentFolder(
 			testGetSiteDocumentFoldersPage_getSiteId(), documentFolder);
 	}
 
-	protected DocumentFolder invokePostSiteDocumentFolder(
-			Long siteId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/document-folders", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return DocumentFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostSiteDocumentFolderResponse(
-			Long siteId, DocumentFolder documentFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			DocumentFolderSerDes.toJSON(documentFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/document-folders", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1819,76 +1334,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseDocumentFolderResourceTestCase.class);
@@ -1908,8 +1356,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private DocumentFolderResource _documentFolderResource;
-
-	private URL _resourceURL;
+	private com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource
+		_documentFolderResource;
 
 }

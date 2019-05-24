@@ -213,7 +213,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 		buildCSSTask.dependsOn(buildThemeTask);
 
-		buildCSSTask.setDocrootDir(
+		buildCSSTask.setBaseDir(
 			new Callable<File>() {
 
 				@Override

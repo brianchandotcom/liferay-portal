@@ -239,17 +239,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public Lock getLock() {
-		try {
-			return LockManagerUtil.getLock(
-				DLFileEntry.class.getName(), getFileEntryId());
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
-		}
-
-		return null;
+		return LockManagerUtil.fetchLock(
+			DLFileEntry.class.getName(), getFileEntryId());
 	}
 
 	@Override

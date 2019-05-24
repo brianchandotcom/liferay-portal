@@ -56,6 +56,11 @@ else {
 	<c:if test="<%= !hasWorkflowTask %>">
 		<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 			<li class="control-menu-nav-item">
+
+				<%
+				List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+				%>
+
 				<portlet:actionURL name="updateLayoutRevision" var="publishURL">
 					<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
 					<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
@@ -69,7 +74,7 @@ else {
 							<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publication" labelOn="ready-for-publication" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
 						</span>
 					</c:when>
-					<c:otherwise>
+					<c:when test="<%= !workflowEnabled || pendingLayoutRevisions.isEmpty() %>">
 
 						<%
 						String label = null;
@@ -87,7 +92,7 @@ else {
 								<liferay-ui:message key="<%= label %>" />
 							</a>
 						</div>
-					</c:otherwise>
+					</c:when>
 				</c:choose>
 			</li>
 		</c:if>

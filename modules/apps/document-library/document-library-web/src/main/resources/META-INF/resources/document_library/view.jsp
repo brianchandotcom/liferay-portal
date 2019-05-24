@@ -30,8 +30,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<%
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
-		String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-
 		String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 		boolean defaultFolderView = dlAdminDisplayContext.isDefaultFolderView();
@@ -63,9 +61,9 @@ String navigation = ParamUtil.getString(request, "navigation");
 			portletURL="<%= restoreTrashEntriesURL %>"
 		/>
 
-		<%@ include file="/document_library/navigation.jspf" %>
+		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-		<%@ include file="/document_library/toolbar.jspf" %>
+		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
 		<%
 		BulkSelectionRunner bulkSelectionRunner = BulkSelectionRunnerUtil.getBulkSelectionRunner();
@@ -105,7 +103,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 				<div class="sidenav-content">
 					<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 						<c:if test='<%= !mvcRenderCommandName.equals("/document_library/search") %>'>
-							<%@ include file="/document_library/breadcrumb.jspf" %>
+							<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
 						</c:if>
 					</div>
 
@@ -134,10 +132,10 @@ String navigation = ParamUtil.getString(request, "navigation");
 						<div class="document-container">
 							<c:choose>
 								<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-									<%@ include file="/document_library/search_resources.jspf" %>
+									<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 								</c:when>
 								<c:otherwise>
-									<%@ include file="/document_library/view_entries.jspf" %>
+									<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
 								</c:otherwise>
 							</c:choose>
 
@@ -199,6 +197,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<aui:script use="liferay-document-library">
 
 			<%
+			String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 			String[] escapedEntryColumns = new String[entryColumns.length];
 
 			for (int i = 0; i < entryColumns.length; i++) {

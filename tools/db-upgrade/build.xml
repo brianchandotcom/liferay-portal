@@ -20,7 +20,6 @@
 			<jvmarg value="-Duser.country=US" />
 			<jvmarg value="-Duser.language=en" />
 			<jvmarg value="-Duser.timezone=GMT" />
-			<jvmarg value="-XX:MaxPermSize=256m" />
 		</java>
 	</target>
 </project>

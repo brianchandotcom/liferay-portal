@@ -1,7 +1,7 @@
 Bundle-Description: Creates a Liferay WAR-style Hook project.
 Bundle-Name: Liferay Project Templates WAR Hook
 Bundle-SymbolicName: com.liferay.project.templates.war.hook
-Bundle-Version: 1.0.30
+Bundle-Version: 1.0.31
 Liferay-Versions: [7,7.3)
 -removeheaders:\
 	Import-Package,\

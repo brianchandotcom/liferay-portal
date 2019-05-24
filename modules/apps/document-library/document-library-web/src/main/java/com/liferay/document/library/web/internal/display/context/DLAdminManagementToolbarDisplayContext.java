@@ -86,19 +86,19 @@ public class DLAdminManagementToolbarDisplayContext {
 	public DLAdminManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			DLRequestHelper dlRequestHelper,
+			HttpServletRequest httpServletRequest,
 			DLAdminDisplayContext dlAdminDisplayContext)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_dlRequestHelper = dlRequestHelper;
+		_httpServletRequest = httpServletRequest;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
-
-		_httpServletRequest = dlRequestHelper.getRequest();
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
+
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);

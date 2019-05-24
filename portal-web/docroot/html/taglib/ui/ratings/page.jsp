@@ -88,6 +88,69 @@ if (!inTrash) {
 
 <div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingContainer">
 	<c:choose>
+		<c:when test="<%= type.equals(RatingsType.STACKED_STARS.getValue()) %>">
+			<div class="liferay-rating-score" id="<%= randomNamespace %>ratingScore">
+				<div id="<%= randomNamespace %>ratingScoreContent">
+					<liferay-util:whitespace-remover>
+
+						<%
+						for (int i = 1; i <= numberOfStars; i++) {
+							String message = StringPool.BLANK;
+
+							if (inTrash) {
+								message = LanguageUtil.get(resourceBundle, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin");
+							}
+							else if (!enabled) {
+								message = LanguageUtil.get(resourceBundle, "ratings-are-disabled-in-staging");
+							}
+							else if (i == 1) {
+								message = LanguageUtil.format(request, ((formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {formattedAverageScore, numberOfStars}, false);
+							}
+							%>
+
+							<span class="rating-element <%= (i <= averageIndex) ? "icon-star" : "icon-star-empty" %>" title="<%= message %>"></span>
+
+							<%
+						}
+						%>
+
+					</liferay-util:whitespace-remover>
+
+					<div class="rating-label">
+						(<%= totalEntries %> <liferay-ui:message key='<%= (totalEntries == 1) ? "vote" : "votes" %>' />)
+					</div>
+				</div>
+			</div>
+
+			<c:if test="<%= themeDisplay.isSignedIn() && enabled %>">
+				<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
+					<div id="<%= randomNamespace %>ratingStarContent">
+						<liferay-util:whitespace-remover>
+
+							<%
+							double yourScoreStars = (yourScore != -1.0) ? yourScore * numberOfStars : 0.0;
+
+							for (int i = 1; i <= numberOfStars; i++) {
+								String ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
+							%>
+
+								<a class="rating-element <%= (i <= yourScoreStars) ? "icon-star" : "icon-star-empty" %>" href="javascript:;"></a>
+
+								<div class="rating-input-container">
+									<label for="<%= ratingId %>"><liferay-ui:message arguments="<%= new Object[] {i, numberOfStars} %>" key='<%= (yourScoreStars == i) ? ((i == 1) ? "you-have-rated-this-x-star-out-of-x" : "you-have-rated-this-x-stars-out-of-x") : ((i == 1) ? "rate-this-x-star-out-of-x" : "rate-this-x-stars-out-of-x") %>' translateArguments="<%= false %>" /></label>
+
+									<input checked="<%= i == yourScoreStars %>" class="rating-input" id="<%= ratingId %>" name="<portlet:namespace />rating" type="radio" value="<%= i %>">
+								</div>
+
+							<%
+							}
+							%>
+
+						</liferay-util:whitespace-remover>
+					</div>
+				</div>
+			</c:if>
+		</c:when>
 		<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
 			<c:if test="<%= themeDisplay.isSignedIn() && enabled %>">
 				<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">

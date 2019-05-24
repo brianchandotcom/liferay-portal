@@ -635,7 +635,6 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Entry Content1&quot;");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTag {
 		Navigator.openURL();
@@ -682,7 +681,6 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "name1");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTagQuotes {
 		Navigator.openURL();
@@ -921,7 +919,6 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -1660,7 +1657,6 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewMultipleFacetURLs {
 		var searchPage = "Search Page";

@@ -402,7 +402,6 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Entry Content1&quot;");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTag {
 		Navigator.openURL();
@@ -449,7 +448,6 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "name1");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchBlogsEntryTagQuotes {
 		Navigator.openURL();
@@ -686,7 +684,6 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
 		property testray.component.names = "Training";
@@ -1415,7 +1412,6 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewMultipleFacetURLs {
 		property osgi.app.includes = "portal-search-solr7";

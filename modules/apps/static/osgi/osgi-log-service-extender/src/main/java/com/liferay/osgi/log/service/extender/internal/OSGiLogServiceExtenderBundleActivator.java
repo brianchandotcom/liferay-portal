@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.log.service.extender.internal;
 
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -183,6 +184,14 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 
 			if (logLevels.isEmpty()) {
 				return null;
+			}
+
+			for (Map.Entry<String, LogLevel> entry : logLevels.entrySet()) {
+				String name = "osgi.logging.".concat(entry.getKey());
+
+				LogLevel logLevel = entry.getValue();
+
+				Log4JUtil.setLevel(name, logLevel.toString(), false);
 			}
 
 			LoggerContext loggerContext = _loggerAdmin.getLoggerContext(

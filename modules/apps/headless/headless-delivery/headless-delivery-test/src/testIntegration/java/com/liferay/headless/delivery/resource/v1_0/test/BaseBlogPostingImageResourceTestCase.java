@@ -21,34 +21,28 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingImageSerDes;
-import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.File;
 
-import java.net.URL;
+import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
@@ -57,19 +51,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -106,9 +97,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/headless-delivery/v1.0");
 	}
 
 	@After
@@ -163,64 +151,26 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage =
 			testDeleteBlogPostingImage_addBlogPostingImage();
 
-		assertResponseCode(
+		assertHttpResponseStatusCode(
 			204,
-			invokeDeleteBlogPostingImageResponse(blogPostingImage.getId()));
+			BlogPostingImageResource.deleteBlogPostingImageHttpResponse(
+				blogPostingImage.getId()));
 
-		assertResponseCode(
-			404, invokeGetBlogPostingImageResponse(blogPostingImage.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			BlogPostingImageResource.getBlogPostingImageHttpResponse(
+				blogPostingImage.getId()));
 
-		assertResponseCode(404, invokeGetBlogPostingImageResponse(0L));
+		assertHttpResponseStatusCode(
+			404, BlogPostingImageResource.getBlogPostingImageHttpResponse(0L));
 	}
 
 	protected BlogPostingImage testDeleteBlogPostingImage_addBlogPostingImage()
 		throws Exception {
 
-		return invokePostSiteBlogPostingImage(
-			testGroup.getGroupId(), toMultipartBody(randomBlogPostingImage()));
-	}
-
-	protected void invokeDeleteBlogPostingImage(Long blogPostingImageId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blogPostingImageId}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteBlogPostingImageResponse(
-			Long blogPostingImageId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blogPostingImageId}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
+		return BlogPostingImageResource.postSiteBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage(),
+			getMultipartFiles());
 	}
 
 	@Test
@@ -228,8 +178,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage postBlogPostingImage =
 			testGetBlogPostingImage_addBlogPostingImage();
 
-		BlogPostingImage getBlogPostingImage = invokeGetBlogPostingImage(
-			postBlogPostingImage.getId());
+		BlogPostingImage getBlogPostingImage =
+			BlogPostingImageResource.getBlogPostingImage(
+				postBlogPostingImage.getId());
 
 		assertEquals(postBlogPostingImage, getBlogPostingImage);
 		assertValid(getBlogPostingImage);
@@ -238,59 +189,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	protected BlogPostingImage testGetBlogPostingImage_addBlogPostingImage()
 		throws Exception {
 
-		return invokePostSiteBlogPostingImage(
-			testGroup.getGroupId(), toMultipartBody(randomBlogPostingImage()));
-	}
-
-	protected BlogPostingImage invokeGetBlogPostingImage(
-			Long blogPostingImageId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blogPostingImageId}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return BlogPostingImageSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetBlogPostingImageResponse(
-			Long blogPostingImageId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{blogPostingImageId}",
-					blogPostingImageId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
+		return BlogPostingImageResource.postSiteBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage(),
+			getMultipartFiles());
 	}
 
 	@Test
@@ -304,8 +205,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 					irrelevantSiteId, randomIrrelevantBlogPostingImage());
 
-			Page<BlogPostingImage> page = invokeGetSiteBlogPostingImagesPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+			Page<BlogPostingImage> page =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					irrelevantSiteId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -323,8 +225,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, randomBlogPostingImage());
 
-		Page<BlogPostingImage> page = invokeGetSiteBlogPostingImagesPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+		Page<BlogPostingImage> page =
+			BlogPostingImageResource.getSiteBlogPostingImagesPage(
+				siteId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -354,10 +257,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				siteId, blogPostingImage1);
 
 		for (EntityField entityField : entityFields) {
-			Page<BlogPostingImage> page = invokeGetSiteBlogPostingImagesPage(
-				siteId, null,
-				getFilterString(entityField, "between", blogPostingImage1),
-				Pagination.of(1, 2), null);
+			Page<BlogPostingImage> page =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null,
+					getFilterString(entityField, "between", blogPostingImage1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(blogPostingImage1),
@@ -388,10 +292,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				siteId, randomBlogPostingImage());
 
 		for (EntityField entityField : entityFields) {
-			Page<BlogPostingImage> page = invokeGetSiteBlogPostingImagesPage(
-				siteId, null,
-				getFilterString(entityField, "eq", blogPostingImage1),
-				Pagination.of(1, 2), null);
+			Page<BlogPostingImage> page =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null,
+					getFilterString(entityField, "eq", blogPostingImage1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(blogPostingImage1),
@@ -417,8 +322,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, randomBlogPostingImage());
 
-		Page<BlogPostingImage> page1 = invokeGetSiteBlogPostingImagesPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+		Page<BlogPostingImage> page1 =
+			BlogPostingImageResource.getSiteBlogPostingImagesPage(
+				siteId, null, null, Pagination.of(1, 2), null);
 
 		List<BlogPostingImage> blogPostingImages1 =
 			(List<BlogPostingImage>)page1.getItems();
@@ -426,8 +332,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertEquals(
 			blogPostingImages1.toString(), 2, blogPostingImages1.size());
 
-		Page<BlogPostingImage> page2 = invokeGetSiteBlogPostingImagesPage(
-			siteId, null, null, Pagination.of(2, 2), null);
+		Page<BlogPostingImage> page2 =
+			BlogPostingImageResource.getSiteBlogPostingImagesPage(
+				siteId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -479,16 +386,17 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				siteId, blogPostingImage2);
 
 		for (EntityField entityField : entityFields) {
-			Page<BlogPostingImage> ascPage = invokeGetSiteBlogPostingImagesPage(
-				siteId, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<BlogPostingImage> ascPage =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(blogPostingImage1, blogPostingImage2),
 				(List<BlogPostingImage>)ascPage.getItems());
 
 			Page<BlogPostingImage> descPage =
-				invokeGetSiteBlogPostingImagesPage(
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
 					siteId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -530,16 +438,17 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				siteId, blogPostingImage2);
 
 		for (EntityField entityField : entityFields) {
-			Page<BlogPostingImage> ascPage = invokeGetSiteBlogPostingImagesPage(
-				siteId, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<BlogPostingImage> ascPage =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(blogPostingImage1, blogPostingImage2),
 				(List<BlogPostingImage>)ascPage.getItems());
 
 			Page<BlogPostingImage> descPage =
-				invokeGetSiteBlogPostingImagesPage(
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
 					siteId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -554,8 +463,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				Long siteId, BlogPostingImage blogPostingImage)
 		throws Exception {
 
-		return invokePostSiteBlogPostingImage(
-			siteId, toMultipartBody(blogPostingImage));
+		return BlogPostingImageResource.postSiteBlogPostingImage(
+			siteId, blogPostingImage, getMultipartFiles());
 	}
 
 	protected Long testGetSiteBlogPostingImagesPage_getSiteId()
@@ -570,84 +479,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<BlogPostingImage> invokeGetSiteBlogPostingImagesPage(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/blog-posting-images", siteId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, BlogPostingImageSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetSiteBlogPostingImagesPageResponse(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/blog-posting-images", siteId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testPostSiteBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
@@ -657,76 +488,17 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			BlogPostingImage blogPostingImage)
 		throws Exception {
 
-		return invokePostSiteBlogPostingImage(
-			testGetSiteBlogPostingImagesPage_getSiteId(),
-			toMultipartBody(blogPostingImage));
+		return BlogPostingImageResource.postSiteBlogPostingImage(
+			testGetSiteBlogPostingImagesPage_getSiteId(), blogPostingImage,
+			getMultipartFiles());
 	}
 
-	protected BlogPostingImage invokePostSiteBlogPostingImage(
-			Long siteId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.addPart("blogPostingImage", _toJSON(multipartBody.getValues()));
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		options.addFilePart(
-			"file", binaryFile.getFileName(),
-			FileUtil.getBytes(binaryFile.getInputStream()), testContentType,
-			"UTF-8");
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/blog-posting-images", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return BlogPostingImageSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostSiteBlogPostingImageResponse(
-			Long siteId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/blog-posting-images", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1056,6 +828,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected BlogPostingImage randomBlogPostingImage() throws Exception {
 		return new BlogPostingImage() {
 			{
@@ -1082,82 +859,10 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return randomBlogPostingImage();
 	}
 
-	protected MultipartBody toMultipartBody(BlogPostingImage blogPostingImage) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseBlogPostingImageResourceTestCase.class);
@@ -1177,8 +882,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private BlogPostingImageResource _blogPostingImageResource;
-
-	private URL _resourceURL;
+	private com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource
+		_blogPostingImageResource;
 
 }

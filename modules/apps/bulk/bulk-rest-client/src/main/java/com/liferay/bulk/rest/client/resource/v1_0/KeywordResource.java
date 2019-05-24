@@ -30,12 +30,31 @@ import javax.annotation.Generated;
 @Generated("")
 public class KeywordResource {
 
-	public void patchKeywordBatch(
+	public static void patchKeywordBatch(
+			com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkSelection
+				keywordBulkSelection)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = patchKeywordBatchHttpResponse(
+			keywordBulkSelection);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse patchKeywordBatchHttpResponse(
 			com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkSelection
 				keywordBulkSelection)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(keywordBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -44,22 +63,34 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void putKeywordBatch(
+			com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkSelection
+				keywordBulkSelection)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putKeywordBatchHttpResponse(
+			keywordBulkSelection);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void putKeywordBatch(
+	public static HttpInvoker.HttpResponse putKeywordBatchHttpResponse(
 			com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkSelection
 				keywordBulkSelection)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(keywordBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -68,22 +99,36 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<Keyword> postKeywordsCommonPage(
+			com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
+				documentBulkSelection)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postKeywordsCommonPageHttpResponse(documentBulkSelection);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, KeywordSerDes::toDTO);
 	}
 
-	public Page<Keyword> postKeywordsCommonPage(
+	public static HttpInvoker.HttpResponse postKeywordsCommonPageHttpResponse(
 			com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
 				documentBulkSelection)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(documentBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -92,16 +137,7 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KeywordSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

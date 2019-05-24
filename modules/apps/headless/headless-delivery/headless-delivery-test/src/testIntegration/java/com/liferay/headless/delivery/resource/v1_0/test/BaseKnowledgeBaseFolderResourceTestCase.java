@@ -21,52 +21,42 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseFolderSerDes;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -103,9 +93,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/headless-delivery/v1.0");
 	}
 
 	@After
@@ -161,67 +148,27 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
-		assertResponseCode(
+		assertHttpResponseStatusCode(
 			204,
-			invokeDeleteKnowledgeBaseFolderResponse(
+			KnowledgeBaseFolderResource.deleteKnowledgeBaseFolderHttpResponse(
 				knowledgeBaseFolder.getId()));
 
-		assertResponseCode(
+		assertHttpResponseStatusCode(
 			404,
-			invokeGetKnowledgeBaseFolderResponse(knowledgeBaseFolder.getId()));
+			KnowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolder.getId()));
 
-		assertResponseCode(404, invokeGetKnowledgeBaseFolderResponse(0L));
+		assertHttpResponseStatusCode(
+			404,
+			KnowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(0L));
 	}
 
 	protected KnowledgeBaseFolder
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	protected void invokeDeleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-	}
-
-	protected Http.Response invokeDeleteKnowledgeBaseFolderResponse(
-			Long knowledgeBaseFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setDelete(true);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -230,7 +177,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder getKnowledgeBaseFolder =
-			invokeGetKnowledgeBaseFolder(postKnowledgeBaseFolder.getId());
+			KnowledgeBaseFolderResource.getKnowledgeBaseFolder(
+				postKnowledgeBaseFolder.getId());
 
 		assertEquals(postKnowledgeBaseFolder, getKnowledgeBaseFolder);
 		assertValid(getKnowledgeBaseFolder);
@@ -240,59 +188,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	protected KnowledgeBaseFolder invokeGetKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetKnowledgeBaseFolderResponse(
-			Long knowledgeBaseFolderId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -304,7 +201,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			randomPatchKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder patchKnowledgeBaseFolder =
-			invokePatchKnowledgeBaseFolder(
+			KnowledgeBaseFolderResource.patchKnowledgeBaseFolder(
 				postKnowledgeBaseFolder.getId(),
 				randomPatchKnowledgeBaseFolder);
 
@@ -315,7 +212,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			expectedPatchKnowledgeBaseFolder, randomPatchKnowledgeBaseFolder);
 
 		KnowledgeBaseFolder getKnowledgeBaseFolder =
-			invokeGetKnowledgeBaseFolder(patchKnowledgeBaseFolder.getId());
+			KnowledgeBaseFolderResource.getKnowledgeBaseFolder(
+				patchKnowledgeBaseFolder.getId());
 
 		assertEquals(expectedPatchKnowledgeBaseFolder, getKnowledgeBaseFolder);
 		assertValid(getKnowledgeBaseFolder);
@@ -325,71 +223,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	protected KnowledgeBaseFolder invokePatchKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePatchKnowledgeBaseFolderResponse(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPatch(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -401,14 +236,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			randomKnowledgeBaseFolder();
 
 		KnowledgeBaseFolder putKnowledgeBaseFolder =
-			invokePutKnowledgeBaseFolder(
+			KnowledgeBaseFolderResource.putKnowledgeBaseFolder(
 				postKnowledgeBaseFolder.getId(), randomKnowledgeBaseFolder);
 
 		assertEquals(randomKnowledgeBaseFolder, putKnowledgeBaseFolder);
 		assertValid(putKnowledgeBaseFolder);
 
 		KnowledgeBaseFolder getKnowledgeBaseFolder =
-			invokeGetKnowledgeBaseFolder(putKnowledgeBaseFolder.getId());
+			KnowledgeBaseFolderResource.getKnowledgeBaseFolder(
+				putKnowledgeBaseFolder.getId());
 
 		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
 		assertValid(getKnowledgeBaseFolder);
@@ -418,71 +254,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	protected KnowledgeBaseFolder invokePutKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePutKnowledgeBaseFolderResponse(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{knowledgeBaseFolderId}",
-					knowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPut(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -501,8 +274,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					randomIrrelevantKnowledgeBaseFolder());
 
 			Page<KnowledgeBaseFolder> page =
-				invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					irrelevantParentKnowledgeBaseFolderId, Pagination.of(1, 2));
+				KnowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						irrelevantParentKnowledgeBaseFolderId,
+						Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -521,8 +296,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page =
-			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				parentKnowledgeBaseFolderId, Pagination.of(1, 2));
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					parentKnowledgeBaseFolderId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -552,8 +328,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
 		Page<KnowledgeBaseFolder> page1 =
-			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				parentKnowledgeBaseFolderId, Pagination.of(1, 2));
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					parentKnowledgeBaseFolderId, Pagination.of(1, 2));
 
 		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
 			(List<KnowledgeBaseFolder>)page1.getItems();
@@ -562,8 +339,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			knowledgeBaseFolders1.toString(), 2, knowledgeBaseFolders1.size());
 
 		Page<KnowledgeBaseFolder> page2 =
-			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				parentKnowledgeBaseFolderId, Pagination.of(2, 2));
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					parentKnowledgeBaseFolderId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -591,8 +369,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
-			parentKnowledgeBaseFolderId, knowledgeBaseFolder);
+		return KnowledgeBaseFolderResource.
+			postKnowledgeBaseFolderKnowledgeBaseFolder(
+				parentKnowledgeBaseFolderId, knowledgeBaseFolder);
 	}
 
 	protected Long
@@ -608,64 +387,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	protected Page<KnowledgeBaseFolder>
-			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long parentKnowledgeBaseFolderId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-					parentKnowledgeBaseFolderId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, KnowledgeBaseFolderSerDes::toDTO);
-	}
-
-	protected Http.Response
-			invokeGetKnowledgeBaseFolderKnowledgeBaseFoldersPageResponse(
-				Long parentKnowledgeBaseFolderId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-					parentKnowledgeBaseFolderId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -688,76 +409,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
-			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
-			knowledgeBaseFolder);
-	}
-
-	protected KnowledgeBaseFolder
-			invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
-				Long parentKnowledgeBaseFolderId,
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-					parentKnowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response
-			invokePostKnowledgeBaseFolderKnowledgeBaseFolderResponse(
-				Long parentKnowledgeBaseFolderId,
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-					parentKnowledgeBaseFolderId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
+		return KnowledgeBaseFolderResource.
+			postKnowledgeBaseFolderKnowledgeBaseFolder(
+				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+				knowledgeBaseFolder);
 	}
 
 	@Test
@@ -772,7 +427,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					irrelevantSiteId, randomIrrelevantKnowledgeBaseFolder());
 
 			Page<KnowledgeBaseFolder> page =
-				invokeGetSiteKnowledgeBaseFoldersPage(
+				KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
 					irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -791,8 +446,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				siteId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page = invokeGetSiteKnowledgeBaseFoldersPage(
-			siteId, Pagination.of(1, 2));
+		Page<KnowledgeBaseFolder> page =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -820,8 +476,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				siteId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page1 = invokeGetSiteKnowledgeBaseFoldersPage(
-			siteId, Pagination.of(1, 2));
+		Page<KnowledgeBaseFolder> page1 =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				siteId, Pagination.of(1, 2));
 
 		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
 			(List<KnowledgeBaseFolder>)page1.getItems();
@@ -829,8 +486,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertEquals(
 			knowledgeBaseFolders1.toString(), 2, knowledgeBaseFolders1.size());
 
-		Page<KnowledgeBaseFolder> page2 = invokeGetSiteKnowledgeBaseFoldersPage(
-			siteId, Pagination.of(2, 2));
+		Page<KnowledgeBaseFolder> page2 =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				siteId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -857,7 +515,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(siteId, knowledgeBaseFolder);
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			siteId, knowledgeBaseFolder);
 	}
 
 	protected Long testGetSiteKnowledgeBaseFoldersPage_getSiteId()
@@ -870,58 +529,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
-	}
-
-	protected Page<KnowledgeBaseFolder> invokeGetSiteKnowledgeBaseFoldersPage(
-			Long siteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/knowledge-base-folders", siteId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, KnowledgeBaseFolderSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetSiteKnowledgeBaseFoldersPageResponse(
-			Long siteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/knowledge-base-folders", siteId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -942,75 +549,17 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
+		return KnowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGetSiteKnowledgeBaseFoldersPage_getSiteId(),
 			knowledgeBaseFolder);
 	}
 
-	protected KnowledgeBaseFolder invokePostSiteKnowledgeBaseFolder(
-			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/knowledge-base-folders", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokePostSiteKnowledgeBaseFolderResponse(
-			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/knowledge-base-folders", siteId);
-
-		options.setLocation(location);
-
-		options.setPost(true);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1568,76 +1117,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseKnowledgeBaseFolderResourceTestCase.class);
@@ -1657,8 +1139,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private KnowledgeBaseFolderResource _knowledgeBaseFolderResource;
-
-	private URL _resourceURL;
+	private
+		com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource
+			_knowledgeBaseFolderResource;
 
 }

@@ -1,0 +1,257 @@
+.pagination {
+	flex-wrap: wrap;
+	font-size: $pagination-font-size;
+	margin-bottom: $pagination-margin-bottom;
+}
+
+.pagination-bar {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+
+	@include clay-scale-component {
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.pagination {
+		@include clay-scale-component {
+			margin-top: $pagination-margin-top-mobile;
+		}
+	}
+}
+
+.page-link {
+	align-items: center;
+
+	@include border-radius($pagination-link-border-radius);
+
+	display: inline-flex;
+	height: $pagination-item-height;
+	justify-content: center;
+
+	@include transition($pagination-link-transition);
+
+	&:focus {
+		z-index: 3;
+	}
+
+	&:not(:disabled):not(.disabled) {
+		cursor: $pagination-link-cursor;
+	}
+
+	&.btn-unstyled {
+		background-color: $pagination-bg;
+		border-width: $pagination-border-width;
+		line-height: $pagination-line-height;
+		max-width: none;
+		padding: $pagination-padding-y $pagination-padding-x;
+
+		&:hover {
+			background-color: $pagination-hover-bg;
+			border-color: $pagination-hover-border-color;
+			color: $pagination-hover-color;
+		}
+
+		&:focus {
+			box-shadow: $pagination-focus-box-shadow;
+		}
+
+		&:disabled {
+			background-color: $pagination-disabled-bg;
+			border-color: $pagination-disabled-border-color;
+			color: $pagination-disabled-color;
+			opacity: $pagination-disabled-opacity;
+		}
+	}
+
+	.lexicon-icon {
+		margin-top: 0;
+	}
+}
+
+.page-item {
+	margin-bottom: $pagination-item-margin-y;
+	margin-left: $pagination-item-margin-x;
+	margin-right: $pagination-item-margin-x;
+	margin-top: $pagination-item-margin-y;
+
+	&:first-child {
+		.page-link {
+			border-radius: $pagination-link-first-border-radius;
+		}
+	}
+
+	&:last-child {
+		.page-link {
+			border-radius: $pagination-link-last-border-radius;
+		}
+	}
+
+	&.active .page-link {
+		cursor: default;
+
+		&.btn-unstyled {
+			background-color: $pagination-active-bg;
+			border-color: $pagination-active-border-color;
+			color: $pagination-active-color;
+		}
+	}
+
+	&.disabled .page-link {
+		cursor: $pagination-disabled-cursor;
+		opacity: $pagination-disabled-opacity;
+		pointer-events: $pagination-disabled-pointer-events;
+	}
+}
+
+.pagination-items-per-page {
+	font-size: $pagination-items-per-page-font-size;
+	margin-bottom: $pagination-margin-bottom;
+
+	> a,
+	> .btn-unstyled {
+		align-items: center;
+		background-color: $pagination-items-per-page-bg;
+		border-color: $pagination-items-per-page-border-color;
+
+		@include border-radius($pagination-items-per-page-border-radius);
+
+		border-style: solid;
+		border-width: $pagination-border-width;
+		color: $pagination-items-per-page-color;
+		display: inline-flex;
+		height: $pagination-item-height;
+		justify-content: center;
+		line-height: $pagination-line-height;
+		padding: $pagination-padding-y $pagination-padding-x;
+		text-decoration: none;
+
+		@include transition($pagination-items-per-page-transition);
+
+		&:hover {
+			background-color: $pagination-items-per-page-hover-bg;
+			border-color: $pagination-items-per-page-hover-border-color;
+			color: $pagination-items-per-page-hover-color;
+		}
+
+		&:focus {
+			box-shadow: $pagination-items-per-page-focus-box-shadow;
+			outline: $pagination-items-per-page-focus-outline;
+		}
+
+		.lexicon-icon {
+			margin-left: $pagination-items-per-page-lexicon-icon-margin-left;
+			margin-top: $pagination-items-per-page-lexicon-icon-margin-top;
+		}
+	}
+
+	+ .pagination-results {
+		@include clay-scale-component {
+			margin-left: auto;
+		}
+	}
+}
+
+.show {
+	&.page-item,
+	&.pagination-items-per-page {
+		.dropdown-toggle {
+			background-color: $pagination-active-bg;
+			border-color: $pagination-active-border-color;
+			color: $pagination-active-color;
+		}
+	}
+}
+
+.page-item .dropdown-menu,
+.pagination-items-per-page .dropdown-menu {
+	margin-bottom: $pagination-dropdown-menu-spacer-y;
+	margin-top: $pagination-dropdown-menu-spacer-y;
+}
+
+.pagination-results {
+	border-color: transparent;
+	border-style: solid;
+	border-width: $pagination-border-width;
+	color: $pagination-results-color;
+	font-size: $pagination-font-size;
+	line-height: $pagination-line-height;
+	margin-bottom: $pagination-margin-bottom;
+	margin-right: auto;
+	max-width: 100%;
+	padding: $pagination-padding-y $pagination-padding-x;
+	word-wrap: break-word;
+}
+
+// Pagination Sizes
+
+.pagination-sm {
+	.pagination-items-per-page {
+		@include border-radius($pagination-link-border-radius-sm);
+
+		.lexicon-icon {
+			margin-left: $pagination-items-per-page-lexicon-icon-margin-left-sm;
+			margin-right: $pagination-items-per-page-lexicon-icon-margin-top-sm;
+		}
+	}
+
+	.pagination-items-per-page > a,
+	.pagination-items-per-page > .btn-unstyled {
+		font-size: $pagination-font-size-sm;
+		height: $pagination-item-height-sm;
+		line-height: $pagination-line-height-sm;
+		padding: $pagination-padding-y-sm $pagination-padding-x;
+	}
+
+	.pagination-results {
+		font-size: $pagination-font-size-sm;
+		line-height: $pagination-line-height-sm;
+		padding: $pagination-padding-y-sm $pagination-padding-x;
+	}
+
+	.page-link {
+		font-size: $pagination-font-size-sm;
+		height: $pagination-item-height-sm;
+		line-height: $pagination-line-height-sm;
+
+		&.btn-unstyled {
+			padding: $pagination-padding-y-sm $pagination-padding-x-sm;
+		}
+	}
+}
+
+.pagination-lg {
+	.pagination-items-per-page {
+		@include border-radius($pagination-link-border-radius-lg);
+
+		.lexicon-icon {
+			margin-left: $pagination-items-per-page-lexicon-icon-margin-left-lg;
+			margin-right: $pagination-items-per-page-lexicon-icon-margin-top-lg;
+		}
+	}
+
+	.pagination-items-per-page > a,
+	.pagination-items-per-page > .btn-unstyled {
+		font-size: $pagination-font-size-lg;
+		height: $pagination-item-height-lg;
+		line-height: $pagination-line-height-lg;
+		padding: $pagination-padding-y-lg $pagination-padding-x;
+	}
+
+	.pagination-results {
+		font-size: $pagination-font-size-lg;
+		line-height: $pagination-line-height-lg;
+		padding: $pagination-padding-y-lg $pagination-padding-x;
+	}
+
+	.page-link {
+		font-size: $pagination-font-size-lg;
+		height: $pagination-item-height-lg;
+		line-height: $pagination-line-height-lg;
+
+		&.btn-unstyled {
+			padding: $pagination-padding-y-lg $pagination-padding-x-lg;
+		}
+	}
+}

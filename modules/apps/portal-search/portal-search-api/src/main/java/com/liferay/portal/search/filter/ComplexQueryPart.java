@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.filter;
 
+import com.liferay.portal.search.query.Query;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -31,6 +33,8 @@ public interface ComplexQueryPart {
 	public String getOccur();
 
 	public String getParent();
+
+	public Query getQuery();
 
 	public String getType();
 

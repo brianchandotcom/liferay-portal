@@ -6,6 +6,10 @@ apply plugin: "java"
 
 task runGradleTest
 
+buildCSS {
+	excludes "**/excluded.scss"
+}
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
@@ -29,5 +33,9 @@ runGradleTest {
 
 			assert matcher.count == 3
 		}
+
+		File excludedFile = new File(dir, "excluded.css")
+
+		assert !excludedFile.exists()
 	}
 }

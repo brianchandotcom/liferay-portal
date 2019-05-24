@@ -32,8 +32,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class DataRecordResource {
 
-	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
+	public static Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			Long dataRecordCollectionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getDataRecordCollectionDataRecordsPageHttpResponse(
+				dataRecordCollectionId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, DataRecordSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getDataRecordCollectionDataRecordsPageHttpResponse(
+				Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -52,43 +72,24 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataRecordSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public DataRecord postDataRecordCollectionDataRecord(
+	public static DataRecord postDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			DataRecordSerDes.toJSON(dataRecord), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/data-engine/v1.0/data-record-collections/{dataRecordCollectionId}/data-records",
-			dataRecordCollectionId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postDataRecordCollectionDataRecordHttpResponse(
+				dataRecordCollectionId, dataRecord);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return DataRecordSerDes.toDTO(content);
@@ -102,8 +103,48 @@ public class DataRecordResource {
 		}
 	}
 
-	public String getDataRecordCollectionDataRecordExport(
+	public static HttpInvoker.HttpResponse
+			postDataRecordCollectionDataRecordHttpResponse(
+				Long dataRecordCollectionId, DataRecord dataRecord)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(dataRecord.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/data-record-collections/{dataRecordCollectionId}/data-records",
+			dataRecordCollectionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static String getDataRecordCollectionDataRecordExport(
 			Long dataRecordCollectionId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getDataRecordCollectionDataRecordExportHttpResponse(
+				dataRecordCollectionId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return content;
+	}
+
+	public static HttpInvoker.HttpResponse
+			getDataRecordCollectionDataRecordExportHttpResponse(
+				Long dataRecordCollectionId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -116,19 +157,26 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteDataRecord(Long dataRecordId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteDataRecordHttpResponse(
+			dataRecordId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return content;
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteDataRecord(Long dataRecordId) throws Exception {
+	public static HttpInvoker.HttpResponse deleteDataRecordHttpResponse(
+			Long dataRecordId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -139,17 +187,37 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static DataRecord getDataRecord(Long dataRecordId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getDataRecordHttpResponse(
+			dataRecordId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return DataRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public DataRecord getDataRecord(Long dataRecordId) throws Exception {
+	public static HttpInvoker.HttpResponse getDataRecordHttpResponse(
+			Long dataRecordId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -160,14 +228,23 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static DataRecord putDataRecord(
+			Long dataRecordId, DataRecord dataRecord)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putDataRecordHttpResponse(
+			dataRecordId, dataRecord);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return DataRecordSerDes.toDTO(content);
@@ -181,13 +258,13 @@ public class DataRecordResource {
 		}
 	}
 
-	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
+	public static HttpInvoker.HttpResponse putDataRecordHttpResponse(
+			Long dataRecordId, DataRecord dataRecord)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			DataRecordSerDes.toJSON(dataRecord), "application/json");
+		httpInvoker.body(dataRecord.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -197,25 +274,7 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return DataRecordSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

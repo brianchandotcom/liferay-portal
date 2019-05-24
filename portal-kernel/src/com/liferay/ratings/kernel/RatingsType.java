@@ -24,15 +24,16 @@ import java.util.Objects;
  */
 public enum RatingsType {
 
-	LIKE("like"), STARS("stars"), THUMBS("thumbs");
+	LIKE("like"), STACKED_STARS("stacked-stars"), STARS("stars"),
+	THUMBS("thumbs");
 
 	public static boolean isValid(String value) {
 		if (Validator.isNull(value)) {
 			return false;
 		}
 
-		if (value.equals(LIKE.getValue()) || value.equals(STARS.getValue()) ||
-			value.equals(THUMBS.getValue())) {
+		if (value.equals(LIKE.getValue()) || value.equals(STACKED_STARS) ||
+			value.equals(STARS.getValue()) || value.equals(THUMBS.getValue())) {
 
 			return true;
 		}
@@ -43,6 +44,9 @@ public enum RatingsType {
 	public static RatingsType parse(String value) {
 		if (Objects.equals(LIKE.getValue(), value)) {
 			return LIKE;
+		}
+		else if (Objects.equals(STACKED_STARS.getValue(), value)) {
+			return STACKED_STARS;
 		}
 		else if (Objects.equals(STARS.getValue(), value)) {
 			return STARS;

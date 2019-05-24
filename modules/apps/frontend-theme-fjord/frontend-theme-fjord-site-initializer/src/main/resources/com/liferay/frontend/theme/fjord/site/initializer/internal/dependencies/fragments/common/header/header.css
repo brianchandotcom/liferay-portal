@@ -31,3 +31,7 @@
 	transform-origin: 0% 100%;
 	-webkit-transform-origin: 0% 100%;
 }
+
+.fjord-header .sign-in {
+	color: inherit;
+}

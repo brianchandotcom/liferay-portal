@@ -16,13 +16,9 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
@@ -39,6 +35,7 @@ import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
@@ -193,41 +190,6 @@ public class SourceChecksUtil {
 		return sourceChecksResult;
 	}
 
-	private static JSONObject _addPropertiesAttribute(
-		JSONObject attributesJSONObject, String key,
-		Map<String, Properties> propertiesMap) {
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			JSONObject propertiesAttributesJSONObject = new JSONObjectImpl();
-
-			Properties properties = entry.getValue();
-
-			for (Object obj : properties.keySet()) {
-				if (!key.equals((String)obj)) {
-					continue;
-				}
-
-				JSONArray jsonArray = new JSONArrayImpl();
-
-				for (String value :
-						StringUtil.split(
-							properties.getProperty(key), StringPool.COMMA)) {
-
-					jsonArray.put(value);
-				}
-
-				propertiesAttributesJSONObject.put(key, jsonArray);
-			}
-
-			if (propertiesAttributesJSONObject.length() != 0) {
-				attributesJSONObject.put(
-					entry.getKey(), propertiesAttributesJSONObject);
-			}
-		}
-
-		return attributesJSONObject;
-	}
-
 	private static JSONObject _getAttributesJSONObject(
 		Map<String, Properties> propertiesMap, String checkName,
 		SourceCheckConfiguration sourceCheckConfiguration) {
@@ -239,55 +201,17 @@ public class SourceChecksUtil {
 
 		if (configurationAttributesJSONObject.length() != 0) {
 			attributesJSONObject.put(
-				SourceFormatterUtil.CONFIGURATION_FILE_LOCATION,
+				SourceFormatterCheckUtil.CONFIGURATION_FILE_LOCATION,
 				configurationAttributesJSONObject);
 		}
 
-		attributesJSONObject = _addPropertiesAttribute(
-			attributesJSONObject, SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH,
-			propertiesMap);
+		attributesJSONObject = SourceFormatterCheckUtil.addPropertiesAttributes(
+			attributesJSONObject, propertiesMap,
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
 
-		return SourceFormatterUtil.addPropertiesAttributes(
-			attributesJSONObject, CheckType.SOURCE_CHECK, checkName,
-			propertiesMap);
-	}
-
-	private static JSONObject _getExcludesJSONObject(
-		Map<String, Properties> propertiesMap) {
-
-		JSONObject excludesJSONObject = new JSONObjectImpl();
-
-		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
-			JSONObject propertiesExcludesJSONObject = new JSONObjectImpl();
-
-			Properties properties = entry.getValue();
-
-			for (Object obj : properties.keySet()) {
-				String key = (String)obj;
-
-				if (!key.endsWith(".excludes")) {
-					continue;
-				}
-
-				JSONArray jsonArray = new JSONArrayImpl();
-
-				for (String value :
-						StringUtil.split(
-							properties.getProperty(key), StringPool.COMMA)) {
-
-					jsonArray.put(value);
-				}
-
-				propertiesExcludesJSONObject.put(key, jsonArray);
-			}
-
-			if (propertiesExcludesJSONObject.length() != 0) {
-				excludesJSONObject.put(
-					entry.getKey(), propertiesExcludesJSONObject);
-			}
-		}
-
-		return excludesJSONObject;
+		return SourceFormatterCheckUtil.addPropertiesAttributes(
+			attributesJSONObject, propertiesMap, CheckType.SOURCE_CHECK,
+			checkName);
 	}
 
 	private static List<SourceCheck> _getSourceChecks(
@@ -308,7 +232,8 @@ public class SourceChecksUtil {
 			return sourceChecks;
 		}
 
-		JSONObject excludesJSONObject = _getExcludesJSONObject(propertiesMap);
+		JSONObject excludesJSONObject =
+			SourceFormatterCheckUtil.getExcludesJSONObject(propertiesMap);
 
 		for (SourceCheckConfiguration sourceCheckConfiguration :
 				sourceCheckConfigurations) {

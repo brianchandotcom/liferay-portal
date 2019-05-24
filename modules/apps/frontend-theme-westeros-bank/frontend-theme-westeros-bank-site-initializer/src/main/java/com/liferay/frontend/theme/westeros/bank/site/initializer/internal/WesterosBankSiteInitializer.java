@@ -506,7 +506,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		return _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layoutPageTemplateEntryId, nameMap, new HashMap<>(),

@@ -2,11 +2,13 @@
 
 {template .render}
 	{@param spritemap: string}
-	{@param? changeListDescription: string}
-	{@param? changeListName: string}
 	{@param? _handleCloseDialogClick: any}
 	{@param? _handleIgnoreCollisionChange: any}
 	{@param? _handlePublishClick: any}
+	{@param? _disablePublishButton: bool}
+	{@param? changeListDescription: string}
+	{@param? changeListHasCollision: bool}
+	{@param? changeListName: string}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
@@ -26,23 +28,19 @@
 				{msg desc=""}ignore-collision{/msg}
 			{/let}
 
-			{call ClayCheckbox.render}
-				{param checked: false /}
-				{param events: [
-					'change': $_handleIgnoreCollisionChange
-				] /}
-				{param label: $ignoreCollisionLabel /}
-			{/call}
-
-			{let $schedulePublicationLabel kind="text"}
-				{msg desc=""}schedule-publication{/msg}
-			{/let}
-
-			{call ClayCheckbox.render}
-				{param checked: false /}
-				{param disabled: true /}
-				{param label: $schedulePublicationLabel /}
-			{/call}
+			<div class="form-group">
+				<label class="toggle-switch">
+					<input class="toggle-switch-check" data-onchange="{$_handleIgnoreCollisionChange}" data-qa-id="ignorecollision-toggle" {if not $changeListHasCollision}disabled{/if} type="checkbox"/>
+					<span aria-hidden="true" class="toggle-switch-bar">
+						<span class="toggle-switch-handle"></span>
+					</span>
+					<span class="toggle-label-text">
+						<span class="custom-control-label-text">
+							{msg desc=""}ignore-collision{/msg}
+						</span>
+					</span>
+				</label>
+			</div>
 		{/param}
 
 		{param dialogClasses: 'modal-dialog-sm' /}
@@ -51,7 +49,11 @@
 
 		{param footer kind="html"}
 			<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
-			<button class="btn btn-primary" data-onclick="{$_handlePublishClick}" type="button">{msg desc=""}publish{/msg}</button>
+			{if $_disablePublishButton}
+				<button class="btn btn-primary" data-onclick="{$_handlePublishClick}" type="button" disabled>{msg desc=""}publish{/msg}</button>
+			{else}
+				<button class="btn btn-primary" data-onclick="{$_handlePublishClick}" type="button">{msg desc=""}publish{/msg}</button>
+			{/if}
 		{/param}
 
 		{param header kind="html"}

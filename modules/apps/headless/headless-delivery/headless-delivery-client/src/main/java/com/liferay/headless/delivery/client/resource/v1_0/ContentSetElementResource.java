@@ -31,8 +31,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContentSetElementResource {
 
-	public Page<ContentSetElement> getContentSetContentSetElementsPage(
+	public static Page<ContentSetElement> getContentSetContentSetElementsPage(
 			Long contentSetId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getContentSetContentSetElementsPageHttpResponse(
+				contentSetId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ContentSetElementSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getContentSetContentSetElementsPageHttpResponse(
+				Long contentSetId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -51,20 +71,32 @@ public class ContentSetElementResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ContentSetElement>
+			getSiteContentSetByKeyContentSetElementsPage(
+				Long siteId, String key, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteContentSetByKeyContentSetElementsPageHttpResponse(
+				siteId, key, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, ContentSetElementSerDes::toDTO);
 	}
 
-	public Page<ContentSetElement> getSiteContentSetByKeyContentSetElementsPage(
-			Long siteId, String key, Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getSiteContentSetByKeyContentSetElementsPageHttpResponse(
+				Long siteId, String key, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -83,20 +115,31 @@ public class ContentSetElementResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ContentSetElement>
+			getSiteContentSetByUuidContentSetElementsPage(
+				Long siteId, String uuid, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteContentSetByUuidContentSetElementsPageHttpResponse(
+				siteId, uuid, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, ContentSetElementSerDes::toDTO);
 	}
 
-	public Page<ContentSetElement>
-			getSiteContentSetByUuidContentSetElementsPage(
+	public static HttpInvoker.HttpResponse
+			getSiteContentSetByUuidContentSetElementsPageHttpResponse(
 				Long siteId, String uuid, Pagination pagination)
 		throws Exception {
 
@@ -116,16 +159,7 @@ public class ContentSetElementResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ContentSetElementSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

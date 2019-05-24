@@ -75,7 +75,7 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 
 	public String getAvailableActions(AssetVocabulary vocabulary) {
 		if (_assetCategoriesDisplayContext.hasPermission(
-				vocabulary, ActionKeys.UPDATE)) {
+				vocabulary, ActionKeys.DELETE)) {
 
 			return "deleteSelectedVocabularies";
 		}

@@ -31,7 +31,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class PhoneResource {
 
-	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
+	public static Page<Phone> getOrganizationPhonesPage(Long organizationId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getOrganizationPhonesPageHttpResponse(organizationId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, PhoneSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getOrganizationPhonesPageHttpResponse(Long organizationId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -44,37 +62,19 @@ public class PhoneResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, PhoneSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Phone getPhone(Long phoneId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-admin-user/v1.0/phones/{phoneId}",
-			phoneId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static Phone getPhone(Long phoneId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getPhoneHttpResponse(phoneId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return PhoneSerDes.toDTO(content);
@@ -88,7 +88,41 @@ public class PhoneResource {
 		}
 	}
 
-	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
+	public static HttpInvoker.HttpResponse getPhoneHttpResponse(Long phoneId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-user/v1.0/phones/{phoneId}",
+			phoneId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<Phone> getUserAccountPhonesPage(Long userAccountId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getUserAccountPhonesPageHttpResponse(userAccountId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, PhoneSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getUserAccountPhonesPageHttpResponse(
+			Long userAccountId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -101,16 +135,7 @@ public class PhoneResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, PhoneSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

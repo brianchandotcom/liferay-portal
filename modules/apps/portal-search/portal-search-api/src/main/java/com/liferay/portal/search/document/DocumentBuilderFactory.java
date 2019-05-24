@@ -25,4 +25,6 @@ public interface DocumentBuilderFactory {
 
 	public DocumentBuilder builder();
 
+	public DocumentBuilder builder(Document document);
+
 }

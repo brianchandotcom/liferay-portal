@@ -40,10 +40,6 @@ public class VariableNameCheck extends BaseCheck {
 		return new int[] {TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF};
 	}
 
-	public void setCheckTypeName(boolean checkTypeName) {
-		_checkTypeName = checkTypeName;
-	}
-
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
@@ -74,7 +70,7 @@ public class VariableNameCheck extends BaseCheck {
 
 		String typeName = firstChildDetailAST.getText();
 
-		if (_checkTypeName) {
+		if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
 			_checkTypeName(detailAST, name, typeName, "DetailAST");
 			_checkTypeName(detailAST, name, typeName, "HttpServletRequest");
 			_checkTypeName(detailAST, name, typeName, "HttpServletResponse");
@@ -406,6 +402,8 @@ public class VariableNameCheck extends BaseCheck {
 		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
 	};
 
+	private static final String _CHECK_TYPE_NAME_KEY = "checkTypeName";
+
 	private static final String _MSG_INCORRECT_ENDING_VARIABLE =
 		"variable.incorrect.ending";
 
@@ -415,7 +413,5 @@ public class VariableNameCheck extends BaseCheck {
 
 	private static final Pattern _isVariableNamePattern = Pattern.compile(
 		"(_?)(is|IS_)([A-Z])(.*)");
-
-	private boolean _checkTypeName;
 
 }

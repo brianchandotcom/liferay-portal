@@ -32,27 +32,19 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContentStructureResource {
 
-	public ContentStructure getContentStructure(Long contentStructureId)
+	public static ContentStructure getContentStructure(Long contentStructureId)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/content-structures/{contentStructureId}",
+		HttpInvoker.HttpResponse httpResponse = getContentStructureHttpResponse(
 			contentStructureId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return ContentStructureSerDes.toDTO(content);
@@ -66,9 +58,47 @@ public class ContentStructureResource {
 		}
 	}
 
-	public Page<ContentStructure> getSiteContentStructuresPage(
+	public static HttpInvoker.HttpResponse getContentStructureHttpResponse(
+			Long contentStructureId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/content-structures/{contentStructureId}",
+			contentStructureId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<ContentStructure> getSiteContentStructuresPage(
 			Long siteId, String search, String filterString,
 			Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteContentStructuresPageHttpResponse(
+				siteId, search, filterString, pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, ContentStructureSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getSiteContentStructuresPageHttpResponse(
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -99,16 +129,7 @@ public class ContentStructureResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, ContentStructureSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

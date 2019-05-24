@@ -59,11 +59,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</li>
 			</ul>
 
-			<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+			<p class="h4 pt-2"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></p>
 
-			<h6 class="text-default">
+			<p class="h6 text-default">
 				<liferay-ui:message key="folder" />
-			</h6>
+			</p>
 		</div>
 
 		<clay:navigation-bar
@@ -71,7 +71,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+			<p class="h5"><liferay-ui:message key="num-of-items" /></p>
 
 			<%
 			long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -86,7 +86,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</p>
 
 			<c:if test="<%= folder != null %>">
-				<h5><liferay-ui:message key="created" /></h5>
+				<p class="h5"><liferay-ui:message key="created" /></p>
 
 				<p>
 					<%= HtmlUtil.escape(folder.getUserName()) %>
@@ -121,12 +121,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(assetEntry.getTitle(locale)) %></h4>
+			<p class="h4 pt-2"><%= HtmlUtil.escape(assetEntry.getTitle(locale)) %></p>
 
 			<c:if test="<%= ddmStructure != null %>">
-				<h6 class="text-default">
+				<p class="h6 text-default">
 					<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
-				</h6>
+				</p>
 			</c:if>
 		</div>
 
@@ -135,32 +135,32 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="id" /></h5>
+			<p class="h5"><liferay-ui:message key="id" /></p>
 
 			<p>
 				<%= HtmlUtil.escape(article.getArticleId()) %>
 			</p>
 
-			<h5><liferay-ui:message key="version" /></h5>
+			<p class="h5"><liferay-ui:message key="version" /></p>
 
 			<p>
 				<%= article.getVersion() %>
 			</p>
 
-			<h5><liferay-ui:message key="status" /></h5>
+			<p class="h5"><liferay-ui:message key="status" /></p>
 
 			<p>
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 			</p>
 
-			<h5><liferay-ui:message key="title" /></h5>
+			<p class="h5"><liferay-ui:message key="title" /></p>
 
 			<p>
 				<%= HtmlUtil.escape(article.getTitle(locale)) %>
 			</p>
 
 			<c:if test="<%= ddmTemplate != null %>">
-				<h5><liferay-ui:message key="template" /></h5>
+				<p class="h5"><liferay-ui:message key="template" /></p>
 
 				<p>
 					<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
@@ -175,13 +175,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				/>
 			</div>
 
-			<h5><liferay-ui:message key="original-author" /></h5>
+			<p class="h5"><liferay-ui:message key="original-author" /></p>
 
 			<p>
 				<%= HtmlUtil.escape(journalDisplayContext.getOriginalAuthor(article)) %>
 			</p>
 
-			<h5><liferay-ui:message key="priority" /></h5>
+			<p class="h5"><liferay-ui:message key="priority" /></p>
 
 			<p>
 				<%= assetEntry.getPriority() %>
@@ -194,14 +194,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			%>
 
 			<c:if test="<%= article.getDisplayDate() != null %>">
-				<h5><liferay-ui:message key="display-date" /></h5>
+				<p class="h5"><liferay-ui:message key="display-date" /></p>
 
 				<p>
 					<%= dateFormatDateTime.format(article.getDisplayDate()) %>
 				</p>
 			</c:if>
 
-			<h5><liferay-ui:message key="expiration-date" /></h5>
+			<p class="h5"><liferay-ui:message key="expiration-date" /></p>
 
 			<p>
 				<c:choose>
@@ -214,7 +214,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</c:choose>
 			</p>
 
-			<h5><liferay-ui:message key="review-date" /></h5>
+			<p class="h5"><liferay-ui:message key="review-date" /></p>
 
 			<p>
 				<c:choose>
@@ -230,7 +230,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h4>
+			<p class="h4 pt-2"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
 		</div>
 
 		<clay:navigation-bar
@@ -238,7 +238,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h5>
+			<p class="h5"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
 		</div>
 	</c:otherwise>
 </c:choose>

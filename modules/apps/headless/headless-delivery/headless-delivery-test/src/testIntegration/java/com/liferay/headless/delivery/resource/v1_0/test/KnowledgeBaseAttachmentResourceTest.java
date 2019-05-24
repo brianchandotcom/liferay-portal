@@ -16,18 +16,17 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
-import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseAttachmentSerDes;
+import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,13 +64,25 @@ public class KnowledgeBaseAttachmentResourceTest
 	}
 
 	@Override
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		Map<String, File> files = new HashMap<>();
+
+		String randomString = RandomTestUtil.randomString();
+
+		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
+
+		return files;
+	}
+
+	@Override
 	protected KnowledgeBaseAttachment
 			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
-			_kbArticle.getResourcePrimKey(),
-			toMultipartBody(randomKnowledgeBaseAttachment()));
+		return KnowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				_kbArticle.getResourcePrimKey(),
+				randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}
 
 	@Override
@@ -86,30 +97,10 @@ public class KnowledgeBaseAttachmentResourceTest
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return invokePostKnowledgeBaseArticleKnowledgeBaseAttachment(
-			_kbArticle.getResourcePrimKey(),
-			toMultipartBody(randomKnowledgeBaseAttachment()));
-	}
-
-	@Override
-	protected MultipartBody toMultipartBody(
-		KnowledgeBaseAttachment knowledgeBaseAttachment) {
-
-		testContentType = "multipart/form-data;boundary=PART";
-
-		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
-
-		String randomString = RandomTestUtil.randomString();
-
-		binaryFileMap.put(
-			"file",
-			new BinaryFile(
-				testContentType, RandomTestUtil.randomString(),
-				new ByteArrayInputStream(randomString.getBytes()), 0));
-
-		return MultipartBody.of(
-			binaryFileMap, __ -> null,
-			KnowledgeBaseAttachmentSerDes.toMap(knowledgeBaseAttachment));
+		return KnowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				_kbArticle.getResourcePrimKey(),
+				randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}
 
 	private KBArticle _kbArticle;

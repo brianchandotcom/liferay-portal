@@ -32,7 +32,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class KnowledgeBaseFolderResource {
 
-	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+	public static void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteKnowledgeBaseFolderHttpResponse(knowledgeBaseFolderId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			deleteKnowledgeBaseFolderHttpResponse(Long knowledgeBaseFolderId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -45,17 +61,37 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseFolder getKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseFolderHttpResponse(knowledgeBaseFolderId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return KnowledgeBaseFolderSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public KnowledgeBaseFolder getKnowledgeBaseFolder(
+	public static HttpInvoker.HttpResponse getKnowledgeBaseFolderHttpResponse(
 			Long knowledgeBaseFolderId)
 		throws Exception {
 
@@ -69,14 +105,24 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseFolder patchKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			patchKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolderId, knowledgeBaseFolder);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseFolderSerDes.toDTO(content);
@@ -90,15 +136,13 @@ public class KnowledgeBaseFolderResource {
 		}
 	}
 
-	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
+	public static HttpInvoker.HttpResponse patchKnowledgeBaseFolderHttpResponse(
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			"application/json");
+		httpInvoker.body(knowledgeBaseFolder.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -108,14 +152,24 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseFolder putKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putKnowledgeBaseFolderHttpResponse(
+				knowledgeBaseFolderId, knowledgeBaseFolder);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseFolderSerDes.toDTO(content);
@@ -129,15 +183,13 @@ public class KnowledgeBaseFolderResource {
 		}
 	}
 
-	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+	public static HttpInvoker.HttpResponse putKnowledgeBaseFolderHttpResponse(
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			"application/json");
+		httpInvoker.body(knowledgeBaseFolder.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -147,29 +199,31 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<KnowledgeBaseFolder>
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPageHttpResponse(
+				parentKnowledgeBaseFolderId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return KnowledgeBaseFolderSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, KnowledgeBaseFolderSerDes::toDTO);
 	}
 
-	public Page<KnowledgeBaseFolder>
-			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+	public static HttpInvoker.HttpResponse
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPageHttpResponse(
 				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception {
 
@@ -189,45 +243,26 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KnowledgeBaseFolderSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			Long parentKnowledgeBaseFolderId,
-			KnowledgeBaseFolder knowledgeBaseFolder)
+	public static KnowledgeBaseFolder
+			postKnowledgeBaseFolderKnowledgeBaseFolder(
+				Long parentKnowledgeBaseFolderId,
+				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-			parentKnowledgeBaseFolderId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postKnowledgeBaseFolderKnowledgeBaseFolderHttpResponse(
+				parentKnowledgeBaseFolderId, knowledgeBaseFolder);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseFolderSerDes.toDTO(content);
@@ -241,8 +276,48 @@ public class KnowledgeBaseFolderResource {
 		}
 	}
 
-	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
+	public static HttpInvoker.HttpResponse
+			postKnowledgeBaseFolderKnowledgeBaseFolderHttpResponse(
+				Long parentKnowledgeBaseFolderId,
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(knowledgeBaseFolder.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
+			parentKnowledgeBaseFolderId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
 			Long siteId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteKnowledgeBaseFoldersPageHttpResponse(siteId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, KnowledgeBaseFolderSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getSiteKnowledgeBaseFoldersPageHttpResponse(
+				Long siteId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -261,44 +336,24 @@ public class KnowledgeBaseFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KnowledgeBaseFolderSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+	public static KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
-			siteId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postSiteKnowledgeBaseFolderHttpResponse(
+				siteId, knowledgeBaseFolder);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseFolderSerDes.toDTO(content);
@@ -310,6 +365,26 @@ public class KnowledgeBaseFolderResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postSiteKnowledgeBaseFolderHttpResponse(
+				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(knowledgeBaseFolder.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
+			siteId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

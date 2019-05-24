@@ -32,7 +32,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class RoleResource {
 
-	public Page<Role> getRolesPage(Pagination pagination) throws Exception {
+	public static Page<Role> getRolesPage(Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getRolesPageHttpResponse(
+			pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, RoleSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getRolesPageHttpResponse(
+			Pagination pagination)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -48,37 +68,19 @@ public class RoleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, RoleSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public Role getRole(Long roleId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}",
-			roleId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static Role getRole(Long roleId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getRoleHttpResponse(roleId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return RoleSerDes.toDTO(content);
@@ -90,6 +92,22 @@ public class RoleResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}",
+			roleId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -32,7 +32,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class MessageBoardMessageResource {
 
-	public void deleteMessageBoardMessage(Long messageBoardMessageId)
+	public static void deleteMessageBoardMessage(Long messageBoardMessageId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteMessageBoardMessageHttpResponse(messageBoardMessageId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			deleteMessageBoardMessageHttpResponse(Long messageBoardMessageId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -45,17 +61,37 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static MessageBoardMessage getMessageBoardMessage(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardMessageHttpResponse(messageBoardMessageId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return MessageBoardMessageSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public MessageBoardMessage getMessageBoardMessage(
+	public static HttpInvoker.HttpResponse getMessageBoardMessageHttpResponse(
 			Long messageBoardMessageId)
 		throws Exception {
 
@@ -69,14 +105,24 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static MessageBoardMessage patchMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			patchMessageBoardMessageHttpResponse(
+				messageBoardMessageId, messageBoardMessage);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardMessageSerDes.toDTO(content);
@@ -90,15 +136,13 @@ public class MessageBoardMessageResource {
 		}
 	}
 
-	public MessageBoardMessage patchMessageBoardMessage(
+	public static HttpInvoker.HttpResponse patchMessageBoardMessageHttpResponse(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			MessageBoardMessageSerDes.toJSON(messageBoardMessage),
-			"application/json");
+		httpInvoker.body(messageBoardMessage.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -108,14 +152,24 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static MessageBoardMessage putMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putMessageBoardMessageHttpResponse(
+				messageBoardMessageId, messageBoardMessage);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardMessageSerDes.toDTO(content);
@@ -129,15 +183,13 @@ public class MessageBoardMessageResource {
 		}
 	}
 
-	public MessageBoardMessage putMessageBoardMessage(
+	public static HttpInvoker.HttpResponse putMessageBoardMessageHttpResponse(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			MessageBoardMessageSerDes.toJSON(messageBoardMessage),
-			"application/json");
+		httpInvoker.body(messageBoardMessage.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -147,28 +199,29 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteMessageBoardMessageMyRating(
+			Long messageBoardMessageId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteMessageBoardMessageMyRatingHttpResponse(
+				messageBoardMessageId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return MessageBoardMessageSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
+	public static HttpInvoker.HttpResponse
+			deleteMessageBoardMessageMyRatingHttpResponse(
+				Long messageBoardMessageId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -181,18 +234,40 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			getMessageBoardMessageMyRating(Long messageBoardMessageId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardMessageMyRatingHttpResponse(messageBoardMessageId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return com.liferay.headless.delivery.client.serdes.v1_0.
+				RatingSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getMessageBoardMessageMyRating(Long messageBoardMessageId)
+	public static HttpInvoker.HttpResponse
+			getMessageBoardMessageMyRatingHttpResponse(
+				Long messageBoardMessageId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -205,14 +280,26 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			postMessageBoardMessageMyRating(
+				Long messageBoardMessageId,
+				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postMessageBoardMessageMyRatingHttpResponse(
+				messageBoardMessageId, rating);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.delivery.client.serdes.v1_0.
@@ -227,13 +314,15 @@ public class MessageBoardMessageResource {
 		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postMessageBoardMessageMyRating(
+	public static HttpInvoker.HttpResponse
+			postMessageBoardMessageMyRatingHttpResponse(
 				Long messageBoardMessageId,
 				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(rating.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -243,14 +332,26 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			putMessageBoardMessageMyRating(
+				Long messageBoardMessageId,
+				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putMessageBoardMessageMyRatingHttpResponse(
+				messageBoardMessageId, rating);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.delivery.client.serdes.v1_0.
@@ -265,13 +366,15 @@ public class MessageBoardMessageResource {
 		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putMessageBoardMessageMyRating(
+	public static HttpInvoker.HttpResponse
+			putMessageBoardMessageMyRatingHttpResponse(
 				Long messageBoardMessageId,
 				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(rating.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -281,30 +384,33 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<MessageBoardMessage>
+			getMessageBoardMessageMessageBoardMessagesPage(
+				Long parentMessageBoardMessageId, String search,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardMessageMessageBoardMessagesPageHttpResponse(
+				parentMessageBoardMessageId, search, filterString, pagination,
+				sortString);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return com.liferay.headless.delivery.client.serdes.v1_0.
-				RatingSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, MessageBoardMessageSerDes::toDTO);
 	}
 
-	public Page<MessageBoardMessage>
-			getMessageBoardMessageMessageBoardMessagesPage(
+	public static HttpInvoker.HttpResponse
+			getMessageBoardMessageMessageBoardMessagesPageHttpResponse(
 				Long parentMessageBoardMessageId, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
@@ -337,45 +443,26 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, MessageBoardMessageSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long parentMessageBoardMessageId,
-			MessageBoardMessage messageBoardMessage)
+	public static MessageBoardMessage
+			postMessageBoardMessageMessageBoardMessage(
+				Long parentMessageBoardMessageId,
+				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			MessageBoardMessageSerDes.toJSON(messageBoardMessage),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{parentMessageBoardMessageId}/message-board-messages",
-			parentMessageBoardMessageId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postMessageBoardMessageMessageBoardMessageHttpResponse(
+				parentMessageBoardMessageId, messageBoardMessage);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardMessageSerDes.toDTO(content);
@@ -389,8 +476,51 @@ public class MessageBoardMessageResource {
 		}
 	}
 
-	public Page<MessageBoardMessage>
+	public static HttpInvoker.HttpResponse
+			postMessageBoardMessageMessageBoardMessageHttpResponse(
+				Long parentMessageBoardMessageId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(messageBoardMessage.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{parentMessageBoardMessageId}/message-board-messages",
+			parentMessageBoardMessageId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
+				Long messageBoardThreadId, String search, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardThreadMessageBoardMessagesPageHttpResponse(
+				messageBoardThreadId, search, filterString, pagination,
+				sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, MessageBoardMessageSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getMessageBoardThreadMessageBoardMessagesPageHttpResponse(
 				Long messageBoardThreadId, String search, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception {
@@ -423,44 +553,24 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, MessageBoardMessageSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+	public static MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			MessageBoardMessageSerDes.toJSON(messageBoardMessage),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages",
-			messageBoardThreadId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postMessageBoardThreadMessageBoardMessageHttpResponse(
+				messageBoardThreadId, messageBoardMessage);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardMessageSerDes.toDTO(content);
@@ -472,6 +582,27 @@ public class MessageBoardMessageResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postMessageBoardThreadMessageBoardMessageHttpResponse(
+				Long messageBoardThreadId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(messageBoardMessage.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages",
+			messageBoardThreadId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

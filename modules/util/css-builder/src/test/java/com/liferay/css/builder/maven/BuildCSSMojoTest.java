@@ -38,13 +38,14 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			Path baseDirPath, String dirName, boolean generateSourceMap,
-			Path importDirPath, String outputDirName, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+			Path baseDirPath, String dirName, String[] excludes,
+			boolean generateSourceMap, Path importDirPath, String outputDirName,
+			int precision, String[] rtlExcludedPathRegexps,
+			String sassCompilerClassName)
 		throws Exception {
 
 		_preparePomXml(
-			baseDirPath, generateSourceMap, importDirPath, dirName,
+			baseDirPath, dirName, excludes, generateSourceMap, importDirPath,
 			outputDirName, precision, rtlExcludedPathRegexps,
 			sassCompilerClassName);
 
@@ -55,9 +56,10 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 	}
 
 	private static void _preparePomXml(
-			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
-			String dirName, String outputDirName, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+			Path baseDirPath, String dirName, String[] excludes,
+			boolean generateSourceMap, Path importDirPath, String outputDirName,
+			int precision, String[] rtlExcludedPathRegexps,
+			String sassCompilerClassName)
 		throws IOException {
 
 		String content = FileTestUtil.read(
@@ -70,6 +72,9 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 			content, "[$CSS_BUILDER_BASE_DIR$]",
 			String.valueOf(baseDirPath.toAbsolutePath()));
 		content = _replace(content, "[$CSS_BUILDER_DIR_NAMES$]", dirName);
+		content = _replace(
+			content, "[$CSS_BUILDER_EXCLUDES$]",
+			StringTestUtil.merge(excludes));
 		content = _replace(
 			content, "[$CSS_BUILDER_GENERATE_SOURCE_MAP$]",
 			String.valueOf(generateSourceMap));

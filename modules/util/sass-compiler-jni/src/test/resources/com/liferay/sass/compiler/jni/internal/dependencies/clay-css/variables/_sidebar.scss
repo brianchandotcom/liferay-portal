@@ -1,0 +1,93 @@
+$sidebar-padding-bottom: 1rem !default; // 16px
+$sidebar-padding-left: 1rem !default; // 16px
+$sidebar-padding-right: 1rem !default; // 16px
+$sidebar-padding-top: 1rem !default; // 16px
+
+// Sidebar Header Title
+
+$sidebar-header-component-title: () !default;
+$sidebar-header-component-title: map-merge((
+	font-size: 1.5rem, // 24px,
+	font-weight: $font-weight-semi-bold,
+	clay-link: (
+		color: $gray-900
+	)
+), $sidebar-header-component-title);
+
+// Sidebar Header Subtitle
+
+$sidebar-header-component-subtitle: () !default;
+$sidebar-header-component-subtitle: map-merge((
+	font-size: 1.125rem, // 18px
+	font-weight: $font-weight-semi-bold,
+	margin-bottom: 0
+), $sidebar-header-component-subtitle);
+
+// Sidebar DT
+
+$sidebar-dt: () !default;
+$sidebar-dt: map-merge((
+	font-size: 0.875rem, // 14px
+	font-weight: $font-weight-semi-bold,
+	margin-bottom: 0.25rem, // 4px
+	text-transform: uppercase
+), $sidebar-dt);
+
+// Sidebar DD
+
+$sidebar-dd: () !default;
+$sidebar-dd: map-merge((
+	font-size: 0.875rem, // 14px
+	margin-bottom: 0.75rem // 12px
+), $sidebar-dd);
+
+// Sidebar Panel
+
+$sidebar-panel-margin-bottom: 1rem !default; // 16px
+
+// Sidebar List Group
+
+$sidebar-list-group-bg: transparent !default;
+$sidebar-list-group-border-color: $gray-300 !default;
+$sidebar-list-group-font-size: 0.875rem !default; // 14px
+$sidebar-list-group-type: list-group-flush !default;
+
+$sidebar-list-group-item-padding: 0 !default;
+
+$sidebar-list-group-autofit-col-padding-x: 0.5rem !default; // 8px
+$sidebar-list-group-autofit-col-padding-y: 1rem !default; // 16px
+
+$sidebar-list-group-sticker-size: () !default;
+$sidebar-list-group-sticker-size: map-merge($sticker-sm, $sidebar-list-group-sticker-size);
+
+// Sidebar Light
+
+$sidebar-light: () !default;
+$sidebar-light: map-merge((
+	bg: $light,
+	border-color: $gray-300,
+	border-left-width: 1px,
+	color: $gray-900,
+	dd: (
+		clay-link: (
+			color: $gray-900,
+		)
+	),
+	panel-bg: $gray-200,
+	sidebar-list-group-title: (
+		font-size: 1rem,
+		clay-link: (
+			color: $gray-900,
+		)
+	)
+), $sidebar-light);
+
+$sidebar-light-navigation-bar: () !default;
+$sidebar-light-navigation-bar: map-merge((
+	bg: $light,
+	border-color: $gray-300,
+	link-color: $navbar-light-color,
+	link-hover-color: $navbar-light-hover-color,
+	link-active-color: $navbar-light-active-color,
+	link-disabled-color: $navbar-light-disabled-color
+), $sidebar-light-navigation-bar);

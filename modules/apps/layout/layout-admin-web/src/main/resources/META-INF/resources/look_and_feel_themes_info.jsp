@@ -34,7 +34,7 @@ else if (Validator.isNull(selLayout)) {
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<h4 class="text-default"><liferay-ui:message key="current-theme" /></h4>
+<h1 class="h4 text-default"><liferay-ui:message key="current-theme" /></h1>
 
 <div class="card-horizontal main-content-card">
 	<div class="card-row card-row-padded">
@@ -49,7 +49,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 
 			<div class="col-6 col-sm-8">
 				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getName()) %>">
-					<h4><liferay-ui:message key="name" /></h4>
+					<h2 class="h4"><liferay-ui:message key="name" /></h2>
 
 					<p class="text-default">
 						<%= HtmlUtil.escape(selPluginPackage.getName()) %>
@@ -57,7 +57,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 				</c:if>
 
 				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
-					<h4><liferay-ui:message key="author" /></h4>
+					<h2 class="h4"><liferay-ui:message key="author" /></h2>
 
 					<p class="text-default">
 						<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
@@ -67,7 +67,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		</aui:row>
 
 		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
-			<h4><liferay-ui:message key="description" /></h4>
+			<h2 class="h4"><liferay-ui:message key="description" /></h2>
 
 			<p class="text-default">
 				<%= HtmlUtil.escape(selPluginPackage.getShortDescription()) %>
@@ -81,7 +81,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		%>
 
 		<c:if test="<%= !colorSchemes.isEmpty() && Validator.isNotNull(selColorScheme) %>">
-			<h4><liferay-ui:message key="color-scheme" /></h4>
+			<h2 class="h4"><liferay-ui:message key="color-scheme" /></h2>
 
 			<aui:row>
 				<div class="col-6 col-md-3 col-sm-4">
@@ -107,7 +107,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		%>
 
 		<c:if test="<%= !configurableSettings.isEmpty() %>">
-			<h4><liferay-ui:message key="settings" /></h4>
+			<h2 class="h4"><liferay-ui:message key="settings" /></h2>
 
 			<%
 			LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();

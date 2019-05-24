@@ -34,7 +34,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class MessageBoardAttachmentResource {
 
-	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
+	public static void deleteMessageBoardAttachment(
+			Long messageBoardAttachmentId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteMessageBoardAttachmentHttpResponse(messageBoardAttachmentId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			deleteMessageBoardAttachmentHttpResponse(
+				Long messageBoardAttachmentId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -47,38 +65,23 @@ public class MessageBoardAttachmentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
-	public MessageBoardAttachment getMessageBoardAttachment(
+	public static MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}",
-			messageBoardAttachmentId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardAttachmentHttpResponse(messageBoardAttachmentId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardAttachmentSerDes.toDTO(content);
@@ -92,8 +95,45 @@ public class MessageBoardAttachmentResource {
 		}
 	}
 
-	public Page<MessageBoardAttachment>
+	public static HttpInvoker.HttpResponse
+			getMessageBoardAttachmentHttpResponse(Long messageBoardAttachmentId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}",
+			messageBoardAttachmentId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
+				Long messageBoardMessageId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardMessageMessageBoardAttachmentsPageHttpResponse(
+				messageBoardMessageId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getMessageBoardMessageMessageBoardAttachmentsPageHttpResponse(
 				Long messageBoardMessageId)
 		throws Exception {
 
@@ -107,52 +147,27 @@ public class MessageBoardAttachmentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			Long messageBoardMessageId,
-			MessageBoardAttachment messageBoardAttachment,
-			Map<String, File> files)
+	public static MessageBoardAttachment
+			postMessageBoardMessageMessageBoardAttachment(
+				Long messageBoardMessageId,
+				MessageBoardAttachment messageBoardAttachment,
+				Map<String, File> multipartFiles)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.multipart();
-
-		httpInvoker.part(
-			"messageBoardAttachment",
-			MessageBoardAttachmentSerDes.toJSON(messageBoardAttachment));
-
-		for (Map.Entry<String, File> entry : files.entrySet()) {
-			httpInvoker.part(entry.getKey(), entry.getValue());
-		}
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments",
-			messageBoardMessageId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postMessageBoardMessageMessageBoardAttachmentHttpResponse(
+				messageBoardMessageId, messageBoardAttachment, multipartFiles);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardAttachmentSerDes.toDTO(content);
@@ -166,8 +181,58 @@ public class MessageBoardAttachmentResource {
 		}
 	}
 
-	public Page<MessageBoardAttachment>
+	public static HttpInvoker.HttpResponse
+			postMessageBoardMessageMessageBoardAttachmentHttpResponse(
+				Long messageBoardMessageId,
+				MessageBoardAttachment messageBoardAttachment,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.multipart();
+
+		httpInvoker.part(
+			"messageBoardAttachment",
+			MessageBoardAttachmentSerDes.toJSON(messageBoardAttachment));
+
+		for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+			httpInvoker.part(entry.getKey(), entry.getValue());
+		}
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments",
+			messageBoardMessageId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
+				messageBoardThreadId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
 				Long messageBoardThreadId)
 		throws Exception {
 
@@ -181,52 +246,27 @@ public class MessageBoardAttachmentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
-			Long messageBoardThreadId,
-			MessageBoardAttachment messageBoardAttachment,
-			Map<String, File> files)
+	public static MessageBoardAttachment
+			postMessageBoardThreadMessageBoardAttachment(
+				Long messageBoardThreadId,
+				MessageBoardAttachment messageBoardAttachment,
+				Map<String, File> multipartFiles)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.multipart();
-
-		httpInvoker.part(
-			"messageBoardAttachment",
-			MessageBoardAttachmentSerDes.toJSON(messageBoardAttachment));
-
-		for (Map.Entry<String, File> entry : files.entrySet()) {
-			httpInvoker.part(entry.getKey(), entry.getValue());
-		}
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments",
-			messageBoardThreadId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postMessageBoardThreadMessageBoardAttachmentHttpResponse(
+				messageBoardThreadId, messageBoardAttachment, multipartFiles);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return MessageBoardAttachmentSerDes.toDTO(content);
@@ -238,6 +278,36 @@ public class MessageBoardAttachmentResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postMessageBoardThreadMessageBoardAttachmentHttpResponse(
+				Long messageBoardThreadId,
+				MessageBoardAttachment messageBoardAttachment,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.multipart();
+
+		httpInvoker.part(
+			"messageBoardAttachment",
+			MessageBoardAttachmentSerDes.toJSON(messageBoardAttachment));
+
+		for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+			httpInvoker.part(entry.getKey(), entry.getValue());
+		}
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments",
+			messageBoardThreadId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

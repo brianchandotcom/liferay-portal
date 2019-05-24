@@ -723,9 +723,9 @@ definition {
 				locator1 = "Home#SITE_NAME",
 				value1 = "Test Site Name");
 
-			AssertTextEquals(
-				locator1 = "Message#INFO",
-				value1 = "This search bar is not visible to users yet. Set up its destination to make it visible.");
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
 
 			AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
 

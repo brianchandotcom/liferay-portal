@@ -19,6 +19,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.DocumentFieldsTranslator;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
@@ -60,10 +61,11 @@ public class SearchHitsTranslator {
 	public SearchHits translate(
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits) {
 
-		return translate(elasticsearchSearchHits, null);
+		return translate(null, elasticsearchSearchHits, null);
 	}
 
 	public SearchHits translate(
+		SearchSearchRequest searchSearchRequest,
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits,
 		String alternateUidFieldName) {
 
@@ -75,7 +77,8 @@ public class SearchHitsTranslator {
 				elasticsearchSearchHits.getHits()
 			).map(
 				elasticsearchSearchHit -> translate(
-					elasticsearchSearchHit, alternateUidFieldName)
+					searchSearchRequest, elasticsearchSearchHit,
+					alternateUidFieldName)
 			)
 		).maxScore(
 			elasticsearchSearchHits.getMaxScore()
@@ -97,6 +100,7 @@ public class SearchHitsTranslator {
 	}
 
 	protected SearchHit translate(
+		SearchSearchRequest searchSearchRequest,
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
 		String alternateUidFieldName) {
 
@@ -108,7 +112,9 @@ public class SearchHitsTranslator {
 		).addSources(
 			elasticsearchSearchHit.getSourceAsMap()
 		).document(
-			translateDocument(elasticsearchSearchHit, alternateUidFieldName)
+			translateDocument(
+				searchSearchRequest, elasticsearchSearchHit,
+				alternateUidFieldName)
 		).explanation(
 			getExplanationString(elasticsearchSearchHit)
 		).id(
@@ -123,21 +129,42 @@ public class SearchHitsTranslator {
 	}
 
 	protected Document translateDocument(
+		SearchSearchRequest searchSearchRequest,
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
 		String alternateUidFieldName) {
 
 		DocumentFieldsTranslator documentFieldsTranslator =
 			new DocumentFieldsTranslator(_geoBuilders);
 
-		Map<String, DocumentField> documentFieldsMap =
-			elasticsearchSearchHit.getFields();
-
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
-		documentFieldsTranslator.translate(documentFieldsMap, documentBuilder);
+		boolean useSource = false;
 
-		documentFieldsTranslator.populateAlternateUID(
-			documentFieldsMap, documentBuilder, alternateUidFieldName);
+		if (searchSearchRequest != null) {
+			Boolean fetchSource = searchSearchRequest.getFetchSource();
+
+			if (fetchSource != null) {
+				useSource = fetchSource.booleanValue();
+			}
+		}
+
+		if (useSource) {
+			Map<String, Object> documentSourceMap =
+				elasticsearchSearchHit.getSourceAsMap();
+
+			documentFieldsTranslator.translate(
+				documentBuilder, documentSourceMap);
+		}
+		else {
+			Map<String, DocumentField> documentFieldsMap =
+				elasticsearchSearchHit.getFields();
+
+			documentFieldsTranslator.translate(
+				documentFieldsMap, documentBuilder);
+
+			documentFieldsTranslator.populateAlternateUID(
+				documentFieldsMap, documentBuilder, alternateUidFieldName);
+		}
 
 		return documentBuilder.build();
 	}

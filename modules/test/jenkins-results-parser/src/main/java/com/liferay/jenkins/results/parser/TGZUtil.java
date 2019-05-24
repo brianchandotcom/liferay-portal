@@ -45,7 +45,9 @@ public class TGZUtil {
 
 	public static boolean debug = false;
 
-	public static void archive(File sourceFile, File archiveFile) {
+	public static void archive(File sourceFile, File archiveFile)
+		throws IOException {
+
 		if (!sourceFile.exists()) {
 			throw new RuntimeException("Unable to find " + sourceFile);
 		}
@@ -56,79 +58,73 @@ public class TGZUtil {
 			parentDir.mkdirs();
 		}
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				archiveFile);
-			BufferedOutputStream bufferedOutputStream =
-				new BufferedOutputStream(fileOutputStream, _CHARS_BUFFER_SIZE);
-			GzipCompressorOutputStream gzipCompressorOutputStream =
-				new GzipCompressorOutputStream(bufferedOutputStream);
-			TarArchiveOutputStream tarArchiveOutputStream =
-				new TarArchiveOutputStream(gzipCompressorOutputStream)) {
+		FileOutputStream fileOutputStream = new FileOutputStream(archiveFile);
 
-			tarArchiveOutputStream.setBigNumberMode(
-				TarArchiveOutputStream.BIGNUMBER_POSIX);
-			tarArchiveOutputStream.setLongFileMode(
-				TarArchiveOutputStream.LONGFILE_POSIX);
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
+			fileOutputStream, _CHARS_BUFFER_SIZE);
 
-			if (sourceFile.isFile()) {
-				_archiveFile(
-					sourceFile.getParentFile(), sourceFile,
-					tarArchiveOutputStream);
-			}
-			else {
-				_archiveDir(
-					sourceFile.getParentFile(), sourceFile,
-					tarArchiveOutputStream);
-			}
+		GzipCompressorOutputStream gzipCompressorOutputStream =
+			new GzipCompressorOutputStream(bufferedOutputStream);
 
-			tarArchiveOutputStream.flush();
+		TarArchiveOutputStream tarArchiveOutputStream =
+			new TarArchiveOutputStream(gzipCompressorOutputStream);
 
-			tarArchiveOutputStream.finish();
+		tarArchiveOutputStream.setBigNumberMode(
+			TarArchiveOutputStream.BIGNUMBER_POSIX);
+		tarArchiveOutputStream.setLongFileMode(
+			TarArchiveOutputStream.LONGFILE_POSIX);
+
+		if (sourceFile.isFile()) {
+			_archiveFile(
+				sourceFile.getParentFile(), sourceFile, tarArchiveOutputStream);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to archive " + sourceFile.toString(), ioe);
+		else {
+			_archiveDir(
+				sourceFile.getParentFile(), sourceFile, tarArchiveOutputStream);
 		}
+
+		tarArchiveOutputStream.flush();
+
+		tarArchiveOutputStream.finish();
 	}
 
-	public static void unarchive(File archiveFile, File destinationDir) {
+	public static void unarchive(File archiveFile, File destinationDir)
+		throws IOException {
+
 		if (!destinationDir.exists()) {
 			destinationDir.mkdirs();
 		}
 
-		try (FileInputStream fileInputStream = new FileInputStream(archiveFile);
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(
-				fileInputStream, _CHARS_BUFFER_SIZE);
-			GzipCompressorInputStream gzipCompressorInputStream =
-				new GzipCompressorInputStream(bufferedInputStream);
-			TarArchiveInputStream tarArchiveInputStream =
-				new TarArchiveInputStream(gzipCompressorInputStream)) {
+		FileInputStream fileInputStream = new FileInputStream(archiveFile);
 
-			TarArchiveEntry tarArchiveEntry =
-				tarArchiveInputStream.getNextTarEntry();
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(
+			fileInputStream, _CHARS_BUFFER_SIZE);
 
-			while (tarArchiveEntry != null) {
-				if (tarArchiveInputStream.canReadEntryData(tarArchiveEntry)) {
-					if (tarArchiveEntry.isDirectory()) {
-						_unarchiveDir(destinationDir, tarArchiveEntry);
-					}
-					else {
-						_unarchiveFile(
-							destinationDir, tarArchiveEntry,
-							tarArchiveInputStream);
-					}
+		GzipCompressorInputStream gzipCompressorInputStream =
+			new GzipCompressorInputStream(bufferedInputStream);
+
+		TarArchiveInputStream tarArchiveInputStream = new TarArchiveInputStream(
+			gzipCompressorInputStream);
+
+		TarArchiveEntry tarArchiveEntry =
+			tarArchiveInputStream.getNextTarEntry();
+
+		while (tarArchiveEntry != null) {
+			if (tarArchiveInputStream.canReadEntryData(tarArchiveEntry)) {
+				if (tarArchiveEntry.isDirectory()) {
+					_unarchiveDir(destinationDir, tarArchiveEntry);
 				}
 				else {
-					System.out.println(
-						"Unable to read " + tarArchiveEntry.getName());
+					_unarchiveFile(
+						destinationDir, tarArchiveEntry, tarArchiveInputStream);
 				}
-
-				tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
 			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to unarchive " + archiveFile.toString(), ioe);
+			else {
+				System.out.println(
+					"Unable to read " + tarArchiveEntry.getName());
+			}
+
+			tarArchiveEntry = tarArchiveInputStream.getNextTarEntry();
 		}
 	}
 

@@ -87,7 +87,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 
 		String trimmedLine2 = StringUtil.trim(line2);
 
-		if ((lineLength1 + trimmedLine2.length() - 4) <= maxLineLength) {
+		if ((lineLength1 + trimmedLine2.length() - 4) <= getMaxLineLength()) {
 			log(
 				lastChildDetailAST, MSG_COMBINE_LITERAL_STRINGS, literalString1,
 				literalString2);
@@ -98,7 +98,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if ((parentDetailAST.getType() == TokenTypes.PLUS) &&
-			((lineLength1 + literalString2.length()) <= maxLineLength)) {
+			((lineLength1 + literalString2.length()) <= getMaxLineLength())) {
 
 			log(
 				detailAST, MSG_COMBINE_LITERAL_STRINGS, literalString1,
@@ -108,7 +108,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 		}
 
 		int pos = getStringBreakPos(
-			literalString1, literalString2, maxLineLength - lineLength1);
+			literalString1, literalString2, getMaxLineLength() - lineLength1);
 
 		if (pos != -1) {
 			log(

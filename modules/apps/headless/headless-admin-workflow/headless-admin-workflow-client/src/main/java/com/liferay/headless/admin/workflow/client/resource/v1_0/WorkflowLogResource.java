@@ -32,25 +32,19 @@ import javax.annotation.Generated;
 @Generated("")
 public class WorkflowLogResource {
 
-	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public static WorkflowLog getWorkflowLog(Long workflowLogId)
+		throws Exception {
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-logs/{workflowLogId}",
+		HttpInvoker.HttpResponse httpResponse = getWorkflowLogHttpResponse(
 			workflowLogId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return WorkflowLogSerDes.toDTO(content);
@@ -64,8 +58,45 @@ public class WorkflowLogResource {
 		}
 	}
 
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+	public static HttpInvoker.HttpResponse getWorkflowLogHttpResponse(
+			Long workflowLogId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-logs/{workflowLogId}",
+			workflowLogId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			Long workflowTaskId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getWorkflowTaskWorkflowLogsPageHttpResponse(
+				workflowTaskId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, WorkflowLogSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getWorkflowTaskWorkflowLogsPageHttpResponse(
+				Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -84,16 +115,7 @@ public class WorkflowLogResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, WorkflowLogSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -32,8 +32,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class DataLayoutResource {
 
-	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
+	public static Page<DataLayout> getDataDefinitionDataLayoutsPage(
 			Long dataDefinitionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getDataDefinitionDataLayoutsPageHttpResponse(
+				dataDefinitionId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, DataLayoutSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getDataDefinitionDataLayoutsPageHttpResponse(
+				Long dataDefinitionId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -52,43 +72,24 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataLayoutSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public DataLayout postDataDefinitionDataLayout(
+	public static DataLayout postDataDefinitionDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			DataLayoutSerDes.toJSON(dataLayout), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-layouts",
-			dataDefinitionId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postDataDefinitionDataLayoutHttpResponse(
+				dataDefinitionId, dataLayout);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return DataLayoutSerDes.toDTO(content);
@@ -102,13 +103,55 @@ public class DataLayoutResource {
 		}
 	}
 
-	public void postDataLayoutDataLayoutPermission(
+	public static HttpInvoker.HttpResponse
+			postDataDefinitionDataLayoutHttpResponse(
+				Long dataDefinitionId, DataLayout dataLayout)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(dataLayout.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-layouts",
+			dataDefinitionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void postDataLayoutDataLayoutPermission(
 			Long dataLayoutId, String operation,
 			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
 				dataLayoutPermission)
 		throws Exception {
 
+		HttpInvoker.HttpResponse httpResponse =
+			postDataLayoutDataLayoutPermissionHttpResponse(
+				dataLayoutId, operation, dataLayoutPermission);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			postDataLayoutDataLayoutPermissionHttpResponse(
+				Long dataLayoutId, String operation,
+				com.liferay.data.engine.rest.client.dto.v1_0.
+					DataLayoutPermission dataLayoutPermission)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(dataLayoutPermission.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -122,17 +165,26 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteDataLayout(Long dataLayoutId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = deleteDataLayoutHttpResponse(
+			dataLayoutId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteDataLayout(Long dataLayoutId) throws Exception {
+	public static HttpInvoker.HttpResponse deleteDataLayoutHttpResponse(
+			Long dataLayoutId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
@@ -143,17 +195,37 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static DataLayout getDataLayout(Long dataLayoutId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getDataLayoutHttpResponse(
+			dataLayoutId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return DataLayoutSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
+	public static HttpInvoker.HttpResponse getDataLayoutHttpResponse(
+			Long dataLayoutId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -164,14 +236,23 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static DataLayout putDataLayout(
+			Long dataLayoutId, DataLayout dataLayout)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putDataLayoutHttpResponse(
+			dataLayoutId, dataLayout);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return DataLayoutSerDes.toDTO(content);
@@ -185,13 +266,13 @@ public class DataLayoutResource {
 		}
 	}
 
-	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
+	public static HttpInvoker.HttpResponse putDataLayoutHttpResponse(
+			Long dataLayoutId, DataLayout dataLayout)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			DataLayoutSerDes.toJSON(dataLayout), "application/json");
+		httpInvoker.body(dataLayout.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -201,28 +282,28 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<DataLayout> getSiteDataLayoutPage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteDataLayoutPageHttpResponse(siteId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return DataLayoutSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, DataLayoutSerDes::toDTO);
 	}
 
-	public Page<DataLayout> getSiteDataLayoutPage(
+	public static HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
 			Long siteId, Pagination pagination)
 		throws Exception {
 
@@ -242,25 +323,38 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void postSiteDataLayoutPermission(
+			Long siteId, String operation,
+			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
+				dataLayoutPermission)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postSiteDataLayoutPermissionHttpResponse(
+				siteId, operation, dataLayoutPermission);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataLayoutSerDes::toDTO);
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void postSiteDataLayoutPermission(
-			Long siteId, String operation,
-			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
-				dataLayoutPermission)
+	public static HttpInvoker.HttpResponse
+			postSiteDataLayoutPermissionHttpResponse(
+				Long siteId, String operation,
+				com.liferay.data.engine.rest.client.dto.v1_0.
+					DataLayoutPermission dataLayoutPermission)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(dataLayoutPermission.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -274,14 +368,7 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

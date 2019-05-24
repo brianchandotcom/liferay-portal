@@ -78,6 +78,14 @@ definition {
 
 		ChangeList.viewNoStagingMenuitemsNotAvailable();
 
+		ChangeList.viewWarningOnSiteExportImport(portletName = "Export");
+
+		ChangeList.viewWarningOnSiteExportImport(portletName = "Import");
+
+		ChangeList.viewWarningOnPortletExport(portletName = "Web Content");
+
+		ChangeList.viewWarningOnPortletImport(portletName = "Web Content");
+
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",

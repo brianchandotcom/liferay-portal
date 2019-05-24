@@ -167,6 +167,7 @@ class Overview extends PortletBase {
 		new PublishChangeList(
 			{
 				changeListDescription: this.descriptionActiveChangeList,
+				changeListHasCollision: this.hasCollision,
 				changeListName: this.headerTitleActiveChangeList,
 				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 				urlChangeListsHistory: this.urlChangeListsHistory,
@@ -323,6 +324,10 @@ class Overview extends PortletBase {
 	_populateCollidingChangeEntries(collisionsResult) {
 		if (collisionsResult.items) {
 			this.collisionsCount = collisionsResult.items.length;
+
+			if (this.collisionsCount > 0) {
+				this.hasCollision = true;
+			}
 		}
 
 		this.collisionsTooltip = Liferay.Util.sub(Liferay.Language.get('collision-detected-for-x-change-lists'), this.collisionsCount);
@@ -421,7 +426,7 @@ class Overview extends PortletBase {
 	}
 
 	_render() {
-		let urlActiveCollection = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + "&type=active";
+		let urlActiveCollection = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + '&type=active';
 
 		let urls = [urlActiveCollection, this.urlProductionInformation, this.urlUserSettings];
 
@@ -619,6 +624,8 @@ Overview.STATE = {
 	collisionsCount: Config.number().value(0),
 
 	collisionsTooltip: Config.string(),
+
+	hasCollision: Config.bool().value(false),
 
 	/**
 	 * If <code>true</code>, head button is disabled.

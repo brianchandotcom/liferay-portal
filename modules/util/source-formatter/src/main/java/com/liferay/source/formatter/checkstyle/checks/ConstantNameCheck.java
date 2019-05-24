@@ -14,68 +14,49 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
-public class ConstantNameCheck
-	extends com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck {
+public class ConstantNameCheck extends BaseCheck {
 
-	public void setCamelCaseTypeNames(String camelCaseTypeNames) {
-		_camelCaseTypeNames = ArrayUtil.append(
-			_camelCaseTypeNames, StringUtil.split(camelCaseTypeNames));
-	}
-
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
-	}
-
-	public void setImmutableFieldTypes(String immutableFieldTypes) {
-		_immutableFieldTypes = ArrayUtil.append(
-			_immutableFieldTypes, StringUtil.split(immutableFieldTypes));
-	}
-
-	public void setShowDebugInformation(boolean showDebugInformation) {
-		_showDebugInformation = showDebugInformation;
+	@Override
+	public int[] getDefaultTokens() {
+		return new int[] {TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
-		if (!_enabled) {
-			return;
-		}
-
-		if (!_showDebugInformation) {
-			_checkConstantName(detailAST);
-
-			return;
-		}
-
-		long startTime = System.currentTimeMillis();
-
+	protected void doVisitToken(DetailAST detailAST) {
 		_checkConstantName(detailAST);
-
-		long endTime = System.currentTimeMillis();
-
-		Class<?> clazz = getClass();
-
-		DebugUtil.increaseProcessingTime(
-			clazz.getSimpleName(), endTime - startTime);
 	}
 
 	private void _checkConstantName(DetailAST detailAST) {
-		if (!mustCheckName(detailAST)) {
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
+
+		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
+			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+
+			return;
+		}
+
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		String name = nameDetailAST.getText();
+
+		if (name.equals("serialPersistentFields") ||
+			name.equals("serialVersionUID")) {
+
 			return;
 		}
 
@@ -83,7 +64,10 @@ public class ConstantNameCheck
 
 		String typeName = DetailASTUtil.getTypeName(detailAST, false);
 
-		if (ArrayUtil.contains(_camelCaseTypeNames, typeName) ||
+		List<String> camelCaseTypeNames = getAttributeValues(
+			_CAMEL_CASE_TYPE_NAMES_KEY);
+
+		if (camelCaseTypeNames.contains(typeName) ||
 			DetailASTUtil.isCollection(
 				detailAST.findFirstToken(TokenTypes.TYPE))) {
 
@@ -98,9 +82,6 @@ public class ConstantNameCheck
 		}
 
 		String accessLevel = null;
-
-		DetailAST modifiersDetailAST = detailAST.findFirstToken(
-			TokenTypes.MODIFIERS);
 
 		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
 			accessLevel = JavaTerm.ACCESS_MODIFIER_PRIVATE;
@@ -119,28 +100,29 @@ public class ConstantNameCheck
 			return;
 		}
 
-		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
 		Pattern pattern = Pattern.compile(regex);
 
-		Matcher matcher = pattern.matcher(nameDetailAST.getText());
+		Matcher matcher = pattern.matcher(name);
 
 		if (!matcher.find()) {
 			if (typeName == null) {
 				log(
 					nameDetailAST, _MSG_INVALID_CONSTANT_NAME, accessLevel,
-					nameDetailAST.getText(), regex);
+					name, regex);
 			}
 			else {
 				log(
 					nameDetailAST, _MSG_INVALID_CONSTANT_TYPE_NAME, accessLevel,
-					nameDetailAST.getText(), typeName, regex);
+					name, typeName, regex);
 			}
 		}
 	}
 
 	private boolean _isImmutableFieldType(String typeName) {
-		for (String immutableFieldType : _immutableFieldTypes) {
+		List<String> immutableFieldTypes = getAttributeValues(
+			_IMMUTABLE_FIELD_TYPES_KEY);
+
+		for (String immutableFieldType : immutableFieldTypes) {
 			if (typeName.equals(immutableFieldType) ||
 				typeName.startsWith(immutableFieldType + "[]")) {
 
@@ -153,8 +135,14 @@ public class ConstantNameCheck
 
 	private static final String _CAMEL_CASE_REGEX = "^[a-z0-9][a-zA-Z0-9]*$";
 
+	private static final String _CAMEL_CASE_TYPE_NAMES_KEY =
+		"camelCaseTypeNames";
+
 	private static final String _CONSTANT_NAME_REGEX =
 		"^[a-zA-Z0-9][_a-zA-Z0-9]*$";
+
+	private static final String _IMMUTABLE_FIELD_TYPES_KEY =
+		"immutableFieldTypes";
 
 	private static final String _MSG_INVALID_CONSTANT_NAME =
 		"name.invalidConstantPattern";
@@ -163,10 +151,5 @@ public class ConstantNameCheck
 		"name.invalidConstantTypePattern";
 
 	private static final String _UPPER_CASE_REGEX = "^[A-Z0-9][_A-Z0-9]*$";
-
-	private String[] _camelCaseTypeNames = new String[0];
-	private boolean _enabled = true;
-	private String[] _immutableFieldTypes = new String[0];
-	private boolean _showDebugInformation;
 
 }

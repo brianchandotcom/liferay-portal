@@ -32,7 +32,25 @@ import javax.annotation.Generated;
 @Generated("")
 public class WorkflowTaskResource {
 
-	public Page<WorkflowTask> getRoleWorkflowTasksPage(
+	public static Page<WorkflowTask> getRoleWorkflowTasksPage(
+			Long roleId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getRoleWorkflowTasksPageHttpResponse(roleId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, WorkflowTaskSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getRoleWorkflowTasksPageHttpResponse(
 			Long roleId, Pagination pagination)
 		throws Exception {
 
@@ -52,20 +70,29 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
+			Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getWorkflowTasksAssignedToMePageHttpResponse(pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, WorkflowTaskSerDes::toDTO);
 	}
 
-	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
-			Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getWorkflowTasksAssignedToMePageHttpResponse(Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -83,20 +110,30 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
+			Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getWorkflowTasksAssignedToMyRolesPageHttpResponse(pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		return Page.of(content, WorkflowTaskSerDes::toDTO);
 	}
 
-	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
-			Pagination pagination)
+	public static HttpInvoker.HttpResponse
+			getWorkflowTasksAssignedToMyRolesPageHttpResponse(
+				Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -114,19 +151,39 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static WorkflowTask getWorkflowTask(Long workflowTaskId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getWorkflowTaskHttpResponse(
+			workflowTaskId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		return Page.of(content, WorkflowTaskSerDes::toDTO);
+		try {
+			return WorkflowTaskSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception {
+	public static HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
+			Long workflowTaskId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -137,14 +194,26 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static WorkflowTask postWorkflowTaskAssignToMe(
+			Long workflowTaskId,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postWorkflowTaskAssignToMeHttpResponse(
+				workflowTaskId, workflowTaskAssignToMe);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return WorkflowTaskSerDes.toDTO(content);
@@ -158,13 +227,16 @@ public class WorkflowTaskResource {
 		}
 	}
 
-	public WorkflowTask postWorkflowTaskAssignToMe(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+	public static HttpInvoker.HttpResponse
+			postWorkflowTaskAssignToMeHttpResponse(
+				Long workflowTaskId,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(workflowTaskAssignToMe.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -174,14 +246,26 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static WorkflowTask postWorkflowTaskAssignToUser(
+			Long workflowTaskId,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToUser workflowTaskAssignToUser)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postWorkflowTaskAssignToUserHttpResponse(
+				workflowTaskId, workflowTaskAssignToUser);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return WorkflowTaskSerDes.toDTO(content);
@@ -195,13 +279,17 @@ public class WorkflowTaskResource {
 		}
 	}
 
-	public WorkflowTask postWorkflowTaskAssignToUser(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToUser workflowTaskAssignToUser)
+	public static HttpInvoker.HttpResponse
+			postWorkflowTaskAssignToUserHttpResponse(
+				Long workflowTaskId,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			workflowTaskAssignToUser.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -211,14 +299,26 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static WorkflowTask postWorkflowTaskChangeTransition(
+			Long workflowTaskId,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition
+				changeTransition)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postWorkflowTaskChangeTransitionHttpResponse(
+				workflowTaskId, changeTransition);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return WorkflowTaskSerDes.toDTO(content);
@@ -232,13 +332,16 @@ public class WorkflowTaskResource {
 		}
 	}
 
-	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition
-				changeTransition)
+	public static HttpInvoker.HttpResponse
+			postWorkflowTaskChangeTransitionHttpResponse(
+				Long workflowTaskId,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					ChangeTransition changeTransition)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(changeTransition.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -248,14 +351,26 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static WorkflowTask postWorkflowTaskUpdateDueDate(
+			Long workflowTaskId,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postWorkflowTaskUpdateDueDateHttpResponse(
+				workflowTaskId, workflowTaskAssignToMe);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return WorkflowTaskSerDes.toDTO(content);
@@ -269,13 +384,16 @@ public class WorkflowTaskResource {
 		}
 	}
 
-	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+	public static HttpInvoker.HttpResponse
+			postWorkflowTaskUpdateDueDateHttpResponse(
+				Long workflowTaskId,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(workflowTaskAssignToMe.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -285,25 +403,7 @@ public class WorkflowTaskResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return WorkflowTaskSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

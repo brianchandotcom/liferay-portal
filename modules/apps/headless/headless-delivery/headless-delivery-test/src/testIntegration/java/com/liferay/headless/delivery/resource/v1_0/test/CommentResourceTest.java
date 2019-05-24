@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Comment;
+import com.liferay.headless.delivery.client.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -56,7 +57,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testDeleteComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		return invokePostBlogPostingComment(
+		return CommentResource.postBlogPostingComment(
 			blogsEntry.getEntryId(), randomComment());
 	}
 
@@ -73,7 +74,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testGetComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		return invokePostBlogPostingComment(
+		return CommentResource.postBlogPostingComment(
 			blogsEntry.getEntryId(), randomComment());
 	}
 
@@ -83,7 +84,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		Comment comment = invokePostBlogPostingComment(
+		Comment comment = CommentResource.postBlogPostingComment(
 			blogsEntry.getEntryId(), randomComment());
 
 		return comment.getId();
@@ -111,10 +112,11 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Comment testPutComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		Comment comment = invokePostBlogPostingComment(
+		Comment comment = CommentResource.postBlogPostingComment(
 			blogsEntry.getEntryId(), randomComment());
 
-		return invokePostCommentComment(comment.getId(), randomComment());
+		return CommentResource.postCommentComment(
+			comment.getId(), randomComment());
 	}
 
 	private BlogsEntry _addBlogsEntry() throws PortalException {

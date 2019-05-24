@@ -32,9 +32,30 @@ import javax.annotation.Generated;
 @Generated("")
 public class TaxonomyVocabularyResource {
 
-	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
+	public static Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			Long siteId, String search, String filterString,
 			Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteTaxonomyVocabulariesPageHttpResponse(
+				siteId, search, filterString, pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, TaxonomyVocabularySerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getSiteTaxonomyVocabulariesPageHttpResponse(
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -65,44 +86,23 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, TaxonomyVocabularySerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public static TaxonomyVocabulary postSiteTaxonomyVocabulary(
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies",
-			siteId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postSiteTaxonomyVocabularyHttpResponse(siteId, taxonomyVocabulary);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return TaxonomyVocabularySerDes.toDTO(content);
@@ -116,7 +116,43 @@ public class TaxonomyVocabularyResource {
 		}
 	}
 
-	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+	public static HttpInvoker.HttpResponse
+			postSiteTaxonomyVocabularyHttpResponse(
+				Long siteId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(taxonomyVocabulary.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies",
+			siteId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteTaxonomyVocabularyHttpResponse(taxonomyVocabularyId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse deleteTaxonomyVocabularyHttpResponse(
+			Long taxonomyVocabularyId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -129,17 +165,38 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static TaxonomyVocabulary getTaxonomyVocabulary(
+			Long taxonomyVocabularyId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getTaxonomyVocabularyHttpResponse(taxonomyVocabularyId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return TaxonomyVocabularySerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
+	public static HttpInvoker.HttpResponse getTaxonomyVocabularyHttpResponse(
+			Long taxonomyVocabularyId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -152,14 +209,24 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static TaxonomyVocabulary patchTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			patchTaxonomyVocabularyHttpResponse(
+				taxonomyVocabularyId, taxonomyVocabulary);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return TaxonomyVocabularySerDes.toDTO(content);
@@ -173,15 +240,13 @@ public class TaxonomyVocabularyResource {
 		}
 	}
 
-	public TaxonomyVocabulary patchTaxonomyVocabulary(
+	public static HttpInvoker.HttpResponse patchTaxonomyVocabularyHttpResponse(
 			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary),
-			"application/json");
+		httpInvoker.body(taxonomyVocabulary.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -191,14 +256,24 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static TaxonomyVocabulary putTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putTaxonomyVocabularyHttpResponse(
+				taxonomyVocabularyId, taxonomyVocabulary);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return TaxonomyVocabularySerDes.toDTO(content);
@@ -212,15 +287,13 @@ public class TaxonomyVocabularyResource {
 		}
 	}
 
-	public TaxonomyVocabulary putTaxonomyVocabulary(
+	public static HttpInvoker.HttpResponse putTaxonomyVocabularyHttpResponse(
 			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary),
-			"application/json");
+		httpInvoker.body(taxonomyVocabulary.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -230,25 +303,7 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return TaxonomyVocabularySerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

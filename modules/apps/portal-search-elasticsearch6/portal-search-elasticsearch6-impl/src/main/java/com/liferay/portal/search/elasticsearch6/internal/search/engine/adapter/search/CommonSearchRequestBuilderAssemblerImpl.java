@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -27,12 +26,16 @@ import com.liferay.portal.search.elasticsearch6.internal.filter.FilterToQueryBui
 import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
+import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
+import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.common.unit.TimeValue;
@@ -75,14 +78,33 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		setTypes(searchRequestBuilder, baseSearchRequest);
 	}
 
-	protected QueryBuilder getQueryBuilder(
-		BaseSearchRequest baseSearchRequest) {
+	protected QueryBuilder combine(
+		QueryBuilder queryBuilder, List<ComplexQueryPart> complexQueryParts) {
 
-		QueryBuilder queryBuilder = translateQuery(
-			baseSearchRequest.getQuery());
+		if (complexQueryParts.isEmpty()) {
+			return queryBuilder;
+		}
 
-		QueryBuilder legacyQueryBuilder = translateQuery(
-			baseSearchRequest.getQuery71());
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		boolQueryBuilder.should(queryBuilder);
+
+		BooleanQuery booleanQuery =
+			(BooleanQuery)_complexQueryBuilderFactory.builder(
+			).addParts(
+				complexQueryParts
+			).build();
+
+		copy(booleanQuery.getFilterQueryClauses(), boolQueryBuilder::filter);
+		copy(booleanQuery.getMustNotQueryClauses(), boolQueryBuilder::mustNot);
+		copy(booleanQuery.getMustQueryClauses(), boolQueryBuilder::must);
+		copy(booleanQuery.getShouldQueryClauses(), boolQueryBuilder::should);
+
+		return boolQueryBuilder;
+	}
+
+	protected QueryBuilder combine(
+		QueryBuilder queryBuilder, QueryBuilder legacyQueryBuilder) {
 
 		if (queryBuilder == null) {
 			return legacyQueryBuilder;
@@ -99,6 +121,33 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		).must(
 			legacyQueryBuilder
 		);
+	}
+
+	protected void copy(List<Query> clauses, Consumer<QueryBuilder> consumer) {
+		clauses.stream(
+		).map(
+			this::translateQuery
+		).forEach(
+			consumer
+		);
+	}
+
+	protected QueryBuilder getQueryBuilder(
+		BaseSearchRequest baseSearchRequest) {
+
+		QueryBuilder queryBuilder = translateQuery(
+			baseSearchRequest.getQuery());
+
+		QueryBuilder legacyQueryBuilder = translateQuery(
+			baseSearchRequest.getQuery71());
+
+		QueryBuilder combinedQueryBuilder = combine(
+			queryBuilder, legacyQueryBuilder);
+
+		List<ComplexQueryPart> complexQueryParts =
+			baseSearchRequest.getComplexQueryParts();
+
+		return combine(combinedQueryBuilder, complexQueryParts);
 	}
 
 	protected void setAggregations(
@@ -126,6 +175,13 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		_aggregationTranslator = aggregationTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setComplexQueryBuilderFactory(
+		ComplexQueryBuilderFactory complexQueryBuilderFactory) {
+
+		_complexQueryBuilderFactory = complexQueryBuilderFactory;
 	}
 
 	protected void setExplain(
@@ -340,7 +396,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			_legacyQueryToQueryBuilderTranslator.translate(query, null);
 
 		if ((query.getPreBooleanFilter() == null) ||
-			(query instanceof BooleanQuery)) {
+			(query instanceof com.liferay.portal.kernel.search.BooleanQuery)) {
 
 			return queryBuilder;
 		}
@@ -370,6 +426,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;
+	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 	private FacetTranslator _facetTranslator;
 	private FilterTranslator<QueryBuilder> _filterToQueryBuilderTranslator;
 	private com.liferay.portal.search.elasticsearch6.internal.legacy.query.

@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -52,7 +53,7 @@ public class TaxonomyCategoryResourceTest
 	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 
@@ -60,7 +61,7 @@ public class TaxonomyCategoryResourceTest
 	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 
@@ -70,7 +71,7 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		TaxonomyCategory taxonomyCategory =
-			invokePostTaxonomyVocabularyTaxonomyCategory(
+			TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 				_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 
 		return taxonomyCategory.getId();
@@ -87,7 +88,7 @@ public class TaxonomyCategoryResourceTest
 	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 
@@ -97,7 +98,7 @@ public class TaxonomyCategoryResourceTest
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), taxonomyCategory);
 	}
 
@@ -107,7 +108,7 @@ public class TaxonomyCategoryResourceTest
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), taxonomyCategory);
 	}
 
@@ -115,7 +116,7 @@ public class TaxonomyCategoryResourceTest
 	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
+		return TaxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 

@@ -204,6 +204,47 @@ definition {
 			value1 = "${changeListName}");
 	}
 
+	macro viewWarningOnPortletExport {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "${portletName}");
+
+		LAR._gotoExportImport();
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+
+		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
+
+		IFrame.closeFrame();
+	}
+
+	macro viewWarningOnPortletImport {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "${portletName}");
+
+		LAR._gotoExportImport();
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+
+		NavItem.click(navItem = "Import");
+
+		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
+
+		IFrame.closeFrame();
+	}
+
+	macro viewWarningOnSiteExportImport {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "${portletName}");
+
+		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
+	}
+
 	macro workOnProduction {
 		if (IsTextEqual(locator1 = "ChangeList#OVERVIEW_PAGE_TITLE", value1 = "Overview")) {
 			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");

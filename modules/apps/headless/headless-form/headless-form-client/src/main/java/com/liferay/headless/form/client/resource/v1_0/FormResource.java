@@ -35,25 +35,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormResource {
 
-	public Form getForm(Long formId) throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}",
-			formId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static Form getForm(Long formId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getFormHttpResponse(formId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return FormSerDes.toDTO(content);
@@ -67,31 +58,39 @@ public class FormResource {
 		}
 	}
 
-	public com.liferay.headless.form.client.dto.v1_0.FormContext
+	public static HttpInvoker.HttpResponse getFormHttpResponse(Long formId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}",
+			formId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.form.client.dto.v1_0.FormContext
 			postFormEvaluateContext(
 				Long formId,
 				com.liferay.headless.form.client.dto.v1_0.FormContext
 					formContext)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/evaluate-context",
-			formId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postFormEvaluateContextHttpResponse(formId, formContext);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.form.client.serdes.v1_0.
@@ -106,37 +105,41 @@ public class FormResource {
 		}
 	}
 
-	public com.liferay.headless.form.client.dto.v1_0.FormDocument
-			postFormFormDocument(
-				Long formId, Form form, Map<String, File> files)
+	public static HttpInvoker.HttpResponse postFormEvaluateContextHttpResponse(
+			Long formId,
+			com.liferay.headless.form.client.dto.v1_0.FormContext formContext)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.multipart();
-
-		httpInvoker.part("form", FormSerDes.toJSON(form));
-
-		for (Map.Entry<String, File> entry : files.entrySet()) {
-			httpInvoker.part(entry.getKey(), entry.getValue());
-		}
+		httpInvoker.body(formContext.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 		httpInvoker.path(
-			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-document",
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/evaluate-context",
 			formId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.form.client.dto.v1_0.FormDocument
+			postFormFormDocument(
+				Long formId, Form form, Map<String, File> multipartFiles)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postFormFormDocumentHttpResponse(formId, form, multipartFiles);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.form.client.serdes.v1_0.
@@ -151,7 +154,51 @@ public class FormResource {
 		}
 	}
 
-	public Page<Form> getSiteFormsPage(Long siteId, Pagination pagination)
+	public static HttpInvoker.HttpResponse postFormFormDocumentHttpResponse(
+			Long formId, Form form, Map<String, File> multipartFiles)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.multipart();
+
+		httpInvoker.part("form", FormSerDes.toJSON(form));
+
+		for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
+			httpInvoker.part(entry.getKey(), entry.getValue());
+		}
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-document",
+			formId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<Form> getSiteFormsPage(
+			Long siteId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getSiteFormsPageHttpResponse(
+			siteId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, FormSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse getSiteFormsPageHttpResponse(
+			Long siteId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -170,16 +217,7 @@ public class FormResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, FormSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

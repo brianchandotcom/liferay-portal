@@ -29,23 +29,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class StatusResource {
 
-	public Status getStatus() throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path("http://localhost:8080/o/bulk-rest/v1.0/status");
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+	public static Status getStatus() throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getStatusHttpResponse();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.bulk.rest.client.serdes.v1_0.StatusSerDes.toDTO(
@@ -58,6 +51,20 @@ public class StatusResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse getStatusHttpResponse()
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path("http://localhost:8080/o/bulk-rest/v1.0/status");
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

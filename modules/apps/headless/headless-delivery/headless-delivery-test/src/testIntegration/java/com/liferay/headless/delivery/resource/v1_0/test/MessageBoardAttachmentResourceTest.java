@@ -16,17 +16,16 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardAttachment;
-import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardAttachmentSerDes;
+import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.vulcan.multipart.BinaryFile;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,13 +63,25 @@ public class MessageBoardAttachmentResourceTest
 	}
 
 	@Override
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		Map<String, File> files = new HashMap<>();
+
+		String randomString = RandomTestUtil.randomString();
+
+		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
+
+		return files;
+	}
+
+	@Override
 	protected MessageBoardAttachment
 			testDeleteMessageBoardAttachment_addMessageBoardAttachment()
 		throws Exception {
 
-		return invokePostMessageBoardThreadMessageBoardAttachment(
-			_mbThread.getThreadId(),
-			toMultipartBody(randomMessageBoardAttachment()));
+		return MessageBoardAttachmentResource.
+			postMessageBoardThreadMessageBoardAttachment(
+				_mbThread.getThreadId(), randomMessageBoardAttachment(),
+				getMultipartFiles());
 	}
 
 	@Override
@@ -78,9 +89,10 @@ public class MessageBoardAttachmentResourceTest
 			testGetMessageBoardAttachment_addMessageBoardAttachment()
 		throws Exception {
 
-		return invokePostMessageBoardThreadMessageBoardAttachment(
-			_mbThread.getThreadId(),
-			toMultipartBody(randomMessageBoardAttachment()));
+		return MessageBoardAttachmentResource.
+			postMessageBoardThreadMessageBoardAttachment(
+				_mbThread.getThreadId(), randomMessageBoardAttachment(),
+				getMultipartFiles());
 	}
 
 	@Override
@@ -95,27 +107,6 @@ public class MessageBoardAttachmentResourceTest
 		testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId() {
 
 		return _mbThread.getThreadId();
-	}
-
-	@Override
-	protected MultipartBody toMultipartBody(
-		MessageBoardAttachment messageBoardAttachment) {
-
-		testContentType = "multipart/form-data;boundary=PART";
-
-		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
-
-		String randomString = RandomTestUtil.randomString();
-
-		binaryFileMap.put(
-			"file",
-			new BinaryFile(
-				testContentType, RandomTestUtil.randomString(),
-				new ByteArrayInputStream(randomString.getBytes()), 0));
-
-		return MultipartBody.of(
-			binaryFileMap, __ -> null,
-			MessageBoardAttachmentSerDes.toMap(messageBoardAttachment));
 	}
 
 	private MBThread _mbThread;

@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,13 +71,41 @@ public abstract class BaseCSSBuilderTestCase {
 	}
 
 	@Test
+	public void testCSSBuilderExcludes() throws Exception {
+		Path outputDirPath = _baseDirPath.resolve("absolute");
+
+		Files.createDirectories(outputDirPath);
+
+		String[] excludes = Arrays.copyOf(_EXCLUDES, _EXCLUDES.length + 1);
+
+		excludes[excludes.length - 1] = "**/test*.scss";
+
+		executeCSSBuilder(
+			_baseDirPath, "/css", excludes, false, _importDirPath,
+			String.valueOf(outputDirPath.toAbsolutePath()), 6, new String[0],
+			"jni");
+
+		File outputDir = new File(_baseDirPath.toString() + "/css/.sass-cache");
+
+		if (outputDir.exists()) {
+			for (File file : outputDir.listFiles()) {
+				String fileName = file.getName();
+
+				System.out.println(fileName);
+
+				Assert.assertFalse(fileName.startsWith("test"));
+			}
+		}
+	}
+
+	@Test
 	public void testCSSBuilderOutputPath() throws Exception {
 		Path outputDirPath = _baseDirPath.resolve("absolute");
 
 		Files.createDirectories(outputDirPath);
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", false, _importDirPath,
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
 			String.valueOf(outputDirPath.toAbsolutePath()), 6, new String[0],
 			"jni");
 
@@ -95,8 +124,8 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "brown", "khaki");
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", false, _importDirPath, ".sass-cache/", 6,
-			new String[0], "jni");
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
+			".sass-cache/", 6, new String[0], "jni");
 
 		Path cssPath = _baseDirPath.resolve(
 			"css/.sass-cache/test_import_change.css");
@@ -106,8 +135,8 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "khaki", "brown");
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", false, _importDirPath, ".sass-cache/", 6,
-			new String[0], "jni");
+			_baseDirPath, "/css", _EXCLUDES, false, _importDirPath,
+			".sass-cache/", 6, new String[0], "jni");
 
 		css = FileTestUtil.read(cssPath);
 
@@ -138,9 +167,10 @@ public abstract class BaseCSSBuilderTestCase {
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	protected abstract void executeCSSBuilder(
-			Path baseDirPath, String dirName, boolean generateSourceMap,
-			Path importDirPath, String outputDirName, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+			Path baseDirPath, String dirName, String[] excludes,
+			boolean generateSourceMap, Path importDirPath, String outputDirName,
+			int precision, String[] rtlExcludedPathRegexps,
+			String sassCompilerClassName)
 		throws Exception;
 
 	private static void _assertMatchesCount(
@@ -162,8 +192,8 @@ public abstract class BaseCSSBuilderTestCase {
 		throws Exception {
 
 		executeCSSBuilder(
-			_baseDirPath, "/css", false, importDirPath, ".sass-cache/", 6,
-			new String[0], sassCompilerClassName);
+			_baseDirPath, "/css", _EXCLUDES, false, importDirPath,
+			".sass-cache/", 6, new String[0], sassCompilerClassName);
 
 		String expectedTestContent = FileTestUtil.read(
 			_dependenciesDirPath.resolve("expected/test.css"));
@@ -212,6 +242,8 @@ public abstract class BaseCSSBuilderTestCase {
 
 		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
 	}
+
+	private static final String[] _EXCLUDES = CSSBuilderArgs.EXCLUDES;
 
 	private static final Pattern _cssImportPattern = Pattern.compile(
 		"@import\\s+url\\s*\\(\\s*['\"]?(.+\\.css\\?t=\\d+)['\"]?\\s*\\)\\s*;");

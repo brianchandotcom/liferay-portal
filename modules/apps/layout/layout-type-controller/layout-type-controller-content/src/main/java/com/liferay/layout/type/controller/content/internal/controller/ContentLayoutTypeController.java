@@ -88,6 +88,12 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout.getClassPK(),
+				ActionKeys.UPDATE);
+		}
+
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 

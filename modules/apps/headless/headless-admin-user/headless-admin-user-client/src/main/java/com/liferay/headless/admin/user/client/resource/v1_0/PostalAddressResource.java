@@ -31,8 +31,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class PostalAddressResource {
 
-	public Page<PostalAddress> getOrganizationPostalAddressesPage(
+	public static Page<PostalAddress> getOrganizationPostalAddressesPage(
 			Long organizationId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getOrganizationPostalAddressesPageHttpResponse(organizationId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, PostalAddressSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getOrganizationPostalAddressesPageHttpResponse(Long organizationId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -45,39 +63,22 @@ public class PostalAddressResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, PostalAddressSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public PostalAddress getPostalAddress(Long postalAddressId)
+	public static PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}",
+		HttpInvoker.HttpResponse httpResponse = getPostalAddressHttpResponse(
 			postalAddressId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return PostalAddressSerDes.toDTO(content);
@@ -91,8 +92,43 @@ public class PostalAddressResource {
 		}
 	}
 
-	public Page<PostalAddress> getUserAccountPostalAddressesPage(
+	public static HttpInvoker.HttpResponse getPostalAddressHttpResponse(
+			Long postalAddressId)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-user/v1.0/postal-addresses/{postalAddressId}",
+			postalAddressId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<PostalAddress> getUserAccountPostalAddressesPage(
 			Long userAccountId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getUserAccountPostalAddressesPageHttpResponse(userAccountId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, PostalAddressSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getUserAccountPostalAddressesPageHttpResponse(Long userAccountId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -105,16 +141,7 @@ public class PostalAddressResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, PostalAddressSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -46,6 +46,13 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public long getResourcesFolderId() throws PortalException {
+		return getResourcesFolderId(true);
+	}
+
+	@Override
+	public long getResourcesFolderId(boolean createIfAbsent)
+		throws PortalException {
+
 		if (_resourcesFolderId != 0) {
 			return _resourcesFolderId;
 		}
@@ -72,15 +79,20 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				String.valueOf(getFragmentCollectionId()));
 		}
 		catch (Exception e) {
-			ServiceContext serviceContext = new ServiceContext();
+			if (createIfAbsent) {
+				ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
 
-			folder = PortletFileRepositoryUtil.addPortletFolder(
-				getUserId(), repository.getRepositoryId(),
-				repository.getDlFolderId(),
-				String.valueOf(getFragmentCollectionId()), serviceContext);
+				folder = PortletFileRepositoryUtil.addPortletFolder(
+					getUserId(), repository.getRepositoryId(),
+					repository.getDlFolderId(),
+					String.valueOf(getFragmentCollectionId()), serviceContext);
+			}
+			else {
+				return 0;
+			}
 		}
 
 		_resourcesFolderId = folder.getFolderId();

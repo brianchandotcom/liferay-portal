@@ -118,7 +118,7 @@ public class ConcatCheck extends StringConcatenationCheck {
 
 		int pos = getStringBreakPos(
 			literalStringValue1, literalStringValue2,
-			maxLineLength - lineLength);
+			getMaxLineLength() - lineLength);
 
 		if (pos != -1) {
 			log(

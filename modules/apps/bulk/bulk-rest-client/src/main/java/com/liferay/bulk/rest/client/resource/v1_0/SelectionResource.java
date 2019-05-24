@@ -29,28 +29,21 @@ import javax.annotation.Generated;
 @Generated("")
 public class SelectionResource {
 
-	public Selection postBulkSelection(
+	public static Selection postBulkSelection(
 			com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
 				documentBulkSelection)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/bulk-selection");
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = postBulkSelectionHttpResponse(
+			documentBulkSelection);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.bulk.rest.client.serdes.v1_0.SelectionSerDes.
@@ -63,6 +56,25 @@ public class SelectionResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse postBulkSelectionHttpResponse(
+			com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
+				documentBulkSelection)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(documentBulkSelection.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/bulk-rest/v1.0/bulk-selection");
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

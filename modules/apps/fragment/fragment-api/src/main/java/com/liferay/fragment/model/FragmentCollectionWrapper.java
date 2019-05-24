@@ -254,6 +254,13 @@ public class FragmentCollectionWrapper
 		return model.getResourcesFolderId();
 	}
 
+	@Override
+	public long getResourcesFolderId(boolean createIfAbsent)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getResourcesFolderId(createIfAbsent);
+	}
+
 	/**
 	 * Returns the user ID of this fragment collection.
 	 *

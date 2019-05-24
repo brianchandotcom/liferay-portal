@@ -32,7 +32,34 @@ import javax.annotation.Generated;
 @Generated("")
 public class FormRecordResource {
 
-	public FormRecord getFormRecord(Long formRecordId) throws Exception {
+	public static FormRecord getFormRecord(Long formRecordId) throws Exception {
+		HttpInvoker.HttpResponse httpResponse = getFormRecordHttpResponse(
+			formRecordId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return FormRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse getFormRecordHttpResponse(
+			Long formRecordId)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
@@ -43,14 +70,23 @@ public class FormRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static FormRecord putFormRecord(
+			Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = putFormRecordHttpResponse(
+			formRecordId, formRecord);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return FormRecordSerDes.toDTO(content);
@@ -64,13 +100,13 @@ public class FormRecordResource {
 		}
 	}
 
-	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
+	public static HttpInvoker.HttpResponse putFormRecordHttpResponse(
+			Long formRecordId, FormRecord formRecord)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			FormRecordSerDes.toJSON(formRecord), "application/json");
+		httpInvoker.body(formRecord.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -80,28 +116,28 @@ public class FormRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<FormRecord> getFormFormRecordsPage(
+			Long formId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getFormFormRecordsPageHttpResponse(formId, pagination);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return FormRecordSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, FormRecordSerDes::toDTO);
 	}
 
-	public Page<FormRecord> getFormFormRecordsPage(
+	public static HttpInvoker.HttpResponse getFormFormRecordsPageHttpResponse(
 			Long formId, Pagination pagination)
 		throws Exception {
 
@@ -121,42 +157,23 @@ public class FormRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, FormRecordSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+	public static FormRecord postFormFormRecord(
+			Long formId, FormRecord formRecord)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			FormRecordSerDes.toJSON(formRecord), "application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records",
-			formId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = postFormFormRecordHttpResponse(
+			formId, formRecord);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return FormRecordSerDes.toDTO(content);
@@ -170,7 +187,53 @@ public class FormRecordResource {
 		}
 	}
 
-	public FormRecord getFormFormRecordByLatestDraft(Long formId)
+	public static HttpInvoker.HttpResponse postFormFormRecordHttpResponse(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(formRecord.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records",
+			formId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static FormRecord getFormFormRecordByLatestDraft(Long formId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getFormFormRecordByLatestDraftHttpResponse(formId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return FormRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			getFormFormRecordByLatestDraftHttpResponse(Long formId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -183,25 +246,7 @@ public class FormRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return FormRecordSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -148,7 +148,7 @@ public class AppendCheck extends StringConcatenationCheck {
 			previousLine, previousLine.length(), getTabWidth());
 
 		if ((previousLineLength + literalStringValue.length()) <=
-				maxLineLength) {
+				getMaxLineLength()) {
 
 			log(
 				methodCallDetailAST, MSG_COMBINE_LITERAL_STRINGS,
@@ -157,7 +157,7 @@ public class AppendCheck extends StringConcatenationCheck {
 		else {
 			int pos = getStringBreakPos(
 				previousLiteralStringValue, literalStringValue,
-				maxLineLength - previousLineLength);
+				getMaxLineLength() - previousLineLength);
 
 			if (pos != -1) {
 				log(

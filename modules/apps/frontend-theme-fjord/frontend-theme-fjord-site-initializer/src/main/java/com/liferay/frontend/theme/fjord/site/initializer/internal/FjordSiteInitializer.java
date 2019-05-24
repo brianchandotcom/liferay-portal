@@ -303,7 +303,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		Layout layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), nameMap,

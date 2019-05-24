@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.client.resource.v1_0.DocumentFolderResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -41,8 +42,9 @@ public class DocumentFolderResourceTest
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		DocumentFolder postDocumentFolder = invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		DocumentFolder postDocumentFolder =
+			DocumentFolderResource.postSiteDocumentFolder(
+				testGroup.getGroupId(), randomDocumentFolder());
 
 		Assert.assertEquals(
 			Integer.valueOf(0), postDocumentFolder.getNumberOfDocuments());
@@ -53,8 +55,9 @@ public class DocumentFolderResourceTest
 			StringPool.BLANK, RandomTestUtil.randomString(10), true,
 			new ServiceContext());
 
-		DocumentFolder getDocumentFolder = invokeGetDocumentFolder(
-			postDocumentFolder.getId());
+		DocumentFolder getDocumentFolder =
+			DocumentFolderResource.getDocumentFolder(
+				postDocumentFolder.getId());
 
 		Assert.assertEquals(
 			Integer.valueOf(1), getDocumentFolder.getNumberOfDocuments());
@@ -67,8 +70,9 @@ public class DocumentFolderResourceTest
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId()
 		throws Exception {
 
-		DocumentFolder documentFolder = invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		DocumentFolder documentFolder =
+			DocumentFolderResource.postSiteDocumentFolder(
+				testGroup.getGroupId(), randomDocumentFolder());
 
 		return documentFolder.getId();
 	}

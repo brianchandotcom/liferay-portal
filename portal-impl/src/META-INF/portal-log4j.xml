@@ -1121,7 +1121,7 @@
 	</category>
 
 	<category name="osgi.logging">
-		<priority value="INFO" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="osgi.logging.org_eclipse_osgi">

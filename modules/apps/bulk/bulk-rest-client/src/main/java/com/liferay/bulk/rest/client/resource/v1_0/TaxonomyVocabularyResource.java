@@ -30,13 +30,38 @@ import javax.annotation.Generated;
 @Generated("")
 public class TaxonomyVocabularyResource {
 
-	public Page<TaxonomyVocabulary> postSiteTaxonomyVocabulariesCommonPage(
-			Long siteId,
-			com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
-				documentBulkSelection)
+	public static Page<TaxonomyVocabulary>
+			postSiteTaxonomyVocabulariesCommonPage(
+				Long siteId,
+				com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
+					documentBulkSelection)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postSiteTaxonomyVocabulariesCommonPageHttpResponse(
+				siteId, documentBulkSelection);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, TaxonomyVocabularySerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			postSiteTaxonomyVocabulariesCommonPageHttpResponse(
+				Long siteId,
+				com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection
+					documentBulkSelection)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(documentBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -46,16 +71,7 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, TaxonomyVocabularySerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

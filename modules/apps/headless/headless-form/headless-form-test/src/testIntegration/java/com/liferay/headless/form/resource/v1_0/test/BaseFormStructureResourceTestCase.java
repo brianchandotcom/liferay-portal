@@ -21,50 +21,42 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.form.client.dto.v1_0.FormStructure;
+import com.liferay.headless.form.client.http.HttpInvoker;
 import com.liferay.headless.form.client.pagination.Page;
+import com.liferay.headless.form.client.pagination.Pagination;
+import com.liferay.headless.form.client.resource.v1_0.FormStructureResource;
 import com.liferay.headless.form.client.serdes.v1_0.FormStructureSerDes;
-import com.liferay.headless.form.resource.v1_0.FormStructureResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -100,8 +92,6 @@ public abstract class BaseFormStructureResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
 	}
 
 	@After
@@ -156,7 +146,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		FormStructure postFormStructure =
 			testGetFormStructure_addFormStructure();
 
-		FormStructure getFormStructure = invokeGetFormStructure(
+		FormStructure getFormStructure = FormStructureResource.getFormStructure(
 			postFormStructure.getId());
 
 		assertEquals(postFormStructure, getFormStructure);
@@ -170,51 +160,6 @@ public abstract class BaseFormStructureResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected FormStructure invokeGetFormStructure(Long formStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-structures/{formStructureId}", formStructureId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return FormStructureSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetFormStructureResponse(Long formStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/form-structures/{formStructureId}", formStructureId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
 	@Test
 	public void testGetSiteFormStructuresPage() throws Exception {
 		Long siteId = testGetSiteFormStructuresPage_getSiteId();
@@ -226,8 +171,9 @@ public abstract class BaseFormStructureResourceTestCase {
 				testGetSiteFormStructuresPage_addFormStructure(
 					irrelevantSiteId, randomIrrelevantFormStructure());
 
-			Page<FormStructure> page = invokeGetSiteFormStructuresPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+			Page<FormStructure> page =
+				FormStructureResource.getSiteFormStructuresPage(
+					irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -245,8 +191,9 @@ public abstract class BaseFormStructureResourceTestCase {
 			testGetSiteFormStructuresPage_addFormStructure(
 				siteId, randomFormStructure());
 
-		Page<FormStructure> page = invokeGetSiteFormStructuresPage(
-			siteId, Pagination.of(1, 2));
+		Page<FormStructure> page =
+			FormStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -272,8 +219,9 @@ public abstract class BaseFormStructureResourceTestCase {
 			testGetSiteFormStructuresPage_addFormStructure(
 				siteId, randomFormStructure());
 
-		Page<FormStructure> page1 = invokeGetSiteFormStructuresPage(
-			siteId, Pagination.of(1, 2));
+		Page<FormStructure> page1 =
+			FormStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(1, 2));
 
 		List<FormStructure> formStructures1 =
 			(List<FormStructure>)page1.getItems();
@@ -281,8 +229,9 @@ public abstract class BaseFormStructureResourceTestCase {
 		Assert.assertEquals(
 			formStructures1.toString(), 2, formStructures1.size());
 
-		Page<FormStructure> page2 = invokeGetSiteFormStructuresPage(
-			siteId, Pagination.of(2, 2));
+		Page<FormStructure> page2 =
+			FormStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -320,61 +269,12 @@ public abstract class BaseFormStructureResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<FormStructure> invokeGetSiteFormStructuresPage(
-			Long siteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/form-structures", siteId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, FormStructureSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetSiteFormStructuresPageResponse(
-			Long siteId, Pagination pagination)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL + _toPath("/sites/{siteId}/form-structures", siteId);
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -835,76 +735,9 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFormStructureResourceTestCase.class);
@@ -924,8 +757,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private FormStructureResource _formStructureResource;
-
-	private URL _resourceURL;
+	private com.liferay.headless.form.resource.v1_0.FormStructureResource
+		_formStructureResource;
 
 }

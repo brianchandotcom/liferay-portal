@@ -792,14 +792,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = layoutLocalService.addLayout(
-			userId, groupId, false, 0, titleMap, titleMap, null, null, null,
+			userId, groupId, true, 0, titleMap, titleMap, null, null, null,
 			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 
 		serviceContext.setModifiedDate(layout.getModifiedDate());
 
 		layoutLocalService.addLayout(
-			userId, groupId, false, layout.getParentLayoutId(),
+			userId, groupId, true, layout.getParentLayoutId(),
 			classNameLocalService.getClassNameId(Layout.class),
 			layout.getPlid(), layout.getNameMap(), titleMap,
 			layout.getDescriptionMap(), layout.getKeywordsMap(),

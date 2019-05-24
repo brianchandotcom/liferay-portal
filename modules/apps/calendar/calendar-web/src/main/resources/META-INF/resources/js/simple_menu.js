@@ -168,32 +168,34 @@ AUI.add(
 					_positionMenu: function() {
 						var instance = this;
 
-						var Util = Liferay.Util;
+						if (instance.items.size()) {
+							var Util = Liferay.Util;
 
-						var align = {
-							node: instance.get('alignNode'),
-							points: DEFAULT_ALIGN_POINTS
-						};
+							var align = {
+								node: instance.get('alignNode'),
+								points: DEFAULT_ALIGN_POINTS
+							};
 
-						var centered = false;
-						var modal = false;
-						var width = 222;
+							var centered = false;
+							var modal = false;
+							var width = 222;
 
-						if (Util.isPhone() || Util.isTablet()) {
-							align = null;
-							centered = true;
-							modal = true;
-							width = '90%';
-						}
-
-						instance.setAttrs(
-							{
-								align: align,
-								centered: centered,
-								modal: modal,
-								width: width
+							if (Util.isPhone() || Util.isTablet()) {
+								align = null;
+								centered = true;
+								modal = true;
+								width = '90%';
 							}
-						);
+
+							instance.setAttrs(
+								{
+									align: align,
+									centered: centered,
+									modal: modal,
+									width: width
+								}
+							);
+						}
 					},
 
 					_renderItems: function(items) {

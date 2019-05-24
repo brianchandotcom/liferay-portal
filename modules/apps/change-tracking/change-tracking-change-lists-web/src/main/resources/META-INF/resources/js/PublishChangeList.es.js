@@ -12,6 +12,10 @@ import templates from './PublishChangeList.soy';
  */
 class PublishChangeList extends Component {
 
+	created() {
+		this._disablePublishButton = this.changeListHasCollision;
+	}
+
 	_handleCloseDialogClick(event) {
 		this.refs.modal.visible = false;
 	}
@@ -106,9 +110,11 @@ class PublishChangeList extends Component {
 	_handleIgnoreCollisionChange(event) {
 		if (event.target.checked) {
 			this.ignoreCollision = true;
+			this._disablePublishButton = false;
 		}
 		else {
 			this.ignoreCollision = false;
+			this._disablePublishButton = true;
 		}
 	}
 
@@ -123,7 +129,11 @@ class PublishChangeList extends Component {
  */
 PublishChangeList.STATE = {
 
+	_disablePublishButton: Config.bool().value(false),
+
 	changeListDescription: Config.string(),
+
+	changeListHasCollision: Config.bool().value(false),
 
 	changeListName: Config.string(),
 

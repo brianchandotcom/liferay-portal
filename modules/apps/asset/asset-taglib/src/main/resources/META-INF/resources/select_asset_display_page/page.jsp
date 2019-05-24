@@ -81,6 +81,7 @@
 	var assetDisplayPageIdInput = document.getElementById('<portlet:namespace />assetDisplayPageIdInput');
 	var chooseSpecificDisplayPage = document.getElementById('<portlet:namespace />chooseSpecificDisplayPage');
 	var pagesContainerInput = document.getElementById('<portlet:namespace />pagesContainerInput');
+	var previewSpecificDisplayPageButton = document.getElementById('<portlet:namespace />previewSpecificDisplayPageButton');
 	var specificDisplayPageNameInput = document.getElementById('<portlet:namespace />specificDisplayPageNameInput');
 
 	chooseSpecificDisplayPage.addEventListener(
@@ -106,6 +107,10 @@
 								}
 
 								specificDisplayPageNameInput.value = selectedItem.name;
+
+								if (previewSpecificDisplayPageButton) {
+									previewSpecificDisplayPageButton.parentNode.remove();
+								}
 							}
 						}
 					},
@@ -140,8 +145,6 @@
 			}
 		);
 	}
-
-	var previewSpecificDisplayPageButton = document.getElementById('<portlet:namespace />previewSpecificDisplayPageButton');
 
 	if (previewSpecificDisplayPageButton) {
 		previewSpecificDisplayPageButton.addEventListener(

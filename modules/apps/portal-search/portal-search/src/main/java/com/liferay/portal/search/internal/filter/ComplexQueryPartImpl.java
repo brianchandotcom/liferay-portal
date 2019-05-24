@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.filter;
 
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilder;
+import com.liferay.portal.search.query.Query;
 
 /**
  * @author André de Oliveira
@@ -32,6 +33,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 		_name = complexQueryPartImpl._name;
 		_occur = complexQueryPartImpl._occur;
 		_parent = complexQueryPartImpl._parent;
+		_query = complexQueryPartImpl._query;
 		_type = complexQueryPartImpl._type;
 		_value = complexQueryPartImpl._value;
 	}
@@ -59,6 +61,11 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	@Override
 	public String getParent() {
 		return _parent;
+	}
+
+	@Override
+	public Query getQuery() {
+		return _query;
 	}
 
 	@Override
@@ -126,6 +133,13 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 		}
 
 		@Override
+		public ComplexQueryPartBuilder query(Query query) {
+			_complexQueryPartImpl._query = query;
+
+			return this;
+		}
+
+		@Override
 		public Builder type(String type) {
 			_complexQueryPartImpl._type = type;
 
@@ -150,6 +164,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	private String _name;
 	private String _occur;
 	private String _parent;
+	private Query _query;
 	private String _type;
 	private String _value;
 

@@ -21,31 +21,26 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentStructureSerDes;
-import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.net.URL;
 
 import java.text.DateFormat;
 
@@ -54,19 +49,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -103,9 +95,6 @@ public abstract class BaseContentStructureResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
-
-		_resourceURL = new URL(
-			"http://localhost:8080/o/headless-delivery/v1.0");
 	}
 
 	@After
@@ -160,8 +149,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructure postContentStructure =
 			testGetContentStructure_addContentStructure();
 
-		ContentStructure getContentStructure = invokeGetContentStructure(
-			postContentStructure.getId());
+		ContentStructure getContentStructure =
+			ContentStructureResource.getContentStructure(
+				postContentStructure.getId());
 
 		assertEquals(postContentStructure, getContentStructure);
 		assertValid(getContentStructure);
@@ -172,57 +162,6 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected ContentStructure invokeGetContentStructure(
-			Long contentStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-structures/{contentStructureId}",
-					contentStructureId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		try {
-			return ContentStructureSerDes.toDTO(string);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to process HTTP response: " + string, e);
-			}
-
-			throw e;
-		}
-	}
-
-	protected Http.Response invokeGetContentStructureResponse(
-			Long contentStructureId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/content-structures/{contentStructureId}",
-					contentStructureId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
 	}
 
 	@Test
@@ -236,8 +175,9 @@ public abstract class BaseContentStructureResourceTestCase {
 				testGetSiteContentStructuresPage_addContentStructure(
 					irrelevantSiteId, randomIrrelevantContentStructure());
 
-			Page<ContentStructure> page = invokeGetSiteContentStructuresPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+			Page<ContentStructure> page =
+				ContentStructureResource.getSiteContentStructuresPage(
+					irrelevantSiteId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -255,8 +195,9 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, randomContentStructure());
 
-		Page<ContentStructure> page = invokeGetSiteContentStructuresPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+		Page<ContentStructure> page =
+			ContentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -286,10 +227,11 @@ public abstract class BaseContentStructureResourceTestCase {
 				siteId, contentStructure1);
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> page = invokeGetSiteContentStructuresPage(
-				siteId, null,
-				getFilterString(entityField, "between", contentStructure1),
-				Pagination.of(1, 2), null);
+			Page<ContentStructure> page =
+				ContentStructureResource.getSiteContentStructuresPage(
+					siteId, null,
+					getFilterString(entityField, "between", contentStructure1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(contentStructure1),
@@ -320,10 +262,11 @@ public abstract class BaseContentStructureResourceTestCase {
 				siteId, randomContentStructure());
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> page = invokeGetSiteContentStructuresPage(
-				siteId, null,
-				getFilterString(entityField, "eq", contentStructure1),
-				Pagination.of(1, 2), null);
+			Page<ContentStructure> page =
+				ContentStructureResource.getSiteContentStructuresPage(
+					siteId, null,
+					getFilterString(entityField, "eq", contentStructure1),
+					Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(contentStructure1),
@@ -349,8 +292,9 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, randomContentStructure());
 
-		Page<ContentStructure> page1 = invokeGetSiteContentStructuresPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+		Page<ContentStructure> page1 =
+			ContentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, Pagination.of(1, 2), null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
@@ -358,8 +302,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		Assert.assertEquals(
 			contentStructures1.toString(), 2, contentStructures1.size());
 
-		Page<ContentStructure> page2 = invokeGetSiteContentStructuresPage(
-			siteId, null, null, Pagination.of(2, 2), null);
+		Page<ContentStructure> page2 =
+			ContentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -411,16 +356,17 @@ public abstract class BaseContentStructureResourceTestCase {
 				siteId, contentStructure2);
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> ascPage = invokeGetSiteContentStructuresPage(
-				siteId, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<ContentStructure> ascPage =
+				ContentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(contentStructure1, contentStructure2),
 				(List<ContentStructure>)ascPage.getItems());
 
 			Page<ContentStructure> descPage =
-				invokeGetSiteContentStructuresPage(
+				ContentStructureResource.getSiteContentStructuresPage(
 					siteId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -462,16 +408,17 @@ public abstract class BaseContentStructureResourceTestCase {
 				siteId, contentStructure2);
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> ascPage = invokeGetSiteContentStructuresPage(
-				siteId, null, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<ContentStructure> ascPage =
+				ContentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(contentStructure1, contentStructure2),
 				(List<ContentStructure>)ascPage.getItems());
 
 			Page<ContentStructure> descPage =
-				invokeGetSiteContentStructuresPage(
+				ContentStructureResource.getSiteContentStructuresPage(
 					siteId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -502,89 +449,12 @@ public abstract class BaseContentStructureResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	protected Page<ContentStructure> invokeGetSiteContentStructuresPage(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/content-structures", siteId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, ContentStructureSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetSiteContentStructuresPageResponse(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/sites/{siteId}/content-structures", siteId);
-
-		if (search != null) {
-			location = HttpUtil.addParameter(location, "search", search);
-		}
-
-		if (filterString != null) {
-			location = HttpUtil.addParameter(location, "filter", filterString);
-		}
-
-		if (pagination != null) {
-			location = HttpUtil.addParameter(
-				location, "page", pagination.getPage());
-			location = HttpUtil.addParameter(
-				location, "pageSize", pagination.getPageSize());
-		}
-
-		if (sortString != null) {
-			location = HttpUtil.addParameter(location, "sort", sortString);
-		}
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	protected void assertResponseCode(
-		int expectedResponseCode, Http.Response actualResponse) {
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
 
 		Assert.assertEquals(
-			expectedResponseCode, actualResponse.getResponseCode());
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
 	protected void assertEquals(
@@ -1037,76 +907,9 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
-	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	private Http.Options _createHttpOptions() {
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Accept", "application/json");
-		options.addHeader(
-			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
-
-		String encodedTestUserNameAndPassword = Base64.encode(
-			testUserNameAndPassword.getBytes());
-
-		options.addHeader(
-			"Authorization", "Basic " + encodedTestUserNameAndPassword);
-
-		options.addHeader("Content-Type", testContentType);
-
-		return options;
-	}
-
-	private String _toJSON(Map<String, String> map) {
-		if (map == null) {
-			return "null";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{");
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
-
-			sb.append("\"" + entry.getKey() + "\": ");
-
-			if (entry.getValue() == null) {
-				sb.append("null");
-			}
-			else {
-				sb.append("\"" + entry.getValue() + "\"");
-			}
-
-			if (iterator.hasNext()) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toPath(String template, Object... values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return template;
-		}
-
-		for (int i = 0; i < values.length; i++) {
-			template = template.replaceFirst(
-				"\\{.*?\\}", String.valueOf(values[i]));
-		}
-
-		return template;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContentStructureResourceTestCase.class);
@@ -1126,8 +929,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private ContentStructureResource _contentStructureResource;
-
-	private URL _resourceURL;
+	private com.liferay.headless.delivery.resource.v1_0.ContentStructureResource
+		_contentStructureResource;
 
 }

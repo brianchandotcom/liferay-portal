@@ -28,6 +28,8 @@ if (ctCollection != null) {
 	changeListName = ctCollection.getName();
 	changeListDescription = ctCollection.getDescription();
 }
+
+boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 %>
 
 <div class="change-list-publish-modal modal-body">
@@ -48,13 +50,23 @@ if (ctCollection != null) {
 			<%= HtmlUtil.escape(changeListDescription) %>
 		</div>
 
-		<aui:input label="ignore-collision" name="ignoreCollision" type="checkbox" />
-
-		<aui:input disabled="<%= true %>" label="schedule-publication" name="schedulePublication" type="checkbox" />
+		<div class="form-group form-inline input-checkbox-wrapper">
+			<label class="toggle-switch">
+				<input <%= !hasCollision ? "disabled" : "" %> class="toggle-switch-check" data-qa-id="ignorecollision-toggle" id="<%= renderResponse.getNamespace() + "ignoreCollision" %>" name="<%= renderResponse.getNamespace() + "ignoreCollision" %>" onclick="<%= renderResponse.getNamespace() + "ignoreCheck();" %>" type="checkbox">
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle"></span>
+				</span>
+				<span class="toggle-label-text">
+					<span class="custom-control-label-text">
+						<liferay-ui:message key="ignore-collision" />
+					</span>
+				</span>
+			</label>
+		</div>
 
 		<aui:button-row>
+			<aui:button disabled="<%= hasCollision %>" type="submit" value="publish" />
 			<aui:button onClick='<%= renderResponse.getNamespace() + "closeModal(true);" %>' value="cancel" />
-			<aui:button type="submit" value="publish" />
 		</aui:button-row>
 	</aui:form>
 
@@ -64,6 +76,19 @@ if (ctCollection != null) {
 
 			if (destroy) {
 				Liferay.Util.getWindow('<portlet:namespace/>publishIconDialog').destroy();
+			}
+		}
+
+		function <portlet:namespace/>ignoreCheck() {
+			let btn = document.querySelector('button[type="submit"]');
+
+			btn.disabled = !event.target.checked;
+
+			if (event.target.checked) {
+				btn.classList.remove('disabled');
+			}
+			else {
+				btn.classList.add('disabled');
 			}
 		}
 

@@ -27,12 +27,34 @@ import javax.annotation.Generated;
 @Generated("")
 public class TaxonomyCategoryResource {
 
-	public void patchTaxonomyCategoryBatch(
+	public static void patchTaxonomyCategoryBatch(
 			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
 				taxonomyCategoryBulkSelection)
 		throws Exception {
 
+		HttpInvoker.HttpResponse httpResponse =
+			patchTaxonomyCategoryBatchHttpResponse(
+				taxonomyCategoryBulkSelection);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			patchTaxonomyCategoryBatchHttpResponse(
+				com.liferay.bulk.rest.client.dto.v1_0.
+					TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			taxonomyCategoryBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -41,22 +63,35 @@ public class TaxonomyCategoryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void putTaxonomyCategoryBatch(
+			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
+				taxonomyCategoryBulkSelection)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putTaxonomyCategoryBatchHttpResponse(taxonomyCategoryBulkSelection);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void putTaxonomyCategoryBatch(
+	public static HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
 			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
 				taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			taxonomyCategoryBulkSelection.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -65,14 +100,7 @@ public class TaxonomyCategoryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

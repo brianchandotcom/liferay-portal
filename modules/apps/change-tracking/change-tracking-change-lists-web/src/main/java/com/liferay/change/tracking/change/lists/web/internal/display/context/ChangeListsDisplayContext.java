@@ -343,6 +343,29 @@ public class ChangeListsDisplayContext {
 		};
 	}
 
+	public boolean hasCollision(long ctCollectionId) {
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+
+		if (!ctCollectionOptional.isPresent()) {
+			return false;
+		}
+
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		int ctEntriesCount = _ctEngineManager.getCTEntriesCount(
+			ctCollectionOptional.get(), null, null, null, null, true,
+			queryDefinition);
+
+		if (ctEntriesCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasCTEntries(long ctCollectionId) {
 		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
 

@@ -138,6 +138,26 @@
 	}
 }
 
+.lfr-configurator-visibility {
+	@include media-query(null, $screen-xs-max) {
+		opacity: 0.5;
+	}
+
+	@include media-query(sm) {
+		.portlet {
+			&:hover, &.focus, &.open {
+				.portlet-topper {
+					opacity: 0.5;
+				}
+			}
+		}
+
+		.portlet-content-editable {
+			opacity: 0.5;
+		}
+	}
+}
+
 /* ---------- Portlet controls in mobile ---------- */
 
 .controls-visible {

@@ -17,6 +17,8 @@ package com.liferay.css.builder;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.css.builder.internal.converters.PathParameterSplitter;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -35,11 +37,11 @@ public class CSSBuilderArgs {
 
 	public static final String DIR_NAME = "/";
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #BASE_DIR_NAME}
-	 */
-	@Deprecated
-	public static final String DOCROOT_DIR_NAME = BASE_DIR_NAME;
+	public static final String[] EXCLUDES = {
+		"**/_diffs/**", "**/.sass-cache*/**", "**/.sass_cache_*/**",
+		"**/_sass_cache_*/**", "**/_styled/**", "**/_unstyled/**",
+		"**/css/aui/**", "**/css/clay/**", "**/tmp/**"
+	};
 
 	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
 
@@ -53,28 +55,16 @@ public class CSSBuilderArgs {
 		return _dirNames;
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #getBaseDir()}
-	 */
-	@Deprecated
-	public File getDocrootDir() {
-		return getBaseDir();
+	public List<String> getExcludes() {
+		return _excludes;
 	}
 
-	public File getImportDir() {
-		return _importDir;
+	public List<File> getImportPaths() {
+		return _importPaths;
 	}
 
 	public String getOutputDirName() {
 		return _outputDirName;
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #getImportDir()}
-	 */
-	@Deprecated
-	public File getPortalCommonPath() {
-		return getImportDir();
 	}
 
 	public int getPrecision() {
@@ -115,32 +105,24 @@ public class CSSBuilderArgs {
 		_dirNames = Arrays.asList(dirNames);
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setDocrootDir(File)}
-	 */
-	@Deprecated
-	public void setDocrootDir(File docrootDir) {
-		setBaseDir(docrootDir);
+	public void setExcludes(String excludes) {
+		setExcludes(_split(excludes));
+	}
+
+	public void setExcludes(String[] excludes) {
+		_excludes = Arrays.asList(excludes);
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setImportDir(File importDir) {
-		_importDir = importDir;
+	public void setImportPaths(List<File> importPaths) {
+		_importPaths = importPaths;
 	}
 
 	public void setOutputDirName(String outputDirName) {
 		_outputDirName = outputDirName;
-	}
-
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
-	 */
-	@Deprecated
-	public void setPortalCommonPath(File portalCommonPath) {
-		setImportDir(portalCommonPath);
 	}
 
 	public void setPrecision(int precision) {
@@ -171,28 +153,32 @@ public class CSSBuilderArgs {
 	@Parameter(
 		arity = 1,
 		description = "Whether to append the current timestamp to the URLs in the @import CSS at-rules.",
-		names = {
-			"append-css-import-timestamps", "sass.append.css.import.timestamps"
-		}
+		names = "--append-css-import-timestamps"
 	)
 	private boolean _appendCssImportTimestamps = APPEND_CSS_IMPORT_TIMESTAMPS;
 
 	@Parameter(
 		description = "The base directory that contains the SCSS files to compile.",
-		names = {"base-dir", "sass.docroot.dir"}
+		names = "--base-dir"
 	)
 	private File _baseDir = new File(BASE_DIR_NAME);
 
 	@Parameter(
 		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
-		names = {"dir-names", "sass.dir"}
+		names = "--dir-names"
 	)
 	private List<String> _dirNames = Arrays.asList(DIR_NAME);
 
 	@Parameter(
+		description = "The SCSS file patterns to exclude from compiling.",
+		names = "--excludes"
+	)
+	private List<String> _excludes = Arrays.asList(EXCLUDES);
+
+	@Parameter(
 		arity = 1,
 		description = "Whether to generate source maps for easier debugging.",
-		names = {"generate-source-map", "sass.generate.source.map"}
+		names = "--generate-source-map"
 	)
 	private boolean _generateSourceMap;
 
@@ -203,35 +189,32 @@ public class CSSBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
-		description = "The import directory of Sass libraries.",
-		names = {
-			"import-dir", "import-path", "sass.portal.common.dir",
-			"sass.portal.common.path"
-		}
+		description = "The import directories of Sass libraries.",
+		names = "--import-paths", splitter = PathParameterSplitter.class
 	)
-	private File _importDir;
+	private List<File> _importPaths;
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",
-		names = {"output-dir", "sass.output.dir"}
+		names = "--output-dir"
 	)
 	private String _outputDirName = OUTPUT_DIR_NAME;
 
 	@Parameter(
 		description = "The numeric precision of numbers in Sass.",
-		names = {"precision", "sass.precision"}
+		names = "--precision"
 	)
 	private int _precision = PRECISION;
 
 	@Parameter(
 		description = "The SCSS file patterns to exclude when converting for right-to-left (RTL) support.",
-		names = {"rtl-excluded-path-regexps", "sass.rtl.excluded.path.regexps"}
+		names = "--rtl-excluded-path-regexps"
 	)
 	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
 
 	@Parameter(
 		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". The Ruby Sass compiler requires \"com.liferay.sass.compiler.ruby.jar\", \"com.liferay.ruby.gems.jar\", and \"jruby-complete.jar\" to be added to the classpath.",
-		names = {"compiler", "sass.compiler.class.name"}
+		names = "--compiler"
 	)
 	private String _sassCompilerClassName = "jni";
 

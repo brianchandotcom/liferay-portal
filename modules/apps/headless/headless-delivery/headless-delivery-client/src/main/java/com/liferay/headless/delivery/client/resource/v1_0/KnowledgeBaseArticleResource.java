@@ -32,7 +32,23 @@ import javax.annotation.Generated;
 @Generated("")
 public class KnowledgeBaseArticleResource {
 
-	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
+	public static void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteKnowledgeBaseArticleHttpResponse(knowledgeBaseArticleId);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+	}
+
+	public static HttpInvoker.HttpResponse
+			deleteKnowledgeBaseArticleHttpResponse(Long knowledgeBaseArticleId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -45,17 +61,37 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseArticle getKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseArticleHttpResponse(knowledgeBaseArticleId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return KnowledgeBaseArticleSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public KnowledgeBaseArticle getKnowledgeBaseArticle(
+	public static HttpInvoker.HttpResponse getKnowledgeBaseArticleHttpResponse(
 			Long knowledgeBaseArticleId)
 		throws Exception {
 
@@ -69,14 +105,25 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			patchKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticleId, knowledgeBaseArticle);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseArticleSerDes.toDTO(content);
@@ -90,16 +137,15 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
+	public static HttpInvoker.HttpResponse
+			patchKnowledgeBaseArticleHttpResponse(
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			KnowledgeBaseArticleSerDes.toJSON(knowledgeBaseArticle),
-			"application/json");
+		httpInvoker.body(knowledgeBaseArticle.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -109,14 +155,25 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static KnowledgeBaseArticle putKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticleId, knowledgeBaseArticle);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseArticleSerDes.toDTO(content);
@@ -130,16 +187,14 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+	public static HttpInvoker.HttpResponse putKnowledgeBaseArticleHttpResponse(
 			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(
-			KnowledgeBaseArticleSerDes.toJSON(knowledgeBaseArticle),
-			"application/json");
+		httpInvoker.body(knowledgeBaseArticle.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -149,28 +204,29 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static void deleteKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			deleteKnowledgeBaseArticleMyRatingHttpResponse(
+				knowledgeBaseArticleId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		try {
-			return KnowledgeBaseArticleSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 	}
 
-	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+	public static HttpInvoker.HttpResponse
+			deleteKnowledgeBaseArticleMyRatingHttpResponse(
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -183,18 +239,40 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseArticleMyRatingHttpResponse(knowledgeBaseArticleId);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return com.liferay.headless.delivery.client.serdes.v1_0.
+				RatingSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
+	public static HttpInvoker.HttpResponse
+			getKnowledgeBaseArticleMyRatingHttpResponse(
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -207,14 +285,26 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			postKnowledgeBaseArticleMyRating(
+				Long knowledgeBaseArticleId,
+				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postKnowledgeBaseArticleMyRatingHttpResponse(
+				knowledgeBaseArticleId, rating);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.delivery.client.serdes.v1_0.
@@ -229,13 +319,15 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postKnowledgeBaseArticleMyRating(
+	public static HttpInvoker.HttpResponse
+			postKnowledgeBaseArticleMyRatingHttpResponse(
 				Long knowledgeBaseArticleId,
 				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(rating.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -245,14 +337,26 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static com.liferay.headless.delivery.client.dto.v1_0.Rating
+			putKnowledgeBaseArticleMyRating(
+				Long knowledgeBaseArticleId,
+				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			putKnowledgeBaseArticleMyRatingHttpResponse(
+				knowledgeBaseArticleId, rating);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return com.liferay.headless.delivery.client.serdes.v1_0.
@@ -267,13 +371,15 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putKnowledgeBaseArticleMyRating(
+	public static HttpInvoker.HttpResponse
+			putKnowledgeBaseArticleMyRatingHttpResponse(
 				Long knowledgeBaseArticleId,
 				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(rating.toString(), "application/json");
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -283,30 +389,33 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		return httpInvoker.invoke();
+	}
+
+	public static Page<KnowledgeBaseArticle>
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				Long parentKnowledgeBaseArticleId, String search,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
+				parentKnowledgeBaseArticleId, search, filterString, pagination,
+				sortString);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
-		try {
-			return com.liferay.headless.delivery.client.serdes.v1_0.
-				RatingSerDes.toDTO(content);
-		}
-		catch (Exception e) {
-			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
-				e);
-
-			throw e;
-		}
+		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
 	}
 
-	public Page<KnowledgeBaseArticle>
-			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+	public static HttpInvoker.HttpResponse
+			getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
 				Long parentKnowledgeBaseArticleId, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
@@ -339,45 +448,26 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long parentKnowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
+	public static KnowledgeBaseArticle
+			postKnowledgeBaseArticleKnowledgeBaseArticle(
+				Long parentKnowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			KnowledgeBaseArticleSerDes.toJSON(knowledgeBaseArticle),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
-			parentKnowledgeBaseArticleId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postKnowledgeBaseArticleKnowledgeBaseArticleHttpResponse(
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseArticleSerDes.toDTO(content);
@@ -391,8 +481,51 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public Page<KnowledgeBaseArticle>
+	public static HttpInvoker.HttpResponse
+			postKnowledgeBaseArticleKnowledgeBaseArticleHttpResponse(
+				Long parentKnowledgeBaseArticleId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(knowledgeBaseArticle.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles",
+			parentKnowledgeBaseArticleId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+				Long knowledgeBaseFolderId, Boolean flatten, String search,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getKnowledgeBaseFolderKnowledgeBaseArticlesPageHttpResponse(
+				knowledgeBaseFolderId, flatten, search, filterString,
+				pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getKnowledgeBaseFolderKnowledgeBaseArticlesPageHttpResponse(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception {
@@ -429,45 +562,26 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
-			Long knowledgeBaseFolderId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
+	public static KnowledgeBaseArticle
+			postKnowledgeBaseFolderKnowledgeBaseArticle(
+				Long knowledgeBaseFolderId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			KnowledgeBaseArticleSerDes.toJSON(knowledgeBaseArticle),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
-			knowledgeBaseFolderId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postKnowledgeBaseFolderKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseFolderId, knowledgeBaseArticle);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseArticleSerDes.toDTO(content);
@@ -481,9 +595,51 @@ public class KnowledgeBaseArticleResource {
 		}
 	}
 
-	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
+	public static HttpInvoker.HttpResponse
+			postKnowledgeBaseFolderKnowledgeBaseArticleHttpResponse(
+				Long knowledgeBaseFolderId,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(knowledgeBaseArticle.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles",
+			knowledgeBaseFolderId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			Long siteId, Boolean flatten, String search, String filterString,
 			Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteKnowledgeBaseArticlesPageHttpResponse(
+				siteId, flatten, search, filterString, pagination, sortString);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getSiteKnowledgeBaseArticlesPageHttpResponse(
+				Long siteId, Boolean flatten, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -518,44 +674,24 @@ public class KnowledgeBaseArticleResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, KnowledgeBaseArticleSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
-	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+	public static KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.body(
-			KnowledgeBaseArticleSerDes.toJSON(knowledgeBaseArticle),
-			"application/json");
-
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-		httpInvoker.path(
-			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles",
-			siteId);
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse =
+			postSiteKnowledgeBaseArticleHttpResponse(
+				siteId, knowledgeBaseArticle);
 
 		String content = httpResponse.getContent();
 
 		_logger.fine("HTTP response content: " + content);
 
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
 
 		try {
 			return KnowledgeBaseArticleSerDes.toDTO(content);
@@ -567,6 +703,26 @@ public class KnowledgeBaseArticleResource {
 
 			throw e;
 		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postSiteKnowledgeBaseArticleHttpResponse(
+				Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(knowledgeBaseArticle.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles",
+			siteId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

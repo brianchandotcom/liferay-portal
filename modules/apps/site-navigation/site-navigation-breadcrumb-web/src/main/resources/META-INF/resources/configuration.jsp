@@ -121,10 +121,21 @@
 	var handler = Liferay.on(
 		'portletReady',
 		function(event) {
-			if (event.portletId === '<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>') {
-				Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
 
+			handler.detach();
+
+			handler = null;
+		}
+	);
+
+	var destroyHandler = Liferay.on(
+		'destroyHandler',
+		function(event) {
+			if (handler) {
 				handler.detach();
+
+				handler = null;
 			}
 		}
 	);

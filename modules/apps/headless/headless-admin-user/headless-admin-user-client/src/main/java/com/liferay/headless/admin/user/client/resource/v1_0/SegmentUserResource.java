@@ -31,8 +31,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class SegmentUserResource {
 
-	public Page<SegmentUser> getSegmentUserAccountsPage(
+	public static Page<SegmentUser> getSegmentUserAccountsPage(
 			Long segmentId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSegmentUserAccountsPageHttpResponse(segmentId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, SegmentUserSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getSegmentUserAccountsPageHttpResponse(
+				Long segmentId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -51,16 +70,7 @@ public class SegmentUserResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, SegmentUserSerDes::toDTO);
+		return httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

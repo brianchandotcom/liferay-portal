@@ -2304,6 +2304,8 @@ log.sanitizer.enabled=false</echo>
 								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar"
 							/>
 
+							<gradle-execute dir="modules/apps/static/required-dependencies/required-dependencies" task="deployReqTestLibs" />
+
 							<local name="artifact.version" />
 
 							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
@@ -2313,6 +2315,7 @@ log.sanitizer.enabled=false</echo>
 
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.arquillian.extension.junit.bridge.connector.jar" artifact.name="com.liferay.arquillian.extension.junit.bridge.connector" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar" artifact.name="com.liferay.portal.test.integration" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />

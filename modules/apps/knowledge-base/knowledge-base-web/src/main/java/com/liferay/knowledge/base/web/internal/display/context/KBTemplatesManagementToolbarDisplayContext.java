@@ -89,7 +89,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(KBTemplate kbTemplate)
+	public List<String> getAvailableActions(KBTemplate kbTemplate)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

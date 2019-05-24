@@ -156,13 +156,11 @@ public class ViewTreeManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-		Organization organization) {
-
+	public List<String> getAvailableActions(Organization organization) {
 		return Arrays.asList(Constants.DELETE, Constants.REMOVE);
 	}
 
-	public List<String> getAvailableActionDropdownItems(User user) {
+	public List<String> getAvailableActions(User user) {
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (user.isActive()) {

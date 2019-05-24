@@ -1089,7 +1089,7 @@ public class AssetPublisherDisplayContext {
 		return null;
 	}
 
-	public List<Long> getVocabularyIds() {
+	public List<Long> getVocabularyIds() throws PortalException {
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupsVocabularies(
 				getReferencedModelsGroupIds());

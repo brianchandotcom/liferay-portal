@@ -79,4 +79,23 @@ definition {
 		property test.run.environment = "I";
 	}
 
+	/*
+
+		This command shouldn't be formatted, becasue it is in the multiline comments block :
+
+		test CommandTest{
+		}
+
+	*/
+
+	test JJ {
+		var wikiPageContent = '''
+<pre>
+	This command shouldn't be formatted, becasue it is in the multiline strings block :
+
+	test CommandTest{
+	}
+</pre>''';
+	}
+
 }

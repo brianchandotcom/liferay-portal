@@ -273,9 +273,7 @@ public class FriendlyURLServletTest {
 
 		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		String forwardedURL = forwardPathReference.get();
-
-		Assert.assertEquals(forwardedURL, getURL(_layout));
+		Assert.assertEquals(getURL(_layout), forwardPathReference.get());
 	}
 
 	@Test
@@ -309,9 +307,9 @@ public class FriendlyURLServletTest {
 
 		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		String redirectURL = mockHttpServletResponse.getRedirectedUrl();
-
-		Assert.assertEquals(redirectURL, _layout.getFriendlyURL());
+		Assert.assertEquals(
+			_layout.getFriendlyURL(),
+			mockHttpServletResponse.getRedirectedUrl());
 
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 	}

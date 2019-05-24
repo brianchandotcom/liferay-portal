@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contri
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
@@ -53,6 +54,9 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 		appendAssetTitleTerm(
 			booleanQuery, kaleoTaskInstanceTokenQuery.getAssetTitle(),
 			keywordQueryContributorHelper);
+		appendAssetTypeTerm(
+			booleanQuery, kaleoTaskInstanceTokenQuery.getAssetTypes(),
+			keywordQueryContributorHelper);
 		appendTaskNameTerm(
 			booleanQuery, kaleoTaskInstanceTokenQuery.getTaskName(),
 			keywordQueryContributorHelper);
@@ -78,6 +82,27 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext,
 			KaleoTaskInstanceTokenField.ASSET_TITLE, false);
+	}
+
+	protected void appendAssetTypeTerm(
+		BooleanQuery booleanQuery, String[] assetTypes,
+		KeywordQueryContributorHelper keywordQueryContributorHelper) {
+
+		if (ArrayUtil.isEmpty(assetTypes)) {
+			return;
+		}
+
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
+
+		for (String assetType : assetTypes) {
+			searchContext.setAttribute(
+				KaleoTaskInstanceTokenField.CLASS_NAME, assetType);
+
+			queryHelper.addSearchTerm(
+				booleanQuery, keywordQueryContributorHelper.getSearchContext(),
+				KaleoTaskInstanceTokenField.CLASS_NAME, false);
+		}
 	}
 
 	protected void appendTaskNameTerm(

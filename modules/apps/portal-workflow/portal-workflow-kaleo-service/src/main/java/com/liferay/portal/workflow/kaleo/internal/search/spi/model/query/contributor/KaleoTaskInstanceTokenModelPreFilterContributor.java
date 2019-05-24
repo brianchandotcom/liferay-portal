@@ -99,7 +99,6 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		if (appendSearchCriteria(kaleoTaskInstanceTokenQuery)) {
 			appendAssetPrimaryKeyTerm(
 				booleanFilter, kaleoTaskInstanceTokenQuery);
-			appendAssetTypeTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 			appendDueDateRangeTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		}
 	}
@@ -117,22 +116,6 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 		for (Long assetPrimaryKey : assetPrimaryKeys) {
 			booleanFilter.addTerm(Field.CLASS_PK, assetPrimaryKey);
-		}
-	}
-
-	protected void appendAssetTypeTerm(
-		BooleanFilter booleanFilter,
-		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
-
-		String[] assetTypes = kaleoTaskInstanceTokenQuery.getAssetTypes();
-
-		if (ArrayUtil.isEmpty(assetTypes)) {
-			return;
-		}
-
-		for (String assetType : assetTypes) {
-			booleanFilter.addTerm(
-				KaleoTaskInstanceTokenField.CLASS_NAME, assetType);
 		}
 	}
 

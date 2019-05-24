@@ -25,8 +25,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumnType(
-				DLFileEntryTypeTable.class, "fileEntryTypeKey",
-				"VARCHAR(75) null")) {
+				"DLFileEntryType", "fileEntryTypeKey", "VARCHAR(75) null")) {
 
 			alter(
 				DLFileEntryTypeTable.class,

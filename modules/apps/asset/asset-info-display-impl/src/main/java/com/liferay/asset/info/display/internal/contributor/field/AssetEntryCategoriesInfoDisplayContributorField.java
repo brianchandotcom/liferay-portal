@@ -21,11 +21,9 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTyp
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,10 +44,7 @@ public class AssetEntryCategoriesInfoDisplayContributorField
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "categories");
+		return LanguageUtil.get(locale, "categories");
 	}
 
 	@Override

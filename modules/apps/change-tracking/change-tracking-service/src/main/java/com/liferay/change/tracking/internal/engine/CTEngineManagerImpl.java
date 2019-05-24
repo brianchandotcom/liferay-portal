@@ -28,6 +28,7 @@ import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
+import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -338,6 +339,14 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	public List<CTEntryAggregate> getCTEntryAggregates(long ctCollectionId) {
 		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
 			ctCollectionId);
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String[] keywords,
+		QueryDefinition<?> queryDefinition) {
+
+
 	}
 
 	@Override

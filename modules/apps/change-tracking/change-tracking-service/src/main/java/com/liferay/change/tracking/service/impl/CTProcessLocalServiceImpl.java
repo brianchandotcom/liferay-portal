@@ -101,6 +101,13 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
 	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String[] keywords,
+		QueryDefinition<?> queryDefinition) {
+
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
 		long companyId, int status, QueryDefinition<?> queryDefinition) {
 
 		return ctProcessFinder.findByC_S(

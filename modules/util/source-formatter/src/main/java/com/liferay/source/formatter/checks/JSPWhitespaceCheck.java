@@ -203,6 +203,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 				line = formatSelfClosingTags(line);
 
 				sb.append(line);
+
 				sb.append("\n");
 			}
 		}

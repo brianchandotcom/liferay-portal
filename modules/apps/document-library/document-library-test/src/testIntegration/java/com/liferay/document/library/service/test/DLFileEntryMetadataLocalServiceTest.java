@@ -239,6 +239,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 		return ddmFormValuesMap;
 	}
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")

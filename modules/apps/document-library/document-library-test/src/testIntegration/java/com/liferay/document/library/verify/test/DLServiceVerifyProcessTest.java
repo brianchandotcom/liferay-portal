@@ -515,6 +515,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	)
 	private static VerifyProcess _verifyProcess;
 
+	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")

@@ -241,9 +241,8 @@ export default class MultiSelect extends React.Component {
 				</div>
 
 				<div
-					className="col-1 mt-1 text-right"
+					className="col-1 drop-icon mt-1 text-right"
 					onClick={this.toggleDropList}
-					style={{ paddingRight: '0px' }}
 				>
 					<Icon iconName="caret-double" />
 				</div>

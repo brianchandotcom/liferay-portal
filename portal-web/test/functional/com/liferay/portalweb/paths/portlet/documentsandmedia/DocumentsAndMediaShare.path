@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>INVITE_TO_COLLABORATE_INPUT</td>
-	<td>//div[contains(@class,'form-control')]/input[contains(@type,'text')]</td>
+	<td>//div[contains(@class,'form-control')]//input[contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,7 +17,6 @@ package com.liferay.frontend.theme.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,10 +47,9 @@ public class ThemeLocalServiceTest {
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		Theme theme = _themeLocalService.getTheme(
-			_group.getCompanyId(), layoutSet.getThemeId());
-
-		Assert.assertNotNull(theme);
+		Assert.assertNotNull(
+			_themeLocalService.getTheme(
+				_group.getCompanyId(), layoutSet.getThemeId()));
 	}
 
 	@DeleteAfterTestRun

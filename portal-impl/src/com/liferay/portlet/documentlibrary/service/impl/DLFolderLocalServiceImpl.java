@@ -283,29 +283,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long userId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		boolean hasLock = hasFolderLock(userId, folderId);
-
-		Lock lock = null;
-
-		if (!hasLock) {
-
-			// Lock
-
-			lock = lockFolder(
-				userId, folderId, null, false,
-				DLFolderImpl.LOCK_EXPIRATION_TIME);
+		if (hasFolderLock(userId, folderId)) {
+			return deleteFolder(folderId, includeTrashedEntries);
 		}
+
+		Lock lock = lockFolder(
+			userId, folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
 
 		try {
 			return deleteFolder(folderId, includeTrashedEntries);
 		}
 		finally {
-			if (!hasLock) {
-
-				// Unlock
-
-				unlockFolder(folderId, lock.getUuid());
-			}
+			unlockFolder(folderId, lock.getUuid());
 		}
 	}
 

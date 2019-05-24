@@ -58,7 +58,9 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 						<%
 						Map<String, String> data = new HashMap<>();
 
-						data.put("href", PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay));
+						String href = PortalUtil.getLayoutFriendlyURL(curLayout, themeDisplay);
+
+						data.put("href", HttpUtil.addParameter(href, "p_l_mode", Constants.PREVIEW));
 						%>
 
 						<clay:button

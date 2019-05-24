@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -543,8 +544,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			sb.append(_article.getId());
 
 			return HttpUtil.addParameter(
-				sb.toString(), "p_p_state",
-				LiferayWindowState.POP_UP.toString());
+				sb.toString(), "p_l_mode", Constants.PREVIEW);
 		}
 
 		if (Validator.isNull(_article.getDDMTemplateKey())) {

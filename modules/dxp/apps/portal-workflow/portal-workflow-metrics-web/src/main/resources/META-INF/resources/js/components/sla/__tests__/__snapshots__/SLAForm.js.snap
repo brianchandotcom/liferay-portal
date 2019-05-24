@@ -237,13 +237,8 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -309,13 +304,8 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -400,13 +390,8 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -977,13 +962,8 @@ exports[`Should display error when the server returns a failure 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -1049,13 +1029,8 @@ exports[`Should display error when the server returns a failure 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -1140,13 +1115,8 @@ exports[`Should display error when the server returns a failure 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -1708,13 +1678,8 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -1780,13 +1745,8 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -1871,13 +1831,8 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -2439,13 +2394,8 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -2511,13 +2461,8 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -2602,13 +2547,8 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -3170,13 +3110,8 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -3242,13 +3177,8 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -3333,13 +3263,8 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -3901,13 +3826,8 @@ exports[`Should edit the SLA with valid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -3973,13 +3893,8 @@ exports[`Should edit the SLA with valid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -4064,13 +3979,8 @@ exports[`Should edit the SLA with valid values 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -4610,13 +4520,8 @@ exports[`Should redirect to SLA list 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -4682,13 +4587,8 @@ exports[`Should redirect to SLA list 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -4773,13 +4673,8 @@ exports[`Should redirect to SLA list 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -5241,13 +5136,8 @@ exports[`Should render component 1`] = `
               />
             </div>
             <div
-              className="col-1 mt-1 text-right"
+              className="col-1 drop-icon mt-1 text-right"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingRight": "0px",
-                }
-              }
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
@@ -5297,13 +5187,8 @@ exports[`Should render component 1`] = `
               />
             </div>
             <div
-              className="col-1 mt-1 text-right"
+              className="col-1 drop-icon mt-1 text-right"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingRight": "0px",
-                }
-              }
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
@@ -5367,13 +5252,8 @@ exports[`Should render component 1`] = `
               />
             </div>
             <div
-              className="col-1 mt-1 text-right"
+              className="col-1 drop-icon mt-1 text-right"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingRight": "0px",
-                }
-              }
             >
               <svg
                 className="lexicon-icon lexicon-icon-caret-double"
@@ -5758,13 +5638,8 @@ exports[`Should render component in edit mode 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -5830,13 +5705,8 @@ exports[`Should render component in edit mode 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -5921,13 +5791,8 @@ exports[`Should render component in edit mode 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -6491,13 +6356,8 @@ exports[`Should test handler erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -6563,13 +6423,8 @@ exports[`Should test handler erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -6654,13 +6509,8 @@ exports[`Should test handler erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -7224,13 +7074,8 @@ exports[`Should test handler erros at start node keys 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -7296,13 +7141,8 @@ exports[`Should test handler erros at start node keys 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -7387,13 +7227,8 @@ exports[`Should test handler erros at start node keys 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -7957,13 +7792,8 @@ exports[`Should test handler no array erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -8029,13 +7859,8 @@ exports[`Should test handler no array erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -8120,13 +7945,8 @@ exports[`Should test handler no array erros 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -8690,13 +8510,8 @@ exports[`Should test load data callback 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -8762,13 +8577,8 @@ exports[`Should test load data callback 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -8853,13 +8663,8 @@ exports[`Should test load data callback 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -9452,13 +9257,8 @@ exports[`Should update state after input changes 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -9524,13 +9324,8 @@ exports[`Should update state after input changes 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"
@@ -9615,13 +9410,8 @@ exports[`Should update state after input changes 1`] = `
                         />
                       </div>
                       <div
-                        className="col-1 mt-1 text-right"
+                        className="col-1 drop-icon mt-1 text-right"
                         onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
                       >
                         <Icon
                           iconName="caret-double"

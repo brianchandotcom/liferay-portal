@@ -233,13 +233,8 @@ exports[`Should add a tag 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -493,13 +488,8 @@ exports[`Should hide the dropdown list 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -752,13 +742,8 @@ exports[`Should remove a tag 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -972,13 +957,8 @@ exports[`Should search 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -1192,13 +1172,8 @@ exports[`Should show the dropdown list 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -1412,13 +1387,8 @@ exports[`Should test component render 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -1632,13 +1602,8 @@ exports[`Should test keydown press 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -1852,13 +1817,8 @@ exports[`Should test keyenter press 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"
@@ -2072,13 +2032,8 @@ exports[`Should test keyup press 1`] = `
       />
     </div>
     <div
-      className="col-1 mt-1 text-right"
+      className="col-1 drop-icon mt-1 text-right"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingRight": "0px",
-        }
-      }
     >
       <Icon
         iconName="caret-double"

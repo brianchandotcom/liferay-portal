@@ -6,6 +6,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		Pause(locator = "1000");
+
 		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
 		PortletEntry.save();

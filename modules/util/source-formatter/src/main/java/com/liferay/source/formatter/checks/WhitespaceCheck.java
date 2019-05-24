@@ -95,6 +95,52 @@ public class WhitespaceCheck extends BaseFileCheck {
 		}
 	}
 
+	protected String formatSelfClosingTags(String line) {
+		Matcher matcher = _selfClosingTagsPattern.matcher(line);
+
+		outerLoop:
+		while (matcher.find()) {
+			int deep = 1;
+
+			char c;
+
+			for (int x = matcher.end(); x < line.length(); x++) {
+				c = line.charAt(x);
+
+				if ((c == '<') && !ToolsUtil.isInsideQuotes(line, x)) {
+					deep++;
+				}
+				else if ((c == '>') && !ToolsUtil.isInsideQuotes(line, x)) {
+					deep--;
+				}
+
+				if (deep != 0) {
+					continue;
+				}
+
+				if ((line.charAt(x - 2) == ' ') &&
+					(line.charAt(x - 1) == '/')) {
+
+					continue outerLoop;
+				}
+
+				if (line.charAt(x - 1) == ' ') {
+					line = StringUtil.insert(line, "/", x);
+				}
+				else if (line.charAt(x - 1) == '/') {
+					line = StringUtil.insert(line, " ", x - 1);
+				}
+				else {
+					line = StringUtil.insert(line, " /", x);
+				}
+
+				return line;
+			}
+		}
+
+		return line;
+	}
+
 	protected String formatWhitespace(
 		String line, String linePart, boolean javaSource) {
 
@@ -331,5 +377,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 	private static final String _ALLOW_TRAILING_DOUBLE_SPACE_KEY =
 		"allowTrailingDoubleSpace";
+
+	private static final Pattern _selfClosingTagsPattern = Pattern.compile(
+		"<(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|" +
+			"param|source|track|wbr)(?!( />|\\w))");
 
 }

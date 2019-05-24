@@ -200,6 +200,8 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 				}
 
+				line = formatSelfClosingTags(line);
+
 				sb.append(line);
 				sb.append("\n");
 			}

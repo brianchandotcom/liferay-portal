@@ -57,6 +57,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public Lock fetchLock(String className, String key) {
+		if (lockPersistence.countByC(className) == 0) {
+			return null;
+		}
+
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 
 		if (lock != null) {
@@ -116,10 +120,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasLock(long userId, String className, String key) {
-		if (lockPersistence.countByC(className) == 0) {
-			return false;
-		}
-
 		Lock lock = fetchLock(className, key);
 
 		if ((lock != null) && (lock.getUserId() == userId)) {
@@ -136,10 +136,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public boolean isLocked(String className, String key) {
-		if (lockPersistence.countByC(className) == 0) {
-			return false;
-		}
-
 		Lock lock = fetchLock(className, key);
 
 		if (lock == null) {

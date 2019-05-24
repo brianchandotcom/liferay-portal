@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -42,13 +43,14 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,18 +121,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
-		if (Validator.isNull(keywords)) {
-			return Page.of(
-				transform(
-					_ddmStructureService.getStructures(
-						contextCompany.getCompanyId(), new long[] {siteId},
-						_getClassNameId(), pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-					DataDefinitionUtil::toDataDefinition),
-				pagination,
-				_ddmStructureService.getStructuresCount(
-					contextCompany.getCompanyId(), new long[] {siteId},
-					_getClassNameId()));
+		if (pagination.getPageSize() > 250) {
+			throw new BadRequestException("Page size is out of limit");
 		}
 
 		return Page.of(
@@ -139,7 +131,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					contextCompany.getCompanyId(), new long[] {siteId},
 					_getClassNameId(), keywords, WorkflowConstants.STATUS_ANY,
 					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
+					new StructureNameComparator()),
 				DataDefinitionUtil::toDataDefinition),
 			pagination,
 			_ddmStructureService.searchCount(

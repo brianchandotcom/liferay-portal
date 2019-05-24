@@ -19,6 +19,8 @@
 <%
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
 
+MBTreeWalker mbTreeWalker = messageDisplay.getTreeWalker();
+
 MBMessage message = messageDisplay.getMessage();
 
 MBCategory category = messageDisplay.getCategory();
@@ -77,7 +79,7 @@ if (portletTitleBasedNavigation) {
 							rootMessage = message;
 						}
 						else {
-							rootMessage = MBMessageLocalServiceUtil.getMessage(message.getRootMessageId());
+							rootMessage = mbTreeWalker.getRoot();
 						}
 						%>
 
@@ -211,8 +213,6 @@ if (portletTitleBasedNavigation) {
 <div class="thread-container">
 
 	<%
-	MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
 	assetHelper.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(MBMessage.class.getName(), thread.getRootMessageId()));
 	%>
 
@@ -221,9 +221,9 @@ if (portletTitleBasedNavigation) {
 	<div class="card-tab-group message-container" id="<portlet:namespace />messageContainer">
 
 		<%
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, mbTreeWalker);
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, mbTreeWalker.getRoot());
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
@@ -238,9 +238,9 @@ if (portletTitleBasedNavigation) {
 		int rootIndexPage = 0;
 		boolean moreMessagesPagination = false;
 
-		List<MBMessage> messages = treeWalker.getMessages();
+		List<MBMessage> messages = mbTreeWalker.getMessages();
 
-		int[] range = treeWalker.getChildrenRange(treeWalker.getRoot());
+		int[] range = mbTreeWalker.getChildrenRange(mbTreeWalker.getRoot());
 
 		MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
 
@@ -257,7 +257,7 @@ if (portletTitleBasedNavigation) {
 				break;
 			}
 
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, mbTreeWalker);
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, mbMessageIterator.next());
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
@@ -285,7 +285,7 @@ if (portletTitleBasedNavigation) {
 	</div>
 
 	<%
-	MBMessage rootMessage = treeWalker.getRoot();
+	MBMessage rootMessage = mbTreeWalker.getRoot();
 	%>
 
 	<c:if test="<%= thread.isApproved() && !thread.isLocked() && !thread.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, rootMessage.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">

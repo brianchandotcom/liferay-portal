@@ -188,7 +188,18 @@ if (message.isAnonymous()) {
 					boolean showAnswerFlag = false;
 
 					if (!message.isRoot()) {
-						MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
+						MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
+
+						MBMessage rootMessage;
+
+						if (messageDisplay != null) {
+							MBTreeWalker mbTreeWalker = messageDisplay.getTreeWalker();
+
+							rootMessage = mbTreeWalker.getRoot();
+						}
+						else {
+							rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
+						}
 
 						showAnswerFlag = thread.isQuestion() && MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE);
 					}

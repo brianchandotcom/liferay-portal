@@ -415,12 +415,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					threadEntriesSearchContainer.setOrderByType(orderByType);
 
 					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);
-
-					request.setAttribute("view.jsp-threadEntriesSearchContainer", threadEntriesSearchContainer);
 					%>
 
 					<c:if test="<%= threadEntriesSearchContainer.getTotal() > 0 %>">
-						<liferay-util:include page='<%= "/message_boards/view_thread_entries.jsp" %>' servletContext="<%= application %>" />
+						<%@ include file="/message_boards/view_thread_entries.jspf" %>
 					</c:if>
 
 					<c:if test="<%= (categoryEntriesSearchContainer.getTotal() <= 0) && (threadEntriesSearchContainer.getTotal() <= 0) %>">
@@ -530,11 +528,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					threadEntriesSearchContainer.setOrderByType(orderByType);
 
 					mbListDisplayContext.populateThreadsResultsAndTotal(threadEntriesSearchContainer);
-
-					request.setAttribute("view.jsp-threadEntriesSearchContainer", threadEntriesSearchContainer);
 					%>
 
-					<liferay-util:include page='<%= "/message_boards/view_thread_entries.jsp" %>' servletContext="<%= application %>" />
+					<%@ include file="/message_boards/view_thread_entries.jspf" %>
 
 					<%
 					String pageSubtitle = null;

@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,31 +43,31 @@ public class GroupLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group1 = GroupTestUtil.addGroup();
-
-		_groups.addFirst(_group1);
-
-		_group2 = GroupTestUtil.addGroup(_group1.getGroupId());
-
-		_groups.addFirst(_group2);
-
-		_group3 = GroupTestUtil.addGroup(_group2.getGroupId());
-
-		_groups.addFirst(_group3);
-
-		_group4 = GroupTestUtil.addGroup(_group1.getGroupId());
-
-		_groups.addFirst(_group4);
-	}
-
 	@Test
-	public void testGetDescendantGroups() {
-		_assertDescendantGroups(_group1, _group2, _group3, _group4);
-		_assertDescendantGroups(_group2, _group3);
-		_assertDescendantGroups(_group3);
-		_assertDescendantGroups(_group4);
+	public void testGetDescendantGroups() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+
+		_groups.addFirst(group1);
+
+		Group group2 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		_groups.addFirst(group2);
+
+		Group group3 = GroupTestUtil.addGroup(group2.getGroupId());
+
+		_groups.addFirst(group3);
+
+		Group group4 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		_groups.addFirst(group4);
+
+		_assertDescendantGroups(group1, group2, group3, group4);
+
+		_assertDescendantGroups(group2, group3);
+
+		_assertDescendantGroups(group3);
+
+		_assertDescendantGroups(group4);
 	}
 
 	@Test
@@ -93,11 +92,6 @@ public class GroupLocalServiceTest {
 				actualDescendantGroups.contains(expectedDescendantGroup));
 		}
 	}
-
-	private Group _group1;
-	private Group _group2;
-	private Group _group3;
-	private Group _group4;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

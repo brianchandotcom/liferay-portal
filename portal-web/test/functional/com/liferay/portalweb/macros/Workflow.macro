@@ -90,8 +90,6 @@ definition {
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
 				value1 = "${workflowActivityComment}");
-
-			Workflow.confirmWorkflowAction();
 		}
 
 		Workflow.confirmWorkflowAction();

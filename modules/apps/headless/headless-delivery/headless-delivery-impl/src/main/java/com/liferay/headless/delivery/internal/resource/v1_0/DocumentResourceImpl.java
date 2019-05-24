@@ -414,8 +414,6 @@ public class DocumentResourceImpl
 			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
 	}
 
-	private static final EntityModel _entityModel = new DocumentEntityModel();
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -427,6 +425,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private DocumentDTOConverter _documentDTOConverter;
+
+	@Reference(target = "(entity.model.name=" + DocumentEntityModel.NAME + ")")
+	private EntityModel _entityModel;
 
 	@Reference
 	private Portal _portal;

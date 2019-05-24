@@ -308,8 +308,10 @@ public class MessageBoardMessageResourceImpl
 		}
 	}
 
-	private static final EntityModel _entityModel =
-		new MessageBoardMessageEntityModel();
+	@Reference(
+		target = "(entity.model.name=" + MessageBoardMessageEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private MBMessageService _mbMessageService;

@@ -230,8 +230,10 @@ public class MessageBoardSectionResourceImpl
 		};
 	}
 
-	private static final EntityModel _entityModel =
-		new MessageBoardSectionEntityModel();
+	@Reference(
+		target = "(entity.model.name=" + MessageBoardSectionEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private MBCategoryService _mbCategoryService;

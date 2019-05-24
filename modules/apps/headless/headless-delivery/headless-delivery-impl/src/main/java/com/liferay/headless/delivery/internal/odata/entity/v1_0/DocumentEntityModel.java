@@ -14,12 +14,12 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -27,6 +27,7 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -37,7 +38,9 @@ import java.util.stream.Stream;
  */
 public class DocumentEntityModel implements EntityModel {
 
-	public DocumentEntityModel() {
+	public static final String NAME = "Document";
+
+	public DocumentEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
 				new IntegerEntityField(
@@ -45,6 +48,7 @@ public class DocumentEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
+			new ComplexEntityField("customFields", entityFields),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -88,9 +92,7 @@ public class DocumentEntityModel implements EntityModel {
 
 	@Override
 	public String getName() {
-		String name = DocumentEntityModel.class.getName();
-
-		return name.replace(CharPool.PERIOD, CharPool.UNDERLINE);
+		return NAME;
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

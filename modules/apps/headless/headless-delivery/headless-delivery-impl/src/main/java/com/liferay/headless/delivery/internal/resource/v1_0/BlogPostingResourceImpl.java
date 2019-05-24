@@ -284,9 +284,6 @@ public class BlogPostingResourceImpl
 				blogsEntry.getEntryId()));
 	}
 
-	private static final EntityModel _entityModel =
-		new BlogPostingEntityModel();
-
 	@Reference
 	private BlogPostingDTOConverter _blogPostingDTOConverter;
 
@@ -295,6 +292,11 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference(
+		target = "(entity.model.name=" + BlogPostingEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private Portal _portal;

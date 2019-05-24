@@ -352,8 +352,10 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticleResourcePrimKey));
 	}
 
-	private static final EntityModel _entityModel =
-		new KnowledgeBaseArticleEntityModel();
+	@Reference(
+		target = "(entity.model.name=" + KnowledgeBaseArticleEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private KBArticleService _kbArticleService;

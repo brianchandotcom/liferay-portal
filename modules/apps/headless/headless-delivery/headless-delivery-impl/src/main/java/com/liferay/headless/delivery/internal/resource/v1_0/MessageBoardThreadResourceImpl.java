@@ -437,9 +437,6 @@ public class MessageBoardThreadResourceImpl
 		}
 	}
 
-	private static final EntityModel _entityModel =
-		new MessageBoardMessageEntityModel();
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -448,6 +445,11 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference(
+		target = "(entity.model.name=" + MessageBoardMessageEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private MBCategoryService _mbCategoryService;

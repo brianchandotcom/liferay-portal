@@ -222,13 +222,15 @@ public class DocumentFolderResourceImpl
 					0, contextAcceptLanguage.getPreferredLocale(), null)));
 	}
 
-	private static final EntityModel _entityModel =
-		new DocumentFolderEntityModel();
-
 	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DocumentFolderDTOConverter _documentFolderDTOConverter;
+
+	@Reference(
+		target = "(entity.model.name=" + DocumentFolderEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 }

@@ -213,8 +213,10 @@ public class StructuredContentFolderResourceImpl
 				journalFolder.getFolderId()));
 	}
 
-	private static final EntityModel _entityModel =
-		new StructuredContentFolderEntityModel();
+	@Reference(
+		target = "(entity.model.name=" + StructuredContentFolderEntityModel.NAME + ")"
+	)
+	private EntityModel _entityModel;
 
 	@Reference
 	private JournalFolderService _journalFolderService;

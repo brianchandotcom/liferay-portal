@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.portal.kernel.lock.BaseLockListener;
 import com.liferay.portal.kernel.log.Log;
@@ -40,8 +41,8 @@ public class DLFileEntryLockListener extends BaseLockListener {
 		try {
 			if (PropsValues.DL_FILE_ENTRY_LOCK_POLICY == 1) {
 				DLFileEntryServiceUtil.checkInFileEntry(
-					fileEntryId, true, "Automatic timeout checkin",
-					new ServiceContext());
+					fileEntryId, DLVersionNumberIncrease.fromMajorVersion(true),
+					"Automatic timeout checkin", new ServiceContext());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Lock expired and checked in " + fileEntryId);

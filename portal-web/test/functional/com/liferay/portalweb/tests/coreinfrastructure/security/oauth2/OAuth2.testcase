@@ -198,7 +198,7 @@ definition {
 			value1 = "test@liferay.com");
 	}
 
-	test EditApplicationScopes {
+	test EditApplicationScopesAndViewLanguageKeys {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
@@ -225,6 +225,22 @@ definition {
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
 			checkboxUncheckList = "Authorization Code");
+
+		Navigator.gotoNavItem(navItem = "Scopes");
+
+		Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
+
+		for (var resourcePanel : list "Liferay.Bulk.REST,Liferay.Headless.Admin.Taxonomy,Liferay.Headless.Admin.User,Liferay.Headless.Admin.Workflow,Liferay.Headless.Delivery,Liferay.Headless.Form") {
+			var key_panel = "${resourcePanel}";
+
+			AssertElementNotPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
+		}
+
+		for (var resourcePanel : list "Analytics,Bulk Processing,Change Tracking,Content Delivery,Dynamic Data Lists,Forms,Portal Services,Taxonomy Administration,User Administration,Workflow Administration") {
+			var key_panel = "${resourcePanel}";
+
+			AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
+		}
 
 		Navigator.gotoBack();
 

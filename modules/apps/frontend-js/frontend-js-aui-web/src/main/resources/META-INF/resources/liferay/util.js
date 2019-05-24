@@ -1106,14 +1106,6 @@
 			return parseInt(value, 10) || 0;
 		},
 
-		_defaultPreviewArticleFn: function(event) {
-			var instance = this;
-
-			event.preventDefault();
-
-			Util.defaultPreviewArticleFn(event);
-		},
-
 		_defaultSubmitFormFn: function(event) {
 			var form = event.form;
 
@@ -1757,41 +1749,6 @@
 		'submitForm',
 		{
 			defaultFn: Util._defaultSubmitFormFn
-		}
-	);
-
-	Liferay.provide(
-		Util,
-		'defaultPreviewArticleFn',
-		function(event) {
-			var instance = this;
-
-			var urlPreview = instance._urlPreview;
-
-			if (!urlPreview) {
-				urlPreview = new Liferay.UrlPreview(
-					{
-						title: Util.escapeHTML(event.title),
-						url: event.uri
-					}
-				);
-
-				instance._urlPreview = urlPreview;
-			}
-			else {
-				urlPreview.set('title', Util.escapeHTML(event.title));
-				urlPreview.set('url', event.uri);
-			}
-
-			urlPreview.open();
-		},
-		['liferay-url-preview']
-	);
-
-	Liferay.publish(
-		'previewArticle',
-		{
-			defaultFn: Util._defaultPreviewArticleFn
 		}
 	);
 

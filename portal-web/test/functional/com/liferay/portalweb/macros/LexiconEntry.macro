@@ -192,4 +192,20 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	macro viewRate {
+		var key_rateResult = StringUtil.replace("${rateResult}", " ", "-");
+		var key_rateResult = StringUtil.lowerCase("${key_rateResult}");
+
+		if (isSet(rateResult)) {
+			AssertTextEquals(
+				locator1 = "Ratings#RATE_THUMB",
+				value1 = "${voteCount}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Ratings#DISPLAY_VOTES",
+				value1 = "${voteCount}");
+		}
+	}
+
 }

@@ -41,6 +41,8 @@
 
 		.lfr-icon-menu > a {
 			color: inherit;
+			line-height: 23px;
+			width: auto;
 		}
 	}
 
@@ -67,7 +69,8 @@
 	&.portlet-barebone .portlet .portlet-header {
 		margin-bottom: 0;
 		position: absolute;
-		right: 1px;
+		right: 2px;
+		top: 2px;
 		z-index: 1;
 	}
 }

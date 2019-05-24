@@ -48,8 +48,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
-import java.io.IOException;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -58,7 +56,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.RequestDispatcher;
@@ -232,10 +229,7 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		final AtomicBoolean failOnForward = new AtomicBoolean();
-		final AtomicReference<String> forwardPathReference =
-			new AtomicReference<>();
-		final IOException ioException = new IOException("Unable to forward");
+		AtomicReference<String> forwardPathReference = new AtomicReference<>();
 
 		MockServletContext mockServletContext = new MockServletContext() {
 
@@ -245,15 +239,10 @@ public class FriendlyURLServletTest {
 
 					@Override
 					public void forward(
-							ServletRequest servletRequest,
-							ServletResponse servletResponse)
-						throws IOException {
+						ServletRequest servletRequest,
+						ServletResponse servletResponse) {
 
 						forwardPathReference.set(path);
-
-						if (failOnForward.get()) {
-							throw ioException;
-						}
 					}
 
 					@Override

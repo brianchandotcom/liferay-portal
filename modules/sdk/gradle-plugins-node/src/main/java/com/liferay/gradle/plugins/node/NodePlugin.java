@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node;
 
-import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
@@ -32,14 +31,9 @@ import com.liferay.gradle.util.Validator;
 import groovy.json.JsonSlurper;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -50,9 +44,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -633,75 +625,73 @@ public class NodePlugin implements Plugin<Project> {
 
 		final File sourceDigestFile = npmRunTask.getSourceDigestFile();
 
-		if (!_isStale(sourceDigestFile, npmRunTask.getSourceFiles())) {
-			Project project = npmRunTask.getProject();
+		Project project = npmRunTask.getProject();
 
-			ProcessResources processResourcesTask =
-				(ProcessResources)GradleUtil.getTask(
-					project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		ProcessResources processResourcesTask =
+			(ProcessResources)GradleUtil.getTask(
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-			processResourcesTask.doFirst(
-				new Action<Task>() {
+		processResourcesTask.doFirst(
+			new Action<Task>() {
 
-					@Override
-					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
+				@Override
+				public void execute(Task task) {
+					ProcessResources processResourcesTask =
+						(ProcessResources)task;
 
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
+					final File processResourcesDir =
+						processResourcesTask.getDestinationDir();
 
-						final File npmRunBuildOutputsDir = new File(
-							sourceDigestFile.getParentFile(), "outputs");
+					final File npmRunBuildOutputsDir = new File(
+						sourceDigestFile.getParentFile(), "outputs");
 
-						project.delete(npmRunBuildOutputsDir);
+					project.delete(npmRunBuildOutputsDir);
 
-						npmRunBuildOutputsDir.mkdirs();
+					npmRunBuildOutputsDir.mkdirs();
 
-						project.copy(
-							new Action<CopySpec>() {
+					project.copy(
+						new Action<CopySpec>() {
 
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(processResourcesDir);
-									copySpec.include("**/*.js");
-									copySpec.into(npmRunBuildOutputsDir);
-									copySpec.setIncludeEmptyDirs(false);
-								}
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(processResourcesDir);
+								copySpec.include("**/*.js");
+								copySpec.into(npmRunBuildOutputsDir);
+								copySpec.setIncludeEmptyDirs(false);
+							}
 
-							});
-					}
+						});
+				}
 
-				});
+			});
 
-			processResourcesTask.doLast(
-				new Action<Task>() {
+		processResourcesTask.doLast(
+			new Action<Task>() {
 
-					@Override
-					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
+				@Override
+				public void execute(Task task) {
+					ProcessResources processResourcesTask =
+						(ProcessResources)task;
 
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
+					final File processResourcesDir =
+						processResourcesTask.getDestinationDir();
 
-						final File npmRunBuildOutputsDir = new File(
-							sourceDigestFile.getParentFile(), "outputs");
+					final File npmRunBuildOutputsDir = new File(
+						sourceDigestFile.getParentFile(), "outputs");
 
-						project.copy(
-							new Action<CopySpec>() {
+					project.copy(
+						new Action<CopySpec>() {
 
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(npmRunBuildOutputsDir);
-									copySpec.into(processResourcesDir);
-								}
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(npmRunBuildOutputsDir);
+								copySpec.into(processResourcesDir);
+							}
 
-							});
-					}
+						});
+				}
 
-				});
-		}
+			});
 	}
 
 	private void _configureTaskNpmRunTestForLifecycleBasePlugin(
@@ -883,32 +873,6 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private boolean _isStale(
-		File sourceDigestFile, FileCollection sourceFileCollection) {
-
-		if (!sourceDigestFile.exists()) {
-			return true;
-		}
-
-		byte[] bytes = null;
-
-		try {
-			bytes = Files.readAllBytes(sourceDigestFile.toPath());
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
-
-		String oldDigest = new String(bytes, StandardCharsets.UTF_8);
-		String newDigest = FileUtil.getDigest(sourceFileCollection);
-
-		if (!Objects.equals(oldDigest, newDigest)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _NPM_RUN_TEST_TASK_NAME = "npmRunTest";

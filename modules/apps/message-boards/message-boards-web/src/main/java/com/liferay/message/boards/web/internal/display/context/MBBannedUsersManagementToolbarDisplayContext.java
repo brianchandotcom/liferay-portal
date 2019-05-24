@@ -75,9 +75,7 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(MBBan ban)
-		throws PortalException {
-
+	public List<String> getAvailableActions(MBBan ban) throws PortalException {
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		PermissionChecker permissionChecker =

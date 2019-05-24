@@ -132,7 +132,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(MBCategory category)
+	public List<String> getAvailableActions(MBCategory category)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
@@ -149,7 +149,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		return availableActionDropdownItems;
 	}
 
-	public List<String> getAvailableActionDropdownItems(MBMessage message)
+	public List<String> getAvailableActions(MBMessage message)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

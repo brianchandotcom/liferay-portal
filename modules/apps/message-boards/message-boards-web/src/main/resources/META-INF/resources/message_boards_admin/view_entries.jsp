@@ -93,7 +93,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 						<%
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
-						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(curCategory)));
+						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActions(curCategory)));
 
 						row.setData(rowData);
 
@@ -161,7 +161,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
-						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(message)));
+						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActions(message)));
 
 						row.setData(rowData);
 						%>

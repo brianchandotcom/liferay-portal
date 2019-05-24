@@ -211,6 +211,7 @@ public interface CTEngineManager {
 	 * @param  queryDefinition the settings regarding pagination, order and
 	 *         status filtering
 	 * @return the change tracking processes filtered based on the parameters
+	 * @review
 	 */
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
@@ -222,6 +223,7 @@ public interface CTEngineManager {
 	 * @param  companyId the company ID of the company to return the latest
 	 *         change tracking process for
 	 * @return the latest change tracking process for the given company
+	 * @review
 	 */
 	public Optional<CTProcess> getLatestCTProcessOptional(long companyId);
 

@@ -17,17 +17,15 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
 
-import org.apache.cxf.jaxrs.impl.ResourceContextImpl;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
+import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
+import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.jaxrs.model.OperationResourceInfo;
+import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 
@@ -60,16 +58,22 @@ public class ContextProviderUtil {
 	private static Object _getMatchedResource(Message message) {
 		Exchange exchange = message.getExchange();
 
-		ResourceContext resourceContext = new ResourceContextImpl(
-			message, exchange.get(OperationResourceInfo.class));
+		Object root = exchange.get(JAXRSUtils.ROOT_INSTANCE);
 
-		UriInfo uriInfo = new UriInfoImpl(message);
+		if (root != null) {
+			return root;
+		}
 
-		List<Object> matchedResources = uriInfo.getMatchedResources();
+		OperationResourceInfo operationResourceInfo = exchange.get(
+			OperationResourceInfo.class);
 
-		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
+		ClassResourceInfo classResourceInfo =
+			operationResourceInfo.getClassResourceInfo();
 
-		return resourceContext.getResource(matchedResourceClass);
+		ResourceProvider resourceProvider =
+			classResourceInfo.getResourceProvider();
+
+		return resourceProvider.getInstance(message);
 	}
 
 	private static MultivaluedMap<String, String> _getPathParameters(

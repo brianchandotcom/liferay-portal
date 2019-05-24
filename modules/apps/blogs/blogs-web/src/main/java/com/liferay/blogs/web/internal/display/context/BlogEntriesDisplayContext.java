@@ -85,7 +85,7 @@ public class BlogEntriesDisplayContext {
 		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
-	public List<String> getAvailableActionDropdownItems(BlogsEntry blogsEntry)
+	public List<String> getAvailableActions(BlogsEntry blogsEntry)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

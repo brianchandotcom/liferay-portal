@@ -584,7 +584,9 @@ definition {
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 
-		var key_searchAssetTitle = "Test Document";
+		// LRCI-276
+
+		/*var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
@@ -593,7 +595,7 @@ definition {
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");
+			dmDocumentTitle = "Test Document"); */
 
 		User.logoutPG();
 
@@ -641,7 +643,9 @@ definition {
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 
-		var key_searchAssetTitle = "Test Document";
+		// LRCI-276
+
+		/* var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
@@ -650,7 +654,7 @@ definition {
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");
+			dmDocumentTitle = "Test Document");*/
 
 		User.logoutPG();
 
@@ -1082,7 +1086,9 @@ definition {
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 
-		var key_searchAssetTitle = "Test Document";
+		// LRCI-276
+
+		/*var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
@@ -1091,7 +1097,7 @@ definition {
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");
+			dmDocumentTitle = "Test Document");*/
 
 		User.logoutPG();
 
@@ -1127,7 +1133,9 @@ definition {
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 
-		var key_searchAssetTitle = "Test Document";
+		// LRCI-276
+
+		/*var key_searchAssetTitle = "Test Document";
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
@@ -1136,13 +1144,9 @@ definition {
 		DMDocument.viewPGViaSearch(
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");
-
-		User.logoutPG();
-
-		User.loginUserPG(
+			dmDocumentTitle = "Test Document",
 			password = "test",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com");*/
 	}
 
 	@priority = "4"

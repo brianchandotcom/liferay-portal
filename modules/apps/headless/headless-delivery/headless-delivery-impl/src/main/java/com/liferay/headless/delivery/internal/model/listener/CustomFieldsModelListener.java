@@ -15,33 +15,20 @@
 package com.liferay.headless.delivery.internal.model.listener;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.odata.entity.BooleanEntityField;
-import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.StringEntityField;
-import com.liferay.portal.odata.normalizer.Normalizer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,11 +55,16 @@ public class CustomFieldsModelListener
 		_classNameLocalService = classNameLocalService;
 		_clazz = clazz;
 		_entityModelFunction = entityModelFunction;
-		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoTableLocalService = expandoTableLocalService;
 
 		try {
-			_fields.putAll(_getEntityFields());
+			long classNameId = classNameLocalService.getClassNameId(
+				clazz.getName());
+
+			_fields.putAll(
+				EntityFieldsUtil.getEntityFields(
+					classNameId, expandoColumnLocalService,
+					expandoTableLocalService));
 
 			_serviceRegistration = _register(_bundleContext, _fields);
 		}
@@ -87,8 +79,8 @@ public class CustomFieldsModelListener
 				return;
 			}
 
-			Optional<EntityField> entityFieldOptional = _getEntityFieldOptional(
-				expandoColumn);
+			Optional<EntityField> entityFieldOptional =
+				EntityFieldsUtil.getEntityFieldOptional(expandoColumn);
 
 			entityFieldOptional.ifPresent(
 				entityField -> {
@@ -125,106 +117,6 @@ public class CustomFieldsModelListener
 
 	public void unregister() {
 		_serviceRegistration.unregister();
-	}
-
-	private EntityField _getEntityField(
-		ExpandoColumn expandoColumn, String encodedName,
-		String encodedFieldName) {
-
-		if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {
-			return new BooleanEntityField(
-				encodedName, locale -> encodedFieldName);
-		}
-		else if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
-			return new DateTimeEntityField(
-				encodedName,
-				locale -> Field.getSortableFieldName(encodedFieldName),
-				locale -> encodedFieldName);
-		}
-		else if (expandoColumn.getType() ==
-					ExpandoColumnConstants.STRING_LOCALIZED) {
-
-			return new StringEntityField(
-				encodedName,
-				locale -> Field.getLocalizedName(locale, encodedFieldName));
-		}
-		else {
-			return new StringEntityField(
-				encodedName, locale -> encodedFieldName);
-		}
-	}
-
-	private Optional<EntityField> _getEntityFieldOptional(
-		ExpandoColumn expandoColumn) {
-
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
-
-		int indexType = GetterUtil.getInteger(
-			unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
-
-		if (indexType == ExpandoColumnConstants.INDEX_TYPE_NONE) {
-			return Optional.empty();
-		}
-
-		String encodedName = Normalizer.normalizeIdentifier(
-			expandoColumn.getName());
-
-		String encodedFieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
-			expandoColumn.getName(), indexType);
-
-		return Optional.of(
-			_getEntityField(expandoColumn, encodedName, encodedFieldName));
-	}
-
-	private Map<Long, EntityField> _getEntityFields() throws PortalException {
-		Map<Long, EntityField> fieldMap = new HashMap<>();
-
-		ActionableDynamicQuery columnActionableDynamicQuery =
-			_expandoColumnLocalService.getActionableDynamicQuery();
-
-		columnActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property tableProperty = PropertyFactoryUtil.forName("tableId");
-
-				long classNameId = _classNameLocalService.getClassNameId(
-					_clazz.getName());
-
-				dynamicQuery.add(
-					tableProperty.in(_getTableDynamicQuery(classNameId)));
-			});
-		columnActionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
-				expandoColumn -> {
-					Optional<EntityField> entityFieldOptional =
-						_getEntityFieldOptional(expandoColumn);
-
-					entityFieldOptional.ifPresent(
-						entityField -> fieldMap.put(
-							expandoColumn.getColumnId(), entityField));
-				});
-
-		columnActionableDynamicQuery.performActions();
-
-		return fieldMap;
-	}
-
-	private DynamicQuery _getTableDynamicQuery(long classNameId) {
-		DynamicQuery dynamicQuery = _expandoTableLocalService.dynamicQuery();
-
-		Property classNameIdProperty = PropertyFactoryUtil.forName(
-			"classNameId");
-
-		dynamicQuery.add(classNameIdProperty.eq(classNameId));
-
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-
-		dynamicQuery.add(
-			nameProperty.eq(ExpandoTableConstants.DEFAULT_TABLE_NAME));
-
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tableId"));
-
-		return dynamicQuery;
 	}
 
 	private boolean _isContentCustomField(ExpandoColumn expandoColumn)
@@ -279,7 +171,6 @@ public class CustomFieldsModelListener
 	private final Class<?> _clazz;
 	private final Function<Map<Long, EntityField>, EntityModel>
 		_entityModelFunction;
-	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final Map<Long, EntityField> _fields = new HashMap<>();
 	private ServiceRegistration<EntityModel> _serviceRegistration;

@@ -478,15 +478,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		public boolean isValidForward() {
 			String path = getPath();
 
-			if (!path.equals(Portal.PATH_MAIN) && !path.startsWith("/c/")) {
-				return false;
+			if (path.equals(Portal.PATH_MAIN) || path.startsWith("/c/")) {
+				if (isForce()) {
+					return false;
+				}
+
+				return true;
 			}
 
-			if (isForce()) {
-				return false;
-			}
-
-			return true;
+			return false;
 		}
 
 		private final boolean _force;

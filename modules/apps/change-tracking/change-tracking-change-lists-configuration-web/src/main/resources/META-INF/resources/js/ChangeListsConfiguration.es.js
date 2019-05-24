@@ -72,15 +72,15 @@ class ChangeListsConfiguration extends PortletBase {
 						}
 					);
 				}
-				else {
-					return Object.assign(
-						{},
-						item,
-						{
-							active: false
-						}
-					);
-				}
+
+				return Object.assign(
+					{},
+					item,
+					{
+						active: false
+					}
+				);
+
 			}
 		);
 	}

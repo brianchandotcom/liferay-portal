@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.history.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
@@ -58,7 +59,8 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_ctManager = _serviceTracker.getService();
+		_ctManager = _ctManagerServiceTracker.getService();
+		_ctEngineManager = _ctEngineManagerServiceTracker.getService();
 	}
 
 	public int getAffectsCount(CTEntry ctEntry) {
@@ -66,10 +68,10 @@ public class ChangeListsHistoryDetailsDisplayContext {
 	}
 
 	public String getChangeType(int changeType) {
-		if (changeType == 1) {
+		if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
 			return "deleted";
 		}
-		else if (changeType == 2) {
+		else if (changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
 			return "modified";
 		}
 		else {
@@ -103,10 +105,10 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		searchContainer.setResults(
-			_ctManager.getCTCollectionCTEntries(
+			_ctEngineManager.getCTEntries(
 				ctCollection, keywords, queryDefinition));
 		searchContainer.setTotal(
-			_ctManager.getCTCollectionCTEntriesCount(
+			_ctEngineManager.getCTEntriesCount(
 				ctCollection, keywords, queryDefinition));
 
 		return searchContainer;
@@ -219,20 +221,32 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		};
 	}
 
-	private static ServiceTracker<CTManager, CTManager> _serviceTracker;
+	private static ServiceTracker<CTEngineManager, CTEngineManager>
+		_ctEngineManagerServiceTracker;
+	private static ServiceTracker<CTManager, CTManager>
+		_ctManagerServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(CTEngineManager.class);
 
-		ServiceTracker<CTManager, CTManager> serviceTracker =
+		ServiceTracker<CTEngineManager, CTEngineManager>
+			ctEngineManagerServiceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), CTEngineManager.class, null);
+
+		ctEngineManagerServiceTracker.open();
+
+		_ctEngineManagerServiceTracker = ctEngineManagerServiceTracker;
+
+		ServiceTracker<CTManager, CTManager> ctManagerServiceTracker =
 			new ServiceTracker<>(
 				bundle.getBundleContext(), CTManager.class, null);
 
-		serviceTracker.open();
+		ctManagerServiceTracker.open();
 
-		_serviceTracker = serviceTracker;
+		_ctManagerServiceTracker = ctManagerServiceTracker;
 	}
 
+	private final CTEngineManager _ctEngineManager;
 	private final CTManager _ctManager;
 	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;

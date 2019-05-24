@@ -456,6 +456,14 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editConfigurationUsersPersonalMenuPersonalApplicationLookAndFeel {
+		SystemSettings.selectOptionSetting(
+			fieldName = "Personal Applications Look and Feel",
+			selectOption = "${selectOption}");
+
+		PortletEntry.update();
+	}
+
 	macro editDefaultLandingPageCP {
 		Type(
 			locator1 = "PortalSettings#DEFAULT_LANDING_PAGE_FIELD",

@@ -96,7 +96,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/message_boards/nav.jsp" servletContext="<%= application %>" />
+<%@ include file="/message_boards/nav.jspf" %>
 
 <c:choose>
 	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>'>

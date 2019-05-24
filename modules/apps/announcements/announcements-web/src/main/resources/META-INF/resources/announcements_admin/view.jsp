@@ -105,7 +105,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, announcementsAdminViewManagementToolbarDisplayContext.getAvailableActionDropdownItems(entry)));
+				rowData.put("actions", String.join(StringPool.COMMA, announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry)));
 
 				row.setData(rowData);
 

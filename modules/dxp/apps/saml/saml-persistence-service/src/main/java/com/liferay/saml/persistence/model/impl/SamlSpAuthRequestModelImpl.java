@@ -29,6 +29,9 @@ import com.liferay.saml.persistence.model.SamlSpAuthRequestModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -212,6 +215,32 @@ public class SamlSpAuthRequestModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, SamlSpAuthRequest>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SamlSpAuthRequest.class.getClassLoader(), SamlSpAuthRequest.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SamlSpAuthRequest> constructor =
+				(Constructor<SamlSpAuthRequest>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<SamlSpAuthRequest, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<SamlSpAuthRequest, Object>>
@@ -373,8 +402,7 @@ public class SamlSpAuthRequestModelImpl
 	@Override
 	public SamlSpAuthRequest toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlSpAuthRequest)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -572,11 +600,8 @@ public class SamlSpAuthRequestModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SamlSpAuthRequest.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SamlSpAuthRequest.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SamlSpAuthRequest>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _samlSpAuthnRequestId;
 	private long _companyId;

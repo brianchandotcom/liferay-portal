@@ -29,6 +29,9 @@ import com.liferay.saml.persistence.model.SamlSpMessageModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -214,6 +217,32 @@ public class SamlSpMessageModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, SamlSpMessage>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SamlSpMessage.class.getClassLoader(), SamlSpMessage.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SamlSpMessage> constructor =
+				(Constructor<SamlSpMessage>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<SamlSpMessage, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<SamlSpMessage, Object>>
@@ -383,8 +412,7 @@ public class SamlSpMessageModelImpl
 	@Override
 	public SamlSpMessage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlSpMessage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -586,11 +614,8 @@ public class SamlSpMessageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SamlSpMessage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SamlSpMessage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SamlSpMessage>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _samlSpMessageId;
 	private long _companyId;

@@ -34,6 +34,9 @@ import com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -292,6 +295,32 @@ public class SPIDefinitionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SPIDefinition>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SPIDefinition.class.getClassLoader(), SPIDefinition.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SPIDefinition> constructor =
+				(Constructor<SPIDefinition>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SPIDefinition, Object>>
@@ -710,8 +739,7 @@ public class SPIDefinitionModelImpl
 	@Override
 	public SPIDefinition toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SPIDefinition)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1004,11 +1032,8 @@ public class SPIDefinitionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SPIDefinition.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SPIDefinition.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SPIDefinition>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _spiDefinitionId;
 	private long _companyId;

@@ -35,6 +35,9 @@ import com.liferay.portal.reports.engine.console.model.EntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -284,6 +287,31 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Entry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Entry.class.getClassLoader(), Entry.class, ModelWrapper.class);
+
+		try {
+			Constructor<Entry> constructor =
+				(Constructor<Entry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Entry, Object>>
@@ -705,8 +733,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public Entry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Entry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1001,11 +1028,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Entry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Entry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Entry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _entryId;
 	private long _groupId;

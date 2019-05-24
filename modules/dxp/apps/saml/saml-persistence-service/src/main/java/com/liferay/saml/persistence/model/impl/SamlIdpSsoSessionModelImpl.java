@@ -32,6 +32,9 @@ import com.liferay.saml.persistence.model.SamlIdpSsoSessionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -214,6 +217,32 @@ public class SamlIdpSsoSessionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SamlIdpSsoSession>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SamlIdpSsoSession.class.getClassLoader(), SamlIdpSsoSession.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SamlIdpSsoSession> constructor =
+				(Constructor<SamlIdpSsoSession>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SamlIdpSsoSession, Object>>
@@ -419,8 +448,7 @@ public class SamlIdpSsoSessionModelImpl
 	@Override
 	public SamlIdpSsoSession toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlIdpSsoSession)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -629,11 +657,8 @@ public class SamlIdpSsoSessionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SamlIdpSsoSession.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SamlIdpSsoSession.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SamlIdpSsoSession>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _samlIdpSsoSessionId;
 	private long _companyId;

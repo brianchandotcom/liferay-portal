@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -291,6 +294,32 @@ public class OAuthApplicationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, OAuthApplication>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			OAuthApplication.class.getClassLoader(), OAuthApplication.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<OAuthApplication> constructor =
+				(Constructor<OAuthApplication>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<OAuthApplication, Object>>
@@ -687,8 +716,7 @@ public class OAuthApplicationModelImpl
 	@Override
 	public OAuthApplication toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (OAuthApplication)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -955,11 +983,8 @@ public class OAuthApplicationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OAuthApplication.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OAuthApplication.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, OAuthApplication>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _oAuthApplicationId;
 	private long _companyId;

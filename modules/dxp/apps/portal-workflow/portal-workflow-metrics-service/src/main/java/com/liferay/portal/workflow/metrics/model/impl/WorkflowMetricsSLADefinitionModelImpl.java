@@ -35,6 +35,9 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionMod
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -249,6 +252,32 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WorkflowMetricsSLADefinition>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WorkflowMetricsSLADefinition.class.getClassLoader(),
+			WorkflowMetricsSLADefinition.class, ModelWrapper.class);
+
+		try {
+			Constructor<WorkflowMetricsSLADefinition> constructor =
+				(Constructor<WorkflowMetricsSLADefinition>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -758,10 +787,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	@Override
 	public WorkflowMetricsSLADefinition toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(WorkflowMetricsSLADefinition)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1086,11 +1113,9 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WorkflowMetricsSLADefinition.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WorkflowMetricsSLADefinition.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, WorkflowMetricsSLADefinition>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private String _uuid;

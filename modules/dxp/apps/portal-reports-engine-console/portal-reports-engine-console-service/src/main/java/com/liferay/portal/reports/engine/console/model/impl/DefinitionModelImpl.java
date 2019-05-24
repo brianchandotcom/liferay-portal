@@ -41,6 +41,9 @@ import com.liferay.portal.reports.engine.console.model.DefinitionSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -291,6 +294,32 @@ public class DefinitionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Definition>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Definition.class.getClassLoader(), Definition.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<Definition> constructor =
+				(Constructor<Definition>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Definition, Object>>
@@ -901,8 +930,7 @@ public class DefinitionModelImpl
 	@Override
 	public Definition toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Definition)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1158,11 +1186,8 @@ public class DefinitionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Definition.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Definition.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Definition>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

@@ -32,6 +32,9 @@ import com.liferay.saml.persistence.model.SamlIdpSpSessionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -221,6 +224,32 @@ public class SamlIdpSpSessionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SamlIdpSpSession>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SamlIdpSpSession.class.getClassLoader(), SamlIdpSpSession.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SamlIdpSpSession> constructor =
+				(Constructor<SamlIdpSpSession>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SamlIdpSpSession, Object>>
@@ -493,8 +522,7 @@ public class SamlIdpSpSessionModelImpl
 	@Override
 	public SamlIdpSpSession toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlIdpSpSession)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -723,11 +751,8 @@ public class SamlIdpSpSessionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SamlIdpSpSession.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SamlIdpSpSession.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SamlIdpSpSession>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _samlIdpSpSessionId;
 	private long _companyId;

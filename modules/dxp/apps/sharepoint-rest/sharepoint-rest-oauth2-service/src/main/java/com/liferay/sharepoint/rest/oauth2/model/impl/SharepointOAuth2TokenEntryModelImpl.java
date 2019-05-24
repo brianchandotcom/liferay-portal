@@ -32,6 +32,9 @@ import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntryModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -220,6 +223,32 @@ public class SharepointOAuth2TokenEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SharepointOAuth2TokenEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SharepointOAuth2TokenEntry.class.getClassLoader(),
+			SharepointOAuth2TokenEntry.class, ModelWrapper.class);
+
+		try {
+			Constructor<SharepointOAuth2TokenEntry> constructor =
+				(Constructor<SharepointOAuth2TokenEntry>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -456,10 +485,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 	@Override
 	public SharepointOAuth2TokenEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(SharepointOAuth2TokenEntry)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -693,11 +720,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SharepointOAuth2TokenEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SharepointOAuth2TokenEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SharepointOAuth2TokenEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _sharepointOAuth2TokenEntryId;
 	private long _userId;

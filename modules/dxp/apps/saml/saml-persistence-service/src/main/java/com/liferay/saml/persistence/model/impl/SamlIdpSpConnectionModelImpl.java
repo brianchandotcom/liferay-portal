@@ -32,6 +32,9 @@ import com.liferay.saml.persistence.model.SamlIdpSpConnectionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -234,6 +237,32 @@ public class SamlIdpSpConnectionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SamlIdpSpConnection>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SamlIdpSpConnection.class.getClassLoader(),
+			SamlIdpSpConnection.class, ModelWrapper.class);
+
+		try {
+			Constructor<SamlIdpSpConnection> constructor =
+				(Constructor<SamlIdpSpConnection>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SamlIdpSpConnection, Object>>
@@ -688,8 +717,7 @@ public class SamlIdpSpConnectionModelImpl
 	@Override
 	public SamlIdpSpConnection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlIdpSpConnection)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -980,11 +1008,8 @@ public class SamlIdpSpConnectionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SamlIdpSpConnection.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SamlIdpSpConnection.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SamlIdpSpConnection>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _samlIdpSpConnectionId;
 	private long _companyId;

@@ -29,6 +29,9 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLinkModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -207,6 +210,32 @@ public class KaleoProcessLinkModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, KaleoProcessLink>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KaleoProcessLink.class.getClassLoader(), KaleoProcessLink.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<KaleoProcessLink> constructor =
+				(Constructor<KaleoProcessLink>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<KaleoProcessLink, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<KaleoProcessLink, Object>>
@@ -338,8 +367,7 @@ public class KaleoProcessLinkModelImpl
 	@Override
 	public KaleoProcessLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoProcessLink)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -512,11 +540,8 @@ public class KaleoProcessLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoProcessLink.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoProcessLink.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoProcessLink>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _kaleoProcessLinkId;
 	private long _kaleoProcessId;

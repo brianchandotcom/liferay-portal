@@ -15,6 +15,7 @@
 package com.liferay.application.list.adapter;
 
 import com.liferay.application.list.PanelApp;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,8 +23,6 @@ import com.liferay.portal.util.PortletCategoryUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
-
-import javax.portlet.Portlet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

@@ -23,10 +23,12 @@ import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.SignatureSigningConfiguration;
+import org.opensaml.xmlsec.SignatureValidationConfiguration;
 import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 import org.opensaml.xmlsec.impl.BasicDecryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicEncryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicSignatureSigningConfiguration;
+import org.opensaml.xmlsec.impl.BasicSignatureValidationConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -51,6 +53,10 @@ public class SecurityConfigurationBootstrap {
 		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration =
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultSignatureSigningConfiguration();
+		BasicSignatureValidationConfiguration
+			basicSignatureValidationConfiguration =
+				DefaultSecurityConfigurationBootstrap.
+					buildDefaultSignatureValidationConfiguration();
 
 		Object blacklistedAlgorithmsObject = properties.get(
 			"blacklisted.algorithms");
@@ -71,6 +77,12 @@ public class SecurityConfigurationBootstrap {
 					basicSignatureSigningConfiguration.
 						getBlacklistedAlgorithms(),
 					(String[])blacklistedAlgorithmsObject));
+
+			basicSignatureValidationConfiguration.setBlacklistedAlgorithms(
+				_combine(
+					basicSignatureValidationConfiguration.
+						getBlacklistedAlgorithms(),
+					(String[])blacklistedAlgorithmsObject));
 		}
 
 		ConfigurationService.register(
@@ -80,6 +92,9 @@ public class SecurityConfigurationBootstrap {
 		ConfigurationService.register(
 			SignatureSigningConfiguration.class,
 			basicSignatureSigningConfiguration);
+		ConfigurationService.register(
+			SignatureValidationConfiguration.class,
+			basicSignatureValidationConfiguration);
 	}
 
 	private Collection<String> _combine(

@@ -15,8 +15,7 @@ definition {
 
 	@description = "This is the description for MacroA."
 	@priority = "5"
-	macro MacroA
-	{
+	macro MacroA {
 		CalendarNavigator.gotoConfiguration();
 	}
 
@@ -27,7 +26,7 @@ definition {
 	@description = "This is the description for MacroC."
 	@ignore = "true"
 	@priority = "5"
-	macro MacroC{
+	macro MacroC {
 		Upgrade.resetTestUserPassword();
 	}
 
@@ -60,7 +59,7 @@ if (true) {
 	@description = "This is the description for MacroF."
 	@ignore = "true"
 	@priority = "5"
-	macro MacroF{
+	macro MacroF {
 		Upgrade.resetTestUser();
 	}
 

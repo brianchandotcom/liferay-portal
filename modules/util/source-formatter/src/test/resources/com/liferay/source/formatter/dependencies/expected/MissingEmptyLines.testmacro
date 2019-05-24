@@ -13,8 +13,7 @@ definition {
 
 	@description = "This is the description for TestA."
 	@priority = "5"
-	test TestA
-	{
+	test TestA {
 		CalendarNavigator.gotoConfiguration();
 	}
 
@@ -25,7 +24,7 @@ definition {
 	@description = "This is the description for TestC."
 	@ignore = "true"
 	@priority = "5"
-	test TestC{
+	test TestC {
 		Upgrade.resetTestUserPassword();
 	}
 

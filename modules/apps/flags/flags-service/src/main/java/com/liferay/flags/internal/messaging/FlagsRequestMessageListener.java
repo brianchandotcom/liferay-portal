@@ -59,6 +59,7 @@ import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,16 +76,20 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	@Activate
 	public void activate() {
-		DefaultMessagingConfigurator defaultMessagingConfigurator =
-			new DefaultMessagingConfigurator();
+		_defaultMessagingConfigurator = new DefaultMessagingConfigurator();
 
-		defaultMessagingConfigurator.setDestinationConfigurations(
+		_defaultMessagingConfigurator.setDestinationConfigurations(
 			Collections.singleton(
 				new DestinationConfiguration(
 					DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 					DestinationNames.FLAGS)));
 
-		defaultMessagingConfigurator.afterPropertiesSet();
+		_defaultMessagingConfigurator.afterPropertiesSet();
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_defaultMessagingConfigurator.destroy();
 	}
 
 	@Override
@@ -335,6 +340,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		FlagsRequestMessageListener.class);
 
 	private CompanyLocalService _companyLocalService;
+	private DefaultMessagingConfigurator _defaultMessagingConfigurator;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private RoleLocalService _roleLocalService;

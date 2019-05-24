@@ -81,6 +81,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public Lock getLock(String className, String key) throws PortalException {
+		if (lockPersistence.countByC(className) == 0) {
+			return null;
+		}
+
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {

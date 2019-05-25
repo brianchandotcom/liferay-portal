@@ -3,6 +3,8 @@ definition {
 	macro configureBreadcrumb {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		Pause(locator1 = "3000");
+
 		if (isSet(checkSetupName)) {
 			for (var checkSetupName : list "${checkSetupName}") {
 				var key_checkSetupName = "${checkSetupName}";

@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_CLIENT_CREDENTIALS_USER_SELECTED</td>
+	<td>//td[contains(@class,'lfr-screen-name-column')]/a[contains(.,'${key_clientCredentialsUser}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_GLOBAL_RESOURCE_SCOPE_CHECKBOX</td>
 	<td>//a[contains(.,'${key_panel}')]/following-sibling::div//input[contains(@data-slave,'${key_scopeName}')]</td>
 	<td></td>

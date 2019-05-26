@@ -263,6 +263,23 @@ definition {
 			}
 		}
 
+		if (isSet(clientCredentialsUser)) {
+			AssertClick(
+				locator1 = "Button#SELECT",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			Pause(locator1 = "3000");
+
+			Click(
+				key_clientCredentialsUser = "${clientCredentialsUser}",
+				locator1 = "OAuth2#ADMIN_CLIENT_CREDENTIALS_USER_SELECTED",
+				value1 = "${clientCredentialsUser}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
 		PortletEntry.save();
 	}
 

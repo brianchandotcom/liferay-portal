@@ -1,7 +1,7 @@
 definition {
 
 	macro searchPG {
-		Type.typeAceEditor(
+		Type(
 			locator1 = "NetworkUtilities#DNS_LOOKUP_FIELD",
 			value1 = "${dnsDomain}");
 

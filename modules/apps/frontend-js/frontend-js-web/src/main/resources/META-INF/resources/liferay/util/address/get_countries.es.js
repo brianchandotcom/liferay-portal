@@ -1,4 +1,4 @@
-import {isDef} from 'metal';
+import {isFunction} from 'metal';
 
 /**
  * Returns a list of countries
@@ -6,13 +6,15 @@ import {isDef} from 'metal';
  * @return {array} Array of countries
  */
 export default function getCountries(callback) {
-	if (isDef(callback)) {
-		Liferay.Service(
-			'/country/get-countries',
-			{
-				active: true
-			},
-			callback
-		);
+	if (!isFunction(callback)) {
+		throw new TypeError('Parameter callback must be a function');
 	}
+
+	Liferay.Service(
+		'/country/get-countries',
+		{
+			active: true
+		},
+		callback
+	);
 }

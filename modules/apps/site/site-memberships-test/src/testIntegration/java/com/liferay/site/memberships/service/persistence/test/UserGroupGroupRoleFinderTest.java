@@ -37,7 +37,6 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,8 +54,8 @@ public class UserGroupGroupRoleFinderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testFindByUserGroupsUsers() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 		_user = UserTestUtil.addUser();
@@ -68,10 +67,7 @@ public class UserGroupGroupRoleFinderTest {
 		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
 			_userGroup.getUserGroupId(), _group.getGroupId(),
 			new long[] {_role.getRoleId()});
-	}
 
-	@Test
-	public void testFindByUserGroupsUsers() {
 		List<UserGroupGroupRole> userGroupGroupRoles =
 			_userGroupGroupRoleFinder.findByUserGroupsUsers(
 				_user.getUserId(), _group.getGroupId());

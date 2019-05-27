@@ -47,6 +47,34 @@ public class CTProcessFinderImpl
 	public static final String FIND_BY_C_U_S_N_D =
 		CTProcessFinder.class.getName() + ".findByC_U_S_N_D";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public List<CTProcess> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return findByC_U_S_N_D(
+			companyId, 0, WorkflowConstants.STATUS_ANY, null, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public List<CTProcess> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		return findByC_U_S_N_D(
+			companyId, 0, status, null, start, end, orderByComparator);
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<CTProcess> findByC_U_S_N_D(
 		long companyId, long userId, int status, String keywords, int start,

@@ -216,10 +216,26 @@ public interface CTProcessLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTProcess> getCTProcesses(long ctCollectionId);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTProcess> getCTProcesses(
+		long companyId, int status, QueryDefinition<?> queryDefinition);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition);
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTProcess> getCTProcesses(
+		long companyId, QueryDefinition<?> queryDefinition);
 
 	/**
 	 * Returns the number of ct processes.

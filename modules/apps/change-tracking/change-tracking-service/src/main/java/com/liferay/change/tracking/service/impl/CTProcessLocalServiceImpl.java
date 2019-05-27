@@ -99,6 +99,19 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		return ctProcessPersistence.findByCollectionId(ctCollectionId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, int status, QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.findByC_S(
+			companyId, status, queryDefinition.getStart(),
+			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
+	}
+
 	@Override
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
@@ -107,6 +120,19 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		return ctProcessFinder.findByC_U_S_N_D(
 			companyId, userId, queryDefinition.getStatus(), keywords,
 			queryDefinition.getStart(), queryDefinition.getEnd(),
+			queryDefinition.getOrderByComparator());
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, QueryDefinition<?> queryDefinition) {
+
+		return ctProcessFinder.findByCompanyId(
+			companyId, queryDefinition.getStart(), queryDefinition.getEnd(),
 			queryDefinition.getOrderByComparator());
 	}
 

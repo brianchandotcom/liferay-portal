@@ -263,6 +263,21 @@ public class CTProcessLocalServiceWrapper
 		return _ctProcessLocalService.getCTProcesses(ctCollectionId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
+			long companyId, int status,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
+				queryDefinition) {
+
+		return _ctProcessLocalService.getCTProcesses(
+			companyId, status, queryDefinition);
+	}
+
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
 		getCTProcesses(
@@ -272,6 +287,21 @@ public class CTProcessLocalServiceWrapper
 
 		return _ctProcessLocalService.getCTProcesses(
 			companyId, userId, keywords, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
+			long companyId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
+				queryDefinition) {
+
+		return _ctProcessLocalService.getCTProcesses(
+			companyId, queryDefinition);
 	}
 
 	/**

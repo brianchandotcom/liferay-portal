@@ -188,9 +188,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	}
 
 	private long _getPlid(
-			long groupId, long classNameId, long classPK,
-			long layoutPageTemplateEntryId)
-		throws PortalException {
+		long groupId, long classNameId, long classPK,
+		long layoutPageTemplateEntryId) {
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.

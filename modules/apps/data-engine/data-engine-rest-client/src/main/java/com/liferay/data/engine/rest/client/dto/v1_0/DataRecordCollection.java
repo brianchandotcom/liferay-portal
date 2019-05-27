@@ -50,6 +50,29 @@ public class DataRecordCollection {
 
 	protected Long dataDefinitionId;
 
+	public String getDataRecordCollectionKey() {
+		return dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(String dataRecordCollectionKey) {
+		this.dataRecordCollectionKey = dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(
+		UnsafeSupplier<String, Exception>
+			dataRecordCollectionKeyUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionKey =
+				dataRecordCollectionKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String dataRecordCollectionKey;
+
 	public Map<String, Object> getDescription() {
 		return description;
 	}

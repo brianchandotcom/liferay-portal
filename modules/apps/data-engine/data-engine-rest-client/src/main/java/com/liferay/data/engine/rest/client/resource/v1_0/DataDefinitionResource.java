@@ -338,6 +338,50 @@ public class DataDefinitionResource {
 		return httpInvoker.invoke();
 	}
 
+	public static DataDefinition getSiteDataDefinition(
+			Long siteId, String dataDefinitionKey)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getSiteDataDefinitionHttpResponse(siteId, dataDefinitionKey);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return DataDefinitionSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse getSiteDataDefinitionHttpResponse(
+			Long siteId, String dataDefinitionKey)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/sites/{siteId}/data-definitions/{dataDefinitionKey}",
+			siteId, dataDefinitionKey);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		DataDefinitionResource.class.getName());
 

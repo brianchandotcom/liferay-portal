@@ -54,6 +54,27 @@ public class DataDefinition {
 
 	protected DataDefinitionField[] dataDefinitionFields;
 
+	public String getDataDefinitionKey() {
+		return dataDefinitionKey;
+	}
+
+	public void setDataDefinitionKey(String dataDefinitionKey) {
+		this.dataDefinitionKey = dataDefinitionKey;
+	}
+
+	public void setDataDefinitionKey(
+		UnsafeSupplier<String, Exception> dataDefinitionKeyUnsafeSupplier) {
+
+		try {
+			dataDefinitionKey = dataDefinitionKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String dataDefinitionKey;
+
 	public DataDefinitionRule[] getDataDefinitionRules() {
 		return dataDefinitionRules;
 	}

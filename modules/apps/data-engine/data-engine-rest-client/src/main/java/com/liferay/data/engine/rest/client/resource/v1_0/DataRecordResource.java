@@ -32,6 +32,97 @@ import javax.annotation.Generated;
 @Generated("")
 public class DataRecordResource {
 
+	public static Page<DataRecord> getDataDefinitionDataRecordsPage(
+			Long dataDefinitionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			getDataDefinitionDataRecordsPageHttpResponse(
+				dataDefinitionId, pagination);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		return Page.of(content, DataRecordSerDes::toDTO);
+	}
+
+	public static HttpInvoker.HttpResponse
+			getDataDefinitionDataRecordsPageHttpResponse(
+				Long dataDefinitionId, Pagination pagination)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-records",
+			dataDefinitionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
+	public static DataRecord postDataDefinitionDataRecord(
+			Long dataDefinitionId, DataRecord dataRecord)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postDataDefinitionDataRecordHttpResponse(
+				dataDefinitionId, dataRecord);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return DataRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse
+			postDataDefinitionDataRecordHttpResponse(
+				Long dataDefinitionId, DataRecord dataRecord)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(dataRecord.toString(), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-records",
+			dataDefinitionId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
 	public static Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {

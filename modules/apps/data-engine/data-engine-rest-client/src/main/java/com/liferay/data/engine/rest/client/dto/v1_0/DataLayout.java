@@ -51,6 +51,27 @@ public class DataLayout {
 
 	protected Long dataDefinitionId;
 
+	public String getDataLayoutKey() {
+		return dataLayoutKey;
+	}
+
+	public void setDataLayoutKey(String dataLayoutKey) {
+		this.dataLayoutKey = dataLayoutKey;
+	}
+
+	public void setDataLayoutKey(
+		UnsafeSupplier<String, Exception> dataLayoutKeyUnsafeSupplier) {
+
+		try {
+			dataLayoutKey = dataLayoutKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String dataLayoutKey;
+
 	public DataLayoutPage[] getDataLayoutPages() {
 		return dataLayoutPages;
 	}
@@ -218,6 +239,27 @@ public class DataLayout {
 	}
 
 	protected String paginationMode;
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
 
 	public Long getUserId() {
 		return userId;

@@ -185,6 +185,26 @@ public abstract class BaseDataDefinitionResourceImpl
 		return new DataDefinition();
 	}
 
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionKey")
+		}
+	)
+	@Path("/sites/{siteId}/data-definitions/{dataDefinitionKey}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public DataDefinition getSiteDataDefinition(
+			@Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @PathParam("dataDefinitionKey") String
+				dataDefinitionKey)
+		throws Exception {
+
+		return new DataDefinition();
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

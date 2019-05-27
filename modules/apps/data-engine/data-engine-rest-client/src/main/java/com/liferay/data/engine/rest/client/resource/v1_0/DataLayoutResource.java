@@ -379,6 +379,50 @@ public class DataLayoutResource {
 		return httpInvoker.invoke();
 	}
 
+	public static DataLayout getSiteDataLayout(
+			Long siteId, String dataLayoutKey)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = getSiteDataLayoutHttpResponse(
+			siteId, dataLayoutKey);
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine(
+			"HTTP response status code: " + httpResponse.getStatusCode());
+
+		try {
+			return DataLayoutSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
+	public static HttpInvoker.HttpResponse getSiteDataLayoutHttpResponse(
+			Long siteId, String dataLayoutKey)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/data-engine/v1.0/sites/{siteId}/data-layouts/{dataLayoutKey}",
+			siteId, dataLayoutKey);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		return httpInvoker.invoke();
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		DataLayoutResource.class.getName());
 

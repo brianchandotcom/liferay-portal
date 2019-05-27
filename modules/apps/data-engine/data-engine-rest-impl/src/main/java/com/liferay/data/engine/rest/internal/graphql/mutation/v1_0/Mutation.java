@@ -227,6 +227,21 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public DataRecord postDataDefinitionDataRecord(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("dataRecord") DataRecord dataRecord)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataDefinitionDataRecord(
+					dataDefinitionId, dataRecord));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public DataRecord postDataRecordCollectionDataRecord(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)

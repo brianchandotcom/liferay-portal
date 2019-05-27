@@ -61,6 +61,45 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/data-records")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public Page<DataRecord> getDataDefinitionDataRecordsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/data-records")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public DataRecord postDataDefinitionDataRecord(
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
+			DataRecord dataRecord)
+		throws Exception {
+
+		return new DataRecord();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")

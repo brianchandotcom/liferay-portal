@@ -168,6 +168,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		DataDefinition dataDefinition = randomDataDefinition();
 
+		dataDefinition.setDataDefinitionKey(regex);
 		dataDefinition.setStorageType(regex);
 
 		String json = DataDefinitionSerDes.toJSON(dataDefinition);
@@ -176,6 +177,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		dataDefinition = DataDefinitionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, dataDefinition.getDataDefinitionKey());
 		Assert.assertEquals(regex, dataDefinition.getStorageType());
 	}
 
@@ -399,6 +401,27 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGetSiteDataDefinitionsPage_getSiteId(), dataDefinition);
 	}
 
+	@Test
+	public void testGetSiteDataDefinition() throws Exception {
+		DataDefinition postDataDefinition =
+			testGetSiteDataDefinition_addDataDefinition();
+
+		DataDefinition getDataDefinition =
+			DataDefinitionResource.getSiteDataDefinition(
+				postDataDefinition.getSiteId(),
+				postDataDefinition.getDataDefinitionKey());
+
+		assertEquals(postDataDefinition, getDataDefinition);
+		assertValid(getDataDefinition);
+	}
+
+	protected DataDefinition testGetSiteDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return DataDefinitionResource.postSiteDataDefinition(
+			testGroup.getGroupId(), randomDataDefinition());
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -480,6 +503,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					"dataDefinitionFields", additionalAssertFieldName)) {
 
 				if (dataDefinition.getDataDefinitionFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataDefinitionKey", additionalAssertFieldName)) {
+
+				if (dataDefinition.getDataDefinitionKey() == null) {
 					valid = false;
 				}
 
@@ -583,6 +616,19 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						dataDefinition1.getDataDefinitionFields(),
 						dataDefinition2.getDataDefinitionFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataDefinitionKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						dataDefinition1.getDataDefinitionKey(),
+						dataDefinition2.getDataDefinitionKey())) {
 
 					return false;
 				}
@@ -740,6 +786,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dataDefinitionKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(dataDefinition.getDataDefinitionKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dataDefinitionRules")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -851,6 +905,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected DataDefinition randomDataDefinition() throws Exception {
 		return new DataDefinition() {
 			{
+				dataDefinitionKey = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();

@@ -78,6 +78,34 @@ public class DataLayout {
 	protected Long dataDefinitionId;
 
 	@Schema
+	public String getDataLayoutKey() {
+		return dataLayoutKey;
+	}
+
+	public void setDataLayoutKey(String dataLayoutKey) {
+		this.dataLayoutKey = dataLayoutKey;
+	}
+
+	@JsonIgnore
+	public void setDataLayoutKey(
+		UnsafeSupplier<String, Exception> dataLayoutKeyUnsafeSupplier) {
+
+		try {
+			dataLayoutKey = dataLayoutKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dataLayoutKey;
+
+	@Schema
 	public DataLayoutPage[] getDataLayoutPages() {
 		return dataLayoutPages;
 	}
@@ -302,6 +330,34 @@ public class DataLayout {
 	protected String paginationMode;
 
 	@Schema
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long siteId;
+
+	@Schema
 	public Long getUserId() {
 		return userId;
 	}
@@ -367,6 +423,20 @@ public class DataLayout {
 			sb.append("\"dataDefinitionId\": ");
 
 			sb.append(dataDefinitionId);
+		}
+
+		if (dataLayoutKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataLayoutKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dataLayoutKey));
+
+			sb.append("\"");
 		}
 
 		if (dataLayoutPages != null) {
@@ -473,6 +543,16 @@ public class DataLayout {
 			sb.append(_escape(paginationMode));
 
 			sb.append("\"");
+		}
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
 		}
 
 		if (userId != null) {

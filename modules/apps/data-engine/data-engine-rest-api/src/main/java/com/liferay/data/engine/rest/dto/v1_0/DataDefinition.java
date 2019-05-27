@@ -81,6 +81,34 @@ public class DataDefinition {
 	protected DataDefinitionField[] dataDefinitionFields;
 
 	@Schema
+	public String getDataDefinitionKey() {
+		return dataDefinitionKey;
+	}
+
+	public void setDataDefinitionKey(String dataDefinitionKey) {
+		this.dataDefinitionKey = dataDefinitionKey;
+	}
+
+	@JsonIgnore
+	public void setDataDefinitionKey(
+		UnsafeSupplier<String, Exception> dataDefinitionKeyUnsafeSupplier) {
+
+		try {
+			dataDefinitionKey = dataDefinitionKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dataDefinitionKey;
+
+	@Schema
 	public DataDefinitionRule[] getDataDefinitionRules() {
 		return dataDefinitionRules;
 	}
@@ -382,6 +410,20 @@ public class DataDefinition {
 			}
 
 			sb.append("]");
+		}
+
+		if (dataDefinitionKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataDefinitionKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dataDefinitionKey));
+
+			sb.append("\"");
 		}
 
 		if (dataDefinitionRules != null) {

@@ -74,6 +74,36 @@ public class DataRecordCollection {
 	protected Long dataDefinitionId;
 
 	@Schema
+	public String getDataRecordCollectionKey() {
+		return dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(String dataRecordCollectionKey) {
+		this.dataRecordCollectionKey = dataRecordCollectionKey;
+	}
+
+	@JsonIgnore
+	public void setDataRecordCollectionKey(
+		UnsafeSupplier<String, Exception>
+			dataRecordCollectionKeyUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionKey =
+				dataRecordCollectionKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dataRecordCollectionKey;
+
+	@Schema
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -192,6 +222,20 @@ public class DataRecordCollection {
 			sb.append("\"dataDefinitionId\": ");
 
 			sb.append(dataDefinitionId);
+		}
+
+		if (dataRecordCollectionKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataRecordCollectionKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dataRecordCollectionKey));
+
+			sb.append("\"");
 		}
 
 		if (description != null) {

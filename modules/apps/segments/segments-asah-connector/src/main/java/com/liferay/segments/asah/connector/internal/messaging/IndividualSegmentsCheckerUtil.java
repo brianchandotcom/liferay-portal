@@ -61,11 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(
-	immediate = true,
-	service = AsahFaroBackendIndividualSegmentsCheckerUtil.class
-)
-public class AsahFaroBackendIndividualSegmentsCheckerUtil {
+@Component(immediate = true, service = IndividualSegmentsCheckerUtil.class)
+public class IndividualSegmentsCheckerUtil {
 
 	public void checkIndividualSegments() throws PortalException {
 		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
@@ -340,7 +337,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 	private static final int _DELTA = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AsahFaroBackendIndividualSegmentsCheckerUtil.class);
+		IndividualSegmentsCheckerUtil.class);
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
 

@@ -42,9 +42,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = AsahFaroBackendMessageListener.class
+	service = CheckIndividualSegmentsMessageListener.class
 )
-public class AsahFaroBackendMessageListener extends BaseMessageListener {
+public class CheckIndividualSegmentsMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -73,16 +74,14 @@ public class AsahFaroBackendMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_asahFaroBackendIndividualSegmentsCheckerUtil.checkIndividualSegments();
+		_individualSegmentsCheckerUtil.checkIndividualSegments();
 	}
 
 	@Reference(unbind = "-")
-	protected void setAsahFaroBackendIndividualSegmentsCheckerUtil(
-		AsahFaroBackendIndividualSegmentsCheckerUtil
-			asahFaroBackendIndividualSegmentsCheckerUtil) {
+	protected void setIndividualSegmentsCheckerUtil(
+		IndividualSegmentsCheckerUtil individualSegmentsCheckerUtil) {
 
-		_asahFaroBackendIndividualSegmentsCheckerUtil =
-			asahFaroBackendIndividualSegmentsCheckerUtil;
+		_individualSegmentsCheckerUtil = individualSegmentsCheckerUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -97,8 +96,7 @@ public class AsahFaroBackendMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	private AsahFaroBackendIndividualSegmentsCheckerUtil
-		_asahFaroBackendIndividualSegmentsCheckerUtil;
+	private IndividualSegmentsCheckerUtil _individualSegmentsCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

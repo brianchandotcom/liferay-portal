@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -865,10 +864,8 @@ public class UserGroupRoleServiceTest {
 			long groupId, long roleId, User subjectUser, User objectUser)
 		throws Exception {
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			subjectUser);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(subjectUser));
 
 		_userGroupRoleService.deleteUserGroupRoles(
 			objectUser.getUserId(), groupId, new long[] {roleId});
@@ -878,10 +875,8 @@ public class UserGroupRoleServiceTest {
 			long groupId, long roleId, User subjectUser, User objectUser)
 		throws Exception {
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			subjectUser);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(subjectUser));
 
 		_userGroupRoleService.deleteUserGroupRoles(
 			new long[] {objectUser.getUserId()}, groupId, roleId);

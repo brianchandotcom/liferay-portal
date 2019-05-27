@@ -23,7 +23,7 @@ import java.util.List;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateStructureServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated

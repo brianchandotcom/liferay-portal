@@ -23,6 +23,8 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletBagFactory;
 
+import javax.servlet.ServletContext;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -45,7 +47,8 @@ public class PortletBagFactoryTest {
 	@Test
 	public void test1() throws Exception {
 		try {
-			PortletBagFactory portletBagFactory = new PortletBagFactory();
+			PortletBagFactory portletBagFactory = _createPortletBagFactory(
+				null, null, null);
 
 			portletBagFactory.create(new PortletImpl());
 
@@ -58,11 +61,10 @@ public class PortletBagFactoryTest {
 	@Test
 	public void test2() throws Exception {
 		try {
-			PortletBagFactory portletBagFactory = new PortletBagFactory();
-
 			Class<?> clazz = getClass();
 
-			portletBagFactory.setClassLoader(clazz.getClassLoader());
+			PortletBagFactory portletBagFactory = _createPortletBagFactory(
+				clazz.getClassLoader(), null, null);
 
 			portletBagFactory.create(new PortletImpl());
 
@@ -75,13 +77,10 @@ public class PortletBagFactoryTest {
 	@Test
 	public void test3() throws Exception {
 		try {
-			PortletBagFactory portletBagFactory = new PortletBagFactory();
-
 			Class<?> clazz = getClass();
 
-			portletBagFactory.setClassLoader(clazz.getClassLoader());
-
-			portletBagFactory.setServletContext(new MockServletContext());
+			PortletBagFactory portletBagFactory = _createPortletBagFactory(
+				clazz.getClassLoader(), new MockServletContext(), null);
 
 			portletBagFactory.create(new PortletImpl());
 
@@ -98,14 +97,10 @@ public class PortletBagFactoryTest {
 		portletImpl.setPortletApp(new PortletAppImpl(StringPool.BLANK));
 		portletImpl.setPortletClass(MVCPortlet.class.getName());
 
-		PortletBagFactory portletBagFactory = new PortletBagFactory();
-
 		Class<?> clazz = getClass();
 
-		portletBagFactory.setClassLoader(clazz.getClassLoader());
-
-		portletBagFactory.setServletContext(new MockServletContext());
-		portletBagFactory.setWARFile(false);
+		PortletBagFactory portletBagFactory = _createPortletBagFactory(
+			clazz.getClassLoader(), new MockServletContext(), false);
 
 		portletBagFactory.create(portletImpl);
 	}
@@ -116,16 +111,28 @@ public class PortletBagFactoryTest {
 
 		portletImpl.setPortletApp(new PortletAppImpl(StringPool.BLANK));
 
-		PortletBagFactory portletBagFactory = new PortletBagFactory();
-
 		Class<?> clazz = getClass();
 
-		portletBagFactory.setClassLoader(clazz.getClassLoader());
-
-		portletBagFactory.setServletContext(new MockServletContext());
-		portletBagFactory.setWARFile(false);
+		PortletBagFactory portletBagFactory = _createPortletBagFactory(
+			clazz.getClassLoader(), new MockServletContext(), false);
 
 		portletBagFactory.create(portletImpl, new MVCPortlet(), false);
+	}
+
+	private PortletBagFactory _createPortletBagFactory(
+		ClassLoader classLoader, ServletContext servletContext,
+		Boolean warFile) {
+
+		PortletBagFactory portletBagFactory = new PortletBagFactory();
+
+		portletBagFactory.setClassLoader(classLoader);
+		portletBagFactory.setServletContext(servletContext);
+
+		if (warFile != null) {
+			portletBagFactory.setWARFile(warFile);
+		}
+
+		return portletBagFactory;
 	}
 
 }

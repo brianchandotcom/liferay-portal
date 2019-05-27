@@ -71,8 +71,6 @@ import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
-import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
-import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
 import java.util.Enumeration;
 import java.util.Map;

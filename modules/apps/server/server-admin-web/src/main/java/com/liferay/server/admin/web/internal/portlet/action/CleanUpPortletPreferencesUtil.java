@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
+package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

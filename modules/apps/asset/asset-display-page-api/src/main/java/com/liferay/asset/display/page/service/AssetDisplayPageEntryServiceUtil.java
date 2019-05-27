@@ -39,6 +39,64 @@ public class AssetDisplayPageEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.asset.display.page.service.impl.AssetDisplayPageEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId, int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			type, serviceContext);
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			serviceContext);
+	}
+
+	public static void deleteAssetDisplayPageEntry(
+			long groupId, long classNameId, long classPK)
+		throws Exception {
+
+		getService().deleteAssetDisplayPageEntry(groupId, classNameId, classPK);
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			fetchAssetDisplayPageEntry(
+				long groupId, long classNameId, long classPK)
+		throws Exception {
+
+		return getService().fetchAssetDisplayPageEntry(
+			groupId, classNameId, classPK);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				long layoutPageTemplateEntryId) {
+
+		return getService().
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
+
+	public static int
+		getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+			long layoutPageTemplateEntryId) {
+
+		return getService().
+			getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -47,6 +105,16 @@ public class AssetDisplayPageEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			updateAssetDisplayPageEntry(
+				long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
+				int type)
+		throws Exception {
+
+		return getService().updateAssetDisplayPageEntry(
+			assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
 	}
 
 	public static AssetDisplayPageEntryService getService() {

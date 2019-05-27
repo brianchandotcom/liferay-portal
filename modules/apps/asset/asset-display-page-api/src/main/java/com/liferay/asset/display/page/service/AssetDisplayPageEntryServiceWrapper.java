@@ -36,6 +36,71 @@ public class AssetDisplayPageEntryServiceWrapper
 		_assetDisplayPageEntryService = assetDisplayPageEntryService;
 	}
 
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId, int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return _assetDisplayPageEntryService.addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return _assetDisplayPageEntryService.addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			serviceContext);
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntry(
+			long groupId, long classNameId, long classPK)
+		throws Exception {
+
+		_assetDisplayPageEntryService.deleteAssetDisplayPageEntry(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			fetchAssetDisplayPageEntry(
+				long groupId, long classNameId, long classPK)
+		throws Exception {
+
+		return _assetDisplayPageEntryService.fetchAssetDisplayPageEntry(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				long layoutPageTemplateEntryId) {
+
+		return _assetDisplayPageEntryService.
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
+
+	@Override
+	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+		long layoutPageTemplateEntryId) {
+
+		return _assetDisplayPageEntryService.
+			getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -44,6 +109,17 @@ public class AssetDisplayPageEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetDisplayPageEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
+			updateAssetDisplayPageEntry(
+				long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
+				int type)
+		throws Exception {
+
+		return _assetDisplayPageEntryService.updateAssetDisplayPageEntry(
+			assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
 	}
 
 	@Override

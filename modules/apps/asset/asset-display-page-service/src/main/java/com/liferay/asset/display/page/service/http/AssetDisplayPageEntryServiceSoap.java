@@ -14,11 +14,17 @@
 
 package com.liferay.asset.display.page.service.http;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil</code> service
+ * <code>AssetDisplayPageEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,160 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class AssetDisplayPageEntryServiceSoap {
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId, int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.display.page.model.AssetDisplayPageEntry
+				returnValue =
+					AssetDisplayPageEntryServiceUtil.addAssetDisplayPageEntry(
+						userId, groupId, classNameId, classPK,
+						layoutPageTemplateEntryId, type, serviceContext);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap
+			addAssetDisplayPageEntry(
+				long userId, long groupId, long classNameId, long classPK,
+				long layoutPageTemplateEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.display.page.model.AssetDisplayPageEntry
+				returnValue =
+					AssetDisplayPageEntryServiceUtil.addAssetDisplayPageEntry(
+						userId, groupId, classNameId, classPK,
+						layoutPageTemplateEntryId, serviceContext);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteAssetDisplayPageEntry(
+			long groupId, long classNameId, long classPK)
+		throws RemoteException {
+
+		try {
+			AssetDisplayPageEntryServiceUtil.deleteAssetDisplayPageEntry(
+				groupId, classNameId, classPK);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap
+			fetchAssetDisplayPageEntry(
+				long groupId, long classNameId, long classPK)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.display.page.model.AssetDisplayPageEntry
+				returnValue =
+					AssetDisplayPageEntryServiceUtil.fetchAssetDisplayPageEntry(
+						groupId, classNameId, classPK);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap[]
+				getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+					long layoutPageTemplateEntryId)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
+					returnValue =
+						AssetDisplayPageEntryServiceUtil.
+							getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+								layoutPageTemplateEntryId);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int
+			getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+				long layoutPageTemplateEntryId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				AssetDisplayPageEntryServiceUtil.
+					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						layoutPageTemplateEntryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap
+			updateAssetDisplayPageEntry(
+				long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
+				int type)
+		throws RemoteException {
+
+		try {
+			com.liferay.asset.display.page.model.AssetDisplayPageEntry
+				returnValue =
+					AssetDisplayPageEntryServiceUtil.
+						updateAssetDisplayPageEntry(
+							assetDisplayPageEntryId, layoutPageTemplateEntryId,
+							type);
+
+			return com.liferay.asset.display.page.model.
+				AssetDisplayPageEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AssetDisplayPageEntryServiceSoap.class);
+
 }

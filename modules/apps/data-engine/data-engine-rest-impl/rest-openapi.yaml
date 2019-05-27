@@ -733,6 +733,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
             responses:
                 204:
                     content:

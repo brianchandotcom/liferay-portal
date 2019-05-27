@@ -317,6 +317,17 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntry>
+		getSegmentsEntries(
+			long groupId, boolean active, String source, String type, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntries(
+			groupId, active, source, type, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry>
 		getSegmentsEntriesBySource(
 			String source, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

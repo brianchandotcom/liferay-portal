@@ -311,6 +311,26 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_A_S_T() throws Exception {
+		_persistence.countByG_A_S_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "", "");
+
+		_persistence.countByG_A_S_T(
+			0L, RandomTestUtil.randomBoolean(), "null", "null");
+
+		_persistence.countByG_A_S_T(
+			0L, RandomTestUtil.randomBoolean(), (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_A_S_TArrayable() throws Exception {
+		_persistence.countByG_A_S_T(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SegmentsEntry newSegmentsEntry = addSegmentsEntry();
 

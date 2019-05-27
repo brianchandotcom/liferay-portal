@@ -262,6 +262,11 @@ public interface SegmentsEntryLocalService
 		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, boolean active, String source, String type, int start,
+		int end, OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator);

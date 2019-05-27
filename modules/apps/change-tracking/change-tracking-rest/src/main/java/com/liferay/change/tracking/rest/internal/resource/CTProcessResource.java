@@ -129,7 +129,7 @@ public class CTProcessResource {
 		CTJaxRsUtil.checkCompany(companyId);
 
 		Stream<CTProcess> stream = _getCTProcesses(
-			companyId, 0, keywords, type, offset, limit, null
+			companyId, -1, keywords, type, offset, limit, null
 		).stream();
 
 		return stream.map(

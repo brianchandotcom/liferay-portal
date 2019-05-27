@@ -217,12 +217,12 @@ public class ChangeListsHistoryDisplayContext {
 		return _filterByStatus;
 	}
 
-	private String _getFilterByUser() {
+	private long _getFilterByUser() {
 		if (_filterByUser != null) {
 			return _filterByUser;
 		}
 
-		_filterByUser = ParamUtil.getString(_httpServletRequest, "user", "all");
+		_filterByUser = ParamUtil.getLong(_httpServletRequest, "user", -1);
 
 		return _filterByUser;
 	}
@@ -285,9 +285,8 @@ public class ChangeListsHistoryDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getFilterByUser(), "all"));
-						dropdownItem.setHref(_getPortletURL(), "user", "all");
+						dropdownItem.setActive(_getFilterByUser() == -1);
+						dropdownItem.setHref(_getPortletURL(), "user", -1);
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "all"));
 					});
@@ -408,7 +407,7 @@ public class ChangeListsHistoryDisplayContext {
 	private final CTEngineManager _ctEngineManager;
 	private final CTManager _ctManager;
 	private String _filterByStatus;
-	private String _filterByUser;
+	private Long _filterByUser;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;

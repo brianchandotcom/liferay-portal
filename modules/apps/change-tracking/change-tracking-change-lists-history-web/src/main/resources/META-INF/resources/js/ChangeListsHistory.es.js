@@ -9,6 +9,10 @@ import {Config} from 'metal-state';
 
 import templates from './ChangeListsHistory.soy';
 
+const TIMEOUT_FIRST = 3000;
+
+const TIMEOUT_INTERVAL = 60000;
+
 /**
  * Handles the tags of the selected file entries inside a modal.
  */
@@ -25,24 +29,14 @@ class ChangeListsHistory extends PortletBase {
 			method: 'GET'
 		};
 
-		const firstTimeout = 3000;
-		const intervalTimeout = 60000;
-
-		let sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
-
-		let urlProcesses = this.urlProcesses + '&type=' + this.filterStatus + '&offset=0&limit=5' + sort;
-
-		if (this.keywords) {
-			urlProcesses = urlProcesses + '&keywords=' + this.keywords;
-		}
+		let urlProcesses = this._getUrlProcesses();
 
 		this._fetchProcesses(urlProcesses, init);
 
 		let instance = this;
 
-		setTimeout(() => instance._fetchProcesses(urlProcesses, init), firstTimeout, urlProcesses, init);
-
-		setInterval(() => instance._fetchProcesses(urlProcesses, init), intervalTimeout, urlProcesses, init);
+		setTimeout(() => instance._fetchProcesses(urlProcesses, init), TIMEOUT_FIRST, urlProcesses, init);
+		setInterval(() => instance._fetchProcesses(urlProcesses, init), TIMEOUT_INTERVAL, urlProcesses, init);
 	}
 
 	static _getState(processEntryStatus) {
@@ -77,6 +71,10 @@ class ChangeListsHistory extends PortletBase {
 
 		let urlProcessUsers = this.urlProcessUsers + '&type=' + this.filterStatus + '&offset=0&limit=5';
 
+		if (this.keywords) {
+			urlProcessUsers = urlProcessUsers + '&keywords=' + this.keywords;
+		}
+
 		fetch(urlProcessUsers, init)
 			.then(r => r.json())
 			.then(response => this._populateProcessUsers(response))
@@ -95,6 +93,25 @@ class ChangeListsHistory extends PortletBase {
 					);
 				}
 			);
+	}
+
+	_getUrlProcesses() {
+		let sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
+
+		let urlProcesses = this.urlProcesses + '&type=' + this.filterStatus + '&offset=0&limit=5' + sort;
+
+		if (this.filterUser > 0) {
+			urlProcesses = urlProcesses + '&user=' + this.filterUser;
+		}
+		else {
+			urlProcesses += '&user=-1';
+		}
+
+		if (this.keywords) {
+			urlProcesses = urlProcesses + '&keywords=' + this.keywords;
+		}
+
+		return urlProcesses;
 	}
 
 	_populateProcessUsers(processUsers) {
@@ -117,12 +134,14 @@ class ChangeListsHistory extends PortletBase {
 						userFilterUrl.setParameter('user', processUser.userId);
 
 						if (filterByUserItems.findIndex(e => e.label === processUser.userName) < 0) {
-							filterByUserItems.push({
-								'active': false,
-								'href': userFilterUrl.toString(),
-								'label': processUser.userName,
-								'type': 'item'
-							});
+							filterByUserItems.push(
+								{
+									'active': this.filterUser === processUser.userId.toString(),
+									'href': userFilterUrl.toString(),
+									'label': processUser.userName,
+									'type': 'item'
+								}
+							);
 						}
 					}
 				);

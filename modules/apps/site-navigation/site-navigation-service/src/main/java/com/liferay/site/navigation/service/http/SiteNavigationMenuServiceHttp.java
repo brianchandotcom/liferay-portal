@@ -57,7 +57,7 @@ public class SiteNavigationMenuServiceHttp {
 	public static com.liferay.site.navigation.model.SiteNavigationMenu
 			addSiteNavigationMenu(
 				HttpPrincipal httpPrincipal, long groupId, String name,
-				int type,
+				int type, boolean auto,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -65,6 +65,48 @@ public class SiteNavigationMenuServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "addSiteNavigationMenu",
 				_addSiteNavigationMenuParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, name, type, auto, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.site.navigation.model.SiteNavigationMenu)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenu
+			addSiteNavigationMenu(
+				HttpPrincipal httpPrincipal, long groupId, String name,
+				int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SiteNavigationMenuServiceUtil.class, "addSiteNavigationMenu",
+				_addSiteNavigationMenuParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, type, serviceContext);
@@ -105,7 +147,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "addSiteNavigationMenu",
-				_addSiteNavigationMenuParameterTypes1);
+				_addSiteNavigationMenuParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, serviceContext);
@@ -145,7 +187,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "deleteSiteNavigationMenu",
-				_deleteSiteNavigationMenuParameterTypes2);
+				_deleteSiteNavigationMenuParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId);
@@ -185,7 +227,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "fetchSiteNavigationMenu",
-				_fetchSiteNavigationMenuParameterTypes3);
+				_fetchSiteNavigationMenuParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId);
@@ -224,7 +266,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "getSiteNavigationMenus",
-				_getSiteNavigationMenusParameterTypes4);
+				_getSiteNavigationMenusParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -259,7 +301,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "getSiteNavigationMenus",
-				_getSiteNavigationMenusParameterTypes5);
+				_getSiteNavigationMenusParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end, orderByComparator);
@@ -296,7 +338,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "getSiteNavigationMenus",
-				_getSiteNavigationMenusParameterTypes6);
+				_getSiteNavigationMenusParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, keywords, start, end, orderByComparator);
@@ -329,7 +371,7 @@ public class SiteNavigationMenuServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class,
 				"getSiteNavigationMenusCount",
-				_getSiteNavigationMenusCountParameterTypes7);
+				_getSiteNavigationMenusCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -359,7 +401,7 @@ public class SiteNavigationMenuServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class,
 				"getSiteNavigationMenusCount",
-				_getSiteNavigationMenusCountParameterTypes8);
+				_getSiteNavigationMenusCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, keywords);
@@ -393,7 +435,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "updateSiteNavigationMenu",
-				_updateSiteNavigationMenuParameterTypes9);
+				_updateSiteNavigationMenuParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId, type, auto, serviceContext);
@@ -435,7 +477,7 @@ public class SiteNavigationMenuServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuServiceUtil.class, "updateSiteNavigationMenu",
-				_updateSiteNavigationMenuParameterTypes10);
+				_updateSiteNavigationMenuParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId, name, serviceContext);
@@ -472,42 +514,47 @@ public class SiteNavigationMenuServiceHttp {
 
 	private static final Class<?>[] _addSiteNavigationMenuParameterTypes0 =
 		new Class[] {
-			long.class, String.class, int.class,
+			long.class, String.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSiteNavigationMenuParameterTypes1 =
 		new Class[] {
+			long.class, String.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _addSiteNavigationMenuParameterTypes2 =
+		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSiteNavigationMenuParameterTypes2 =
+	private static final Class<?>[] _deleteSiteNavigationMenuParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchSiteNavigationMenuParameterTypes3 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getSiteNavigationMenusParameterTypes4 =
+	private static final Class<?>[] _fetchSiteNavigationMenuParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getSiteNavigationMenusParameterTypes5 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSiteNavigationMenusParameterTypes6 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSiteNavigationMenusParameterTypes6 =
+	private static final Class<?>[] _getSiteNavigationMenusParameterTypes7 =
 		new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getSiteNavigationMenusCountParameterTypes7 = new Class[] {long.class};
+		_getSiteNavigationMenusCountParameterTypes8 = new Class[] {long.class};
 	private static final Class<?>[]
-		_getSiteNavigationMenusCountParameterTypes8 = new Class[] {
+		_getSiteNavigationMenusCountParameterTypes9 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes9 =
+	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes10 =
 		new Class[] {
 			long.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes10 =
+	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes11 =
 		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

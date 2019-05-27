@@ -1,6 +1,7 @@
 @default = "confirm"
 @summary = "Execute the confirmation of a confirmation window"
 definition {
+
 	function confirm {
 		selenium.getConfirmation();
 
@@ -10,4 +11,5 @@ definition {
 
 		WaitForSPARefresh();
 	}
+
 }

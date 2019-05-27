@@ -1,4 +1,5 @@
 definition {
+
 	macro addDraft {
 		BlogsNavigator.gotoAddEntry();
 
@@ -147,6 +148,8 @@ definition {
 
 	macro addEntryWithUploadedCoverImage {
 		BlogsNavigator.gotoAddEntry();
+
+		Pause(locator1 = "5000");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -549,4 +552,5 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");
 	}
+
 }

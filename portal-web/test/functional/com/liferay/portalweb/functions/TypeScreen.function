@@ -1,8 +1,10 @@
 @default = "typeScreen"
 definition {
+
 	function typeScreen {
 		WaitForSPARefresh();
 
 		selenium.typeScreen();
 	}
+
 }

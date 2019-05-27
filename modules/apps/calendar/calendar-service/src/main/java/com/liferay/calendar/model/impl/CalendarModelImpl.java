@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -289,6 +292,32 @@ public class CalendarModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Calendar>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Calendar.class.getClassLoader(), Calendar.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<Calendar> constructor =
+				(Constructor<Calendar>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Calendar, Object>>
@@ -978,8 +1007,7 @@ public class CalendarModelImpl
 	@Override
 	public Calendar toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Calendar)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1247,11 +1275,8 @@ public class CalendarModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Calendar.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Calendar.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Calendar>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -127,6 +127,8 @@ public class SearchBarPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getKeywordsOptional()
 		).setKeywordsParameterName(
 			keywordsParameterName
+		).setPaginationStartParameterName(
+			getPaginationStartParameterName(portletSharedSearchResponse)
 		).setScopeParameterName(
 			scopeParameterName
 		).setScopeParameterValue(
@@ -154,6 +156,17 @@ public class SearchBarPortlet extends MVCPortlet {
 
 		return optional.orElse(
 			searchBarPortletPreferences.getKeywordsParameterName());
+	}
+
+	protected String getPaginationStartParameterName(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getSearchResponse();
+
+		SearchRequest request = searchResponse.getRequest();
+
+		return request.getPaginationStartParameterName();
 	}
 
 	protected boolean isEmptySearchEnabled(

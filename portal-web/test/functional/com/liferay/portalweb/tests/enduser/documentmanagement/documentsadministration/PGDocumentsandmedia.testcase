@@ -1,5 +1,6 @@
 @component-name = "portal-document-management"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
@@ -1730,4 +1731,5 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
+
 }

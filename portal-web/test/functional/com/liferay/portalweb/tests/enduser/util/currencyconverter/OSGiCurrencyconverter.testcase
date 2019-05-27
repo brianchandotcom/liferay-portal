@@ -1,5 +1,6 @@
 @component-name = "portal-util-misc"
 definition {
+
 	property osgi.app.includes = "currency-converter";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -41,4 +42,5 @@ definition {
 			currencyTo = "EUR",
 			currencyValue = "4");
 	}
+
 }

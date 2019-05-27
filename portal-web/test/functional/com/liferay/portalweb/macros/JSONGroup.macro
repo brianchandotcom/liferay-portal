@@ -349,4 +349,5 @@ definition {
 
 		JSONGroup._deleteGroup(groupId = "${groupId}");
 	}
+
 }

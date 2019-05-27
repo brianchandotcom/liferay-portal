@@ -87,6 +87,16 @@ public class OrganizationSerDes {
 			sb.append(String.valueOf(organization.getContactInformation()));
 		}
 
+		if (organization.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(organization.getCustomFields()));
+		}
+
 		if (organization.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -267,6 +277,14 @@ public class OrganizationSerDes {
 				String.valueOf(organization.getContactInformation()));
 		}
 
+		if (organization.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields", String.valueOf(organization.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(organization.getDateCreated()));
@@ -403,6 +421,12 @@ public class OrganizationSerDes {
 					organization.setContactInformation(
 						ContactInformationSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					organization.setCustomFields(
+						OrganizationSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

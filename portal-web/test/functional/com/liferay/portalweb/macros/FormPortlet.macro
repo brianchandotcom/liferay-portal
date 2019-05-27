@@ -1,4 +1,5 @@
 definition {
+
 	var validationErrorMessage = "This field is required.";
 
 	macro changeLocale {
@@ -97,4 +98,5 @@ definition {
 			locator1 = "FormPortlet#SUCCESS_PAGE_DESCRIPTION",
 			value1 = "${successPageDescription}");
 	}
+
 }

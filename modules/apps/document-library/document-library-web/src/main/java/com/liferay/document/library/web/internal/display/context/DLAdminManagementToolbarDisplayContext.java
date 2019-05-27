@@ -248,7 +248,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(FileEntry fileEntry)
+	public List<String> getAvailableActions(FileEntry fileEntry)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
@@ -295,7 +295,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		return availableActionDropdownItems;
 	}
 
-	public List<String> getAvailableActionDropdownItems(Folder folder)
+	public List<String> getAvailableActions(Folder folder)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

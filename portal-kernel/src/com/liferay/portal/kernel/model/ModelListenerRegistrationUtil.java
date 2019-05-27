@@ -71,14 +71,7 @@ public class ModelListenerRegistrationUtil {
 		List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
 		if (modelListeners == null) {
-			modelListeners = new ArrayList<>();
-
-			List<ModelListener<?>> previousModelListeners =
-				_modelListeners.putIfAbsent(clazz, modelListeners);
-
-			if (previousModelListeners != null) {
-				modelListeners = previousModelListeners;
-			}
+			return new ModelListener[0];
 		}
 
 		return modelListeners.toArray(new ModelListener[0]);
@@ -174,6 +167,10 @@ public class ModelListenerRegistrationUtil {
 
 			if (modelListeners != null) {
 				modelListeners.remove(modelListener);
+
+				if (modelListeners.isEmpty()) {
+					_modelListeners.remove(modelClass);
+				}
 			}
 		}
 

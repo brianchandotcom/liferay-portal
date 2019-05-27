@@ -370,7 +370,10 @@ public class StructuredContentResourceImpl
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(),
+					JournalArticle.class, contextCompany.getCompanyId(),
+					structuredContent.getCustomFields(),
 					journalArticle.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getViewableByAsString())));
 	}
 
@@ -459,7 +462,10 @@ public class StructuredContentResourceImpl
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(),
+					JournalArticle.class, contextCompany.getCompanyId(),
+					structuredContent.getCustomFields(),
 					journalArticle.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getViewableByAsString())));
 	}
 
@@ -533,7 +539,10 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, null,
 				ServiceContextUtil.createServiceContext(
 					structuredContent.getKeywords(),
-					structuredContent.getTaxonomyCategoryIds(), siteId,
+					structuredContent.getTaxonomyCategoryIds(),
+					JournalArticle.class, contextCompany.getCompanyId(),
+					structuredContent.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
 					structuredContent.getViewableByAsString())));
 	}
 

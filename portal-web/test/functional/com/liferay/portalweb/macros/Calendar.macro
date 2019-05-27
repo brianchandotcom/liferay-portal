@@ -1,4 +1,5 @@
 definition {
+
 	var calendarDefault = "Yes";
 	var calendarDescription = "";
 	var siteName = "Liferay";
@@ -834,4 +835,5 @@ definition {
 			locator1 = "Calendar#SMALL_CALENDAR_WEEK_START_DAY",
 			value1 = "${weekStartDay}");
 	}
+
 }

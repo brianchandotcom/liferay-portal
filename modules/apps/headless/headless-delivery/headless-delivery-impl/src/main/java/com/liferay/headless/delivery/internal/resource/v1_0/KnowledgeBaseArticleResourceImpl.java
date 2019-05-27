@@ -258,7 +258,10 @@ public class KnowledgeBaseArticleResourceImpl
 					).orElse(
 						new Long[0]
 					),
+					KBArticle.class, contextCompany.getCompanyId(),
+					knowledgeBaseArticle.getCustomFields(),
 					knowledgeBaseArticle.getSiteId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
@@ -288,7 +291,10 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription(), null, null, null,
 				ServiceContextUtil.createServiceContext(
 					knowledgeBaseArticle.getKeywords(),
-					knowledgeBaseArticle.getTaxonomyCategoryIds(), siteId,
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					KBArticle.class, contextCompany.getCompanyId(),
+					knowledgeBaseArticle.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
@@ -342,7 +348,8 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, knowledgeBaseArticleResourcePrimKey));
+				contextAcceptLanguage.getPreferredLocale(),
+				knowledgeBaseArticleResourcePrimKey));
 	}
 
 	private static final EntityModel _entityModel =

@@ -43,6 +43,7 @@
 			label=escape(label)
 			name="${namespacedFieldName}Title"
 			readonly="readonly"
+			required=required
 			type="text"
 			value=selectedAssetTitle
 		/>
@@ -57,11 +58,7 @@
 			name=namespacedFieldName
 			type="hidden"
 			value=fieldRawValue
-		>
-			<#if required>
-				<@liferay_aui.validator name="required" />
-			</#if>
-		</@>
+		/>
 
 		<#if validator.isNotNull(message)>
 			<div class="form-feedback-item" id="${portletNamespace}${namespacedFieldName}Message">${message}</div>

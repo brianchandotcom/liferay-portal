@@ -1,5 +1,6 @@
 @component-name = "portal-util-misc"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Nested Portlets";
@@ -60,4 +61,5 @@ definition {
 			portletColumnNumberTo = "1",
 			portletName = "Web Content Display");
 	}
+
 }

@@ -84,6 +84,24 @@ ToggleDisableInputs.STATE = {
 
 	label: {
 		validator: core.isString
+	},
+
+	/**
+	 * Label of the "off" state
+	 * @type {String}
+	 */
+
+	labelOff: {
+		validator: core.isString
+	},
+
+	/**
+	 * Label of the "on" state
+	 * @type {String}
+	 */
+
+	labelOn: {
+		validator: core.isString
 	}
 };
 

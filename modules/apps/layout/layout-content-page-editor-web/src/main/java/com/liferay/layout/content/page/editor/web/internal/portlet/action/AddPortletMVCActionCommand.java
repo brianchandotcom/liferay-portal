@@ -25,25 +25,32 @@ import com.liferay.fragment.util.FragmentPortletSetupUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -80,9 +87,17 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		String portletId = ParamUtil.getString(actionRequest, "portletId");
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
+		String portletId = PortletIdCodec.decodePortletName(
+			ParamUtil.getString(actionRequest, "portletId"));
+
+		PortletPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), layout.getGroupId(), layout,
+			portletId, ActionKeys.ADD_TO_PAGE);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -94,6 +109,13 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 			if (portlet.isInstanceable()) {
 				instanceId = PortletIdCodec.generateInstanceId();
+			}
+			else if (_portletPreferencesLocalService.getPortletPreferencesCount(
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+						portletId) > 0) {
+
+				throw new PortletIdException(
+					"Cannot add non-instanceable portlet more than once");
 			}
 
 			String html = _getPortletFragmentEntryLinkHTML(
@@ -201,9 +223,15 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -223,6 +226,32 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, AssetListEntrySegmentsEntryRel>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AssetListEntrySegmentsEntryRel.class.getClassLoader(),
+			AssetListEntrySegmentsEntryRel.class, ModelWrapper.class);
+
+		try {
+			Constructor<AssetListEntrySegmentsEntryRel> constructor =
+				(Constructor<AssetListEntrySegmentsEntryRel>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -573,10 +602,8 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 	@Override
 	public AssetListEntrySegmentsEntryRel toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(AssetListEntrySegmentsEntryRel)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -850,11 +877,9 @@ public class AssetListEntrySegmentsEntryRelModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AssetListEntrySegmentsEntryRel.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AssetListEntrySegmentsEntryRel.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, AssetListEntrySegmentsEntryRel>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

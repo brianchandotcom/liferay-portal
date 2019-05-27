@@ -67,9 +67,9 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 	rightTitle="available"
 />
 
-<h5>
+<label class="control-label" for="<portlet:namespace />typesOptions">
 	<liferay-ui:message key="display-style" />
-</h5>
+</label>
 
 <div class="form-group" id="<portlet:namespace />typesOptions">
 

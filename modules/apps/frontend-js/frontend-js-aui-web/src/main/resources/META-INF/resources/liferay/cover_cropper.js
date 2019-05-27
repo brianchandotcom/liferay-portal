@@ -162,8 +162,8 @@ AUI.add(
 
 						var imagePos = image.getXY();
 
-						var cropRegion = instance._getCropRegion(
-							image,
+						var cropRegion = Liferay.Util.getCropRegion(
+							image._node,
 							{
 								height: imageContainer.height(),
 								x: containerPos[0] - imagePos[0],
@@ -183,6 +183,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'liferay-crop-region', 'plugin']
+		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'plugin']
 	}
 );

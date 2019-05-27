@@ -1,5 +1,6 @@
 @component-name = "portal-plugins-deployment"
 definition {
+
 	property testray.main.component.name = "Plugin Installer";
 
 	setUp {
@@ -17,4 +18,5 @@ definition {
 
 		AppManager.viewAppCP(appName = "${appName}");
 	}
+
 }

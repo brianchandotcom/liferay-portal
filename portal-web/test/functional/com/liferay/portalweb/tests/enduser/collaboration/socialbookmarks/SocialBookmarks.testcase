@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Social Bookmarks";
@@ -188,4 +189,5 @@ definition {
 
 		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Twitter,Facebook,LinkedIn,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot");
 	}
+
 }

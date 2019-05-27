@@ -1,6 +1,7 @@
 @default = "assertConfirmation"
 @summary = "Assert that the text within the confirmation window equals the value '${value1}' and execute the confirmation"
 definition {
+
 	function assertConfirmation {
 		selenium.assertConfirmation();
 
@@ -38,4 +39,5 @@ definition {
 
 		WaitForSPARefresh();
 	}
+
 }

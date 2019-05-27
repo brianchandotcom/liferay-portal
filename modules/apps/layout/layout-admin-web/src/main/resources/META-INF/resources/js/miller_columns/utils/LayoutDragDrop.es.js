@@ -69,7 +69,10 @@ class LayoutDragDrop extends State {
 		const targetItem = data.target;
 
 		if (targetItem) {
-			const mouseY = data.originalEvent.clientY;
+			const mouseY = data.originalEvent ?
+				data.originalEvent.clientY :
+				data.relativeY;
+
 			const placeholderItemRegion = position.getRegion(data.placeholder);
 			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
 			const targetItemRegion = position.getRegion(targetItem);

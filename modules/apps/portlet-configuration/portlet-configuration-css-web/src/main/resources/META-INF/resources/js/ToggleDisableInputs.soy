@@ -5,6 +5,8 @@
  *
  * @param? checked
  * @param label
+ * @param? labelOff
+ * @param? labelOn
  * @param? name
  *
  */
@@ -30,7 +32,21 @@
 			<span class="toggle-switch-label">{$label}</span>
 
 			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" data-label-off="NO" data-label-on="YES"></span>
+				{let $defaultLabelOff kind="text"}
+					{msg desc=""}no{/msg}
+				{/let}
+
+				{let $defaultLabelOn kind="text"}
+					{msg desc=""}yes{/msg}
+				{/let}
+
+				{let $spanAttributes kind="attributes"}
+					class="toggle-switch-handle"
+					data-label-off="{$labelOff ?: $defaultLabelOff}"
+					data-label-on="{$labelOn ?: $defaultLabelOn}"
+				{/let}
+
+				<span {$spanAttributes}></span>
 			</span>
 		</label>
 	</div>

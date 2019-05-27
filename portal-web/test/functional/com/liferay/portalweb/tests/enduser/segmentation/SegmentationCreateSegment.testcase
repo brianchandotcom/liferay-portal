@@ -1,0 +1,55 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "People",
+				panel = "Site Administration",
+				portlet = "Segments");
+
+			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+				Segmentation.tearDown();
+			}
+		}
+	}
+
+	@description = "Validate if the user can create a segment"
+	@priority = "5"
+	test AddSegment {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "AddSegment Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

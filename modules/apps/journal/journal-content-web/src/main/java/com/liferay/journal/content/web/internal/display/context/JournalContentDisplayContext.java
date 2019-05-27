@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -303,6 +304,34 @@ public class JournalContentDisplayContext {
 		}
 
 		return assetRendererFactory.getAssetRenderer(article, 0);
+	}
+
+	public ContentMetadataAssetAddonEntry getContentMetadataAssetAddonEntry(
+		String key) {
+
+		String contentMetadataAssetAddonEntryKeysString =
+			_journalContentPortletInstanceConfiguration.
+				contentMetadataAssetAddonEntryKeys();
+
+		if (Validator.isNull(contentMetadataAssetAddonEntryKeysString)) {
+			return null;
+		}
+
+		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
+			contentMetadataAssetAddonEntryKeysString);
+
+		if (ArrayUtil.contains(contentMetadataAssetAddonEntryKeys, key)) {
+			ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry =
+				_contentMetadataAssetAddonEntryMap.getService(key);
+
+			if ((contentMetadataAssetAddonEntry != null) &&
+				contentMetadataAssetAddonEntry.isEnabled()) {
+
+				return contentMetadataAssetAddonEntry;
+			}
+		}
+
+		return null;
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {

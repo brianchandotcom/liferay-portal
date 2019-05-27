@@ -34,6 +34,9 @@ import com.liferay.subscription.model.SubscriptionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -228,6 +231,32 @@ public class SubscriptionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Subscription>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Subscription.class.getClassLoader(), Subscription.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<Subscription> constructor =
+				(Constructor<Subscription>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Subscription, Object>>
@@ -537,8 +566,7 @@ public class SubscriptionModelImpl
 	@Override
 	public Subscription toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Subscription)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -768,11 +796,8 @@ public class SubscriptionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Subscription.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Subscription.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Subscription>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _subscriptionId;

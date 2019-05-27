@@ -1,4 +1,5 @@
 definition {
+
 	macro addDynamicSelection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Selection");
 
@@ -125,4 +126,5 @@ definition {
 
 		AssertElementPresent(locator1 = "AssetLists#ASSET_LIST_USAGES");
 	}
+
 }

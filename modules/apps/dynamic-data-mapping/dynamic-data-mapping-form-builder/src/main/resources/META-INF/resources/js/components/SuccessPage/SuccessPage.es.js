@@ -5,17 +5,6 @@ import {Config} from 'metal-state';
 import {setValue} from '../../util/i18n.es';
 
 class SucessPage extends Component {
-	static STATE = {
-
-		/**
-		 * @instance
-		 * @memberof SucessPage
-		 * @type {?object}
-		 */
-
-		successPageSettings: Config.object().value({})
-	}
-
 	prepareStateForRender(state) {
 		const {store} = this.context;
 		const {editingLanguageId} = store.props;
@@ -39,6 +28,17 @@ class SucessPage extends Component {
 		dispatch('successPageChanged', setValue(successPageSettings, editingLanguageId, setting, value));
 	}
 }
+
+SucessPage.STATE = {
+
+	/**
+	 * @instance
+	 * @memberof SucessPage
+	 * @type {?object}
+	 */
+
+	successPageSettings: Config.object().value({})
+};
 
 Soy.register(SucessPage, templates);
 

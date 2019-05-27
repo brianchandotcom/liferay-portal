@@ -41,6 +41,9 @@ import com.liferay.wiki.model.WikiPageSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -331,6 +334,32 @@ public class WikiPageModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WikiPage>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WikiPage.class.getClassLoader(), WikiPage.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<WikiPage> constructor =
+				(Constructor<WikiPage>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<WikiPage, Object>>
@@ -1220,8 +1249,7 @@ public class WikiPageModelImpl
 	@Override
 	public WikiPage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WikiPage)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1595,11 +1623,8 @@ public class WikiPageModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WikiPage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WikiPage.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WikiPage>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

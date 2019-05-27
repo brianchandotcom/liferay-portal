@@ -833,7 +833,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 					String name = file.getName();
 
-					if (name.endsWith(".jar")) {
+					if (name.endsWith(".bin") || name.endsWith(".jar")) {
 						Files.delete(filePath);
 
 						return FileVisitResult.CONTINUE;

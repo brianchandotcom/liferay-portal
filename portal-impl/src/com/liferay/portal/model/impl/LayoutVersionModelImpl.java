@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -298,6 +301,32 @@ public class LayoutVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, LayoutVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			LayoutVersion.class.getClassLoader(), LayoutVersion.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<LayoutVersion> constructor =
+				(Constructor<LayoutVersion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<LayoutVersion, Object>>
@@ -1863,8 +1892,7 @@ public class LayoutVersionModelImpl
 	@Override
 	public LayoutVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LayoutVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -2333,11 +2361,8 @@ public class LayoutVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LayoutVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LayoutVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LayoutVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _layoutVersionId;
 	private int _version;

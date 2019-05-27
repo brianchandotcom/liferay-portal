@@ -1,4 +1,5 @@
 definition {
+
 	macro _clickAddPortlet {
 		var browserType = PropsUtil.get("browser.type");
 
@@ -495,4 +496,5 @@ definition {
 	macro waitForForm {
 		AssertElementNotPresent(locator1 = "//fieldset[@disabled]");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro viewLiferayCloudDashboard {
 		Navigator.openSpecificURL(url = "http://localhost:8983/solr/#/~cloud");
 
@@ -24,4 +25,5 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Updating cluster state from ZooKeeper");
 	}
+
 }

@@ -36,6 +36,9 @@ import com.liferay.sync.model.SyncDeviceSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -280,6 +283,32 @@ public class SyncDeviceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SyncDevice>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SyncDevice.class.getClassLoader(), SyncDevice.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SyncDevice> constructor =
+				(Constructor<SyncDevice>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SyncDevice, Object>>
@@ -590,8 +619,7 @@ public class SyncDeviceModelImpl
 	@Override
 	public SyncDevice toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDevice)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -825,11 +853,8 @@ public class SyncDeviceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDevice.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDevice.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SyncDevice>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -232,6 +235,32 @@ public class MBDiscussionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, MBDiscussion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			MBDiscussion.class.getClassLoader(), MBDiscussion.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<MBDiscussion> constructor =
+				(Constructor<MBDiscussion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<MBDiscussion, Object>>
@@ -571,8 +600,7 @@ public class MBDiscussionModelImpl
 	@Override
 	public MBDiscussion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBDiscussion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -815,11 +843,8 @@ public class MBDiscussionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBDiscussion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBDiscussion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBDiscussion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

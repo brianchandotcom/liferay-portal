@@ -81,7 +81,7 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(KBComment kbComment)
+	public List<String> getAvailableActions(KBComment kbComment)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

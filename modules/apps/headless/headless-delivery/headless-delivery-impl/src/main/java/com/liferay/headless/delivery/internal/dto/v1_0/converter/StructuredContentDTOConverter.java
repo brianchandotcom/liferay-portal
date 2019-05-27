@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
@@ -116,6 +117,9 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(journalArticle.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					journalArticle.getCompanyId(), journalArticle.getId(),
+					JournalArticle.class, dtoConverterContext.getLocale());
 				dateCreated = journalArticle.getCreateDate();
 				dateModified = journalArticle.getModifiedDate();
 				datePublished = journalArticle.getDisplayDate();

@@ -1,4 +1,5 @@
 definition {
+
 	macro _editFieldLabel {
 		DynamicDataMapping.editFieldSettings(fieldFieldLabel = "${field}");
 
@@ -816,4 +817,5 @@ definition {
 				value1 = "${fieldReadOnly}");
 		}
 	}
+
 }

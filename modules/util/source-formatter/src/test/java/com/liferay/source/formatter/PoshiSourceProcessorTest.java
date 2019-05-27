@@ -25,7 +25,7 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testDuplicatedParameters() throws Exception {
 		test(
 			"PoshiDuplicatedParameters.testmacro",
-			"Duplicate parameter 'userScreenName'", 4);
+			"Duplicate parameter 'userScreenName'", 5);
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be a line break after ';'",
 				"There should be a line break after ';'"
 			},
-			new Integer[] {2, 3, 17, 18});
+			new Integer[] {3, 4, 18, 19});
 	}
 
 	@Test
@@ -61,6 +61,11 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testmacro");
+	}
+
+	@Test
+	public void testMissingEmptyLines() throws Exception {
+		test("MissingEmptyLines.testmacro");
 	}
 
 }

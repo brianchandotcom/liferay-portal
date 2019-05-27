@@ -31,6 +31,9 @@ import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntryMo
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -204,6 +207,32 @@ public class NestedSetsTreeEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, NestedSetsTreeEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			NestedSetsTreeEntry.class.getClassLoader(),
+			NestedSetsTreeEntry.class, ModelWrapper.class);
+
+		try {
+			Constructor<NestedSetsTreeEntry> constructor =
+				(Constructor<NestedSetsTreeEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<NestedSetsTreeEntry, Object>>
@@ -443,8 +472,7 @@ public class NestedSetsTreeEntryModelImpl
 	@Override
 	public NestedSetsTreeEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (NestedSetsTreeEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -619,11 +647,8 @@ public class NestedSetsTreeEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		NestedSetsTreeEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		NestedSetsTreeEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, NestedSetsTreeEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _nestedSetsTreeEntryId;
 	private long _groupId;

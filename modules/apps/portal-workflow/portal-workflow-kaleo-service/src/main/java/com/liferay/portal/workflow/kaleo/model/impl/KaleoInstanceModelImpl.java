@@ -32,6 +32,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -245,6 +248,32 @@ public class KaleoInstanceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, KaleoInstance>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KaleoInstance.class.getClassLoader(), KaleoInstance.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<KaleoInstance> constructor =
+				(Constructor<KaleoInstance>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<KaleoInstance, Object>>
@@ -691,8 +720,7 @@ public class KaleoInstanceModelImpl
 	@Override
 	public KaleoInstance toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoInstance)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -990,11 +1018,8 @@ public class KaleoInstanceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoInstance.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoInstance.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoInstance>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _kaleoInstanceId;

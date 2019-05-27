@@ -1,4 +1,5 @@
 definition {
+
 	macro adaptAllImages {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Adapt All Images");
 
@@ -121,14 +122,10 @@ definition {
 			locator1 = "AdaptiveMediaTable#STATE",
 			value1 = "Disabled");
 
-		if (isSet(percentAdapted)) {
-			var key_percentAdapted = "${percentAdapted}";
-
-			AssertCssValue(
-				locator1 = "AdaptiveMediaTable#PROGRESS_BAR_COLOR",
-				locator2 = "opacity",
-				value1 = "0.5");
-		}
+		AssertCssValue(
+			locator1 = "AdaptiveMediaTable#PROGRESS_BAR_COLOR",
+			locator2 = "opacity",
+			value1 = "0.5");
 	}
 
 	macro editImageResolution {
@@ -284,4 +281,5 @@ definition {
 
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");
 	}
+
 }

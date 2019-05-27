@@ -1437,6 +1437,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (knowledgeBaseArticle.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (knowledgeBaseArticle.getDescription() == null) {
 					valid = false;
@@ -1634,6 +1642,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				if (!Objects.deepEquals(
 						knowledgeBaseArticle1.getCreator(),
 						knowledgeBaseArticle2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle1.getCustomFields(),
+						knowledgeBaseArticle2.getCustomFields())) {
 
 					return false;
 				}
@@ -1901,6 +1920,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

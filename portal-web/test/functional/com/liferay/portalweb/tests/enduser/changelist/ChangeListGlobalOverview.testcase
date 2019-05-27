@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change Lists";
@@ -14,7 +15,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList(gotoOverview = "true");
+		ChangeList.enableChangeList();
+
+		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
+
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
 	}
 
 	tearDown {
@@ -30,6 +38,8 @@ definition {
 				portlet = "Settings");
 
 			ChangeList.disableChangeList();
+
+			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 		}
 	}
 
@@ -345,4 +355,5 @@ definition {
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
 			value1 = "Change List Name");
 	}
+
 }

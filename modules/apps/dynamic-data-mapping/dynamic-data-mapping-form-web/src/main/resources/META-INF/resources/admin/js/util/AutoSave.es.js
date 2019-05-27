@@ -6,14 +6,6 @@ import {Config} from 'metal-state';
 import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/js/util/fetch.es';
 
 class AutoSave extends Component {
-	static PROPS = {
-		form: Config.any(),
-		interval: Config.number().setter('_setInterval'),
-		saveAsDraft: Config.bool().value(true),
-		stateSyncronizer: Config.any(),
-		url: Config.string()
-	};
-
 	created() {
 		const currentState = this.getCurrentState();
 		const currentStateHash = this.getStateHash(currentState);
@@ -160,5 +152,13 @@ class AutoSave extends Component {
 		return minutes * 60000;
 	}
 }
+
+AutoSave.PROPS = {
+	form: Config.any(),
+	interval: Config.number().setter('_setInterval'),
+	saveAsDraft: Config.bool().value(true),
+	stateSyncronizer: Config.any(),
+	url: Config.string()
+};
 
 export default AutoSave;

@@ -22,6 +22,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <div class="visible-interaction">
 	<liferay-ui:icon-menu
+		cssClass="btn btn-monospaced btn-sm"
 		direction="left-side"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"

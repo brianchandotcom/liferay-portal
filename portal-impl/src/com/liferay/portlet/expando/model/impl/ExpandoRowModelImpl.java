@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -204,6 +207,32 @@ public class ExpandoRowModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ExpandoRow>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ExpandoRow.class.getClassLoader(), ExpandoRow.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ExpandoRow> constructor =
+				(Constructor<ExpandoRow>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ExpandoRow, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ExpandoRow, Object>>
@@ -321,8 +350,7 @@ public class ExpandoRowModelImpl
 	@Override
 	public ExpandoRow toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ExpandoRow)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -498,11 +526,8 @@ public class ExpandoRowModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ExpandoRow.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ExpandoRow.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ExpandoRow>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _rowId;
 	private long _companyId;

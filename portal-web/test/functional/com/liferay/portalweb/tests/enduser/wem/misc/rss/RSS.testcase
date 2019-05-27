@@ -1,5 +1,6 @@
 @component-name = "portal-rss"
 definition {
+
 	property osgi.module.configuration.file.names = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration.config";
 	property osgi.module.configurations = "com.liferay.portlet.display-category=&quot;category.cms&quot;";
 	property portal.release = "true";
@@ -608,4 +609,5 @@ definition {
 
 		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
 	}
+
 }

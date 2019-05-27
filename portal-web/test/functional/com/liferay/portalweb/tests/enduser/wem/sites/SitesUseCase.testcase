@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Site Administration";
@@ -1295,4 +1296,5 @@ definition {
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
+
 }

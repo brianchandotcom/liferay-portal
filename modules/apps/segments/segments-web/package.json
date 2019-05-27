@@ -42,6 +42,7 @@
 	"description": "",
 	"devDependencies": {
 		"@babel/preset-react": "^7.0.0",
+		"babel-plugin-module-resolver": "^3.2.0",
 		"check-source-formatting": "^2.0.14",
 		"clay-css": "2.15.1",
 		"css-loader": "^2.0.1",

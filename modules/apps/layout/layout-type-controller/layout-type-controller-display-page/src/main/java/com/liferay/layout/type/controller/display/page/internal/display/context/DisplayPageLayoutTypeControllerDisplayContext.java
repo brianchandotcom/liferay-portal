@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,23 +95,40 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	public Map<String, Object> getInfoDisplayFieldsValues()
 		throws PortalException {
 
+		if (_infoDisplayFieldsValuesMap.containsKey(
+				_infoDisplayObjectProvider.getClassPK())) {
+
+			return _infoDisplayFieldsValuesMap.get(
+				_infoDisplayObjectProvider.getClassPK());
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> infoDisplayFieldsValues = null;
 
 		long versionClassPK = GetterUtil.getLong(
 			_httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.VERSION_CLASS_PK));
 
 		if (versionClassPK > 0) {
-			return _infoDisplayContributor.getVersionInfoDisplayFieldsValues(
-				_infoDisplayObjectProvider.getDisplayObject(), versionClassPK,
-				themeDisplay.getLocale());
+			infoDisplayFieldsValues =
+				_infoDisplayContributor.getVersionInfoDisplayFieldsValues(
+					_infoDisplayObjectProvider.getDisplayObject(),
+					versionClassPK, themeDisplay.getLocale());
+		}
+		else {
+			infoDisplayFieldsValues =
+				_infoDisplayContributor.getInfoDisplayFieldsValues(
+					_infoDisplayObjectProvider.getDisplayObject(),
+					themeDisplay.getLocale());
 		}
 
-		return _infoDisplayContributor.getInfoDisplayFieldsValues(
-			_infoDisplayObjectProvider.getDisplayObject(),
-			themeDisplay.getLocale());
+		_infoDisplayFieldsValuesMap.put(
+			_infoDisplayObjectProvider.getClassPK(), infoDisplayFieldsValues);
+
+		return infoDisplayFieldsValues;
 	}
 
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider() {
@@ -161,6 +179,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public JSONArray getStructureJSONArray() throws PortalException {
+		if (_structureJSONArray != null) {
+			return _structureJSONArray;
+		}
+
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			getInfoDisplayObjectProvider();
 
@@ -190,11 +212,16 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-		return dataJSONObject.getJSONArray("structure");
+		_structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+		return _structureJSONArray;
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayContributor _infoDisplayContributor;
+	private Map<Long, Map<String, Object>> _infoDisplayFieldsValuesMap =
+		new HashMap<>();
 	private final InfoDisplayObjectProvider _infoDisplayObjectProvider;
+	private JSONArray _structureJSONArray;
 
 }

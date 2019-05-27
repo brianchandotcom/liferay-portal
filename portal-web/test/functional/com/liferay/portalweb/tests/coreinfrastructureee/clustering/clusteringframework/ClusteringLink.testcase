@@ -1,5 +1,6 @@
 @component-name = "portal-clustering"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Clustering";
@@ -118,4 +119,5 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "bind_addr=${ipAddress}");
 	}
+
 }

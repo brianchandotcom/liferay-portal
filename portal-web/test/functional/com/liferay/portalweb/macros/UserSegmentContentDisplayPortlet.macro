@@ -1,4 +1,5 @@
 definition {
+
 	macro configureDisplayContent {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
@@ -217,4 +218,5 @@ definition {
 			locator1 = "UserSegmentContentDisplay#ENTRY_CONTENT",
 			value1 = "The selected content no longer exists");
 	}
+
 }

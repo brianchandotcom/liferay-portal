@@ -31,4 +31,5 @@ definition {
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY",
 			value1 = "${day}");
 	}
+
 }

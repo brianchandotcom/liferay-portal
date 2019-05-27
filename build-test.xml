@@ -9984,10 +9984,24 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			</then>
 		</if>
 
-		<unzip
-			dest="${liferay.home}"
-			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
-		/>
+		<if>
+			<available file="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" type="dir" />
+			<then>
+				<copy
+					todir="${liferay.home}"
+				>
+					<fileset
+						dir="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
+					/>
+				</copy>
+			</then>
+			<else>
+				<unzip
+					dest="${liferay.home}"
+					src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
+				/>
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${database.type}" arg2="db2" />

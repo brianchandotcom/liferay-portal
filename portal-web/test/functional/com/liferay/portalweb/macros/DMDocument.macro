@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Document";
 	var dmDocumentTypeName = "File Upload";
 
@@ -73,8 +74,8 @@ definition {
 		IFrame.selectModalFrame();
 
 		AssertClick(
-			locator1 = "SitesSelectSite#CHOOSE_BUTTON",
-			value1 = "Choose");
+			locator1 = "SitesSelectSite#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -1007,7 +1008,7 @@ definition {
 
 		var key_dmFolderName = "${dmFolderName}";
 
-		if (IsTextNotEqual(locator1 = "Button#SELECT", value1 = "Select")) {
+		if (IsElementPresent(locator1 = "//div[contains(@class,'portlet-body')]//form//ol[contains(@class,'breadcrumb')]//a[contains(.,'Home')]")) {
 			AssertClick(
 				key_breadcrumbName = "Home",
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
@@ -1731,7 +1732,9 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE",
 			value1 = "${assetTitle}");
 
-		AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
+		// LRCI-276
+
+		// AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
@@ -1960,4 +1963,5 @@ definition {
 				value1 = "${tagName}");
 		}
 	}
+
 }

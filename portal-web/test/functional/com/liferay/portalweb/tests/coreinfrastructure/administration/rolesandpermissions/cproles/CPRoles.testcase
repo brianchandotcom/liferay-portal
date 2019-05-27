@@ -1,5 +1,6 @@
 @component-name = "portal-user-management-and-portal-configuration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Roles";
@@ -117,4 +118,5 @@ definition {
 
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
+
 }

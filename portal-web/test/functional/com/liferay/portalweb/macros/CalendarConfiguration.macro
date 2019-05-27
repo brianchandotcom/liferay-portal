@@ -1,4 +1,5 @@
 definition {
+
 	macro disableGlobalTimeZone {
 		Uncheck(locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX");
 	}
@@ -103,4 +104,5 @@ definition {
 	macro viewRSSOptionsDisabled {
 		AssertElementNotPresent(locator1 = "CalendarConfiguration#RSS_SETTING_OPTIONS");
 	}
+
 }

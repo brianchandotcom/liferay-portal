@@ -1,10 +1,13 @@
 definition {
+
 	macro configureDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Pause(locator = "1000");
 
 		if (IsElementPresent(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED")) {
 			AssertClick(
@@ -90,8 +93,8 @@ definition {
 			value1 = "${dmFolderName}");
 
 		AssertClick(
-			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_CHOOSE",
-			value1 = "Choose");
+			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -175,4 +178,5 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
+
 }

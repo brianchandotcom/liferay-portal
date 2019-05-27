@@ -98,7 +98,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(WikiNode wikiNode)
+	public List<String> getAvailableActions(WikiNode wikiNode)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

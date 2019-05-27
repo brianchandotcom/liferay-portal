@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -289,6 +292,32 @@ public class DDLRecordVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, DDLRecordVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DDLRecordVersion.class.getClassLoader(), DDLRecordVersion.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<DDLRecordVersion> constructor =
+				(Constructor<DDLRecordVersion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<DDLRecordVersion, Object>>
@@ -808,8 +837,7 @@ public class DDLRecordVersionModelImpl
 	@Override
 	public DDLRecordVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDLRecordVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1071,11 +1099,8 @@ public class DDLRecordVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDLRecordVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDLRecordVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDLRecordVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

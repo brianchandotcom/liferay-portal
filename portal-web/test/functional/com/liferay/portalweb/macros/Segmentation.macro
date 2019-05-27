@@ -1,0 +1,59 @@
+definition {
+
+	macro _deleteSegment {
+		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro addProperties {
+		var key_propertyOption = "${propertyOption}";
+
+		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
+
+		DragAndDrop(
+			locator1 = "Segmentation#ADD_FIELD_TYPE",
+			locator2 = "Segmentation#ADD_FIELD_POSITION",
+			value1 = "${propertyOption}");
+
+	}
+
+	macro changeCriterionInputEmailAddress {
+		var key_criterionInputOption = "${criterionInputOption}";
+
+		Click(locator1 = "Segmentation#CRITERION_INPUT");
+
+		Click(
+			locator1 = "Segmentation#CRITERION_INPUT_OPTION",
+			value1 = "${criterionInputOption}");
+	}
+
+	macro fillEmailAddress {
+		Click(locator1 = "Segmentation#EMAIL_ADDRESS_FIELD");
+
+		Type(
+			locator1 = "Segmentation#EMAIL_ADDRESS_FIELD",
+			value1 = "${emailAddressField}");
+	}
+
+	macro fillTitle {
+		Click(locator1 = "Segmentation#TITLE_FIELD");
+
+		Type(
+			locator1 = "Segmentation#TITLE_FIELD",
+			value1 = "${titleField}");
+	}
+
+	macro tearDown {
+		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+			Segmentation._deleteSegment();
+		}
+
+		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
+	}
+
+}

@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -254,6 +257,31 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, Image>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Image.class.getClassLoader(), Image.class, ModelWrapper.class);
+
+		try {
+			Constructor<Image> constructor =
+				(Constructor<Image>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<Image, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<Image, Object>>
@@ -423,8 +451,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	@Override
 	public Image toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Image)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -615,11 +642,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Image.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Image.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Image>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _imageId;

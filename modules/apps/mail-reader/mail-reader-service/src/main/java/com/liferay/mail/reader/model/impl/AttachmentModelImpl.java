@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -213,6 +216,32 @@ public class AttachmentModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Attachment>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Attachment.class.getClassLoader(), Attachment.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<Attachment> constructor =
+				(Constructor<Attachment>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Attachment, Object>>
@@ -415,8 +444,7 @@ public class AttachmentModelImpl
 	@Override
 	public Attachment toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Attachment)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -605,11 +633,8 @@ public class AttachmentModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Attachment.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Attachment.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Attachment>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _attachmentId;
 	private long _companyId;

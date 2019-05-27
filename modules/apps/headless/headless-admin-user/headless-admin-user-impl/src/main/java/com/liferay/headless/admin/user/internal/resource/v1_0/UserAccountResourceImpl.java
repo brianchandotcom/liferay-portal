@@ -31,6 +31,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -259,6 +259,9 @@ public class UserAccountResourceImpl
 							WebUrl.class);
 					}
 				};
+				customFields = CustomFieldsUtil.toCustomFields(
+					user.getCompanyId(), user.getUserId(), User.class,
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = user.getCreateDate();
 				dateModified = user.getModifiedDate();
 				emailAddress = user.getEmailAddress();
@@ -334,9 +337,6 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private RoleService _roleService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

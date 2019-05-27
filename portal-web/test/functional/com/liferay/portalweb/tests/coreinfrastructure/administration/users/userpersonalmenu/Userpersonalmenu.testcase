@@ -1,0 +1,56 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Users and Organizations";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.tearDownCP();
+
+			Site.tearDownCP();
+
+			Suborganization.tearDownCP();
+
+			Organization.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test ConfigureLookAndFeelCurrentSiteAndMyDashboard {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Personal Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuPersonalApplicationLookAndFeel(selectOption = "Current Site");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextNotPresent(value1 = "My Dashboard");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Personal Menu",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationUsersPersonalMenuPersonalApplicationLookAndFeel(selectOption = "My Dashboard");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextPresent(value1 = "My Dashboard");
+	}
+
+}

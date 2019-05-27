@@ -1,4 +1,5 @@
 definition {
+
 	@description = "Navigate to a dropdown item in the User Personal Bar."
 	macro gotoDropdownItem {
 		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
@@ -30,4 +31,5 @@ definition {
 			Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
 		}
 	}
+
 }

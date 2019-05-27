@@ -41,17 +41,17 @@
 			onChangeMethod="${namespacedFieldName}OnChangeEditor"
 			skipEditorLoading=skipEditorLoading
 			toolbarSet="${toolbarSet}"
-		/>
-
-		<@liferay_aui.input
-			name=namespacedFieldName
-			type="hidden"
-			value=fieldValue
 		>
 			<#if required>
 				<@liferay_aui.validator name="required" />
 			</#if>
 		</@>
+
+		<@liferay_aui.input
+			name=namespacedFieldName
+			type="hidden"
+			value=fieldValue
+		/>
 
 		<@liferay_aui.script>
 			Liferay.provide(

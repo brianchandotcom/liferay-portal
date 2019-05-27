@@ -97,6 +97,16 @@ public class MessageBoardThreadSerDes {
 			sb.append(String.valueOf(messageBoardThread.getCreator()));
 		}
 
+		if (messageBoardThread.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(messageBoardThread.getCustomFields()));
+		}
+
 		if (messageBoardThread.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -331,6 +341,15 @@ public class MessageBoardThreadSerDes {
 			map.put("creator", String.valueOf(messageBoardThread.getCreator()));
 		}
 
+		if (messageBoardThread.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(messageBoardThread.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(
@@ -509,6 +528,13 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setCustomFields(
+						MessageBoardThreadSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

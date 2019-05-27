@@ -1,5 +1,6 @@
 @default = "isElementNotPresent"
 definition {
+
 	function isElementNotPresent {
 		WaitForSPARefresh();
 
@@ -18,4 +19,5 @@ definition {
 
 		selenium.isNotVisible();
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro addChildPageViaSiteTemplateCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",
@@ -338,4 +339,5 @@ definition {
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_ACTIVE",
 			value1 = "${siteTemplateActiveEdit}");
 	}
+
 }

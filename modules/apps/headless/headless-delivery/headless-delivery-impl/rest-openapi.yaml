@@ -42,6 +42,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The blog post's author.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The blog post's creation date.
                     format: date-time
@@ -513,6 +517,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The document's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The document's creation date.
                     format: date-time
@@ -601,6 +609,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The folder's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The folder's creation date.
                     format: date-time
@@ -659,6 +671,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The article's author.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the article was created.
                     format: date-time
@@ -794,6 +810,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The folder's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the folder was created.
                     format: date-time
@@ -901,6 +921,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The message's author.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the message was created.
                     format: date-time
@@ -963,6 +987,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The section's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the section was created.
                     format: date-time
@@ -1021,6 +1049,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The thread's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the thread was created.
                     format: date-time
@@ -1163,6 +1195,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The structured content's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The structured content's creation date.
                     format: date-time
@@ -1259,7 +1295,6 @@ components:
                     type: string
                     writeOnly: true
             required:
-                - contentStructureId
                 - title
         StructuredContentFolder:
             description: Represents a folder that can be used to organize structured content.
@@ -1269,6 +1304,10 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     description: The folder's creator.
                     readOnly: true
+                customFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dateCreated:
                     description: The date the folder was created.
                     format: date-time

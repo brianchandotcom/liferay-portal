@@ -37,6 +37,9 @@ import com.liferay.ratings.kernel.model.RatingsEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -282,6 +285,32 @@ public class RatingsEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, RatingsEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			RatingsEntry.class.getClassLoader(), RatingsEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<RatingsEntry> constructor =
+				(Constructor<RatingsEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<RatingsEntry, Object>>
@@ -600,8 +629,7 @@ public class RatingsEntryModelImpl
 	@Override
 	public RatingsEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RatingsEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -830,11 +858,8 @@ public class RatingsEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RatingsEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RatingsEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RatingsEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

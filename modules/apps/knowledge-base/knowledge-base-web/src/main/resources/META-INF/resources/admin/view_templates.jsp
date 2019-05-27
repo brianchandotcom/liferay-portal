@@ -61,7 +61,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 					<%
 					Map<String, Object> rowData = new HashMap<String, Object>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, kbTemplatesManagementToolbarDisplayContext.getAvailableActionDropdownItems(kbTemplate)));
+					rowData.put("actions", String.join(StringPool.COMMA, kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate)));
 
 					row.setData(rowData);
 					%>

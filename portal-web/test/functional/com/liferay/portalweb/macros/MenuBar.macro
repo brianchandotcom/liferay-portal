@@ -1,4 +1,5 @@
 definition {
+
 	macro click {
 		var key_menuBar = "${menuBar}";
 
@@ -40,4 +41,5 @@ definition {
 			key_menuBar = "${menuBar}",
 			locator1 = "MenuBar#ACTIVE_NAV_LINK");
 	}
+
 }

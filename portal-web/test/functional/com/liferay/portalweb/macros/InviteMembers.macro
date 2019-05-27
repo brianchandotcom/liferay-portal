@@ -1,4 +1,5 @@
 definition {
+
 	macro _selectUser {
 		var key_inviteUserFullName = "${inviteUserFullName}";
 
@@ -22,4 +23,5 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+
 }

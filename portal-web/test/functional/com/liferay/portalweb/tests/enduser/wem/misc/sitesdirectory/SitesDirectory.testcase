@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.upstream = "true";
 	property testray.component.names = "Navigation";
 	property testray.main.component.name = "Navigation";
@@ -134,4 +135,5 @@ definition {
 			childSiteName3 = "Child SiteName 3",
 			currentSiteName = "Site Name");
 	}
+
 }

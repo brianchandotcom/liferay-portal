@@ -13,29 +13,6 @@ import {Config} from 'metal-state';
 
 class Calculator extends Component {
 
-	static STATE = {
-		expression: Config.string().value(''),
-
-		fields: Config.arrayOf(
-			Config.shapeOf(
-				{
-					fieldName: Config.string(),
-					label: Config.string(),
-					repeatable: Config.bool(),
-					value: Config.string()
-				}
-			)
-		).value([]),
-
-		functions: Config.array().value([]),
-
-		index: Config.number().value(0),
-
-		repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
-
-		spritemap: Config.string().required()
-	}
-
 	addTokenToExpression(tokenType, tokenValue) {
 		const {expression, index} = this;
 		const newToken = new Token(tokenType, tokenValue);
@@ -212,6 +189,29 @@ class Calculator extends Component {
 		return fields.filter(({repeatable}) => repeatable === true);
 	}
 }
+
+Calculator.STATE = {
+	expression: Config.string().value(''),
+
+	fields: Config.arrayOf(
+		Config.shapeOf(
+			{
+				fieldName: Config.string(),
+				label: Config.string(),
+				repeatable: Config.bool(),
+				value: Config.string()
+			}
+		)
+	).value([]),
+
+	functions: Config.array().value([]),
+
+	index: Config.number().value(0),
+
+	repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
+
+	spritemap: Config.string().required()
+};
 
 Soy.register(Calculator, templates);
 

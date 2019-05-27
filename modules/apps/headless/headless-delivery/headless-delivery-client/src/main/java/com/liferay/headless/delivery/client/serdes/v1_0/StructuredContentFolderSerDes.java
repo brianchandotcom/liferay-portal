@@ -73,6 +73,16 @@ public class StructuredContentFolderSerDes {
 			sb.append(String.valueOf(structuredContentFolder.getCreator()));
 		}
 
+		if (structuredContentFolder.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(structuredContentFolder.getCustomFields()));
+		}
+
 		if (structuredContentFolder.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -223,6 +233,15 @@ public class StructuredContentFolderSerDes {
 				String.valueOf(structuredContentFolder.getCreator()));
 		}
 
+		if (structuredContentFolder.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(structuredContentFolder.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(
@@ -356,6 +375,13 @@ public class StructuredContentFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContentFolder.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					structuredContentFolder.setCustomFields(
+						StructuredContentFolderSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

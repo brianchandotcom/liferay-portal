@@ -1,5 +1,6 @@
 @component-name = "portal-calendar"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
@@ -120,4 +121,5 @@ definition {
 			portlet = "Mi cuenta",
 			saveButton = "Guardar");
 	}
+
 }

@@ -109,7 +109,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(WikiPage wikiPage)
+	public List<String> getAvailableActions(WikiPage wikiPage)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

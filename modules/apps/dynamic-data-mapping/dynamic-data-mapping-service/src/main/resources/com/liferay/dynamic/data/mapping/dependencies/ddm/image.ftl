@@ -54,11 +54,7 @@
 			name=namespacedFieldName
 			type="hidden"
 			value=fieldRawValue
-		>
-			<#if required>
-				<@liferay_aui.validator name="required" />
-			</#if>
-		</@>
+		/>
 
 		<div class="button-holder">
 			<@liferay_aui.button

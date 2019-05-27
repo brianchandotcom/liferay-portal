@@ -1,5 +1,6 @@
 @default = "selectWindow"
 definition {
+
 	function selectPopUp {
 		WaitForSPARefresh();
 
@@ -43,4 +44,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

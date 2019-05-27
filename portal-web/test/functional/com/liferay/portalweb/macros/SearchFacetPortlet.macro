@@ -1,4 +1,5 @@
 definition {
+
 	macro checkFacet {
 		Check(
 			checkboxName = "${facetValueName}",
@@ -227,4 +228,5 @@ definition {
 
 		return "${searchURL}";
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	var assetType = "Wiki Page";
 
 	macro _checkForRSSTitleCP {
@@ -1608,4 +1609,5 @@ definition {
 				value1 = "${viewCountNumber} Views");
 		}
 	}
+
 }

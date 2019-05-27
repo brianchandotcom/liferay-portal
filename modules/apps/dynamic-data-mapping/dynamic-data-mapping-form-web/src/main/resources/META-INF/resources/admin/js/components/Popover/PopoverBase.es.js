@@ -14,29 +14,6 @@ const Footer = ({children}) => {
 };
 
 class PopoverBase extends Component {
-	static PROPS = {
-
-		/**
-		 * @type {string}
-		 * @default undefined
-		 */
-		placement: Config.oneOf(
-			[
-				'bottom',
-				'left',
-				'none',
-				'right',
-				'top'
-			]
-		).value('none'),
-
-		/**
-		 * @type {boolean}
-		 * @default false
-		 */
-		visible: Config.bool().value(false)
-	};
-
 	render() {
 		const {children, placement, visible} = this.props;
 		const classes = getCN(
@@ -55,6 +32,29 @@ class PopoverBase extends Component {
 		);
 	}
 }
+
+PopoverBase.PROPS = {
+
+	/**
+	 * @type {string}
+	 * @default undefined
+	 */
+	placement: Config.oneOf(
+		[
+			'bottom',
+			'left',
+			'none',
+			'right',
+			'top'
+		]
+	).value('none'),
+
+	/**
+	 * @type {boolean}
+	 * @default false
+	 */
+	visible: Config.bool().value(false)
+};
 
 PopoverBase.Header = Header;
 PopoverBase.Body = Body;

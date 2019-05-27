@@ -1,4 +1,5 @@
 definition {
+
 	macro addNewChangeList {
 		Click(locator1 = "Button#PLUS");
 
@@ -21,6 +22,28 @@ definition {
 		AssertTextEquals(
 			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
 			value1 = "Select Change List");
+	}
+
+	macro changeUserSettingsPopuConfirmation {
+		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_USER_SETTINGS");
+
+		if ("${changeUserPopupConfirmation}" == "enable") {
+			Check.checkToggleSwitch(locator1 = "ChangeList#CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED");
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(locator1 = "ChangeList#CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED");
+		}
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_GLOBAL_SETTINGS");
+	}
+
+	macro confirmSwitchingChangeList {
+		AssertConfirm.assertPartialConfirmation(value1 = "Do you want to switch to ${changeListName} change list?");
+
 	}
 
 	macro disableChangeList {
@@ -109,9 +132,13 @@ definition {
 				value1 = "Select Change List");
 		}
 		else {
-			Click(
+			ClickNoError(
 				key_changeListName = "${changeListName}",
 				locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
+
+			if ( "${changeListConfirmEnabled}" == "true") {
+				ChangeList.confirmSwitchingChangeList(changeListName = "${changeListName}");
+			}
 
 			AssertTextEquals(
 				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
@@ -249,20 +276,28 @@ definition {
 		if (IsTextEqual(locator1 = "ChangeList#OVERVIEW_PAGE_TITLE", value1 = "Overview")) {
 			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
-			Click(
+			ClickNoError(
 				key_changeListName = "Work on Production",
 				locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
+
+			if ("${changeListConfirmEnabled}" == "true") {
+				ChangeList.confirmSwitchingChangeList(changeListName = "Work on Production");
+			}
 
 			AssertTextEquals(
 				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
 				value1 = "Select Change List");
 		}
 		else {
-			Click(
+			ClickNoError(
 				key_changeListName = "Work on Production",
 				locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
+			if ("${changeListConfirmEnabled}" == "true") {
+				ChangeList.confirmSwitchingChangeList(changeListName = "Work on Production");
+			}
 		}
 		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 
 	}
+
 }

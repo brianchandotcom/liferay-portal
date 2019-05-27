@@ -1,4 +1,5 @@
 definition {
+
 	// There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.
 
 	macro configureActionCP {
@@ -141,4 +142,5 @@ definition {
 			locator1 = "UserStatistics#RANKING_TABLE_PARTICIPATION_SCORE",
 			value1 = "${participationScore}");
 	}
+
 }

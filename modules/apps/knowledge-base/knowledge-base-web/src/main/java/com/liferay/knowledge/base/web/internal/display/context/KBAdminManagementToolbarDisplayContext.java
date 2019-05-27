@@ -103,7 +103,7 @@ public class KBAdminManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(KBArticle kbArticle)
+	public List<String> getAvailableActions(KBArticle kbArticle)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
@@ -120,7 +120,7 @@ public class KBAdminManagementToolbarDisplayContext {
 		return availableActionDropdownItems;
 	}
 
-	public List<String> getAvailableActionDropdownItems(KBFolder kbFolder)
+	public List<String> getAvailableActions(KBFolder kbFolder)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

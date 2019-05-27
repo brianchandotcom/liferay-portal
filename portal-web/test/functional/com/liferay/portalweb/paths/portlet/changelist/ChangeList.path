@@ -9,6 +9,21 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHANGE_LIST_NAVIGATION_USER_SETTINGS</td>
+	<td>//li[contains(@class,'nav-item')]//span[contains(.,'User Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LIST_NAVIGATION_GLOBAL_SETTINGS</td>
+	<td>//li[contains(@class,'nav-item')]//span[contains(.,'Global Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED</td>
+	<td>//div[contains(@class,'change-lists-configuration')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_CHANGE_LIST_TITLE</td>
 	<td>//div[contains(@class,'border-left-blue')]//div[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>

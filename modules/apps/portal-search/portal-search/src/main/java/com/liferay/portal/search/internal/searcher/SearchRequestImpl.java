@@ -132,6 +132,10 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		return Collections.unmodifiableList(_modelIndexerClasses);
 	}
 
+	public String getPaginationStartParameterName() {
+		return _paginationStartParameterName;
+	}
+
 	@Override
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap() {
 		return Collections.unmodifiableMap(_pipelineAggregationsMap);
@@ -248,6 +252,12 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		Collections.addAll(_modelIndexerClasses, classes);
 	}
 
+	public void setPaginationStartParameterName(
+		String paginationStartParameterName) {
+
+		_paginationStartParameterName = paginationStartParameterName;
+	}
+
 	public void setPostFilterQuery(Query query) {
 		_postFilterQuery = query;
 	}
@@ -302,6 +312,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private Integer _from;
 	private boolean _includeResponseString;
 	private final List<Class<?>> _modelIndexerClasses = new ArrayList<>();
+	private String _paginationStartParameterName;
 	private final Map<String, PipelineAggregation> _pipelineAggregationsMap =
 		new LinkedHashMap<>();
 	private Query _postFilterQuery;

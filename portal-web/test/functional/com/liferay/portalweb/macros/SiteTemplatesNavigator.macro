@@ -1,4 +1,5 @@
 definition {
+
 	macro gotoSiteTemplatesPage {
 		var key_siteTemplateName = "${siteTemplateName}";
 
@@ -10,4 +11,5 @@ definition {
 
 		Navigator._gotoPage(pageName = "${pageName}");
 	}
+
 }

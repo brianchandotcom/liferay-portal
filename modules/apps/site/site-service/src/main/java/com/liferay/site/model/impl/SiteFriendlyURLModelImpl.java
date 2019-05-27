@@ -34,6 +34,9 @@ import com.liferay.site.model.SiteFriendlyURLModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -228,6 +231,32 @@ public class SiteFriendlyURLModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SiteFriendlyURL>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SiteFriendlyURL.class.getClassLoader(), SiteFriendlyURL.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SiteFriendlyURL> constructor =
+				(Constructor<SiteFriendlyURL>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SiteFriendlyURL, Object>>
@@ -537,8 +566,7 @@ public class SiteFriendlyURLModelImpl
 	@Override
 	public SiteFriendlyURL toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SiteFriendlyURL)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -784,11 +812,8 @@ public class SiteFriendlyURLModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SiteFriendlyURL.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SiteFriendlyURL.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SiteFriendlyURL>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

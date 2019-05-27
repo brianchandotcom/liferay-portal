@@ -81,7 +81,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
+	public List<String> getAvailableActions(
 			AnnouncementsEntry announcementsEntry)
 		throws PortalException {
 

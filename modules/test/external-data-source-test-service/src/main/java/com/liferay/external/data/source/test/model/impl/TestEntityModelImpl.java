@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -192,6 +195,32 @@ public class TestEntityModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, TestEntity>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			TestEntity.class.getClassLoader(), TestEntity.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<TestEntity> constructor =
+				(Constructor<TestEntity>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<TestEntity, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<TestEntity, Object>>
@@ -291,8 +320,7 @@ public class TestEntityModelImpl
 	@Override
 	public TestEntity toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (TestEntity)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -447,11 +475,8 @@ public class TestEntityModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		TestEntity.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		TestEntity.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, TestEntity>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _id;
 	private String _data;

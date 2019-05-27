@@ -89,8 +89,6 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 
-		// Layout Page Template Entry
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				assetDisplayPageEntryId);

@@ -1,5 +1,6 @@
 @default = "sikuliLeftMouseUp"
 definition {
+
 	function sikuliLeftMouseUp {
 		WaitForSPARefresh();
 
@@ -11,4 +12,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro checkReplyToMessageForGuestPG {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -14,4 +15,5 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 	}
+
 }

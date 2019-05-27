@@ -1,5 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
+
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -36,4 +37,5 @@ definition {
 
 		Upgrade.ViewPortletsPermissions();
 	}
+
 }

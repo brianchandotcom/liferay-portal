@@ -1,4 +1,5 @@
 definition {
+
 	macro _gotoPage {
 		var key_pageName = "${pageName}";
 		var count = "0";
@@ -303,4 +304,5 @@ definition {
 	macro selectSpecificWindow {
 		SelectWindow(locator1 = "title=${windowTitle}");
 	}
+
 }

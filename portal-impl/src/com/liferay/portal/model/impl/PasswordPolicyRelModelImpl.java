@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -212,6 +215,32 @@ public class PasswordPolicyRelModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PasswordPolicyRel>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PasswordPolicyRel.class.getClassLoader(), PasswordPolicyRel.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PasswordPolicyRel> constructor =
+				(Constructor<PasswordPolicyRel>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PasswordPolicyRel, Object>>
@@ -405,8 +434,7 @@ public class PasswordPolicyRelModelImpl
 	@Override
 	public PasswordPolicyRel toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PasswordPolicyRel)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -588,11 +616,8 @@ public class PasswordPolicyRelModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PasswordPolicyRel.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PasswordPolicyRel.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PasswordPolicyRel>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _passwordPolicyRelId;

@@ -1,5 +1,6 @@
 @component-name = "portal-document-management"
 definition {
+
 	property osgi.app.includes = "oauth, oauth-api, oauth-service, oauth-web, sync-encryptor, sync-oauth, sync-security, sync-service, sync-web";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -203,4 +204,5 @@ definition {
 			dmDocumentTitle = "Document_1.xlsx",
 			dmDocumentType = "Basic Document");
 	}
+
 }

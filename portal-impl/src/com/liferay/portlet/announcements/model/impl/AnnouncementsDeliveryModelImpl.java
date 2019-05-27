@@ -34,6 +34,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -272,6 +275,32 @@ public class AnnouncementsDeliveryModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, AnnouncementsDelivery>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			AnnouncementsDelivery.class.getClassLoader(),
+			AnnouncementsDelivery.class, ModelWrapper.class);
+
+		try {
+			Constructor<AnnouncementsDelivery> constructor =
+				(Constructor<AnnouncementsDelivery>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<AnnouncementsDelivery, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<AnnouncementsDelivery, Object>>
@@ -492,8 +521,7 @@ public class AnnouncementsDeliveryModelImpl
 	@Override
 	public AnnouncementsDelivery toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -679,11 +707,8 @@ public class AnnouncementsDeliveryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		AnnouncementsDelivery.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AnnouncementsDelivery.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, AnnouncementsDelivery>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _deliveryId;
 	private long _companyId;

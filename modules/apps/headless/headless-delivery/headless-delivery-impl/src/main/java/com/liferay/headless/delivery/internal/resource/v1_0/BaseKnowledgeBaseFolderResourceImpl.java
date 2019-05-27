@@ -120,6 +120,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
 
+		if (knowledgeBaseFolder.getCustomFields() != null) {
+			existingKnowledgeBaseFolder.setCustomFields(
+				knowledgeBaseFolder.getCustomFields());
+		}
+
 		if (knowledgeBaseFolder.getDateCreated() != null) {
 			existingKnowledgeBaseFolder.setDateCreated(
 				knowledgeBaseFolder.getDateCreated());

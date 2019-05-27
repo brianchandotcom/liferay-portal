@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -211,6 +214,31 @@ public class FolderModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Folder>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Folder.class.getClassLoader(), Folder.class, ModelWrapper.class);
+
+		try {
+			Constructor<Folder> constructor =
+				(Constructor<Folder>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Folder, Object>>
@@ -442,8 +470,7 @@ public class FolderModelImpl
 	@Override
 	public Folder toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Folder)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -655,11 +682,8 @@ public class FolderModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Folder.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Folder.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Folder>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _folderId;
 	private long _companyId;

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
@@ -242,7 +243,9 @@ public class MessageBoardThreadResourceImpl
 					).orElse(
 						new String[0]
 					),
-					null, mbThread.getGroupId(),
+					null, MBMessage.class, contextCompany.getCompanyId(),
+					messageBoardThread.getCustomFields(), mbThread.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					messageBoardThread.getViewableByAsString())));
 	}
 
@@ -271,7 +274,10 @@ public class MessageBoardThreadResourceImpl
 			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
 			_toPriority(siteId, messageBoardThread.getThreadType()), false,
 			ServiceContextUtil.createServiceContext(
-				messageBoardThread.getKeywords(), null, siteId,
+				messageBoardThread.getKeywords(), null, MBMessage.class,
+				contextCompany.getCompanyId(),
+				messageBoardThread.getCustomFields(), siteId,
+				contextAcceptLanguage.getPreferredLocale(),
 				messageBoardThread.getViewableByAsString()));
 
 		_updateQuestion(mbMessage, messageBoardThread);
@@ -328,6 +334,10 @@ public class MessageBoardThreadResourceImpl
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
 					_portal, _userService.getUserById(mbThread.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					mbThread.getCompanyId(), mbMessage.getMessageId(),
+					MBMessage.class,
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();

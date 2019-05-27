@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
@@ -22,7 +23,6 @@ import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -98,16 +98,19 @@ public class KnowledgeBaseFolderResourceImpl
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderService.getKBFolder(
+		KBFolder parentKBFolder = _kbFolderService.getKBFolder(
 			parentKnowledgeBaseFolderId);
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				kbFolder.getGroupId(), _getClassNameId(),
+				parentKBFolder.getGroupId(), _getClassNameId(),
 				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					kbFolder.getGroupId(),
+					KBFolder.class, contextCompany.getCompanyId(),
+					knowledgeBaseFolder.getCustomFields(),
+					parentKBFolder.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
@@ -121,7 +124,10 @@ public class KnowledgeBaseFolderResourceImpl
 				siteId, _getClassNameId(), 0, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					siteId, knowledgeBaseFolder.getViewableByAsString())));
+					KBFolder.class, contextCompany.getCompanyId(),
+					knowledgeBaseFolder.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
+					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
 	@Override
@@ -140,7 +146,11 @@ public class KnowledgeBaseFolderResourceImpl
 			_kbFolderService.updateKBFolder(
 				_getClassNameId(), parentKnowledgeBaseFolderId,
 				knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(), new ServiceContext()));
+				knowledgeBaseFolder.getDescription(),
+				ServiceContextUtil.createServiceContext(
+					KBFolder.class, contextCompany.getCompanyId(),
+					knowledgeBaseFolder.getCustomFields(), 0,
+					contextAcceptLanguage.getPreferredLocale(), null)));
 	}
 
 	private long _getClassNameId() {
@@ -158,6 +168,9 @@ public class KnowledgeBaseFolderResourceImpl
 			{
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
+				customFields = CustomFieldsUtil.toCustomFields(
+					kbFolder.getCompanyId(), kbFolder.getKbFolderId(),
+					KBFolder.class, contextAcceptLanguage.getPreferredLocale());
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();
 				description = kbFolder.getDescription();

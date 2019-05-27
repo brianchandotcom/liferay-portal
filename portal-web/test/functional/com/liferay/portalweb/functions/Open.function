@@ -1,6 +1,7 @@
 @default = "open"
 @summary = "Open browser to '${locator1}'"
 definition {
+
 	function open {
 		WaitForSPARefresh();
 
@@ -26,4 +27,5 @@ definition {
 
 		selenium.open();
 	}
+
 }

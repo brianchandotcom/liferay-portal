@@ -1,5 +1,6 @@
 @component-name = "portal-security"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Security";
@@ -257,4 +258,5 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Message#INFO",
 			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
 	}
+
 }

@@ -149,7 +149,10 @@ public class StructuredContentFolderResourceImpl
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
 				ServiceContextUtil.createServiceContext(
+					JournalFolder.class, contextCompany.getCompanyId(),
+					structuredContentFolder.getCustomFields(),
 					journalFolder.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					structuredContentFolder.getViewableByAsString())));
 	}
 
@@ -163,7 +166,10 @@ public class StructuredContentFolderResourceImpl
 				siteId, parentFolderId, structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					siteId, structuredContentFolder.getViewableByAsString())));
+					JournalFolder.class, contextCompany.getCompanyId(),
+					structuredContentFolder.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
+					structuredContentFolder.getViewableByAsString())));
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(

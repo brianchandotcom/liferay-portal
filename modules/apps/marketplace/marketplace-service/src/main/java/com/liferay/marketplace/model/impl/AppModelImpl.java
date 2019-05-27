@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -268,6 +271,31 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, App>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			App.class.getClassLoader(), App.class, ModelWrapper.class);
+
+		try {
+			Constructor<App> constructor =
+				(Constructor<App>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<App, Object>>
@@ -617,8 +645,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	@Override
 	public App toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (App)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -874,10 +901,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = App.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		App.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, App>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

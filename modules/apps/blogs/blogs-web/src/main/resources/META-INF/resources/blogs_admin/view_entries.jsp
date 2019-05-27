@@ -70,7 +70,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 				<%
 				Map<String, Object> rowData = new HashMap<>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, blogEntriesDisplayContext.getAvailableActionDropdownItems(entry)));
+				rowData.put("actions", String.join(StringPool.COMMA, blogEntriesDisplayContext.getAvailableActions(entry)));
 
 				row.setData(rowData);
 				%>

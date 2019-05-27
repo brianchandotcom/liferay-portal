@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -222,6 +225,32 @@ public class RecentLayoutRevisionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, RecentLayoutRevision>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			RecentLayoutRevision.class.getClassLoader(),
+			RecentLayoutRevision.class, ModelWrapper.class);
+
+		try {
+			Constructor<RecentLayoutRevision> constructor =
+				(Constructor<RecentLayoutRevision>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<RecentLayoutRevision, Object>>
@@ -470,8 +499,7 @@ public class RecentLayoutRevisionModelImpl
 	@Override
 	public RecentLayoutRevision toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RecentLayoutRevision)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -673,11 +701,8 @@ public class RecentLayoutRevisionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RecentLayoutRevision.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RecentLayoutRevision.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RecentLayoutRevision>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _recentLayoutRevisionId;

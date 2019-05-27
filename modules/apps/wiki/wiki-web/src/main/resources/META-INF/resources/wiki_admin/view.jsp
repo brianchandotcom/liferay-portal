@@ -144,7 +144,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 					<%
 					Map<String, Object> rowData = new HashMap<>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, wikiNodesManagementToolbarDisplayContext.getAvailableActionDropdownItems(node)));
+					rowData.put("actions", String.join(StringPool.COMMA, wikiNodesManagementToolbarDisplayContext.getAvailableActions(node)));
 
 					row.setData(rowData);
 

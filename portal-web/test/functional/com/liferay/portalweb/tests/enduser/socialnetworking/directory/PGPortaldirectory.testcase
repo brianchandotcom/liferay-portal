@@ -1,5 +1,6 @@
 @component-name = "portal-social-networking"
 definition {
+
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
 	property testray.main.component.name = "Social Networking";
@@ -153,4 +154,5 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 	}
+
 }

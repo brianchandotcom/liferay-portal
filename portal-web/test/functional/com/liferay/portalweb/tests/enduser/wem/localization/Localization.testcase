@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portlet.plugins.includes = "test-localized-portlet";
@@ -226,4 +227,5 @@ definition {
 
 		AssertTextNotPresent(value1 = "FAILED");
 	}
+
 }

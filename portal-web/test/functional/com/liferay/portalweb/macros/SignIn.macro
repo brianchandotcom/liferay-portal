@@ -1,4 +1,5 @@
 definition {
+
 	var userEmailAddress = "test@liferay.com";
 	var userPassword = "test";
 	var userPasswordReminderAnswer = "test";
@@ -91,6 +92,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		Pause(locator1 = "3000");
+
 		Type(
 			locator1 = "TextInput#WEB_ID",
 			value1 = "${portalURL}");
@@ -133,4 +136,5 @@ definition {
 			SignIn.setPasswordReminder();
 		}
 	}
+
 }

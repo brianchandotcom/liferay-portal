@@ -9,6 +9,7 @@ import {
 } from './component.es';
 import escape from 'lodash.escape';
 import getCountries from './util/address/get_countries.es';
+import getCropRegion from './util/get_crop_region.es';
 import getRegions from './util/address/get_regions.es';
 import getFormElement from './util/form/get_form_element.es';
 import groupBy from 'lodash.groupby';
@@ -36,6 +37,7 @@ Liferay.Address = {
 };
 
 Liferay.Util.escape = escape;
+Liferay.Util.getCropRegion = getCropRegion;
 Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.groupBy = groupBy;
 Liferay.Util.isEqual = isEqual;

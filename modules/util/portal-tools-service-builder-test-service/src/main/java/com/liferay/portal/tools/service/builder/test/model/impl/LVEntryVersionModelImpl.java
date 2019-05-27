@@ -32,6 +32,9 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -243,6 +246,32 @@ public class LVEntryVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, LVEntryVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			LVEntryVersion.class.getClassLoader(), LVEntryVersion.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<LVEntryVersion> constructor =
+				(Constructor<LVEntryVersion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<LVEntryVersion, Object>>
@@ -652,8 +681,7 @@ public class LVEntryVersionModelImpl
 	@Override
 	public LVEntryVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LVEntryVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -875,11 +903,8 @@ public class LVEntryVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		LVEntryVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		LVEntryVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, LVEntryVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _lvEntryVersionId;
 	private int _version;

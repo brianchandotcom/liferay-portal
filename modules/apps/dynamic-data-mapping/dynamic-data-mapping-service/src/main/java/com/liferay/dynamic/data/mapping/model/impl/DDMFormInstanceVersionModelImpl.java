@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -303,6 +306,32 @@ public class DDMFormInstanceVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, DDMFormInstanceVersion>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DDMFormInstanceVersion.class.getClassLoader(),
+			DDMFormInstanceVersion.class, ModelWrapper.class);
+
+		try {
+			Constructor<DDMFormInstanceVersion> constructor =
+				(Constructor<DDMFormInstanceVersion>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<DDMFormInstanceVersion, Object>>
@@ -1064,8 +1093,7 @@ public class DDMFormInstanceVersionModelImpl
 	@Override
 	public DDMFormInstanceVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DDMFormInstanceVersion)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1333,11 +1361,8 @@ public class DDMFormInstanceVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DDMFormInstanceVersion.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DDMFormInstanceVersion.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DDMFormInstanceVersion>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _formInstanceVersionId;
 	private long _groupId;

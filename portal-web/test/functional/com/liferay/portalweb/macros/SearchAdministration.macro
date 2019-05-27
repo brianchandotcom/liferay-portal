@@ -1,4 +1,5 @@
 definition {
+
 	macro assertEngineVendorAndVersions {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Search#SEARCH__ENGINE_INFORMATION",
@@ -41,4 +42,5 @@ definition {
 			fail("Reindex timed out after 2 minutes.");
 		}
 	}
+
 }

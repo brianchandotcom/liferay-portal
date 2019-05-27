@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change Lists";
@@ -14,7 +15,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList(gotoOverview = "true");
+		ChangeList.enableChangeList();
+
+		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
@@ -178,8 +181,30 @@ definition {
 	}
 
 	@priority = "4"
+	test SwitchActiveChangeList {
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Overview");
+
+		ChangeList.selectChangeList(changeListName = "Select Change List");
+
+		ChangeList.addNewChangeList(
+			changeListDescription = "Change List Description",
+			changeListName = "Change List 2 Name");
+
+		ChangeList.selectChangeList(
+			changeListConfirmEnabled = "true",
+			changeListName = "Change List Name");
+
+		AssertTextEquals(
+			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
+			value1 = "Change List Name");
+	}
+
+	@priority = "4"
 	test WorkOnProduction {
-		ChangeList.workOnProduction();
+		ChangeList.workOnProduction(changeListConfirmEnabled = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -192,17 +217,20 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		Button.clickPublishToChangeList();
+		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
 			portlet = "Overview");
 
-		Click(
+		ClickNoError(
 			key_changeListName = "Change List Name",
 			locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
 
+		ChangeList.confirmSwitchingChangeList(changeListName = "Change List Name");
+
 		ChangeList.viewAddedItemCounter(nbrOfAddedItems = "0");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro clickEllipsisItem {
 		LexiconTable.clickEllipsisItem(
 			item = "${item}",
@@ -242,4 +243,5 @@ definition {
 			locator1 = "Message#TOOLTIP",
 			value1 = "Entries that have been in the Recycle Bin for more than ${maxAgeField} are automatically deleted.");
 	}
+
 }

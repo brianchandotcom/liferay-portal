@@ -1,4 +1,5 @@
 definition {
+
 	macro gotoAddPageViaPG {
 		Portlet.clickPortletPlusIconPG(portletName = "Wiki");
 
@@ -168,4 +169,5 @@ definition {
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
 			value1 = "${wikiPageTitle}");
 	}
+
 }

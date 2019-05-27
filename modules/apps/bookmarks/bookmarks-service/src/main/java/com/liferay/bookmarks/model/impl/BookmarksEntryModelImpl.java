@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -302,6 +305,32 @@ public class BookmarksEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, BookmarksEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			BookmarksEntry.class.getClassLoader(), BookmarksEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<BookmarksEntry> constructor =
+				(Constructor<BookmarksEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<BookmarksEntry, Object>>
@@ -1027,8 +1056,7 @@ public class BookmarksEntryModelImpl
 	@Override
 	public BookmarksEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (BookmarksEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1347,11 +1375,8 @@ public class BookmarksEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		BookmarksEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		BookmarksEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, BookmarksEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

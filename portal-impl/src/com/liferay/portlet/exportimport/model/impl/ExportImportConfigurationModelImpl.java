@@ -40,6 +40,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -305,6 +308,32 @@ public class ExportImportConfigurationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, ExportImportConfiguration>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ExportImportConfiguration.class.getClassLoader(),
+			ExportImportConfiguration.class, ModelWrapper.class);
+
+		try {
+			Constructor<ExportImportConfiguration> constructor =
+				(Constructor<ExportImportConfiguration>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -965,10 +994,8 @@ public class ExportImportConfigurationModelImpl
 	@Override
 	public ExportImportConfiguration toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(ExportImportConfiguration)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1249,11 +1276,8 @@ public class ExportImportConfigurationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ExportImportConfiguration.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ExportImportConfiguration.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ExportImportConfiguration>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;

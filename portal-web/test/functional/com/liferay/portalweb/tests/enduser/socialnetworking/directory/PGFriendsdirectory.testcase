@@ -1,5 +1,6 @@
 @component-name = "portal-social-networking"
 definition {
+
 	property dummy.socket.proxy.disabled = "true";
 	property osgi.app.includes = "social-networking";
 	property portal.upstream = "true";
@@ -242,4 +243,5 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 	}
+
 }

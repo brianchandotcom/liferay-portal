@@ -34,6 +34,9 @@ import com.liferay.sync.model.SyncDLObjectSoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -328,6 +331,32 @@ public class SyncDLObjectModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SyncDLObject>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SyncDLObject.class.getClassLoader(), SyncDLObject.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SyncDLObject> constructor =
+				(Constructor<SyncDLObject>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SyncDLObject, Object>>
@@ -990,8 +1019,7 @@ public class SyncDLObjectModelImpl
 	@Override
 	public SyncDLObject toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SyncDLObject)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1377,11 +1405,8 @@ public class SyncDLObjectModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SyncDLObject.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SyncDLObject.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SyncDLObject>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _syncDLObjectId;
 	private long _companyId;

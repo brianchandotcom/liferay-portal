@@ -106,6 +106,9 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes);
 
+	public void paginationStartParameterName(
+		String paginationStartParameterName);
+
 	public SearchRequestBuilder postFilterQuery(Query query);
 
 	public SearchRequestBuilder query(Query query);

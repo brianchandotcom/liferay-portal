@@ -1,4 +1,5 @@
 definition {
+
 	macro clickTagView {
 		var key_tagName = "${tagName}";
 
@@ -103,4 +104,5 @@ definition {
 				value1 = "Show Asset Count");
 		}
 	}
+
 }

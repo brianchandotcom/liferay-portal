@@ -1,4 +1,5 @@
 definition {
+
 	var orgName = "Organization Name";
 
 	macro addCategorizationCP {
@@ -736,4 +737,5 @@ definition {
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_ACTIONS");
 	}
+
 }

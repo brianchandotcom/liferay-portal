@@ -1,5 +1,6 @@
 @component-name = "portal-staging"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Change Lists";
@@ -15,6 +16,8 @@ definition {
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
+
+		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
 	}
 
 	tearDown {
@@ -30,6 +33,8 @@ definition {
 				portlet = "Settings");
 
 			ChangeList.disableChangeList();
+
+			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 		}
 	}
 
@@ -118,4 +123,5 @@ definition {
 
 		AssertElementPresent(locator1 = "ChangeList#COLLISION_DETECTED");
 	}
+
 }

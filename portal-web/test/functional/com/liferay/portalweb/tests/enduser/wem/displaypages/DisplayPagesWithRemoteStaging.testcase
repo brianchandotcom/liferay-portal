@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -104,4 +105,5 @@ definition {
 			assetContent = "Webcontent Content",
 			assetTitle = "Webcontent Title");
 	}
+
 }

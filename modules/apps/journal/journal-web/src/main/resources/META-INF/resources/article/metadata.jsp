@@ -60,22 +60,18 @@ if (article != null) {
 DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 %>
 
-<div class="pb-3">
-	<liferay-asset:asset-categories-selector
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= classPK %>"
-		classTypePK="<%= ddmStructure.getStructureId() %>"
-		ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-	/>
-</div>
+<liferay-asset:asset-categories-selector
+	className="<%= JournalArticle.class.getName() %>"
+	classPK="<%= classPK %>"
+	classTypePK="<%= ddmStructure.getStructureId() %>"
+	ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
+/>
 
-<div class="pb-3">
-	<liferay-asset:asset-tags-selector
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= classPK %>"
-		ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-	/>
-</div>
+<liferay-asset:asset-tags-selector
+	className="<%= JournalArticle.class.getName() %>"
+	classPK="<%= classPK %>"
+	ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
+/>
 
 <aui:input cssClass="form-control-sm" label="priority" name="assetPriority" type="text" value="<%= priority %>" wrapperCssClass="mb-3">
 	<aui:validator name="number" />

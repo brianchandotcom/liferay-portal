@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -227,6 +230,32 @@ public class FriendlyURLEntryLocalizationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, FriendlyURLEntryLocalization>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			FriendlyURLEntryLocalization.class.getClassLoader(),
+			FriendlyURLEntryLocalization.class, ModelWrapper.class);
+
+		try {
+			Constructor<FriendlyURLEntryLocalization> constructor =
+				(Constructor<FriendlyURLEntryLocalization>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -509,10 +538,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 	@Override
 	public FriendlyURLEntryLocalization toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(FriendlyURLEntryLocalization)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -733,11 +760,9 @@ public class FriendlyURLEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		FriendlyURLEntryLocalization.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		FriendlyURLEntryLocalization.class, ModelWrapper.class
-	};
+	private static final Function
+		<InvocationHandler, FriendlyURLEntryLocalization>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _friendlyURLEntryLocalizationId;

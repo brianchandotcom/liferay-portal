@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -221,6 +224,32 @@ public class RecentLayoutBranchModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, RecentLayoutBranch>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			RecentLayoutBranch.class.getClassLoader(), RecentLayoutBranch.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<RecentLayoutBranch> constructor =
+				(Constructor<RecentLayoutBranch>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<RecentLayoutBranch, Object>>
@@ -466,8 +495,7 @@ public class RecentLayoutBranchModelImpl
 	@Override
 	public RecentLayoutBranch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RecentLayoutBranch)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -666,11 +694,8 @@ public class RecentLayoutBranchModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		RecentLayoutBranch.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		RecentLayoutBranch.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, RecentLayoutBranch>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _recentLayoutBranchId;

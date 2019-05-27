@@ -1,4 +1,5 @@
 definition {
+
 	macro checkCardCheckbox {
 		Click.clickNoWaitForVisible(
 			key_card = "${card}",
@@ -77,4 +78,5 @@ definition {
 			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "${card}");
 	}
+
 }

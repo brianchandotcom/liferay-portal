@@ -22,7 +22,10 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.concurrent.Callable;
 
@@ -95,7 +99,14 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public Void call() throws Exception {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_actionRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			long plid = ParamUtil.getLong(_actionRequest, "classPK");
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 			Layout draftLayout = _layoutLocalService.getLayout(plid);
 
@@ -134,6 +145,10 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 			if (layoutPageTemplateEntry != null) {
+				LayoutPermissionUtil.check(
+					themeDisplay.getPermissionChecker(), layout.getPlid(),
+					ActionKeys.UPDATE);
+
 				UnicodeProperties typeSettingsProperties =
 					layout.getTypeSettingsProperties();
 
@@ -147,6 +162,10 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 						classNameId, classTypeId);
 			}
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout.getPlid(),
+				ActionKeys.VIEW);
 
 			draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 

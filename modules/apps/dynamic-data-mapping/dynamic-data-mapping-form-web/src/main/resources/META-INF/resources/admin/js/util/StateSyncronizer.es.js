@@ -5,18 +5,6 @@ import {EventHandler} from 'metal-events';
 import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
 
 class StateSyncronizer extends Component {
-	static PROPS = {
-		descriptionEditor: Config.any(),
-		layoutProvider: Config.any(),
-		localizedDescription: Config.object().value({}),
-		localizedName: Config.object().value({}),
-		nameEditor: Config.any(),
-		namespace: Config.string().required(),
-		published: Config.bool(),
-		settingsDDMForm: Config.any(),
-		translationManager: Config.any()
-	};
-
 	created() {
 		const {descriptionEditor, nameEditor, translationManager} = this.props;
 
@@ -250,5 +238,17 @@ class StateSyncronizer extends Component {
 		localizedName[this.getEditingLanguageId()] = editor.getHTML();
 	}
 }
+
+StateSyncronizer.PROPS = {
+	descriptionEditor: Config.any(),
+	layoutProvider: Config.any(),
+	localizedDescription: Config.object().value({}),
+	localizedName: Config.object().value({}),
+	nameEditor: Config.any(),
+	namespace: Config.string().required(),
+	published: Config.bool(),
+	settingsDDMForm: Config.any(),
+	translationManager: Config.any()
+};
 
 export default StateSyncronizer;

@@ -115,9 +115,20 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				return null;
 			}
 
+			long primaryKey = (Long)model.getPrimaryKeyObj();
+
+			if (permissionChecker.hasOwnerPermission(
+					model.getCompanyId(), name, primaryKey, model.getUserId(),
+					actionId) ||
+				permissionChecker.hasPermission(
+					model.getGroupId(), name, primaryKey, actionId)) {
+
+				return null;
+			}
+
 			if (!_sharingEntryLocalService.hasSharingPermission(
-					permissionChecker.getUserId(), _classNameId,
-					(Long)model.getPrimaryKeyObj(), sharingEntryAction)) {
+					permissionChecker.getUserId(), _classNameId, primaryKey,
+					sharingEntryAction)) {
 
 				return null;
 			}

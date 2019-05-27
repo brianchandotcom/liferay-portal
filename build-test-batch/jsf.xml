@@ -3,27 +3,6 @@
 <project basedir="../" name="portal-test-batch" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="../build-test-batch.xml" />
 
-	<macrodef name="add-cdiannotations-header">
-		<attribute name="liferay.plugin.package.properties.file" />
-
-		<sequential>
-			<if>
-				<not>
-					<resourcecontains
-						resource="@{liferay.plugin.package.properties.file}"
-						substring="-cdiannotations:"
-					/>
-				</not>
-				<then>
-					<echo>Adding -cdiannotations: header to @{liferay.plugin.package.properties.file}.</echo>
-
-					<echo append="true" file="@{liferay.plugin.package.properties.file}">
--cdiannotations:</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<target name="jsf-jdk8">
 		<run-batch-test>
 			<test-action>
@@ -65,19 +44,6 @@
 						<echo file="${app.server.classes.portal.dir}/portal-ext.properties">${portal.ext.properties}</echo>
 
 						<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
-
-						<!--
-						Add -cdiannotations: header before building so that JSF CDI portlets will deploy without error.
-						See LPS-86824 for more details.
-						-->
-
-						<add-cdiannotations-header
-							liferay.plugin.package.properties.file="${liferay.faces.bridge.impl.dir}/demo/jsf-cdi-applicant-portlet/src/main/webapp/WEB-INF/liferay-plugin-package.properties"
-						/>
-
-						<add-cdiannotations-header
-							liferay.plugin.package.properties.file="${liferay.faces.bridge.impl.dir}/demo/jsf-flows-portlet/src/main/webapp/WEB-INF/liferay-plugin-package.properties"
-						/>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/demo">
 							mvn clean package -P liferay,mojarra,tomcat

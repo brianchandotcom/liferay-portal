@@ -143,12 +143,6 @@ if (journalContentDisplayContext.isShowArticle()) {
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
 						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>">
-							<div class="text-right user-tool-asset-addon-entries">
-								<liferay-asset:asset-addon-entry-display
-									assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-								/>
-							</div>
-
 							<liferay-journal:journal-article-display
 								articleDisplay="<%= articleDisplay %>"
 							/>
@@ -169,8 +163,6 @@ if (journalContentDisplayContext.isShowArticle()) {
 									total="<%= articleDisplay.getNumberOfPages() %>"
 									type="article"
 								/>
-
-								<br />
 							</c:if>
 						</div>
 					</c:when>
@@ -181,11 +173,59 @@ if (journalContentDisplayContext.isShowArticle()) {
 </c:choose>
 
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
-	<div class="content-metadata-asset-addon-entries">
-		<liferay-asset:asset-addon-entry-display
-			assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-		/>
-	</div>
+
+	<%
+	ContentMetadataAssetAddonEntry relatedAssetsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableRelatedAssets");
+	%>
+
+	<c:if test="<%= relatedAssetsContentMetadataAssetAddonEntry != null %>">
+		<div class="asset-links content-metadata-asset-addon-entries mb-4">
+			<liferay-asset:asset-addon-entry-display
+				assetAddonEntries="<%= Collections.singletonList(relatedAssetsContentMetadataAssetAddonEntry) %>"
+			/>
+		</div>
+	</c:if>
+
+	<%
+	ContentMetadataAssetAddonEntry ratingsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableRatings");
+
+	List<UserToolAssetAddonEntry> selectedUserToolAssetAddonEntries = journalContentDisplayContext.getSelectedUserToolAssetAddonEntries();
+	%>
+
+	<c:if test="<%= ListUtil.isNotEmpty(selectedUserToolAssetAddonEntries) || (ratingsContentMetadataAssetAddonEntry != null) %>">
+		<div class="separator"><!-- --></div>
+
+		<div class="autofit-float autofit-row autofit-row-center mb-4 user-tool-asset-addon-entries">
+
+			<c:if test="<%= ratingsContentMetadataAssetAddonEntry != null %>">
+				<div class="autofit-col">
+					<liferay-asset:asset-addon-entry-display
+						assetAddonEntries="<%= Collections.singletonList(ratingsContentMetadataAssetAddonEntry) %>"
+					/>
+				</div>
+			</c:if>
+
+			<c:if test="<%= ListUtil.isNotEmpty(selectedUserToolAssetAddonEntries) %>">
+				<liferay-asset:asset-addon-entry-display
+					assetAddonEntries="<%= selectedUserToolAssetAddonEntries %>"
+				/>
+			</c:if>
+		</div>
+	</c:if>
+
+	<%
+	ContentMetadataAssetAddonEntry commentsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableComments");
+	%>
+
+	<c:if test="<%= commentsContentMetadataAssetAddonEntry != null %>">
+		<div class="separator"><!-- --></div>
+
+		<div class="asset-links content-metadata-asset-addon-entries mb-4">
+			<liferay-asset:asset-addon-entry-display
+				assetAddonEntries="<%= Collections.singletonList(commentsContentMetadataAssetAddonEntry) %>"
+			/>
+		</div>
+	</c:if>
 </c:if>
 
 <liferay-util:dynamic-include key="com.liferay.journal.content.web#/view.jsp#post" />

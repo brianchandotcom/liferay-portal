@@ -32,6 +32,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -237,6 +240,32 @@ public class KaleoNotificationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, KaleoNotification>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KaleoNotification.class.getClassLoader(), KaleoNotification.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<KaleoNotification> constructor =
+				(Constructor<KaleoNotification>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<KaleoNotification, Object>>
@@ -688,8 +717,7 @@ public class KaleoNotificationModelImpl
 	@Override
 	public KaleoNotification toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoNotification)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -996,11 +1024,8 @@ public class KaleoNotificationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoNotification.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoNotification.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoNotification>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _kaleoNotificationId;

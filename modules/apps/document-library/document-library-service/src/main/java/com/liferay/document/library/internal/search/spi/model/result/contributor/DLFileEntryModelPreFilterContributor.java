@@ -166,8 +166,9 @@ public class DLFileEntryModelPreFilterContributor
 				searchContext.getFolderIds(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			booleanFilter.addRequiredTerm(
-				Field.HIDDEN, searchContext.isIncludeAttachments());
+			if (!searchContext.isIncludeAttachments()) {
+				booleanFilter.addRequiredTerm(Field.HIDDEN, false);
+			}
 		}
 	}
 

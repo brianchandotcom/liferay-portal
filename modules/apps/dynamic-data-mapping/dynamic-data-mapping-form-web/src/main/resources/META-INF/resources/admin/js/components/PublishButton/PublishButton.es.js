@@ -3,14 +3,6 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 class PublishButton extends Component {
-	static PROPS = {
-		namespace: Config.string().required(),
-		published: Config.bool().value(false),
-		spritemap: Config.string().required(),
-		submitForm: Config.func().required(),
-		url: Config.string()
-	};
-
 	publish(event) {
 		this.props.published = true;
 
@@ -73,5 +65,13 @@ class PublishButton extends Component {
 		return Promise.resolve(submitForm());
 	}
 }
+
+PublishButton.PROPS = {
+	namespace: Config.string().required(),
+	published: Config.bool().value(false),
+	spritemap: Config.string().required(),
+	submitForm: Config.func().required(),
+	url: Config.string()
+};
 
 export default PublishButton;

@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -250,6 +253,32 @@ public class ClassNameModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, ClassName>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ClassName.class.getClassLoader(), ClassName.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ClassName> constructor =
+				(Constructor<ClassName>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<ClassName, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<ClassName, Object>>
@@ -367,8 +396,7 @@ public class ClassNameModelImpl
 	@Override
 	public ClassName toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ClassName)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -531,11 +559,8 @@ public class ClassNameModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ClassName.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ClassName.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ClassName>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _classNameId;

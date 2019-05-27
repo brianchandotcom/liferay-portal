@@ -1,5 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
@@ -729,8 +730,7 @@ definition {
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Low Resolution",
-			imageState = "Disabled",
-			percentAdapted = "100");
+			imageState = "Disabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -772,4 +772,5 @@ definition {
 
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "4/4");
 	}
+
 }

@@ -1,4 +1,5 @@
 definition {
+
 	macro _addTag {
 		Type(
 			locator1 = "AssetCategorization#TAGS_FIELD",
@@ -144,4 +145,5 @@ definition {
 			locator1 = "AssetCategorization#TAG",
 			value1 = "${tagName}");
 	}
+
 }

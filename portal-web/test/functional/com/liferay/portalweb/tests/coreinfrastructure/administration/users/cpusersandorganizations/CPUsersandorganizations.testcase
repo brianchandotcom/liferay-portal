@@ -1,5 +1,6 @@
 @component-name = "portal-user-management-and-portal-configuration"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Users and Organizations";
@@ -510,6 +511,37 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+	}
+
+	@description = "This is a use case for LPS-95340."
+	@priority = "5"
+	test AddUserAfterPublishContentPageWithAP {
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		AssertConsoleTextNotPresent(value1 = "FileNotFoundException");
 	}
 
 	@priority = "3"
@@ -1978,4 +2010,5 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
 			value1 = "11/24/1984");
 	}
+
 }

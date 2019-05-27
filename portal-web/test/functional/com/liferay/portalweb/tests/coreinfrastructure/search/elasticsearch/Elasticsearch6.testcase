@@ -1,5 +1,6 @@
 @component-name = "portal-search"
 definition {
+
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch6";
 	property portal.upstream = "true";
@@ -153,4 +154,5 @@ definition {
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 	}
+
 }

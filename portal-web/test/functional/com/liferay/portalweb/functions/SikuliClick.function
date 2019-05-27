@@ -1,5 +1,6 @@
 @default = "sikuliClick"
 definition {
+
 	function sikuliClick {
 		WaitForSPARefresh();
 
@@ -11,4 +12,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

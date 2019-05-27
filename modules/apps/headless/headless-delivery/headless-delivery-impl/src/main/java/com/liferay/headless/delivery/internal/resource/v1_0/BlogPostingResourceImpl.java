@@ -165,7 +165,10 @@ public class BlogPostingResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
-					blogPosting.getTaxonomyCategoryIds(), siteId,
+					blogPosting.getTaxonomyCategoryIds(), BlogsEntry.class,
+					contextCompany.getCompanyId(),
+					blogPosting.getCustomFields(), siteId,
+					contextAcceptLanguage.getPreferredLocale(),
 					blogPosting.getViewableByAsString())));
 	}
 
@@ -203,8 +206,10 @@ public class BlogPostingResourceImpl
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
-					blogPosting.getTaxonomyCategoryIds(),
-					blogsEntry.getGroupId(),
+					blogPosting.getTaxonomyCategoryIds(), BlogsEntry.class,
+					contextCompany.getCompanyId(),
+					blogPosting.getCustomFields(), blogsEntry.getGroupId(),
+					contextAcceptLanguage.getPreferredLocale(),
 					blogPosting.getViewableByAsString())));
 	}
 

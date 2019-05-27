@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -217,6 +220,31 @@ public class TicketModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, Ticket>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			Ticket.class.getClassLoader(), Ticket.class, ModelWrapper.class);
+
+		try {
+			Constructor<Ticket> constructor =
+				(Constructor<Ticket>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<Ticket, Object>>
@@ -479,8 +507,7 @@ public class TicketModelImpl
 	@Override
 	public Ticket toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Ticket)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -704,11 +731,8 @@ public class TicketModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		Ticket.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		Ticket.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, Ticket>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _ticketId;

@@ -74,6 +74,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
@@ -432,8 +433,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		ServletContext servletContext,
 		FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
 
-		return (ServletContext)ProxyUtil.newProxyInstance(
-			freeMarkerBundleClassloader, _INTERFACES,
+		return _servletContextProxyProviderFunction.apply(
 			new ServletContextInvocationHandler(
 				servletContext, freeMarkerBundleClassloader));
 	}
@@ -479,14 +479,15 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return sb.toString();
 	}
 
-	private static final Class<?>[] _INTERFACES = {ServletContext.class};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerManager.class);
 
 	private static final Map<ClassLoader, BeansWrapper> _beansWrappers =
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private static final Function<InvocationHandler, ServletContext>
+		_servletContextProxyProviderFunction =
+			ProxyUtil.getProxyProviderFunction(ServletContext.class);
 
 	private Bundle _bundle;
 	private BundleTracker<Set<String>> _bundleTracker;

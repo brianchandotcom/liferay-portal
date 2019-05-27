@@ -1,4 +1,5 @@
 definition {
+
 	macro Smoke {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
@@ -27,4 +28,5 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "remove-plugin -Dplugin.name=${portletName}");
 	}
+
 }

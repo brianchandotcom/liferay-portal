@@ -39,6 +39,10 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = content.replaceAll(
+			"(\\{\\{)(?!(-| [^ ])[^\\}]*[^ ] \\}\\})( *)(?!-)(.*?) *(\\}\\})",
+			"$1 $4 $5");
+
 		content = StringUtil.replace(
 			content, CharPool.TAB, StringPool.FOUR_SPACES);
 

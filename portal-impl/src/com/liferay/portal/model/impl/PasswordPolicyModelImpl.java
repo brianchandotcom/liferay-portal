@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -342,6 +345,32 @@ public class PasswordPolicyModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, PasswordPolicy>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			PasswordPolicy.class.getClassLoader(), PasswordPolicy.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<PasswordPolicy> constructor =
+				(Constructor<PasswordPolicy>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<PasswordPolicy, Object>>
@@ -1095,8 +1124,7 @@ public class PasswordPolicyModelImpl
 	@Override
 	public PasswordPolicy toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PasswordPolicy)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1409,11 +1437,8 @@ public class PasswordPolicyModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		PasswordPolicy.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		PasswordPolicy.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, PasswordPolicy>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private String _uuid;

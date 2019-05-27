@@ -64,100 +64,6 @@ class Actions extends Component {
 
 const withActionableFields = ChildComponent => {
 	class ActionableFields extends Component {
-		static STATE = {
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof ActionableFields
-			 * @type {?array<string>}
-			 */
-
-			indexes: Config.object()
-		}
-
-		static PROPS = {
-
-			/**
-			 * @default
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?number}
-			 */
-
-			activePage: Config.number().value(0),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?string}
-			 */
-
-			defaultLanguageId: Config.string(),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?string}
-			 */
-
-			editingLanguageId: Config.string(),
-
-			/**
-			 * @default []
-			 * @instance
-			 * @memberof Sidebar
-			 * @type {?(array|undefined)}
-			 */
-
-			fieldTypes: Config.array().value([]),
-
-			/**
-			 * @default {}
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?object}
-			 */
-
-			focusedField: focusedFieldStructure.value({}),
-
-			/**
-			 * @default []
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?array<object>}
-			 */
-
-			pages: Config.arrayOf(pageStructure).value([]),
-
-			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			paginationMode: Config.string().required(),
-
-			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			rules: Config.arrayOf(ruleStructure).required(),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormRenderer
-			 * @type {!string}
-			 */
-
-			spritemap: Config.string().required()
-		}
-
 		attached() {
 			this._eventHandler = new EventHandler();
 
@@ -276,6 +182,100 @@ const withActionableFields = ChildComponent => {
 			}
 		}
 	}
+
+	ActionableFields.STATE = {
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof ActionableFields
+		 * @type {?array<string>}
+		 */
+
+		indexes: Config.object()
+	};
+
+	ActionableFields.PROPS = {
+
+		/**
+		 * @default
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?string}
+		 */
+
+		defaultLanguageId: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?string}
+		 */
+
+		editingLanguageId: Config.string(),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldTypes: Config.array().value([]),
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?object}
+		 */
+
+		focusedField: focusedFieldStructure.value({}),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?array<object>}
+		 */
+
+		pages: Config.arrayOf(pageStructure).value([]),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		rules: Config.arrayOf(ruleStructure).required(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required()
+	};
 
 	return ActionableFields;
 };

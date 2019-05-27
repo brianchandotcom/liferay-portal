@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -260,6 +263,32 @@ public class UserGroupGroupRoleModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
+	private static Function<InvocationHandler, UserGroupGroupRole>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			UserGroupGroupRole.class.getClassLoader(), UserGroupGroupRole.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<UserGroupGroupRole> constructor =
+				(Constructor<UserGroupGroupRole>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
+	}
+
 	private static final Map<String, Function<UserGroupGroupRole, Object>>
 		_attributeGetterFunctions;
 	private static final Map<String, BiConsumer<UserGroupGroupRole, Object>>
@@ -407,8 +436,7 @@ public class UserGroupGroupRoleModelImpl
 	@Override
 	public UserGroupGroupRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserGroupGroupRole)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -580,11 +608,8 @@ public class UserGroupGroupRoleModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		UserGroupGroupRole.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		UserGroupGroupRole.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, UserGroupGroupRole>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _userGroupId;

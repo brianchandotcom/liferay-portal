@@ -71,6 +71,16 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append(String.valueOf(knowledgeBaseFolder.getCreator()));
 		}
 
+		if (knowledgeBaseFolder.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(knowledgeBaseFolder.getCustomFields()));
+		}
+
 		if (knowledgeBaseFolder.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -239,6 +249,15 @@ public class KnowledgeBaseFolderSerDes {
 				"creator", String.valueOf(knowledgeBaseFolder.getCreator()));
 		}
 
+		if (knowledgeBaseFolder.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(knowledgeBaseFolder.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(
@@ -388,6 +407,13 @@ public class KnowledgeBaseFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setCustomFields(
+						KnowledgeBaseFolderSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

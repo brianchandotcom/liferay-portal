@@ -1,8 +1,10 @@
 @default = "isVisible"
 definition {
+
 	function isVisible {
 		WaitForSPARefresh();
 
 		selenium.isVisible();
 	}
+
 }

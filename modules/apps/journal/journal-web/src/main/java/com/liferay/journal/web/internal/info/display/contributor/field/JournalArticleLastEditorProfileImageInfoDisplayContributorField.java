@@ -71,10 +71,6 @@ public class JournalArticleLastEditorProfileImageInfoDisplayContributorField
 			return StringPool.BLANK;
 		}
 
-		if (user.getPortraitId() <= 0) {
-			return StringPool.BLANK;
-		}
-
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {

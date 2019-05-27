@@ -1,4 +1,5 @@
 definition {
+
 	macro _saveDisplaySettings {
 		PortletEntry.save();
 	}
@@ -453,6 +454,14 @@ definition {
 		}
 
 		PortletEntry.save();
+	}
+
+	macro editConfigurationUsersPersonalMenuPersonalApplicationLookAndFeel {
+		SystemSettings.selectOptionSetting(
+			fieldName = "Personal Applications Look and Feel",
+			selectOption = "${selectOption}");
+
+		PortletEntry.update();
 	}
 
 	macro editDefaultLandingPageCP {
@@ -1233,4 +1242,5 @@ definition {
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
 			value1 = "");
 	}
+
 }

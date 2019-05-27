@@ -107,6 +107,16 @@ public class MessageBoardMessageSerDes {
 			sb.append(String.valueOf(messageBoardMessage.getCreator()));
 		}
 
+		if (messageBoardMessage.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(messageBoardMessage.getCustomFields()));
+		}
+
 		if (messageBoardMessage.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -338,6 +348,15 @@ public class MessageBoardMessageSerDes {
 				"creator", String.valueOf(messageBoardMessage.getCreator()));
 		}
 
+		if (messageBoardMessage.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(messageBoardMessage.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(
@@ -513,6 +532,13 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setCustomFields(
+						MessageBoardMessageSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

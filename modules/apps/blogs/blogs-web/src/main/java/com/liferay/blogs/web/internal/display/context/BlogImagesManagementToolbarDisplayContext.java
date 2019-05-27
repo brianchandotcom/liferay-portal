@@ -78,7 +78,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(FileEntry fileEntry)
+	public List<String> getAvailableActions(FileEntry fileEntry)
 		throws PortalException {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();

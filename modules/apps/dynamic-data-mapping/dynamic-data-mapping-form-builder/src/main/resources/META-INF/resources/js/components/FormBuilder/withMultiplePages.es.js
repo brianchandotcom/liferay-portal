@@ -9,114 +9,6 @@ import {setValue} from '../../util/i18n.es';
 
 const withMultiplePages = ChildComponent => {
 	class MultiplePages extends Component {
-		static PROPS = {
-
-			/**
-			 * @default
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?number}
-			 */
-
-			activePage: Config.number().value(0),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?string}
-			 */
-
-			defaultLanguageId: Config.string(),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?string}
-			 */
-
-			editingLanguageId: Config.string(),
-
-			/**
-			 * @default []
-			 * @instance
-			 * @memberof Sidebar
-			 * @type {?(array|undefined)}
-			 */
-
-			fieldTypes: Config.array().value([]),
-
-			/**
-			 * @default {}
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?object}
-			 */
-
-			focusedField: focusedFieldStructure.value({}),
-
-			/**
-			 * @default []
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {?array<object>}
-			 */
-
-			pages: Config.arrayOf(pageStructure).value([]),
-
-			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			paginationMode: Config.string().required(),
-
-			/**
-			 * @instance
-			 * @memberof FormBuilder
-			 * @type {string}
-			 */
-
-			rules: Config.arrayOf(ruleStructure).required(),
-
-			/**
-			 * @default undefined
-			 * @instance
-			 * @memberof FormRenderer
-			 * @type {!string}
-			 */
-
-			spritemap: Config.string().required(),
-
-			/**
-			 * @instance
-			 * @memberof MultiplePages
-			 * @type {object}
-			 */
-
-			successPageSettings: Config.shapeOf(
-				{
-					body: Config.object(),
-					enabled: Config.bool(),
-					title: Config.object()
-				}
-			).value({})
-		}
-
-		static STATE = {
-
-			/**
-			 * @default false
-			 * @instance
-			 * @memberof FormRenderer
-			 * @type {boolean}
-			 */
-
-			dropdownExpanded: Config.bool().value(false).internal()
-		}
-
 		getPages() {
 			let {pages} = this.props;
 			const {successPageSettings} = this.props;
@@ -340,6 +232,114 @@ const withMultiplePages = ChildComponent => {
 			dispatch('successPageChanged', successPageSettings);
 		}
 	}
+
+	MultiplePages.PROPS = {
+
+		/**
+		 * @default
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?number}
+		 */
+
+		activePage: Config.number().value(0),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?string}
+		 */
+
+		defaultLanguageId: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?string}
+		 */
+
+		editingLanguageId: Config.string(),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldTypes: Config.array().value([]),
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?object}
+		 */
+
+		focusedField: focusedFieldStructure.value({}),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?array<object>}
+		 */
+
+		pages: Config.arrayOf(pageStructure).value([]),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		rules: Config.arrayOf(ruleStructure).required(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {!string}
+		 */
+
+		spritemap: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof MultiplePages
+		 * @type {object}
+		 */
+
+		successPageSettings: Config.shapeOf(
+			{
+				body: Config.object(),
+				enabled: Config.bool(),
+				title: Config.object()
+			}
+		).value({})
+	};
+
+	MultiplePages.STATE = {
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof FormRenderer
+		 * @type {boolean}
+		 */
+
+		dropdownExpanded: Config.bool().value(false).internal()
+	};
 
 	return MultiplePages;
 };

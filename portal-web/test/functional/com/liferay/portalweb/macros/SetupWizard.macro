@@ -1,4 +1,5 @@
 definition {
+
 	macro configureAdministratorUserPG {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
@@ -361,4 +362,5 @@ definition {
 			fail("Fail to save the Sample Data property in portal-setup-wizard.properties.");
 		}
 	}
+
 }

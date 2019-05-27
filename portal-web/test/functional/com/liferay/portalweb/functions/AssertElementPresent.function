@@ -1,6 +1,7 @@
 @default = "assertElementPresent"
 @summary = "Assert that '${locator1}' is available"
 definition {
+
 	function assertElementPresent {
 		WaitForSPARefresh();
 
@@ -36,4 +37,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

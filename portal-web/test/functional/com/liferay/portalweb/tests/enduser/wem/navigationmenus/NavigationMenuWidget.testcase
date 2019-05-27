@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Navigation";
@@ -149,4 +150,5 @@ definition {
 			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
 		}
 	}
+
 }

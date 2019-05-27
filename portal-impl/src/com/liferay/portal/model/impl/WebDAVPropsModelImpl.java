@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -214,6 +217,32 @@ public class WebDAVPropsModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, WebDAVProps>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			WebDAVProps.class.getClassLoader(), WebDAVProps.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<WebDAVProps> constructor =
+				(Constructor<WebDAVProps>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<WebDAVProps, Object>>
@@ -423,8 +452,7 @@ public class WebDAVPropsModelImpl
 	@Override
 	public WebDAVProps toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WebDAVProps)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -626,11 +654,8 @@ public class WebDAVPropsModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		WebDAVProps.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		WebDAVProps.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, WebDAVProps>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _webDavPropsId;

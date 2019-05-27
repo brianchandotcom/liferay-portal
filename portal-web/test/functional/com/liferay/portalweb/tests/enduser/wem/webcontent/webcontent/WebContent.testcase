@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Web Content Administration";
@@ -1225,4 +1226,5 @@ definition {
 
 		WebContent.viewRelatedAssetsPGViaWCD(relatedAssetTitle = "WC WebContent 5 Title");
 	}
+
 }

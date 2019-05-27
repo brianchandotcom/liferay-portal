@@ -28,6 +28,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 
 /**
  * @author Shuyang Zhou
@@ -106,6 +107,35 @@ public class ProxyUtil {
 		_constructorReferences.putIfAbsent(clazz, new ConstructorReference());
 
 		return clazz;
+	}
+
+	public static <T> Function<InvocationHandler, T> getProxyProviderFunction(
+		Class<?>... interfaceClasses) {
+
+		ClassLoader classLoader = interfaceClasses[0].getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = getProxyClass(classLoader, interfaceClasses);
+
+		try {
+			Constructor<T> constructor =
+				(Constructor<T>)proxyClass.getConstructor(_ARGUMENTS_CLASS);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	public static boolean isProxyClass(Class<?> clazz) {

@@ -1,5 +1,6 @@
 @component-name = "portal-plugins-osgi"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "App Manager";
@@ -50,4 +51,5 @@ definition {
 
 		AppManager.viewNoAppCP(appName = "Independent Modules");
 	}
+
 }

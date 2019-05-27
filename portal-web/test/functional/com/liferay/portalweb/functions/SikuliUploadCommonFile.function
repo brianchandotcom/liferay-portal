@@ -1,5 +1,6 @@
 @default = "sikuliUploadCommonFile"
 definition {
+
 	function sikuliUploadCommonFile {
 		WaitForSPARefresh();
 
@@ -9,4 +10,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

@@ -1,5 +1,6 @@
 @component-name = "portal-test-plugins"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Test Plugins";
@@ -42,4 +43,5 @@ definition {
 
 		Portlet.viewCannotAddPG(portletName = "Test Dependency Fox");
 	}
+
 }

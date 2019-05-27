@@ -14,51 +14,6 @@ import {Config} from 'metal-state';
 import {pageStructure} from '../../util/config.es';
 
 class PageRenderer extends Component {
-	static STATE = {
-
-		/**
-		 * @instance
-		 * @memberof FormPage
-		 * @type {?number}
-		 */
-
-		activePage: Config.number().value(0),
-
-		/**
-		 * @instance
-		 * @memberof FormPage
-		 * @type {?boolean}
-		 */
-		editable: Config.bool().value(false),
-
-		/**
-		 * @default []
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {?array<object>}
-		 */
-
-		page: pageStructure,
-
-		/**
-		 * @default 1
-		 * @instance
-		 * @memberof FormPage
-		 * @type {?number}
-		 */
-
-		pageIndex: Config.number().value(0),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof FormRenderer
-		 * @type {!string}
-		 */
-
-		spritemap: Config.string().required()
-	}
-
 	getPage(page) {
 		const {editingLanguageId} = this;
 
@@ -130,6 +85,51 @@ class PageRenderer extends Component {
 		this.emit('fieldEdited', event);
 	}
 }
+
+PageRenderer.STATE = {
+
+	/**
+	 * @instance
+	 * @memberof FormPage
+	 * @type {?number}
+	 */
+
+	activePage: Config.number().value(0),
+
+	/**
+	 * @instance
+	 * @memberof FormPage
+	 * @type {?boolean}
+	 */
+	editable: Config.bool().value(false),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof FormRenderer
+	 * @type {?array<object>}
+	 */
+
+	page: pageStructure,
+
+	/**
+	 * @default 1
+	 * @instance
+	 * @memberof FormPage
+	 * @type {?number}
+	 */
+
+	pageIndex: Config.number().value(0),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FormRenderer
+	 * @type {!string}
+	 */
+
+	spritemap: Config.string().required()
+};
 
 Soy.register(PageRenderer, templates);
 

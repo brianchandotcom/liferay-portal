@@ -12,165 +12,6 @@ import {makeFetch} from '../../util/fetch.es';
  */
 
 class RuleBuilder extends Component {
-	static PROPS = {
-		dataProviderInstanceParameterSettingsURL: Config.string().required(),
-
-		dataProviderInstancesURL: Config.string().required(),
-
-		functionsMetadata: Config.object(
-			{
-				number: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				),
-				text: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				),
-				user: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							name: Config.string(),
-							parameterTypes: Config.array(),
-							returnType: Config.string()
-						}
-					)
-				)
-			}
-		),
-
-		functionsURL: Config.string().required(),
-
-		pages: Config.array().required(),
-
-		rolesURL: Config.string().required(),
-
-		rules: Config.arrayOf(
-			Config.shapeOf(
-				{
-					actions: Config.arrayOf(
-						Config.shapeOf(
-							{
-								action: Config.string(),
-								label: Config.string(),
-								target: Config.string()
-							}
-						)
-					),
-					conditions: Config.arrayOf(
-						Config.shapeOf(
-							{
-								operands: Config.arrayOf(
-									Config.shapeOf(
-										{
-											label: Config.string(),
-											repeatable: Config.bool(),
-											type: Config.string(),
-											value: Config.string()
-										}
-									)
-								),
-								operator: Config.string()
-							}
-						)
-					),
-					logicalOperator: Config.string()
-				}
-			)
-		).value([]),
-
-		/**
-		 * The path to the SVG spritemap file containing the icons.
-		 * @default undefined
-		 * @instance
-		 * @memberof Form
-		 * @type {!string}
-		 */
-
-		spritemap: Config.string().required()
-	}
-
-	static STATE = {
-		dataProvider: Config.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string(),
-					name: Config.string(),
-					uuid: Config.string()
-				}
-			)
-		).internal(),
-
-		/**
-		 * @default
-		 * @instance
-		 * @memberof RuleBuilder
-		 *
-		 */
-
-		index: Config.number(),
-
-		mode: Config.oneOf(['view', 'edit', 'create']).value('view'),
-
-		originalRule: Config.object(),
-
-		roles: Config.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string(),
-					name: Config.string()
-				}
-			)
-		).internal(),
-
-		rules: Config.arrayOf(
-			Config.shapeOf(
-				{
-					actions: Config.arrayOf(
-						Config.shapeOf(
-							{
-								action: Config.string(),
-								label: Config.string(),
-								target: Config.string()
-							}
-						)
-					),
-					conditions: Config.arrayOf(
-						Config.shapeOf(
-							{
-								operands: Config.arrayOf(
-									Config.shapeOf(
-										{
-											label: Config.string(),
-											repeatable: Config.bool(),
-											type: Config.string(),
-											value: Config.string()
-										}
-									)
-								),
-								operator: Config.string()
-							}
-						)
-					),
-					logicalOperator: Config.string()
-				}
-			)
-		).valueFn('_setRulesValueFn')
-	};
-
 	created() {
 		this._eventHandler = new EventHandler();
 
@@ -463,6 +304,165 @@ class RuleBuilder extends Component {
 		);
 	}
 }
+
+RuleBuilder.PROPS = {
+	dataProviderInstanceParameterSettingsURL: Config.string().required(),
+
+	dataProviderInstancesURL: Config.string().required(),
+
+	functionsMetadata: Config.object(
+		{
+			number: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			),
+			text: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			),
+			user: Config.arrayOf(
+				Config.shapeOf(
+					{
+						label: Config.string(),
+						name: Config.string(),
+						parameterTypes: Config.array(),
+						returnType: Config.string()
+					}
+				)
+			)
+		}
+	),
+
+	functionsURL: Config.string().required(),
+
+	pages: Config.array().required(),
+
+	rolesURL: Config.string().required(),
+
+	rules: Config.arrayOf(
+		Config.shapeOf(
+			{
+				actions: Config.arrayOf(
+					Config.shapeOf(
+						{
+							action: Config.string(),
+							label: Config.string(),
+							target: Config.string()
+						}
+					)
+				),
+				conditions: Config.arrayOf(
+					Config.shapeOf(
+						{
+							operands: Config.arrayOf(
+								Config.shapeOf(
+									{
+										label: Config.string(),
+										repeatable: Config.bool(),
+										type: Config.string(),
+										value: Config.string()
+									}
+								)
+							),
+							operator: Config.string()
+						}
+					)
+				),
+				logicalOperator: Config.string()
+			}
+		)
+	).value([]),
+
+	/**
+	 * The path to the SVG spritemap file containing the icons.
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!string}
+	 */
+
+	spritemap: Config.string().required()
+};
+
+RuleBuilder.STATE = {
+	dataProvider: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string(),
+				name: Config.string(),
+				uuid: Config.string()
+			}
+		)
+	).internal(),
+
+	/**
+	 * @default
+	 * @instance
+	 * @memberof RuleBuilder
+	 *
+	 */
+
+	index: Config.number(),
+
+	mode: Config.oneOf(['view', 'edit', 'create']).value('view'),
+
+	originalRule: Config.object(),
+
+	roles: Config.arrayOf(
+		Config.shapeOf(
+			{
+				id: Config.string(),
+				name: Config.string()
+			}
+		)
+	).internal(),
+
+	rules: Config.arrayOf(
+		Config.shapeOf(
+			{
+				actions: Config.arrayOf(
+					Config.shapeOf(
+						{
+							action: Config.string(),
+							label: Config.string(),
+							target: Config.string()
+						}
+					)
+				),
+				conditions: Config.arrayOf(
+					Config.shapeOf(
+						{
+							operands: Config.arrayOf(
+								Config.shapeOf(
+									{
+										label: Config.string(),
+										repeatable: Config.bool(),
+										type: Config.string(),
+										value: Config.string()
+									}
+								)
+							),
+							operator: Config.string()
+						}
+					)
+				),
+				logicalOperator: Config.string()
+			}
+		)
+	).valueFn('_setRulesValueFn')
+};
 
 export default RuleBuilder;
 export {RuleBuilder};

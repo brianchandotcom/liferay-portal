@@ -16,10 +16,16 @@ package com.liferay.portal.util;
 
 import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -183,5 +189,87 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 		Assert.assertEquals(
 			virtualHostnameFriendlyURL, controlPanelFriendlyURL);
 	}
+
+	@Test
+	public void testUsingPublicLayoutSetWithVirtualHostToControlPanel()
+		throws Exception {
+
+		// Set virtual hostname for public layout Set
+
+		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
+
+		VirtualHostLocalServiceUtil.updateVirtualHost(
+			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
+			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+
+		// Test generated layout URL for Control Panel navigating from the
+		// public layout
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, VIRTUAL_HOSTNAME,
+			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+
+		Group controlPanelGroup = controlPanelLayout.getGroup();
+
+		String expectedControlPanelFriendlyURL =
+			PortalUtil.getPortalURL(themeDisplay) +
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+					controlPanelGroup.getFriendlyURL() +
+						controlPanelLayout.getFriendlyURL();
+
+		String controlPanelFriendlyURL = PortalUtil.getLayoutURL(
+			controlPanelLayout, themeDisplay, true);
+
+		Assert.assertEquals(
+			expectedControlPanelFriendlyURL, controlPanelFriendlyURL);
+	}
+
+	@Test
+	public void testUsingPublicLayoutSetWithVirtualHostToScopedControlPanel()
+		throws Exception {
+
+		// Set virtual hostname for public layout set
+
+		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
+
+		VirtualHostLocalServiceUtil.updateVirtualHost(
+			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
+			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+
+		// Create group for public layout (will be used as scope group)
+
+		Group scopeGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), publicLayout);
+
+		// Test generated layout URL for scoped Control Panel navigating from
+		// the public layout
+
+		Layout scopedControlPanelLayout = new VirtualLayout(
+			controlPanelLayout, scopeGroup);
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, VIRTUAL_HOSTNAME,
+			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+
+		themeDisplay.setScopeGroupId(scopedControlPanelLayout.getGroupId());
+
+		String expectedScopedControlPanelFriendlyURL =
+			PortalUtil.getPortalURL(themeDisplay) +
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+					scopeGroup.getFriendlyURL() +
+						scopedControlPanelLayout.getFriendlyURL();
+
+		String scopedControlPanelFriendlyURL = PortalUtil.getLayoutURL(
+			scopedControlPanelLayout, themeDisplay, true);
+
+		Assert.assertEquals(
+			expectedScopedControlPanelFriendlyURL,
+			scopedControlPanelFriendlyURL);
+
+		GroupTestUtil.deleteGroup(scopeGroup);
+	}
+
+	private static final String _PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME =
+		"test-public-layout.com";
 
 }

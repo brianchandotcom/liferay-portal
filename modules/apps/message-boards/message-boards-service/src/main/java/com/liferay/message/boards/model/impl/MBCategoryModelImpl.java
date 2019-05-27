@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -309,6 +312,32 @@ public class MBCategoryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, MBCategory>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			MBCategory.class.getClassLoader(), MBCategory.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<MBCategory> constructor =
+				(Constructor<MBCategory>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<MBCategory, Object>>
@@ -1048,8 +1077,7 @@ public class MBCategoryModelImpl
 	@Override
 	public MBCategory toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (MBCategory)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1364,11 +1392,8 @@ public class MBCategoryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		MBCategory.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		MBCategory.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, MBCategory>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

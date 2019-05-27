@@ -14,14 +14,35 @@
 
 package com.liferay.headless.common.spi.service.context;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Víctor Galán
  */
 public class ServiceContextUtil {
+
+	public static ServiceContext createServiceContext(
+		Class<?> clazz, long companyId,
+		Map<String, Object> expandoBridgeAttributes, long groupId,
+		Locale locale, String viewableBy) {
+
+		return createServiceContext(
+			new String[0], new Long[0], clazz, companyId,
+			expandoBridgeAttributes, groupId, locale, viewableBy);
+	}
 
 	public static ServiceContext createServiceContext(
 		long groupId, String viewableBy) {
@@ -31,8 +52,9 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		String[] assetTagNames, Long[] assetCategoryIds, Long groupId,
-		String viewableBy) {
+		String[] assetTagNames, Long[] assetCategoryIds, Class<?> clazz,
+		long companyId, Map<String, Object> expandoBridgeAttributes,
+		Long groupId, Locale locale, String viewableBy) {
 
 		return new ServiceContext() {
 			{
@@ -57,11 +79,66 @@ public class ServiceContextUtil {
 					setAssetTagNames(assetTagNames);
 				}
 
+				if (expandoBridgeAttributes != null) {
+					setExpandoBridgeAttributes(
+						_toExpandoBridgeAttributes(
+							clazz, companyId, (Map)expandoBridgeAttributes,
+							locale));
+				}
+
 				if (groupId != null) {
 					setScopeGroupId(groupId);
 				}
 			}
 		};
+	}
+
+	public static ServiceContext createServiceContext(
+		String[] assetTagNames, Long[] assetCategoryIds, Long groupId,
+		String viewableBy) {
+
+		return createServiceContext(
+			assetTagNames, assetCategoryIds, null, 0, null, groupId, null,
+			viewableBy);
+	}
+
+	private static Map<String, Object> _toExpandoBridgeAttributes(
+		Class<?> clazz, long companyId, Map<String, Object> customFields,
+		Locale locale) {
+
+		if (customFields == null) {
+			return null;
+		}
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			companyId, clazz.getName());
+
+		for (Map.Entry<String, Object> entry : customFields.entrySet()) {
+			int attributeType = expandoBridge.getAttributeType(entry.getKey());
+
+			if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
+				Map map = Collections.singletonMap(locale, entry.getValue());
+
+				customFields.put(entry.getKey(), map);
+			}
+			else if (ExpandoColumnConstants.DATE == attributeType) {
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat(
+						"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+				try {
+					customFields.put(
+						entry.getKey(),
+						dateFormat.parse((String)entry.getValue()));
+				}
+				catch (ParseException pe) {
+					throw new IllegalArgumentException(
+						"Unable to parse date from " + entry.getValue(), pe);
+				}
+			}
+		}
+
+		return customFields;
 	}
 
 }

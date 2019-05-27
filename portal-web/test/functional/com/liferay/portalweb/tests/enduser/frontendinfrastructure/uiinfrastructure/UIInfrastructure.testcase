@@ -1,5 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Mobile Web";
@@ -46,4 +47,5 @@ definition {
 	test PreviewTablet {
 		MobileDevice.previewPG(deviceType = "tablet");
 	}
+
 }

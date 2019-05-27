@@ -65,9 +65,15 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	preview(itemData) {
-		Liferay.fire(
-			'previewArticle',
+		Liferay.Util.openWindow(
 			{
+				dialog: {
+					destroyOnHide: true,
+					modal: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
 				title: itemData.title,
 				uri: itemData.previewURL
 			}

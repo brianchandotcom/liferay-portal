@@ -112,6 +112,16 @@ public class BlogPostingSerDes {
 			sb.append(String.valueOf(blogPosting.getCreator()));
 		}
 
+		if (blogPosting.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(blogPosting.getCustomFields()));
+		}
+
 		if (blogPosting.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -411,6 +421,14 @@ public class BlogPostingSerDes {
 			map.put("creator", String.valueOf(blogPosting.getCreator()));
 		}
 
+		if (blogPosting.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields", String.valueOf(blogPosting.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(blogPosting.getDateCreated()));
@@ -607,6 +625,12 @@ public class BlogPostingSerDes {
 				if (jsonParserFieldValue != null) {
 					blogPosting.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					blogPosting.setCustomFields(
+						BlogPostingSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

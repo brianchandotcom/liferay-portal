@@ -1,16 +1,12 @@
 {
     "plugins": [
-        ["@babel/plugin-proposal-decorators", {"legacy": true}],
-        "@babel/plugin-proposal-class-properties",
-        ["incremental-dom", {
-            components: true,
-            namespaceAttributes: true,
-            prefix: "IncrementalDOM",
-            runtime: "iDOMHelpers"
-        }],
-        "@babel/plugin-proposal-object-rest-spread"
-    ],
-    "presets": [
-        "@babel/preset-env"
+        [
+			"incremental-dom", {
+				"components": true,
+				"namespaceAttributes": true,
+				"prefix": "IncrementalDOM",
+				"runtime": "iDOMHelpers"
+			}
+		]
     ]
 }

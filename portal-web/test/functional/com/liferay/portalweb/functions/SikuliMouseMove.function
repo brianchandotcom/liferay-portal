@@ -1,5 +1,6 @@
 @default = "sikuliMouseMove"
 definition {
+
 	function sikuliMouseMove {
 		WaitForSPARefresh();
 
@@ -11,4 +12,5 @@ definition {
 
 		selenium.assertLiferayErrors();
 	}
+
 }

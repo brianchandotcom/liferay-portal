@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -221,6 +224,32 @@ public class OAuth2ScopeGrantModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, OAuth2ScopeGrant>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			OAuth2ScopeGrant.class.getClassLoader(), OAuth2ScopeGrant.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<OAuth2ScopeGrant> constructor =
+				(Constructor<OAuth2ScopeGrant>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<OAuth2ScopeGrant, Object>>
@@ -450,8 +479,7 @@ public class OAuth2ScopeGrantModelImpl
 	@Override
 	public OAuth2ScopeGrant toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (OAuth2ScopeGrant)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -668,11 +696,8 @@ public class OAuth2ScopeGrantModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		OAuth2ScopeGrant.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		OAuth2ScopeGrant.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, OAuth2ScopeGrant>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

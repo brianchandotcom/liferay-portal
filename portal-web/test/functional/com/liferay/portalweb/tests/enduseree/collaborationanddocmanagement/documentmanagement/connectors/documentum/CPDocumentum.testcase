@@ -1,5 +1,6 @@
 @component-name = "portal-document-management-ee"
 definition {
+
 	property cmis.repository.type = "documentum6";
 	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName";
 	property dummy.socket.proxy.disabled = "true";
@@ -637,4 +638,5 @@ definition {
 
 		DMRepository.viewBreadcrumb(dmRepositoryName = "Documentum Repository Name");
 	}
+
 }

@@ -1064,6 +1064,14 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (structuredContentFolder.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (structuredContentFolder.getDescription() == null) {
 					valid = false;
@@ -1165,6 +1173,17 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContentFolder1.getCreator(),
 						structuredContentFolder2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContentFolder1.getCustomFields(),
+						structuredContentFolder2.getCustomFields())) {
 
 					return false;
 				}
@@ -1326,6 +1345,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -218,6 +221,32 @@ public class DLFileEntryMetadataModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, DLFileEntryMetadata>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DLFileEntryMetadata.class.getClassLoader(),
+			DLFileEntryMetadata.class, ModelWrapper.class);
+
+		try {
+			Constructor<DLFileEntryMetadata> constructor =
+				(Constructor<DLFileEntryMetadata>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<DLFileEntryMetadata, Object>>
@@ -436,8 +465,7 @@ public class DLFileEntryMetadataModelImpl
 	@Override
 	public DLFileEntryMetadata toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileEntryMetadata)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -637,11 +665,8 @@ public class DLFileEntryMetadataModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLFileEntryMetadata.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLFileEntryMetadata.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLFileEntryMetadata>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

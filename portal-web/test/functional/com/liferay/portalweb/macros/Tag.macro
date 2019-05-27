@@ -1,4 +1,5 @@
 definition {
+
 	macro _addCP {
 		LexiconEntry.gotoAdd();
 
@@ -130,4 +131,5 @@ definition {
 			locator1 = "Tags#TAG_ENTRY_TABLE_NAME",
 			value1 = "${tagName}");
 	}
+
 }

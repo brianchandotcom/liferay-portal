@@ -1,5 +1,6 @@
 @component-name = "portal-workflow"
 definition {
+
 	property custom.properties = "minifier.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -481,4 +482,5 @@ definition {
 			fieldName = "TextTwo",
 			fieldValue = "Text Two Input");
 	}
+
 }

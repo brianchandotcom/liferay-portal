@@ -5,6 +5,7 @@
 	data=data
 	helpMessage=escape(fieldStructure.tip)
 	label=escape(label)
+	required=required
 >
 	<div class="clearfix form-group">
 		${fieldStructure.children}

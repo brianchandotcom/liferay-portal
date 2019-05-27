@@ -248,6 +248,16 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public void paginationStartParameterName(
+		String paginationStartParameterName) {
+
+		withSearchRequestImpl(
+			searchRequestImpl ->
+				searchRequestImpl.setPaginationStartParameterName(
+					paginationStartParameterName));
+	}
+
+	@Override
 	public SearchRequestBuilder postFilterQuery(Query query) {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setPostFilterQuery(query));

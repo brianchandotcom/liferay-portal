@@ -118,6 +118,16 @@ public class UserAccountSerDes {
 			sb.append(String.valueOf(userAccount.getContactInformation()));
 		}
 
+		if (userAccount.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(userAccount.getCustomFields()));
+		}
+
 		if (userAccount.getDashboardURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -438,6 +448,14 @@ public class UserAccountSerDes {
 				String.valueOf(userAccount.getContactInformation()));
 		}
 
+		if (userAccount.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields", String.valueOf(userAccount.getCustomFields()));
+		}
+
 		if (userAccount.getDashboardURL() == null) {
 			map.put("dashboardURL", null);
 		}
@@ -638,6 +656,12 @@ public class UserAccountSerDes {
 					userAccount.setContactInformation(
 						ContactInformationSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setCustomFields(
+						UserAccountSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dashboardURL")) {

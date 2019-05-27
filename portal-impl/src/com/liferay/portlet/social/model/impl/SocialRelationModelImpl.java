@@ -29,6 +29,9 @@ import com.liferay.social.kernel.model.SocialRelationModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -216,6 +219,32 @@ public class SocialRelationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SocialRelation>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SocialRelation.class.getClassLoader(), SocialRelation.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<SocialRelation> constructor =
+				(Constructor<SocialRelation>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SocialRelation, Object>>
@@ -419,8 +448,7 @@ public class SocialRelationModelImpl
 	@Override
 	public SocialRelation toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialRelation)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -615,11 +643,8 @@ public class SocialRelationModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialRelation.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialRelation.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialRelation>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

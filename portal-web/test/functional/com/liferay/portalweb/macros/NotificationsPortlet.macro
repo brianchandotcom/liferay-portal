@@ -1,4 +1,5 @@
 definition {
+
 	macro configureNotificationPG {
 		MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
 
@@ -261,4 +262,5 @@ definition {
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION",
 			value1 = "Website");
 	}
+
 }

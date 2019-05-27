@@ -1,5 +1,6 @@
 @component-name = "portal-wcm"
 definition {
+
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content Pages";
@@ -772,4 +773,5 @@ definition {
 			AssertElementNotPresent(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER");
 		}
 	}
+
 }

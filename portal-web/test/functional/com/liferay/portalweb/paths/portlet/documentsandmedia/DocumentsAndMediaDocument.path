@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_HEADER</td>
-	<td>//div[contains(@class,'sidebar-body')]//h2[contains(@class,'asset-links-title')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//h2[contains(@class,'sheet-tertiary-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 <!--DOCUMENT_DETAILS-->
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//div[@class='sidebar-section']//a[@title='Download (${key_dmDocumentSize})']</td>
+	<td>//div[@class='sidebar-section']//a[@title='File Size ${key_dmDocumentSize}']</td>
 	<td></td>
 </tr>
 <tr>

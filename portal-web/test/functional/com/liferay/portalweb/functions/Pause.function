@@ -1,9 +1,11 @@
 @default = "pause"
 definition {
+
 	@summary-ignore = "true"
 	function pause {
 		WaitForSPARefresh();
 
 		selenium.pause();
 	}
+
 }

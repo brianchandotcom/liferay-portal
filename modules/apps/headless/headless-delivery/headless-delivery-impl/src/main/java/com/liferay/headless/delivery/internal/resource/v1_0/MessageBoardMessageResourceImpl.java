@@ -192,7 +192,9 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
 			ServiceContextUtil.createServiceContext(
-				mbMessage.getGroupId(),
+				MBMessage.class, contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(), mbMessage.getGroupId(),
+				contextAcceptLanguage.getPreferredLocale(),
 				messageBoardMessage.getViewableByAsString()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
@@ -233,7 +235,10 @@ public class MessageBoardMessageResourceImpl
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
 			false,
 			ServiceContextUtil.createServiceContext(
+				MBMessage.class, contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(),
 				parentMBMessage.getGroupId(),
+				contextAcceptLanguage.getPreferredLocale(),
 				messageBoardMessage.getViewableByAsString()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);

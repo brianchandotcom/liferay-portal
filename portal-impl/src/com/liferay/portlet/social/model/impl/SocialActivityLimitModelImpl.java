@@ -34,6 +34,9 @@ import com.liferay.social.kernel.model.SocialActivityLimitModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -228,6 +231,32 @@ public class SocialActivityLimitModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, SocialActivityLimit>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SocialActivityLimit.class.getClassLoader(),
+			SocialActivityLimit.class, ModelWrapper.class);
+
+		try {
+			Constructor<SocialActivityLimit> constructor =
+				(Constructor<SocialActivityLimit>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<SocialActivityLimit, Object>>
@@ -530,8 +559,7 @@ public class SocialActivityLimitModelImpl
 	@Override
 	public SocialActivityLimit toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityLimit)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -751,11 +779,8 @@ public class SocialActivityLimitModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		SocialActivityLimit.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		SocialActivityLimit.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, SocialActivityLimit>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _activityLimitId;
 	private long _groupId;

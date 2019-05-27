@@ -32,6 +32,9 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstanceModel;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -244,6 +247,32 @@ public class KaleoTaskFormInstanceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, KaleoTaskFormInstance>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KaleoTaskFormInstance.class.getClassLoader(),
+			KaleoTaskFormInstance.class, ModelWrapper.class);
+
+		try {
+			Constructor<KaleoTaskFormInstance> constructor =
+				(Constructor<KaleoTaskFormInstance>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<KaleoTaskFormInstance, Object>>
@@ -697,8 +726,7 @@ public class KaleoTaskFormInstanceModelImpl
 	@Override
 	public KaleoTaskFormInstance toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (KaleoTaskFormInstance)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1000,11 +1028,8 @@ public class KaleoTaskFormInstanceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		KaleoTaskFormInstance.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		KaleoTaskFormInstance.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, KaleoTaskFormInstance>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private long _mvccVersion;
 	private long _kaleoTaskFormInstanceId;

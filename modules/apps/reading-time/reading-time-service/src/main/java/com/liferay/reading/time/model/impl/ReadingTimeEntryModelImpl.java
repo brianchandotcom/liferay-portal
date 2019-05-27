@@ -40,6 +40,9 @@ import com.liferay.reading.time.model.ReadingTimeEntrySoap;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -283,6 +286,32 @@ public class ReadingTimeEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, ReadingTimeEntry>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ReadingTimeEntry.class.getClassLoader(), ReadingTimeEntry.class,
+			ModelWrapper.class);
+
+		try {
+			Constructor<ReadingTimeEntry> constructor =
+				(Constructor<ReadingTimeEntry>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map<String, Function<ReadingTimeEntry, Object>>
@@ -719,8 +748,7 @@ public class ReadingTimeEntryModelImpl
 	@Override
 	public ReadingTimeEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ReadingTimeEntry)ProxyUtil.newProxyInstance(
-				_classLoader, _escapedModelInterfaces,
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -940,11 +968,8 @@ public class ReadingTimeEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		ReadingTimeEntry.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		ReadingTimeEntry.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, ReadingTimeEntry>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	private String _uuid;
 	private String _originalUuid;

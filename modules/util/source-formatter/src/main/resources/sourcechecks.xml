@@ -418,6 +418,9 @@
 		<check name="PoshiCommandsOrderCheck">
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiEmptyLinesCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PoshiIndentationCheck" />
 		<check name="PoshiParametersOrderCheck">
 			<property name="enabled" value="false" />
@@ -515,6 +518,9 @@
 	</source-processor>
 	<source-processor name="YMLSourceProcessor">
 		<check name="YMLDefinitionOrderCheck" />
+		<check name="YMLEmptyLinesCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="YMLWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+
 import java.sql.Types;
 
 import java.util.Collections;
@@ -209,6 +212,32 @@ public class DLOpenerFileEntryReferenceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
+	}
+
+	private static Function<InvocationHandler, DLOpenerFileEntryReference>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			DLOpenerFileEntryReference.class.getClassLoader(),
+			DLOpenerFileEntryReference.class, ModelWrapper.class);
+
+		try {
+			Constructor<DLOpenerFileEntryReference> constructor =
+				(Constructor<DLOpenerFileEntryReference>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new InternalError(roe);
+				}
+			};
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new InternalError(nsme);
+		}
 	}
 
 	private static final Map
@@ -463,10 +492,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 	@Override
 	public DLOpenerFileEntryReference toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel =
-				(DLOpenerFileEntryReference)ProxyUtil.newProxyInstance(
-					_classLoader, _escapedModelInterfaces,
-					new AutoEscapeBeanHandler(this));
+			_escapedModel = _escapedModelProxyProviderFunction.apply(
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -689,11 +716,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader =
-		DLOpenerFileEntryReference.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		DLOpenerFileEntryReference.class, ModelWrapper.class
-	};
+	private static final Function<InvocationHandler, DLOpenerFileEntryReference>
+		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.internal;
+package com.liferay.portlet.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.RenderParametersPool;
+import com.liferay.portlet.internal.PortletURLImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +40,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class PortletURLImplTest {
 
 	@ClassRule

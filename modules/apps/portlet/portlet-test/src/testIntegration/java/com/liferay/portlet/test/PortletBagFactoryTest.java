@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.internal;
+package com.liferay.portlet.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,12 +27,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Raymond Augé
  */
+@RunWith(Arquillian.class)
 public class PortletBagFactoryTest {
 
 	@ClassRule

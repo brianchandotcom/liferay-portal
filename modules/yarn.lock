@@ -3471,15 +3471,10 @@ clay-component@2.15.1, clay-component@^2.15.1:
     metal-dom "^2.16.0"
     metal-state "^2.16.0"
 
-clay-css@2.15.1:
+clay-css@2.15.1, clay-css@^2.11.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.15.1.tgz#d77312075072f20b5547a53281202c33755ad08c"
   integrity sha512-MzILHCar0hbw2zO+d06muv8cXEta1LYyttQAmyg+ufDWLmbY5cFc9zECxackAy7g4cZ4ILKjhAEDuZdA5EGnzg==
-
-clay-css@^2.11.1:
-  version "2.14.2"
-  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.14.2.tgz#28e4410f2a46b42a9107cdbd7e6fa9f8a078ccf3"
-  integrity sha512-KaVFEeJ+hNWppAwI8NPSbA33iz1YqFbnqpS7Le3GRnTQxaeuV3pM+gcIOtslf4ABoBApcab1ykSyhgNdmLC2/Q==
 
 clay-data-provider@2.15.1, clay-data-provider@^2.15.1:
   version "2.15.1"
@@ -4264,7 +4259,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.5, core-js@^2.5.6:
+core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.6:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
   integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
@@ -11009,12 +11004,10 @@ metal-component@2.16.8, metal-component@^2.0.0, metal-component@^2.13.2, metal-c
     metal-events "^2.16.8"
     metal-state "^2.16.8"
 
-metal-debounce@2.0.1, metal-debounce@^2.0.0, metal-debounce@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/metal-debounce/-/metal-debounce-2.0.1.tgz#c69cfaa458f5a9ddd915382a2d04a404a37f46db"
-  integrity sha512-rielNpoc6dggjtfGfrmI+VByEj7vbz85c8v1OaAwPeFkwD1b9RwWCcySud0BCuOa3UrKHLOWnEiJXW1161gPTw==
-  dependencies:
-    core-js "^2.5.5"
+metal-debounce@^2.0.0, metal-debounce@^2.0.1, metal-debounce@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/metal-debounce/-/metal-debounce-2.0.2.tgz#e5cbe97e76bf0e57a09df927de8b65a47c1f2fc5"
+  integrity sha512-BFAVzGDN50drx6cV88JgI1pyI2z4awQZejMgefxpwJgcvsFXMQyymDFRzuEtecYARSHWyGPjfB5BYrpaKY8uKQ==
 
 metal-dom@2.16.8, metal-dom@^2.0.0, metal-dom@^2.16.0, metal-dom@^2.16.6, metal-dom@^2.16.7, metal-dom@^2.16.8, metal-dom@^2.5.3:
   version "2.16.8"

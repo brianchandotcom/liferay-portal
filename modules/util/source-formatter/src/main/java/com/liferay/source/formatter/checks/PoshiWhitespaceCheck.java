@@ -76,8 +76,8 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 				content = StringUtil.replaceFirst(
 					content, matcher.group(),
 					StringBundler.concat(
-						matcher.group(1), " ", matcher.group(3), " ",
-						matcher.group(4)),
+						matcher.group(1), StringPool.SPACE, matcher.group(3),
+						StringPool.SPACE, matcher.group(4)),
 					matcher.start());
 			}
 		}

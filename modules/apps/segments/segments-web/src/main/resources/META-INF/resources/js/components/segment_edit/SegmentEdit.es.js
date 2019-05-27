@@ -1,17 +1,20 @@
 import ClayButton from '../shared/ClayButton.es';
 import ClayToggle from '../shared/ClayToggle.es';
+import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder.es';
 import LocalizedInput from '../title_editor/LocalizedInput.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
-import {FieldArray, withFormik} from 'formik';
+import {buildQueryString, translateQueryToCriteria} from '../../utils/odata.es';
 import {
+	CONJUNCTIONS,
 	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES
 } from '../../utils/constants.es';
+import {FieldArray, withFormik} from 'formik';
 
 class SegmentEdit extends Component {
 	static contextType = ThemeContext;
@@ -54,14 +57,47 @@ class SegmentEdit extends Component {
 		contributors: [],
 		initialSegmentActive: true,
 		initialSegmentName: {},
-		portletNamespace: ''
+		portletNamespace: '',
+		showInEditMode: false
 	};
 
 	constructor(props) {
 		super(props);
 
+		const {contributors: initialContributors, propertyGroups} = props;
+
+		const {conjunctionId: initialConjunction} = initialContributors.find(
+			c => c.conjunctionId
+		) || {conjunctionId: CONJUNCTIONS.AND};
+
+		const contributors =
+			initialContributors &&
+			initialContributors.map(c => {
+				const propertyGroup =
+					propertyGroups &&
+					propertyGroups.find(
+						propertyGroup =>
+							c.propertyKey === propertyGroup.propertyKey
+					);
+
+				return {
+					conjunctionId: c.conjunctionId || initialConjunction,
+					conjunctionInputId: c.conjunctionInputId,
+					criteriaMap: c.initialQuery
+						? translateQueryToCriteria(c.initialQuery)
+						: null,
+					entityName: propertyGroup && propertyGroup.entityName,
+					inputId: c.inputId,
+					modelLabel: propertyGroup && propertyGroup.name,
+					properties: propertyGroup && propertyGroup.properties,
+					propertyKey: c.propertyKey,
+					query: c.initialQuery
+				};
+			});
+
 		this.state = {
-			disabledSave: this._isQueryEmpty(),
+			contributors,
+			disabledSave: this._isQueryEmpty(contributors),
 			editing: this.props.showInEditMode,
 			validTitle: !!props.values.name[props.defaultLanguageId]
 		};
@@ -80,9 +116,27 @@ class SegmentEdit extends Component {
 		});
 	};
 
-	_handleQueryChange = () => {
-		this.setState({
-			disabledSave: this._isQueryEmpty()
+	_handleQueryChange = (criteriaChange, index) => {
+		this.setState(prevState => {
+			const contributors = prevState.contributors.map(contributor => {
+				const {conjunctionId, properties, propertyKey} = contributor;
+
+				return index === propertyKey
+					? {
+							...contributor,
+							criteriaMap: criteriaChange,
+							query: buildQueryString(
+								[criteriaChange],
+								conjunctionId,
+								properties
+							)
+					  }
+					: contributor;
+			});
+			return {
+				contributors,
+				disabledSave: this._isQueryEmpty(contributors)
+			};
 		});
 	};
 
@@ -101,20 +155,44 @@ class SegmentEdit extends Component {
 		Liferay.Portal.ToolTip.show(event.currentTarget, message);
 	};
 
+	_handleConjunctionChange = () => {
+		this.setState(prevState => {
+			const prevContributors = prevState.contributors;
+
+			const prevConjunction =
+				prevContributors[0] && prevContributors[0].conjunctionId;
+
+			const conjunctionIndex = SUPPORTED_CONJUNCTIONS.findIndex(
+				item => item.name === prevConjunction
+			);
+
+			const conjunctionSelected =
+				conjunctionIndex === SUPPORTED_CONJUNCTIONS.length - 1
+					? SUPPORTED_CONJUNCTIONS[0].name
+					: SUPPORTED_CONJUNCTIONS[conjunctionIndex + 1].name;
+
+			const contributors = prevContributors.map(contributor => ({
+				...contributor,
+				conjunctionId: conjunctionSelected
+			}));
+
+			return {
+				contributors
+			};
+		});
+	};
+
 	/**
 	 * Checks if every query in each contributor has a value.
 	 * @return {boolean} True if none of the contributor's queries have a value.
 	 */
-	_isQueryEmpty = () =>
-		this.props.contributors.every(({initialQuery, inputId}) => {
-			const input = document.getElementById(inputId);
-
-			return input ? !input.value : !initialQuery;
+	_isQueryEmpty = contributors =>
+		contributors.every(contributor => {
+			return !contributor.query;
 		});
 
 	_renderContributors = () => {
 		const {
-			contributors,
 			formId,
 			initialMembersCount,
 			locale,
@@ -124,19 +202,20 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {editing} = this.state;
+		const {contributors, editing} = this.state;
 
-		const emptyContributors = this._isQueryEmpty();
+		const emptyContributors = this._isQueryEmpty(contributors);
 
 		const segmentName = values.name[locale];
 
 		return propertyGroups && contributors ? (
 			<ContributorsBuilder
+				contributors={contributors}
 				editing={editing}
 				emptyContributors={emptyContributors}
 				formId={formId}
-				initialContributors={contributors}
 				membersCount={initialMembersCount}
+				onConjunctionChange={this._handleConjunctionChange}
 				onQueryChange={this._handleQueryChange}
 				previewMembersURL={previewMembersURL}
 				propertyGroups={propertyGroups}
@@ -241,7 +320,7 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {disabledSave, editing, validTitle} = this.state;
+		const {contributors, disabledSave, editing, validTitle} = this.state;
 
 		const {assetsPath} = this.context;
 
@@ -336,6 +415,7 @@ class SegmentEdit extends Component {
 						name='contributors'
 						render={this._renderContributors}
 					/>
+					<ContributorInputs contributors={contributors} />
 				</div>
 			</div>
 		);

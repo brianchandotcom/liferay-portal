@@ -114,4 +114,58 @@ describe('SegmentEdit', () => {
 
 		expect(asFragment()).toMatchSnapshot();
 	});
+
+	it('should render with given values', () => {
+		const contributors = [
+			{
+				conjunctionId: 'and',
+				conjunctionInputId: 'conjunction-input-1',
+				initialQuery: "(value eq 'value')",
+				inputId: 'input-id-for-backend-form',
+				propertyKey: 'first-test-values-group'
+			}
+		];
+		const hasUpdatePermission = true;
+
+		const propertyGroups = [
+			{
+				entityName: 'First Test Values Group',
+				name: 'First Test Values Group',
+				properties: [
+					{
+						label: 'Value',
+						name: 'value',
+						options: [],
+						selectEntity: null,
+						type: 'string'
+					}
+				],
+				propertyKey: 'first-test-values-group'
+			}
+		];
+
+		const {asFragment, getByTestId} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				contributors={contributors}
+				defaultLanguageId='en_US'
+				hasUpdatePermission={hasUpdatePermission}
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				propertyGroups={propertyGroups}
+				redirect='/test-url'
+				showInEditMode={true}
+			/>
+		);
+
+		expect(getByTestId(contributors[0].inputId).value).toBe(
+			contributors[0].initialQuery
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

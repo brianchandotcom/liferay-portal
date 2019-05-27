@@ -823,46 +823,6 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                   </div>
                 </div>
               </div>
-              <input
-                class="field form-control"
-                data-testid="input_test_id"
-                id="input_test_id"
-                name="input_test_id"
-                readonly=""
-                type="hidden"
-                value=""
-              />
-              <input
-                id="conjunction_input_test_id"
-                name="conjunction_input_test_id"
-                readonly=""
-                type="hidden"
-                value="and"
-              />
-              <div
-                class="criteria-builder-root"
-              >
-                <h4
-                  class="sheet-subtitle"
-                >
-                  x-with-property-x
-                </h4>
-                <div
-                  class="criteria-group-item-root color--user"
-                >
-                  <div
-                    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
-                  >
-                    <div
-                      class="drop-zone-target p-5"
-                    >
-                      <div
-                        class="empty-drop-zone-indicator"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1695,22 +1655,6 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                   </div>
                 </div>
               </div>
-              <input
-                class="field form-control"
-                data-testid="input_test_id"
-                id="input_test_id"
-                name="input_test_id"
-                readonly=""
-                type="hidden"
-                value=""
-              />
-              <input
-                id="conjunction_input_test_id"
-                name="conjunction_input_test_id"
-                readonly=""
-                type="hidden"
-                value="and"
-              />
             </div>
           </div>
         </div>

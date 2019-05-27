@@ -16,21 +16,14 @@ import {
 } from '../../utils/constants.es';
 import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
+import {initialContributorShape} from '../../utils/types.es';
 
 class SegmentEdit extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
 		availableLocales: PropTypes.object.isRequired,
-		contributors: PropTypes.arrayOf(
-			PropTypes.shape({
-				conjunctionId: PropTypes.string,
-				conjunctionInputId: PropTypes.string,
-				initialQuery: PropTypes.string,
-				inputId: PropTypes.string,
-				propertyKey: PropTypes.string
-			})
-		),
+		contributors: PropTypes.arrayOf(initialContributorShape),
 		defaultLanguageId: PropTypes.string.isRequired,
 		errors: PropTypes.object,
 		formId: PropTypes.string,

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {jsDatetoYYYYMMDD} from '../../utils/utils.es';
 import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {propertyGroupShape} from '../../utils/types.es';
 
 const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -43,7 +44,7 @@ function getDefaultValue(property) {
 class CriteriaSidebarCollapse extends Component {
 	static propTypes = {
 		onCollapseClick: PropTypes.func,
-		propertyGroups: PropTypes.array,
+		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		propertyKey: PropTypes.string,
 		searchValue: PropTypes.string
 	};

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {initialContributorShape} from '../../utils/types.es';
 
 function ContributorInputs({contributors}) {
 	return contributors.map((criteria, i) => {
@@ -27,15 +28,7 @@ function ContributorInputs({contributors}) {
 }
 
 ContributorInputs.propTypes = {
-	contributors: PropTypes.arrayOf(
-		PropTypes.shape({
-			conjunctionId: PropTypes.string,
-			conjunctionInputId: PropTypes.string,
-			initialQuery: PropTypes.string,
-			inputId: PropTypes.string,
-			propertyKey: PropTypes.string
-		})
-	)
+	contributors: PropTypes.arrayOf(initialContributorShape)
 };
 
 export default ContributorInputs;

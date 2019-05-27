@@ -2,41 +2,21 @@ import CriteriaGroup from './CriteriaGroup.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
+	conjunctionShape,
+	criteriaShape,
+	propertyShape,
+	propertyTypesShape
+} from '../../utils/types.es';
+import {
 	insertAtIndex,
 	removeAtIndex,
 	replaceAtIndex,
 	sub
 } from '../../utils/utils.es';
 
-const CRITERIA_GROUP_SHAPE = {
-	conjunctionName: PropTypes.string,
-	groupId: PropTypes.string,
-	items: PropTypes.array
-};
-
-const CRITERION_SHAPE = {
-	displayValue: PropTypes.string,
-	operatorName: PropTypes.string,
-	propertyName: PropTypes.string,
-	value: PropTypes.oneOfType([
-		PropTypes.array,
-		PropTypes.number,
-		PropTypes.string
-	])
-};
-
 class CriteriaBuilder extends Component {
 	static propTypes = {
-		criteria: PropTypes.shape({
-			conjunctionName: PropTypes.string,
-			groupId: PropTypes.string,
-			items: PropTypes.arrayOf(
-				PropTypes.oneOfType([
-					PropTypes.shape(CRITERIA_GROUP_SHAPE),
-					PropTypes.shape(CRITERION_SHAPE)
-				])
-			)
-		}),
+		criteria: criteriaShape,
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
 
@@ -57,23 +37,10 @@ class CriteriaBuilder extends Component {
 		modelLabel: PropTypes.string,
 		onChange: PropTypes.func,
 		propertyKey: PropTypes.string.isRequired,
-		supportedConjunctions: PropTypes.arrayOf(
-			PropTypes.shape({
-				label: PropTypes.string,
-				name: PropTypes.string.isRequired
-			})
-		),
+		supportedConjunctions: PropTypes.arrayOf(conjunctionShape),
 		supportedOperators: PropTypes.array,
-		supportedProperties: PropTypes.arrayOf(
-			PropTypes.shape({
-				entityUrl: PropTypes.string,
-				label: PropTypes.string,
-				name: PropTypes.string.isRequired,
-				options: PropTypes.array,
-				type: PropTypes.string.isRequired
-			})
-		).isRequired,
-		supportedPropertyTypes: PropTypes.object
+		supportedProperties: PropTypes.arrayOf(propertyShape).isRequired,
+		supportedPropertyTypes: propertyTypesShape
 	};
 
 	/**

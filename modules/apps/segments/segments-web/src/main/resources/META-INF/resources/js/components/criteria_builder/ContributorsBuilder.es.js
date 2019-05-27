@@ -8,60 +8,19 @@ import getCN from 'classnames';
 import HTML5Backend from 'react-dnd-html5-backend';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {
+	conjunctionShape,
+	contributorShape,
+	operatorShape,
+	propertyGroupShape,
+	propertyTypesShape
+} from '../../utils/types.es';
 import {DragDropContext as dragDropContext} from 'react-dnd';
 import {getPluralMessage, sub} from '../../utils/utils.es';
 
-const conjunctionShape = PropTypes.shape({
-	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired
-});
-
-const propertyShape = PropTypes.shape({
-	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired
-});
-
-const contributorsShape = PropTypes.shape({
-	conjunctionId: PropTypes.string,
-	conjunctionInputId: PropTypes.string,
-	criteriaMap: PropTypes.shape({
-		conjunctionName: PropTypes.string,
-		groupId: PropTypes.string,
-		items: PropTypes.arrayOf(PropTypes.object)
-	}),
-	entityName: PropTypes.string,
-	inputId: PropTypes.string,
-	modelLabel: PropTypes.string,
-	properties: PropTypes.arrayOf(propertyShape),
-	propertyKey: PropTypes.string,
-	query: PropTypes.string
-});
-
-const operatorShape = PropTypes.shape({
-	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired
-});
-
-const propertyGroupShape = PropTypes.shape({
-	entityName: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	properties: PropTypes.arrayOf(propertyShape),
-	propertyKey: PropTypes.string.isRequired
-});
-
-const propertyTypeShape = PropTypes.shape({
-	boolean: PropTypes.arrayOf(PropTypes.string).isRequired,
-	date: PropTypes.arrayOf(PropTypes.string).isRequired,
-	double: PropTypes.arrayOf(PropTypes.string).isRequired,
-	id: PropTypes.arrayOf(PropTypes.string).isRequired,
-	integer: PropTypes.arrayOf(PropTypes.string).isRequired,
-	string: PropTypes.arrayOf(PropTypes.string).isRequired
-});
-
 class ContributorBuilder extends React.Component {
 	static propTypes = {
-		contributors: PropTypes.arrayOf(contributorsShape),
+		contributors: PropTypes.arrayOf(contributorShape),
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
 		formId: PropTypes.string,
@@ -75,7 +34,7 @@ class ContributorBuilder extends React.Component {
 		segmentName: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
-		supportedPropertyTypes: propertyTypeShape.isRequired
+		supportedPropertyTypes: propertyTypesShape.isRequired
 	};
 
 	static defaultProps = {

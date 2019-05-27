@@ -2,6 +2,7 @@ import ClayButton from '../shared/ClayButton.es';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {conjunctionShape} from '../../utils/types.es';
 
 class Conjunction extends React.Component {
 	static propTypes = {
@@ -9,7 +10,7 @@ class Conjunction extends React.Component {
 		conjunctionName: PropTypes.string.isRequired,
 		editing: PropTypes.bool.isRequired,
 		onClick: PropTypes.func,
-		supportedConjunctions: PropTypes.array.isRequired
+		supportedConjunctions: PropTypes.arrayOf(conjunctionShape)
 	};
 
 	_getConjunctionLabel(conjunctionName, conjunctions) {

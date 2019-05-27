@@ -64,7 +64,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -89,7 +89,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -114,7 +114,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -139,7 +139,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -169,7 +169,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -199,7 +199,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -228,7 +228,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -257,7 +257,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -281,7 +281,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addGroupOwnerUser(_group);
 		_objectUser = UserTestUtil.addGroupAdminUser(_group);
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_group.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
 
 		Assert.assertFalse(
@@ -300,7 +300,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addGroupOwnerUser(_group);
 		_objectUser = UserTestUtil.addGroupAdminUser(_group);
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_group.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
 
 		Assert.assertFalse(
@@ -319,7 +319,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addGroupOwnerUser(_group);
 		_objectUser = UserTestUtil.addGroupOwnerUser(_group);
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_group.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
 
 		Assert.assertFalse(
@@ -338,7 +338,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addGroupOwnerUser(_group);
 		_objectUser = UserTestUtil.addGroupOwnerUser(_group);
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_group.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
 
 		Assert.assertFalse(
@@ -363,7 +363,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -393,7 +393,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -422,7 +422,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -451,7 +451,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				group.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -479,7 +479,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -507,7 +507,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -534,7 +534,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -561,7 +561,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -588,7 +588,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -615,7 +615,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -642,7 +642,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupOwnerUser(_organization.getGroup());
 
 		try {
-			deleteUserGroupRolesByRole(
+			_deleteUserGroupRolesByRole(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -669,7 +669,7 @@ public class UserGroupRoleServiceTest {
 		_objectUser = UserTestUtil.addGroupOwnerUser(_organization.getGroup());
 
 		try {
-			deleteUserGroupRolesByUser(
+			_deleteUserGroupRolesByUser(
 				_organization.getGroupId(), role.getRoleId(), _subjectUser,
 				_objectUser);
 
@@ -696,7 +696,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -719,7 +719,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addOrganizationAdminUser(_organization);
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -741,7 +741,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -763,7 +763,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -785,7 +785,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -807,7 +807,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addGroupAdminUser(_organization.getGroup());
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -829,7 +829,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addGroupOwnerUser(_organization.getGroup());
 
-		deleteUserGroupRolesByRole(
+		_deleteUserGroupRolesByRole(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -851,7 +851,7 @@ public class UserGroupRoleServiceTest {
 		_subjectUser = UserTestUtil.addOrganizationOwnerUser(_organization);
 		_objectUser = UserTestUtil.addGroupOwnerUser(_organization.getGroup());
 
-		deleteUserGroupRolesByUser(
+		_deleteUserGroupRolesByUser(
 			_organization.getGroupId(), role.getRoleId(), _subjectUser,
 			_objectUser);
 
@@ -861,7 +861,7 @@ public class UserGroupRoleServiceTest {
 				role.getRoleId()));
 	}
 
-	protected void deleteUserGroupRolesByRole(
+	private void _deleteUserGroupRolesByRole(
 			long groupId, long roleId, User subjectUser, User objectUser)
 		throws Exception {
 
@@ -874,7 +874,7 @@ public class UserGroupRoleServiceTest {
 			objectUser.getUserId(), groupId, new long[] {roleId});
 	}
 
-	protected void deleteUserGroupRolesByUser(
+	private void _deleteUserGroupRolesByUser(
 			long groupId, long roleId, User subjectUser, User objectUser)
 		throws Exception {
 

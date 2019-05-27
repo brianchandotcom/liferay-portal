@@ -177,7 +177,7 @@
 					<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
 
 						<%
-						int usersCount = UserLocalServiceUtil.getGroupUsersCount(curGroup.getGroupId());
+						int usersCount = UserLocalServiceUtil.getGroupUsersCount(curGroup.getGroupId(), WorkflowConstants.STATUS_APPROVED);
 						%>
 
 						<c:if test="<%= usersCount > 0 %>">

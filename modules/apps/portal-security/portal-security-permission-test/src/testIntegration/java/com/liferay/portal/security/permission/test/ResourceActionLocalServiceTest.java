@@ -91,21 +91,21 @@ public class ResourceActionLocalServiceTest {
 	public void testFirstAvailableBitwiseValueGetsGenerated()
 		throws PortalException {
 
-		ResourceAction resourceAction =
+		ResourceAction resourceAction1 =
 			_resourceActionLocalService.getResourceAction(
 				_NAME, ActionKeys.VIEW);
 
-		Assert.assertEquals(1L, resourceAction.getBitwiseValue());
+		Assert.assertEquals(1L, resourceAction1.getBitwiseValue());
 
-		resourceAction = _resourceActionLocalService.getResourceAction(
-			_NAME, _ACTION_ID_1);
+		ResourceAction resourceAction2 =
+			_resourceActionLocalService.getResourceAction(_NAME, _ACTION_ID_1);
 
-		Assert.assertEquals(2L, resourceAction.getBitwiseValue());
+		Assert.assertEquals(2L, resourceAction2.getBitwiseValue());
 
-		resourceAction = _resourceActionLocalService.getResourceAction(
-			_NAME, _ACTION_ID_3);
+		ResourceAction resourceAction3 =
+			_resourceActionLocalService.getResourceAction(_NAME, _ACTION_ID_3);
 
-		Assert.assertEquals(4L, resourceAction.getBitwiseValue());
+		Assert.assertEquals(4L, resourceAction3.getBitwiseValue());
 	}
 
 	@Test

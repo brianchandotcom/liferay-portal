@@ -15,7 +15,6 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -205,26 +204,18 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 			final String primKey = RandomTestUtil.randomString(
 				UniqueStringRandomizerBumper.INSTANCE);
 
-			Callable<ResourcePermission> callable =
-				new Callable<ResourcePermission>() {
+			Callable<ResourcePermission> callable = () -> {
+				Role role = _roleLocalService.getRole(
+					TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
-					@Override
-					public ResourcePermission call() throws PortalException {
-						Role role = _roleLocalService.getRole(
-							TestPropsValues.getCompanyId(),
-							RoleConstants.GUEST);
+				_resourcePermissionLocalService.addResourcePermission(
+					TestPropsValues.getCompanyId(), _name, 0, primKey,
+					role.getRoleId(), _actionId);
 
-						_resourcePermissionLocalService.addResourcePermission(
-							TestPropsValues.getCompanyId(), _name, 0, primKey,
-							role.getRoleId(), _actionId);
-
-						return _resourcePermissionLocalService.
-							fetchResourcePermission(
-								TestPropsValues.getCompanyId(), _name, 0,
-								primKey, role.getRoleId());
-					}
-
-				};
+				return _resourcePermissionLocalService.fetchResourcePermission(
+					TestPropsValues.getCompanyId(), _name, 0, primKey,
+					role.getRoleId());
+			};
 
 			List<FutureTask<ResourcePermission>> futureTasks =
 				new ArrayList<>();

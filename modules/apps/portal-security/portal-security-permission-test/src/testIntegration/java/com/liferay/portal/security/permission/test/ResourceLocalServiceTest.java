@@ -32,7 +32,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,8 +48,8 @@ public class ResourceLocalServiceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testAddResourcesConcurrently() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_users = new User[ServiceTestUtil.THREAD_COUNT];
@@ -61,10 +60,7 @@ public class ResourceLocalServiceTest {
 
 			_users[i] = user;
 		}
-	}
 
-	@Test
-	public void testAddResourcesConcurrently() throws Exception {
 		DoAsUserThread[] doAsUserThreads =
 			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
 

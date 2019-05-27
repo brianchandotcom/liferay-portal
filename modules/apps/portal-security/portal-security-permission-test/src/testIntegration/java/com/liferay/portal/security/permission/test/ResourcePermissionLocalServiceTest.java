@@ -53,6 +53,11 @@ public class ResourcePermissionLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		Role guestRole = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		_roleIds[0] = guestRole.getRoleId();
 	}
 
 	@Test
@@ -73,16 +78,9 @@ public class ResourcePermissionLocalServiceTest {
 
 		resources.add(lastResource);
 
-		long[] roleIds = new long[1];
-
-		Role guestRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.GUEST);
-
-		roleIds[0] = guestRole.getRoleId();
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, roleIds, ActionKeys.VIEW);
+				resources, _roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
@@ -107,16 +105,9 @@ public class ResourcePermissionLocalServiceTest {
 
 		resources.add(lastResource);
 
-		long[] roleIds = new long[1];
-
-		Role guestRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.GUEST);
-
-		roleIds[0] = guestRole.getRoleId();
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, roleIds, ActionKeys.VIEW);
+				resources, _roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
@@ -130,16 +121,9 @@ public class ResourcePermissionLocalServiceTest {
 
 		resources.add(new ResourceImpl());
 
-		long[] roleIds = new long[1];
-
-		Role guestRole = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.GUEST);
-
-		roleIds[0] = guestRole.getRoleId();
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, roleIds, ActionKeys.VIEW);
+				resources, _roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
@@ -153,6 +137,8 @@ public class ResourcePermissionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private final long[] _roleIds = new long[1];
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.connector.internal.cache.SegmentsAsahCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
@@ -41,6 +42,7 @@ import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
@@ -55,6 +57,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = IndividualSegmentsCheckerUtil.class)
 public class IndividualSegmentsCheckerUtil {
 
-	public void checkIndividualSegments() throws PortalException {
+	public void checkIndividualSegments() {
 		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
 			_createAsahFaroBackendClient();
 
@@ -76,6 +79,58 @@ public class IndividualSegmentsCheckerUtil {
 
 		_checkIndividualSegments();
 		_checkIndividualSegmentsMemberships();
+	}
+
+	public void checkIndividualSegments(String individualPK) {
+		if (_segmentsAsahCache.getSegmentsEntryIds(individualPK) != null) {
+			return;
+		}
+
+		if (_asahFaroBackendClient == null) {
+			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
+				_createAsahFaroBackendClient();
+
+			if (!asahFaroBackendClientOptional.isPresent()) {
+				return;
+			}
+
+			_asahFaroBackendClient = asahFaroBackendClientOptional.get();
+		}
+
+		Individual individual = _asahFaroBackendClient.getIndividual(
+			individualPK);
+
+		if (individual == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to find individual " + individualPK);
+			}
+
+			return;
+		}
+
+		List<String> individualSegmentIds =
+			individual.getIndividualSegmentIds();
+
+		if (ListUtil.isEmpty(individualSegmentIds)) {
+			return;
+		}
+
+		long[] segmentsEntryIds = individualSegmentIds.stream(
+		).map(
+			segmentsEntryKey -> _segmentsEntryLocalService.fetchSegmentsEntry(
+				_serviceContext.getScopeGroupId(), segmentsEntryKey, true)
+		).filter(
+			Objects::nonNull
+		).mapToLong(
+			SegmentsEntryModel::getSegmentsEntryId
+		).toArray();
+
+		_segmentsAsahCache.putSegmentsEntryIds(individualPK, segmentsEntryIds);
+	}
+
+	@Activate
+	protected void activate() throws PortalException {
+		_serviceContext = _getServiceContext();
 	}
 
 	private void _addSegmentsEntry(
@@ -144,8 +199,8 @@ public class IndividualSegmentsCheckerUtil {
 		}
 	}
 
-	private void _checkIndividualSegmentMemberships(SegmentsEntry segmentsEntry)
-		throws PortalException {
+	private void _checkIndividualSegmentMemberships(
+		SegmentsEntry segmentsEntry) {
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			segmentsEntry.getSegmentsEntryId());
@@ -172,8 +227,6 @@ public class IndividualSegmentsCheckerUtil {
 
 			int totalPages = (int)Math.ceil((double)totalElements / _DELTA);
 
-			ServiceContext serviceContext = _getServiceContext();
-
 			int curPage = 1;
 
 			while (true) {
@@ -181,7 +234,7 @@ public class IndividualSegmentsCheckerUtil {
 
 				individuals.forEach(
 					individual -> _addSegmentsEntryRel(
-						segmentsEntry, individual, serviceContext));
+						segmentsEntry, individual, _serviceContext));
 
 				curPage++;
 
@@ -203,7 +256,7 @@ public class IndividualSegmentsCheckerUtil {
 		}
 	}
 
-	private void _checkIndividualSegments() throws PortalException {
+	private void _checkIndividualSegments() {
 		Results<IndividualSegment> individualSegmentResults = new Results<>();
 
 		try {
@@ -229,17 +282,15 @@ public class IndividualSegmentsCheckerUtil {
 			return;
 		}
 
-		ServiceContext serviceContext = _getServiceContext();
-
 		List<IndividualSegment> individualSegments =
 			individualSegmentResults.getItems();
 
 		individualSegments.forEach(
 			individualSegment -> _addSegmentsEntry(
-				individualSegment, serviceContext));
+				individualSegment, _serviceContext));
 	}
 
-	private void _checkIndividualSegmentsMemberships() throws PortalException {
+	private void _checkIndividualSegmentsMemberships() {
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntriesBySource(
 				SegmentsConstants.SOURCE_ASAH_FARO_BACKEND, QueryUtil.ALL_POS,
@@ -357,10 +408,15 @@ public class IndividualSegmentsCheckerUtil {
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Reference
+	private SegmentsAsahCache _segmentsAsahCache;
+
+	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@Reference
 	private UserLocalService _userLocalService;

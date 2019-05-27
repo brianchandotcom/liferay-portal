@@ -21,14 +21,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -46,7 +46,7 @@ public class ResourceLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before
@@ -98,6 +98,9 @@ public class ResourceLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private ResourceLocalService _resourceLocalService;
+
 	@DeleteAfterTestRun
 	private User[] _users;
 
@@ -110,7 +113,7 @@ public class ResourceLocalServiceTest {
 		@Override
 		protected void doRun() throws Exception {
 			try {
-				ResourceLocalServiceUtil.getResource(
+				_resourceLocalService.getResource(
 					TestPropsValues.getCompanyId(), Layout.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(
@@ -120,7 +123,7 @@ public class ResourceLocalServiceTest {
 				boolean addGroupPermission = true;
 				boolean addGuestPermission = true;
 
-				ResourceLocalServiceUtil.addResources(
+				_resourceLocalService.addResources(
 					TestPropsValues.getCompanyId(), _group.getGroupId(), 0,
 					Layout.class.getName(),
 					TestPropsValues.getPlid(_group.getGroupId()), false,

@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ResourcePermissionLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before
@@ -75,13 +75,13 @@ public class ResourcePermissionLocalServiceTest {
 
 		long[] roleIds = new long[1];
 
-		Role guestRole = RoleLocalServiceUtil.getRole(
+		Role guestRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
 
 		roleIds[0] = guestRole.getRoleId();
 
 		try {
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			_resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
@@ -109,13 +109,13 @@ public class ResourcePermissionLocalServiceTest {
 
 		long[] roleIds = new long[1];
 
-		Role guestRole = RoleLocalServiceUtil.getRole(
+		Role guestRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
 
 		roleIds[0] = guestRole.getRoleId();
 
 		try {
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			_resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
@@ -132,13 +132,13 @@ public class ResourcePermissionLocalServiceTest {
 
 		long[] roleIds = new long[1];
 
-		Role guestRole = RoleLocalServiceUtil.getRole(
+		Role guestRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
 
 		roleIds[0] = guestRole.getRoleId();
 
 		try {
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			_resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
@@ -150,5 +150,11 @@ public class ResourcePermissionLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

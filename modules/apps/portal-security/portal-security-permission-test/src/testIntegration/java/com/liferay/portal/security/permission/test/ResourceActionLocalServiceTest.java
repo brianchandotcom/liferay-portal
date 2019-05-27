@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ResourceActionLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before
@@ -53,24 +53,24 @@ public class ResourceActionLocalServiceTest {
 		actionIds.add(_ACTION_ID_1);
 		actionIds.add(_ACTION_ID_2);
 
-		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
+		_resourceActionLocalService.checkResourceActions(_NAME, actionIds);
 
 		actionIds.set(2, _ACTION_ID_3);
 
-		ResourceActionLocalServiceUtil.deleteResourceAction(
-			ResourceActionLocalServiceUtil.fetchResourceAction(
+		_resourceActionLocalService.deleteResourceAction(
+			_resourceActionLocalService.fetchResourceAction(
 				_NAME, _ACTION_ID_2));
 
-		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
+		_resourceActionLocalService.checkResourceActions(_NAME, actionIds);
 	}
 
 	@After
 	public void tearDown() {
 		List<ResourceAction> resourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(_NAME);
+			_resourceActionLocalService.getResourceActions(_NAME);
 
 		for (ResourceAction resourceAction : resourceActions) {
-			ResourceActionLocalServiceUtil.deleteResourceAction(resourceAction);
+			_resourceActionLocalService.deleteResourceAction(resourceAction);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class ResourceActionLocalServiceTest {
 			actionIds.add("actionId" + i);
 		}
 
-		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
+		_resourceActionLocalService.checkResourceActions(_NAME, actionIds);
 	}
 
 	@Test
@@ -92,17 +92,17 @@ public class ResourceActionLocalServiceTest {
 		throws PortalException {
 
 		ResourceAction resourceAction =
-			ResourceActionLocalServiceUtil.getResourceAction(
+			_resourceActionLocalService.getResourceAction(
 				_NAME, ActionKeys.VIEW);
 
 		Assert.assertEquals(1L, resourceAction.getBitwiseValue());
 
-		resourceAction = ResourceActionLocalServiceUtil.getResourceAction(
+		resourceAction = _resourceActionLocalService.getResourceAction(
 			_NAME, _ACTION_ID_1);
 
 		Assert.assertEquals(2L, resourceAction.getBitwiseValue());
 
-		resourceAction = ResourceActionLocalServiceUtil.getResourceAction(
+		resourceAction = _resourceActionLocalService.getResourceAction(
 			_NAME, _ACTION_ID_3);
 
 		Assert.assertEquals(4L, resourceAction.getBitwiseValue());
@@ -111,7 +111,7 @@ public class ResourceActionLocalServiceTest {
 	@Test
 	public void testViewActionBitwiseValue() throws PortalException {
 		ResourceAction viewResourceAction =
-			ResourceActionLocalServiceUtil.getResourceAction(
+			_resourceActionLocalService.getResourceAction(
 				_NAME, ActionKeys.VIEW);
 
 		Assert.assertEquals(1L, viewResourceAction.getBitwiseValue());
@@ -125,5 +125,8 @@ public class ResourceActionLocalServiceTest {
 
 	private static final String _NAME =
 		ResourceActionLocalServiceTest.class.getName();
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 }

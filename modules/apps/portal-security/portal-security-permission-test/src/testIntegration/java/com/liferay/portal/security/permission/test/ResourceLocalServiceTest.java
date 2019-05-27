@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.security.permission.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.model.Group;
@@ -35,10 +36,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@RunWith(Arquillian.class)
 public class ResourceLocalServiceTest {
 
 	@ClassRule

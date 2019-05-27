@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.security.permission.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -36,10 +37,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class ResourcePermissionLocalServiceTest {
 
 	@ClassRule

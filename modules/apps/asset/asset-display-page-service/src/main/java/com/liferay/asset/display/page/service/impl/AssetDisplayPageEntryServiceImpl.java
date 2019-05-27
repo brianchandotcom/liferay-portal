@@ -14,8 +14,13 @@
 
 package com.liferay.asset.display.page.service.impl;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,4 +36,74 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AssetDisplayPageEntryServiceImpl
 	extends AssetDisplayPageEntryServiceBaseImpl {
+
+	@Override
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			type, serviceContext);
+	}
+
+	@Override
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			serviceContext);
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntry(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
+		long groupId, long classNameId, long classPK) {
+
+		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public List<AssetDisplayPageEntry>
+		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+			long layoutPageTemplateEntryId) {
+
+		return assetDisplayPageEntryLocalService.
+			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
+
+	@Override
+	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+		long layoutPageTemplateEntryId) {
+
+		return assetDisplayPageEntryLocalService.
+			getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+				layoutPageTemplateEntryId);
+	}
+
+	@Override
+	public AssetDisplayPageEntry updateAssetDisplayPageEntry(
+			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
+			int type)
+		throws PortalException {
+
+		return assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+			assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
+	}
+
 }

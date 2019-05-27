@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -53,7 +54,7 @@ import org.junit.runner.RunWith;
  * @author Eduardo García
  */
 @RunWith(Arquillian.class)
-public class SegmentsEntryProviderTest {
+public class DefaultSegmentsEntryProviderTest {
 
 	@ClassRule
 	@Rule
@@ -425,7 +426,10 @@ public class SegmentsEntryProviderTest {
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
-	@Inject
+	@Inject(
+		filter = "segments.entry.provider.source=" + SegmentsConstants.SOURCE_DEFAULT,
+		type = SegmentsEntryProvider.class
+	)
 	private SegmentsEntryProvider _segmentsEntryProvider;
 
 	@Inject

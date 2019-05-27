@@ -104,6 +104,14 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 					uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId, uri);
 
+					var languageId = '<%= themeDisplay.getLanguageId() %>';
+
+					if (document.<portlet:namespace />fm1.<portlet:namespace />languageId.value != '') {
+						languageId = document.<portlet:namespace />fm1.<portlet:namespace />languageId.value;
+					}
+
+					uri = Liferay.Util.addParams('<portlet:namespace />languageId=' + languageId, uri);
+
 					Liferay.Util.selectEntity(
 						{
 							dialog: {

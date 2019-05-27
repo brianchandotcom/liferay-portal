@@ -409,8 +409,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCD#DOCUMENT_CONVERSION_TYPE",
 				value1 = "${fileType}");
-
-			AssertElementPresent(locator1 = "WCD#DOCUMENT_CONVERSION_TYPE_ICON");
 		}
 	}
 

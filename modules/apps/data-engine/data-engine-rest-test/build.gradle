@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-client")
+	testIntegrationCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

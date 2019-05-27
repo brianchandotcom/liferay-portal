@@ -84,7 +84,6 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
 
-request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
 
@@ -402,7 +401,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					%>
 
 					<c:if test="<%= categoryEntriesSearchContainer.getTotal() > 0 %>">
-						<liferay-util:include page='<%= "/message_boards/view_category_entries.jsp" %>' servletContext="<%= application %>" />
+						<%@ include file="/message_boards/view_category_entries.jspf" %>
 					</c:if>
 
 					<%

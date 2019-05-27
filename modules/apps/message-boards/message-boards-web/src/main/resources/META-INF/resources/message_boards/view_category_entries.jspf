@@ -14,14 +14,8 @@
  */
 --%>
 
-<%@ include file="/message_boards/init.jsp" %>
-
 <%
-long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
-
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
-
-SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-categoryEntriesSearchContainer");
 %>
 
 <liferay-ui:search-container
@@ -31,16 +25,16 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 		className="com.liferay.message.boards.model.MBCategory"
 		escapedModel="<%= true %>"
 		keyProperty="categoryId"
-		modelVar="category"
+		modelVar="curCategory"
 	>
 
 		<%
-		row.setPrimaryKey(String.valueOf(category.getCategoryId()));
+		row.setPrimaryKey(String.valueOf(curCategory.getCategoryId()));
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container-column-icon
@@ -53,17 +47,17 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 		>
 			<h4>
 				<aui:a href="<%= rowURL.toString() %>">
-					<%= category.getName() %>
+					<%= curCategory.getName() %>
 				</aui:a>
 			</h4>
 
 			<h5 class="text-default">
-				<%= category.getDescription() %>
+				<%= curCategory.getDescription() %>
 			</h5>
 
 			<%
-			int subcategoriesCount = categoryDisplay.getSubcategoriesCount(category);
-			int threadsCount = categoryDisplay.getSubcategoriesThreadsCount(category);
+			int subcategoriesCount = categoryDisplay.getSubcategoriesCount(curCategory);
+			int threadsCount = categoryDisplay.getSubcategoriesThreadsCount(curCategory);
 			%>
 
 			<span class="h6 text-default">

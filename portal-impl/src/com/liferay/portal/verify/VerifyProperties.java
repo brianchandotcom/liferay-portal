@@ -1654,7 +1654,10 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.read.count.enabled",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
 		"dl.file.extensions", "dl.file.max.size", "dl.file.rank.enabled",
-		"dl.folder.menu.visible", "dl.hook.jcr.fetch.delay",
+		"dl.folder.menu.visible", "dl.hook.cmis.credentials.password",
+		"dl.hook.cmis.credentials.username",
+		"dl.store.cmis.credentials.username",
+		"dl.store.cmis.credentials.password", "dl.hook.jcr.fetch.delay",
 		"dl.hook.jcr.fetch.max.failures", "dl.hook.jcr.move.version.labels",
 		"dl.store.jcr.fetch.delay", "dl.store.jcr.fetch.max.failures",
 		"dl.store.jcr.move.version.labels", "dl.tabs.visible",
@@ -1866,14 +1869,6 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		{"default.user.private.layout.lar", "default.user.private.layouts.lar"},
 		{"default.user.public.layout.lar", "default.user.public.layouts.lar"},
-		{
-			"dl.hook.cmis.credentials.password",
-			"dl.store.cmis.credentials.password"
-		},
-		{
-			"dl.hook.cmis.credentials.username",
-			"dl.store.cmis.credentials.username"
-		},
 		{"dl.hook.cmis.repository.url", "dl.store.cmis.repository.url"},
 		{"dl.hook.cmis.system.root.dir", "dl.store.cmis.system.root.dir"},
 		{"dl.hook.file.system.root.dir", "dl.store.file.system.root.dir"},

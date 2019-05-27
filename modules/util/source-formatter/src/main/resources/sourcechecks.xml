@@ -121,7 +121,7 @@
 		<check name="HTMLEmptyLinesCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="WhitespaceCheck" />
+		<check name="HTMLWhitespaceCheck" />
 		<check name="XMLTagAttributesCheck" />
 	</source-processor>
 	<source-processor name="JavaSourceProcessor">

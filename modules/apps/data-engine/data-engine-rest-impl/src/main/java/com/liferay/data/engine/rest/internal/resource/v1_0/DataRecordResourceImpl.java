@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -114,17 +115,25 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public String getDataRecordCollectionDataRecordExport(
-			Long dataRecordCollectionId)
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
+		if (pagination.getPageSize() > 250) {
+			throw new BadRequestException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-cannot-be-bigger-than-x", 250));
+		}
+
 		return _dataRecordExporter.export(
 			transform(
 				_ddlRecordLocalService.getRecords(
-					dataRecordCollectionId, -1, -1, null),
+					dataRecordCollectionId, pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
 				this::_toDataRecord));
 	}
 
@@ -136,6 +145,13 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.VIEW_DATA_RECORD);
+
+		if (pagination.getPageSize() > 250) {
+			throw new BadRequestException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-cannot-be-bigger-than-x", 250));
+		}
 
 		return Page.of(
 			transform(

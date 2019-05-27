@@ -246,6 +246,17 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, boolean active, String source, String type, int start,
+		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByG_A_S_T(
+			ArrayUtil.append(
+				PortalUtil.getAncestorSiteGroupIds(groupId), groupId),
+			active, source, type, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {

@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller;
 
+import com.liferay.layout.type.controller.test.util.constants.LayoutTypeControllerPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portlet.util.test.PortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.name=" + PortletKeys.TEST,
+		"javax.portlet.name=" + LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

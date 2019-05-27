@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
+import com.liferay.layout.test.util.constants.LayoutPortletKeys;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,7 +43,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.util.test.PortletKeys;
 
 import java.awt.image.BufferedImage;
 
@@ -220,7 +220,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyLayoutPortletPreferences() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId = LayoutPortletKeys.LAYOUT_TEST_PORTLET;
 
 		Layout sourceLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "column-1=" + portletId);
@@ -314,7 +314,9 @@ public class LayoutCopyHelperTest {
 	@Inject
 	private Portal _portal;
 
-	@Inject(filter = "javax.portlet.name=" + PortletKeys.TEST)
+	@Inject(
+		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET
+	)
 	private final Portlet _portlet = null;
 
 	private ServiceContext _serviceContext;

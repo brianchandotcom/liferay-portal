@@ -437,6 +437,8 @@ AUI.add(
 
 						AArray.invoke(instance.eventHandlers, 'detach');
 
+						AArray.invoke(instance.get('fields'), 'destroy');
+
 						instance.eventHandlers = null;
 
 						instance.get('container').remove();

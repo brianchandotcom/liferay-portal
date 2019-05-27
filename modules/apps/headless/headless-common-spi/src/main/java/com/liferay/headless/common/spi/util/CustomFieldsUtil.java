@@ -61,13 +61,20 @@ public class CustomFieldsUtil {
 
 					Object value = entry.getValue();
 
+					int attributeType = expandoBridge.getAttributeType(key);
+
 					if (_isEmpty(value)) {
 						put(key, expandoBridge.getAttributeDefault(key));
 					}
 					else if (ExpandoColumnConstants.STRING_LOCALIZED ==
-								expandoBridge.getAttributeType(key)) {
+								attributeType) {
 
 						put(key, ((Map)value).get(locale));
+					}
+					else if (ExpandoColumnConstants.GEOLOCATION ==
+								attributeType) {
+
+						put(key, String.valueOf(value));
 					}
 					else {
 						put(key, value);

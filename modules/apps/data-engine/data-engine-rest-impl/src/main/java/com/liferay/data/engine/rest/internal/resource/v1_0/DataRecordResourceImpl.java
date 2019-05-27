@@ -210,6 +210,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		dataRecord.setDataRecordCollectionId(ddlRecordSet.getRecordSetId());
 
+		dataRecord.setId(dataRecordId);
+
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		_validate(

@@ -15,6 +15,7 @@
 package com.liferay.site.teams.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
@@ -106,6 +107,22 @@ public class TeamFinderTest {
 		Assert.assertTrue(
 			userOrUserGroupTeams2.toString(),
 			userOrUserGroupTeams2.contains(groupTeam));
+	}
+
+	@Test
+	public void testSearchTeams() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		TeamLocalServiceUtil.addTeam(
+			_user.getUserId(), _group.getGroupId(), "team", "", serviceContext);
+
+		List<Team> teams = TeamLocalServiceUtil.search(
+			_group.getGroupId(), "team", "team", null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(teams.toString(), 1, teams.size());
 	}
 
 	@DeleteAfterTestRun

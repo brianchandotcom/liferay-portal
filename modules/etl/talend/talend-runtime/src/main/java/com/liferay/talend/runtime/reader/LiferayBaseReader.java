@@ -22,13 +22,15 @@ import java.io.IOException;
 
 import java.util.Map;
 
+import javax.ws.rs.HttpMethod;
+
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.AbstractBoundedReader;
-import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.exception.TalendRuntimeException;
 
 /**
  * @author Zoltán Takács
@@ -57,25 +59,34 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 	}
 
 	protected Schema getSchema() throws IOException {
-		if (schema == null) {
-			schema = liferayConnectionResourceBaseProperties.getSchema();
+		if (schema != null) {
+			return schema;
+		}
 
-			if (AvroUtils.isIncludeAllFields(schema)) {
-				String resourceURL = null;
+		schema = liferayConnectionResourceBaseProperties.getSchema();
 
-				if (liferayConnectionResourceBaseProperties instanceof
-						TLiferayInputProperties) {
+		if (AvroUtils.isIncludeAllFields(schema)) {
+			String endpoint = null;
 
-					resourceURL =
-						liferayConnectionResourceBaseProperties.resource.
-							endpoint.getValue();
-				}
+			if (liferayConnectionResourceBaseProperties instanceof
+					TLiferayInputProperties) {
 
-				BoundedSource boundedSource = getCurrentSource();
-
-				schema = boundedSource.getEndpointSchema(
-					runtimeContainer, resourceURL);
+				endpoint =
+					liferayConnectionResourceBaseProperties.resource.endpoint.
+						getValue();
 			}
+			else {
+				Class<? extends LiferayConnectionResourceBaseProperties> clazz =
+					liferayConnectionResourceBaseProperties.getClass();
+
+				throw TalendRuntimeException.createUnexpectedException(
+					"Wrong instance of Input component properties: " +
+						clazz.getName());
+			}
+
+			LiferaySource boundedSource = (LiferaySource)getCurrentSource();
+
+			schema = boundedSource.getEndpointSchema(endpoint, HttpMethod.GET);
 		}
 
 		return schema;

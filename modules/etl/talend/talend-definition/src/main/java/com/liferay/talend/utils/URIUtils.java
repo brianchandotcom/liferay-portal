@@ -28,8 +28,6 @@ import java.util.regex.Pattern;
 
 import javax.ws.rs.core.UriBuilder;
 
-import org.apache.commons.lang3.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -159,22 +157,22 @@ public class URIUtils {
 			Collections.singletonMap("pageSize", String.valueOf(limit)));
 	}
 
-	public static URI toURI(String url) {
+	public static URI toURI(String href) {
 		try {
-			return new URI(url);
+			return new URI(StringUtils.removeQuotes(href));
 		}
 		catch (URISyntaxException urise) {
-			_log.error("Unable to convert URL to URI: " + url);
+			_log.error("Unable to convert URL to URI: " + href);
 
 			throw new RuntimeException(urise);
 		}
 	}
 
-	public static URL toURL(String stringURL) {
+	public static URL toURL(String href) {
 		URL url = null;
 
 		try {
-			url = new URL(stringURL);
+			url = new URL(StringUtils.removeQuotes(href));
 		}
 		catch (java.net.MalformedURLException murle) {
 			throw new MalformedURLException(murle);

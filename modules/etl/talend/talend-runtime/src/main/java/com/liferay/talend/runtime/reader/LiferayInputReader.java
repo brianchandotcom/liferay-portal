@@ -25,10 +25,9 @@ import java.io.IOException;
 
 import java.net.URI;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.generic.IndexedRecord;
 
@@ -71,14 +70,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 
-		String actual = _apioResourceCollection.path(
+		int actual = _endpointJsonNode.path(
 			"page"
-		).asText();
-		String last = _apioResourceCollection.path(
+		).asInt();
+		int last = _endpointJsonNode.path(
 			"lastPage"
-		).asText();
+		).asInt();
 
-		if (actual.equals(last)) {
+		if (actual >= last) {
 			_hasMore = false;
 
 			return false;
@@ -86,20 +85,11 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_hasMore = true;
 
-		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
-		/*
-				String nextResourceCollectionSegmentURL =
-					_apioResourceCollection.getResourceNextPage();
+		String endpointURL =
+			liferayConnectionResourceBaseProperties.resource.getEndpointURL();
 
-				URI decoratedNextResourceCollectionSegmentURI =
-					URIUtils.addQueryConditionToURL(
-						nextResourceCollectionSegmentURL, _queryCondition);
-
-				_apioResourceCollection = new ApioResourceCollection(
-					liferaySource.doGetRequest(
-						decoratedNextResourceCollectionSegmentURI.toString()));
-		*/
-		_inputRecordsJsonNode = _apioResourceCollection.path("items");
+		_endpointJsonNode = _getEndpointJsonNode(endpointURL, ++actual, 1);
+		_inputRecordsJsonNode = _getItemsJsonNode(endpointURL, ++actual, -1);
 
 		_inputRecordsIndex = 0;
 
@@ -140,54 +130,13 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return _inputRecordsJsonNode.get(_inputRecordsIndex);
 	}
 
-	public List<String> getCurrentObject() throws NoSuchElementException {
-		JsonNode resourceJsonNode = _inputRecordsJsonNode.get(
-			_inputRecordsIndex);
-
-		if (resourceJsonNode == null) {
-			_log.error("Index: {}", _inputRecordsIndex);
-
-			throw new NoSuchElementException("Index: " + _inputRecordsIndex);
-		}
-
-		List<String> resourceValues = new ArrayList<>();
-
-		Iterator<JsonNode> iterator = resourceJsonNode.elements();
-
-		while (iterator.hasNext()) {
-			JsonNode jsonNode = iterator.next();
-
-			resourceValues.add(jsonNode.toString());
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Resource has been processed");
-		}
-
-		return resourceValues;
-	}
-
 	@Override
 	public boolean start() throws IOException {
-		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
+		String endpointURL =
+			liferayConnectionResourceBaseProperties.resource.getEndpointURL();
 
-		String resourceURL =
-			liferayConnectionResourceBaseProperties.resource.endpoint.
-				getValue();
-
-		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
-			resourceURL, _queryCondition);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Started to process resources at entry point: " +
-					decoratedResourceURI.toString());
-		}
-
-		_apioResourceCollection = liferaySource.doGetRequest(
-			decoratedResourceURI.toString());
-
-		_inputRecordsJsonNode = _apioResourceCollection.path("items");
+		_endpointJsonNode = _getEndpointJsonNode(endpointURL, 1, 1);
+		_inputRecordsJsonNode = _getItemsJsonNode(endpointURL, 1, -1);
 
 		boolean start = false;
 
@@ -225,10 +174,56 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return _resourceEntityAvroConverter;
 	}
 
+	private JsonNode _getEndpointJsonNode(
+		String endpointURL, int page, int pageSize) {
+
+		UriBuilder uriBuilder = UriBuilder.fromPath(endpointURL);
+
+		if (page <= 0) {
+			page = 1;
+		}
+
+		if (pageSize == -1) {
+			pageSize =
+				liferayConnectionResourceBaseProperties.connection.itemsPerPage.
+					getValue();
+		}
+
+		URI resourceURI = uriBuilder.queryParam(
+			"page", page
+		).queryParam(
+			"pageSize", pageSize
+		).build(
+			liferayConnectionResourceBaseProperties.connection.siteId.getValue()
+		);
+
+		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
+			resourceURI.toASCIIString(), _queryCondition);
+
+		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Started to process resources at entry point: " +
+					decoratedResourceURI.toString());
+		}
+
+		return liferaySource.doGetRequest(decoratedResourceURI.toString());
+	}
+
+	private JsonNode _getItemsJsonNode(
+		String endpointURL, int page, int pageSize) {
+
+		JsonNode responseJsonNode = _getEndpointJsonNode(
+			endpointURL, page, pageSize);
+
+		return responseJsonNode.path("items");
+	}
+
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private transient JsonNode _apioResourceCollection;
+	private transient JsonNode _endpointJsonNode;
 
 	/**
 	 * Represents state of this Reader: whether it has more records

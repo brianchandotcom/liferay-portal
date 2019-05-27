@@ -16,13 +16,6 @@ package com.liferay.talend.avro;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
@@ -30,7 +23,7 @@ import org.apache.avro.generic.IndexedRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.talend.daikon.avro.NameUtil;
+import org.talend.daikon.avro.AvroUtils;
 
 /**
  * @author Zoltán Takács
@@ -47,54 +40,75 @@ public class ResourceNodeConverter
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public IndexedRecord convertToAvro(JsonNode resource) {
+	public IndexedRecord convertToAvro(JsonNode resourceJsonNode) {
 		IndexedRecord record = new GenericData.Record(getSchema());
 
-		Iterator<Map.Entry<String, JsonNode>> jsonFields = resource.fields();
+		schemaFields.forEach(
+			schemaEntry -> {
+				String name = schemaEntry.name();
 
-		// Already used names for the fields
+				JsonNode fieldJsonNode = _getFieldJsonNode(
+					resourceJsonNode, name);
 
-		int i = 0;
-		Set<String> normalizedJsonFieldNames = new HashSet<>();
-		int pos = -1;
+				if (fieldJsonNode.isMissingNode() && _log.isDebugEnabled()) {
+					_log.debug(
+						"{} field is not present in the response. It will be " +
+							"ignored.",
+						name);
 
-		while (jsonFields.hasNext()) {
-			Map.Entry<String, JsonNode> field = jsonFields.next();
-
-			String fieldName = NameUtil.correct(
-				field.getKey(), i, normalizedJsonFieldNames);
-
-			normalizedJsonFieldNames.add(fieldName);
-
-			i++;
-
-			for (Schema.Field schemaField : schemaFields) {
-				if (fieldName.equals(schemaField.name())) {
-					pos = schemaField.pos();
-
-					break;
+					return;
 				}
-			}
 
-			if (pos >= 0) {
-				JsonNode resourceJsonNode = field.getValue();
+				Schema fieldSchema = AvroUtils.unwrapIfNullable(
+					schemaEntry.schema());
 
-				Object value = avroConverters[pos].convertToAvro(
-					resourceJsonNode.asText());
+				if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.asText());
 
-				record.put(pos, value);
+					record.put(schemaEntry.pos(), value);
+				}
+				else if (AvroUtils.isSameType(
+							fieldSchema, AvroUtils._bytes())) {
 
-				pos = -1;
-			}
-			else if (!_blacklistedJsonLDKeywords.contains(fieldName) &&
-					 _log.isDebugEnabled()) {
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.asText());
 
-				_log.debug(
-					"{} is not present in the runtime schema. It will be " +
-						"ignored.",
-					fieldName);
-			}
-		}
+					record.put(schemaEntry.pos(), value);
+				}
+				else if (AvroUtils.isSameType(
+							fieldSchema, AvroUtils._double())) {
+
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.asText("0"));
+
+					record.put(schemaEntry.pos(), value);
+				}
+				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.asText("0"));
+
+					record.put(schemaEntry.pos(), value);
+				}
+				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.asText("0"));
+
+					record.put(schemaEntry.pos(), value);
+				}
+				else {
+					Object value =
+						avroConverters[schemaEntry.pos()].convertToAvro(
+							fieldJsonNode.toString());
+
+					record.put(schemaEntry.pos(), value);
+				}
+			});
 
 		return record;
 	}
@@ -104,10 +118,19 @@ public class ResourceNodeConverter
 		throw new UnsupportedOperationException();
 	}
 
+	private JsonNode _getFieldJsonNode(JsonNode resourceJsonNode, String name) {
+		if (name.contains("_")) {
+			String[] nameParts = name.split("_");
+
+			resourceJsonNode = resourceJsonNode.path(nameParts[0]);
+
+			name = nameParts[1];
+		}
+
+		return resourceJsonNode.path(name);
+	}
+
 	private static final Logger _log = LoggerFactory.getLogger(
 		ResourceNodeConverter.class);
-
-	private static final List<String> _blacklistedJsonLDKeywords =
-		Arrays.asList("_context", "_type");
 
 }

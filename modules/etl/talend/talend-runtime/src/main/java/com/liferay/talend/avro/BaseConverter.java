@@ -25,6 +25,8 @@ import org.talend.daikon.avro.LogicalTypeUtils;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.avro.converter.AvroConverter;
 import org.talend.daikon.avro.converter.string.StringBooleanConverter;
+import org.talend.daikon.avro.converter.string.StringDoubleConverter;
+import org.talend.daikon.avro.converter.string.StringFloatConverter;
 import org.talend.daikon.avro.converter.string.StringIntConverter;
 import org.talend.daikon.avro.converter.string.StringLongConverter;
 import org.talend.daikon.avro.converter.string.StringStringConverter;
@@ -111,6 +113,8 @@ public abstract class BaseConverter<DatumT, AvroT>
 		new HashMap<Schema.Type, AvroConverter>() {
 			{
 				put(Schema.Type.BOOLEAN, new StringBooleanConverter());
+				put(Schema.Type.DOUBLE, new StringDoubleConverter());
+				put(Schema.Type.FLOAT, new StringFloatConverter());
 				put(Schema.Type.INT, new StringIntConverter());
 				put(Schema.Type.LONG, new StringLongConverter());
 				put(Schema.Type.STRING, new StringStringConverter());

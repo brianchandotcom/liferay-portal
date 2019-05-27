@@ -40,10 +40,6 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
-			"fieldEditedHandler",
-			"fieldSetAddedHandler",
-			"focusedField",
-			"Calculator",
 			"Evaluator",
 			"FormBuilder",
 			"FormRenderer",
@@ -51,9 +47,7 @@
 			"PageRenderer",
 			"RuleBuilder",
 			"RuleEditor",
-			"RuleList",
-			"Sidebar",
-			"SuccessPage"
+			"Sidebar"
 		]
 	},
 	"name": "dynamic-data-mapping-form-builder",

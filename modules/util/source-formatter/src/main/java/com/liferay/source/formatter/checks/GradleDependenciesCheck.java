@@ -121,10 +121,14 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			return StringUtil.replace(content, dependencies, newDependencies);
 		}
 
+		String newDependencies = StringUtil.replace(
+			dependencies, "group: \"org.osgi\", name: \"org.osgi.core\"",
+			"group: \"org.osgi\", name: \"osgi.core\"");
+
 		Set<String> uniqueDependencies = new TreeSet<>(
 			new GradleDependencyComparator());
 
-		for (String dependency : StringUtil.splitLines(dependencies)) {
+		for (String dependency : StringUtil.splitLines(newDependencies)) {
 			dependency = dependency.trim();
 
 			if (Validator.isNull(dependency)) {

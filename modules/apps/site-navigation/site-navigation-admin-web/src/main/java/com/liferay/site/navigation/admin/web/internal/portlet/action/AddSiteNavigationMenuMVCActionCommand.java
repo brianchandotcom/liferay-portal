@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.handler.SiteNavigationMenuExceptionRequestHandler;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
@@ -65,7 +66,8 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 			SiteNavigationMenu siteNavigationMenu =
 				_siteNavigationMenuService.addSiteNavigationMenu(
-					serviceContext.getScopeGroupId(), name, serviceContext);
+					serviceContext.getScopeGroupId(), name,
+					SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",

@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,12 +74,20 @@ public class CTProcessFinderImpl
 			String[] descriptions = _customSQL.keywords(
 				keywords, true, WildcardMode.SURROUND);
 
-			sql = _customSQL.replaceKeywords(
-				sql, "LOWER(CTCollection.name)", StringPool.LIKE, false, names);
-			sql = _customSQL.replaceKeywords(
-				sql, "LOWER(CTCollection.description)", StringPool.LIKE, true,
-				descriptions);
-			sql = _customSQL.replaceAndOperator(sql, false);
+			boolean keywordsEmpty = _isKeywordsEmpty(names);
+
+			if (keywordsEmpty) {
+				sql = _replaceKeywordConditionsWithBlank(sql);
+			}
+			else {
+				sql = _customSQL.replaceKeywords(
+					sql, "LOWER(CTCollection.name)", StringPool.LIKE, false,
+					names);
+				sql = _customSQL.replaceKeywords(
+					sql, "LOWER(CTCollection.description)", StringPool.LIKE,
+					true, descriptions);
+				sql = _customSQL.replaceAndOperator(sql, false);
+			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
@@ -96,9 +107,11 @@ public class CTProcessFinderImpl
 				qPos.add(status);
 			}
 
-			qPos.add(names, 2);
+			if (!keywordsEmpty) {
+				qPos.add(names, 2);
 
-			qPos.add(descriptions, 2);
+				qPos.add(descriptions, 2);
+			}
 
 			return (List<CTProcess>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -109,6 +122,31 @@ public class CTProcessFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private boolean _isKeywordsEmpty(String[] keywords) {
+		boolean emptyKeywords = false;
+		boolean nonEmptyKeywords = false;
+
+		for (String keyword : keywords) {
+			emptyKeywords = Validator.isNull(keyword);
+			nonEmptyKeywords = Validator.isNotNull(keyword);
+		}
+
+		if (emptyKeywords && !nonEmptyKeywords) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _replaceKeywordConditionsWithBlank(String sql) {
+		Matcher matcher = _pattern.matcher(sql);
+
+		return matcher.replaceAll(StringPool.BLANK);
+	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"AND\\s*\\(\\s*\\([A-Za-z\\(\\)\\.\\s\\?\\[\\]$_]*\\)\\s*\\)");
 
 	@Reference
 	private CustomSQL _customSQL;

@@ -1,6 +1,6 @@
 import ClayButton from '../shared/ClayButton.es';
 import ClayToggle from '../shared/ClayToggle.es';
-import ContributorBuilder from '../criteria_builder/ContributorBuilder.es';
+import ContributorsBuilder from '../criteria_builder/ContributorsBuilder.es';
 import LocalizedInput from '../title_editor/LocalizedInput.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -131,7 +131,7 @@ class SegmentEdit extends Component {
 		const segmentName = values.name[locale];
 
 		return propertyGroups && contributors ? (
-			<ContributorBuilder
+			<ContributorsBuilder
 				editing={editing}
 				emptyContributors={emptyContributors}
 				formId={formId}

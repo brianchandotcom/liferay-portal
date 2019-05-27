@@ -1,4 +1,4 @@
-import ContributorBuilder from 'components/criteria_builder/ContributorBuilder.es';
+import ContributorsBuilder from 'components/criteria_builder/ContributorsBuilder.es';
 import React from 'react';
 import {cleanup, render} from 'react-testing-library';
 import {
@@ -165,14 +165,14 @@ const propertyGroups = [
 	}
 ];
 
-describe('ContributorBuilder', () => {
+describe('ContributorsBuilder', () => {
 	afterEach(cleanup);
 
 	it('should render builder with sidebar', () => {
 		const editing = true;
 
 		const {asFragment} = render(
-			<ContributorBuilder
+			<ContributorsBuilder
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
@@ -190,7 +190,7 @@ describe('ContributorBuilder', () => {
 		const editing = false;
 
 		const {asFragment} = render(
-			<ContributorBuilder
+			<ContributorsBuilder
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}

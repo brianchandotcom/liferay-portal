@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\
 	com.liferay.portal.vulcan.resource,\
+	com.liferay.portal.vulcan.status,\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\
 	com.liferay.portal.vulcan.yaml.config,\

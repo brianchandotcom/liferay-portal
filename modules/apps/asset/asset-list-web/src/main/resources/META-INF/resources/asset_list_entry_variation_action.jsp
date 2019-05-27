@@ -22,7 +22,7 @@
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
-	triggerCssClass="btn btn-unstyled text-secondary"
+	triggerCssClass="btn btn-unstyled component-action text-secondary"
 >
 	<portlet:renderURL var="viewAssetListEntryVariationContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/view_content.jsp" />

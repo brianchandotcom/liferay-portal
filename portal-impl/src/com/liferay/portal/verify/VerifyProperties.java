@@ -709,22 +709,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.store.filesystem"
 		},
 		{
-			"dl.store.cmis.credentials.username", "credentials.username",
-			"com.liferay.portal.store.cmis"
-		},
-		{
-			"dl.store.cmis.credentials.password", "credentials.password",
-			"com.liferay.portal.store.cmis"
-		},
-		{
-			"dl.store.cmis.repository.url", "repository.url",
-			"com.liferay.portal.store.cmis"
-		},
-		{
-			"dl.store.cmis.system.root.dir", "system.root.dir",
-			"com.liferay.portal.store.cmis"
-		},
-		{
 			"dl.store.file.system.root.dir", "root.dir",
 			"com.liferay.portal.store.filesystem"
 		},
@@ -1657,7 +1641,10 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.folder.menu.visible", "dl.hook.cmis.credentials.password",
 		"dl.hook.cmis.credentials.username",
 		"dl.store.cmis.credentials.username",
-		"dl.store.cmis.credentials.password", "dl.hook.jcr.fetch.delay",
+		"dl.store.cmis.credentials.password", "dl.store.cmis.repository.url",
+		"dl.store.cmis.system.root.dir", "dl.store.file.system.root.dir",
+		"dl.hook.cmis.repository.url", "dl.hook.cmis.system.root.dir",
+		"dl.hook.file.system.root.dir", "dl.hook.jcr.fetch.delay",
 		"dl.hook.jcr.fetch.max.failures", "dl.hook.jcr.move.version.labels",
 		"dl.store.jcr.fetch.delay", "dl.store.jcr.fetch.max.failures",
 		"dl.store.jcr.move.version.labels", "dl.tabs.visible",
@@ -1869,9 +1856,6 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		{"default.user.private.layout.lar", "default.user.private.layouts.lar"},
 		{"default.user.public.layout.lar", "default.user.public.layouts.lar"},
-		{"dl.hook.cmis.repository.url", "dl.store.cmis.repository.url"},
-		{"dl.hook.cmis.system.root.dir", "dl.store.cmis.system.root.dir"},
-		{"dl.hook.file.system.root.dir", "dl.store.file.system.root.dir"},
 		{"dl.hook.impl", "dl.store.impl"},
 		{"dl.hook.s3.access.key", "dl.store.s3.access.key"},
 		{"dl.hook.s3.bucket.name", "dl.store.s3.bucket.name"},

@@ -50,10 +50,8 @@ public class PortletBagFactoryTest {
 
 		portletImpl.setPortletApp(new PortletAppImpl(StringPool.BLANK));
 
-		Class<?> clazz = getClass();
-
 		PortletBagFactory portletBagFactory = _createPortletBagFactory(
-			clazz.getClassLoader(), new MockServletContext(), false);
+			_classLoader, new MockServletContext(), false);
 
 		portletBagFactory.create(portletImpl, new MVCPortlet(), false);
 	}
@@ -65,10 +63,8 @@ public class PortletBagFactoryTest {
 		portletImpl.setPortletApp(new PortletAppImpl(StringPool.BLANK));
 		portletImpl.setPortletClass(MVCPortlet.class.getName());
 
-		Class<?> clazz = getClass();
-
 		PortletBagFactory portletBagFactory = _createPortletBagFactory(
-			clazz.getClassLoader(), new MockServletContext(), false);
+			_classLoader, new MockServletContext(), false);
 
 		portletBagFactory.create(portletImpl);
 	}
@@ -77,11 +73,9 @@ public class PortletBagFactoryTest {
 	public void testValidate() throws Exception {
 		_testValidate(null, null, null);
 
-		Class<?> clazz = getClass();
+		_testValidate(_classLoader, null, null);
 
-		_testValidate(clazz.getClassLoader(), null, null);
-
-		_testValidate(clazz.getClassLoader(), new MockServletContext(), null);
+		_testValidate(_classLoader, new MockServletContext(), null);
 	}
 
 	private PortletBagFactory _createPortletBagFactory(
@@ -116,5 +110,8 @@ public class PortletBagFactoryTest {
 		catch (IllegalStateException ise) {
 		}
 	}
+
+	private final ClassLoader _classLoader =
+		PortletBagFactoryTest.class.getClassLoader();
 
 }

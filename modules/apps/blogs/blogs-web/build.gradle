@@ -38,6 +38,7 @@ dependencies {
 	compileOnly project(":apps:reading-time:reading-time-taglib")
 	compileOnly project(":apps:rss:rss-api")
 	compileOnly project(":apps:rss:rss-taglib")
+	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":apps:social:social-bookmarks-taglib")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:subscription:subscription-api")

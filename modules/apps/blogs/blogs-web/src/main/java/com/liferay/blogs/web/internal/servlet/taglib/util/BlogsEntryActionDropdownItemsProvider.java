@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.servlet.taglib.util;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
+import com.liferay.blogs.web.internal.sharing.BlogsEntrySharingUtil;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -97,6 +98,10 @@ public class BlogsEntryActionDropdownItemsProvider {
 
 					add(_getPublishToLiveEntryActionUnsafeConsumer());
 				}
+
+				add(
+					BlogsEntrySharingUtil.createShareDropdownItem(
+						_blogsEntry, _httpServletRequest));
 			}
 		};
 	}

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
@@ -51,7 +51,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	public PreviewSegmentsEntryUsersDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
-		SegmentsEntryProvider segmentsEntryProvider,
+		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry,
 		SegmentsEntryService segmentsEntryService,
 		ODataRetriever<User> userODataRetriever,
 		UserLocalService userLocalService) {
@@ -59,7 +59,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_segmentsEntryProvider = segmentsEntryProvider;
+		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
 		_segmentsEntryService = segmentsEntryService;
 		_userODataRetriever = userODataRetriever;
 		_userLocalService = userLocalService;
@@ -107,11 +107,13 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 					userSearchContainer.getEnd());
 			}
 			else if (segmentsEntry != null) {
-				total = _segmentsEntryProvider.getSegmentsEntryClassPKsCount(
-					segmentsEntry.getSegmentsEntryId());
+				total =
+					_segmentsEntryProviderRegistry.
+						getSegmentsEntryClassPKsCount(
+							segmentsEntry.getSegmentsEntryId());
 
 				long[] segmentsEntryClassPKs =
-					_segmentsEntryProvider.getSegmentsEntryClassPKs(
+					_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
 						segmentsEntry.getSegmentsEntryId(),
 						userSearchContainer.getStart(),
 						userSearchContainer.getEnd());
@@ -197,7 +199,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SegmentsEntry _segmentsEntry;
-	private final SegmentsEntryProvider _segmentsEntryProvider;
+	private final SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;

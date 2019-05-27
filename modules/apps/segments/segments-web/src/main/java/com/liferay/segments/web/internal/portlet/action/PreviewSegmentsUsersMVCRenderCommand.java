@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext;
@@ -78,7 +78,7 @@ public class PreviewSegmentsUsersMVCRenderCommand implements MVCRenderCommand {
 			previewSegmentsEntryUsersDisplayContext =
 				new PreviewSegmentsEntryUsersDisplayContext(
 					httpServletRequest, renderRequest, renderResponse,
-					_segmentsEntryProvider, _segmentsEntryService,
+					_segmentsEntryProviderRegistry, _segmentsEntryService,
 					userODataRetriever, _userLocalService);
 
 		renderRequest.setAttribute(
@@ -92,7 +92,7 @@ public class PreviewSegmentsUsersMVCRenderCommand implements MVCRenderCommand {
 	private Portal _portal;
 
 	@Reference
-	private SegmentsEntryProvider _segmentsEntryProvider;
+	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;

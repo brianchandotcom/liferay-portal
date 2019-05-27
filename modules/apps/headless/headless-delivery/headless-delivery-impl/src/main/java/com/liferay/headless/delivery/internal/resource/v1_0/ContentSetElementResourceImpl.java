@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -140,9 +140,10 @@ public class ContentSetElementResourceImpl
 			AssetListEntry assetListEntry, Pagination pagination)
 		throws Exception {
 
-		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			assetListEntry.getGroupId(), _user.getModelClassName(),
-			_user.getPrimaryKey(), _createSegmentsContext());
+		long[] segmentsEntryIds =
+			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+				assetListEntry.getGroupId(), _user.getModelClassName(),
+				_user.getPrimaryKey(), _createSegmentsContext());
 
 		return Page.of(
 			transform(
@@ -193,7 +194,7 @@ public class ContentSetElementResourceImpl
 	private HttpHeaders _httpHeaders;
 
 	@Reference
-	private SegmentsEntryProvider _segmentsEntryProvider;
+	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 
 	@Context
 	private User _user;

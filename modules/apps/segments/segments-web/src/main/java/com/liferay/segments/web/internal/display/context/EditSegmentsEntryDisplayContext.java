@@ -39,7 +39,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
 
@@ -62,7 +62,7 @@ public class EditSegmentsEntryDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		SegmentsCriteriaContributorRegistry segmentsCriteriaContributorRegistry,
-		SegmentsEntryProvider segmentsEntryProvider,
+		SegmentsEntryProviderRegistry segmentsEntryProviderRegistry,
 		SegmentsEntryService segmentsEntryService) {
 
 		_httpServletRequest = httpServletRequest;
@@ -70,7 +70,7 @@ public class EditSegmentsEntryDisplayContext {
 		_renderResponse = renderResponse;
 		_segmentsCriteriaContributorRegistry =
 			segmentsCriteriaContributorRegistry;
-		_segmentsEntryProvider = segmentsEntryProvider;
+		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
 		_segmentsEntryService = segmentsEntryService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -257,7 +257,7 @@ public class EditSegmentsEntryDisplayContext {
 			}
 
 			_segmentsEntryClassPKsCount =
-				_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 					segmentsEntry.getSegmentsEntryId());
 
 			return _segmentsEntryClassPKsCount;
@@ -406,7 +406,7 @@ public class EditSegmentsEntryDisplayContext {
 	private Integer _segmentsEntryClassPKsCount;
 	private Long _segmentsEntryId;
 	private String _segmentsEntryKey;
-	private final SegmentsEntryProvider _segmentsEntryProvider;
+	private final SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 	private final SegmentsEntryService _segmentsEntryService;
 	private Boolean _showInEditMode;
 	private final ThemeDisplay _themeDisplay;

@@ -36,7 +36,7 @@ import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
@@ -149,7 +149,7 @@ public class SegmentsServicePreAction extends Action {
 		}
 
 		try {
-			return _segmentsEntryProvider.getSegmentsEntryIds(
+			return _segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				groupId, User.class.getName(), userId,
 				_requestContextMapper.map(httpServletRequest));
 		}
@@ -190,7 +190,7 @@ public class SegmentsServicePreAction extends Action {
 	private RequestContextMapper _requestContextMapper;
 
 	@Reference
-	private SegmentsEntryProvider _segmentsEntryProvider;
+	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

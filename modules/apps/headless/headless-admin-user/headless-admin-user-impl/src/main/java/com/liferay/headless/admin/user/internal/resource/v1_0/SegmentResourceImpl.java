@@ -25,7 +25,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 
 import java.time.LocalDate;
@@ -71,9 +71,10 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 		User user = _userService.getUserById(userAccountId);
 
-		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			siteId, user.getModelClassName(), user.getPrimaryKey(),
-			_createSegmentsContext());
+		long[] segmentsEntryIds =
+			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
+				siteId, user.getModelClassName(), user.getPrimaryKey(),
+				_createSegmentsContext());
 
 		return Page.of(
 			transformToList(
@@ -143,7 +144,7 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 	private HttpHeaders _httpHeaders;
 
 	@Reference
-	private SegmentsEntryProvider _segmentsEntryProvider;
+	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;

@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
@@ -77,7 +77,7 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 			actionRequest, "fragmentEntryLinkId");
 
 		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			_fragmentEntryLinkService.deleteFragmentEntryLink(
 				fragmentEntryLinkId);
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
@@ -176,7 +176,7 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

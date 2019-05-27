@@ -46,7 +46,6 @@ import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
-import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.messaging.handler.MessageHandler;
 import org.opensaml.messaging.handler.impl.BasicMessageHandlerChain;
@@ -69,9 +68,7 @@ import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
-import org.opensaml.xmlsec.SignatureValidationConfiguration;
 import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
-import org.opensaml.xmlsec.impl.BasicSignatureValidationConfiguration;
 import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
@@ -133,21 +130,6 @@ public class MetadataManagerImpl
 
 		_chainingSignatureTrustEngine = new ChainingSignatureTrustEngine(
 			signatureTrustEngines);
-
-		SignatureValidationConfiguration signatureValidationConfiguration =
-			ConfigurationService.get(SignatureValidationConfiguration.class);
-
-		if (signatureValidationConfiguration instanceof
-				BasicSignatureValidationConfiguration) {
-
-			BasicSignatureValidationConfiguration
-				basicSignatureValidationConfiguration =
-					(BasicSignatureValidationConfiguration)
-						signatureValidationConfiguration;
-
-			basicSignatureValidationConfiguration.setSignatureTrustEngine(
-				_chainingSignatureTrustEngine);
-		}
 	}
 
 	@Override

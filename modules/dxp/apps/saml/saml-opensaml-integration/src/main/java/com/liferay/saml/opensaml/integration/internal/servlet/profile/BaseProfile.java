@@ -43,6 +43,7 @@ import javax.servlet.http.HttpSession;
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
+import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.MarshallingException;
@@ -67,8 +68,8 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.xmlsec.SignatureValidationConfiguration;
 import org.opensaml.xmlsec.SignatureValidationParameters;
-import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
@@ -184,8 +185,8 @@ public abstract class BaseProfile {
 			basicSignatureValidationParametersResolver.resolveSingle(
 				new CriteriaSet(
 					new SignatureValidationConfigurationCriterion(
-						DefaultSecurityConfigurationBootstrap.
-							buildDefaultSignatureValidationConfiguration())));
+						ConfigurationService.get(
+							SignatureValidationConfiguration.class))));
 
 		signatureValidationParameters.setSignatureTrustEngine(
 			metadataManager.getSignatureTrustEngine());

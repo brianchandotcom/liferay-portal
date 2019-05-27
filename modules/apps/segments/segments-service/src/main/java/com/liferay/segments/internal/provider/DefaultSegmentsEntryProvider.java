@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -51,8 +52,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = SegmentsEntryProvider.class)
-public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
+@Component(
+	immediate = true,
+	property = "segments.entry.provider.source=" + SegmentsConstants.SOURCE_DEFAULT,
+	service = SegmentsEntryProvider.class
+)
+public class DefaultSegmentsEntryProvider implements SegmentsEntryProvider {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -154,8 +159,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				groupId, true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				groupId, true, SegmentsConstants.SOURCE_DEFAULT, className,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (segmentsEntries.isEmpty()) {
 			return new long[0];
@@ -318,7 +323,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryProviderImpl.class);
+		DefaultSegmentsEntryProvider.class);
 
 	@Reference(
 		target = "(target.class.name=com.liferay.segments.context.Context)"

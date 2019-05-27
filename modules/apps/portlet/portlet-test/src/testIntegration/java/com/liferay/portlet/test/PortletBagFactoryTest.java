@@ -71,11 +71,12 @@ public class PortletBagFactoryTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		_testValidate(null, null, null);
+		_testValidate("Class loader is null", null, null, null);
 
-		_testValidate(_classLoader, null, null);
+		_testValidate("Servlet context is null", _classLoader, null, null);
 
-		_testValidate(_classLoader, new MockServletContext(), null);
+		_testValidate(
+			"WAR file is null", _classLoader, new MockServletContext(), null);
 	}
 
 	private PortletBagFactory _createPortletBagFactory(
@@ -95,8 +96,8 @@ public class PortletBagFactoryTest {
 	}
 
 	private void _testValidate(
-			ClassLoader classLoader, ServletContext servletContext,
-			Boolean warFile)
+			String expectedMessage, ClassLoader classLoader,
+			ServletContext servletContext, Boolean warFile)
 		throws Exception {
 
 		try {
@@ -108,6 +109,7 @@ public class PortletBagFactoryTest {
 			Assert.fail();
 		}
 		catch (IllegalStateException ise) {
+			Assert.assertEquals(expectedMessage, ise.getMessage());
 		}
 	}
 

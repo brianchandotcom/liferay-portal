@@ -966,9 +966,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			String fullUserDN = binding.getNameInNamespace();
 
-			sb.append(
-				_portalLDAP.encodeFilterAttribute(
-					escapeLDAPName(fullUserDN), false));
+			sb.append(_portalLDAP.encodeFilterAttribute(fullUserDN, false));
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 			sb.append(StringPool.CLOSE_PARENTHESIS);

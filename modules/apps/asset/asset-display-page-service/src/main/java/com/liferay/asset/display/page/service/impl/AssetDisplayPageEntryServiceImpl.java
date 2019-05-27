@@ -16,8 +16,10 @@ package com.liferay.asset.display.page.service.impl;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryServiceBaseImpl;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -42,39 +44,78 @@ public class AssetDisplayPageEntryServiceImpl
 			long userId, long groupId, long classNameId, long classPK,
 			long layoutPageTemplateEntryId, int type,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
-		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
-			type, serviceContext);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		if (assetRendererFactory.hasPermission(
+				getPermissionChecker(), classPK, ActionKeys.UPDATE)) {
+
+			return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				userId, groupId, classNameId, classPK,
+				layoutPageTemplateEntryId, type, serviceContext);
+		}
+
+		return null;
 	}
 
 	@Override
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(
 			long userId, long groupId, long classNameId, long classPK,
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
-		return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
-			serviceContext);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		if (assetRendererFactory.hasPermission(
+				getPermissionChecker(), classPK, ActionKeys.UPDATE)) {
+
+			return assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				userId, groupId, classNameId, classPK,
+				layoutPageTemplateEntryId, serviceContext);
+		}
+
+		return null;
 	}
 
 	@Override
 	public void deleteAssetDisplayPageEntry(
 			long groupId, long classNameId, long classPK)
-		throws PortalException {
+		throws Exception {
 
-		assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
-			groupId, classNameId, classPK);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		if (assetRendererFactory.hasPermission(
+				getPermissionChecker(), classPK, ActionKeys.DELETE)) {
+
+			assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
+				groupId, classNameId, classPK);
+		}
 	}
 
 	@Override
 	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
-		long groupId, long classNameId, long classPK) {
+			long groupId, long classNameId, long classPK)
+		throws Exception {
 
-		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-			groupId, classNameId, classPK);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		if (assetRendererFactory.hasPermission(
+				getPermissionChecker(), classPK, ActionKeys.VIEW)) {
+
+			return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				groupId, classNameId, classPK);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -100,10 +141,27 @@ public class AssetDisplayPageEntryServiceImpl
 	public AssetDisplayPageEntry updateAssetDisplayPageEntry(
 			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
 			int type)
-		throws PortalException {
+		throws Exception {
 
-		return assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
-			assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			assetDisplayPageEntryPersistence.fetchByPrimaryKey(
+				assetDisplayPageEntryId);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetDisplayPageEntry.getClassNameId());
+
+		if (assetRendererFactory.hasPermission(
+				getPermissionChecker(), assetDisplayPageEntry.getClassPK(),
+				ActionKeys.UPDATE)) {
+
+			return assetDisplayPageEntryLocalService.
+				updateAssetDisplayPageEntry(
+					assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
+		}
+
+		return null;
 	}
 
 }

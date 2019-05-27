@@ -73,7 +73,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 				!PoshiSourceUtil.isInsideMultiLines(
 					lineNumber, multiLineStringPositions)) {
 
-				content = StringUtil.replaceFirst(
+				return StringUtil.replaceFirst(
 					content, matcher.group(),
 					StringBundler.concat(
 						matcher.group(1), StringPool.SPACE, matcher.group(3),

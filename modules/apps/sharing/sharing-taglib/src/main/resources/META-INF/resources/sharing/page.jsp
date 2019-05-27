@@ -38,6 +38,4 @@ String buttonComponentId = randomNamespace + "shareButton";
 			<%= request.getAttribute("liferay-sharing:button:onClick") %>
 		}
 	);
-
-	<%= request.getAttribute("liferay-sharing:button:javaScript") %>
 </aui:script>

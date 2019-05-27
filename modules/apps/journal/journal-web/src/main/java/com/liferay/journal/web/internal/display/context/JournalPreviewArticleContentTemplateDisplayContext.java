@@ -158,7 +158,8 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 			return _languageId;
 		}
 
-		_languageId = ParamUtil.getString(_renderRequest, "languageId");
+		_languageId = ParamUtil.getString(
+			_renderRequest, "languageId", _themeDisplay.getLanguageId());
 
 		return _languageId;
 	}

@@ -187,7 +187,9 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public String getDataRecordCollectionDataRecordExport(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -195,7 +197,7 @@ public class Query {
 			this::_populateResourceContext,
 			dataRecordResource ->
 				dataRecordResource.getDataRecordCollectionDataRecordExport(
-					dataRecordCollectionId));
+					dataRecordCollectionId, Pagination.of(page, pageSize)));
 	}
 
 	@GraphQLField

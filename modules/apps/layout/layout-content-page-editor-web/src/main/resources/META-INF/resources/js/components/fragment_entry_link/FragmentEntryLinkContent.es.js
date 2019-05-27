@@ -1,4 +1,4 @@
-import {closest} from 'metal-dom';
+import {closest, globalEval} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
@@ -244,23 +244,22 @@ class FragmentEntryLinkContent extends Component {
 	 */
 	_renderContent(content) {
 		if (content && this.refs.content) {
-			AUI().use('aui-parse-content', A => {
-				const contentNode = A.one(this.refs.content);
-				contentNode.plug(A.Plugin.ParseContent);
-				contentNode.setContent(content);
-				if (this.editableValues) {
-					this._createEditables();
+			this.refs.content.innerHTML = content;
 
-					this._update({
-						defaultLanguageId: this.defaultLanguageId,
-						defaultSegmentsExperienceId: this
-							.defaultSegmentsExperienceId,
-						languageId: this.languageId,
-						segmentsExperienceId: this.segmentsExperienceId,
-						updateFunctions: []
-					});
-				}
-			});
+			globalEval.runScriptsInElement(this.refs.content);
+
+			if (this.editableValues) {
+				this._createEditables();
+
+				this._update({
+					defaultLanguageId: this.defaultLanguageId,
+					defaultSegmentsExperienceId: this
+						.defaultSegmentsExperienceId,
+					languageId: this.languageId,
+					segmentsExperienceId: this.segmentsExperienceId,
+					updateFunctions: []
+				});
+			}
 		}
 	}
 

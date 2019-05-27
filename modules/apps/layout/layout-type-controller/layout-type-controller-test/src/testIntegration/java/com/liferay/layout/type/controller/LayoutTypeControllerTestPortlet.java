@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.test;
+package com.liferay.layout.type.controller;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portlet.util.test.PortletKeys;
@@ -22,7 +22,7 @@ import javax.portlet.Portlet;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
@@ -37,5 +37,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class TestPortlet extends MVCPortlet {
+public class LayoutTypeControllerTestPortlet extends MVCPortlet {
 }

@@ -51,7 +51,7 @@ class RuleEditor extends Component {
 				const actionsFieldOptions = this.getFieldsByTypes(this.actionsFieldOptions, fieldsTypes);
 
 				return {
-					actionsFieldOptions,
+					fieldOptions: actionsFieldOptions,
 					label,
 					name,
 					required,

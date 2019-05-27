@@ -1,0 +1,121 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<html>
+	<head>
+		<meta content="no-cache" http-equiv="Cache-Control">
+		<meta content="no-cache" http-equiv="Pragma" />
+		<meta content="0" http-equiv="Expires"/>
+	</head>
+
+	<body>
+		<img alt="Planets" border="0" src="/i/eg_planets.jpg" usemap="#planetmap" />
+
+		<map id="planetmap" name="planetmap">
+			<area alt="Sun" coords="0,0,110,260" href="/sun.html" shape="rect" target="_blank">
+			<area alt="Venus" coords="180,139,14" href="/venus.html" shape="circle" target="_blank" />
+			<area alt="Mercury" coords="129,161,10" href="/mercur.html" shape="circle" target="_blank"/>
+		</map>
+
+		<base href="http://www.a.com" target="_blank" >
+		<base href="http://www.b.com" target="_blank">
+		<base href="http://www.c.com" target="_blank" />
+		<base href="http://www.d.com" target="_blank"/>
+
+		<br />
+		<br/>
+		<br><br>
+
+		<table border="1" width="100%">
+			<col align="center" >
+			<col align="right">
+			<col align="left" />
+			<col align="center"/>
+		</table>
+
+		<command >
+		<command>
+		<command />
+		<command/>
+
+		<embed src="/i/helloworld1.swf" >
+		<embed src="/i/helloworld2.swf">
+		<embed src="/i/helloworld3.swf" />
+		<embed src="/i/helloworld4.swf"/>
+
+		<hr >
+		<hr />
+		<hr/>
+		<hr/><hr>
+		<hr><hr/>
+
+		<img src="/i/a.jpg" >
+		<img src="/i/b.jpg">
+		<img src="/i/c.jpg" />
+		<img src="/i/d.jpg"/>
+
+		<input name="name1" type="text" >
+		<input name="na<me2" type="text">
+		<input name="name3" type="text" /><input name='na>me4' type="text"/>
+		<input name="name5" type="text"/>
+
+		<keygen >
+		<keygen>
+		<keygen />
+		<keygen/>
+
+		<link href="<%= blogsEntryURL.toString() %>" rel="prev" >
+		<link href="<%= blogsEntryURL.toString() %>" rel="prev">
+		<link href="<%= blogsEntryURL.toString() %>" rel="prev" />
+		<link href="<%= blogsEntryURL.toString() %>" rel="prev" ><div></div><link href=""/>
+
+		<object classid="clsid:F08DF954-8592-11D1-B16A-00C0F0283628" height="50" id="Slider1" width="100">
+			<param name="BorderStyle" value="1">
+			<param name="MousePointer" value="0" />
+			<param name="Enabled" value="1"/>
+		</object>
+
+		<video autoplay="" class="background-video-1">
+			<source src="https://www.liferay.com/documents/10182/13225/homepage+video+banner+%28webm%29/695f8e49-b5ec-45aa-b27c-e294463fd2f6" type="video/webm">
+
+			<track kind="subtitles" label="Chinese" src="subs_chi.srt" srclang="zh">
+			<track kind="subtitles" label="English" src="subs_eng.srt" srclang="en" />
+			<track kind="subtitles" label="Japanese" src="subs_jap.srt" srclang="jp"/>
+		</video>
+
+		<video autoplay="" class="background-video-2">
+			<source src="https://www.liferay.com/documents/10182/13225/homepage+video+banner+%28webm%29/695f8e49-b5ec-45aa-b27c-e294463fd2f6" type="video/webm" />
+
+			<track kind="subtitles" label="Chinese" src="subs_chi.srt" srclang="zh">
+			<track kind="subtitles" label="English" src="subs_eng.srt" srclang="en" />
+			<track kind="subtitles" label="Japanese" src="subs_jap.srt" srclang="jp"/>
+		</video>
+
+		<video autoplay="" class="background-video-3">
+			<source src="https://www.liferay.com/documents/10182/13225/homepage+video+banner+%28webm%29/695f8e49-b5ec-45aa-b27c-e294463fd2f6" type="video/webm"/>
+
+			<track kind="subtitles" label="Chinese" src="subs_chi.srt" srclang="zh">
+			<track kind="subtitles" label="English" src="subs_eng.srt" srclang="en" />
+			<track kind="subtitles" label="Japanese" src="subs_jap.srt" srclang="jp"/>
+		</video>
+
+		<p>Word<wbr>Break<wbr />Opportunity<wbr/>!</p>
+
+		<inputcustomizeddummytag>
+	</body>
+</html>

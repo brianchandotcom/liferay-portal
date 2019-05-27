@@ -8,8 +8,6 @@ import getCN from 'classnames';
 import HTML5Backend from 'react-dnd-html5-backend';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {CONJUNCTIONS} from '../../utils/constants.es';
-import {debounce} from 'metal-debounce';
 import {DragDropContext as dragDropContext} from 'react-dnd';
 import {getPluralMessage, sub} from '../../utils/utils.es';
 
@@ -68,6 +66,7 @@ class ContributorBuilder extends React.Component {
 		emptyContributors: PropTypes.bool.isRequired,
 		formId: PropTypes.string,
 		membersCount: PropTypes.number,
+		membersCountLoading: PropTypes.bool,
 		onConjunctionChange: PropTypes.func,
 		onQueryChange: PropTypes.func,
 		previewMembersURL: PropTypes.string,
@@ -83,7 +82,8 @@ class ContributorBuilder extends React.Component {
 		contributors: [],
 		membersCount: 0,
 		onConjunctionChange: () => {},
-		onQueryChange: () => {}
+		onQueryChange: () => {},
+		membersCountLoading: false
 	};
 
 	constructor(props) {
@@ -100,59 +100,13 @@ class ContributorBuilder extends React.Component {
 			: propertyGroups[0].propertyKey;
 
 		this.state = {
-			conjunctionName: CONJUNCTIONS.AND,
-			editingId: propertyKey,
-			membersCount: props.membersCount,
-			membersCountLoading: false
+			editingId: propertyKey
 		};
-
-		this._debouncedFetchMembersCount = debounce(
-			this._fetchMembersCount,
-			500
-		);
 	}
-
-	_fetchMembersCount = () => {
-		const formElement = document.getElementById(this.props.formId);
-
-		const formData = new FormData(formElement);
-
-		fetch(this.props.requestMembersCountURL, {
-			body: formData,
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(membersCount => {
-				this.setState({
-					membersCount,
-					membersCountLoading: false
-				});
-			})
-			.catch(() => {
-				this.setState({membersCountLoading: false});
-
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
-					title: Liferay.Language.get('error'),
-					type: 'danger'
-				});
-			});
-	};
 
 	_handleCriteriaChange = (criteriaChange, index) => {
 		const {onQueryChange} = this.props;
-
-		this.setState(
-			{
-				membersCountLoading: true
-			},
-			() => {
-				onQueryChange(criteriaChange, index);
-				this._debouncedFetchMembersCount();
-			}
-		);
+		onQueryChange(criteriaChange, index);
 	};
 
 	_handleCriteriaEdit = (id, editing) => {
@@ -178,16 +132,7 @@ class ContributorBuilder extends React.Component {
 		event.preventDefault();
 
 		const {onConjunctionChange} = this.props;
-
-		this.setState(
-			{
-				membersCountLoading: true
-			},
-			() => {
-				onConjunctionChange();
-				this._debouncedFetchMembersCount();
-			}
-		);
+		onConjunctionChange();
 	};
 
 	render() {
@@ -195,6 +140,8 @@ class ContributorBuilder extends React.Component {
 			contributors,
 			editing,
 			emptyContributors,
+			membersCount,
+			membersCountLoading,
 			previewMembersURL,
 			propertyGroups,
 			supportedConjunctions,
@@ -202,7 +149,7 @@ class ContributorBuilder extends React.Component {
 			supportedPropertyTypes
 		} = this.props;
 
-		const {editingId, membersCount, membersCountLoading} = this.state;
+		const {editingId} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
 			editing

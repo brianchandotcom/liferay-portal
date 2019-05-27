@@ -14,6 +14,7 @@ import {
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES
 } from '../../utils/constants.es';
+import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
 
 class SegmentEdit extends Component {
@@ -64,7 +65,11 @@ class SegmentEdit extends Component {
 	constructor(props) {
 		super(props);
 
-		const {contributors: initialContributors, propertyGroups} = props;
+		const {
+			contributors: initialContributors,
+			initialMembersCount,
+			propertyGroups
+		} = props;
 
 		const {conjunctionId: initialConjunction} = initialContributors.find(
 			c => c.conjunctionId
@@ -99,8 +104,14 @@ class SegmentEdit extends Component {
 			contributors,
 			disabledSave: this._isQueryEmpty(contributors),
 			editing: this.props.showInEditMode,
+			membersCount: initialMembersCount,
 			validTitle: !!props.values.name[props.defaultLanguageId]
 		};
+
+		this._debouncedFetchMembersCount = debounce(
+			this._fetchMembersCount,
+			500
+		);
 	}
 
 	_handleCriteriaEdit = () => {
@@ -114,6 +125,35 @@ class SegmentEdit extends Component {
 		this.setState({
 			validTitle: !invalid
 		});
+	};
+
+	_fetchMembersCount = () => {
+		const formElement = document.getElementById(this.props.formId);
+
+		const formData = new FormData(formElement);
+
+		fetch(this.props.requestMembersCountURL, {
+			body: formData,
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(membersCount => {
+				this.setState({
+					membersCount,
+					membersCountLoading: false
+				});
+			})
+			.catch(() => {
+				this.setState({membersCountLoading: false});
+
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	};
 
 	_handleQueryChange = (criteriaChange, index) => {
@@ -135,9 +175,10 @@ class SegmentEdit extends Component {
 			});
 			return {
 				contributors,
-				disabledSave: this._isQueryEmpty(contributors)
+				disabledSave: this._isQueryEmpty(contributors),
+				membersCountLoading: true
 			};
-		});
+		}, this._debouncedFetchMembersCount);
 	};
 
 	_handleSegmentNameBlur = event => {
@@ -177,9 +218,10 @@ class SegmentEdit extends Component {
 			}));
 
 			return {
-				contributors
+				contributors,
+				membersCountLoading: true
 			};
-		});
+		}, this._debouncedFetchMembersCount);
 	};
 
 	/**
@@ -194,7 +236,6 @@ class SegmentEdit extends Component {
 	_renderContributors = () => {
 		const {
 			formId,
-			initialMembersCount,
 			locale,
 			previewMembersURL,
 			propertyGroups,
@@ -202,7 +243,12 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {contributors, editing} = this.state;
+		const {
+			contributors,
+			editing,
+			membersCount,
+			membersCountLoading
+		} = this.state;
 
 		const emptyContributors = this._isQueryEmpty(contributors);
 
@@ -214,7 +260,8 @@ class SegmentEdit extends Component {
 				editing={editing}
 				emptyContributors={emptyContributors}
 				formId={formId}
-				membersCount={initialMembersCount}
+				membersCount={membersCount}
+				membersCountLoading={membersCountLoading}
 				onConjunctionChange={this._handleConjunctionChange}
 				onQueryChange={this._handleQueryChange}
 				previewMembersURL={previewMembersURL}

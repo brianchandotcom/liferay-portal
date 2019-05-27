@@ -9,6 +9,7 @@ import {
 } from './component.es';
 import escape from 'lodash.escape';
 import fetch from './util/fetch.es';
+import formatXML from './util/format_xml.es';
 import getCountries from './util/address/get_countries.es';
 import getCropRegion from './util/get_crop_region.es';
 import getRegions from './util/address/get_regions.es';
@@ -42,6 +43,7 @@ Liferay.SideNavigation = SideNavigation;
 
 Liferay.Util.escape = escape;
 Liferay.Util.fetch = fetch;
+Liferay.Util.formatXML = formatXML;
 Liferay.Util.getCropRegion = getCropRegion;
 Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.groupBy = groupBy;

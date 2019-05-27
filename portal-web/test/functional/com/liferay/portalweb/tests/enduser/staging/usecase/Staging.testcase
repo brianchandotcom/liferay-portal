@@ -2125,6 +2125,8 @@ definition {
 	@description = "This is a use case for LPS-79092."
 	@priority = "4"
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
+		property portal.release = "false";
+
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(

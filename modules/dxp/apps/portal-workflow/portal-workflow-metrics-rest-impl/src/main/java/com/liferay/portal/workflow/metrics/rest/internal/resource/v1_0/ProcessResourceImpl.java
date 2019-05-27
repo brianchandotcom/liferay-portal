@@ -251,7 +251,8 @@ public class ProcessResourceImpl
 
 		if (Validator.isNotNull(title)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.term(_getTitleFieldName(), title));
+				_queries.term(
+					Field.getSortableFieldName(_getTitleFieldName()), title));
 		}
 
 		return booleanQuery.addMustQueryClauses(

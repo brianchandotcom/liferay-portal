@@ -15,6 +15,7 @@
 package com.liferay.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -31,14 +32,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.RenderParametersPool;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,14 +55,11 @@ public class PortletURLImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-	}
-
 	@Test
 	public void testToStringShouldNotReplicateExistingParamValues()
 		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -77,52 +72,37 @@ public class PortletURLImplTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		long plid = themeDisplay.getPlid();
-
-		Map<String, String[]> renderParameters = new HashMap<>();
-
-		String[] values = {"value1", "value2"};
-
-		renderParameters.put("name", values);
-
 		MockHttpServletRequest mockServletRequest =
 			new MockHttpServletRequest();
 
 		mockServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		RenderParametersPool.put(
-			mockServletRequest, plid, PortletKeys.LOGIN, renderParameters);
+			mockServletRequest, themeDisplay.getPlid(), PortletKeys.LOGIN,
+			Collections.singletonMap(
+				"name", new String[] {"value1", "value2"}));
 
-		PortletURL portletURL = _portletURLFactory.create(
-			mockServletRequest, PortletKeys.LOGIN, plid,
+		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
+			mockServletRequest, PortletKeys.LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
-
-		LiferayPortletURL liferayPortletURL = (LiferayPortletURL)portletURL;
 
 		liferayPortletURL.setCopyCurrentRenderParameters(true);
 
-		StringBuilder sb = new StringBuilder(10);
+		String expectedToString = StringBundler.concat(
+			"http://localhost:8080/web", _group.getFriendlyURL(),
+			layout.getFriendlyURL(), "?p_p_id=", PortletKeys.LOGIN,
+			"&p_p_lifecycle=0&_", PortletKeys.LOGIN, "_name=value1&_",
+			PortletKeys.LOGIN, "_name=value2");
 
-		sb.append("http://localhost:8080/web");
-		sb.append(_group.getFriendlyURL());
-		sb.append(layout.getFriendlyURL());
-		sb.append("?p_p_id=");
-		sb.append(PortletKeys.LOGIN);
-		sb.append("&p_p_lifecycle=0&_");
-		sb.append(PortletKeys.LOGIN);
-		sb.append("_name=value1&_");
-		sb.append(PortletKeys.LOGIN);
-		sb.append("_name=value2");
-
-		Assert.assertEquals(sb.toString(), portletURL.toString());
+		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 
 		_invokeClearCache(liferayPortletURL);
 
-		Assert.assertEquals(sb.toString(), portletURL.toString());
+		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 
 		_invokeClearCache(liferayPortletURL);
 
-		Assert.assertEquals(sb.toString(), portletURL.toString());
+		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 	}
 
 	private void _invokeClearCache(LiferayPortletURL liferayPortletURL) {

@@ -30,7 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,23 +64,23 @@ public class ResourcePermissionLocalServiceTest {
 	public void testShouldFailIfFirstResourceIsNotIndividual()
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
 		Resource firstResource = new ResourceImpl();
 
 		firstResource.setScope(ResourceConstants.SCOPE_GROUP);
-
-		resources.add(firstResource);
 
 		Resource lastResource = new ResourceImpl();
 
 		lastResource.setScope(ResourceConstants.SCOPE_COMPANY);
 
-		resources.add(lastResource);
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, _roleIds, ActionKeys.VIEW);
+				new ArrayList<Resource>() {
+					{
+						add(firstResource);
+						add(lastResource);
+					}
+				},
+				_roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
@@ -91,23 +91,23 @@ public class ResourcePermissionLocalServiceTest {
 
 	@Test
 	public void testShouldFailIfLastResourceIsNotCompany() throws Exception {
-		List<Resource> resources = new ArrayList<>();
-
 		Resource firstResource = new ResourceImpl();
 
 		firstResource.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-
-		resources.add(firstResource);
 
 		Resource lastResource = new ResourceImpl();
 
 		lastResource.setScope(ResourceConstants.SCOPE_GROUP);
 
-		resources.add(lastResource);
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, _roleIds, ActionKeys.VIEW);
+				new ArrayList<Resource>() {
+					{
+						add(firstResource);
+						add(lastResource);
+					}
+				},
+				_roleIds, ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
@@ -117,13 +117,10 @@ public class ResourcePermissionLocalServiceTest {
 
 	@Test
 	public void testShouldFailIfResourcesIsLessThanTwo() throws Exception {
-		List<Resource> resources = new ArrayList<>();
-
-		resources.add(new ResourceImpl());
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
-				resources, _roleIds, ActionKeys.VIEW);
+				Collections.singletonList(new ResourceImpl()), _roleIds,
+				ActionKeys.VIEW);
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(

@@ -210,13 +210,14 @@ public class HtmlImpl implements Html {
 			return escapeAttribute(text);
 		}
 
+		if (mode == ESCAPE_MODE_JS) {
+			return escapeJS(text);
+		}
+
 		String prefix = StringPool.BLANK;
 
 		if (mode == ESCAPE_MODE_CSS) {
 			prefix = StringPool.BACK_SLASH;
-		}
-		else if (mode == ESCAPE_MODE_JS) {
-			prefix = "\\x";
 		}
 		else if (mode == ESCAPE_MODE_URL) {
 			return URLCodec.encodeURL(text, true);

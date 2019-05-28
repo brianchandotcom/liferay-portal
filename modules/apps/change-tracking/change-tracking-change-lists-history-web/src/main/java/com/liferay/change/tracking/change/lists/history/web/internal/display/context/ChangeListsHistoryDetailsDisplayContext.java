@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.change.lists.history.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
@@ -142,7 +141,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		PortletURL portletURL = _getIteratorURL();
 
 		portletURL.setParameter(
-			CTWebKeys.CT_COLLECTION_ID, String.valueOf(ctCollectionId));
+			"ctCollectionId", String.valueOf(ctCollectionId));
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/change_lists_history/view_details");
 
@@ -164,7 +163,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 			_renderRequest, _renderResponse);
 
 		long ctCollectionId = ParamUtil.getLong(
-			_renderRequest, CTWebKeys.CT_COLLECTION_ID);
+			_renderRequest, "ctCollectionId");
 
 		String backURL = ParamUtil.getString(_renderRequest, "backURL");
 
@@ -183,7 +182,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		}
 
 		iteratorURL.setParameter(
-			CTWebKeys.CT_COLLECTION_ID, String.valueOf(ctCollectionId));
+			"ctCollectionId", String.valueOf(ctCollectionId));
 		iteratorURL.setParameter("backURL", backURL);
 		iteratorURL.setParameter("displayStyle", "list");
 		iteratorURL.setParameter(

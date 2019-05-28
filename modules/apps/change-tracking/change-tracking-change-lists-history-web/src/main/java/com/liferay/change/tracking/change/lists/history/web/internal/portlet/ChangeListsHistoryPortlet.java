@@ -92,7 +92,7 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 		}
 
 		long ctCollectionId = ParamUtil.getLong(
-			renderRequest, CTWebKeys.CT_COLLECTION_ID);
+			renderRequest, "ctCollectionId");
 
 		try {
 			if (ctCollectionId > 0) {

@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 
+	@Override
 	@Test
 	public void testGetTimeRangesPage() throws Exception {
 		Page<TimeRange> timeRangesPage = TimeRangeResource.getTimeRangesPage();

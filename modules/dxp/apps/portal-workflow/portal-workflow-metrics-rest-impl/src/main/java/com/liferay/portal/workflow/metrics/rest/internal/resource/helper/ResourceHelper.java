@@ -193,8 +193,8 @@ public class ResourceHelper {
 		).findFirst(
 		).map(
 			document -> document.getString("version")
-		).orElse(
-			StringPool.BLANK
+		).orElseGet(
+			() -> StringPool.BLANK
 		);
 	}
 

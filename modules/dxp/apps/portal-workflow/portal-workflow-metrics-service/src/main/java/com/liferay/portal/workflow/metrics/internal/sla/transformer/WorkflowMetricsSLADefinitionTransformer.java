@@ -99,8 +99,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		).findFirst(
 		).map(
 			sourceMap -> MapUtil.getString(sourceMap, "nodeId")
-		).orElse(
-			StringPool.BLANK
+		).orElseGet(
+			() -> StringPool.BLANK
 		);
 	}
 

@@ -414,8 +414,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		).findFirst(
 		).map(
 			document -> document.getString("version")
-		).orElse(
-			StringPool.BLANK
+		).orElseGet(
+			() -> StringPool.BLANK
 		);
 	}
 

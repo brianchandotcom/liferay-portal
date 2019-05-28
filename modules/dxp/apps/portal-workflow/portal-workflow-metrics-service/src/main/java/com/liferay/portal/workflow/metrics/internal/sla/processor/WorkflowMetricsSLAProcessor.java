@@ -198,8 +198,8 @@ public class WorkflowMetricsSLAProcessor {
 							document.getString("status")));
 				}
 			}
-		).orElse(
-			null
+		).orElseGet(
+			() -> null
 		);
 	}
 

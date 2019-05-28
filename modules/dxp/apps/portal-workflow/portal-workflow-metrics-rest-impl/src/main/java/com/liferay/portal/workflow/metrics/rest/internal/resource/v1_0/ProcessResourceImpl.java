@@ -119,8 +119,8 @@ public class ProcessResourceImpl
 
 				return process;
 			}
-		).orElse(
-			new Process()
+		).orElseGet(
+			Process::new
 		);
 	}
 
@@ -163,8 +163,8 @@ public class ProcessResourceImpl
 		).findFirst(
 		).map(
 			document -> document.getString(_getTitleFieldName())
-		).orElse(
-			StringPool.BLANK
+		).orElseGet(
+			() -> StringPool.BLANK
 		);
 	}
 

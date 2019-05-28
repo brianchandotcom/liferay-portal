@@ -263,8 +263,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).findFirst(
 		).map(
 			document -> document.getLong("nodeId")
-		).orElse(
-			0L
+		).orElseGet(
+			() -> 0L
 		);
 	}
 

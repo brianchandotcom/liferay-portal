@@ -180,8 +180,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 				return instance;
 			}
-		).orElse(
-			new Instance()
+		).orElseGet(
+			Instance::new
 		);
 	}
 
@@ -493,8 +493,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 					return instance;
 				}
-			).orElse(
-				new Instance()
+			).orElseGet(
+				Instance::new
 			)
 		).collect(
 			Collectors.toCollection(LinkedList::new)
@@ -627,8 +627,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					SearchHit::getSourcesMap
 				).map(
 					this::_createSLAResult
-				).orElse(
-					new SLAResult()
+				).orElseGet(
+					SLAResult::new
 				)
 			).toArray(
 				SLAResult[]::new

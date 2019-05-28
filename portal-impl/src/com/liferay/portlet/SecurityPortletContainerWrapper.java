@@ -421,6 +421,8 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 					portlet.getPortletId()));
 		}
 
+		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
 		return ActionResult.EMPTY_ACTION_RESULT;
 	}
 

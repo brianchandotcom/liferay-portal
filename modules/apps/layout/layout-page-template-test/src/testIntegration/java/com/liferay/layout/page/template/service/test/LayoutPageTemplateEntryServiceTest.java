@@ -22,7 +22,6 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -74,7 +73,9 @@ public class LayoutPageTemplateEntryServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = DuplicateLayoutPageTemplateEntryException.class)
+	@Test(
+		expected = LayoutPageTemplateEntryNameException.MustNotBeDuplicate.class
+	)
 	public void testAddDuplicateLayoutPageTemplateEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

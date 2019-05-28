@@ -168,8 +168,8 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_SLA_PROCESS_RESULT_INDEXER),
 			_creatWorkflowMetricsSLAProcessResultDocument(
-				companyId, instance.getProcessId(), instance.getId(),
-				slaDefinitionId, onTime));
+				companyId, instance.getId(), onTime, instance.getProcessId(),
+				slaDefinitionId));
 
 		_retryAssertCount(
 			"workflow-metrics-sla-process-results", "slaDefinitionId",
@@ -349,8 +349,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsSLAProcessResultDocument(
-		long companyId, long processId, long instanceId, long slaDefinitionId,
-		boolean onTime) {
+		long companyId, long instanceId, boolean onTime, long processId,
+		long slaDefinitionId) {
 
 		Document document = new DocumentImpl();
 

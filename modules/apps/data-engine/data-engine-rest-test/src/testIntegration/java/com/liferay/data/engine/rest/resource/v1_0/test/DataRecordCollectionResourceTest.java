@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.HashMap;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -39,6 +40,21 @@ public class DataRecordCollectionResourceTest
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
 		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
 			irrelevantGroup);
+	}
+
+	@Override
+	@Test
+	public void testPostDataDefinitionDataRecordCollection() throws Exception {
+		super.testPostDataDefinitionDataRecordCollection();
+
+		DataRecordCollection randomDataRecordCollection =
+			randomDataRecordCollection();
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.
+				postDataDefinitionDataRecordCollectionHttpResponse(
+					Long.valueOf(0), randomDataRecordCollection));
 	}
 
 	@Override

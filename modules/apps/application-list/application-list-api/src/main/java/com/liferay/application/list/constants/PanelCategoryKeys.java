@@ -74,11 +74,23 @@ public interface PanelCategoryKeys {
 	public static final String SITES_ADMINISTRATION_MY_SITES =
 		"site_administration.my_sites";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String USER = "user";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String USER_MY_ACCOUNT =
 		PortletCategoryKeys.USER_MY_ACCOUNT;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String USER_SIGN_OUT = "user.sign_out";
 
 }

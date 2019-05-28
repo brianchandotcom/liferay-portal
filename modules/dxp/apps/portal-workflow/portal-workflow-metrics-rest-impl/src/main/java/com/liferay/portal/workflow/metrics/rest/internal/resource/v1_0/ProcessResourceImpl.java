@@ -223,7 +223,8 @@ public class ProcessResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false), _createBooleanQuery(completed),
+			_queries.term("deleted", Boolean.FALSE),
+			_createBooleanQuery(completed),
 			_createProcessIdTermsQuery(processIds));
 	}
 
@@ -257,7 +258,7 @@ public class ProcessResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false));
+			_queries.term("deleted", Boolean.FALSE));
 	}
 
 	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
@@ -299,7 +300,7 @@ public class ProcessResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false),
+			_queries.term("deleted", Boolean.FALSE),
 			_createProcessIdTermsQuery(processIds));
 	}
 

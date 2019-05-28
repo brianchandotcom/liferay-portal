@@ -173,7 +173,8 @@ public class TaskResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false), _queries.term("type", "TASK"));
+			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("type", "TASK"));
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
@@ -191,7 +192,7 @@ public class TaskResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false),
+			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId), termsQuery);
 	}
 
@@ -217,7 +218,8 @@ public class TaskResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", false), _queries.term("deleted", false));
+			_queries.term("completed", Boolean.FALSE),
+			_queries.term("deleted", Boolean.FALSE));
 	}
 
 	private long _getInstanceCount(Bucket bucket) {

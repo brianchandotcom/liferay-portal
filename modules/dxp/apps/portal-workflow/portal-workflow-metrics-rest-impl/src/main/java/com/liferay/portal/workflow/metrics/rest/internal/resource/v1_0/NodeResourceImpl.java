@@ -57,7 +57,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
 				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("deleted", false),
+				_queries.term("deleted", Boolean.FALSE),
 				_queries.term("processId", processId),
 				_queries.term(
 					"version",

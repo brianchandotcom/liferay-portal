@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
+import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -90,26 +90,25 @@ public class UpdateLayoutPrototypeMVCActionCommand
 				_log.debug(t, t);
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (t instanceof LayoutPageTemplateEntryNameException) {
+				LayoutPageTemplateEntryNameException lptene =
+					(LayoutPageTemplateEntryNameException)t;
 
-			String errorMessage = "an-unexpected-error-occurred";
-
-			Throwable cause = t.getCause();
-
-			if (cause instanceof LayoutPageTemplateEntryNameException) {
-				errorMessage = "please-enter-a-valid-name";
+				_layoutPageTemplateEntryExceptionRequestHandler.
+					handlePortalException(
+						actionRequest, actionResponse, lptene);
 			}
-			else if (cause instanceof
-						DuplicateLayoutPageTemplateEntryException) {
+			else {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				errorMessage =
-					"a-page-template-entry-with-that-name-already-exists";
+				jsonObject.put(
+					"error",
+					LanguageUtil.get(
+						themeDisplay.getRequest(),
+						"an-unexpected-error-occurred"));
 			}
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -118,6 +117,10 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateLayoutPrototypeMVCActionCommand.class);
+
+	@Reference
+	private LayoutPageTemplateEntryExceptionRequestHandler
+		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;

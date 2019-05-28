@@ -85,8 +85,7 @@ public class HtmlImplTest {
 
 		Assert.assertEquals(value, _htmlImpl.escape(value));
 
-		Assert.assertEquals(
-			value, _htmlImpl.escape(value, HtmlImpl.ESCAPE_MODE_ATTRIBUTE));
+		Assert.assertEquals(value, _htmlImpl.escapeAttribute(value));
 	}
 
 	@Test

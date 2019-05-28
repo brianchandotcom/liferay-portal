@@ -214,15 +214,15 @@ if (journalContentDisplayContext.isShowArticle()) {
 	</c:if>
 
 	<%
-	ContentMetadataAssetAddonEntry commentsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableComments");
+	List<ContentMetadataAssetAddonEntry> commentsContentMetadataAssetAddonEntries = journalContentDisplayContext.getCommentsContentMetadataAssetAddonEntries();
 	%>
 
-	<c:if test="<%= commentsContentMetadataAssetAddonEntry != null %>">
+	<c:if test="<%= ListUtil.isNotEmpty(commentsContentMetadataAssetAddonEntries) %>">
 		<div class="separator"><!-- --></div>
 
 		<div class="asset-links content-metadata-asset-addon-entries mb-4">
 			<liferay-asset:asset-addon-entry-display
-				assetAddonEntries="<%= Collections.singletonList(commentsContentMetadataAssetAddonEntry) %>"
+				assetAddonEntries="<%= commentsContentMetadataAssetAddonEntries %>"
 			/>
 		</div>
 	</c:if>

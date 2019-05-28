@@ -214,6 +214,10 @@ public class HtmlImpl implements Html {
 			return escapeJS(text);
 		}
 
+		if (mode == ESCAPE_MODE_CSS) {
+			return escapeCSS(text);
+		}
+
 		String prefix = StringPool.BLANK;
 
 		if (mode == ESCAPE_MODE_CSS) {

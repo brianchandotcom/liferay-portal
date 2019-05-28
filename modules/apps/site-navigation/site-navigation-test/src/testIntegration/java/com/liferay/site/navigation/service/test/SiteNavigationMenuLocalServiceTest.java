@@ -301,23 +301,25 @@ public class SiteNavigationMenuLocalServiceTest {
 
 	@Test
 	public void testGetSiteNavigationMenusCount() throws Exception {
-		int startCount =
+		int originalSiteNavigationMenusCount =
 			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
-		int endCount =
+		int actualSiteNavigationMenusCount =
 			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
-		Assert.assertEquals(startCount + 2, endCount);
+		Assert.assertEquals(
+			originalSiteNavigationMenusCount + 2,
+			actualSiteNavigationMenusCount);
 	}
 
 	@Test
 	public void testGetSiteNavigationMenusCountWithKeywords() throws Exception {
-		int startCount =
+		int originalSiteNavigationMenusCount =
 			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
 				_group.getGroupId(), "Menu");
 
@@ -325,11 +327,13 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "Menu 2");
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "Test Name");
 
-		int endCount =
+		int actualSiteNavigationMenusCount =
 			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
 				_group.getGroupId(), "Menu");
 
-		Assert.assertEquals(startCount + 2, endCount);
+		Assert.assertEquals(
+			originalSiteNavigationMenusCount + 2,
+			actualSiteNavigationMenusCount);
 	}
 
 	@Test

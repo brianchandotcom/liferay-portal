@@ -102,12 +102,16 @@ public class WhitespaceCheck extends BaseFileCheck {
 			int deep = 1;
 
 			for (int x = matcher.end(); x < line.length(); x++) {
+				if (ToolsUtil.isInsideQuotes(line, x)) {
+					continue;
+				}
+
 				char c = line.charAt(x);
 
-				if ((c == CharPool.LESS_THAN) && !ToolsUtil.isInsideQuotes(line, x)) {
+				if (c == CharPool.LESS_THAN) {
 					deep++;
 				}
-				else if ((c == CharPool.GREATER_THAN) && !ToolsUtil.isInsideQuotes(line, x)) {
+				else if (c == CharPool.GREATER_THAN) {
 					deep--;
 				}
 

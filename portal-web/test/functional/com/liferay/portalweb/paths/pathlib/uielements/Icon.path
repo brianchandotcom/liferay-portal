@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ANGLE_LEFT_BACK</td>
-	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //a[span/*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
+	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
 	<td></td>
 </tr>
 <tr>

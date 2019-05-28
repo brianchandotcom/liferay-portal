@@ -169,21 +169,25 @@
 		return region;
 	};
 
-	var guid = (function() {
-		var counter = 0;
+	let selectorCounter = 0;
 
-		return function($toggler, ns) {
-			var strId = $toggler.attr('id');
+	/**
+	 * Returns a unique ID-based selector for the supplied element,
+	 * creating one and assigning it to the element if necessary.
+	 */
+	function getUniqueSelector(element) {
+		element = getElement(element);
 
-			if (!strId) {
-				strId = (ns + counter++);
+		let id = element.id
 
-				$toggler.attr('id', strId);
-			}
+		if (!id) {
+			id = 'generatedSideNavId__' + selectorCounter++;
 
-			return strId;
-		};
-	}());
+			element.id = id;
+		}
+
+		return `#${id}`;
+	}
 
 	var toInt = function(str) {
 		return parseInt(str, 10) || 0;
@@ -797,7 +801,7 @@
 			var containerSelector = options.container;
 
 			var $closeButton = $(containerSelector).find('.sidenav-close').first();
-			var closeButtonSelector = '#' + guid($closeButton, 'generatedLexiconSidenavCloseId');
+			var closeButtonSelector = getUniqueSelector($closeButton);
 			var dataCloseButtonSelector = 'lexicon.' + closeButtonSelector;
 
 			if (!$doc.data(dataCloseButtonSelector)) {
@@ -819,7 +823,7 @@
 
 			var $toggler = instance.$toggler;
 
-			var togglerSelector = '#' + guid($toggler, 'generatedLexiconSidenavTogglerId');
+			var togglerSelector = getUniqueSelector($toggler);
 
 			var dataTogglerSelector = 'lexicon.' + togglerSelector;
 

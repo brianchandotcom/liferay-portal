@@ -426,7 +426,66 @@ public class HtmlImpl implements Html {
 	 */
 	@Override
 	public String escapeJS(String js) {
-		return escape(js, ESCAPE_MODE_JS);
+		if (js == null) {
+			return null;
+		}
+
+		if (js.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		String prefix = "\\x";
+
+		StringBuilder sb = null;
+		char[] hexBuffer = new char[4];
+		int lastReplacementIndex = 0;
+
+		for (int i = 0; i < js.length(); i++) {
+			char c = js.charAt(i);
+
+			if (c < _VALID_CHARS.length) {
+				if (!_VALID_CHARS[c]) {
+					if (sb == null) {
+						sb = new StringBuilder(js.length() + 64);
+					}
+
+					if (i > lastReplacementIndex) {
+						sb.append(js, lastReplacementIndex, i);
+					}
+
+					sb.append(prefix);
+
+					_appendHexChars(sb, hexBuffer, c);
+
+					lastReplacementIndex = i + 1;
+				}
+			}
+			else if ((c == '\u2028') || (c == '\u2029')) {
+				if (sb == null) {
+					sb = new StringBuilder(js.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(js, lastReplacementIndex, i);
+				}
+
+				sb.append("\\u");
+
+				_appendHexChars(sb, hexBuffer, c);
+
+				lastReplacementIndex = i + 1;
+			}
+		}
+
+		if (sb == null) {
+			return js;
+		}
+
+		if (lastReplacementIndex < js.length()) {
+			sb.append(js, lastReplacementIndex, js.length());
+		}
+
+		return sb.toString();
 	}
 
 	@Override

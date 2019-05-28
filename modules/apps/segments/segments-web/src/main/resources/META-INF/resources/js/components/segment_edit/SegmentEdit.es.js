@@ -6,11 +6,14 @@ import LocalizedInput from '../title_editor/LocalizedInput.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
-import {buildQueryString} from '../../utils/odata.es';
+import {
+	applyCriteriaChangeToContributors,
+	initialContributorsToContributors,
+	sub
+} from '../../utils/utils.es';
 import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
 import {initialContributorShape} from '../../utils/types.es';
-import {initialContributorsToContributors, sub} from '../../utils/utils.es';
 import {
 	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
@@ -129,21 +132,14 @@ class SegmentEdit extends Component {
 
 	_handleQueryChange = (criteriaChange, index) => {
 		this.setState(prevState => {
-			const contributors = prevState.contributors.map(contributor => {
-				const {conjunctionId, properties, propertyKey} = contributor;
+			const contributors = applyCriteriaChangeToContributors(
+				prevState.contributors,
+				{
+					criteriaChange,
+					propertyKey: index
+				}
+			);
 
-				return index === propertyKey
-					? {
-							...contributor,
-							criteriaMap: criteriaChange,
-							query: buildQueryString(
-								[criteriaChange],
-								conjunctionId,
-								properties
-							)
-					  }
-					: contributor;
-			});
 			return {
 				contributors,
 				disabledSave: this._isQueryEmpty(contributors),

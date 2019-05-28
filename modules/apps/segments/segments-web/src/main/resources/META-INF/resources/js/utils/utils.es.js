@@ -1,7 +1,7 @@
 import dateFns from 'date-fns';
+import {buildQueryString, translateQueryToCriteria} from './odata.es';
 import {CONJUNCTIONS} from 'utils/constants.es';
 import {getUid} from 'metal';
-import {translateQueryToCriteria} from './odata.es';
 
 const GROUP_ID_NAMESPACE = 'group_';
 
@@ -198,7 +198,24 @@ export function jsDatetoYYYYMMDD(dateJsObject) {
  * and a list of propertyGroups
  *
  * @export
- * @param {{
+ * @param {Object[]} initialContributors
+ * @param {string} initialContributors[].conjunctionId
+ * @param {string} initialContributors[].conjunctionInputId
+ * @param {Object} initialContributors[].criteriaMap
+ * @param {string} initialContributors[].entityName
+ * @param {string} initialContributors[].inputId
+ * @param {string} initialContributors[].modelLabel
+ * @param {Array} initialContributors[].properties
+ * @param {string} initialContributors[].propertyKey
+ * @param {string} initialContributors[].query
+ *
+ * @param {Object[]} propertyGroups
+ * @param {string} propertyGroups[].entityName
+ * @param {string} propertyGroups[].name
+ * @param {Array} propertyGroups[].properties
+ * @param {string} propertyGroups[].propertyKey
+ *
+ * @typedef {{
  *   conjunctionId: string,
  *   conjunctionInputId: string,
  *   criteriaMap: Object,
@@ -207,26 +224,10 @@ export function jsDatetoYYYYMMDD(dateJsObject) {
  *   modelLabel: string,
  *   properties: Array,
  *   propertyKey: string,
- *   query: string,
- * }[]} initialContributors
- * @param {{
- *   entityName: string,
- *   name: string,
- *   properties: Array,
- *   propertyKey: string
- * }[]} propertyGroups
- *
- * @returns {{
- *   conjunctionId: string
- *   conjunctionInputId: string
- *   criteriaMap: Object
- *   entityName: string
- *   inputId: string
- *   modelLabel: string
- *   properties: Array
- *   propertyKey: string
  *   query: string
- * }[]}
+ * }} Contributor
+ *
+ * @return {Contributor[]} contributors
  */
 export function initialContributorsToContributors(
 	initialContributors,
@@ -258,5 +259,33 @@ export function initialContributorsToContributors(
 			propertyKey: initialContributor.propertyKey,
 			query: initialContributor.initialQuery
 		};
+	});
+}
+
+/**
+ * Applies a criteria change to a contributor from a list
+ * in both the criteriaMap and query properties
+ *
+ * @export
+ * @param {Contributor[]} contributors
+ * @param {{ propertyKey: string, criteriaChange: Array }} change - Contains the criteria change and an identifier to locate the right contributor
+ *
+ * @return {Contributor[]} contributors
+ */
+export function applyCriteriaChangeToContributors(contributors, change) {
+	return contributors.map(contributor => {
+		const {conjunctionId, properties, propertyKey} = contributor;
+
+		return change.propertyKey === propertyKey
+			? {
+					...contributor,
+					criteriaMap: change.criteriaChange,
+					query: buildQueryString(
+						[change.criteriaChange],
+						conjunctionId,
+						properties
+					)
+			  }
+			: contributor;
 	});
 }

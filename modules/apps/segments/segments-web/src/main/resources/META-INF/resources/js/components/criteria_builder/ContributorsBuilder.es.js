@@ -16,22 +16,20 @@ import {
 	propertyTypesShape
 } from '../../utils/types.es';
 import {DragDropContext as dragDropContext} from 'react-dnd';
-import {getPluralMessage, sub} from '../../utils/utils.es';
+import {getPluralMessage} from '../../utils/utils.es';
 
 class ContributorBuilder extends React.Component {
 	static propTypes = {
 		contributors: PropTypes.arrayOf(contributorShape),
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
-		formId: PropTypes.string,
 		membersCount: PropTypes.number,
 		membersCountLoading: PropTypes.bool,
 		onConjunctionChange: PropTypes.func,
+		onPreviewMembers: PropTypes.func,
 		onQueryChange: PropTypes.func,
 		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
-		requestMembersCountURL: PropTypes.string,
-		segmentName: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
 		supportedPropertyTypes: propertyTypesShape.isRequired
@@ -41,6 +39,7 @@ class ContributorBuilder extends React.Component {
 		contributors: [],
 		membersCount: 0,
 		onConjunctionChange: () => {},
+		onPreviewMembers: () => {},
 		onQueryChange: () => {},
 		membersCountLoading: false
 	};
@@ -74,23 +73,13 @@ class ContributorBuilder extends React.Component {
 		});
 	};
 
-	_handlePreviewClick = url => () => {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true
-			},
-			id: 'segment-members-dialog',
-			title: sub(Liferay.Language.get('x-members'), [
-				this.props.segmentName
-			]),
-			uri: url
-		});
+	_handlePreviewClick = () => {
+		this.props.onPreviewMembers();
 	};
 
 	_handleRootConjunctionClick = event => {
-		event.preventDefault();
-
 		const {onConjunctionChange} = this.props;
+
 		onConjunctionChange();
 	};
 
@@ -101,7 +90,6 @@ class ContributorBuilder extends React.Component {
 			emptyContributors,
 			membersCount,
 			membersCountLoading,
-			previewMembersURL,
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
@@ -167,9 +155,10 @@ class ContributorBuilder extends React.Component {
 														label={Liferay.Language.get(
 															'view-members'
 														)}
-														onClick={this._handlePreviewClick(
-															previewMembersURL
-														)}
+														onClick={
+															this
+																._handlePreviewClick
+														}
 														size='sm'
 														type='button'
 													/>

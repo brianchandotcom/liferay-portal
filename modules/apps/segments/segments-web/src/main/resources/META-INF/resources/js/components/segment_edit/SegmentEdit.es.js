@@ -17,6 +17,7 @@ import {
 import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
 import {initialContributorShape} from '../../utils/types.es';
+import {sub} from '../../utils/utils.es';
 
 class SegmentEdit extends Component {
 	static contextType = ThemeContext;
@@ -228,9 +229,7 @@ class SegmentEdit extends Component {
 
 	_renderContributors = () => {
 		const {
-			formId,
 			locale,
-			previewMembersURL,
 			propertyGroups,
 			requestMembersCountURL,
 			values
@@ -252,12 +251,11 @@ class SegmentEdit extends Component {
 				contributors={contributors}
 				editing={editing}
 				emptyContributors={emptyContributors}
-				formId={formId}
 				membersCount={membersCount}
 				membersCountLoading={membersCountLoading}
 				onConjunctionChange={this._handleConjunctionChange}
+				onPreviewMembers={this._handlePreviewMembers}
 				onQueryChange={this._handleQueryChange}
-				previewMembersURL={previewMembersURL}
 				propertyGroups={propertyGroups}
 				requestMembersCountURL={requestMembersCountURL}
 				segmentName={segmentName}
@@ -266,6 +264,28 @@ class SegmentEdit extends Component {
 				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
 			/>
 		) : null;
+	};
+
+	/**
+	 * Opens a modal from to show the view from `this.props.previewMembersURL`
+	 *
+	 * @memberof SegmentEdit
+	 */
+	_handlePreviewMembers = () => {
+		const {locale, previewMembersURL} = this.props;
+		const {name} = this.props.values;
+		const segmentLocalizedName = name[locale];
+
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true
+			},
+			id: 'segment-members-dialog',
+			title: sub(Liferay.Language.get('x-members'), [
+				segmentLocalizedName
+			]),
+			uri: previewMembersURL
+		});
 	};
 
 	/**

@@ -21,10 +21,4 @@ public interface CTWebKeys {
 
 	public static final String CT_COLLECTION = "ctCollection";
 
-	public static final String CT_COLLECTION_ID = "ctCollectionId";
-
-	public static final String CT_PROCESS = "ctProcess";
-
-	public static final String CT_PROCESS_ID = "ctProcessId";
-
 }

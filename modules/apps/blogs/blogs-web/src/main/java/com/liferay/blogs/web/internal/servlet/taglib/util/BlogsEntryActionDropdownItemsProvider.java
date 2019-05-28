@@ -102,6 +102,10 @@ public class BlogsEntryActionDropdownItemsProvider {
 				add(
 					BlogsEntrySharingUtil.createShareDropdownItem(
 						_blogsEntry, _httpServletRequest));
+
+				add(
+					BlogsEntrySharingUtil.createManageCollaboratorsDropdownItem(
+						_blogsEntry, _httpServletRequest));
 			}
 		};
 	}

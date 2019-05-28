@@ -31,6 +31,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class BlogsEntrySharingUtil {
 
+	public static DropdownItem createManageCollaboratorsDropdownItem(
+		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
+
+		try {
+			return _sharingDropdownItemFactory.
+				createManageCollaboratorsDropdownItem(
+					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+					httpServletRequest);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
 	public static DropdownItem createShareDropdownItem(
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 

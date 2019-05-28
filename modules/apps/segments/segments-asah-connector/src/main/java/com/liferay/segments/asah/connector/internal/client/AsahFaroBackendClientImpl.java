@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
+import com.liferay.segments.asah.connector.internal.client.data.binding.InterestsTopicsJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
+import com.liferay.segments.asah.connector.internal.client.model.Topic;
 import com.liferay.segments.asah.connector.internal.client.util.FilterBuilder;
 import com.liferay.segments.asah.connector.internal.client.util.FilterConstants;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
@@ -160,6 +162,27 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 	}
 
+	@Override
+	public Results<Topic> getInterestsTermsResults(
+		String userId, int cur, int delta, List<OrderByField> orderByFields) {
+
+		try {
+			String response = _jsonWebServiceClient.doGet(
+				StringUtil.replace(_PATH_INTERESTS_TERMS, "{userId}", userId),
+				_getParameters(
+					new FilterBuilder(),
+					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur, delta,
+					orderByFields),
+				_headers);
+
+			return _interestsTopicsJSONObjectMapper.mapToResults(response);
+		}
+		catch (IOException ioe) {
+			throw new NestableRuntimeException(
+				"Unable to handle JSON response: " + ioe.getMessage(), ioe);
+		}
+	}
+
 	private MultivaluedMap<String, Object> _getParameters(
 		FilterBuilder filterBuilder, String fieldNameContext, int cur,
 		int delta, List<OrderByField> orderByFields) {
@@ -233,11 +256,17 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	private static final String _PATH_INDIVIDUALS = "api/1.0/individuals";
 
+	private static final String _PATH_INTERESTS_TERMS =
+		"api/1.0/interests/terms/{userId}";
+
 	private static final IndividualJSONObjectMapper
 		_individualJSONObjectMapper = new IndividualJSONObjectMapper();
 	private static final IndividualSegmentJSONObjectMapper
 		_individualSegmentJSONObjectMapper =
 			new IndividualSegmentJSONObjectMapper();
+	private static final InterestsTopicsJSONObjectMapper
+		_interestsTopicsJSONObjectMapper =
+			new InterestsTopicsJSONObjectMapper();
 
 	private final String _dataSourceId;
 	private final Map<String, String> _headers = new HashMap<>();

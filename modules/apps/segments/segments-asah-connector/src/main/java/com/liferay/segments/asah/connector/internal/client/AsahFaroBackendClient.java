@@ -17,6 +17,7 @@ package com.liferay.segments.asah.connector.internal.client;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
+import com.liferay.segments.asah.connector.internal.client.model.Topic;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
 
 import java.util.List;
@@ -76,5 +77,18 @@ public interface AsahFaroBackendClient {
 	 */
 	public Results<IndividualSegment> getIndividualSegmentResults(
 		int cur, int delta, List<OrderByField> orderByFields);
+
+	/**
+	 * Returns a {@link Results} of terms of interest given a user ID.
+	 *
+	 * @param  userId the ID of the user
+	 * @param  cur the current page (one-based numbering)
+	 * @param  delta the page size
+	 * @param  orderByFields the sort fields
+	 * @return a {@link Results} of terms of interest
+	 * @review
+	 */
+	public Results<Topic> getInterestsTermsResults(
+		String userId, int cur, int delta, List<OrderByField> orderByFields);
 
 }

@@ -218,8 +218,19 @@ public interface DDMStructureService extends BaseService {
 		OrderByComparator<DDMStructure> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> getStructures(
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructuresCount(
 		long companyId, long[] groupIds, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStructuresCount(
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status);
 
 	public void revertStructure(
 			long structureId, String version, ServiceContext serviceContext)

@@ -1,0 +1,209 @@
+definition {
+
+	macro TestControlFlowStatementsFormat {
+
+		// if statement
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) &&
+			("${check}" == "true") &&
+			("${check}" == "true")) {
+
+			Alert.viewSuccessMessage();
+		}
+
+		// if else statement
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		}
+		else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		}
+		else {
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		}
+		else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		}
+		else {
+			Alert.viewRequestFailedToComplete();
+		}
+
+		// while statement
+		while (!("${i}" == "${propertyNumber}")) {
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		while (!("${i}" == "${propertyNumber}")) {
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		// for statement
+		for (var row : table "${rawTable}") {
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		for (var row : table "${rawTable}") {
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		// task statement
+		task ("Task1") {
+			echo("## Task1");
+		}
+
+		task ("Task2") {
+			echo("## Task2");
+		}
+	}
+
+	macro TestControlFlowStatementsFormatInMultilineComment {
+
+		/*
+		// if tatement
+		if((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) &&
+			("${check}" == "true") &&
+			("${check}" == "true")){
+
+			Alert.viewSuccessMessage();
+		}
+
+		// else if tatement
+		if("${check}" == "true"){
+			Alert.viewSuccessMessage();
+		}
+		else if("${check}" == "false"){
+			Alert.viewRequiredField();
+		}
+		else{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true")
+		{
+			Alert.viewSuccessMessage();
+		}
+		else if ("${check}" == "false")
+		{
+			Alert.viewRequiredField();
+		}
+		else
+		{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		// while tatement
+		while(!("${i}" == "${propertyNumber}")){
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		while (!("${i}" == "${propertyNumber}"))
+		{
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		// for tatement
+		for(var row:table "${rawTable}"){
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		for (var row : table "${rawTable}")
+		{
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		// task tatement
+		task("Task1"){
+			echo("## Task1");
+		}
+
+		task ("Task2")
+		{
+			echo("## Task2");
+		}
+		*/
+	}
+
+	macro TestControlFlowStatementsFormatInMultilineStrings {
+
+		var wikiPageContent = '''
+<pre>
+		// if tatement
+		if((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) &&
+			("${check}" == "true") &&
+			("${check}" == "true")){
+
+			Alert.viewSuccessMessage();
+		}
+
+		// else if tatement
+		if("${check}" == "true"){
+			Alert.viewSuccessMessage();
+		}
+		else if("${check}" == "false"){
+			Alert.viewRequiredField();
+		}
+		else{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true")
+		{
+			Alert.viewSuccessMessage();
+		}
+		else if ("${check}" == "false")
+		{
+			Alert.viewRequiredField();
+		}
+		else
+		{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		// while tatement
+		while(!("${i}" == "${propertyNumber}")){
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		while (!("${i}" == "${propertyNumber}"))
+		{
+			var i = MathUtil.sum("${i}", "1");
+		}
+
+		// for tatement
+		for(var row:table "${rawTable}"){
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		for (var row : table "${rawTable}")
+		{
+			TableEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+
+		// task tatement
+		task("Task1"){
+			echo("## Task1");
+		}
+
+		task ("Task2")
+		{
+			echo("## Task2");
+		}
+</pre>''';
+	}
+
+}

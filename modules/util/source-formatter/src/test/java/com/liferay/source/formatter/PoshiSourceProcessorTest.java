@@ -61,6 +61,7 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testmacro");
+		test("IncorrectWhitespaceInControlFlowStatements.testmacro");
 	}
 
 	@Test

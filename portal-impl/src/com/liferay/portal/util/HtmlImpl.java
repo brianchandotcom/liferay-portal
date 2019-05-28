@@ -502,7 +502,7 @@ public class HtmlImpl implements Html {
 	 */
 	@Override
 	public String escapeURL(String url) {
-		return escape(url, ESCAPE_MODE_URL);
+		return URLCodec.encodeURL(url, true);
 	}
 
 	@Override

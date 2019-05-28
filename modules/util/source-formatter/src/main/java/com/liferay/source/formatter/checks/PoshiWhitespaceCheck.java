@@ -52,27 +52,21 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
-		Matcher matcher = _incorrectWhitespacePattern1.matcher(content);
+		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
 
 		while (matcher.find()) {
-			int x = matcher.start(1);
+			int x;
 
-			if (!ToolsUtil.isInsideQuotes(content, x) &&
-				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineCommentsPositions) &&
-				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineStringPositions)) {
+			String match = null;
 
-				return StringUtil.replaceFirst(
-					content, matcher.group(1), StringPool.BLANK,
-					matcher.start());
+			if (matcher.start(1) != -1) {
+				x = matcher.start(1);
+				match = matcher.group(1);
 			}
-		}
-
-		matcher = _incorrectWhitespacePattern2.matcher(content);
-
-		while (matcher.find()) {
-			int x = matcher.start(1);
+			else {
+				x = matcher.start(2);
+				match = matcher.group(2);
+			}
 
 			if (!ToolsUtil.isInsideQuotes(content, x) &&
 				!PoshiSourceUtil.isInsideMultiLines(
@@ -81,8 +75,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 					getLineNumber(content, x), multiLineStringPositions)) {
 
 				return StringUtil.replaceFirst(
-					content, matcher.group(1), StringPool.SPACE,
-					matcher.start());
+					content, match, StringPool.BLANK, matcher.start());
 			}
 		}
 
@@ -172,10 +165,8 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 
 	private static final Pattern _incorrectCommandPattern = Pattern.compile(
 		"(\n\t*(function|macro|test))(?! \\w+ \\{)[\t ]+(\\w+)\\s*(\\{)");
-	private static final Pattern _incorrectWhitespacePattern1 = Pattern.compile(
-		"\\)(\\s+);");
-	private static final Pattern _incorrectWhitespacePattern2 = Pattern.compile(
-		"\\)(?! \\{)(\\s*)\\{");
+	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
+		"\\)(\\s+);|(\n\t*)\\{");
 	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
 		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _multiLineStringPattern = Pattern.compile(

@@ -39,6 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class WorkflowMetricsSLACalendarTrackerImpl
 	implements WorkflowMetricsSLACalendarTracker {
 
+	@Override
 	public WorkflowMetricsSLACalendar getWorkflowMetricsSLACalendar(
 		String key) {
 
@@ -46,6 +47,7 @@ public class WorkflowMetricsSLACalendarTrackerImpl
 			key, _defaultWorkflowMetricsSLACalendar);
 	}
 
+	@Override
 	public Map<String, String> getWorkflowMetricsSLACalendarTitles(
 		Locale locale) {
 

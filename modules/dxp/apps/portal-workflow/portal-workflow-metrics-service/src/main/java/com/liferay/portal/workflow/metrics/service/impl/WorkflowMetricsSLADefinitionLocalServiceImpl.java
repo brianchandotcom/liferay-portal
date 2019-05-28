@@ -120,6 +120,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		return workflowMetricsSLADefinition;
 	}
 
+	@Override
 	public int countWorkflowMetricsSLADefinitions(
 		long companyId, long processId, int status) {
 
@@ -167,6 +168,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			companyId, processId);
 	}
 
+	@Override
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId, int status, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> obc) {
@@ -184,6 +186,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			companyId, processId, start, end, orderByComparator);
 	}
 
+	@Override
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId, String processVersion, int status) {
 
@@ -199,6 +202,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			companyId, processId);
 	}
 
+	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
 		long companyId, long processId, int status) {
 

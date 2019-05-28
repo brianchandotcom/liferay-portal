@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -153,7 +154,7 @@ public class IndividualJSONObjectMapperTest {
 
 		byte[] bytes = Files.readAllBytes(Paths.get(url.toURI()));
 
-		return new String(bytes, "UTF-8");
+		return new String(bytes, StandardCharsets.UTF_8);
 	}
 
 	private static final IndividualJSONObjectMapper

@@ -355,7 +355,61 @@ public class HtmlImpl implements Html {
 	 */
 	@Override
 	public String escapeCSS(String css) {
-		return escape(css, ESCAPE_MODE_CSS);
+		if (css == null) {
+			return null;
+		}
+
+		if (css.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		String prefix = StringPool.BACK_SLASH;
+
+		StringBuilder sb = null;
+		char[] hexBuffer = new char[4];
+		int lastReplacementIndex = 0;
+
+		for (int i = 0; i < css.length(); i++) {
+			char c = css.charAt(i);
+
+			if (c < _VALID_CHARS.length) {
+				if (!_VALID_CHARS[c]) {
+					if (sb == null) {
+						sb = new StringBuilder(css.length() + 64);
+					}
+
+					if (i > lastReplacementIndex) {
+						sb.append(css, lastReplacementIndex, i);
+					}
+
+					sb.append(prefix);
+
+					_appendHexChars(sb, hexBuffer, c);
+
+					if (i < (css.length() - 1)) {
+						char nextChar = css.charAt(i + 1);
+
+						if ((nextChar >= CharPool.NUMBER_0) &&
+							(nextChar <= CharPool.NUMBER_9)) {
+
+							sb.append(CharPool.SPACE);
+						}
+					}
+
+					lastReplacementIndex = i + 1;
+				}
+			}
+		}
+
+		if (sb == null) {
+			return css;
+		}
+
+		if (lastReplacementIndex < css.length()) {
+			sb.append(css, lastReplacementIndex, css.length());
+		}
+
+		return sb.toString();
 	}
 
 	/**

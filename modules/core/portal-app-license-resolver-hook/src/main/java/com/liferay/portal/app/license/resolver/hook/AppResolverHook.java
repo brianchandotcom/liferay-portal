@@ -75,7 +75,16 @@ public class AppResolverHook implements ResolverHook {
 
 			Bundle bundle = bundleRevision.getBundle();
 
-			Properties properties = _getAppLicenseProperties(bundle);
+			Properties properties = null;
+
+			try {
+				properties = _getAppLicenseProperties(bundle);
+			}
+			catch (IllegalStateException ise) {
+				iterator.remove();
+
+				continue;
+			}
 
 			String productId = (String)properties.get("product-id");
 

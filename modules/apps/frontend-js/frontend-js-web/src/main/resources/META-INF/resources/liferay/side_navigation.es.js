@@ -112,8 +112,6 @@
 		return null;
 	}
 
-	var $doc = $(document);
-
 	var listenerAdded = false;
 
 	// Make sure we only add one resize listener to the page,
@@ -224,7 +222,7 @@
 			options.breakpoint = toInt(options.breakpoint);
 			options.container = options.container || $toggler.data('target') || $toggler.attr('href');
 			options.gutter = toInt(options.gutter);
-			options.rtl = $doc.attr('dir') === 'rtl';
+			options.rtl = document.dir === 'rtl';
 			options.width = toInt(options.width);
 			options.widthOriginal = options.width;
 

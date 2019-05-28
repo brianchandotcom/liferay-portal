@@ -64,20 +64,12 @@ public class ResourcePermissionLocalServiceTest {
 	public void testShouldFailIfFirstResourceIsNotIndividual()
 		throws Exception {
 
-		Resource firstResource = new ResourceImpl();
-
-		firstResource.setScope(ResourceConstants.SCOPE_GROUP);
-
-		Resource lastResource = new ResourceImpl();
-
-		lastResource.setScope(ResourceConstants.SCOPE_COMPANY);
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
 				new ArrayList<Resource>() {
 					{
-						add(firstResource);
-						add(lastResource);
+						add(_createResource(ResourceConstants.SCOPE_GROUP));
+						add(_createResource(ResourceConstants.SCOPE_COMPANY));
 					}
 				},
 				_roleIds, ActionKeys.VIEW);
@@ -91,20 +83,14 @@ public class ResourcePermissionLocalServiceTest {
 
 	@Test
 	public void testShouldFailIfLastResourceIsNotCompany() throws Exception {
-		Resource firstResource = new ResourceImpl();
-
-		firstResource.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-
-		Resource lastResource = new ResourceImpl();
-
-		lastResource.setScope(ResourceConstants.SCOPE_GROUP);
-
 		try {
 			_resourcePermissionLocalService.hasResourcePermission(
 				new ArrayList<Resource>() {
 					{
-						add(firstResource);
-						add(lastResource);
+						add(
+							_createResource(
+								ResourceConstants.SCOPE_INDIVIDUAL));
+						add(_createResource(ResourceConstants.SCOPE_GROUP));
 					}
 				},
 				_roleIds, ActionKeys.VIEW);
@@ -127,6 +113,14 @@ public class ResourcePermissionLocalServiceTest {
 				"The list of resources must contain at least two values",
 				iae.getMessage());
 		}
+	}
+
+	private Resource _createResource(int scope) {
+		Resource resource = new ResourceImpl();
+
+		resource.setScope(scope);
+
+		return resource;
 	}
 
 	@DeleteAfterTestRun

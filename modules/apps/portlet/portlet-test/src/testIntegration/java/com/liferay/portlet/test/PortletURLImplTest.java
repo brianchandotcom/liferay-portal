@@ -107,7 +107,7 @@ public class PortletURLImplTest {
 
 	private void _invokeClearCache(LiferayPortletURL liferayPortletURL) {
 		ReflectionTestUtil.invoke(
-			liferayPortletURL, "clearCache", new Class<?>[0], new Object[0]);
+			liferayPortletURL, "clearCache", new Class<?>[0]);
 	}
 
 	@DeleteAfterTestRun

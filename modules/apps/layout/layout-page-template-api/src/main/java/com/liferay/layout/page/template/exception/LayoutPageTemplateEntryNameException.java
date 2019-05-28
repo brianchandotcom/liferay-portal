@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -37,6 +38,50 @@ public class LayoutPageTemplateEntryNameException extends PortalException {
 
 	public LayoutPageTemplateEntryNameException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustNotBeDuplicate
+		extends LayoutPageTemplateEntryNameException {
+
+		public MustNotBeDuplicate(long groupId, String name) {
+			super(
+				String.format(
+					StringBundler.concat(
+						"Duplicate layout page template for group ", groupId,
+						" with name ", name)));
+		}
+
+	}
+
+	public static class MustNotBeNull
+		extends LayoutPageTemplateEntryNameException {
+
+		public MustNotBeNull(long groupId) {
+			super("Name must not be null for group " + groupId);
+		}
+
+	}
+
+	public static class MustNotContainInvalidCharacters
+		extends LayoutPageTemplateEntryNameException {
+
+		public MustNotContainInvalidCharacters(char character) {
+			super("Invalid character in name " + character);
+
+			this.character = character;
+		}
+
+		public final char character;
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends LayoutPageTemplateEntryNameException {
+
+		public MustNotExceedMaximumSize(int maxLength) {
+			super("Maximum length of name exceeded " + maxLength);
+		}
+
 	}
 
 }

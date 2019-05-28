@@ -9,9 +9,8 @@ import ThemeContext from '../../ThemeContext.es';
 import {
 	applyConjunctionChangeToContributor,
 	applyCriteriaChangeToContributors,
-	initialContributorsToContributors,
-	sub
-} from '../../utils/utils.es';
+	initialContributorsToContributors
+} from '../../utils/contributors.es';
 import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
 import {initialContributorShape} from '../../utils/types.es';
@@ -21,6 +20,7 @@ import {
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES
 } from '../../utils/constants.es';
+import {sub} from '../../utils/utils.es';
 
 class SegmentEdit extends Component {
 	static contextType = ThemeContext;

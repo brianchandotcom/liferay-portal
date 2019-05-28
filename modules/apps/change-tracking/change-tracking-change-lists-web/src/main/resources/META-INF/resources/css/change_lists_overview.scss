@@ -28,3 +28,34 @@
 .change-list-publish-modal {
 	background-color: #FFF;
 }
+
+.contents-affected-dialog {
+	min-height: 700px;
+	min-width: 600px;
+
+	.bold {
+		font-weight: bold;
+	}
+
+	.container-fluid-max-sm {
+		max-width: 100%;
+		padding: 1.5rem;
+	}
+
+	.padding-left {
+		padding-left: 1.5rem;
+	}
+
+	.modal-content {
+		height: 700px;
+	}
+
+	&.modal-dialog-sm .modal-content {
+		height: 800px;
+
+		.modal-body.inline-scroller {
+			max-height: 800px;
+			padding: 0;
+		}
+	}
+}

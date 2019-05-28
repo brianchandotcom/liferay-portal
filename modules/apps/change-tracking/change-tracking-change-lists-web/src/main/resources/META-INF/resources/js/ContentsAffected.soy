@@ -1,0 +1,255 @@
+{namespace com.liferay.change.tracking.change.lists.web.ContentsAffected}
+
+{template .render}
+	{@param spritemap: string}
+	{@param? affectedContents: list<[
+	title: string,
+	contentType: string
+	]>}
+	{@param lastPage: number}
+	{@param page: number}
+	{@param pageSize: number}
+	{@param startPosition: number}
+	{@param endPosition: number}
+	{@param totalCount: number}
+	{@param? _handleCloseDialogClick: any}
+	{@param? _handleSearchFormKeyUp: any}
+	{@param? _handleClickNextPage: any}
+	{@param? _handleClickPageNumber: any}
+	{@param? _handleClickPreviousPage: any}
+	{@param? _handleClickSearch: any}
+
+	{call liferay.frontend.Modal.render}
+		{param body kind="html"}
+
+				<div class="container-fluid-max-sm">
+					<div class="input-group">
+						<div class="input-group-item">
+							<input
+									class="form-control input-group-inset input-group-inset-after"
+									data-oninput="{$_handleSearchFormKeyUp}"
+									data-onkeyup="{$_handleSearchFormKeyUp}"
+									name="filterKeywords"
+									id="filterKeywords"
+									placeholder="{msg desc=""}search{/msg}"
+									type="text"
+							/>
+
+							<span class="input-group-inset-item input-group-inset-item-after">
+								<button class="btn btn-unstyled" onclick="{$_handleClickSearch}">
+									<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+										<use xlink:href="{$spritemap}#search"></use>
+									</svg>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+
+			{if $affectedContents}
+				{if length($affectedContents) == 0}
+					<div class="sheet taglib-empty-result-message">
+						<div class="taglib-empty-result-message-header"></div>
+						<div class="sheet-text text-center">
+							{msg desc=""}
+								there-are-no-changes-in-this-change-list{/msg}
+						</div>
+					</div>
+				{else}
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+							<tr>
+								<th class="table-cell-expand">
+									<div class="padding-left">{msg desc=""}title{/msg}</div>
+								</th>
+								<th class="table-cell-expand">
+									<div class="padding-left">{msg desc=""}content-type{/msg}</div>
+								</th>
+							</tr>
+							</thead>
+
+							<tbody>
+								{foreach $affectedContent in $affectedContents}
+									{call .affectedContent}
+										{param contentType: $affectedContent.contentType /}
+										{param index: index($affectedContent) /}
+										{param title: $affectedContent.title /}
+									{/call}
+								{/foreach}
+							</tbody>
+						</table>
+					</div>
+					{call .pagination}
+						{param endPosition: $endPosition /}
+						{param lastPage: $lastPage /}
+						{param page: $page /}
+						{param pageSize: $pageSize /}
+						{param spritemap: $spritemap /}
+						{param startPosition: $startPosition /}
+						{param totalCount: $totalCount /}
+						{param _handleClickNextPage: $_handleClickNextPage /}
+						{param _handleClickPageNumber: $_handleClickPageNumber /}
+						{param _handleClickPreviousPage: $_handleClickPreviousPage /}
+					{/call}
+				{/if}
+			{/if}
+		{/param}
+
+		{param dialogClasses: 'modal-dialog-sm contents-affected-dialog' /}
+
+		{param events: [ 'hide': $_handleCloseDialogClick] /}
+
+		{param footer kind="html"}
+			<button class="btn btn-primary" data-onclick="hide" type="button">{msg desc=""}done{/msg}</button>
+		{/param}
+
+		{param header kind="html"}
+			{msg desc=""}contents-affected{/msg}
+		{/param}
+
+		{param ref: 'modal' /}
+
+		{param spritemap: $spritemap /}
+	{/call}
+{/template}
+
+{template .affectedContent}
+	{@param contentType: string}
+	{@param index: number}
+	{@param title: string}
+
+	<tr>
+		<td class="table-cell-expand">
+			<div class="bold padding-left" id="change-entry-title-{$index}">{$title}</div>
+		</td>
+		<td class="table-cell-expand">
+			<div class="padding-left" id="change-entry-content-type-{$index}">{$contentType}</div>
+		</td>
+	</tr>
+{/template}
+
+{template .pagination}
+	{@param endPosition: number}
+	{@param lastPage: number}
+	{@param page: number}
+	{@param pageSize: number}
+	{@param spritemap: string}
+	{@param startPosition: number}
+	{@param totalCount: number}
+	{@param? _handleClickNextPage: any}
+	{@param? _handleClickPageNumber: any}
+	{@param? _handleClickPreviousPage: any}
+
+	{if $totalCount > $pageSize}
+		<div class="bottom-border padding-left">
+			<div class="pagination-bar">
+				<div class="pagination-results">
+					Showing {$startPosition} to {if $endPosition > $totalCount}{$totalCount}{else}{$endPosition}{/if} of {$totalCount} entries.
+				</div>
+
+				<ul class="pagination">
+					<li class="page-item {if 1 == $page}disabled{/if}">
+						<a class="page-link" href="#1" role="button"
+							tabindex="-1" onclick="{$_handleClickPreviousPage}">
+						<span class="change-lists-helper float-right lfr-portal-tooltip"
+								title="{msg desc=""}previous{/msg}">
+							<svg class="lexicon-icon lexicon-icon-angle-left"
+								focusable="false" role="presentation">
+								<use xlink:href="{$spritemap}#angle-left"></use>
+							</svg>
+						</span>
+						</a>
+					</li>
+					<li class="{if 1 == $page}active disabled{/if} page-item ">
+						<a class="page-link"
+							href="#1"
+							role="button" tabindex="-1"
+							data-page="1"
+							onclick="{$_handleClickPageNumber}">
+							1
+						</a>
+					</li>
+					{if $page > 3}
+						<li class="dropdown page-item">
+							<a aria-expanded="false" aria-haspopup="true"
+								class="dropdown-toggle page-link"
+								data-toggle="dropdown" href="#1" role="button">...</a>
+							<ul class="dropdown-menu dropdown-menu-top-center">
+								<li>
+									<ul class="inline-scroller">
+										{for $index in range(1, $page - 2)}
+											<li>
+												<a class="dropdown-item"
+													href="#{$index + 1}"
+													role="button" tabindex="-1"
+													data-page="{$index + 1}"
+													onclick="{$_handleClickPageNumber}">{$index + 1}</a>
+											</li>
+										{/for}
+									</ul>
+								</li>
+							</ul>
+						</li>
+					{/if}
+					{for $index in range(1, $lastPage - 1)}
+						{if ($index + 1 > $page - 2) and ($index + 1 < $page + 2)}
+							<li class="active{/if} page-item {if $index + 1 == $page}disabled">
+								<a class="page-link"
+									href="#{$index + 1}"
+									role="button" tabindex="-1"
+									data-page="{$index + 1}"
+									onclick="{$_handleClickPageNumber}">
+									{$index + 1}
+								</a>
+							</li>
+						{/if}
+					{/for}
+					{if $page < $lastPage - 4}
+						<li class="dropdown page-item">
+							<a aria-expanded="false" aria-haspopup="true"
+								class="dropdown-toggle page-link"
+								data-toggle="dropdown" href="#1" role="button">...</a>
+							<ul class="dropdown-menu dropdown-menu-top-center">
+								<li>
+									<ul class="inline-scroller">
+										{for $index in range($page + 1, $lastPage - 1)}
+											<li>
+												<a class="dropdown-item"
+													href="#{$index + 1}"
+													role="button" tabindex="-1"
+													data-page="{$index + 1}"
+													onclick="{$_handleClickPageNumber}">{$index + 1}</a>
+											</li>
+										{/for}
+									</ul>
+								</li>
+							</ul>
+						</li>
+					{/if}
+					<li class="{if $lastPage == $page}active disabled{/if} page-item">
+						<a class="page-link"
+							href="#{$lastPage}"
+							role="button" tabindex="-1"
+							data-page="{$lastPage}"
+							onclick="{$_handleClickPageNumber}">
+							{$lastPage}
+						</a>
+					</li>
+					<li class="page-item {if $lastPage == $page}disabled{/if}">
+						<a class="page-link" href="#{$lastPage}" role="button"
+							tabindex="-1" onclick="{$_handleClickNextPage}">
+						<span class="change-lists-helper float-right lfr-portal-tooltip"
+								title="{msg desc=""}next{/msg}">
+							<svg class="lexicon-icon lexicon-icon-angle-right"
+								focusable="false" role="presentation">
+								<use xlink:href="{$spritemap}#angle-right"></use>
+							</svg>
+						</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	{/if}
+{/template}

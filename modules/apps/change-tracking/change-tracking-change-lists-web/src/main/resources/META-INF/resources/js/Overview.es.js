@@ -5,6 +5,7 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
 import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import {PublishChangeList} from './PublishChangeList.es';
+import {ContentsAffected} from './ContentsAffected.es';
 
 import templates from './Overview.soy';
 
@@ -222,6 +223,19 @@ class Overview extends PortletBase {
 			);
 	}
 
+	_handleClickAffected(event) {
+		event.preventDefault();
+		let entryId = event.target.getAttribute('data-entry-id');
+
+		new ContentsAffected(
+			{
+				entityNameTranslations: this.entityNameTranslations,
+				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
+				urlAffectedContents: this.urlCollectionsBase + '/' + this.activeCTCollectionId + '/entries/' + entryId + '/affecteds'
+			}
+		);
+	}
+
 	_handleClickPublish(event) {
 		new PublishChangeList(
 			{
@@ -339,9 +353,11 @@ class Overview extends PortletBase {
 
 				this.changeEntries.push(
 					{
+						affectedCTEntriesCount: changeEntry.affectedCTEntriesCount,
 						changeType: changeTypeStr,
 						conflict: changeEntry.collision,
 						contentType: entityNameTranslation.translation,
+						ctEntryId: changeEntry.ctEntryId,
 						lastEdited: new Intl.DateTimeFormat(
 							Liferay.ThemeDisplay.getBCP47LanguageId(),
 							{
@@ -625,6 +641,7 @@ Overview.STATE = {
 	changeEntries: Config.arrayOf(
 		Config.shapeOf(
 			{
+				affectedCTEntriesCount: Config.number(),
 				changeType: Config.string(),
 				conflict: Config.bool(),
 				contentType: Config.string(),

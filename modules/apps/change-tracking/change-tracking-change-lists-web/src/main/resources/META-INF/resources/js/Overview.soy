@@ -8,6 +8,7 @@
 	{@param urlProductionView: string}
 	{@param urlSelectChangeList: string}
 	{@param? changeEntries: list<[
+		ctEntryId: number,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -15,6 +16,7 @@
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
+		affectedCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changes: [
@@ -43,6 +45,7 @@
 		userPortraitURL: string,
 		userName: string
 	]}
+	{@param? _handleClickAffected: any}
 	{@param? _handleClickPublish: any}
 	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
@@ -149,6 +152,7 @@
 							{msg desc=""}latest-changes-in{/msg} {$headerTitleActiveChangeList}
 						{/param}
 						{param spritemap: $spritemap /}
+						{param _handleClickAffected: $_handleClickAffected /}
 					{/call}
 				</div>
 			</div>
@@ -166,6 +170,7 @@
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
+		ctEntryId: number,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -173,6 +178,7 @@
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
+		affectedCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
@@ -214,6 +220,7 @@
 	]}
 	{@param? publishedByTitle: string}
 	{@param? urlSelectChangeList: string}
+	{@param? _handleClickAffected: any}
 	{@param? _handleClickPublish: any}
 	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
@@ -242,7 +249,6 @@
 
 		{if not $cardEmpty}
 			<div class="overview-card-sheet-divider"></div>
-
 			{call .overviewCardBody}
 				{param changes: $changes /}
 				{param changeEntries: $changeEntries /}
@@ -252,6 +258,7 @@
 				{param publishedBy: $publishedBy /}
 				{param publishedByTitle: $publishedByTitle /}
 				{param spritemap: $spritemap /}
+				{param _handleClickAffected: $_handleClickAffected /}
 			{/call}
 		{else}
 			<div class="empty-production-view sheet-text text-center text-strong">
@@ -370,6 +377,7 @@
 
 {template .overviewCardBody}
 	{@param? changeEntries: list<[
+		ctEntryId: number,
 		title: string,
 		conflict: bool,
 		userName: string,
@@ -377,6 +385,7 @@
 		contentType: string,
 		lastEdited: string,
 		changeType: string,
+		affectedCTEntriesCount: number,
 		version: string
 	]>}
 	{@param? changesLabel: string}
@@ -398,6 +407,7 @@
 	]}
 	{@param? publishedByTitle: string}
 	{@param spritemap: string}
+	{@param? _handleClickAffected: any}
 
 	<div class="overview-card-body overview-card-container">
 
@@ -492,6 +502,8 @@
 									<th class="table-cell-expand">{msg desc=""}
 										change-type{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
+										affects{/msg}</th>
+									<th class="table-cell-expand">{msg desc=""}
 										version{/msg}</th>
 								</tr>
 								</thead>
@@ -499,6 +511,8 @@
 								<tbody>
 									{foreach $changeEntry in $changeEntries}
 										{call .changeEntry}
+											{param ctEntryId: $changeEntry.ctEntryId /}
+											{param affects: $changeEntry.affectedCTEntriesCount /}
 											{param changeType: $changeEntry.changeType /}
 											{param conflict: $changeEntry.conflict /}
 											{param contentType: $changeEntry.contentType /}
@@ -509,6 +523,7 @@
 											{param title: $changeEntry.title /}
 											{param userName: $changeEntry.userName /}
 											{param version: $changeEntry.version /}
+											{param _handleClickAffected: $_handleClickAffected /}
 										{/call}
 									{/foreach}
 								</tbody>
@@ -522,6 +537,8 @@
 {/template}
 
 {template .changeEntry}
+	{@param ctEntryId: number}
+	{@param affects: number}
 	{@param changeType: string}
 	{@param conflict: bool}
 	{@param contentType: string}
@@ -532,6 +549,7 @@
 	{@param title: string}
 	{@param userName: string}
 	{@param version: string}
+	{@param _handleClickAffected: any}
 
 	<tr>
 		<td class="table-cell-expand">
@@ -563,6 +581,13 @@
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-change-type-{$index}">{$changeType}</div>
+		</td>
+		<td class="table-cell-expand">
+			<div id="change-entry-affects-{$index}">
+				{if $affects > 0}
+					<a data-entry-id="{$ctEntryId}" href="#" onclick="{$_handleClickAffected}" >{$affects}</a>
+				{/if}
+			</div>
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-version-{$index}">{$version}</div>

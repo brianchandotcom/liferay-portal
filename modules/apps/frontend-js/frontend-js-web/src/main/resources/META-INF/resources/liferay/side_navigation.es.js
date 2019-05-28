@@ -112,27 +112,6 @@
 		return null;
 	}
 
-	var listenerAdded = false;
-
-	// Make sure we only add one resize listener to the page,
-	// no matter how many components we have
-
-	var addResizeListener = function() {
-		if (!listenerAdded) {
-			$(window).on(
-				'resize',
-				debounce(
-					function(event) {
-						Liferay.fire('screenChange.lexicon.sidenav');
-					},
-					150
-				)
-			);
-
-			listenerAdded = true;
-		}
-	};
-
 	var debounce = function(fn, delay) {
 		var id;
 
@@ -152,6 +131,20 @@
 			id = setTimeout(later, delay);
 		};
 	};
+
+	// One shared resize listener per page,
+	// no matter how many components we have
+	subscribe(
+		window,
+		'resize',
+		debounce(
+			function resizeHandler(event) {
+				Liferay.fire('screenChange.lexicon.sidenav');
+			},
+			150
+		)
+	);
+
 
 	var getBreakpointRegion = function() {
 		var screenXs = 480;
@@ -705,7 +698,6 @@
 			var instance = this;
 
 			if (!instance.useDataAttribute) {
-				addResizeListener();
 				instance._onScreenChange();
 			}
 

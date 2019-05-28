@@ -447,11 +447,55 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 = randomDocumentFolder();
 		DocumentFolder documentFolder2 = randomDocumentFolder();
 
+		setEntityFieldValueSortDateTime(documentFolder1, documentFolder2);
+
+		documentFolder1 =
+			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
+				parentDocumentFolderId, documentFolder1);
+
+		documentFolder2 =
+			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
+				parentDocumentFolderId, documentFolder2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<DocumentFolder> ascPage =
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+					parentDocumentFolderId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(documentFolder1, documentFolder2),
+				(List<DocumentFolder>)ascPage.getItems());
+
+			Page<DocumentFolder> descPage =
+				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+					parentDocumentFolderId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(documentFolder2, documentFolder1),
+				(List<DocumentFolder>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetDocumentFolderDocumentFoldersPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentDocumentFolderId =
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
+
+		DocumentFolder documentFolder1 = randomDocumentFolder();
+		DocumentFolder documentFolder2 = randomDocumentFolder();
+
+		setEntityFieldValueSortInteger(documentFolder1, documentFolder2);
 
 		documentFolder1 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
@@ -499,12 +543,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 = randomDocumentFolder();
 		DocumentFolder documentFolder2 = randomDocumentFolder();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				documentFolder2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(documentFolder1, documentFolder2);
 
 		documentFolder1 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
@@ -757,11 +796,52 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 = randomDocumentFolder();
 		DocumentFolder documentFolder2 = randomDocumentFolder();
 
+		setEntityFieldValueSortDateTime(documentFolder1, documentFolder2);
+
+		documentFolder1 = testGetSiteDocumentFoldersPage_addDocumentFolder(
+			siteId, documentFolder1);
+
+		documentFolder2 = testGetSiteDocumentFoldersPage_addDocumentFolder(
+			siteId, documentFolder2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<DocumentFolder> ascPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(documentFolder1, documentFolder2),
+				(List<DocumentFolder>)ascPage.getItems());
+
+			Page<DocumentFolder> descPage =
+				DocumentFolderResource.getSiteDocumentFoldersPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(documentFolder2, documentFolder1),
+				(List<DocumentFolder>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteDocumentFoldersPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
+
+		DocumentFolder documentFolder1 = randomDocumentFolder();
+		DocumentFolder documentFolder2 = randomDocumentFolder();
+
+		setEntityFieldValueSortInteger(documentFolder1, documentFolder2);
 
 		documentFolder1 = testGetSiteDocumentFoldersPage_addDocumentFolder(
 			siteId, documentFolder1);
@@ -806,12 +886,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder1 = randomDocumentFolder();
 		DocumentFolder documentFolder2 = randomDocumentFolder();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				documentFolder2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(documentFolder1, documentFolder2);
 
 		documentFolder1 = testGetSiteDocumentFoldersPage_addDocumentFolder(
 			siteId, documentFolder1);
@@ -875,6 +950,48 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		return DocumentFolderResource.postSiteDocumentFolder(
 			testGetSiteDocumentFoldersPage_getSiteId(), documentFolder);
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			DocumentFolder documentFolder1, DocumentFolder documentFolder2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				documentFolder1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			DocumentFolder documentFolder1, DocumentFolder documentFolder2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(documentFolder1, entityField.getName(), 0);
+			BeanUtils.setProperty(documentFolder2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			DocumentFolder documentFolder1, DocumentFolder documentFolder2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				documentFolder1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				documentFolder2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected void assertHttpResponseStatusCode(

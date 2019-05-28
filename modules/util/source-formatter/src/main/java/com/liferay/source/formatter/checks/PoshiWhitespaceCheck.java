@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
@@ -37,6 +39,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		throws IOException {
 
 		content = _formatWhitespace(content);
+		content = _formatWhitespace(fileName, absolutePath, content);
 		content = _formatWhitespaceOnCommand(content);
 
 		return super.doProcess(fileName, absolutePath, content);
@@ -64,6 +67,64 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 					content, matcher.group(1), StringPool.BLANK,
 					matcher.start());
 			}
+		}
+
+		return content;
+	}
+
+	private String _formatWhitespace(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		int[] multiLineCommentsPositions =
+			PoshiSourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+			content, _multiLineStringPattern);
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			int lineNumber = 0;
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber++;
+
+				line = trimLine(fileName, absolutePath, line);
+
+				if (PoshiSourceUtil.isInsideMultiLines(
+						lineNumber, multiLineCommentsPositions) ||
+					PoshiSourceUtil.isInsideMultiLines(
+						lineNumber, multiLineStringPositions)) {
+
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
+				}
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				line = formatWhitespace(line, trimmedLine, false);
+
+				line = formatIncorrectSyntax(line, "){", ") {", false);
+				line = formatIncorrectSyntax(line, "for \\([^:]*[^:\"'\\s](:)");
+				line = formatIncorrectSyntax(line, "for \\([^:]*:([^:\"'\\s])");
+
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		content = sb.toString();
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
 		}
 
 		return content;

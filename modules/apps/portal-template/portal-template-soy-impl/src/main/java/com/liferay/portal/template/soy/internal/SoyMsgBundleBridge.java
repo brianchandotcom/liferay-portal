@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -41,9 +44,17 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 		SoyMsgBundle soyMsgBundle, Locale locale,
 		ResourceBundle resourceBundle) {
 
-		_soyMsgBundle = soyMsgBundle;
-		_resourceBundle = resourceBundle;
 		_languageId = LanguageUtil.getLanguageId(locale);
+
+		for (SoyMsg soyMsg : soyMsgBundle) {
+			SoyMsg.Builder builder = SoyMsg.builder();
+
+			builder.setLocaleString(_languageId);
+			builder.setIsPlrselMsg(false);
+			builder.setParts(_getLocalizedMessageParts(resourceBundle, soyMsg));
+
+			_soyMsgMap.put(soyMsg.getId(), builder.build());
+		}
 	}
 
 	@Override
@@ -53,28 +64,24 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	@Override
 	public SoyMsg getMsg(long messageId) {
-		SoyMsg soyMsg = _soyMsgBundle.getMsg(messageId);
-
-		SoyMsg.Builder builder = SoyMsg.builder();
-
-		builder.setLocaleString(_languageId);
-		builder.setIsPlrselMsg(false);
-		builder.setParts(_getLocalizedMessageParts(soyMsg));
-
-		return builder.build();
+		return _soyMsgMap.get(messageId);
 	}
 
 	@Override
 	public int getNumMsgs() {
-		return _soyMsgBundle.getNumMsgs();
+		return _soyMsgMap.size();
 	}
 
 	@Override
 	public Iterator<SoyMsg> iterator() {
-		return _soyMsgBundle.iterator();
+		Collection<SoyMsg> values = _soyMsgMap.values();
+
+		return values.iterator();
 	}
 
-	private List<SoyMsgPart> _getLocalizedMessageParts(SoyMsg soyMsg) {
+	private static List<SoyMsgPart> _getLocalizedMessageParts(
+		ResourceBundle resourceBundle, SoyMsg soyMsg) {
+
 		List<SoyMsgPart> soyMsgParts = soyMsg.getParts();
 
 		StringBundler sb = new StringBundler(soyMsgParts.size());
@@ -103,7 +110,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 		}
 
 		String localizedText = LanguageUtil.format(
-			_resourceBundle, sb.toString(), placeholderStrings.toArray());
+			resourceBundle, sb.toString(), placeholderStrings.toArray());
 
 		List<SoyMsgPart> localizedSoyMsgParts = new ArrayList<>();
 
@@ -124,7 +131,6 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	private static final String _PLACEHOLDER = "__SOY_MSG_PLACEHOLDER__";
 
 	private final String _languageId;
-	private final ResourceBundle _resourceBundle;
-	private final SoyMsgBundle _soyMsgBundle;
+	private final Map<Long, SoyMsg> _soyMsgMap = new HashMap<>();
 
 }

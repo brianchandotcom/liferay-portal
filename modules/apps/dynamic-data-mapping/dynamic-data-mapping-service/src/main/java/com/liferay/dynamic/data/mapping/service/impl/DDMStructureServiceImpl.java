@@ -353,11 +353,31 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDMStructure> getStructures(
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
+
+		return ddmStructureLocalService.getStructures(
+			companyId, groupIds, classNameId, keywords, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public int getStructuresCount(
 		long companyId, long[] groupIds, long classNameId) {
 
 		return _ddmStructureFinder.countByC_G_C_S(
 			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public int getStructuresCount(
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status) {
+
+		return ddmStructureLocalService.getStructuresCount(
+			companyId, groupIds, classNameId, keywords, status);
 	}
 
 	@Override

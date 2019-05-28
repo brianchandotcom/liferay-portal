@@ -71,12 +71,12 @@ public class PortletBagFactoryTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		_testValidate("Class loader is null", null, null, null);
+		_testValidate("Class loader is null", null, null);
 
-		_testValidate("Servlet context is null", _classLoader, null, null);
+		_testValidate("Servlet context is null", _classLoader, null);
 
 		_testValidate(
-			"WAR file is null", _classLoader, new MockServletContext(), null);
+			"WAR file is null", _classLoader, new MockServletContext());
 	}
 
 	private PortletBagFactory _createPortletBagFactory(
@@ -97,12 +97,12 @@ public class PortletBagFactoryTest {
 
 	private void _testValidate(
 			String expectedMessage, ClassLoader classLoader,
-			ServletContext servletContext, Boolean warFile)
+			ServletContext servletContext)
 		throws Exception {
 
 		try {
 			PortletBagFactory portletBagFactory = _createPortletBagFactory(
-				classLoader, servletContext, warFile);
+				classLoader, servletContext, null);
 
 			portletBagFactory.create(new PortletImpl());
 

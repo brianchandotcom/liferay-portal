@@ -43,10 +43,23 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _formatWhitespace(String content) {
+		int[] multiLineCommentsPositions =
+			PoshiSourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+			content, _multiLineStringPattern);
+
 		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
 
 		while (matcher.find()) {
-			if (!ToolsUtil.isInsideQuotes(content, matcher.start(1))) {
+			int x = matcher.start(1);
+
+			if (!ToolsUtil.isInsideQuotes(content, x) &&
+				!PoshiSourceUtil.isInsideMultiLines(
+					getLineNumber(content, x), multiLineCommentsPositions) &&
+				!PoshiSourceUtil.isInsideMultiLines(
+					getLineNumber(content, x), multiLineStringPositions)) {
+
 				return StringUtil.replaceFirst(
 					content, matcher.group(1), StringPool.BLANK,
 					matcher.start());

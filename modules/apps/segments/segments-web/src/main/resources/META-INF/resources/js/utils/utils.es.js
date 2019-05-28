@@ -1,6 +1,7 @@
 import dateFns from 'date-fns';
 import {CONJUNCTIONS} from 'utils/constants.es';
 import {getUid} from 'metal';
+import {translateQueryToCriteria} from './odata.es';
 
 const GROUP_ID_NAMESPACE = 'group_';
 
@@ -189,4 +190,73 @@ export function dateToInternationalHuman(
 export function jsDatetoYYYYMMDD(dateJsObject) {
 	const DATE_FORMAT = 'YYYY-MM-DD';
 	return dateFns.format(dateJsObject, DATE_FORMAT);
+}
+
+/**
+ * Produces a list of Contributors
+ * from a list of initialContributors
+ * and a list of propertyGroups
+ *
+ * @export
+ * @param {{
+ *   conjunctionId: string,
+ *   conjunctionInputId: string,
+ *   criteriaMap: Object,
+ *   entityName: string,
+ *   inputId: string,
+ *   modelLabel: string,
+ *   properties: Array,
+ *   propertyKey: string,
+ *   query: string,
+ * }[]} initialContributors
+ * @param {{
+ *   entityName: string,
+ *   name: string,
+ *   properties: Array,
+ *   propertyKey: string
+ * }[]} propertyGroups
+ *
+ * @returns {{
+ *   conjunctionId: string
+ *   conjunctionInputId: string
+ *   criteriaMap: Object
+ *   entityName: string
+ *   inputId: string
+ *   modelLabel: string
+ *   properties: Array
+ *   propertyKey: string
+ *   query: string
+ * }[]}
+ */
+export function initialContributorsToContributors(
+	initialContributors,
+	propertyGroups
+) {
+	const {conjunctionId: initialConjunction} = initialContributors.find(
+		c => c.conjunctionId
+	) || {conjunctionId: CONJUNCTIONS.AND};
+
+	return initialContributors.map(initialContributor => {
+		const propertyGroup =
+			propertyGroups &&
+			propertyGroups.find(
+				propertyGroup =>
+					initialContributor.propertyKey === propertyGroup.propertyKey
+			);
+
+		return {
+			conjunctionId:
+				initialContributor.conjunctionId || initialConjunction,
+			conjunctionInputId: initialContributor.conjunctionInputId,
+			criteriaMap: initialContributor.initialQuery
+				? translateQueryToCriteria(initialContributor.initialQuery)
+				: null,
+			entityName: propertyGroup && propertyGroup.entityName,
+			inputId: initialContributor.inputId,
+			modelLabel: propertyGroup && propertyGroup.name,
+			properties: propertyGroup && propertyGroup.properties,
+			propertyKey: initialContributor.propertyKey,
+			query: initialContributor.initialQuery
+		};
+	});
 }

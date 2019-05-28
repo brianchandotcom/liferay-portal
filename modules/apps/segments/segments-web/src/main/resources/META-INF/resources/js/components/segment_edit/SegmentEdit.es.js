@@ -6,18 +6,17 @@ import LocalizedInput from '../title_editor/LocalizedInput.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
-import {buildQueryString, translateQueryToCriteria} from '../../utils/odata.es';
+import {buildQueryString} from '../../utils/odata.es';
+import {debounce} from 'metal-debounce';
+import {FieldArray, withFormik} from 'formik';
+import {initialContributorShape} from '../../utils/types.es';
+import {initialContributorsToContributors, sub} from '../../utils/utils.es';
 import {
-	CONJUNCTIONS,
 	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES
 } from '../../utils/constants.es';
-import {debounce} from 'metal-debounce';
-import {FieldArray, withFormik} from 'formik';
-import {initialContributorShape} from '../../utils/types.es';
-import {sub} from '../../utils/utils.es';
 
 class SegmentEdit extends Component {
 	static contextType = ThemeContext;
@@ -63,42 +62,19 @@ class SegmentEdit extends Component {
 		const {
 			contributors: initialContributors,
 			initialMembersCount,
-			propertyGroups
+			propertyGroups,
+			showInEditMode
 		} = props;
 
-		const {conjunctionId: initialConjunction} = initialContributors.find(
-			c => c.conjunctionId
-		) || {conjunctionId: CONJUNCTIONS.AND};
-
-		const contributors =
-			initialContributors &&
-			initialContributors.map(c => {
-				const propertyGroup =
-					propertyGroups &&
-					propertyGroups.find(
-						propertyGroup =>
-							c.propertyKey === propertyGroup.propertyKey
-					);
-
-				return {
-					conjunctionId: c.conjunctionId || initialConjunction,
-					conjunctionInputId: c.conjunctionInputId,
-					criteriaMap: c.initialQuery
-						? translateQueryToCriteria(c.initialQuery)
-						: null,
-					entityName: propertyGroup && propertyGroup.entityName,
-					inputId: c.inputId,
-					modelLabel: propertyGroup && propertyGroup.name,
-					properties: propertyGroup && propertyGroup.properties,
-					propertyKey: c.propertyKey,
-					query: c.initialQuery
-				};
-			});
+		const contributors = initialContributorsToContributors(
+			initialContributors,
+			propertyGroups
+		);
 
 		this.state = {
 			contributors,
 			disabledSave: this._isQueryEmpty(contributors),
-			editing: this.props.showInEditMode,
+			editing: showInEditMode,
 			membersCount: initialMembersCount,
 			validTitle: !!props.values.name[props.defaultLanguageId]
 		};

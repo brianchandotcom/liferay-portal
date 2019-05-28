@@ -42,13 +42,13 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 		ResourceBundle resourceBundle) {
 
 		_soyMsgBundle = soyMsgBundle;
-		_locale = locale;
 		_resourceBundle = resourceBundle;
+		_languageId = LanguageUtil.getLanguageId(locale);
 	}
 
 	@Override
 	public String getLocaleString() {
-		return LanguageUtil.getLanguageId(_locale);
+		return _languageId;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 		SoyMsg.Builder builder = SoyMsg.builder();
 
-		builder.setLocaleString(getLocaleString());
+		builder.setLocaleString(_languageId);
 		builder.setIsPlrselMsg(false);
 		builder.setParts(_getLocalizedMessageParts(soyMsg));
 
@@ -145,7 +145,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	private static final String _PLACEHOLDER = "__SOY_MSG_PLACEHOLDER__";
 
-	private final Locale _locale;
+	private final String _languageId;
 	private final ResourceBundle _resourceBundle;
 	private final SoyMsgBundle _soyMsgBundle;
 

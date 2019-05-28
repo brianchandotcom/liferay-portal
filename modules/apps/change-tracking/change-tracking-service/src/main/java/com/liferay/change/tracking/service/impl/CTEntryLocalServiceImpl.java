@@ -356,8 +356,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
-		booleanQuery.addFilterQueryClauses(
 			_queries.term(Field.COMPANY_ID, ctCollection.getCompanyId()));
 
 		if (!ArrayUtil.isEmpty(groupIds)) {
@@ -367,10 +365,29 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 					_getTermValues(ArrayUtil.toArray(groupIds))));
 		}
 
+		if (WorkflowConstants.STATUS_ANY != status) {
+			if (excludeStatus) {
+				booleanQuery.addMustNotQueryClauses(
+					_queries.term(Field.STATUS, status));
+			}
+			else {
+				booleanQuery.addMustQueryClauses(
+					_queries.term(Field.STATUS, status));
+			}
+		}
+
 		if (!ArrayUtil.isEmpty(userIds)) {
 			booleanQuery.addMustQueryClauses(
 				_getTermsQuery(
 					Field.USER_ID, _getTermValues(ArrayUtil.toArray(userIds))));
+		}
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
+
+		if (collision != null) {
+			booleanQuery.addFilterQueryClauses(
+				_queries.term("collision", collision));
 		}
 
 		if (!ArrayUtil.isEmpty(classNameIds)) {
@@ -387,22 +404,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 					_getTermValues(ArrayUtil.toArray(changeTypes))));
 		}
 
-		if (collision != null) {
-			booleanQuery.addFilterQueryClauses(
-				_queries.term("collision", collision));
-		}
-
-		if (WorkflowConstants.STATUS_ANY != status) {
-			if (excludeStatus) {
-				booleanQuery.addMustNotQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-			else {
-				booleanQuery.addMustQueryClauses(
-					_queries.term(Field.STATUS, status));
-			}
-		}
-
 		return booleanQuery;
 	}
 
@@ -410,13 +411,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(
-				"originalCTCollectionId", ctCollection.getCtCollectionId()));
-		booleanQuery.addFilterQueryClauses(
 			_queries.term(Field.COMPANY_ID, ctCollection.getCompanyId()));
-
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(Field.STATUS, WorkflowConstants.STATUS_APPROVED));
 
@@ -425,6 +420,12 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 				_fieldQueryFactory.createQuery(
 					Field.TITLE, keywords, true, false));
 		}
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("ctCollectionId", ctCollection.getCtCollectionId()));
+		booleanQuery.addFilterQueryClauses(
+			_queries.term(
+				"originalCTCollectionId", ctCollection.getCtCollectionId()));
 
 		return booleanQuery;
 	}

@@ -32,7 +32,7 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
-import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemUtil;
+import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemPersistence;
 import com.liferay.site.navigation.util.SiteNavigationMenuItemTestUtil;
 import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
 
@@ -80,7 +80,7 @@ public class SiteNavigationMenuItemServiceTest {
 				serviceContext);
 
 		SiteNavigationMenuItem persistedSiteNavigationMenuItem =
-			SiteNavigationMenuItemUtil.fetchByPrimaryKey(
+			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 
 		Assert.assertEquals(
@@ -97,7 +97,7 @@ public class SiteNavigationMenuItemServiceTest {
 			siteNavigationMenuItem.getSiteNavigationMenuItemId());
 
 		Assert.assertNull(
-			SiteNavigationMenuItemUtil.fetchByPrimaryKey(
+			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId()));
 	}
 
@@ -112,14 +112,14 @@ public class SiteNavigationMenuItemServiceTest {
 			_siteNavigationMenu);
 
 		int originalSiteNavigationMenuItemsCount =
-			SiteNavigationMenuItemUtil.countBySiteNavigationMenuId(
+			_siteNavigationMenuItemPersistence.countBySiteNavigationMenuId(
 				_siteNavigationMenu.getSiteNavigationMenuId());
 
 		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(
 			_siteNavigationMenu.getSiteNavigationMenuId());
 
 		int actualSiteNavigationMenuItemsCount =
-			SiteNavigationMenuItemUtil.countBySiteNavigationMenuId(
+			_siteNavigationMenuItemPersistence.countBySiteNavigationMenuId(
 				_siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
@@ -170,7 +170,7 @@ public class SiteNavigationMenuItemServiceTest {
 			siteNavigationMenuItem.getSiteNavigationMenuItemId(), 0);
 
 		childSiteNavigationMenuItem1 =
-			SiteNavigationMenuItemUtil.fetchByPrimaryKey(
+			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				childSiteNavigationMenuItem1.getSiteNavigationMenuItemId());
 
 		Assert.assertEquals(1, childSiteNavigationMenuItem1.getOrder());
@@ -198,7 +198,7 @@ public class SiteNavigationMenuItemServiceTest {
 			siteNavigationMenuItem2.getSiteNavigationMenuItemId(), 0);
 
 		childSiteNavigationMenuItem11 =
-			SiteNavigationMenuItemUtil.fetchByPrimaryKey(
+			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				childSiteNavigationMenuItem11.getSiteNavigationMenuItemId());
 
 		Assert.assertEquals(
@@ -210,6 +210,10 @@ public class SiteNavigationMenuItemServiceTest {
 	private Group _group;
 
 	private SiteNavigationMenu _siteNavigationMenu;
+
+	@Inject
+	private SiteNavigationMenuItemPersistence
+		_siteNavigationMenuItemPersistence;
 
 	@Inject
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

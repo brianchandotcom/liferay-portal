@@ -36,7 +36,7 @@ import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuExceptio
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.site.navigation.service.persistence.SiteNavigationMenuUtil;
+import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
 
@@ -81,7 +81,7 @@ public class SiteNavigationMenuLocalServiceTest {
 				SiteNavigationConstants.TYPE_DEFAULT, false, serviceContext);
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(siteNavigationMenu, persistedSiteNavigationMenu);
@@ -109,7 +109,7 @@ public class SiteNavigationMenuLocalServiceTest {
 				RandomTestUtil.randomString(), serviceContext);
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(siteNavigationMenu, persistedSiteNavigationMenu);
@@ -128,7 +128,7 @@ public class SiteNavigationMenuLocalServiceTest {
 				SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(siteNavigationMenu, persistedSiteNavigationMenu);
@@ -166,7 +166,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			siteNavigationMenu);
 
 		Assert.assertNull(
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId()));
 	}
 
@@ -181,7 +181,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertNull(
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId()));
 	}
 
@@ -192,13 +192,13 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
 		List<SiteNavigationMenu> originalSiteNavigationMenus =
-			SiteNavigationMenuUtil.findByGroupId(_group.getGroupId());
+			_siteNavigationMenuPersistence.findByGroupId(_group.getGroupId());
 
 		_siteNavigationMenuLocalService.deleteSiteNavigationMenus(
 			_group.getGroupId());
 
 		List<SiteNavigationMenu> actualSiteNavigationMenus =
-			SiteNavigationMenuUtil.findByGroupId(_group.getGroupId());
+			_siteNavigationMenuPersistence.findByGroupId(_group.getGroupId());
 
 		Assert.assertEquals(
 			actualSiteNavigationMenus.toString(),
@@ -441,7 +441,7 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
-		siteNavigationMenu = SiteNavigationMenuUtil.fetchByPrimaryKey(
+		siteNavigationMenu = _siteNavigationMenuPersistence.fetchByPrimaryKey(
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(siteNavigationMenu.isAuto(), false);
@@ -452,7 +452,7 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
-		siteNavigationMenu = SiteNavigationMenuUtil.fetchByPrimaryKey(
+		siteNavigationMenu = _siteNavigationMenuPersistence.fetchByPrimaryKey(
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
@@ -468,7 +468,7 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, SiteNavigationConstants.TYPE_PRIMARY);
 
-		siteNavigationMenu = SiteNavigationMenuUtil.fetchByPrimaryKey(
+		siteNavigationMenu = _siteNavigationMenuPersistence.fetchByPrimaryKey(
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
@@ -488,7 +488,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			originalSiteNavigationMenu.getType(), true);
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertTrue(persistedSiteNavigationMenu.isAuto());
@@ -510,7 +510,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			"Updated Name", serviceContext);
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
@@ -532,7 +532,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			originalSiteNavigationMenu.isAuto());
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
-			SiteNavigationMenuUtil.fetchByPrimaryKey(
+			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
@@ -545,5 +545,8 @@ public class SiteNavigationMenuLocalServiceTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private SiteNavigationMenuPersistence _siteNavigationMenuPersistence;
 
 }

@@ -126,6 +126,8 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		Navigator.openURL();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewTaskAssignedToMeDetails(

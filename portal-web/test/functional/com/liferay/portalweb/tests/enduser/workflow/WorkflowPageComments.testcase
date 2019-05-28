@@ -168,6 +168,8 @@ definition {
 
 		Button.clickSave();
 
+		Navigator.openURL();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewTaskAssignedToMeDetails(

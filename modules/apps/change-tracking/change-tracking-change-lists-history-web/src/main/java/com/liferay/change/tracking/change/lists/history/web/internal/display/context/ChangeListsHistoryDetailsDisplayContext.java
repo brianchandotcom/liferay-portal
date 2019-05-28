@@ -59,8 +59,8 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_ctManager = _ctManagerServiceTracker.getService();
 		_ctEngineManager = _ctEngineManagerServiceTracker.getService();
+		_ctManager = _ctManagerServiceTracker.getService();
 	}
 
 	public int getAffectsCount(CTEntry ctEntry) {
@@ -74,9 +74,8 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		else if (changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
 			return "modified";
 		}
-		else {
-			return "added";
-		}
+
+		return "added";
 	}
 
 	public SearchContainer<CTEntry> getCTCollectionSearchContainer(

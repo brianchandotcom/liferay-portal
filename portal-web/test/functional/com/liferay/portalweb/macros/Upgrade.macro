@@ -1251,7 +1251,7 @@ definition {
 			value1 = "APPROVED");
 
 		AssertTextEquals(
-			key_dmDocumentSize = "22KB",
+			key_dmDocumentSize = "22 KB",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD",
 			value1 = "Download");
 

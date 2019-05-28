@@ -53,7 +53,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	@Override
 	public SoyMsg getMsg(long messageId) {
-		SoyMsg soyMsg = _getMsg(messageId);
+		SoyMsg soyMsg = _soyMsgBundle.getMsg(messageId);
 
 		SoyMsg.Builder builder = SoyMsg.builder();
 
@@ -66,15 +66,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	@Override
 	public int getNumMsgs() {
-		int count = 0;
-
-		Iterator<SoyMsg> iterator = _soyMsgBundle.iterator();
-
-		while (iterator.hasNext()) {
-			count++;
-		}
-
-		return count;
+		return _soyMsgBundle.getNumMsgs();
 	}
 
 	@Override
@@ -127,20 +119,6 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 		}
 
 		return localizedSoyMsgParts;
-	}
-
-	private SoyMsg _getMsg(long messageId) {
-		Iterator<SoyMsg> iterator = _soyMsgBundle.iterator();
-
-		while (iterator.hasNext()) {
-			SoyMsg soyMsg = iterator.next();
-
-			if (messageId == soyMsg.getId()) {
-				return soyMsg;
-			}
-		}
-
-		return null;
 	}
 
 	private static final String _PLACEHOLDER = "__SOY_MSG_PLACEHOLDER__";

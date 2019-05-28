@@ -98,7 +98,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 	protected String formatSelfClosingTags(String line) {
 		Matcher matcher = _selfClosingTagsPattern.matcher(line);
 
-		outerLoop:
 		while (matcher.find()) {
 			int deep = 1;
 
@@ -121,7 +120,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 				if ((line.charAt(x - 2) == ' ') &&
 					(line.charAt(x - 1) == '/')) {
 
-					continue outerLoop;
+					break;
 				}
 
 				if (line.charAt(x - 1) == ' ') {

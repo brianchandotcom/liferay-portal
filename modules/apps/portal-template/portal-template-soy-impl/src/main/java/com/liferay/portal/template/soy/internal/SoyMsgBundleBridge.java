@@ -38,10 +38,10 @@ import java.util.ResourceBundle;
 public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	public SoyMsgBundleBridge(
-		Iterable<SoyMsg> messages, Locale locale,
+		SoyMsgBundle soyMsgBundle, Locale locale,
 		ResourceBundle resourceBundle) {
 
-		_messages = messages;
+		_soyMsgBundle = soyMsgBundle;
 		_locale = locale;
 		_resourceBundle = resourceBundle;
 	}
@@ -68,7 +68,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	public int getNumMsgs() {
 		int count = 0;
 
-		Iterator<SoyMsg> iterator = _messages.iterator();
+		Iterator<SoyMsg> iterator = _soyMsgBundle.iterator();
 
 		while (iterator.hasNext()) {
 			count++;
@@ -79,7 +79,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	@Override
 	public Iterator<SoyMsg> iterator() {
-		return _messages.iterator();
+		return _soyMsgBundle.iterator();
 	}
 
 	private List<SoyMsgPart> _getLocalizedMessageParts(SoyMsg soyMsg) {
@@ -130,7 +130,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	}
 
 	private SoyMsg _getMsg(long messageId) {
-		Iterator<SoyMsg> iterator = _messages.iterator();
+		Iterator<SoyMsg> iterator = _soyMsgBundle.iterator();
 
 		while (iterator.hasNext()) {
 			SoyMsg soyMsg = iterator.next();
@@ -146,7 +146,7 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	private static final String _PLACEHOLDER = "__SOY_MSG_PLACEHOLDER__";
 
 	private final Locale _locale;
-	private final Iterable<SoyMsg> _messages;
 	private final ResourceBundle _resourceBundle;
+	private final SoyMsgBundle _soyMsgBundle;
 
 }

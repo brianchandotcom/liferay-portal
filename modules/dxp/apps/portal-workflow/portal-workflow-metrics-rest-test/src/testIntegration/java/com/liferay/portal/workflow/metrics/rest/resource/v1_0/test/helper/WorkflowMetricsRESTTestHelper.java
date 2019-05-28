@@ -136,7 +136,6 @@ public class WorkflowMetricsRESTTestHelper {
 				companyId, process.getId(), "1.0", process.getTitle()));
 
 		Long onTimeInstanceCount = process.getOnTimeInstanceCount();
-
 		Long overdueInstanceCount = process.getOverdueInstanceCount();
 
 		for (int i = 0; i < process.getInstanceCount(); i++) {

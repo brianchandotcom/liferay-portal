@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,15 +48,15 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		if (isCategorizable(groupId, classNameId, classPK)) {
-			List<AssetVocabulary> assetVocabularies =
-				_assetVocabularyLocalService.getGroupsVocabularies(
-					_portal.getCurrentAndAncestorSiteGroupIds(groupId));
+		if (!isCategorizable(groupId, classNameId, classPK)) {
+			return;
+		}
 
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				validate(
-					classNameId, classTypePK, categoryIds, assetVocabulary);
-			}
+		for (AssetVocabulary assetVocabulary :
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_portal.getCurrentAndAncestorSiteGroupIds(groupId))) {
+
+			validate(classNameId, classTypePK, categoryIds, assetVocabulary);
 		}
 	}
 

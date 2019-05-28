@@ -213,7 +213,7 @@ public abstract class BaseWorkspaceGitRepository
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		if (!gitWorkingDirectory.localSHAExists(_getBranchHeadSHA())) {
-			GitHubDevSyncUtil.fetchCachedBranchFromGitHubDev(
+			GitHubDevSyncUtil.fetchCacheBranchFromGitHubDev(
 				gitWorkingDirectory, getGitHubDevBranchName());
 		}
 
@@ -351,7 +351,7 @@ public abstract class BaseWorkspaceGitRepository
 		_setGitHubURL(pullRequest.getHtmlURL());
 
 		LocalGitBranch localGitBranch =
-			GitHubDevSyncUtil.createCachedLocalGitBranch(
+			GitHubDevSyncUtil.createCacheLocalGitBranch(
 				this, pullRequest, JenkinsResultsParserUtil.isCINode());
 
 		_setBranchHeadSHA(localGitBranch.getSHA());
@@ -365,7 +365,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (JenkinsResultsParserUtil.isCINode()) {
 			_setGitHubDevBranchName(
-				GitHubDevSyncUtil.getCachedBranchName(pullRequest));
+				GitHubDevSyncUtil.getCacheBranchName(pullRequest));
 
 			validateKeys(_CI_KEYS_REQUIRED);
 		}
@@ -383,7 +383,7 @@ public abstract class BaseWorkspaceGitRepository
 				remoteGitRef.getName()));
 
 		LocalGitBranch localGitBranch =
-			GitHubDevSyncUtil.createCachedLocalGitBranch(
+			GitHubDevSyncUtil.createCacheLocalGitBranch(
 				this, remoteGitRef, JenkinsResultsParserUtil.isCINode());
 
 		_setBranchHeadSHA(localGitBranch.getSHA());
@@ -397,7 +397,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (JenkinsResultsParserUtil.isCINode()) {
 			_setGitHubDevBranchName(
-				GitHubDevSyncUtil.getCachedBranchName(remoteGitRef));
+				GitHubDevSyncUtil.getCacheBranchName(remoteGitRef));
 
 			validateKeys(_CI_KEYS_REQUIRED);
 		}

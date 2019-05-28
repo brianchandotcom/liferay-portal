@@ -1742,6 +1742,8 @@ definition {
 		}
 
 		if (isSet(categoryName)) {
+			var key_categoryName = "${categoryName}";
+
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
 				value1 = "${categoryName}"

@@ -92,6 +92,47 @@
 			}
 		).render();
 
+		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
+			var contentBox = searchContainer.get('contentBox');
+
+			var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
+
+			if (contentBox) {
+				var mainContent = contentBox.ancestor('#main-content');
+
+				if (mainContent) {
+					var scrollingContainer = window === Liferay.Util.getOpener() ? window : mainContent._node;
+
+					var table = fixedHeader.parentElement.parentElement;
+					var trDomRect = fixedHeader.previousElementSibling.getBoundingClientRect();
+
+					var fixedHeaderEventHandler = function(event) {
+						var scrollTop = scrollingContainer.scrollTop;
+
+						var trDomRecTop = trDomRect.top;
+
+						fixedHeader.style.transform = 'translateY(' + Math.ceil(scrollTop - table.offsetTop - trDomRect.height) + 'px)';
+
+						if (fixedHeader.classList.contains('hide') && (scrollTop >= trDomRecTop)) {
+							fixedHeader.classList.remove('hide');
+						}
+						else if (scrollingContainer.scrollTop < trDomRecTop) {
+							fixedHeader.classList.add('hide');
+						}
+					};
+
+					scrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
+
+					Liferay.on(
+						'destroyPortlet',
+						function() {
+							scrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
+						}
+					);
+				}
+			}
+		</c:if>
+
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
 
 		var destroySearchContainer = function(event) {

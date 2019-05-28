@@ -3725,6 +3725,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to fix the table header to the top of page when scrolling. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>fixedHeader</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

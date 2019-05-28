@@ -116,3 +116,13 @@
 		color: #009AE5;
 	}
 }
+
+.lfr-search-iterator-fixed-header {
+	position: absolute;
+	width: 100%;
+	z-index: $zindex-sticky;
+}
+
+.lfr-search-iterator-fixed-header-table {
+	position: relative;
+}

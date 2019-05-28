@@ -353,7 +353,98 @@ public class HtmlImpl implements Html {
 	 */
 	@Override
 	public String escapeAttribute(String attribute) {
-		return escape(attribute, ESCAPE_MODE_ATTRIBUTE);
+		if (attribute == null) {
+			return null;
+		}
+
+		if (attribute.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		String prefix = "&#x";
+		String postfix = StringPool.SEMICOLON;
+
+		StringBuilder sb = null;
+		char[] hexBuffer = new char[4];
+		int lastReplacementIndex = 0;
+
+		for (int i = 0; i < attribute.length(); i++) {
+			char c = attribute.charAt(i);
+
+			if (c < _VALID_CHARS.length) {
+				if (!_VALID_CHARS[c]) {
+					String replacement = null;
+
+					if (c == CharPool.AMPERSAND) {
+						replacement = StringPool.AMPERSAND_ENCODED;
+					}
+					else if (c == CharPool.APOSTROPHE) {
+						replacement = "&#39;";
+					}
+					else if (c == CharPool.GREATER_THAN) {
+						replacement = "&gt;";
+					}
+					else if (c == CharPool.LESS_THAN) {
+						replacement = "&lt;";
+					}
+					else if (c == CharPool.QUOTE) {
+						replacement = "&quot;";
+					}
+					else if (!_isValidXmlCharacter(c)) {
+						replacement = StringPool.SPACE;
+					}
+					else {
+						continue;
+					}
+
+					if (sb == null) {
+						sb = new StringBuilder(attribute.length() + 64);
+					}
+
+					if (i > lastReplacementIndex) {
+						sb.append(attribute, lastReplacementIndex, i);
+					}
+
+					if (replacement != null) {
+						sb.append(replacement);
+					}
+					else {
+						sb.append(prefix);
+
+						_appendHexChars(sb, hexBuffer, c);
+
+						sb.append(postfix);
+					}
+
+					lastReplacementIndex = i + 1;
+				}
+			}
+			else if (!_isValidXmlCharacter(c) ||
+					 _isUnicodeCompatibilityCharacter(c)) {
+
+				if (sb == null) {
+					sb = new StringBuilder(attribute.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(attribute, lastReplacementIndex, i);
+				}
+
+				sb.append(CharPool.SPACE);
+
+				lastReplacementIndex = i + 1;
+			}
+		}
+
+		if (sb == null) {
+			return attribute;
+		}
+
+		if (lastReplacementIndex < attribute.length()) {
+			sb.append(attribute, lastReplacementIndex, attribute.length());
+		}
+
+		return sb.toString();
 	}
 
 	/**

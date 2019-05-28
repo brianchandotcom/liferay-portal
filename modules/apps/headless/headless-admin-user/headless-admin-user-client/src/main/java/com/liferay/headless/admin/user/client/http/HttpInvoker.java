@@ -322,6 +322,11 @@ public class HttpInvoker {
 
 		httpURLConnection.setRequestMethod(_httpMethod.name());
 
+		for (Map.Entry<String, String> header : _headers.entrySet()) {
+			httpURLConnection.setRequestProperty(
+				header.getKey(), header.getValue());
+		}
+
 		if (_encodedUserNameAndPassword != null) {
 			httpURLConnection.setRequestProperty(
 				"Authorization", "Basic " + _encodedUserNameAndPassword);

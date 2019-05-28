@@ -48,13 +48,13 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 			long[] categoryIds, String[] entryNames)
 		throws PortalException {
 
-		List<AssetVocabulary> assetVocabularies =
-			_assetVocabularyLocalService.getGroupsVocabularies(
-				_portal.getCurrentAndAncestorSiteGroupIds(groupId));
-
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		if (isCategorizable(groupId, classNameId, classPK)) {
+			List<AssetVocabulary> assetVocabularies =
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_portal.getCurrentAndAncestorSiteGroupIds(groupId));
+
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
 				validate(
 					classNameId, classTypePK, categoryIds, assetVocabulary);

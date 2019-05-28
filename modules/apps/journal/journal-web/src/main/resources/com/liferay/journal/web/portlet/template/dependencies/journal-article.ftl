@@ -13,11 +13,11 @@
 </#if>
 
 <#if stringUtil.equals(language, "ftl")>
-	${r"<#assign"}
-		webcontent = jsonFactoryUtil.createJSONObject(${variableData})
-	${r"/>"}
+${r"<#assign"}
+	webcontent = jsonFactoryUtil.createJSONObject(${variableData})
+${r"/>"}
 <#else>
-	#set ($webcontent = $jsonFactoryUtil.createJSONObject($${variableData}))
+#set ($webcontent = $jsonFactoryUtil.createJSONObject($${variableData}))
 </#if>
 
 <a href="${getVariableReferenceCode(variableFriendlyUrl)}">

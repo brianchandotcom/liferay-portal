@@ -24,6 +24,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +100,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 		Matcher matcher = _selfClosingTagsPattern.matcher(line);
 
 		while (matcher.find()) {
-			int deep = 1;
+			int level = 1;
 
 			for (int x = matcher.end(); x < line.length(); x++) {
 				if (ToolsUtil.isInsideQuotes(line, x)) {
@@ -109,19 +110,17 @@ public class WhitespaceCheck extends BaseFileCheck {
 				char c = line.charAt(x);
 
 				if (c == CharPool.LESS_THAN) {
-					deep++;
+					level++;
 				}
 				else if (c == CharPool.GREATER_THAN) {
-					deep--;
+					level--;
 				}
 
-				if (deep != 0) {
+				if (level != 0) {
 					continue;
 				}
 
-				if ((line.charAt(x - 2) == CharPool.SPACE) &&
-					(line.charAt(x - 1) == CharPool.SLASH)) {
-
+				if (Objects.equals(line.substring(x - 2, x), " /")) {
 					break;
 				}
 

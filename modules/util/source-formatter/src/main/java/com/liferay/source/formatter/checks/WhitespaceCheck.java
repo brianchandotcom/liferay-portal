@@ -152,6 +152,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 			linePart, "else if(", "else if (", true);
 		linePart = formatIncorrectSyntax(linePart, "for(", "for (", true);
 		linePart = formatIncorrectSyntax(linePart, "if(", "if (", true);
+		linePart = formatIncorrectSyntax(linePart, "task(", "task (", true);
 		linePart = formatIncorrectSyntax(linePart, "while(", "while (", true);
 		linePart = formatIncorrectSyntax(linePart, "List <", "List<", false);
 

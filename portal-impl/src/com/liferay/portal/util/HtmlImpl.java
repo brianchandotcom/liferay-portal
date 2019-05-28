@@ -211,7 +211,6 @@ public class HtmlImpl implements Html {
 		}
 
 		String prefix = StringPool.BLANK;
-		String postfix = StringPool.BLANK;
 
 		if (mode == ESCAPE_MODE_CSS) {
 			prefix = StringPool.BACK_SLASH;
@@ -277,8 +276,6 @@ public class HtmlImpl implements Html {
 
 						_appendHexChars(sb, hexBuffer, c);
 
-						sb.append(postfix);
-
 						if ((mode == ESCAPE_MODE_CSS) &&
 							(i < (text.length() - 1))) {
 
@@ -325,8 +322,6 @@ public class HtmlImpl implements Html {
 				sb.append("\\u");
 
 				_appendHexChars(sb, hexBuffer, c);
-
-				sb.append(postfix);
 
 				lastReplacementIndex = i + 1;
 			}

@@ -27,7 +27,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 />
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/css/main.css") %>" rel="stylesheet">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>
 
 <soy:component-renderer

@@ -147,7 +147,7 @@
 								</ul>
 
 								<div class="ctrl-holder">
-									<input id="saveSettings" type="submit" value="<liferay-ui:message key="save" />">
+									<input id="saveSettings" type="submit" value="<liferay-ui:message key="save" />" />
 								</div>
 							</div>
 						</div>

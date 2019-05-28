@@ -345,7 +345,7 @@ public class SoyTemplate extends BaseTemplate {
 	private ResourceBundle _getLanguageResourceBundle(
 		List<TemplateResource> templateResources, Locale locale) {
 
-		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
+		Set<Bundle> templateResourceBundles = new HashSet<>();
 
 		for (TemplateResource templateResource : templateResources) {
 			try {
@@ -353,12 +353,7 @@ public class SoyTemplate extends BaseTemplate {
 					SoyProviderCapabilityBundleRegister.getTemplateBundle(
 						templateResource.getTemplateId());
 
-				BundleWiring bundleWiring = templateResourceBundle.adapt(
-					BundleWiring.class);
-
-				resourceBundleLoaders.add(
-					new ClassResourceBundleLoader(
-						"content.Language", bundleWiring.getClassLoader()));
+				templateResourceBundles.add(templateResourceBundle);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -370,6 +365,18 @@ public class SoyTemplate extends BaseTemplate {
 						e);
 				}
 			}
+		}
+
+		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>(
+			templateResourceBundles.size() + 1);
+
+		for (Bundle templateResourceBundle : templateResourceBundles) {
+			BundleWiring bundleWiring = templateResourceBundle.adapt(
+				BundleWiring.class);
+
+			resourceBundleLoaders.add(
+				new ClassResourceBundleLoader(
+					"content.Language", bundleWiring.getClassLoader()));
 		}
 
 		resourceBundleLoaders.add(LanguageUtil.getPortalResourceBundleLoader());

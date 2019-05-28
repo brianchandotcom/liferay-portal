@@ -1744,7 +1744,7 @@ definition {
 		if (isSet(categoryName)) {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
-				value1 = "Topic: ${categoryName}"
+				value1 = "${categoryName}"
 			);
 		}
 	}

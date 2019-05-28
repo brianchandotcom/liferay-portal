@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Sarai Díaz
  */
-public class InterestsTermJSONObjectMapper {
+public class InterestTermsJSONObjectMapper {
 
 	public Topic map(String json) throws IOException {
 		return AsahFaroBackendJSONObjectMapper.map(json, Topic.class);

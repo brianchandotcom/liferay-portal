@@ -33,11 +33,11 @@ import org.junit.Test;
 /**
  * @author Sarai Díaz
  */
-public class InterestsTermJSONObjectMapperTest {
+public class InterestTermsJSONObjectMapperTest {
 
 	@Test
 	public void testMap() throws Exception {
-		Topic topic = _interestsTermsJSONObjectMapper.map(
+		Topic topic = _interestTermsJSONObjectMapper.map(
 			_read("get-interests-term.json"));
 
 		Assert.assertNotNull(topic);
@@ -57,12 +57,12 @@ public class InterestsTermJSONObjectMapperTest {
 
 	@Test(expected = IOException.class)
 	public void testMapThrowsIOException() throws Exception {
-		_interestsTermsJSONObjectMapper.map("invalid json");
+		_interestTermsJSONObjectMapper.map("invalid json");
 	}
 
 	@Test
 	public void testMapToResults() throws Exception {
-		Results<Topic> results = _interestsTermsJSONObjectMapper.mapToResults(
+		Results<Topic> results = _interestTermsJSONObjectMapper.mapToResults(
 			_read("get-interests-terms.json"));
 
 		Assert.assertEquals(3, results.getTotal());
@@ -84,7 +84,7 @@ public class InterestsTermJSONObjectMapperTest {
 
 	@Test
 	public void testMapToResultsWithNoResults() throws Exception {
-		Results<Topic> results = _interestsTermsJSONObjectMapper.mapToResults(
+		Results<Topic> results = _interestTermsJSONObjectMapper.mapToResults(
 			_read("get-interests-terms-no-results.json"));
 
 		Assert.assertEquals(0, results.getTotal());
@@ -106,7 +106,7 @@ public class InterestsTermJSONObjectMapperTest {
 
 	private static final int _DELTA = 100;
 
-	private static final InterestsTermJSONObjectMapper
-		_interestsTermsJSONObjectMapper = new InterestsTermJSONObjectMapper();
+	private static final InterestTermsJSONObjectMapper
+		_interestTermsJSONObjectMapper = new InterestTermsJSONObjectMapper();
 
 }

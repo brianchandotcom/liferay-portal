@@ -88,7 +88,7 @@ public interface AsahFaroBackendClient {
 	 * @return a {@link Results} of terms of interest
 	 * @review
 	 */
-	public Results<Topic> getInterestsTermsResults(
+	public Results<Topic> getInterestTermsResults(
 		String userId, int cur, int delta, List<OrderByField> orderByFields);
 
 }

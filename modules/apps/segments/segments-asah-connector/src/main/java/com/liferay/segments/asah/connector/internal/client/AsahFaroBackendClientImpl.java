@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
-import com.liferay.segments.asah.connector.internal.client.data.binding.InterestsTermJSONObjectMapper;
+import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -163,7 +163,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
-	public Results<Topic> getInterestsTermsResults(
+	public Results<Topic> getInterestTermsResults(
 		String userId, int cur, int delta, List<OrderByField> orderByFields) {
 
 		try {
@@ -175,7 +175,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 					orderByFields),
 				_headers);
 
-			return _interestsTermJSONObjectMapper.mapToResults(response);
+			return _interestTermsJSONObjectMapper.mapToResults(response);
 		}
 		catch (IOException ioe) {
 			throw new NestableRuntimeException(
@@ -264,9 +264,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final IndividualSegmentJSONObjectMapper
 		_individualSegmentJSONObjectMapper =
 			new IndividualSegmentJSONObjectMapper();
-	private static final InterestsTermJSONObjectMapper
-		_interestsTermJSONObjectMapper =
-			new InterestsTermJSONObjectMapper();
+	private static final InterestTermsJSONObjectMapper
+		_interestTermsJSONObjectMapper = new InterestTermsJSONObjectMapper();
 
 	private final String _dataSourceId;
 	private final Map<String, String> _headers = new HashMap<>();

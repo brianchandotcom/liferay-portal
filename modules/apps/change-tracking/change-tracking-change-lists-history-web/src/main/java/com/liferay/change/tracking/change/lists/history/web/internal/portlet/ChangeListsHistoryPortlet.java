@@ -19,7 +19,6 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -117,19 +116,6 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 			CTPortalConfiguration.class, properties);
 	}
 
-	protected void checkOmniAdmin() throws PortletException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-
-			throw new PortletException(principalException);
-		}
-	}
-
 	@Override
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
@@ -162,8 +148,5 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	private CTPortalConfiguration _ctPortalConfiguration;
-
-	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
 
 }

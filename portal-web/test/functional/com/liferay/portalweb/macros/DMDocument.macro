@@ -1707,14 +1707,10 @@ definition {
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
 		if ("${dmRepositoryName}" == "true") {
-			AssertElementNotPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING"
-			);
+			AssertElementNotPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
 		}
 		else {
-			AssertElementPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING"
-			);
+			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
 		}
 
 		if (isSet(dmDocumentDescription)) {
@@ -1722,22 +1718,18 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
-				value1 = "${dmDocumentDescription}"
-			);
+				value1 = "${dmDocumentDescription}");
 		}
 
 		if ("${dmDocumentFileType}" == "Image") {
-			AssertElementPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW"
-			);
+			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 		}
 
 		if (isSet(tagNameList)) {
 			for (var tagName : list "${tagNameList}") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS",
-					value1 = "${tagName}"
-				);
+					value1 = "${tagName}");
 			}
 		}
 
@@ -1746,8 +1738,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
-				value1 = "${categoryName}"
-			);
+				value1 = "${categoryName}");
 		}
 	}
 

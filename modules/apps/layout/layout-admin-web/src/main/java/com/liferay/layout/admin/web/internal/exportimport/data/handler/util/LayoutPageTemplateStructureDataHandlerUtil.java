@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Map;
@@ -92,6 +95,9 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 
 			_importLayoutPageTemplateStructureRel(
 				portletDataContext, existingLayoutPageTemplateStructureRel);
+
+			_updateSegmentsExperiences(
+				classNameId, classPK, existingLayoutPageTemplateStructureRel);
 		}
 	}
 
@@ -161,6 +167,32 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 				existingLayoutPageTemplateStructureRel);
 	}
 
+	private void _updateSegmentsExperiences(
+		long classNameId, long classPK,
+		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
+
+		if (existingLayoutPageTemplateStructureRel.getSegmentsExperienceId() ==
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+
+			return;
+		}
+
+		SegmentsExperience existingSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				existingLayoutPageTemplateStructureRel.
+					getSegmentsExperienceId());
+
+		if (existingSegmentsExperience == null) {
+			return;
+		}
+
+		existingSegmentsExperience.setClassNameId(classNameId);
+		existingSegmentsExperience.setClassPK(classPK);
+
+		_segmentsExperienceLocalService.updateSegmentsExperience(
+			existingSegmentsExperience);
+	}
+
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
@@ -168,5 +200,8 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 	@Reference
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

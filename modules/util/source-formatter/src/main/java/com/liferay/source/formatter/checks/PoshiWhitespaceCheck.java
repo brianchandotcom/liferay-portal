@@ -52,7 +52,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
-		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
+		Matcher matcher = _incorrectWhitespacePattern1.matcher(content);
 
 		while (matcher.find()) {
 			int x = matcher.start(1);
@@ -65,6 +65,23 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 
 				return StringUtil.replaceFirst(
 					content, matcher.group(1), StringPool.BLANK,
+					matcher.start());
+			}
+		}
+
+		matcher = _incorrectWhitespacePattern2.matcher(content);
+
+		while (matcher.find()) {
+			int x = matcher.start(1);
+
+			if (!ToolsUtil.isInsideQuotes(content, x) &&
+				!PoshiSourceUtil.isInsideMultiLines(
+					getLineNumber(content, x), multiLineCommentsPositions) &&
+				!PoshiSourceUtil.isInsideMultiLines(
+					getLineNumber(content, x), multiLineStringPositions)) {
+
+				return StringUtil.replaceFirst(
+					content, matcher.group(1), StringPool.SPACE,
 					matcher.start());
 			}
 		}
@@ -161,8 +178,10 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 
 	private static final Pattern _incorrectCommandPattern = Pattern.compile(
 		"(\n\t*(function|macro|test))(?! \\w+ \\{)[\t ]+(\\w+)\\s*(\\{)");
-	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
+	private static final Pattern _incorrectWhitespacePattern1 = Pattern.compile(
 		"\\)(\\s+);");
+	private static final Pattern _incorrectWhitespacePattern2 = Pattern.compile(
+		"\\)(?! \\{)(\\s*)\\{");
 	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
 		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _multiLineStringPattern = Pattern.compile(

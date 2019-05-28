@@ -14,9 +14,11 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
@@ -84,6 +86,14 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public String getHref() {
+		if (!FragmentPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
+
+			return null;
+		}
+
 		PortletURL editFragmentEntryURL = _renderResponse.createRenderURL();
 
 		editFragmentEntryURL.setParameter(

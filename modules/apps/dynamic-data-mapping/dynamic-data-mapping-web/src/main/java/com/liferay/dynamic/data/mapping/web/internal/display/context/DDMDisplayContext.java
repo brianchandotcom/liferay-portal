@@ -1036,7 +1036,7 @@ public class DDMDisplayContext {
 				structureSearch.getEnd());
 		}
 		else {
-			results = _ddmStructureService.search(
+			results = _ddmStructureService.getStructures(
 				_ddmWebRequestHelper.getCompanyId(), groupIds,
 				getStructureClassNameId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), structureSearch.getStart(),
@@ -1071,7 +1071,7 @@ public class DDMDisplayContext {
 				getSearchRestrictionClassPK());
 		}
 		else {
-			total = _ddmStructureService.searchCount(
+			total = _ddmStructureService.getStructuresCount(
 				_ddmWebRequestHelper.getCompanyId(), groupIds,
 				getStructureClassNameId(), searchTerms.getKeywords(),
 				searchTerms.getStatus());

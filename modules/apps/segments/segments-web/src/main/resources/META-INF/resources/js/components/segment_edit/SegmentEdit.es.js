@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import {
+	applyConjunctionChangeToContributor,
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors,
 	sub
@@ -165,24 +166,9 @@ class SegmentEdit extends Component {
 
 	_handleConjunctionChange = () => {
 		this.setState(prevState => {
-			const prevContributors = prevState.contributors;
-
-			const prevConjunction =
-				prevContributors[0] && prevContributors[0].conjunctionId;
-
-			const conjunctionIndex = SUPPORTED_CONJUNCTIONS.findIndex(
-				item => item.name === prevConjunction
+			const contributors = applyConjunctionChangeToContributor(
+				prevState.contributors
 			);
-
-			const conjunctionSelected =
-				conjunctionIndex === SUPPORTED_CONJUNCTIONS.length - 1
-					? SUPPORTED_CONJUNCTIONS[0].name
-					: SUPPORTED_CONJUNCTIONS[conjunctionIndex + 1].name;
-
-			const contributors = prevContributors.map(contributor => ({
-				...contributor,
-				conjunctionId: conjunctionSelected
-			}));
 
 			return {
 				contributors,

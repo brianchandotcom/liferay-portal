@@ -1,6 +1,6 @@
 import dateFns from 'date-fns';
 import {buildQueryString, translateQueryToCriteria} from './odata.es';
-import {CONJUNCTIONS} from 'utils/constants.es';
+import {CONJUNCTIONS, SUPPORTED_CONJUNCTIONS} from 'utils/constants.es';
 import {getUid} from 'metal';
 
 const GROUP_ID_NAMESPACE = 'group_';
@@ -288,4 +288,30 @@ export function applyCriteriaChangeToContributors(contributors, change) {
 			  }
 			: contributor;
 	});
+}
+
+/**
+ * Applies a conjunction change to the whole array of contributors
+ *
+ * @export
+ * @param {Contributor[]} contributors
+ * @return {Contributor[]} contributors
+ */
+export function applyConjunctionChangeToContributor(contributors) {
+	const prevConjunction = contributors[0] && contributors[0].conjunctionId;
+
+	const conjunctionIndex = SUPPORTED_CONJUNCTIONS.findIndex(
+		item => item.name === prevConjunction
+	);
+
+	const conjunctionSelected =
+		conjunctionIndex === SUPPORTED_CONJUNCTIONS.length - 1
+			? SUPPORTED_CONJUNCTIONS[0].name
+			: SUPPORTED_CONJUNCTIONS[conjunctionIndex + 1].name;
+
+	const nextContributors = contributors.map(contributor => ({
+		...contributor,
+		conjunctionId: conjunctionSelected
+	}));
+	return nextContributors;
 }

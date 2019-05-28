@@ -26,12 +26,7 @@
 <!--DOCUMENT_CONVERSION-->
 <tr>
 	<td>DOCUMENT_CONVERSION_TYPE</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_fileType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_TYPE_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_fileType}')]/../i</td>
+	<td>//a[contains (.,'${key_fileType}')]</td>
 	<td></td>
 </tr>
 <tr>

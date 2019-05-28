@@ -33,12 +33,12 @@ import javax.annotation.Generated;
 public class DataLayoutResource {
 
 	public static Page<DataLayout> getDataDefinitionDataLayoutsPage(
-			Long dataDefinitionId, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
 			getDataDefinitionDataLayoutsPageHttpResponse(
-				dataDefinitionId, pagination);
+				dataDefinitionId, keywords, pagination);
 
 		String content = httpResponse.getContent();
 
@@ -53,12 +53,16 @@ public class DataLayoutResource {
 
 	public static HttpInvoker.HttpResponse
 			getDataDefinitionDataLayoutsPageHttpResponse(
-				Long dataDefinitionId, Pagination pagination)
+				Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (keywords != null) {
+			httpInvoker.parameter("keywords", String.valueOf(keywords));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
@@ -286,11 +290,11 @@ public class DataLayoutResource {
 	}
 
 	public static Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
-			getSiteDataLayoutPageHttpResponse(siteId, pagination);
+			getSiteDataLayoutPageHttpResponse(siteId, keywords, pagination);
 
 		String content = httpResponse.getContent();
 
@@ -304,12 +308,16 @@ public class DataLayoutResource {
 	}
 
 	public static HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
-			Long siteId, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (keywords != null) {
+			httpInvoker.parameter("keywords", String.valueOf(keywords));
+		}
 
 		if (pagination != null) {
 			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));

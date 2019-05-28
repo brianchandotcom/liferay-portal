@@ -57,7 +57,7 @@ public class OrganizationActionDropdownItemsProvider {
 			{
 				if (GroupPermissionUtil.contains(
 						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 						ActionKeys.ASSIGN_MEMBERS)) {
 
 					add(_getDeleteGroupOrganizationsActionUnsafeConsumer());
@@ -77,7 +77,8 @@ public class OrganizationActionDropdownItemsProvider {
 		deleteGroupOrganizationsURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		deleteGroupOrganizationsURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+			"groupId",
+			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId()));
 		deleteGroupOrganizationsURL.setParameter(
 			"removeOrganizationId",
 			String.valueOf(_organization.getOrganizationId()));

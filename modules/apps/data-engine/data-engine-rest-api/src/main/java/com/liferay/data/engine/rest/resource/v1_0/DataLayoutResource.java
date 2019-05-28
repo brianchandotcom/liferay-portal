@@ -34,7 +34,7 @@ import javax.annotation.Generated;
 public interface DataLayoutResource {
 
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
-			Long dataDefinitionId, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception;
 
 	public DataLayout postDataDefinitionDataLayout(
@@ -54,7 +54,7 @@ public interface DataLayoutResource {
 		throws Exception;
 
 	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
 	public void postSiteDataLayoutPermission(

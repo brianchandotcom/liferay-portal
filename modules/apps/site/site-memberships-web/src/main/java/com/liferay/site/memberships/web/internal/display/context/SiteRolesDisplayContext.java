@@ -86,7 +86,8 @@ public class SiteRolesDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		_groupId = ParamUtil.getLong(
-			_httpServletRequest, "groupId", themeDisplay.getSiteGroupId());
+			_httpServletRequest, "groupId",
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}

@@ -74,7 +74,7 @@ definition {
 			key_rowEntry = "${rowEntry}",
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Activate");
+		MenuItem.clickNoError(menuItem = "Activate");
 	}
 
 	macro gotoDelete {

@@ -22,6 +22,11 @@ import org.junit.Test;
 public class HTMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testFormatSelfClosingTags() throws Exception {
+		test("FormatSelfClosingTags.testhtml");
+	}
+
+	@Test
 	public void testIncorrectEmptyLines() throws Exception {
 		test("IncorrectEmptyLines.testhtml");
 	}

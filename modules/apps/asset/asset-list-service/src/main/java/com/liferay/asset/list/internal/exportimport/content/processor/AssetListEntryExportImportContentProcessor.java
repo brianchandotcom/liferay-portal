@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -34,6 +36,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +71,11 @@ public class AssetListEntryExportImportContentProcessor
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.load(content);
+
+		long[] groupIds = GetterUtil.getLongValues(
+			StringUtil.split(unicodeProperties.getProperty("groupIds", null)));
+
+		_addGroupMappingsElement(portletDataContext, groupIds);
 
 		long[] classNameIds = GetterUtil.getLongValues(
 			StringUtil.split(
@@ -147,6 +156,23 @@ public class AssetListEntryExportImportContentProcessor
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.load(content);
+
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		Element groupIdMappingsElement = rootElement.element(
+			"group-id-mappings");
+
+		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
+			(StagedModelDataHandler<StagedGroup>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					StagedGroup.class.getName());
+
+		for (Element groupIdMappingElement :
+				groupIdMappingsElement.elements("group-id-mapping")) {
+
+			stagedModelDataHandler.importMissingReference(
+				portletDataContext, groupIdMappingElement);
+		}
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -242,6 +268,36 @@ public class AssetListEntryExportImportContentProcessor
 	@Override
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
+	}
+
+	private void _addGroupMappingsElement(
+			PortletDataContext portletDataContext, long[] groupIds)
+		throws Exception {
+
+		Element rootElement = portletDataContext.getExportDataRootElement();
+
+		Element groupIdMappingsElement = rootElement.addElement(
+			"group-id-mappings");
+
+		for (long groupId : groupIds) {
+			Element groupIdMappingElement = groupIdMappingsElement.addElement(
+				"group-id-mapping");
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			long liveGroupId = group.getLiveGroupId();
+
+			if (group.isStagedRemotely()) {
+				liveGroupId = group.getRemoteLiveGroupId();
+			}
+
+			groupIdMappingElement.addAttribute(
+				"group-id", String.valueOf(groupId));
+			groupIdMappingElement.addAttribute(
+				"live-group-id", String.valueOf(liveGroupId));
+			groupIdMappingElement.addAttribute(
+				"group-key", group.getGroupKey());
+		}
 	}
 
 	@Reference

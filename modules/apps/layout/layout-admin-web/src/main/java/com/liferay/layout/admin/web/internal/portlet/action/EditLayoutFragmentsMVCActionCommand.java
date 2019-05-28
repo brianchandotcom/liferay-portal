@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -60,8 +60,8 @@ public class EditLayoutFragmentsMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+		_fragmentEntryLinkService.updateFragmentEntryLinks(
+			serviceContext.getScopeGroupId(),
 			_portal.getClassNameId(Layout.class), plid, fragmentIds,
 			editableValues, serviceContext);
 
@@ -72,7 +72,7 @@ public class EditLayoutFragmentsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private Portal _portal;

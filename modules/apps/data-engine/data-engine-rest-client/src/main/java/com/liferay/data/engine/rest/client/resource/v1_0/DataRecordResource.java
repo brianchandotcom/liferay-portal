@@ -124,12 +124,12 @@ public class DataRecordResource {
 	}
 
 	public static String getDataRecordCollectionDataRecordExport(
-			Long dataRecordCollectionId)
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
 			getDataRecordCollectionDataRecordExportHttpResponse(
-				dataRecordCollectionId);
+				dataRecordCollectionId, pagination);
 
 		String content = httpResponse.getContent();
 
@@ -144,12 +144,18 @@ public class DataRecordResource {
 
 	public static HttpInvoker.HttpResponse
 			getDataRecordCollectionDataRecordExportHttpResponse(
-				Long dataRecordCollectionId)
+				Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		if (pagination != null) {
+			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+			httpInvoker.parameter(
+				"pageSize", String.valueOf(pagination.getPageSize()));
+		}
 
 		httpInvoker.path(
 			"http://localhost:8080/o/data-engine/v1.0/data-record-collections/{dataRecordCollectionId}/data-records/export",

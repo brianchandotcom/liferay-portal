@@ -47,7 +47,8 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.PortletRequest" %>
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

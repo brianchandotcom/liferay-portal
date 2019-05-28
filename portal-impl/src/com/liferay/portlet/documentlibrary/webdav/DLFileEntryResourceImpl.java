@@ -76,13 +76,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 	public Lock getLock() {
 		FileEntry fileEntry = getModel();
 
-		try {
-			return fileEntry.getLock();
-		}
-		catch (Exception e) {
-		}
-
-		return null;
+		return fileEntry.getLock();
 	}
 
 	@Override

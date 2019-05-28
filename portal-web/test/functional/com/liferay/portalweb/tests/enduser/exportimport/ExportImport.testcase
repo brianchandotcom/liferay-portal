@@ -446,6 +446,7 @@ definition {
 	@description = "This is a use case for LPS-91735."
 	@priority = "3"
 	test ExportImportGlobalDDMStructureViaInstances {
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalDDMStructureViaInstances";
 
 		ProductMenu.gotoSite(site = "Global");
@@ -503,6 +504,7 @@ definition {
 	@priority = "3"
 	test ExportImportGlobalPagesViaInstances {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
+		property portal.release = "false";
 
 		ProductMenu.gotoSite(site = "Global");
 
@@ -1074,6 +1076,26 @@ definition {
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
+	}
+
+	@description = "This is a use case for LPS-88498."
+	@priority = "5"
+	test ExportViaGuest {
+		LAR.exportSiteCP();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful");
+
+		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${downloadURL}");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
 	}
 
 	@priority = "5"

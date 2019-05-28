@@ -18,7 +18,8 @@
 
 <div class="custom-checkbox custom-control">
 	<label>
-		<input class="custom-control-input" data-qa-id="<%= name %>" id="<%= HtmlUtil.escape(domId) %>" <%= disabledString %> <%= checkedString %> type="checkbox" name="<%= HtmlUtil.escape(domName) %>">
+		<input class="custom-control-input" data-qa-id="<%= name %>" id="<%= HtmlUtil.escape(domId) %>" <%= disabledString %> <%= checkedString %> type="checkbox" name="<%= HtmlUtil.escape(domName) %>" />
+
 		<span class="custom-control-label">
 			<%@ include file="/checkbox/extended_label.jspf" %>
 		</span>

@@ -1,5 +1,5 @@
 import {
-	isDef,
+	isFunction,
 	isString
 } from 'metal';
 
@@ -10,14 +10,20 @@ import {
  * @return {array} Array of regions by country
  */
 export default function getRegions(callback, selectKey) {
-	if (isDef(callback) && isString(selectKey)) {
-		Liferay.Service(
-			'/region/get-regions',
-			{
-				active: true,
-				countryId: parseInt(selectKey, 10)
-			},
-			callback
-		);
+	if (!isFunction(callback)) {
+		throw new TypeError('Parameter callback must be a function');
 	}
+
+	if (!isString(selectKey)) {
+		throw new TypeError('Parameter selectKey must be a string');
+	}
+
+	Liferay.Service(
+		'/region/get-regions',
+		{
+			active: true,
+			countryId: parseInt(selectKey, 10)
+		},
+		callback
+	);
 }

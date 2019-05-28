@@ -51,7 +51,7 @@ class RuleEditor extends Component {
 				const actionsFieldOptions = this.getFieldsByTypes(this.actionsFieldOptions, fieldsTypes);
 
 				return {
-					actionsFieldOptions,
+					fieldOptions: actionsFieldOptions,
 					label,
 					name,
 					required,
@@ -148,7 +148,7 @@ class RuleEditor extends Component {
 			}
 		);
 
-		options = field.options;
+		options = field ? field.options : [];
 
 		return options;
 	}
@@ -1368,7 +1368,7 @@ class RuleEditor extends Component {
 	}
 
 	_syncActions(actions) {
-		const {pages, rule} = this;
+		const {pages} = this;
 
 		const visitor = new PagesVisitor(pages);
 
@@ -1395,7 +1395,7 @@ class RuleEditor extends Component {
 				}
 				else if (action.action == 'auto-fill') {
 					action = {
-						...rule.actions[index],
+						...action,
 						calculatorFields: []
 					};
 				}

@@ -143,7 +143,8 @@ public class ViewMembershipRequestsDisplayContext {
 		portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			"groupId",
+			String.valueOf(themeDisplay.getSiteGroupIdOrLiveGroupId()));
 
 		String displayStyle = getDisplayStyle();
 
@@ -201,12 +202,12 @@ public class ViewMembershipRequestsDisplayContext {
 
 		int membershipRequestCount =
 			MembershipRequestLocalServiceUtil.searchCount(
-				themeDisplay.getScopeGroupId(), getStatusId());
+				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId());
 
 		siteMembershipSearch.setTotal(membershipRequestCount);
 
 		List results = MembershipRequestLocalServiceUtil.search(
-			themeDisplay.getScopeGroupId(), getStatusId(),
+			themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId(),
 			siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(),
 			siteMembershipSearch.getOrderByComparator());
 

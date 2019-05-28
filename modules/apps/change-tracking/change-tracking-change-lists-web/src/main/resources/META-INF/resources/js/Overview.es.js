@@ -21,6 +21,65 @@ class Overview extends PortletBase {
 		this._fetchProductionCollection();
 	}
 
+	_checkoutCollection(ctCollectionId, production) {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
+
+		let body = {
+			credentials: 'include',
+			headers,
+			method: 'POST'
+		};
+
+		let url = this.urlCollectionsBase + '/' + ctCollectionId + '/checkout?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId();
+
+		fetch(url, body)
+			.then(
+				response => {
+					if (response.status === 202) {
+						Liferay.fire('refreshChangeTrackingIndicator');
+
+						if (production) {
+							Liferay.Util.navigate(this.urlSelectProduction);
+						}
+						else {
+							this._render();
+						}
+					}
+					else if (response.status === 400) {
+						response.json()
+							.then(
+								data => {
+									openToast(
+										{
+											message: Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out-x'), this.changeListName, data.message),
+											title: Liferay.Language.get('error'),
+											type: 'danger'
+										}
+									);
+								}
+							);
+					}
+				}
+			)
+			.catch(
+				error => {
+					const message = typeof error === 'string' ?
+						error :
+						Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out'), this.changeListName);
+
+					openToast(
+						{
+							message,
+							title: Liferay.Language.get('error'),
+							type: 'danger'
+						}
+					);
+				}
+			);
+	}
+
 	_fetchProductionCollection() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -188,6 +247,23 @@ class Overview extends PortletBase {
 		}
 
 		if (ok) {
+
+			let collectionId = event.target.getAttribute('data-collection-id');
+
+			let production = event.target.getAttribute('data-production');
+
+			this._checkoutCollection(collectionId, production);
+		}
+	}
+
+	_handleClickTrash() {
+		let ok = false;
+
+		const label = this._sub(Liferay.Language.get('are-you-sure-you-want-to-delete-x-change-list'), [this.headerTitleActiveChangeList]);
+
+		ok = confirm(label);
+
+		if (ok) {
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
 			headers.append('X-CSRF-Token', Liferay.authToken);
@@ -195,49 +271,32 @@ class Overview extends PortletBase {
 			let body = {
 				credentials: 'include',
 				headers,
-				method: 'POST'
+				method: 'DELETE'
 			};
 
-			let collectionId = event.target.getAttribute('data-collection-id');
-
-			let production = event.target.getAttribute('data-production');
-
-			let url = this.urlCollectionsBase + '/' + collectionId + '/checkout?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId();
+			let url = this.urlCollectionsBase + '/' + this.activeCTCollectionId;
 
 			fetch(url, body)
 				.then(
 					response => {
-						if (response.status === 202) {
-							Liferay.fire('refreshChangeTrackingIndicator');
-
-							if (production) {
-								Liferay.Util.navigate(this.urlSelectProduction);
-							}
-							else {
-								this._render();
-							}
+						if (response.status === 204) {
+							Liferay.Util.navigate(this.urlSelectProduction);
 						}
-						else if (response.status === 400) {
-							response.json()
-								.then(
-									data => {
-										openToast(
-											{
-												message: Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out-x'), this.changeListName, data.message),
-												title: Liferay.Language.get('error'),
-												type: 'danger'
-											}
-										);
-									}
-								);
+						else if (response.status === 404) {
+							openToast(
+								{
+									message: this._sub(Liferay.Language.get('unable-to-delete-change-list-x-because-it-could-not-be-found'), [this.headerTitleActiveChangeList]),
+									title: Liferay.Language.get('error'),
+									type: 'danger'
+								}
+							);
 						}
 					}
-				)
-				.catch(
+				).catch(
 					error => {
 						const message = typeof error === 'string' ?
 							error :
-							Liferay.Util.sub(Liferay.Language.get('an-error-occured-when-trying-to-check-x-out'), this.changeListName);
+							this._sub(Liferay.Language.get('an-error-occured-when-trying-to-delete-x'), [this.headerTitleActiveChangeList]);
 
 						openToast(
 							{
@@ -339,6 +398,8 @@ class Overview extends PortletBase {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
 		let userSettings = requestResult[2];
+
+		this.activeCTCollectionId = activeCollection[0].ctCollectionId;
 
 		if (activeCollection !== undefined && activeCollection.length == 1) {
 			activeCollection = activeCollection[0];

@@ -653,6 +653,10 @@ public interface DLFileEntryLocalService
 	public boolean hasFileEntryLock(long userId, long fileEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasFileEntryLock(
+		long userId, long fileEntryId, long folderId);
+
 	@BufferedIncrement(
 		configuration = "DLFileEntry", incrementClass = NumberIncrement.class
 	)

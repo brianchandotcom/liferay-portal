@@ -474,6 +474,15 @@ public class DDMStructureLayoutLocalServiceWrapper
 			orderByComparator);
 	}
 
+	@Override
+	public int searchCount(
+			long companyId, long[] groupIds, long classNameId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLayoutLocalService.searchCount(
+			companyId, groupIds, classNameId, keywords);
+	}
+
 	/**
 	 * Updates the ddm structure layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

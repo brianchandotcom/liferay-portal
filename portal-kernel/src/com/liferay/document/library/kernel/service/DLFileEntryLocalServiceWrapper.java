@@ -1057,6 +1057,14 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasFileEntryLock(
+		long userId, long fileEntryId, long folderId) {
+
+		return _dlFileEntryLocalService.hasFileEntryLock(
+			userId, fileEntryId, folderId);
+	}
+
+	@Override
 	public void incrementViewCounter(
 		com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry,
 		int increment) {

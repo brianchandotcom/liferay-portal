@@ -97,6 +97,8 @@ public class ChangeListsDisplayContext {
 						_httpServletRequest, contentTypeLanguageKey)
 				))
 		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
@@ -133,7 +135,7 @@ public class ChangeListsDisplayContext {
 
 		soyContext.put("urlSelectChangeList", portletURL.toString());
 
-		portletURL.setParameter("production", "true");
+		portletURL.setParameter("refresh", "true");
 
 		soyContext.put("urlSelectProduction", portletURL.toString());
 

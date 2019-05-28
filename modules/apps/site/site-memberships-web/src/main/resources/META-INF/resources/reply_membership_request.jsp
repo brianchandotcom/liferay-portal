@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 <portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL">
 	<portlet:param name="mvcPath" value="/reply_membership_request.jsp" />
 	<portlet:param name="p_u_i_d" value="<%= String.valueOf(membershipRequest.getUserId()) %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupIdOrLiveGroupId()) %>" />
 	<portlet:param name="membershipRequestId" value="<%= String.valueOf(membershipRequest.getMembershipRequestId()) %>" />
 </portlet:actionURL>
 
@@ -63,7 +63,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 		<aui:fieldset>
 
 			<%
-			Group group = themeDisplay.getScopeGroup();
+			Group group = GroupLocalServiceUtil.getGroup(themeDisplay.getSiteGroupIdOrLiveGroupId());
 			%>
 
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">

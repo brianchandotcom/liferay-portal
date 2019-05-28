@@ -157,6 +157,8 @@ definition {
 
 		ChangeList.gotoActivate(rowEntry = "Change List Name");
 
+		ChangeList.confirmSwitchingChangeList(changeListName = "Change List Name");
+
 		Alert.viewSuccessMessage();
 
 		ChangeList.selectChangeList(changeListName = "Select Change List");
@@ -170,6 +172,8 @@ definition {
 			value1 = "Active");
 
 		ChangeList.gotoActivate(rowEntry = "Work on Production");
+
+		ChangeList.confirmSwitchingChangeList(changeListName = "Work on Production");
 
 		Alert.viewSuccessMessage();
 

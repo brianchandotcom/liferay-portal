@@ -74,7 +74,7 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		int page = ParamUtil.getInteger(_renderRequest, "page");
 
 		_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
-			article, ddmTemplateKey, null, _themeDisplay.getLanguageId(), page,
+			article, ddmTemplateKey, null, getLanguageId(), page,
 			new PortletRequestModel(_renderRequest, _renderResponse),
 			_themeDisplay);
 
@@ -153,6 +153,17 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		return _groupId;
 	}
 
+	public String getLanguageId() {
+		if (_languageId != null) {
+			return _languageId;
+		}
+
+		_languageId = ParamUtil.getString(
+			_renderRequest, "languageId", _themeDisplay.getLanguageId());
+
+		return _languageId;
+	}
+
 	public PortletURL getPageIteratorPortletURL() throws Exception {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -199,6 +210,7 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 	private Long _ddmTemplateId;
 	private String _eventName;
 	private Long _groupId;
+	private String _languageId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

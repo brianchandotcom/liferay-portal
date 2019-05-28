@@ -283,29 +283,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long userId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		boolean hasLock = hasFolderLock(userId, folderId);
-
-		Lock lock = null;
-
-		if (!hasLock) {
-
-			// Lock
-
-			lock = lockFolder(
-				userId, folderId, null, false,
-				DLFolderImpl.LOCK_EXPIRATION_TIME);
+		if (hasFolderLock(userId, folderId)) {
+			return deleteFolder(folderId, includeTrashedEntries);
 		}
+
+		Lock lock = lockFolder(
+			userId, folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
 
 		try {
 			return deleteFolder(folderId, includeTrashedEntries);
 		}
 		finally {
-			if (!hasLock) {
-
-				// Unlock
-
-				unlockFolder(folderId, lock.getUuid());
-			}
+			unlockFolder(folderId, lock.getUuid());
 		}
 	}
 
@@ -781,15 +770,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNotNull(lockUuid)) {
-			try {
-				Lock lock = LockManagerUtil.getLock(
-					DLFolder.class.getName(), folderId);
+			Lock lock = LockManagerUtil.fetchLock(
+				DLFolder.class.getName(), folderId);
 
-				if (!lockUuid.equals(lock.getUuid())) {
-					throw new InvalidLockException("UUIDs do not match");
-				}
-			}
-			catch (ExpiredLockException | NoSuchLockException e) {
+			if ((lock != null) && !lockUuid.equals(lock.getUuid())) {
+				throw new InvalidLockException("UUIDs do not match");
 			}
 		}
 

@@ -102,7 +102,9 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path(
@@ -112,7 +114,8 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public String getDataRecordCollectionDataRecordExport(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return StringPool.BLANK;

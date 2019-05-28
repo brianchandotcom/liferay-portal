@@ -15,14 +15,13 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
+import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -127,8 +126,6 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		Callable<LayoutPrototype> addLayoutPrototypeCallable =
 			new AddLayoutPrototypeCallable(actionRequest);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			LayoutPrototype layoutPrototype = TransactionInvokerUtil.invoke(
 				_transactionConfig, addLayoutPrototypeCallable);
@@ -145,32 +142,42 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 					redirectURL, "p_l_back_url", backURL);
 			}
 
-			jsonObject.put("redirectURL", redirectURL);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirectURL));
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(t, t);
 			}
 
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (t instanceof LayoutNameException ||
-				t instanceof LayoutPageTemplateEntryNameException) {
-
-				errorMessage = "please-enter-a-valid-name";
+			if (t instanceof LayoutNameException) {
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"please-enter-a-valid-name")));
 			}
-			else if (t instanceof DuplicateLayoutPageTemplateEntryException) {
-				errorMessage =
-					"a-page-template-entry-with-that-name-already-exists";
-			}
+			else if (t instanceof LayoutPageTemplateEntryNameException) {
+				LayoutPageTemplateEntryNameException lptene =
+					(LayoutPageTemplateEntryNameException)t;
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+				_layoutPageTemplateEntryExceptionRequestHandler.
+					handlePortalException(
+						actionRequest, actionResponse, lptene);
+			}
+			else {
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"an-unexpected-error-occurred")));
+			}
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -182,6 +189,10 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LayoutPageTemplateEntryExceptionRequestHandler
+		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

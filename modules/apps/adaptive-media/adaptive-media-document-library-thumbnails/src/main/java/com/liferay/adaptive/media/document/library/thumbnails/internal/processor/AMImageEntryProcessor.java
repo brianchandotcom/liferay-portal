@@ -26,12 +26,15 @@ import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
+import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.xml.Element;
@@ -65,7 +68,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		_imageProcessor = new ImageProcessorImpl();
 	}
 
@@ -90,8 +93,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void generateImages(
-			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
-		throws Exception {
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 	}
 
 	@Override
@@ -228,9 +230,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
+		PortletDataContext portletDataContext, FileEntry fileEntry,
+		FileEntry importedFileEntry, Element fileEntryElement) {
 	}
 
 	@Override
@@ -255,10 +256,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void storeThumbnail(
-			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId, InputStream is,
-			String type)
-		throws Exception {
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		long custom1ImageId, long custom2ImageId, InputStream is, String type) {
 	}
 
 	@Override
@@ -316,7 +315,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			amAsyncProcessor.triggerProcess(
-				fileVersion, String.valueOf(fileVersion.getFileVersionId()));
+				new SafeFileVersion(fileVersion),
+				String.valueOf(fileVersion.getFileVersionId()));
 		}
 		catch (PortalException pe) {
 			_log.error(
@@ -342,5 +342,74 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	private AMImageValidator _amImageValidator;
 
 	private ImageProcessor _imageProcessor;
+
+	@Reference
+	private InputStreamSanitizer _inputStreamSanitizer;
+
+	private class SafeFileEntry extends FileEntryWrapper {
+
+		public SafeFileEntry(FileEntry fileEntry) {
+			super(fileEntry);
+		}
+
+		@Override
+		public InputStream getContentStream() throws PortalException {
+			return _inputStreamSanitizer.sanitize(super.getContentStream());
+		}
+
+		@Override
+		public InputStream getContentStream(String version)
+			throws PortalException {
+
+			return _inputStreamSanitizer.sanitize(
+				super.getContentStream(version));
+		}
+
+		@Override
+		public FileVersion getFileVersion() throws PortalException {
+			return new SafeFileVersion(super.getFileVersion());
+		}
+
+		@Override
+		public FileVersion getFileVersion(String version)
+			throws PortalException {
+
+			return new SafeFileVersion(super.getFileVersion(version));
+		}
+
+		@Override
+		public FileVersion getLatestFileVersion() throws PortalException {
+			return new SafeFileVersion(super.getLatestFileVersion());
+		}
+
+		@Override
+		public FileVersion getLatestFileVersion(boolean trusted)
+			throws PortalException {
+
+			return new SafeFileVersion(super.getLatestFileVersion(trusted));
+		}
+
+	}
+
+	private class SafeFileVersion extends FileVersionWrapper {
+
+		public SafeFileVersion(FileVersion fileVersion) {
+			super(fileVersion);
+		}
+
+		@Override
+		public InputStream getContentStream(boolean incrementCounter)
+			throws PortalException {
+
+			return _inputStreamSanitizer.sanitize(
+				super.getContentStream(incrementCounter));
+		}
+
+		@Override
+		public FileEntry getFileEntry() throws PortalException {
+			return new SafeFileEntry(super.getFileEntry());
+		}
+
+	}
 
 }

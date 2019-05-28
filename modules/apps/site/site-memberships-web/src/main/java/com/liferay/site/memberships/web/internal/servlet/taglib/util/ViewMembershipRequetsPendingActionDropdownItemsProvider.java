@@ -58,7 +58,7 @@ public class ViewMembershipRequetsPendingActionDropdownItemsProvider {
 						MembershipRequestConstants.STATUS_PENDING) &&
 					GroupPermissionUtil.contains(
 						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroup(),
+						_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 						ActionKeys.ASSIGN_MEMBERS)) {
 
 					add(_getReplyRequestActionUnsafeConsumer());
@@ -75,7 +75,8 @@ public class ViewMembershipRequetsPendingActionDropdownItemsProvider {
 				_renderResponse.createRenderURL(), "mvcPath",
 				"/reply_membership_request.jsp", "p_u_i_d",
 				_membershipRequest.getUserId(), "groupId",
-				_themeDisplay.getScopeGroupId(), "membershipRequestId",
+				_themeDisplay.getSiteGroupIdOrLiveGroupId(),
+				"membershipRequestId",
 				_membershipRequest.getMembershipRequestId());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "reply"));

@@ -80,7 +80,7 @@ public class UsersManagementToolbarDisplayContext
 				try {
 					if (GroupPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(),
-							themeDisplay.getScopeGroupId(),
+							_usersDisplayContext.getGroupId(),
 							ActionKeys.ASSIGN_USER_ROLES)) {
 
 						add(
@@ -160,12 +160,12 @@ public class UsersManagementToolbarDisplayContext
 
 		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ASSIGN_MEMBERS) &&
+				_usersDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) &&
 			!SiteMembershipPolicyUtil.isMembershipProtected(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
-				themeDisplay.getScopeGroupId()) &&
+				_usersDisplayContext.getGroupId()) &&
 			!SiteMembershipPolicyUtil.isMembershipRequired(
-				user.getUserId(), themeDisplay.getScopeGroupId())) {
+				user.getUserId(), _usersDisplayContext.getGroupId())) {
 
 			return "deleteSelectedUsers";
 		}

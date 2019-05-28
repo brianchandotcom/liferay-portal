@@ -578,10 +578,12 @@ portletURL.setParameter("portletResource", portletResource);
 	<c:if test="<%= StagingUtil.isChangeTrackingEnabled(company.getCompanyId()) %>">
 	var form = document.<portlet:namespace />fm1;
 
-	var formElements = form.elements;
+	if (form) {
+		var formElements = form.elements;
 
-	for (var i = 0; i < formElements.length; ++i) {
-		formElements[i].disabled = true;
+		for (var i = 0; i < formElements.length; ++i) {
+			formElements[i].disabled = true;
+		}
 	}
 	</c:if>
 </aui:script>

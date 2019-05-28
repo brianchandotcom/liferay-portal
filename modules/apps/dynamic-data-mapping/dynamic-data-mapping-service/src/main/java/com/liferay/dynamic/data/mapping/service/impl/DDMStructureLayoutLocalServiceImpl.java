@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -187,6 +188,20 @@ public class DDMStructureLayoutLocalServiceImpl
 		return ddmSearchHelper.doSearch(
 			searchContext, DDMStructureLayout.class,
 			ddmStructureLayoutPersistence::findByPrimaryKey);
+	}
+
+	public int searchCount(
+			long companyId, long[] groupIds, long classNameId, String keywords)
+		throws PortalException {
+
+		SearchContext searchContext =
+			ddmSearchHelper.buildStructureLayoutSearchContext(
+				companyId, groupIds, classNameId, keywords, keywords,
+				StringPool.BLANK, null, WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return ddmSearchHelper.doSearchCount(
+			searchContext, DDMStructureLayout.class);
 	}
 
 	@Override

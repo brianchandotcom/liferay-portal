@@ -43,12 +43,12 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				"<br/>", "@page import", "@tag import", "\"%>", ")%>",
-				"function (", "javascript: ", "){\n", "\n\n\n"
+				"@page import", "@tag import", "\"%>", ")%>", "function (",
+				"javascript: ", "){\n", "\n\n\n"
 			},
 			new String[] {
-				"<br />", "@ page import", "@ tag import", "\" %>", ") %>",
-				"function(", "javascript:", ") {\n", "\n\n"
+				"@ page import", "@ tag import", "\" %>", ") %>", "function(",
+				"javascript:", ") {\n", "\n\n"
 			});
 
 		return content;
@@ -200,7 +200,10 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 				}
 
+				line = formatSelfClosingTags(line);
+
 				sb.append(line);
+
 				sb.append("\n");
 			}
 		}

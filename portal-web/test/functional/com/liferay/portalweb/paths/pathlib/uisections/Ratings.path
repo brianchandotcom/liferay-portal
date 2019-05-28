@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>DISPLAY_VOTES</td>
+	<td>//div[contains(@class,'ratings')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THUMB</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'${key_ratingResult}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THUMB_UP</td>
 	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumb-up')]</td>
 	<td></td>

@@ -165,7 +165,9 @@ public class FormPageSerDes {
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
-		return string.replaceAll("\"", "\\\\\"");
+		string = string.replaceAll("\"", "\\\\\"");
+
+		return string.replace("\\", "\\\\");
 	}
 
 	private static String _toJSON(Map<String, ?> map) {

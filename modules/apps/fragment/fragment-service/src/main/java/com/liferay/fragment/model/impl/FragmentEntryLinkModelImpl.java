@@ -19,9 +19,11 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
+import com.liferay.fragment.model.FragmentEntryLinkSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -40,10 +42,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -61,6 +65,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FragmentEntryLinkImpl
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class FragmentEntryLinkModelImpl
 	extends BaseModelImpl<FragmentEntryLink> implements FragmentEntryLinkModel {
@@ -151,6 +156,68 @@ public class FragmentEntryLinkModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static FragmentEntryLink toModel(FragmentEntryLinkSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		FragmentEntryLink model = new FragmentEntryLinkImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setFragmentEntryLinkId(soapModel.getFragmentEntryLinkId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setOriginalFragmentEntryLinkId(
+			soapModel.getOriginalFragmentEntryLinkId());
+		model.setFragmentEntryId(soapModel.getFragmentEntryId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
+		model.setCss(soapModel.getCss());
+		model.setHtml(soapModel.getHtml());
+		model.setJs(soapModel.getJs());
+		model.setEditableValues(soapModel.getEditableValues());
+		model.setNamespace(soapModel.getNamespace());
+		model.setPosition(soapModel.getPosition());
+		model.setRendererKey(soapModel.getRendererKey());
+		model.setLastPropagationDate(soapModel.getLastPropagationDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<FragmentEntryLink> toModels(
+		FragmentEntryLinkSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<FragmentEntryLink> models = new ArrayList<FragmentEntryLink>(
+			soapModels.length);
+
+		for (FragmentEntryLinkSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public FragmentEntryLinkModelImpl() {
@@ -401,6 +468,7 @@ public class FragmentEntryLinkModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -426,6 +494,7 @@ public class FragmentEntryLinkModelImpl
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getFragmentEntryLinkId() {
 		return _fragmentEntryLinkId;
@@ -436,6 +505,7 @@ public class FragmentEntryLinkModelImpl
 		_fragmentEntryLinkId = fragmentEntryLinkId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -458,6 +528,7 @@ public class FragmentEntryLinkModelImpl
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -480,6 +551,7 @@ public class FragmentEntryLinkModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -506,6 +578,7 @@ public class FragmentEntryLinkModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -521,6 +594,7 @@ public class FragmentEntryLinkModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -531,6 +605,7 @@ public class FragmentEntryLinkModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -547,6 +622,7 @@ public class FragmentEntryLinkModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getOriginalFragmentEntryLinkId() {
 		return _originalFragmentEntryLinkId;
@@ -559,6 +635,7 @@ public class FragmentEntryLinkModelImpl
 		_originalFragmentEntryLinkId = originalFragmentEntryLinkId;
 	}
 
+	@JSON
 	@Override
 	public long getFragmentEntryId() {
 		return _fragmentEntryId;
@@ -601,6 +678,7 @@ public class FragmentEntryLinkModelImpl
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -623,6 +701,7 @@ public class FragmentEntryLinkModelImpl
 		return _originalClassNameId;
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -645,6 +724,7 @@ public class FragmentEntryLinkModelImpl
 		return _originalClassPK;
 	}
 
+	@JSON
 	@Override
 	public String getCss() {
 		if (_css == null) {
@@ -660,6 +740,7 @@ public class FragmentEntryLinkModelImpl
 		_css = css;
 	}
 
+	@JSON
 	@Override
 	public String getHtml() {
 		if (_html == null) {
@@ -675,6 +756,7 @@ public class FragmentEntryLinkModelImpl
 		_html = html;
 	}
 
+	@JSON
 	@Override
 	public String getJs() {
 		if (_js == null) {
@@ -690,6 +772,7 @@ public class FragmentEntryLinkModelImpl
 		_js = js;
 	}
 
+	@JSON
 	@Override
 	public String getEditableValues() {
 		if (_editableValues == null) {
@@ -705,6 +788,7 @@ public class FragmentEntryLinkModelImpl
 		_editableValues = editableValues;
 	}
 
+	@JSON
 	@Override
 	public String getNamespace() {
 		if (_namespace == null) {
@@ -720,6 +804,7 @@ public class FragmentEntryLinkModelImpl
 		_namespace = namespace;
 	}
 
+	@JSON
 	@Override
 	public int getPosition() {
 		return _position;
@@ -732,6 +817,7 @@ public class FragmentEntryLinkModelImpl
 		_position = position;
 	}
 
+	@JSON
 	@Override
 	public String getRendererKey() {
 		if (_rendererKey == null) {
@@ -747,6 +833,7 @@ public class FragmentEntryLinkModelImpl
 		_rendererKey = rendererKey;
 	}
 
+	@JSON
 	@Override
 	public Date getLastPropagationDate() {
 		return _lastPropagationDate;
@@ -757,6 +844,7 @@ public class FragmentEntryLinkModelImpl
 		_lastPropagationDate = lastPropagationDate;
 	}
 
+	@JSON
 	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;

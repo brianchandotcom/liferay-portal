@@ -128,10 +128,34 @@ public class DLFileEntryInfoDisplayContributorTest {
 						fileEntry, LocaleUtil.getDefault());
 
 				Assert.assertEquals(
-					StringPool.BLANK, infoDisplayFieldsValues.get("summary"));
+					fileEntry.getUserName(),
+					infoDisplayFieldsValues.get("authorName"));
+				Assert.assertEquals(
+					StringPool.BLANK,
+					infoDisplayFieldsValues.get("authorProfileImage"));
+				Assert.assertEquals(
+					StringPool.BLANK,
+					infoDisplayFieldsValues.get("categories"));
+				Assert.assertEquals(
+					fileEntry.getDescription(),
+					infoDisplayFieldsValues.get("description"));
+				Assert.assertEquals(
+					_dlurlHelper.getDownloadURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK),
+					infoDisplayFieldsValues.get("downloadURL"));
 				Assert.assertEquals(
 					fileEntry.getFileName(),
 					infoDisplayFieldsValues.get("fileName"));
+				Assert.assertEquals(
+					fileEntry.getMimeType(),
+					infoDisplayFieldsValues.get("mimeType"));
+
+				JSONObject previewImageJSONObject =
+					(JSONObject)infoDisplayFieldsValues.get("previewImage");
+
+				Assert.assertEquals(
+					StringPool.BLANK, previewImageJSONObject.getString("url"));
 
 				Format dateFormatDateTime =
 					FastDateFormatFactoryUtil.getDateTime(
@@ -142,42 +166,18 @@ public class DLFileEntryInfoDisplayContributorTest {
 					infoDisplayFieldsValues.get("publishDate"));
 
 				Assert.assertEquals(
-					_dlurlHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK),
-					infoDisplayFieldsValues.get("downloadURL"));
+					TextFormatter.formatStorageSize(
+						fileEntry.getSize(), LocaleUtil.getDefault()),
+					infoDisplayFieldsValues.get("size"));
 				Assert.assertEquals(
-					fileEntry.getDescription(),
-					infoDisplayFieldsValues.get("description"));
+					StringPool.BLANK, infoDisplayFieldsValues.get("summary"));
 				Assert.assertEquals(
-					fileEntry.getMimeType(),
-					infoDisplayFieldsValues.get("mimeType"));
+					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
 				Assert.assertEquals(
 					fileEntry.getTitle(), infoDisplayFieldsValues.get("title"));
 				Assert.assertEquals(
 					fileEntry.getVersion(),
 					infoDisplayFieldsValues.get("version"));
-				Assert.assertEquals(
-					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
-				Assert.assertEquals(
-					StringPool.BLANK,
-					infoDisplayFieldsValues.get("authorProfileImage"));
-				Assert.assertEquals(
-					TextFormatter.formatStorageSize(
-						fileEntry.getSize(), LocaleUtil.getDefault()),
-					infoDisplayFieldsValues.get("size"));
-				Assert.assertEquals(
-					fileEntry.getUserName(),
-					infoDisplayFieldsValues.get("authorName"));
-				Assert.assertEquals(
-					StringPool.BLANK,
-					infoDisplayFieldsValues.get("categories"));
-
-				JSONObject previewImageJSONObject =
-					(JSONObject)infoDisplayFieldsValues.get("previewImage");
-
-				Assert.assertEquals(
-					StringPool.BLANK, previewImageJSONObject.getString("url"));
 			});
 	}
 

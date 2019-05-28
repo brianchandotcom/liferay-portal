@@ -12,6 +12,14 @@
 	/>
 </#if>
 
+<#if stringUtil.equals(language, "ftl")>
+${r"<#assign"}
+	webContentData = jsonFactoryUtil.createJSONObject(${variableData})
+${r"/>"}
+<#else>
+#set ($webContentData = $jsonFactoryUtil.createJSONObject($${variableData}))
+</#if>
+
 <a href="${getVariableReferenceCode(variableFriendlyUrl)}">
-	${getVariableReferenceCode(variableData)}
+	${r"${webContentData.title}"}
 </a>

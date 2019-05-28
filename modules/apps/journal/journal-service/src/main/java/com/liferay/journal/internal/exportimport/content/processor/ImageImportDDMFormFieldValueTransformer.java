@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -79,8 +80,18 @@ public class ImageImportDDMFormFieldValueTransformer
 		for (Locale locale : value.getAvailableLocales()) {
 			String valueString = value.getString(locale);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
+			JSONObject jsonObject = null;
+
+			try {
+				jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+			}
+			catch (JSONException jsone) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to parse JSON", jsone);
+				}
+
+				continue;
+			}
 
 			FileEntry importedFileEntry = fetchImportedFileEntry(
 				_portletDataContext, jsonObject.getLong("fileEntryId"),
@@ -121,22 +132,31 @@ public class ImageImportDDMFormFieldValueTransformer
 			PortletDataContext portletDataContext, long oldClassPK, String uuid)
 		throws PortalException {
 
-		Map<Long, Long> fileEntryPKs =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntry.class);
+		try {
+			Map<Long, Long> fileEntryPKs =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DLFileEntry.class);
 
-		Long classPK = fileEntryPKs.get(oldClassPK);
+			Long classPK = fileEntryPKs.get(oldClassPK);
 
-		if (classPK == null) {
-			if (Validator.isNotNull(uuid)) {
-				return _dlAppService.getFileEntryByUuidAndGroupId(
-					uuid, portletDataContext.getScopeGroupId());
+			if (classPK == null) {
+				if (Validator.isNotNull(uuid)) {
+					return _dlAppService.getFileEntryByUuidAndGroupId(
+						uuid, portletDataContext.getScopeGroupId());
+				}
+
+				return null;
 			}
 
-			return null;
+			return _dlAppService.getFileEntry(classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find file entry", pe);
+			}
 		}
 
-		return _dlAppService.getFileEntry(classPK);
+		return null;
 	}
 
 	protected String toJSON(FileEntry fileEntry, String type, String alt) {

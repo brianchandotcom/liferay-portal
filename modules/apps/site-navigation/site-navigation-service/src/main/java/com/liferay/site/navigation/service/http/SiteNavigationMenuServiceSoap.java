@@ -66,6 +66,27 @@ public class SiteNavigationMenuServiceSoap {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap
 			addSiteNavigationMenu(
+				long groupId, String name, int type, boolean auto,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.site.navigation.model.SiteNavigationMenu returnValue =
+				SiteNavigationMenuServiceUtil.addSiteNavigationMenu(
+					groupId, name, type, auto, serviceContext);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap
+			addSiteNavigationMenu(
 				long groupId, String name, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

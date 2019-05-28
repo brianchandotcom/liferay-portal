@@ -52,7 +52,8 @@ boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 
 		<div class="form-group form-inline input-checkbox-wrapper">
 			<label class="toggle-switch">
-				<input <%= !hasCollision ? "disabled" : "" %> class="toggle-switch-check" data-qa-id="ignorecollision-toggle" id="<%= renderResponse.getNamespace() + "ignoreCollision" %>" name="<%= renderResponse.getNamespace() + "ignoreCollision" %>" onclick="<%= renderResponse.getNamespace() + "ignoreCheck();" %>" type="checkbox">
+				<input <%= !hasCollision ? "disabled" : "" %> class="toggle-switch-check" data-qa-id="ignorecollision-toggle" id="<%= renderResponse.getNamespace() + "ignoreCollision" %>" name="<%= renderResponse.getNamespace() + "ignoreCollision" %>" onclick="<%= renderResponse.getNamespace() + "ignoreCheck();" %>" type="checkbox" />
+
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle"></span>
 				</span>
@@ -95,7 +96,7 @@ boolean hasCollision = changeListsDisplayContext.hasCollision(ctCollectionId);
 		function <portlet:namespace/>submitForm(event) {
 			var form = AUI().one('#<portlet:namespace/>fm');
 
-			Liferay.Util.getOpener().Liferay.fire('<portlet:namespace/>refreshSelectChangeList');
+			Liferay.Util.getOpener().Liferay.fire('<portlet:namespace/>refreshChangeListHistory');
 
 			Liferay.Util.submitForm(form);
 

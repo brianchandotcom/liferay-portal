@@ -120,7 +120,9 @@ definition {
 				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
 				value1 = "${javascriptSnippet}");
 
-			PortletEntry.publish();
+			Button.clickPublish();
+
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 		}
 
 		task ("Export the fragment collection") {

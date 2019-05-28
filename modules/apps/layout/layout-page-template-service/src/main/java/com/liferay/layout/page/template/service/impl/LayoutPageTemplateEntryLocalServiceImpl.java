@@ -18,11 +18,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -744,14 +742,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	protected void validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new LayoutPageTemplateEntryNameException(
-				"Name must not be null for group " + groupId);
+			throw new LayoutPageTemplateEntryNameException.MustNotBeNull(
+				groupId);
 		}
 
 		for (char c : _BLACKLIST_CHAR) {
 			if (name.indexOf(c) >= 0) {
-				throw new LayoutPageTemplateEntryNameException(
-					"Invalid character in name");
+				throw new LayoutPageTemplateEntryNameException.
+					MustNotContainInvalidCharacters(c);
 			}
 		}
 
@@ -759,18 +757,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			LayoutPageTemplateEntry.class.getName(), "name");
 
 		if (name.length() > nameMaxLength) {
-			throw new LayoutPageTemplateEntryNameException(
-				"Maximum length of name exceeded");
+			throw new LayoutPageTemplateEntryNameException.
+				MustNotExceedMaximumSize(nameMaxLength);
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryPersistence.fetchByG_N(groupId, name);
 
 		if (layoutPageTemplateEntry != null) {
-			throw new DuplicateLayoutPageTemplateEntryException(
-				StringBundler.concat(
-					"Duplicate layout page template for group ", groupId,
-					" with name ", name));
+			throw new LayoutPageTemplateEntryNameException.MustNotBeDuplicate(
+				groupId, name);
 		}
 	}
 

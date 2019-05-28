@@ -68,7 +68,7 @@ public class UserGroupsManagementToolbarDisplayContext
 				try {
 					if (GroupPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(),
-							themeDisplay.getScopeGroup(),
+							_userGroupsDisplayContext.getGroupId(),
 							ActionKeys.ASSIGN_MEMBERS)) {
 
 						add(
@@ -88,7 +88,7 @@ public class UserGroupsManagementToolbarDisplayContext
 				try {
 					if (GroupPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(),
-							themeDisplay.getScopeGroupId(),
+							_userGroupsDisplayContext.getGroupId(),
 							ActionKeys.ASSIGN_USER_ROLES)) {
 
 						add(

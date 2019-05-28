@@ -174,7 +174,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_handleChangeListIndicatorBlur(event) {
-		this._handleMouseLeave.bind(this);
+		this._handleChangeListIndicatorMouseLeave.bind(this);
 	}
 
 	/**
@@ -184,7 +184,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_handleChangeListIndicatorFocus(event) {
-		this._handleMouseEnter.bind(this);
+		this._handleChangeListIndicatorMouseEnter.bind(this);
 	}
 
 	/**
@@ -194,7 +194,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_handleChangeListIndicatorMouseClick(event) {
-		this._handleMouseEnter.bind(this);
+		this._handleChangeListIndicatorMouseEnter.bind(this);
 	}
 
 	/**

@@ -182,7 +182,8 @@ renderResponse.setTitle(title);
 									<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 								</liferay-portlet:actionURL>
 
-								<liferay-ui:icon
+								<liferay-ui:icon-delete
+									confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", curCTCollection.getName()) %>'
 									message="delete"
 									url="<%= deleteCollectionURL %>"
 								/>
@@ -410,7 +411,8 @@ renderResponse.setTitle(title);
 													<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 												</liferay-portlet:actionURL>
 
-												<liferay-ui:icon
+												<liferay-ui:icon-delete
+													confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", curCTCollection.getName()) %>'
 													message="delete"
 													url="<%= deleteCollectionURL %>"
 												/>
@@ -433,7 +435,7 @@ renderResponse.setTitle(title);
 
 <script>
 	Liferay.on(
-		'<portlet:namespace/>refreshSelectChangeList',
+		'<portlet:namespace/>refreshChangeListHistory',
 		function(event) {
 			setTimeout(
 				function() {
@@ -441,6 +443,27 @@ renderResponse.setTitle(title);
 				},
 				1000);
 	});
+
+	Liferay.on(
+		'<portlet:namespace/>refreshSelectChangeList',
+		function(event) {
+			setTimeout(
+				function() {
+
+					<%
+					PortletURL refreshURL = PortletURLFactoryUtil.create(request, CTPortletKeys.CHANGE_LISTS, PortletRequest.RENDER_PHASE);
+
+					refreshURL.setParameter("production", "true");
+					%>
+
+					Liferay.Util.navigate('<%= refreshURL.toString() %>');
+				},
+				1000);
+		});
+
+	if (<%= ParamUtil.getBoolean(request, "refresh") %>) {
+		Liferay.fire('<portlet:namespace/>refreshSelectChangeList');
+	}
 
 	function <portlet:namespace/>checkoutCollection(url, message) {
 		var confirmationDisabled = <%= !changeListsDisplayContext.isCheckoutCtCollectionConfirmationEnabled() %>;

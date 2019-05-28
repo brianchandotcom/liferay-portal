@@ -58,7 +58,7 @@ public class UserActionDropdownItemsProvider {
 			{
 				if (GroupPermissionUtil.contains(
 						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 						ActionKeys.ASSIGN_USER_ROLES)) {
 
 					add(_getAssignSiteRolesActionUnsafeConsumer());
@@ -66,13 +66,14 @@ public class UserActionDropdownItemsProvider {
 
 				if (GroupPermissionUtil.contains(
 						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) &&
 					!SiteMembershipPolicyUtil.isMembershipProtected(
 						_themeDisplay.getPermissionChecker(), _user.getUserId(),
-						_themeDisplay.getScopeGroupId()) &&
+						_themeDisplay.getSiteGroupIdOrLiveGroupId()) &&
 					!SiteMembershipPolicyUtil.isMembershipRequired(
-						_user.getUserId(), _themeDisplay.getScopeGroupId())) {
+						_user.getUserId(),
+						_themeDisplay.getSiteGroupIdOrLiveGroupId())) {
 
 					add(_getDeleteGroupUsersActionUnsafeConsumer());
 				}
@@ -90,7 +91,8 @@ public class UserActionDropdownItemsProvider {
 		assignSiteRolesURL.setParameter(
 			"p_u_i_d", String.valueOf(_user.getUserId()));
 		assignSiteRolesURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+			"groupId",
+			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId()));
 		assignSiteRolesURL.setWindowState(LiferayWindowState.POP_UP);
 
 		PortletURL editUserGroupRoleURL = _renderResponse.createActionURL();
@@ -121,7 +123,8 @@ public class UserActionDropdownItemsProvider {
 		deleteGroupUsersURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		deleteGroupUsersURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+			"groupId",
+			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId()));
 		deleteGroupUsersURL.setParameter(
 			"removeUserId", String.valueOf(_user.getUserId()));
 

@@ -457,26 +457,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro rateThumbsDown {
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
-
-		Click(locator1 = "Ratings#THUMB_DOWN");
-	}
-
-	macro rateThumbsUp {
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
-
-		Click(locator1 = "Ratings#THUMB_UP");
-	}
-
 	macro removeSmallImage {
 		Click(locator1 = "Button#REMOVE_IMAGE");
 
@@ -1083,30 +1063,6 @@ definition {
 				locator1 = "BlogsEntry#TITLE",
 				value1 = "${entryTitle}");
 		}
-	}
-
-	macro viewThumbsDown {
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
-
-		AssertTextEquals(
-			locator1 = "Ratings#THUMB_DOWN",
-			value1 = "${voteCount}");
-	}
-
-	macro viewThumbsUp {
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
-
-		AssertTextEquals(
-			locator1 = "Ratings#THUMB_UP",
-			value1 = "${voteCount}");
 	}
 
 	macro viewTitle {

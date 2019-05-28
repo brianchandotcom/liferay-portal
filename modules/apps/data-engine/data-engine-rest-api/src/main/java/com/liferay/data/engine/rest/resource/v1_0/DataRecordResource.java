@@ -41,7 +41,7 @@ public interface DataRecordResource {
 		throws Exception;
 
 	public String getDataRecordCollectionDataRecordExport(
-			Long dataRecordCollectionId)
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception;
 
 	public void deleteDataRecord(Long dataRecordId) throws Exception;

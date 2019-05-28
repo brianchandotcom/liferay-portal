@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -89,6 +90,9 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
+	@Reference
+	private LayoutService _layoutService;
+
 	private class UpdateLayoutPageTemplateEntryAssetTypeCallable
 		implements Callable<Void> {
 
@@ -121,7 +125,7 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 				typeSettingsProperties.setProperty(
 					"assetClassTypeId", String.valueOf(classTypeId));
 
-				_layoutLocalService.updateLayout(
+				_layoutService.updateLayout(
 					draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 					draftLayout.getLayoutId(),
 					typeSettingsProperties.toString());

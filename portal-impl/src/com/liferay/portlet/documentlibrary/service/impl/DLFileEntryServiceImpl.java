@@ -582,10 +582,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public boolean hasFileEntryLock(long fileEntryId) throws PortalException {
-		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-			fileEntryId);
-
-		return dlFileEntry.hasLock();
+		return dlFileEntryLocalService.hasFileEntryLock(
+			getUserId(), fileEntryId);
 	}
 
 	@Override

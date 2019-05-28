@@ -15,6 +15,7 @@
 package com.liferay.layout.type.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.type.controller.test.util.constants.LayoutTypeControllerPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.util.test.PortletKeys;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -72,7 +72,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeAboutPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(_layoutTypePortlet.hasModeAboutPortletId(portletId));
 
@@ -83,7 +84,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeConfigPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(
 			_layoutTypePortlet.hasModeConfigPortletId(portletId));
@@ -95,7 +97,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeEditDefaultsPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(
 			_layoutTypePortlet.hasModeEditDefaultsPortletId(portletId));
@@ -108,7 +111,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeEditGuestPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(
 			_layoutTypePortlet.hasModeEditGuestPortletId(portletId));
@@ -121,7 +125,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeEditPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(_layoutTypePortlet.hasModeEditPortletId(portletId));
 
@@ -132,7 +137,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModeHelpPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(_layoutTypePortlet.hasModeHelpPortletId(portletId));
 
@@ -143,7 +149,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModePreviewPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(
 			_layoutTypePortlet.hasModePreviewPortletId(portletId));
@@ -156,7 +163,8 @@ public class LayoutTypePortletTest {
 
 	@Test
 	public void testAddModePrintPortletId() throws Exception {
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		Assert.assertFalse(_layoutTypePortlet.hasModePrintPortletId(portletId));
 
@@ -171,7 +179,8 @@ public class LayoutTypePortletTest {
 
 		_user = UserTestUtil.addUser(layout.getGroupId());
 
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		LayoutTemplate layoutTemplate = _layoutTypePortlet.getLayoutTemplate();
 
@@ -197,7 +206,8 @@ public class LayoutTypePortletTest {
 
 		_user = UserTestUtil.addUser(layout.getGroupId());
 
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		LayoutTemplate layoutTemplate = _layoutTypePortlet.getLayoutTemplate();
 
@@ -243,7 +253,8 @@ public class LayoutTypePortletTest {
 
 		_user = UserTestUtil.addUser(layout.getGroupId());
 
-		String portletId = PortletKeys.TEST;
+		String portletId =
+			LayoutTypeControllerPortletKeys.LAYOUT_TYPE_CONTROLLER_TEST_PORTLET;
 
 		portletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), portletId);
@@ -262,7 +273,9 @@ public class LayoutTypePortletTest {
 		int initialPortletsSize = initialPortlets.size();
 
 		final String portletId = _layoutTypePortlet.addPortletId(
-			_user.getUserId(), PortletKeys.TEST);
+			_user.getUserId(),
+			LayoutTypeControllerPortletKeys.
+				LAYOUT_TYPE_CONTROLLER_TEST_PORTLET);
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 

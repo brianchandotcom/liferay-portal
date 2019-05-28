@@ -90,15 +90,10 @@ else if (fileEntry != null) {
 }
 
 boolean checkedOut = false;
-boolean hasLock = false;
 boolean pending = false;
-
-com.liferay.portal.kernel.lock.Lock lock = null;
 
 if (fileEntry != null) {
 	checkedOut = fileEntry.isCheckedOut();
-	hasLock = fileEntry.hasLock();
-	lock = fileEntry.getLock();
 	pending = fileVersion.isPending();
 }
 
@@ -155,6 +150,13 @@ if (portletTitleBasedNavigation) {
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<c:if test="<%= checkedOut %>">
+
+		<%
+		boolean hasLock = fileEntry.hasLock();
+
+		Lock lock = fileEntry.getLock();
+		%>
+
 		<c:choose>
 			<c:when test="<%= hasLock %>">
 				<div class="alert alert-success">

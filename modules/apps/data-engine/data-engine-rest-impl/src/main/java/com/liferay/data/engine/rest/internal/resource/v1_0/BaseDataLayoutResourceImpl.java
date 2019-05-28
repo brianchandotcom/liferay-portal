@@ -63,6 +63,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -73,6 +74,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -171,6 +173,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -180,6 +183,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public Page<DataLayout> getSiteDataLayoutPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
 

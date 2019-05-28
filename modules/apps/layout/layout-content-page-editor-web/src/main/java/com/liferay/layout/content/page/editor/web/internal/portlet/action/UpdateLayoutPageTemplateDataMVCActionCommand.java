@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -105,10 +105,9 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				serviceContext.getScopeGroupId(), classNameId, classPK,
-				segmentsExperienceId, data);
+		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
+			serviceContext.getScopeGroupId(), classNameId, classPK,
+			segmentsExperienceId, data);
 
 		String fragmentEntryLinkIdsString = ParamUtil.getString(
 			actionRequest, "fragmentEntryLinkIds");
@@ -133,8 +132,8 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutPageTemplateStructureService
+		_layoutPageTemplateStructureService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -172,7 +172,7 @@ public class StructuredContentResourceImpl
 		List<EntityField> entityFields = null;
 
 		Long contentStructureId = GetterUtil.getLong(
-			(String)multivaluedMap.getFirst("content-structure-id"));
+			(String)multivaluedMap.getFirst("contentStructureId"));
 
 		if (contentStructureId > 0) {
 			DDMStructure ddmStructure = _ddmStructureService.getStructure(

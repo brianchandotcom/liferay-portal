@@ -61,7 +61,8 @@ public class OrganizationsManagementToolbarDisplayContext
 		try {
 			if (!GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup(), ActionKeys.ASSIGN_MEMBERS)) {
+					themeDisplay.getSiteGroupIdOrLiveGroupId(),
+					ActionKeys.ASSIGN_MEMBERS)) {
 
 				return null;
 			}

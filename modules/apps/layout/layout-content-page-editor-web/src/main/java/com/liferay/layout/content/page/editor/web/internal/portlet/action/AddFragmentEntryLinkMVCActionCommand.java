@@ -20,7 +20,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -100,23 +100,19 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				contributedRendererKey = fragmentEntryKey;
 			}
 
-			fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(), classNameId, classPK,
-					fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(), null, StringPool.BLANK, 0,
-					contributedRendererKey, serviceContext);
+			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
+				serviceContext.getScopeGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), null, StringPool.BLANK, 0,
+				contributedRendererKey, serviceContext);
 		}
 		else {
-			fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0, 0, classNameId,
-					classPK, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
-					fragmentEntryKey, serviceContext);
+			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
+				serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
+				serviceContext);
 		}
 
 		long segmentsExperienceId = ParamUtil.getLong(
@@ -215,7 +211,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		_fragmentCollectionContributorTracker;
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

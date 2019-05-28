@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,7 +56,7 @@ public class EditFragmentEntryLinkMVCActionCommand
 		String editableValues = ParamUtil.getString(
 			actionRequest, "editableValues");
 
-		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+		_fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues);
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -66,6 +66,6 @@ public class EditFragmentEntryLinkMVCActionCommand
 	}
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 }

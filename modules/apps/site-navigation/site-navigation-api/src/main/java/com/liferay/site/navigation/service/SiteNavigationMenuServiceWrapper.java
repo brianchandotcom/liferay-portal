@@ -39,6 +39,17 @@ public class SiteNavigationMenuServiceWrapper
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu
 			addSiteNavigationMenu(
+				long groupId, String name, int type, boolean auto,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuService.addSiteNavigationMenu(
+			groupId, name, type, auto, serviceContext);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu
+			addSiteNavigationMenu(
 				long groupId, String name, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

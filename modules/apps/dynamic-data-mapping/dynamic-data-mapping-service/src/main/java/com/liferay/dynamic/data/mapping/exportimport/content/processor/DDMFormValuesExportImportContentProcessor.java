@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.exportimport.content.processor;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
@@ -31,8 +30,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -49,8 +48,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-
-import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
@@ -148,24 +145,6 @@ public class DDMFormValuesExportImportContentProcessor
 			stagedModelDataHandler.getExportableStatuses(), status);
 	}
 
-	private boolean _isReferenceDisposable(
-		PortletDataContext portletDataContext, StagedModel parentStagedModel,
-		long groupId, String uuid) {
-
-		Element parentElement = portletDataContext.getImportDataElement(
-			parentStagedModel);
-
-		Element disposableElement = portletDataContext.getReferenceElement(
-			parentElement, DLFileEntry.class, groupId, uuid,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE);
-
-		if (disposableElement != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesExportImportContentProcessor.class);
 
@@ -202,8 +181,18 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				long groupId = GetterUtil.getLong(jsonObject.get("groupId"));
 				String uuid = jsonObject.getString("uuid");
@@ -212,9 +201,19 @@ public class DDMFormValuesExportImportContentProcessor
 					continue;
 				}
 
-				FileEntry fileEntry =
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+				FileEntry fileEntry = null;
+
+				try {
+					fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to find file entry", pe);
+					}
+
+					continue;
+				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -276,8 +275,18 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				String type = jsonObject.getString("type");
 
@@ -302,30 +311,18 @@ public class DDMFormValuesExportImportContentProcessor
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					DLFileEntry.class);
 
-			long newClassPK = MapUtil.getLong(classPKs, classPK);
+			long newClassPK = MapUtil.getLong(classPKs, classPK, classPK);
 
 			if (newClassPK > 0) {
 				try {
 					return _dlAppLocalService.getFileEntry(newClassPK);
 				}
-				catch (NoSuchFileEntryException nsfee) {
-					Element referenceElement =
-						portletDataContext.getReferenceElement(
-							_stagedModel, DLFileEntry.class,
-							(Serializable)classPK);
-
-					if (PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE.
-							equals(referenceElement.attributeValue("type"))) {
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to find file entry with fileEntryId " +
-									newClassPK,
-								nsfee);
-						}
-					}
-					else {
-						throw nsfee;
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find file entry with file entry ID " +
+								newClassPK,
+							pe);
 					}
 				}
 			}
@@ -339,9 +336,6 @@ public class DDMFormValuesExportImportContentProcessor
 			long groupId = jsonObject.getLong("groupId");
 			String uuid = jsonObject.getString("uuid");
 
-			boolean disposable = _isReferenceDisposable(
-				portletDataContext, _stagedModel, groupId, uuid);
-
 			groupId = MapUtil.getLong(groupIds, groupId, groupId);
 
 			if ((groupId > 0) && Validator.isNotNull(uuid)) {
@@ -349,18 +343,9 @@ public class DDMFormValuesExportImportContentProcessor
 					return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 				}
-				catch (NoSuchFileEntryException nsfee) {
-					if (disposable || (newClassPK == 0)) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Unable to find file entry with uuid ",
-									uuid, " and groupId ", groupId),
-								nsfee);
-						}
-					}
-					else {
-						throw nsfee;
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to find file entry", pe);
 					}
 				}
 			}
@@ -415,8 +400,18 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
 				String className = GetterUtil.getString(
@@ -430,6 +425,10 @@ public class DDMFormValuesExportImportContentProcessor
 
 				JournalArticle journalArticle =
 					_journalArticleLocalService.fetchLatestArticle(classPK);
+
+				if (journalArticle == null) {
+					continue;
+				}
 
 				jsonObject.put(
 					"groupId", journalArticle.getGroupId()
@@ -497,8 +496,18 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				JournalArticle journalArticle = fetchJournalArticle(jsonObject);
 
@@ -521,7 +530,7 @@ public class DDMFormValuesExportImportContentProcessor
 				(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
 					JournalArticle.class);
 
-			long newClassPK = MapUtil.getLong(classPKs, classPK);
+			long newClassPK = MapUtil.getLong(classPKs, classPK, classPK);
 
 			if (newClassPK > 0) {
 				try {
@@ -529,23 +538,11 @@ public class DDMFormValuesExportImportContentProcessor
 						newClassPK);
 				}
 				catch (NoSuchArticleException nsae) {
-					Element referenceElement =
-						_portletDataContext.getReferenceElement(
-							_stagedModel, JournalArticle.class,
-							(Serializable)classPK);
-
-					if (PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE.
-							equals(referenceElement.attributeValue("type"))) {
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to find journal article with " +
-									"primaryKey " + newClassPK,
-								nsae);
-						}
-					}
-					else {
-						throw nsae;
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find journal article with primary key " +
+								newClassPK,
+							nsae);
 					}
 				}
 			}
@@ -559,7 +556,7 @@ public class DDMFormValuesExportImportContentProcessor
 				(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
 					Group.class);
 
-			groupId = MapUtil.getLong(groupIds, groupId);
+			groupId = MapUtil.getLong(groupIds, groupId, groupId);
 
 			return _journalArticleLocalService.
 				fetchJournalArticleByUuidAndGroupId(uuid, groupId);
@@ -595,11 +592,21 @@ public class DDMFormValuesExportImportContentProcessor
 				String valueString = value.getString(locale);
 
 				if (Validator.isNull(valueString)) {
-					return;
+					continue;
 				}
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				long groupId = GetterUtil.getLong(jsonObject.get("groupId"));
 				long layoutId = GetterUtil.getLong(
@@ -650,8 +657,18 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+				}
+				catch (JSONException jsone) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsone);
+					}
+
+					continue;
+				}
 
 				Layout importedLayout = fetchImportedLayout(
 					_portletDataContext, jsonObject);

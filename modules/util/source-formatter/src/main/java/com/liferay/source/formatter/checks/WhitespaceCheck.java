@@ -24,6 +24,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +94,51 @@ public class WhitespaceCheck extends BaseFileCheck {
 					line, incorrectSyntax, correctSyntax, x);
 			}
 		}
+	}
+
+	protected String formatSelfClosingTags(String line) {
+		Matcher matcher = _selfClosingTagsPattern.matcher(line);
+
+		while (matcher.find()) {
+			int level = 1;
+
+			for (int x = matcher.end(); x < line.length(); x++) {
+				if (ToolsUtil.isInsideQuotes(line, x)) {
+					continue;
+				}
+
+				char c = line.charAt(x);
+
+				if (c == CharPool.LESS_THAN) {
+					level++;
+				}
+				else if (c == CharPool.GREATER_THAN) {
+					level--;
+				}
+
+				if (level != 0) {
+					continue;
+				}
+
+				if (Objects.equals(line.substring(x - 2, x), " /")) {
+					break;
+				}
+
+				char previousChar = line.charAt(x - 1);
+
+				if (previousChar == CharPool.SPACE) {
+					return StringUtil.insert(line, StringPool.SLASH, x);
+				}
+
+				if (previousChar == CharPool.SLASH) {
+					return StringUtil.insert(line, StringPool.SPACE, x - 1);
+				}
+
+				return StringUtil.insert(line, " /", x);
+			}
+		}
+
+		return line;
 	}
 
 	protected String formatWhitespace(
@@ -331,5 +377,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 	private static final String _ALLOW_TRAILING_DOUBLE_SPACE_KEY =
 		"allowTrailingDoubleSpace";
+
+	private static final Pattern _selfClosingTagsPattern = Pattern.compile(
+		"<(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|" +
+			"param|source|track|wbr)(?!( />|\\w))");
 
 }

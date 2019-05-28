@@ -15,10 +15,9 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
+import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,8 +61,6 @@ public class UpdateLayoutPrototypeMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			long layoutPrototypeId = ParamUtil.getLong(
 				actionRequest, "layoutPrototypeId");
@@ -83,41 +80,45 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			jsonObject.put("redirectURL", redirect);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirect));
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(t, t);
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			if (t instanceof LayoutPageTemplateEntryNameException) {
+				LayoutPageTemplateEntryNameException lptene =
+					(LayoutPageTemplateEntryNameException)t;
 
-			String errorMessage = "an-unexpected-error-occurred";
-
-			Throwable cause = t.getCause();
-
-			if (cause instanceof LayoutPageTemplateEntryNameException) {
-				errorMessage = "please-enter-a-valid-name";
+				_layoutPageTemplateEntryExceptionRequestHandler.
+					handlePortalException(
+						actionRequest, actionResponse, lptene);
 			}
-			else if (cause instanceof
-						DuplicateLayoutPageTemplateEntryException) {
+			else {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				errorMessage =
-					"a-page-template-entry-with-that-name-already-exists";
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"an-unexpected-error-occurred")));
 			}
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateLayoutPrototypeMVCActionCommand.class);
+
+	@Reference
+	private LayoutPageTemplateEntryExceptionRequestHandler
+		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPrototypeService _layoutPrototypeService;

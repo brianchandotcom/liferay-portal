@@ -209,9 +209,7 @@ definition {
 			for (var dmDocumentFile : list "${dmDocumentFileList}") {
 				var key_dmDocumentFile = "${dmDocumentFile}";
 
-				AssertClick(
-					locator1 = "Button#SELECT_FILES",
-					value1 = "Select Files");
+				AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 				if ("${uploadTempFile}" == "true") {
 					SikuliUploadTempFile(
@@ -886,7 +884,7 @@ definition {
 
 		KeyPress(
 			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = "\RETURN");
+			value1 = ",");
 
 		Button.clickSave();
 

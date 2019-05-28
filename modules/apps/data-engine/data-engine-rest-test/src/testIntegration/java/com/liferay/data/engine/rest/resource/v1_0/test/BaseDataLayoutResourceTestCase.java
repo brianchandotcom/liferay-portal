@@ -14,7 +14,9 @@
 
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -105,10 +107,16 @@ public abstract class BaseDataLayoutResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -126,9 +134,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -155,7 +169,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 			Page<DataLayout> page =
 				DataLayoutResource.getDataDefinitionDataLayoutsPage(
-					irrelevantDataDefinitionId, Pagination.of(1, 2));
+					irrelevantDataDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -175,7 +189,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page =
 			DataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, Pagination.of(1, 2));
+				dataDefinitionId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -206,7 +220,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page1 =
 			DataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, Pagination.of(1, 2));
+				dataDefinitionId, null, Pagination.of(1, 2));
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
@@ -214,7 +228,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page2 =
 			DataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, Pagination.of(2, 2));
+				dataDefinitionId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -352,7 +366,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDataLayout());
 
 			Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -369,7 +383,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			siteId, randomDataLayout());
 
 		Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
-			siteId, Pagination.of(1, 2));
+			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -393,14 +407,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 			siteId, randomDataLayout());
 
 		Page<DataLayout> page1 = DataLayoutResource.getSiteDataLayoutPage(
-			siteId, Pagination.of(1, 2));
+			siteId, null, Pagination.of(1, 2));
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
 		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
 
 		Page<DataLayout> page2 = DataLayoutResource.getSiteDataLayoutPage(
-			siteId, Pagination.of(2, 2));
+			siteId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 

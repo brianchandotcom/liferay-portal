@@ -44,7 +44,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	</c:if>
 
 	<aui:fieldset>
-		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="offer-new-pages-to-this-menu" name="auto" type="checkbox" />
+		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="when-creating-a-new-page,-the-page-will-be-automatically-added-to-this-menu-unless-the-user-deselects-it" name="auto" type="checkbox" />
 	</aui:fieldset>
 
 	<aui:button-row>

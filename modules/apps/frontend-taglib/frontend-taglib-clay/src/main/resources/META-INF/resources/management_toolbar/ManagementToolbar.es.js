@@ -39,7 +39,7 @@ class ManagementToolbar extends ClayComponent {
 				const select = searchContainer.select;
 
 				if (
-					select.getAllSelectedElements &&
+					select && select.getAllSelectedElements &&
 					select.getCurrentPageElements &&
 					select.getCurrentPageSelectedElements
 				) {

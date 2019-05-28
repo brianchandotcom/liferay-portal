@@ -115,11 +115,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_VOTES</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

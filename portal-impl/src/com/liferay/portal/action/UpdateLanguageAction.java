@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -112,7 +113,18 @@ public class UpdateLanguageAction implements Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (isGroupFriendlyURL(layout.getGroup(), layout, layoutURL, locale)) {
+		if (isFriendlyURLResolver(layoutURL)) {
+			redirect = layoutURL;
+
+			if (themeDisplay.isI18n()) {
+				String i18nPath = themeDisplay.getI18nPath();
+
+				redirect = redirect.substring(i18nPath.length());
+			}
+		}
+		else if (isGroupFriendlyURL(
+					layout.getGroup(), layout, layoutURL, locale)) {
+
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;
 
@@ -150,6 +162,19 @@ public class UpdateLanguageAction implements Action {
 		httpServletResponse.sendRedirect(redirect);
 
 		return null;
+	}
+
+	protected boolean isFriendlyURLResolver(String layoutURL) {
+		String[] urlSeparators =
+			FriendlyURLResolverRegistryUtil.getURLSeparators();
+
+		for (String urlSeparator : urlSeparators) {
+			if (layoutURL.contains(urlSeparator)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean isGroupFriendlyURL(

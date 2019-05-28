@@ -70,12 +70,10 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 	<aui:input name="fragmentCollectionId" type="hidden" />
 </aui:form>
 
-<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<liferay-frontend:component
-		componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-		module="js/FragmentEntryDropdownDefaultEventHandler.es"
-	/>
-</c:if>
+<liferay-frontend:component
+	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/FragmentEntryDropdownDefaultEventHandler.es"
+/>
 
 <liferay-frontend:component
 	componentId="<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"

@@ -14,12 +14,12 @@
 
 package com.liferay.layout.admin.web.internal.handler;
 
-import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -49,32 +49,54 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			themeDisplay.getLocale(),
+			LayoutPageTemplateEntryExceptionRequestHandler.class);
 
-		if (pe instanceof LayoutPageTemplateEntryNameException) {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "please-enter-a-valid-name"));
+		String errorMessage = "an-unexpected-error-occurred";
+
+		if (pe instanceof
+				LayoutPageTemplateEntryNameException.MustNotBeDuplicate) {
+
+			errorMessage = LanguageUtil.get(
+				resourceBundle,
+				"a-page-template-entry-with-that-name-already-exists");
 		}
-		else {
-			String errorMessage = "an-unexpected-error-occurred";
+		else if (pe instanceof
+					LayoutPageTemplateEntryNameException.MustNotBeNull) {
 
-			if (pe instanceof DuplicateLayoutPageTemplateEntryException) {
-				errorMessage =
-					"a-page-template-entry-with-that-name-already-exists";
-			}
+			errorMessage = LanguageUtil.get(
+				resourceBundle, "name-must-not-be-empty");
+		}
+		else if (pe instanceof
+					LayoutPageTemplateEntryNameException.
+						MustNotContainInvalidCharacters) {
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(),
-				LayoutPageTemplateEntryExceptionRequestHandler.class);
+			LayoutPageTemplateEntryNameException.MustNotContainInvalidCharacters
+				lptene =
+					(LayoutPageTemplateEntryNameException.
+						MustNotContainInvalidCharacters)pe;
 
-			jsonObject.put(
-				"error", LanguageUtil.get(resourceBundle, errorMessage));
+			errorMessage = LanguageUtil.format(
+				resourceBundle,
+				"name-cannot-contain-the-following-invalid-character-x",
+				lptene.character);
+		}
+		else if (pe instanceof
+					LayoutPageTemplateEntryNameException.
+						MustNotExceedMaximumSize) {
+
+			int nameMaxLength = ModelHintsUtil.getMaxLength(
+				LayoutPageTemplateEntry.class.getName(), "name");
+
+			errorMessage = LanguageUtil.format(
+				resourceBundle,
+				"please-enter-a-name-with-fewer-than-x-characters",
+				nameMaxLength);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			actionRequest, actionResponse, JSONUtil.put("error", errorMessage));
 	}
 
 }

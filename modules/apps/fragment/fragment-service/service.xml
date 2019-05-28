@@ -144,7 +144,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="FragmentEntryLink" remote-service="false" uuid="true">
+	<entity local-service="true" name="FragmentEntryLink" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

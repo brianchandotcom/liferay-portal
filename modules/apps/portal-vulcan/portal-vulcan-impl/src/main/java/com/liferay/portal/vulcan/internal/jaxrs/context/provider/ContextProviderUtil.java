@@ -46,7 +46,7 @@ public class ContextProviderUtil {
 				(EntityModelResource)matchedResource;
 
 			return entityModelResource.getEntityModel(
-				_getQueryParameters(message));
+				_getPathParameters(message));
 		}
 
 		return null;
@@ -72,12 +72,12 @@ public class ContextProviderUtil {
 		return resourceContext.getResource(matchedResourceClass);
 	}
 
-	private static MultivaluedMap<String, String> _getQueryParameters(
+	private static MultivaluedMap<String, String> _getPathParameters(
 		Message message) {
 
 		UriInfoImpl uriInfo = new UriInfoImpl(message);
 
-		return uriInfo.getQueryParameters();
+		return uriInfo.getPathParameters();
 	}
 
 }

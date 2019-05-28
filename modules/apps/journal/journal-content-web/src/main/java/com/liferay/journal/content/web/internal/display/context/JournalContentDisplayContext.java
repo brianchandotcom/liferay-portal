@@ -306,6 +306,32 @@ public class JournalContentDisplayContext {
 		return assetRendererFactory.getAssetRenderer(article, 0);
 	}
 
+	public List<ContentMetadataAssetAddonEntry>
+		getCommentsContentMetadataAssetAddonEntries() {
+
+		List commentsContentMetadataAssetAddonEntries = new ArrayList();
+
+		ContentMetadataAssetAddonEntry
+			enableCommentsContentMetadataAssetAddonEntry =
+				getContentMetadataAssetAddonEntry("enableComments");
+
+		if (enableCommentsContentMetadataAssetAddonEntry != null) {
+			commentsContentMetadataAssetAddonEntries.add(
+				enableCommentsContentMetadataAssetAddonEntry);
+		}
+
+		ContentMetadataAssetAddonEntry
+			enableCommentRatingsContentMetadataAssetAddonEntry =
+				getContentMetadataAssetAddonEntry("enableCommentRatings");
+
+		if (enableCommentRatingsContentMetadataAssetAddonEntry != null) {
+			commentsContentMetadataAssetAddonEntries.add(
+				enableCommentRatingsContentMetadataAssetAddonEntry);
+		}
+
+		return commentsContentMetadataAssetAddonEntries;
+	}
+
 	public ContentMetadataAssetAddonEntry getContentMetadataAssetAddonEntry(
 		String key) {
 

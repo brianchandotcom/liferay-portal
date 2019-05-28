@@ -62,10 +62,14 @@ public class AsahFaroBackendJSONObjectMapper {
 
 		JsonNode pageJsonNode = responseJsonNode.get("page");
 
-		PageMetadata pageMetadata = _objectMapper.treeToValue(
-			pageJsonNode, PageMetadata.class);
+		if (pageJsonNode != null) {
+			PageMetadata pageMetadata = _objectMapper.treeToValue(
+				pageJsonNode, PageMetadata.class);
 
-		return new Results<>(items, (int)pageMetadata.getTotalElements());
+			return new Results<>(items, (int)pageMetadata.getTotalElements());
+		}
+
+		return new Results<>(items, items.size());
 	}
 
 	private AsahFaroBackendJSONObjectMapper() {

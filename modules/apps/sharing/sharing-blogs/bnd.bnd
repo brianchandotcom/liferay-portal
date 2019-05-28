@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Sharing Blogs
+Bundle-SymbolicName: com.liferay.sharing.blogs
+Bundle-Version: 1.0.0
+Web-ContextPath: /sharing-blogs

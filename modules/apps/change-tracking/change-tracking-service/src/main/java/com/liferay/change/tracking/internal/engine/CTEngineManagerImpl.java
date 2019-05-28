@@ -498,41 +498,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			queryDefinition.getOrderByComparator());
 	}
 
-	private void _copyEntriesFromProduction(CTCollection ctCollection) {
-		Optional<CTCollection> productionCTCollectionOptional =
-			getProductionCTCollectionOptional(ctCollection.getCompanyId());
-
-		List<CTEntry> productionCTEntries = productionCTCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).map(
-			this::getCTEntries
-		).orElse(
-			Collections.emptyList()
-		);
-
-		for (CTEntry ctEntry : productionCTEntries) {
-			_ctCollectionLocalService.addCTEntryCTCollection(
-				ctEntry.getCtEntryId(), ctCollection);
-		}
-
-		List<CTEntryAggregate> productionCTEntryAggregates =
-			productionCTCollectionOptional.map(
-				CTCollection::getCtCollectionId
-			).map(
-				this::getCTEntryAggregates
-			).orElse(
-				Collections.emptyList()
-			);
-
-		for (CTEntryAggregate productionCTEntryAggregate :
-				productionCTEntryAggregates) {
-
-			_ctCollectionLocalService.addCTEntryAggregateCTCollection(
-				productionCTEntryAggregate.getCtEntryAggregateId(),
-				ctCollection);
-		}
-	}
-
 	private Optional<CTCollection> _createCTCollection(
 			long userId, String name, String description)
 		throws CTEngineException {
@@ -542,15 +507,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		try {
 			ctCollection = TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				() -> {
-					CTCollection addedCTCollection =
-						_ctCollectionLocalService.addCTCollection(
-							userId, name, description, new ServiceContext());
-
-					_copyEntriesFromProduction(addedCTCollection);
-
-					return addedCTCollection;
-				});
+				() -> _ctCollectionLocalService.addCTCollection(
+					userId, name, description, new ServiceContext()));
 		}
 		catch (CTCollectionDescriptionException ctcde) {
 			throw new CTCollectionDescriptionCTEngineException(

@@ -80,7 +80,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -111,7 +111,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -136,7 +136,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -202,7 +202,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -227,7 +227,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -258,7 +258,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -283,7 +283,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -314,7 +314,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -333,7 +333,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -364,7 +364,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -389,7 +389,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -420,7 +420,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -445,7 +445,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -476,7 +476,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -501,7 +501,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -532,7 +532,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -551,7 +551,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -582,7 +582,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -607,7 +607,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor, Mockito.never()
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 
@@ -638,7 +638,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.verify(
 			_amAsyncProcessor
 		).triggerProcess(
-			_fileVersion, String.valueOf(_fileVersion.getFileVersionId())
+			Mockito.any(FileVersion.class), Mockito.anyString()
 		);
 	}
 

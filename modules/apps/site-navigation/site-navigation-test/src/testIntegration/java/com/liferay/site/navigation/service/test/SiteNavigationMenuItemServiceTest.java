@@ -129,7 +129,7 @@ public class SiteNavigationMenuItemServiceTest {
 
 	@Test
 	public void testGetSiteNavigationMenuItems() throws PortalException {
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+		List<SiteNavigationMenuItem> originalSiteNavigationMenuItems =
 			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
 				_siteNavigationMenu.getSiteNavigationMenuId());
 
@@ -139,7 +139,7 @@ public class SiteNavigationMenuItemServiceTest {
 		SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
 			_siteNavigationMenu);
 
-		List<SiteNavigationMenuItem> persistedSiteNavigationMenuItems =
+		List<SiteNavigationMenuItem> actualSiteNavigationMenuItems =
 			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
 				_siteNavigationMenu.getSiteNavigationMenuId());
 

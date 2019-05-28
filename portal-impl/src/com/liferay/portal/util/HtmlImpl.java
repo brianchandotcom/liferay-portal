@@ -206,14 +206,14 @@ public class HtmlImpl implements Html {
 			return StringPool.BLANK;
 		}
 
+		if (mode == ESCAPE_MODE_ATTRIBUTE) {
+			return escapeAttribute(text);
+		}
+
 		String prefix = StringPool.BLANK;
 		String postfix = StringPool.BLANK;
 
-		if (mode == ESCAPE_MODE_ATTRIBUTE) {
-			prefix = "&#x";
-			postfix = StringPool.SEMICOLON;
-		}
-		else if (mode == ESCAPE_MODE_CSS) {
+		if (mode == ESCAPE_MODE_CSS) {
 			prefix = StringPool.BACK_SLASH;
 		}
 		else if (mode == ESCAPE_MODE_JS) {

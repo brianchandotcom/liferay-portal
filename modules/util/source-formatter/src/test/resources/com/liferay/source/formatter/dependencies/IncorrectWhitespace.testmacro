@@ -1,5 +1,14 @@
 definition {
 
+	/*
+
+		This is the multiline comments:
+		We should ignore all SF rules here.
+
+		Navigator.correctLine() ;
+
+	*/
+
 	test AddUser {
 		Refresh()	 ;
 
@@ -40,7 +49,7 @@ definition {
 			''';
 
 		Site.editGoogleAnalyticsIDCP(
-			googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//'''
+			googleAnalyticsID = '''']) ;alert(/googleAnalyticsId/);//'''
 		);
 	}
 

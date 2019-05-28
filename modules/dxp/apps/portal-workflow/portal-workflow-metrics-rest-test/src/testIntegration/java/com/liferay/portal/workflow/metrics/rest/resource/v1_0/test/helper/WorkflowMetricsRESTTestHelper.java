@@ -133,7 +133,7 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
-				companyId, process.getId(), "1.0", process.getTitle()));
+				companyId, process.getId(), process.getTitle(), "1.0"));
 
 		Long onTimeInstanceCount = process.getOnTimeInstanceCount();
 		Long overdueInstanceCount = process.getOverdueInstanceCount();
@@ -220,7 +220,7 @@ public class WorkflowMetricsRESTTestHelper {
 	public void deleteProcess(long companyId, long processId) throws Exception {
 		deleteProcess(
 			_createWorkflowMetricsProcessDocument(
-				companyId, processId, "1.0", null));
+				companyId, processId, null, "1.0"));
 	}
 
 	public void deleteTask(long companyId, long processId, String taskName)
@@ -274,7 +274,7 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeUpdateDocument(
 			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
-				companyId, processId, version, null));
+				companyId, processId, null, version));
 
 		_retryAssertCount("workflow-metrics-processes", "processId", processId);
 	}
@@ -330,7 +330,7 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _createWorkflowMetricsProcessDocument(
-		long companyId, long processId, String version, String title) {
+		long companyId, long processId, String title, String version) {
 
 		Document document = new DocumentImpl();
 

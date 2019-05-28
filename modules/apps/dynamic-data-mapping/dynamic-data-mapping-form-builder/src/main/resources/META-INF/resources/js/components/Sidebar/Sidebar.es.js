@@ -167,9 +167,7 @@ class Sidebar extends Component {
 	}
 
 	isActionsDisabled() {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-
-		return defaultLanguageId !== editingLanguageId;
+		return false;
 	}
 
 	isChangeFieldTypeEnabled() {
@@ -177,12 +175,7 @@ class Sidebar extends Component {
 	}
 
 	isFieldReadOnly({localizable, type}) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-
-		return (
-			defaultLanguageId !== editingLanguageId &&
-			(!localizable || type === 'validation')
-		);
+		return false;
 	}
 
 	open() {

@@ -1243,8 +1243,6 @@ definition {
 
 		DMDocument.viewDocumentToolbarCmdPG();
 
-		Click(locator1 = "Icon#INFO");
-
 		DMDocument.viewDocumentAuthorCmdPG(dmDocumentAuthor = "${dmDocumentAuthor}");
 
 		if (isSet(commentBody)) {
@@ -1703,7 +1701,7 @@ definition {
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
-		
+
 		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");

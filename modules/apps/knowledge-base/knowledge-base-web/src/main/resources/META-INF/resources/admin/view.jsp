@@ -146,7 +146,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							KBFolder kbFolder = (KBFolder)kbObject;
 
-							rowData.put("actions", String.join(StringPool.COMMA, kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder)));
+							rowData.put("actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder)));
 
 							row.setData(rowData);
 
@@ -230,7 +230,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							KBArticle kbArticle = (KBArticle)kbObject;
 
-							rowData.put("actions", String.join(StringPool.COMMA, kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle)));
+							rowData.put("actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle)));
 
 							row.setData(rowData);
 

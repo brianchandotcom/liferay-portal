@@ -174,7 +174,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 					<%
 					Map<String, Object> rowData = new HashMap<>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, wikiPagesManagementToolbarDisplayContext.getAvailableActions(curPage)));
+					rowData.put("actions", StringUtil.merge(wikiPagesManagementToolbarDisplayContext.getAvailableActions(curPage)));
 
 					row.setData(rowData);
 

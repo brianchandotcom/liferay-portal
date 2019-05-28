@@ -150,7 +150,9 @@ public abstract class BaseFragmentCollectionContributor
 		JSONObject jsonObject = _getStructure(path + "/fragment.json");
 
 		String name = jsonObject.getString("name");
-		String fragmentEntryKey = _getFragmentEntryKey(jsonObject);
+		String fragmentEntryKey = StringBundler.concat(
+			getFragmentCollectionKey(), StringPool.DASH,
+			jsonObject.getString("fragmentEntryKey"));
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
@@ -171,13 +173,6 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setImagePreviewURL(thumbnailURL);
 
 		return fragmentEntry;
-	}
-
-	private String _getFragmentEntryKey(JSONObject jsonObject) {
-		String fragmentEntryKey = jsonObject.getString("fragmentEntryKey");
-
-		return String.join(
-			StringPool.DASH, getFragmentCollectionKey(), fragmentEntryKey);
 	}
 
 	private String _getImagePreviewURL(String fileName) {

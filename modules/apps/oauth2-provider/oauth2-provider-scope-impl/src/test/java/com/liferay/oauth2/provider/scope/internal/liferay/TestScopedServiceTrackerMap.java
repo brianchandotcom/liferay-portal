@@ -14,6 +14,8 @@
 
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class TestScopedServiceTrackerMap<T> {
 		String companyIdString = String.valueOf(companyId);
 
 		T services = _servicesByCompanyAndKey.get(
-			String.join("-", companyIdString, key));
+			StringBundler.concat(companyIdString, "-", key));
 
 		if (services != null) {
 			return services;
@@ -54,7 +56,8 @@ public class TestScopedServiceTrackerMap<T> {
 	public void setService(long companyId, String key, T service) {
 		String companyIdString = String.valueOf(companyId);
 
-		String companyIdKeyString = String.join("-", companyIdString, key);
+		String companyIdKeyString = StringBundler.concat(
+			companyIdString, "-", key);
 
 		_servicesByCompanyAndKey.put(companyIdKeyString, service);
 	}

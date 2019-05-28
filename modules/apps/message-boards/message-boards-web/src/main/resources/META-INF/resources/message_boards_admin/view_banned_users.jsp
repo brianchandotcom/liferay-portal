@@ -69,7 +69,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, mbBannedUsersManagementToolbarDisplayContext.getAvailableActions(ban)));
+				rowData.put("actions", StringUtil.merge(mbBannedUsersManagementToolbarDisplayContext.getAvailableActions(ban)));
 
 				row.setData(rowData);
 				%>

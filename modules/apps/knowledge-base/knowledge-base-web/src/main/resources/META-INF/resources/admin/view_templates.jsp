@@ -61,7 +61,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 					<%
 					Map<String, Object> rowData = new HashMap<String, Object>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate)));
+					rowData.put("actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate)));
 
 					row.setData(rowData);
 					%>

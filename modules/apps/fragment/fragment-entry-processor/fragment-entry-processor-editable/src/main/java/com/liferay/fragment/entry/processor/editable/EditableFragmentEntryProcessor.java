@@ -408,7 +408,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				resourceBundle,
 				"you-must-define-all-require-attributes-x-for-each-editable-" +
 					"element",
-				String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTE_NAMES)));
+				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
 	}
 
 	private void _validateAttributes(String html)

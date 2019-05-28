@@ -848,7 +848,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 		serviceContext.setAttribute(
 			"dlFileEntryTypesSearchContainerPrimaryKeys",
-			String.join(StringPool.COMMA, dlFileEntryTypeMap.keySet()));
+			StringUtil.merge(dlFileEntryTypeMap.keySet()));
 
 		dlFileEntryTypeMap.forEach(
 			(dlFileEntryType, workflowDefinition) ->

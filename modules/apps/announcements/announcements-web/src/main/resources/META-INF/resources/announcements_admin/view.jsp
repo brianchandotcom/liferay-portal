@@ -105,7 +105,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry)));
+				rowData.put("actions", StringUtil.merge(announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry)));
 
 				row.setData(rowData);
 

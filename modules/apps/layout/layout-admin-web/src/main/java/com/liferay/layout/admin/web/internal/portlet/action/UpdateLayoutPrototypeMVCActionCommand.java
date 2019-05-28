@@ -17,8 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,8 +61,6 @@ public class UpdateLayoutPrototypeMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			long layoutPrototypeId = ParamUtil.getLong(
 				actionRequest, "layoutPrototypeId");
@@ -83,7 +80,9 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			jsonObject.put("redirectURL", redirect);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirect));
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -103,16 +102,15 @@ public class UpdateLayoutPrototypeMVCActionCommand
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"an-unexpected-error-occurred"));
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"an-unexpected-error-occurred")));
 			}
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

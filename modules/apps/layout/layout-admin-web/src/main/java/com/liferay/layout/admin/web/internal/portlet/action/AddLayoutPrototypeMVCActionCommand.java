@@ -21,8 +21,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -127,8 +126,6 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		Callable<LayoutPrototype> addLayoutPrototypeCallable =
 			new AddLayoutPrototypeCallable(actionRequest);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			LayoutPrototype layoutPrototype = TransactionInvokerUtil.invoke(
 				_transactionConfig, addLayoutPrototypeCallable);
@@ -145,7 +142,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 					redirectURL, "p_l_back_url", backURL);
 			}
 
-			jsonObject.put("redirectURL", redirectURL);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirectURL));
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -153,11 +152,13 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (t instanceof LayoutNameException) {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"please-enter-a-valid-name"));
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"please-enter-a-valid-name")));
 			}
 			else if (t instanceof LayoutPageTemplateEntryNameException) {
 				LayoutPageTemplateEntryNameException lptene =
@@ -168,16 +169,15 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, actionResponse, lptene);
 			}
 			else {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						themeDisplay.getRequest(),
-						"an-unexpected-error-occurred"));
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"error",
+						LanguageUtil.get(
+							themeDisplay.getRequest(),
+							"an-unexpected-error-occurred")));
 			}
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

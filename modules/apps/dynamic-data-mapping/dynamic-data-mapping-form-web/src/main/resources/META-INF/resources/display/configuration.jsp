@@ -104,7 +104,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								>
 
 									<%
-									buffer.append(StringUtil.shorten(HtmlUtil.escape(formInstance.getDescription(locale), 100)));
+									buffer.append(StringUtil.shorten(HtmlUtil.escape(formInstance.getDescription(locale)), 100));
 									%>
 
 								</liferay-ui:search-container-column-text>

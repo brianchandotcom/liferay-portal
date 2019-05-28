@@ -101,15 +101,17 @@ public class WhitespaceCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			int deep = 1;
 
-			char c;
-
 			for (int x = matcher.end(); x < line.length(); x++) {
-				c = line.charAt(x);
+				char c = line.charAt(x);
 
-				if ((c == '<') && !ToolsUtil.isInsideQuotes(line, x)) {
+				if ((c == CharPool.LESS_THAN) &&
+					!ToolsUtil.isInsideQuotes(line, x)) {
+
 					deep++;
 				}
-				else if ((c == '>') && !ToolsUtil.isInsideQuotes(line, x)) {
+				else if ((c == CharPool.GREATER_THAN) &&
+						 !ToolsUtil.isInsideQuotes(line, x)) {
+
 					deep--;
 				}
 
@@ -117,17 +119,17 @@ public class WhitespaceCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if ((line.charAt(x - 2) == ' ') &&
-					(line.charAt(x - 1) == '/')) {
+				if ((line.charAt(x - 2) == CharPool.SPACE) &&
+					(line.charAt(x - 1) == CharPool.SLASH)) {
 
 					break;
 				}
 
-				if (line.charAt(x - 1) == ' ') {
-					line = StringUtil.insert(line, "/", x);
+				if (line.charAt(x - 1) == CharPool.SPACE) {
+					line = StringUtil.insert(line, StringPool.SLASH, x);
 				}
-				else if (line.charAt(x - 1) == '/') {
-					line = StringUtil.insert(line, " ", x - 1);
+				else if (line.charAt(x - 1) == CharPool.SLASH) {
+					line = StringUtil.insert(line, StringPool.SPACE, x - 1);
 				}
 				else {
 					line = StringUtil.insert(line, " /", x);

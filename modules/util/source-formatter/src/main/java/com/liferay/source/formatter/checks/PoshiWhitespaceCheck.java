@@ -138,13 +138,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 			}
 		}
 
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
+		return sb.toString();
 	}
 
 	private String _formatWhitespaceOnCommand(String content) {

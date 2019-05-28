@@ -19,9 +19,9 @@ AUI.add(
 				instance.emptySearchEnabled = false;
 			}
 
-			instance.resetStartPage = instance.form.one('.search-bar-reset-start-page');
-
 			instance.keywordsInput = instance.form.one('.search-bar-keywords-input');
+
+			instance.resetStartPage = instance.form.one('.search-bar-reset-start-page');
 
 			instance.scopeSelect = instance.form.one('.search-bar-scope-select');
 
@@ -82,13 +82,29 @@ AUI.add(
 						);
 					}
 
+					if (hasQuestionMark) {
+						var parts = queryString.split('?');
+						queryString = parts[1];
+						hasQuestionMark = false;
+					}
+					var parameterArray = queryString.split('&');
+
+					parameterArray = FacetUtil.removeURLParameters(
+						'start',
+						parameterArray
+					);
+
 					if (instance.resetStartPage) {
-						queryString = FacetUtil.updateQueryString(
-							instance.resetStartPage.get('name'),
-							[instance.resetStartPage.val()],
-							queryString
+
+						var resetStartPageName = instance.resetStartPage.get('name');
+
+						parameterArray = FacetUtil.removeURLParameters(
+							resetStartPageName,
+							parameterArray
 						);
 					}
+
+					queryString = parameterArray.join('&');
 
 					if (!hasQuestionMark) {
 						queryString = '?' + queryString;

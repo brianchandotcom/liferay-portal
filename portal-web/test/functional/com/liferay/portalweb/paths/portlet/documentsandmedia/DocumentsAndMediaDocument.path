@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CATEGORIES</td>
-	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Categories')]</td>
+	<td>//dd[contains(@class,'sidebar-dd')]/span[contains(@class,'categories')]/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

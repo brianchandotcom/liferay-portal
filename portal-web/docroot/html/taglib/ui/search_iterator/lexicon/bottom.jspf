@@ -93,31 +93,44 @@
 		).render();
 
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
-			var fixedHeaderRowElement = document.getElementById('<%= namespace + id %>fixedHeader');
-			var scrollingContainer = window === Liferay.Util.getOpener() ? window : searchContainer.get('contentBox').ancestor('#main-content')._node;
+			var contentBox = searchContainer.get('contentBox');
 
-			var tableElement = fixedHeaderRowElement.parentElement.parentElement;
-			var trBoundingClientRectangle = fixedHeaderRowElement.previousElementSibling.getBoundingClientRect();
+			var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
 
-			var fixedHeaderScrollEvent = function(event) {
-				fixedHeaderRowElement.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - tableElement.offsetTop - trBoundingClientRectangle.height) + 'px)';
+			if (contentBox) {
+				var mainContent = contentBox.ancestor('#main-content');
 
-				if (fixedHeaderRowElement.classList.contains('hide') && (scrollingContainer.scrollTop >= trBoundingClientRectangle.top)) {
-					fixedHeaderRowElement.classList.remove('hide');
+				if (mainContent) {
+					var scrollingContainer = window === Liferay.Util.getOpener() ? window : mainContent._node;
+
+					var table = fixedHeader.parentElement.parentElement;
+					var trDomRect = fixedHeader.previousElementSibling.getBoundingClientRect();
+
+					var fixedHeaderEventHandler = function(event) {
+						var scrollTop = scrollingContainer.scrollTop;
+
+						var trDomRecTop = trDomRect.top;
+
+						fixedHeader.style.transform = 'translateY(' + Math.ceil(scrollTop - table.offsetTop - trDomRect.height) + 'px)';
+
+						if (fixedHeader.classList.contains('hide') && (scrollTop >= trDomRecTop)) {
+							fixedHeader.classList.remove('hide');
+						}
+						else if (scrollingContainer.scrollTop < trDomRecTop) {
+							fixedHeader.classList.add('hide');
+						}
+					};
+
+					scrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
+
+					Liferay.on(
+						'destroyPortlet',
+						function() {
+							scrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
+						}
+					);
 				}
-				else if (scrollingContainer.scrollTop < trBoundingClientRectangle.top) {
-					fixedHeaderRowElement.classList.add('hide');
-				}
-			};
-
-			scrollingContainer.addEventListener('scroll', fixedHeaderScrollEvent);
-
-			Liferay.on(
-				'destroyPortlet',
-				function() {
-					scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
-				}
-			);
+			}
 		</c:if>
 
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);

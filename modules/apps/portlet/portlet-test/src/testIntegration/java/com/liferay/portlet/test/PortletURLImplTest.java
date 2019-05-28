@@ -96,18 +96,15 @@ public class PortletURLImplTest {
 
 		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 
-		_invokeClearCache(liferayPortletURL);
-
-		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
-
-		_invokeClearCache(liferayPortletURL);
-
-		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
-	}
-
-	private void _invokeClearCache(LiferayPortletURL liferayPortletURL) {
 		ReflectionTestUtil.invoke(
 			liferayPortletURL, "clearCache", new Class<?>[0]);
+
+		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
+
+		ReflectionTestUtil.invoke(
+			liferayPortletURL, "clearCache", new Class<?>[0]);
+
+		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 	}
 
 	@DeleteAfterTestRun

@@ -353,16 +353,7 @@ public class HtmlImpl implements Html {
 						sb.append(attribute, lastReplacementIndex, i);
 					}
 
-					if (replacement != null) {
-						sb.append(replacement);
-					}
-					else {
-						sb.append(prefix);
-
-						_appendHexChars(sb, hexBuffer, c);
-
-						sb.append(postfix);
-					}
+					sb.append(replacement);
 
 					lastReplacementIndex = i + 1;
 				}

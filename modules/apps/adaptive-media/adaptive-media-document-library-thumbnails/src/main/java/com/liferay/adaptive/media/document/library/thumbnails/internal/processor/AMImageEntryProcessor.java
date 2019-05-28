@@ -68,7 +68,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		_imageProcessor = new ImageProcessorImpl();
 	}
 
@@ -93,8 +93,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void generateImages(
-			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
-		throws Exception {
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 	}
 
 	@Override
@@ -231,9 +230,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void importGeneratedFiles(
-			PortletDataContext portletDataContext, FileEntry fileEntry,
-			FileEntry importedFileEntry, Element fileEntryElement)
-		throws Exception {
+		PortletDataContext portletDataContext, FileEntry fileEntry,
+		FileEntry importedFileEntry, Element fileEntryElement) {
 	}
 
 	@Override
@@ -258,10 +256,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void storeThumbnail(
-			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId, InputStream is,
-			String type)
-		throws Exception {
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		long custom1ImageId, long custom2ImageId, InputStream is, String type) {
 	}
 
 	@Override

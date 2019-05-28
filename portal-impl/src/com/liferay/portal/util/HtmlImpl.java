@@ -219,7 +219,7 @@ public class HtmlImpl implements Html {
 		}
 
 		if (mode == ESCAPE_MODE_URL) {
-			return URLCodec.encodeURL(text, true);
+			return escapeURL(text);
 		}
 
 		return escape(text);

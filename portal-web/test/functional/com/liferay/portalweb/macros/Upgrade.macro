@@ -1180,7 +1180,11 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
 			value1 = "APPROVED");
 
-		AssertElementPresent(locator1 = "Button#DOWNLOAD");
+		var key_text = "Download";
+
+		AssertTextEquals(
+			locator1 = "Button#ANY",
+			value1 = "Download");
 
 		Navigator.gotoPage(pageName = "Message Boards");
 

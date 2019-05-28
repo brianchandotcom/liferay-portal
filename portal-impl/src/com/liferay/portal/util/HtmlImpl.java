@@ -47,14 +47,35 @@ import net.htmlparser.jericho.TextExtractor;
  */
 public class HtmlImpl implements Html {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 *			   {@link #escapeAttribute(String)}
+	 */
+	@Deprecated
 	public static final int ESCAPE_MODE_ATTRIBUTE = 1;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeCSS(String)}
+	 */
+	@Deprecated
 	public static final int ESCAPE_MODE_CSS = 2;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeJS(String)}
+	 */
+	@Deprecated
 	public static final int ESCAPE_MODE_JS = 3;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escape(String)}
+	 */
+	@Deprecated
 	public static final int ESCAPE_MODE_TEXT = 4;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #escapeURL(String)}
+	 */
+	@Deprecated
 	public static final int ESCAPE_MODE_URL = 5;
 
 	/**
@@ -195,7 +216,12 @@ public class HtmlImpl implements Html {
 	 * @param  mode the encoding type
 	 * @return the escaped hexadecimal value of the input text, based on the
 	 *         mode, or <code>null</code> if the text is <code>null</code>
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 *			   {@link #escapeAttribute(String)}, {@link #escapeCSS(String)},
+	 *			   {@link #escapeJS(String)}, {@link #escape(String)},
+	 *			   {@link #escapeURL(String)}
 	 */
+	@Deprecated
 	@Override
 	public String escape(String text, int mode) {
 		if (text == null) {

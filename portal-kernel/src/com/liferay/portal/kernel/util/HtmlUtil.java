@@ -52,7 +52,12 @@ public class HtmlUtil {
 	 * @return the escaped hexadecimal value of the input text, based on the
 	 *         mode, or <code>null</code> if the text is <code>null</code>
 	 * @see    com.liferay.portal.util.HtmlImpl#escape(String, int)
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 *			   {@link #escapeAttribute(String)}, {@link #escapeCSS(String)},
+	 *			   {@link #escapeJS(String)}, {@link #escape(String)},
+	 *			   {@link #escapeURL(String)}
 	 */
+	@Deprecated
 	public static String escape(String text, int mode) {
 		return getHtml().escape(text, mode);
 	}

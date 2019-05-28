@@ -141,6 +141,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 StringBundler sb = new StringBundler(4);
 
 sb.append("metal-dom/src/dom as dom, ");
+sb.append("metal-dom/src/globalEval as globalEval, ");
 sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");
 sb.append(npmResolvedPackageName);
@@ -182,13 +183,13 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 		}
 		else {
 			if (sidebarHeaderButtonClickEventListener) {
-				sidebarHeaderButtonClickEventListener.detach();
+				sidebarHeaderButtonClickEventListener.removeListener();
 				sidebarHeaderButtonClickEventListener = null;
 			}
 
 			if (!error) {
 				if (sidebarBodyChangeHandler) {
-					sidebarBodyChangeHandler.detach();
+					sidebarBodyChangeHandler.removeListener();
 
 					sidebarBodyChangeHandler = null;
 				}
@@ -303,24 +304,33 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 			}
 		).then(
 			function(responseContent) {
-				AUI().use(
-					['aui-base', 'aui-parse-content'],
-					function(A) {
-						var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
-						var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
-
-						if (sidebarBody) {
-							sidebarBody.plug(A.Plugin.ParseContent);
-
-							sidebarBody.setContent(responseContent);
-							sidebarBodyChangeHandler = sidebarBody.on('change', handleSidebarBodyChange);
-						}
-
-						if (sidebarHeaderButton) {
-							sidebarHeaderButtonClickEventListener = sidebarHeaderButton.on('click', handleSidebarCloseButtonClick);
-						}
-					}
+				const sidebarBody = document.getElementById(
+					'<portlet:namespace />sidebarBody'
 				);
+
+				const sidebarHeaderButton = document.getElementById(
+					'<portlet:namespace />sidebarHeaderButton'
+				);
+
+				if (sidebarBody) {
+					sidebarBody.innerHTML = responseContent;
+
+					globalEval.default.runScriptsInElement(sidebarBody);
+
+					sidebarBodyChangeHandler = dom.on(
+						sidebarBody,
+						'change',
+						handleSidebarBodyChange
+					);
+				}
+
+				if (sidebarHeaderButton) {
+					sidebarHeaderButtonClickEventListener = dom.on(
+						sidebarHeaderButton,
+						'click',
+						handleSidebarCloseButtonClick
+					);
+				}
 			}
 		);
 	};

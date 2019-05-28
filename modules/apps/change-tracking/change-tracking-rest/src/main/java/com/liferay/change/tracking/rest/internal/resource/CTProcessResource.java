@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
@@ -129,32 +130,24 @@ public class CTProcessResource {
 		CTJaxRsUtil.checkCompany(companyId);
 
 		Stream<CTProcess> stream = _getCTProcesses(
-			companyId, -1, keywords, type, offset, limit, null
+			companyId, CTConstants.USER_FILTER_ALL, keywords, type, offset,
+			limit, null
 		).stream();
 
 		return stream.map(
-			ctProcess -> {
+			CTProcess::getUserId
+		).distinct(
+		).map(
+			_userLocalService::fetchUser
+		).filter(
+			Objects::nonNull
+		).map(
+			user -> {
 				CTProcessUserModel.Builder builder =
-					CTProcessUserModel.forCTProcessId(
-						ctProcess.getCtProcessId());
+					CTProcessUserModel.forUserId(user.getUserId());
 
-				Optional<User> userOptional = Optional.ofNullable(
-					_userLocalService.fetchUser(ctProcess.getUserId()));
-
-				return builder.setCTCollectionId(
-					ctProcess.getCtCollectionId()
-				).setUserId(
-					userOptional.map(
-						User::getUserId
-					).orElse(
-						0L
-					)
-				).setUserName(
-					userOptional.map(
-						User::getFullName
-					).orElse(
-						StringPool.BLANK
-					)
+				return builder.setUserName(
+					user.getFullName()
 				).build();
 			}
 		).collect(

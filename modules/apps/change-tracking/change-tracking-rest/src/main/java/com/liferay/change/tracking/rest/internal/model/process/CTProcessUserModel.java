@@ -14,10 +14,6 @@
 
 package com.liferay.change.tracking.rest.internal.model.process;
 
-import com.liferay.change.tracking.rest.internal.model.links.ModelLinkModel;
-
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 
 /**
@@ -28,25 +24,8 @@ public class CTProcessUserModel {
 	public static final CTProcessUserModel EMPTY_CT_PROCESS_USER_MODEL =
 		new CTProcessUserModel();
 
-	public static Builder forCTProcessId(long ctProcessId) {
-		return new Builder(ctProcessId);
-	}
-
-	@XmlElement
-	public long getCtProcessId() {
-		return _ctProcessId;
-	}
-
-	@XmlElement
-	public List<ModelLinkModel> getLinks() {
-		ModelLinkModel.Builder builder = new ModelLinkModel.Builder();
-
-		return builder.addModelLinkModel(
-			"/o/change-tracking/collections/" + _ctCollectionId, "collection",
-			"GET"
-		).addModelLinkModel(
-			"/o/change-tracking/processes/" + _ctProcessId, "process", "GET"
-		).build();
+	public static Builder forUserId(long userId) {
+		return new Builder(userId);
 	}
 
 	@XmlElement
@@ -61,26 +40,14 @@ public class CTProcessUserModel {
 
 	public static class Builder {
 
-		public Builder(long ctProcessId) {
+		public Builder(long userId) {
 			_ctProcessUserModel = new CTProcessUserModel();
 
-			_ctProcessUserModel._ctProcessId = ctProcessId;
+			_ctProcessUserModel._userId = userId;
 		}
 
 		public CTProcessUserModel build() {
 			return _ctProcessUserModel;
-		}
-
-		public Builder setCTCollectionId(long ctCollectionId) {
-			_ctProcessUserModel._ctCollectionId = ctCollectionId;
-
-			return this;
-		}
-
-		public Builder setUserId(long userId) {
-			_ctProcessUserModel._userId = userId;
-
-			return this;
 		}
 
 		public Builder setUserName(String userName) {
@@ -96,8 +63,6 @@ public class CTProcessUserModel {
 	private CTProcessUserModel() {
 	}
 
-	private long _ctCollectionId;
-	private long _ctProcessId;
 	private long _userId;
 	private String _userName;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.history.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
@@ -222,7 +223,8 @@ public class ChangeListsHistoryDisplayContext {
 			return _filterByUser;
 		}
 
-		_filterByUser = ParamUtil.getLong(_httpServletRequest, "user", -1);
+		_filterByUser = ParamUtil.getLong(
+			_httpServletRequest, "user", CTConstants.USER_FILTER_ALL);
 
 		return _filterByUser;
 	}
@@ -285,8 +287,11 @@ public class ChangeListsHistoryDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setActive(_getFilterByUser() == -1);
-						dropdownItem.setHref(_getPortletURL(), "user", -1);
+						dropdownItem.setActive(
+							_getFilterByUser() == CTConstants.USER_FILTER_ALL);
+						dropdownItem.setHref(
+							_getPortletURL(), "user",
+							CTConstants.USER_FILTER_ALL);
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "all"));
 					});

@@ -13,6 +13,8 @@ const TIMEOUT_FIRST = 3000;
 
 const TIMEOUT_INTERVAL = 60000;
 
+const USER_FILTER_ALL = -1;
+
 /**
  * Handles the tags of the selected file entries inside a modal.
  */
@@ -104,7 +106,7 @@ class ChangeListsHistory extends PortletBase {
 			urlProcesses = urlProcesses + '&user=' + this.filterUser;
 		}
 		else {
-			urlProcesses += '&user=-1';
+			urlProcesses += '&user=' + USER_FILTER_ALL;
 		}
 
 		if (this.keywords) {
@@ -133,16 +135,14 @@ class ChangeListsHistory extends PortletBase {
 						userFilterUrl.setParameter('orderByType', this.orderByType);
 						userFilterUrl.setParameter('user', processUser.userId);
 
-						if (filterByUserItems.findIndex(e => e.label === processUser.userName) < 0) {
-							filterByUserItems.push(
-								{
-									'active': this.filterUser === processUser.userId.toString(),
-									'href': userFilterUrl.toString(),
-									'label': processUser.userName,
-									'type': 'item'
-								}
-							);
-						}
+						filterByUserItems.push(
+							{
+								'active': this.filterUser === processUser.userId.toString(),
+								'href': userFilterUrl.toString(),
+								'label': processUser.userName,
+								'type': 'item'
+							}
+						);
 					}
 				);
 			}

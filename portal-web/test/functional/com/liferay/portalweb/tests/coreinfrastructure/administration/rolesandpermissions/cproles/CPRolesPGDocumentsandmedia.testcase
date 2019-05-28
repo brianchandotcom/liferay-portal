@@ -329,6 +329,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
 
 		User.logoutAndLoginPG(

@@ -218,65 +218,11 @@ public class HtmlImpl implements Html {
 			return escapeCSS(text);
 		}
 
-		String prefix = StringPool.BLANK;
-
-		if (mode == ESCAPE_MODE_CSS) {
-			prefix = StringPool.BACK_SLASH;
-		}
-		else if (mode == ESCAPE_MODE_URL) {
+		if (mode == ESCAPE_MODE_URL) {
 			return URLCodec.encodeURL(text, true);
 		}
-		else {
-			return escape(text);
-		}
 
-		StringBuilder sb = null;
-		char[] hexBuffer = new char[4];
-		int lastReplacementIndex = 0;
-
-		for (int i = 0; i < text.length(); i++) {
-			char c = text.charAt(i);
-
-			if (c < _VALID_CHARS.length) {
-				if (!_VALID_CHARS[c]) {
-					if (sb == null) {
-						sb = new StringBuilder(text.length() + 64);
-					}
-
-					if (i > lastReplacementIndex) {
-						sb.append(text, lastReplacementIndex, i);
-					}
-
-					sb.append(prefix);
-
-					_appendHexChars(sb, hexBuffer, c);
-
-					if ((mode == ESCAPE_MODE_CSS) &&
-						(i < (text.length() - 1))) {
-
-						char nextChar = text.charAt(i + 1);
-
-						if ((nextChar >= CharPool.NUMBER_0) &&
-							(nextChar <= CharPool.NUMBER_9)) {
-
-							sb.append(CharPool.SPACE);
-						}
-					}
-
-					lastReplacementIndex = i + 1;
-				}
-			}
-		}
-
-		if (sb == null) {
-			return text;
-		}
-
-		if (lastReplacementIndex < text.length()) {
-			sb.append(text, lastReplacementIndex, text.length());
-		}
-
-		return sb.toString();
+		return escape(text);
 	}
 
 	/**

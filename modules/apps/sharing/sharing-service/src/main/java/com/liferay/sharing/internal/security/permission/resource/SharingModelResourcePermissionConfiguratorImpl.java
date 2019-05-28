@@ -22,19 +22,27 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.internal.configuration.SharingSystemConfiguration;
+import com.liferay.sharing.internal.security.permission.contributor.SharingPermissionSQLContributor;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -50,9 +58,19 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	implements SharingModelResourcePermissionConfigurator {
 
 	@Activate
-	public void activate(Map<String, Object> properties) {
+	public void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
 			SharingSystemConfiguration.class, properties);
+
+		_sharingPermissionSQLContributorServiceRegistration =
+			bundleContext.registerService(
+				PermissionSQLContributor.class,
+				new SharingPermissionSQLContributor(
+					_classNameLocalService, _groupLocalService,
+					_sharingConfigurationFactory),
+				new HashMapDictionary<>());
 	}
 
 	@Override
@@ -61,11 +79,25 @@ public class SharingModelResourcePermissionConfiguratorImpl
 		Consumer<ModelResourcePermissionLogic<T>> consumer) {
 
 		if (_sharingSystemConfiguration.enabled()) {
+			_modelClassNames.add(modelResourcePermission.getModelName());
+
+			_sharingPermissionSQLContributorServiceRegistration.setProperties(
+				new HashMapDictionary<String, Object>() {
+					{
+						put("model.class.name", _modelClassNames.toArray());
+					}
+				});
+
 			consumer.accept(
 				new SharingModelResourcePermissionLogicImpl<>(
 					_classNameLocalService.getClassNameId(
 						modelResourcePermission.getModelName())));
 		}
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_sharingPermissionSQLContributorServiceRegistration.unregister();
 	}
 
 	private static Map<String, SharingEntryAction> _getSharingEntryActions() {
@@ -90,12 +122,16 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	private final Set<String> _modelClassNames = new HashSet<>();
+
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
 
+	private ServiceRegistration<PermissionSQLContributor>
+		_sharingPermissionSQLContributorServiceRegistration;
 	private SharingSystemConfiguration _sharingSystemConfiguration;
 
 	private class SharingModelResourcePermissionLogicImpl

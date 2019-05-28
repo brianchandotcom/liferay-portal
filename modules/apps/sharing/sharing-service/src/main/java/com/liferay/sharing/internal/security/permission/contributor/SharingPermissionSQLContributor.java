@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.security.permission.contributor;
+package com.liferay.sharing.internal.security.permission.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -27,23 +27,24 @@ import com.liferay.portal.security.permission.contributor.PermissionSQLContribut
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * Extends inline permission SQL queries to also consider sharing entries when
- * returning results for {@code
- * com.liferay.document.library.kernel.model.DLFileEntry}.
+ * returning results.
  *
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = PermissionSQLContributor.class
-)
-public class DLFileEntrySharingPermissionSQLContributor
+public class SharingPermissionSQLContributor
 	implements PermissionSQLContributor {
+
+	public SharingPermissionSQLContributor(
+		ClassNameLocalService classNameLocalService,
+		GroupLocalService groupLocalService,
+		SharingConfigurationFactory sharingConfigurationFactory) {
+
+		_classNameLocalService = classNameLocalService;
+		_groupLocalService = groupLocalService;
+		_sharingConfigurationFactory = sharingConfigurationFactory;
+	}
 
 	@Override
 	public String getPermissionSQL(
@@ -120,13 +121,8 @@ public class DLFileEntrySharingPermissionSQLContributor
 		}
 	}
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private SharingConfigurationFactory _sharingConfigurationFactory;
+	private final ClassNameLocalService _classNameLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final SharingConfigurationFactory _sharingConfigurationFactory;
 
 }

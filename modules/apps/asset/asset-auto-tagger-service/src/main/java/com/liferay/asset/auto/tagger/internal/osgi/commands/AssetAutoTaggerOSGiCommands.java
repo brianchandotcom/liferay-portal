@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"osgi.command.function=commitAutoTags",
 		"osgi.command.function=tagAllUntagged",
 		"osgi.command.function=untagAll", "osgi.command.scope=assetAutoTagger"
 	},

@@ -24,12 +24,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +53,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		return StringBundler.concat(
 			"Liferay.Sharing.manageCollaborators(",
 			_classNameLocalService.getClassNameId(className), ", ", classPK,
-			")");
+			", '", _getNamespace(httpServletRequest), "', true)");
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 			", '",
 			_getSharingDialogTitle(
 				className, classPK, httpServletRequest.getLocale()),
-			"')");
+			"', '", _getNamespace(httpServletRequest), "', false)");
 	}
 
 	private String _getAssetTitle(
@@ -97,6 +100,14 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 			return null;
 		}
+	}
+
+	private String _getNamespace(HttpServletRequest httpServletRequest) {
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return portletResponse.getNamespace();
 	}
 
 	private String _getSharingDialogTitle(

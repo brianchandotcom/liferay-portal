@@ -102,10 +102,6 @@ public class ResourceLocalServiceTest {
 
 	private class AddResources extends DoAsUserThread {
 
-		public AddResources(long userId) {
-			super(userId);
-		}
-
 		@Override
 		protected void doRun() throws Exception {
 			try {
@@ -122,6 +118,10 @@ public class ResourceLocalServiceTest {
 					TestPropsValues.getPlid(_group.getGroupId()), false, true,
 					true);
 			}
+		}
+
+		private AddResources(long userId) {
+			super(userId);
 		}
 
 	}

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -102,10 +104,16 @@ public abstract class BaseTimeRangeResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -123,9 +131,15 @@ public abstract class BaseTimeRangeResourceTestCase {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
 				setDateFormat(new ISO8601DateFormat());
 				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
 
@@ -136,6 +150,23 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		TimeRange timeRange = randomTimeRange();
+
+		timeRange.setName(regex);
+
+		String json = TimeRangeSerDes.toJSON(timeRange);
+
+		Assert.assertFalse(json.contains(regex));
+
+		timeRange = TimeRangeSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, timeRange.getName());
 	}
 
 	@Test

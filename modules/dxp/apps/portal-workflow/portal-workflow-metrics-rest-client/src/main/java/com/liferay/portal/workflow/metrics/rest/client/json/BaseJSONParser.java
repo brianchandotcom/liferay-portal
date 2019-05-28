@@ -271,7 +271,7 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	private String _getCapturedSubstring() {
-		return _json.substring(_captureStartStack.pop(), _index - 1);
+		return _unescape(_json.substring(_captureStartStack.pop(), _index - 1));
 	}
 
 	private boolean _ifLastCharMatchesThenRead(char ch) {
@@ -546,6 +546,12 @@ public abstract class BaseJSONParser<T> {
 
 	private void _setCaptureStart() {
 		_captureStartStack.push(_index - 1);
+	}
+
+	private String _unescape(String string) {
+		string = string.replace("\\\\", "\\");
+
+		return string.replace("\\\"", "\"");
 	}
 
 	private Stack<Integer> _captureStartStack;

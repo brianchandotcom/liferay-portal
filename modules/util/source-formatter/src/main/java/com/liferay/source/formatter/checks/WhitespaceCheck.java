@@ -104,14 +104,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 			for (int x = matcher.end(); x < line.length(); x++) {
 				char c = line.charAt(x);
 
-				if ((c == CharPool.LESS_THAN) &&
-					!ToolsUtil.isInsideQuotes(line, x)) {
-
+				if ((c == CharPool.LESS_THAN) && !ToolsUtil.isInsideQuotes(line, x)) {
 					deep++;
 				}
-				else if ((c == CharPool.GREATER_THAN) &&
-						 !ToolsUtil.isInsideQuotes(line, x)) {
-
+				else if ((c == CharPool.GREATER_THAN) && !ToolsUtil.isInsideQuotes(line, x)) {
 					deep--;
 				}
 
@@ -125,17 +121,17 @@ public class WhitespaceCheck extends BaseFileCheck {
 					break;
 				}
 
-				if (line.charAt(x - 1) == CharPool.SPACE) {
-					line = StringUtil.insert(line, StringPool.SLASH, x);
-				}
-				else if (line.charAt(x - 1) == CharPool.SLASH) {
-					line = StringUtil.insert(line, StringPool.SPACE, x - 1);
-				}
-				else {
-					line = StringUtil.insert(line, " /", x);
+				char previousChar = line.charAt(x - 1);
+
+				if (previousChar == CharPool.SPACE) {
+					return StringUtil.insert(line, StringPool.SLASH, x);
 				}
 
-				return line;
+				if (previousChar == CharPool.SLASH) {
+					return StringUtil.insert(line, StringPool.SPACE, x - 1);
+				}
+
+				return StringUtil.insert(line, " /", x);
 			}
 		}
 

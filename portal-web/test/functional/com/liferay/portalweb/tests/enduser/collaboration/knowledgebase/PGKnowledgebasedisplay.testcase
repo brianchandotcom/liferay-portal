@@ -434,10 +434,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		LexiconEntry.rate(rateResult = "Thumb Up");
+		LexiconEntry.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Up",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Up",
 			voteCount = "1");
 	}
 
@@ -886,10 +886,10 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		LexiconEntry.rate(rateResult = "Thumb Up");
+		LexiconEntry.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Up",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Up",
 			voteCount = "1");
 
 		PortalSettings.gotoConfiguration(
@@ -928,7 +928,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		LexiconEntry.viewRate(voteCount = "1");
+		LexiconEntry.viewRating(voteCount = "1");
 	}
 
 	@priority = "3"

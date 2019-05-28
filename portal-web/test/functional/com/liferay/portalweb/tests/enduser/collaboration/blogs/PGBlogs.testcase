@@ -907,24 +907,24 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		LexiconEntry.rate(rateResult = "Thumb Up");
+		LexiconEntry.rate(ratingResult = "Thumb Up");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Up",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Down",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Down",
 			voteCount = "0");
 
-		LexiconEntry.rate(rateResult = "Thumb Down");
+		LexiconEntry.rate(ratingResult = "Thumb Down");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Up",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Up",
 			voteCount = "0");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Down",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Down",
 			voteCount = "1");
 	}
 

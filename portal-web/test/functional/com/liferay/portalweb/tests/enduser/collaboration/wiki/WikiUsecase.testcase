@@ -306,7 +306,7 @@ definition {
 
 		WikiPage.addComment(entryComment = "Wiki Page Comment");
 
-		LexiconEntry.rate(rateResult = "Thumb Up");
+		LexiconEntry.rate(ratingResult = "Thumb Up");
 
 		WikiPage.editComment(
 			entryComment = "Wiki Page Comment",
@@ -322,12 +322,12 @@ definition {
 			entryComment = "Wiki Page Comment Edited",
 			wikiPageTitle = "Wiki Page 1");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Up",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		LexiconEntry.viewRate(
-			rateResult = "Thumb Down",
+		LexiconEntry.viewRating(
+			ratingResult = "Thumb Down",
 			voteCount = "0");
 	}
 

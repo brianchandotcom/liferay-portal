@@ -14,8 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RATE_THUMB</td>
-	<td>//div[contains(@class,'ratings')]//a[contains(@class,'${key_rateResult}')]</td>
+	<td>THUMB</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>

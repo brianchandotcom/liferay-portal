@@ -315,44 +315,24 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < attribute.length(); i++) {
 			char c = attribute.charAt(i);
 
-			if (c < _VALID_CHARS.length) {
-				if (!_VALID_CHARS[c]) {
-					String replacement = null;
+			if (c < _ATTRIBUTE_ESCAPES.length) {
+				String replacement = _ATTRIBUTE_ESCAPES[c];
 
-					if (c == CharPool.AMPERSAND) {
-						replacement = StringPool.AMPERSAND_ENCODED;
-					}
-					else if (c == CharPool.APOSTROPHE) {
-						replacement = "&#39;";
-					}
-					else if (c == CharPool.GREATER_THAN) {
-						replacement = "&gt;";
-					}
-					else if (c == CharPool.LESS_THAN) {
-						replacement = "&lt;";
-					}
-					else if (c == CharPool.QUOTE) {
-						replacement = "&quot;";
-					}
-					else if (!_isValidXmlCharacter(c)) {
-						replacement = StringPool.SPACE;
-					}
-					else {
-						continue;
-					}
-
-					if (sb == null) {
-						sb = new StringBuilder(attribute.length() + 64);
-					}
-
-					if (i > lastReplacementIndex) {
-						sb.append(attribute, lastReplacementIndex, i);
-					}
-
-					sb.append(replacement);
-
-					lastReplacementIndex = i + 1;
+				if (replacement == null) {
+					continue;
 				}
+
+				if (sb == null) {
+					sb = new StringBuilder(attribute.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(attribute, lastReplacementIndex, i);
+				}
+
+				sb.append(replacement);
+
+				lastReplacementIndex = i + 1;
 			}
 			else if (!_isValidXmlCharacter(c) ||
 					 _isUnicodeCompatibilityCharacter(c)) {
@@ -941,6 +921,18 @@ public class HtmlImpl implements Html {
 		sb.append(buffer, index, buffer.length - index);
 	}
 
+	private static boolean _isValidXmlCharacter(char c) {
+		if (((c >= CharPool.SPACE) && (c <= '\ud7ff')) ||
+			((c >= '\ue000') && (c <= '\ufffd')) || Character.isSurrogate(c) ||
+			(c == CharPool.TAB) || (c == CharPool.NEW_LINE) ||
+			(c == CharPool.RETURN)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isUnicodeCompatibilityCharacter(char c) {
 		if (((c >= '\u007f') && (c <= '\u0084')) ||
 			((c >= '\u0086') && (c <= '\u009f')) ||
@@ -952,17 +944,7 @@ public class HtmlImpl implements Html {
 		return false;
 	}
 
-	private boolean _isValidXmlCharacter(char c) {
-		if (((c >= CharPool.SPACE) && (c <= '\ud7ff')) ||
-			((c >= '\ue000') && (c <= '\ufffd')) || Character.isSurrogate(c) ||
-			(c == CharPool.TAB) || (c == CharPool.NEW_LINE) ||
-			(c == CharPool.RETURN)) {
-
-			return true;
-		}
-
-		return false;
-	}
+	private static final String[] _ATTRIBUTE_ESCAPES = new String[256];
 
 	private static final char[] _HEX_DIGITS = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
@@ -1005,8 +987,21 @@ public class HtmlImpl implements Html {
 		};
 
 	static {
-		for (int i = 0; i < _VALID_CHARS.length; i++) {
-			if (Character.isLetterOrDigit(i)) {
+		for (int i = 0; i < 256; i++) {
+			char c = (char)i;
+
+			if (!_isValidXmlCharacter(c)) {
+				_ATTRIBUTE_ESCAPES[i] = StringPool.SPACE;
+			}
+
+			_ATTRIBUTE_ESCAPES[CharPool.AMPERSAND] =
+				StringPool.AMPERSAND_ENCODED;
+			_ATTRIBUTE_ESCAPES[CharPool.APOSTROPHE] = "&#39;";
+			_ATTRIBUTE_ESCAPES[CharPool.GREATER_THAN] = "&gt;";
+			_ATTRIBUTE_ESCAPES[CharPool.LESS_THAN] = "&lt;";
+			_ATTRIBUTE_ESCAPES[CharPool.QUOTE] = "&quot;";
+
+			if (Character.isLetterOrDigit(c)) {
 				_VALID_CHARS[i] = true;
 			}
 		}

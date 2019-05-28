@@ -50,6 +50,7 @@ class SegmentEdit extends Component {
 
 	static defaultProps = {
 		contributors: [],
+		handleBlur: () => {},
 		initialSegmentActive: true,
 		initialSegmentName: {},
 		portletNamespace: '',

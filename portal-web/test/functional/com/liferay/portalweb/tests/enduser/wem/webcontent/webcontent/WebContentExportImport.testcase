@@ -210,6 +210,64 @@ definition {
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 	}
 
+	@description = "This is a use case for LPS-95441."
+	@priority = "3"
+	test ExportWebContentWithEditedStructure {
+		ProductMenu.gotoSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "TestName");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContentStructures.viewCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
+			description = "WC WebContent 1 Description",
+			fieldName = "TestName",
+			webContentTitle = "WC WebContent 1 Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 1 Title");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+
+		DynamicDataMapping.deleteField(fieldFieldLabel = "Text");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "TestName");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+	}
+
 	@priority = "5"
 	test ImportAndUseGlobalStructureAndTemplate {
 		property testray.component.names = "Training";

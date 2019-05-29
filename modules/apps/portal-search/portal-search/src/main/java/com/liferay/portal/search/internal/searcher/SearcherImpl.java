@@ -28,6 +28,8 @@ import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.searcher.Searcher;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,25 +42,18 @@ public class SearcherImpl implements Searcher {
 
 	@Override
 	public SearchResponse search(SearchRequest searchRequest) {
-		if (!(searchRequest instanceof SearchRequestImpl)) {
-			throw new UnsupportedOperationException();
-		}
+		return doSearch(transformSearchRequest(searchRequest));
+	}
 
-		SearchRequestImpl searchRequestImpl = (SearchRequestImpl)searchRequest;
-
-		SearchResponseBuilder searchResponseBuilder =
-			searchResponseBuilderFactory.builder(
-				searchRequestImpl.getSearchContext());
-
-		doSmartSearch(searchRequestImpl, searchResponseBuilder);
-
-		doFederatedSearches(searchRequestImpl, searchResponseBuilder);
-
-		return searchResponseBuilder.federatedSearchKey(
-			searchRequestImpl.getFederatedSearchKey()
-		).request(
-			searchRequestImpl
-		).build();
+	protected static <T> T transform(T t, Stream<Function<T, T>> stream) {
+		return stream.reduce(
+			(beforeFunction, afterFunction) -> beforeFunction.andThen(
+				afterFunction)
+		).orElse(
+			Function.identity()
+		).apply(
+			t
+		);
 	}
 
 	protected static RuntimeException uncheck(SearchException se) {
@@ -139,6 +134,28 @@ public class SearcherImpl implements Searcher {
 		searchResponseBuilder.hits(hits);
 	}
 
+	protected SearchResponse doSearch(SearchRequest searchRequest) {
+		if (!(searchRequest instanceof SearchRequestImpl)) {
+			throw new UnsupportedOperationException();
+		}
+
+		SearchRequestImpl searchRequestImpl = (SearchRequestImpl)searchRequest;
+
+		SearchResponseBuilder searchResponseBuilder =
+			searchResponseBuilderFactory.builder(
+				searchRequestImpl.getSearchContext());
+
+		doSmartSearch(searchRequestImpl, searchResponseBuilder);
+
+		doFederatedSearches(searchRequestImpl, searchResponseBuilder);
+
+		return searchResponseBuilder.federatedSearchKey(
+			searchRequestImpl.getFederatedSearchKey()
+		).request(
+			searchRequestImpl
+		).build();
+	}
+
 	protected void doSingleIndexerSearch(
 		Class<?> clazz, SearchRequestImpl searchRequestImpl,
 		SearchResponseBuilder searchResponseBuilder) {
@@ -172,10 +189,15 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
-	protected long getCompanyId(SearchRequestImpl searchRequestImpl) {
-		SearchContext searchContext = searchRequestImpl.getSearchContext();
+	protected Stream<Function<SearchRequest, SearchRequest>> getContributors(
+		SearchRequest searchRequest) {
 
-		return searchContext.getCompanyId();
+		return searchRequestContributorsHolder.stream(
+			searchRequest.getIncludeContributors(),
+			searchRequest.getExcludeContributors()
+		).map(
+			searchRequestContributor -> searchRequestContributor::contribute
+		);
 	}
 
 	protected Class<?> getSingleIndexerClass(
@@ -230,6 +252,12 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
+	protected SearchRequest transformSearchRequest(
+		SearchRequest searchRequest) {
+
+		return transform(searchRequest, getContributors(searchRequest));
+	}
+
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
 
@@ -238,6 +266,9 @@ public class SearcherImpl implements Searcher {
 
 	@Reference
 	protected IndexSearcherHelper indexSearcherHelper;
+
+	@Reference
+	protected SearchRequestContributorsHolder searchRequestContributorsHolder;
 
 	@Reference
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;

@@ -9,7 +9,8 @@ Export-Package:\
 	com.liferay.portal.search.spi.model.query.contributor.helper,\
 	com.liferay.portal.search.spi.model.registrar,\
 	com.liferay.portal.search.spi.model.registrar.contributor,\
-	com.liferay.portal.search.spi.model.result.contributor
+	com.liferay.portal.search.spi.model.result.contributor,\
+	com.liferay.portal.search.spi.searcher
 Import-Package:\
 	com.liferay.portal.kernel.search;version="[7.1.0,8.1.0)",\
 	\

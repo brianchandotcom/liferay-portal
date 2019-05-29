@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Change Tracking Headless Client
+Bundle-SymbolicName: com.liferay.change.tracking.headless.client
+Bundle-Version: 1.0.0

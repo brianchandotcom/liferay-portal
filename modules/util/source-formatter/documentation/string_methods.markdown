@@ -22,3 +22,19 @@ when possible.
 
 Instead of `StringUtil.replace(s, "$", "DOLLAR")` we should use
 `StringUtil.replace(s, '$', "DOLLAR")`.
+
+For better performance, use `StringUtil.merge()` instead of `String.join()`.
+
+#### Example
+
+Instead of
+
+```java
+String mergedActions = String.join("-", getActions());
+```
+
+we should write
+
+```java
+String mergedActions = StringUtil.merge(getActions(), "-");
+```

@@ -72,7 +72,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 
 	@Test
 	public void testCleanUpOrphanePortletPreferences() throws Exception {
-		LayoutRevision layoutRevision = getLayoutRevision();
+		LayoutRevision layoutRevision = _getLayoutRevision();
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.addPortletPreferences(
@@ -96,7 +96,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 
 	@Test
 	public void testCleanUpProperPortletPreferences() throws Exception {
-		LayoutRevision layoutRevision = getLayoutRevision();
+		LayoutRevision layoutRevision = _getLayoutRevision();
 
 		String portletId = PortletIdCodec.encode(PortletKeys.TEST);
 
@@ -136,7 +136,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 		Assert.assertNotNull(portletPreferences);
 	}
 
-	protected LayoutRevision getLayoutRevision() throws Exception {
+	private LayoutRevision _getLayoutRevision() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group, false);
 
 		ServiceContext serviceContext =

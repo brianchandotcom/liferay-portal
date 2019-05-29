@@ -293,7 +293,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 	private Group _group;
 
 	@Inject(filter = "component.name=*.DLFileEntryInfoDisplayContributor")
-	private InfoDisplayContributor _infoDisplayContributor;
+	private InfoDisplayContributor<FileEntry> _infoDisplayContributor;
 
 	@Inject
 	private LayoutPageTemplateCollectionService

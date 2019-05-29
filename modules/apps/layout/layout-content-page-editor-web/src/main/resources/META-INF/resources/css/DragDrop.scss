@@ -59,6 +59,7 @@
 
 	&.fragments-editor__drag-handler,
 	.fragments-editor__drag-handler {
+		cursor: pointer;
 		cursor: grab;
 	}
 }

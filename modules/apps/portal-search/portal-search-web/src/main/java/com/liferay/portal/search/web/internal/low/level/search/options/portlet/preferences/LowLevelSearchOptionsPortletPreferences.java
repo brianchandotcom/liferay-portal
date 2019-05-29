@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.low.level.search.options.portlet;
+package com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences;
 
 import java.util.Optional;
 
@@ -21,6 +21,12 @@ import java.util.Optional;
  */
 public interface LowLevelSearchOptionsPortletPreferences {
 
+	public static final String PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE =
+		"contributorsToExclude";
+
+	public static final String PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE =
+		"contributorsToInclude";
+
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
 
@@ -28,6 +34,14 @@ public interface LowLevelSearchOptionsPortletPreferences {
 		"fieldsToReturn";
 
 	public static final String PREFERENCE_KEY_INDEXES = "indexes";
+
+	public Optional<String> getContributorsToExcludeOptional();
+
+	public String getContributorsToExcludeString();
+
+	public Optional<String> getContributorsToIncludeOptional();
+
+	public String getContributorsToIncludeString();
 
 	public Optional<String> getFederatedSearchKeyOptional();
 

@@ -16,8 +16,8 @@ package com.liferay.portal.search.web.internal.low.level.search.options.portlet.
 
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
-import com.liferay.portal.search.web.internal.low.level.search.options.portlet.LowLevelSearchOptionsPortletPreferences;
-import com.liferay.portal.search.web.internal.low.level.search.options.portlet.LowLevelSearchOptionsPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferences;
+import com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
@@ -50,10 +50,18 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 				lowLevelSearchOptionsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		searchRequestBuilder.fields(
+		searchRequestBuilder.excludeContributors(
+			SearchStringUtil.splitAndUnquote(
+				lowLevelSearchOptionsPortletPreferences.
+					getContributorsToExcludeOptional())
+		).fields(
 			SearchStringUtil.splitAndUnquote(
 				lowLevelSearchOptionsPortletPreferences.
 					getFieldsToReturnOptional())
+		).includeContributors(
+			SearchStringUtil.splitAndUnquote(
+				lowLevelSearchOptionsPortletPreferences.
+					getContributorsToIncludeOptional())
 		).indexes(
 			SearchStringUtil.splitAndUnquote(
 				lowLevelSearchOptionsPortletPreferences.getIndexesOptional())

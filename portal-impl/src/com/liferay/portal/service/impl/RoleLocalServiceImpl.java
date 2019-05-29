@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -1594,7 +1596,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				PermissionThreadLocal.setAddResource(true);
 			}
 
-			if (name.equals(RoleConstants.USER)) {
+			if (name.equals(RoleConstants.ANALYTICS_ADMINISTRATOR)) {
+				initAnalyticsAdministratorViewPermissions(role);
+			}
+			else if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);
 			}
 		}
@@ -1644,6 +1649,34 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		return teamRoleMap;
+	}
+
+	protected void initAnalyticsAdministratorViewPermissions(Role role)
+		throws PortalException {
+
+		resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), Group.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
+
+		resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), User.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
+
+		resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), Organization.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW_MEMBERS);
+
+		resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), UserGroup.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW_MEMBERS);
 	}
 
 	protected void initPersonalControlPanelPortletsPermissions(Role role)

@@ -79,10 +79,12 @@ public class AssetVocabularyLocalServiceImpl
 		titleMap.put(
 			LocaleUtil.getSiteDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGuestPermissions(true);
+				setScopeGroupId(groupId);
+			}
+		};
 
 		return assetVocabularyLocalService.addVocabulary(
 			defaultUserId, groupId, StringPool.BLANK, titleMap, null,

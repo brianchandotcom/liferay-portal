@@ -145,11 +145,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			AssetTag tag = fetchTag(group.getGroupId(), name);
 
 			if (tag == null) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
-				serviceContext.setScopeGroupId(group.getGroupId());
+				ServiceContext serviceContext = new ServiceContext() {
+					{
+						setAddGroupPermissions(true);
+						setAddGuestPermissions(true);
+						setScopeGroupId(group.getGroupId());
+					}
+				};
 
 				tag = addTag(userId, group.getGroupId(), name, serviceContext);
 			}

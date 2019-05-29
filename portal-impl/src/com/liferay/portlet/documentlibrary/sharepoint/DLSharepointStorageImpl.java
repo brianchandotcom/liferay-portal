@@ -100,10 +100,12 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		String folderName = getResourceName(folderPath);
 		String description = StringPool.BLANK;
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGroupPermissions(true);
+				setAddGuestPermissions(true);
+			}
+		};
 
 		DLAppServiceUtil.addFolder(
 			groupId, parentFolderId, folderName, description, serviceContext);

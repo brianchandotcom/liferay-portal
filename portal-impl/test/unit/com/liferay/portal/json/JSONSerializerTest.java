@@ -104,12 +104,14 @@ public class JSONSerializerTest {
 
 	@Test
 	public void testSerializeTwice() {
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				String[] groupPermissions = {"VIEW"};
 
-		String[] groupPermissions = {"VIEW"};
-
-		serviceContext.setAttribute("groupPermissions", groupPermissions);
-		serviceContext.setGroupPermissions(groupPermissions);
+				setAttribute("groupPermissions", groupPermissions);
+				setGroupPermissions(groupPermissions);
+			}
+		};
 
 		String json1 = JSONFactoryUtil.serialize(serviceContext);
 

@@ -186,11 +186,13 @@ public class DLFileEntryTypeLocalServiceImpl
 		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(
 			dlFolder.getFolderId());
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(dlFolder.getCompanyId());
-		serviceContext.setScopeGroupId(dlFolder.getGroupId());
-		serviceContext.setUserId(userId);
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setCompanyId(dlFolder.getCompanyId());
+				setScopeGroupId(dlFolder.getGroupId());
+				setUserId(userId);
+			}
+		};
 
 		cascadeFileEntryTypes(
 			userId, dlFolder.getGroupId(), dlFolder.getFolderId(),

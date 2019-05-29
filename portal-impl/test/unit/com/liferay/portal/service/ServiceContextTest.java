@@ -38,18 +38,20 @@ public class ServiceContextTest {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAttribute("TestName", "TestValue");
 
-		serviceContext.setAttribute("TestName", "TestValue");
+				Map<String, String> headers = new HashMap<>();
 
-		Map<String, String> headers = new HashMap<>();
+				headers.put("TestHeaderName", "TestHeaderValue");
 
-		headers.put("TestHeaderName", "TestHeaderValue");
+				setHeaders(headers);
 
-		serviceContext.setHeaders(headers);
-
-		serviceContext.setRequest(
-			ProxyFactory.newDummyInstance(HttpServletRequest.class));
+				setRequest(
+					ProxyFactory.newDummyInstance(HttpServletRequest.class));
+			}
+		};
 
 		String json = JSONFactoryUtil.serialize(serviceContext);
 

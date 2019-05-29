@@ -3929,10 +3929,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String friendlyURL = getFriendlyURL(
 			PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAttribute("layout.instanceable.allowed", Boolean.TRUE);
+			}
+		};
 
 		layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), true,

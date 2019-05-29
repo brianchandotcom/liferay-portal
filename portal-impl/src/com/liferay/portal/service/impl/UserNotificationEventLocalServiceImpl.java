@@ -49,9 +49,11 @@ public class UserNotificationEventLocalServiceImpl
 
 		JSONObject payloadJSONObject = notificationEvent.getPayload();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setUuid(notificationEvent.getUuid());
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setUuid(notificationEvent.getUuid());
+			}
+		};
 
 		return addUserNotificationEvent(
 			userId, notificationEvent.getType(),

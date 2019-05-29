@@ -51,11 +51,13 @@ public class DLAppServiceSoapTest {
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGroupPermissions(true);
+				setAddGuestPermissions(true);
+				setScopeGroupId(_group.getGroupId());
+			}
+		};
 
 		try {
 			getDLAppServiceSoap().deleteFolder(
@@ -107,11 +109,13 @@ public class DLAppServiceSoapTest {
 		String changeLog = StringPool.BLANK;
 		byte[] bytes = _CONTENT.getBytes();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGroupPermissions(true);
+				setAddGuestPermissions(true);
+				setScopeGroupId(_group.getGroupId());
+			}
+		};
 
 		return getDLAppServiceSoap().addFileEntry(
 			_group.getGroupId(), folderId, title, ContentTypes.TEXT_PLAIN,

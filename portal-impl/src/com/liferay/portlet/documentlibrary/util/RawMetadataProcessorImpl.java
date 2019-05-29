@@ -167,10 +167,12 @@ public class RawMetadataProcessorImpl
 				PortalUtil.getClassNameId(RawMetadataProcessor.class),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(fileVersion.getGroupId());
-		serviceContext.setUserId(fileVersion.getUserId());
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setScopeGroupId(fileVersion.getGroupId());
+				setUserId(fileVersion.getUserId());
+			}
+		};
 
 		DLFileEntryMetadataLocalServiceUtil.updateFileEntryMetadata(
 			fileVersion.getCompanyId(), ddmStructures,

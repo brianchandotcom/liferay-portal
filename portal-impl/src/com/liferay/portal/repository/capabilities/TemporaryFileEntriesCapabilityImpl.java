@@ -79,10 +79,12 @@ public class TemporaryFileEntriesCapabilityImpl
 
 			file = FileUtil.createTempFile(inputStream);
 
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+			ServiceContext serviceContext = new ServiceContext() {
+				{
+					setAddGroupPermissions(true);
+					setAddGuestPermissions(true);
+				}
+			};
 
 			return _documentRepository.addFileEntry(
 				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
@@ -244,10 +246,12 @@ public class TemporaryFileEntriesCapabilityImpl
 			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		ServiceContext serviceContext = new ServiceContext() {
+			{
+				setAddGroupPermissions(true);
+				setAddGuestPermissions(true);
+			}
+		};
 
 		return addFolders(
 			temporaryFileEntriesScope.getUserId(),

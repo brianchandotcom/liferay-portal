@@ -15,6 +15,7 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -81,6 +82,101 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
+	}
+
+	@Test
+	public void testAddFragmentEntryByFragmentEntryKeyAndStatus()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEY", "Fragment Entry",
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		Assert.assertEquals(
+			"fragmententrykey", fragmentEntry.getFragmentEntryKey());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
+	}
+
+	@Test
+	public void testAddFragmentEntryByFragmentEntryKeyAndType()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEY", "Fragment Entry",
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		Assert.assertEquals(
+			"fragmententrykey", fragmentEntry.getFragmentEntryKey());
+		Assert.assertEquals(
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
+	}
+
+	@Test
+	public void testAddFragmentEntryByType() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", FragmentConstants.TYPE_COMPONENT,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		Assert.assertEquals(
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
+	}
+
+	@Test
+	public void testAddFragmentEntryByTypeAndValidHTML()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		String html = "<div>Valid HTML</div>";
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, html, null,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		Assert.assertEquals(html, fragmentEntry.getHtml());
+		Assert.assertEquals(
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -345,6 +441,48 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
+	public void testFragmentEntriesByType() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		List<FragmentEntry> originalFragmentEntries =
+			_fragmentEntryService.getFragmentEntriesByType(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEYTWO", "Fragment Entry Two",
+			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		List<FragmentEntry> actualFragmentEntries =
+			_fragmentEntryService.getFragmentEntriesByType(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			actualFragmentEntries.toString(),
+			originalFragmentEntries.size() + 1, actualFragmentEntries.size());
+	}
+
+	@Test
 	public void testGetFragmentCollectionsCount() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -377,6 +515,82 @@ public class FragmentEntryServiceTest {
 
 		Assert.assertEquals(
 			originalFragmentCollectionsCount + 2,
+			actualFragmentCollectionsCount);
+	}
+
+	@Test
+	public void testGetFragmentCollectionsCountByKeyword() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		int originalFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCount(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Entry");
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry One", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry Two", WorkflowConstants.STATUS_DENIED,
+			serviceContext);
+
+		int actualFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCount(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Entry");
+
+		Assert.assertEquals(
+			originalFragmentCollectionsCount + 2,
+			actualFragmentCollectionsCount);
+	}
+
+	@Test
+	public void testGetFragmentCollectionsCountByKeywordAndStatus()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		int originalFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCount(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Entry",
+				WorkflowConstants.STATUS_APPROVED);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry One", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry Two", WorkflowConstants.STATUS_DENIED,
+			serviceContext);
+
+		int actualFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCount(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Entry",
+				WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			originalFragmentCollectionsCount + 1,
 			actualFragmentCollectionsCount);
 	}
 
@@ -509,6 +723,80 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
+	public void testGetFragmentCollectionsCountByType() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		int originalFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCountByType(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				FragmentConstants.TYPE_COMPONENT);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEYTWO", "Fragment Entry Two",
+			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		int actualFragmentCollectionsCount =
+			_fragmentEntryService.getFragmentCollectionsCountByType(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				FragmentConstants.TYPE_COMPONENT);
+
+		Assert.assertEquals(
+			originalFragmentCollectionsCount + 1,
+			actualFragmentCollectionsCount);
+	}
+
+	@Test
+	public void testMoveFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection1 =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection1.getFragmentCollectionId(),
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		FragmentCollection fragmentCollection2 =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		_fragmentEntryService.moveFragmentEntry(
+			fragmentEntry.getFragmentEntryId(),
+			fragmentCollection2.getFragmentCollectionId());
+
+		FragmentEntry persistedFragmentEntry =
+			_fragmentEntryService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId());
+
+		Assert.assertEquals(
+			fragmentCollection2.getFragmentCollectionId(),
+			persistedFragmentEntry.getFragmentCollectionId());
+	}
+
+	@Test
 	public void testUpdateFragmentEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -528,6 +816,44 @@ public class FragmentEntryServiceTest {
 			fragmentEntry.getFragmentEntryId(), "Fragment Name Updated");
 
 		Assert.assertEquals("Fragment Name Updated", fragmentEntry.getName());
+	}
+
+	@Test
+	public void testUpdateFragmentEntryPreviewFileEntryId() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"FRAGMENTENTRYKEY", "Fragment Entry Original", null,
+			"<div>Original</div>", null, WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
+
+		Assert.assertEquals(0, fragmentEntry.getPreviewFileEntryId());
+
+		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
+			fragmentEntry.getFragmentEntryId(), "Fragment Entry Updated",
+			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
+			1, WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals("Fragment Entry Updated", fragmentEntry.getName());
+
+		Assert.assertEquals("div {\ncolor: red;\n}", fragmentEntry.getCss());
+
+		Assert.assertEquals("<div>Updated</div>", fragmentEntry.getHtml());
+
+		Assert.assertEquals("alert(\"test\");", fragmentEntry.getJs());
+
+		Assert.assertEquals(1, fragmentEntry.getPreviewFileEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
 	}
 
 	@Test

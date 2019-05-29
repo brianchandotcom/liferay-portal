@@ -66,12 +66,12 @@ appendHotfixQualifier {
 				String version = properties.getProperty(Constants.BUNDLE_VERSION)
 
 				if ((version != null) && (version.indexOf(qualifier) == -1)) {
-					String newLine = Constants.BUNDLE_VERSION + ": " + version + qualifier + System.lineSeparator()
+					String newLine = Constants.BUNDLE_VERSION + ": " + version + qualifier
 					String oldLine = bndBndFile.filterLine {
 						it =~ "^" + Constants.BUNDLE_VERSION + ".*"
 					}
 
-					bndBndFile.text = bndBndFile.text.replace(oldLine, newLine)
+					bndBndFile.text = bndBndFile.text.replace(oldLine.trim(), newLine)
 
 					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
 				}

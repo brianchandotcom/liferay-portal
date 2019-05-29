@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,7 +47,6 @@ import com.liferay.portlet.util.test.PortletKeys;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,11 +62,6 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-	}
 
 	@Test
 	public void testCleanUpOrphanePortletPreferences() throws Exception {
@@ -87,11 +80,9 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
 			new Class<?>[0]);
 
-		portletPreferences =
+		Assert.assertNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				portletPreferences.getPortletPreferencesId());
-
-		Assert.assertNull(portletPreferences);
+				portletPreferences.getPortletPreferencesId()));
 	}
 
 	@Test
@@ -129,24 +120,21 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
 			new Class<?>[0]);
 
-		portletPreferences =
+		Assert.assertNotNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				portletPreferences.getPortletPreferencesId());
-
-		Assert.assertNotNull(portletPreferences);
+				portletPreferences.getPortletPreferencesId()));
 	}
 
 	private LayoutRevision _getLayoutRevision() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group, false);
+		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		Layout layout = LayoutTestUtil.addLayout(_group, false);
 
 		LayoutSetBranch layoutSetBranch =
 			_layoutSetBranchLocalService.addLayoutSetBranch(
 				TestPropsValues.getUserId(), _group.getGroupId(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, 0, serviceContext);
+				true, 0, ServiceContextTestUtil.getServiceContext());
 
 		LayoutBranch layoutBranch =
 			_layoutBranchLocalService.getMasterLayoutBranch(

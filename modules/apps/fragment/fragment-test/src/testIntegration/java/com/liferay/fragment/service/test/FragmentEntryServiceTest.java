@@ -441,7 +441,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testFragmentEntriesByType() throws Exception {
+	public void testGetFragmentEntriesByType() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -595,7 +595,9 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByKeywords() throws Exception {
+	public void testGetFragmentEntriesByKeywordAndOrderByComparator()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -628,7 +630,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByKeywordsAndStatus()
+	public void testGetFragmentEntriesByKeywordStatusAndOrderByComparator()
 		throws Exception {
 
 		ServiceContext serviceContext =

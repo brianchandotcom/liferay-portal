@@ -298,6 +298,8 @@ public class StringUtilTest {
 		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
 		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
 		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+		Assert.assertEquals(
+			"123", StringUtil.merge(Arrays.asList("1", "2", "3"), ""));
 	}
 
 	@Test

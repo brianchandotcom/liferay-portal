@@ -417,8 +417,11 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	public void updatePreferences(long companyId, UnicodeProperties properties)
 		throws PortalException {
 
-		if (!roleLocalService.hasUserRole(
-				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
+		if (!(roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true) ||
+			  roleLocalService.hasUserRole(
+				  getUserId(), companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  true))) {
 
 			throw new PrincipalException();
 		}

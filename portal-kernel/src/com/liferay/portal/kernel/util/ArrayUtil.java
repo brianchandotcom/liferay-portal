@@ -24,6 +24,7 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -1426,6 +1427,132 @@ public class ArrayUtil {
 			array[left] = array[right];
 			array[right] = value;
 		}
+	}
+
+	public static byte[] sortedUnique(byte[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static double[] sortedUnique(double[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static float[] sortedUnique(float[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static int[] sortedUnique(int[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static long[] sortedUnique(long[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static short[] sortedUnique(short[] array) {
+		Arrays.sort(array);
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if ((array[index] != array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
+	}
+
+	public static String[] sortedUnique(String[] array) {
+		Arrays.sort(array, Comparator.nullsLast(Comparator.naturalOrder()));
+
+		int index = 0;
+
+		for (int i = 1; i < array.length; i++) {
+			if (!Objects.equals(array[index], array[i]) && (++index != i)) {
+				array[index] = array[i];
+			}
+		}
+
+		if (++index != array.length) {
+			return Arrays.copyOf(array, index);
+		}
+
+		return array;
 	}
 
 	public static Object split(Object array, int splitSize) {

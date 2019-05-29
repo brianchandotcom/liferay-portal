@@ -14,11 +14,19 @@
 
 package com.liferay.sharing.web.internal.product.navigation.personal.menu;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -34,8 +42,30 @@ import org.osgi.service.component.annotations.Component;
 public class SharedAssetsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
+	public boolean isShow(
+			PortletRequest portletRequest, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		SharingConfiguration companySharingConfiguration =
+			_sharingConfigurationFactory.getCompanySharingConfiguration(
+				_portal.getCompany(portletRequest));
+
+		if (!companySharingConfiguration.isEnabled()) {
+			return false;
+		}
+
+		return super.isShow(portletRequest, permissionChecker);
+	}
+
+	@Override
 	protected String getPortletId() {
 		return SharingPortletKeys.SHARED_ASSETS;
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 }

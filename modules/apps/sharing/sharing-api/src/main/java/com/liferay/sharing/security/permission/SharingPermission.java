@@ -34,12 +34,22 @@ public interface SharingPermission {
 			long groupId)
 		throws PortalException;
 
+	public void checkSharePermission(
+			PermissionChecker permissionChecker, long classNameId, long classPK,
+			long groupId)
+		throws PortalException;
+
 	public boolean contains(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			long groupId, Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException;
 
 	public boolean containsManageCollaboratorsPermission(
+			PermissionChecker permissionChecker, long classNameId, long classPK,
+			long groupId)
+		throws PortalException;
+
+	public boolean containsSharePermission(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			long groupId)
 		throws PortalException;

@@ -19,9 +19,11 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.model.SharingEntry;
@@ -101,6 +103,23 @@ public class SharingPermissionImpl implements SharingPermission {
 	}
 
 	@Override
+	public void checkSharePermission(
+			PermissionChecker permissionChecker, long classNameId, long classPK,
+			long groupId)
+		throws PortalException {
+
+		if (!containsSharePermission(
+				permissionChecker, classNameId, classPK, groupId)) {
+
+			throw new PrincipalException(
+				StringBundler.concat(
+					"User ", permissionChecker.getUserId(),
+					" does not have permission to share ", classNameId,
+					StringPool.SPACE, classPK));
+		}
+	}
+
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			long groupId, Collection<SharingEntryAction> sharingEntryActions)
@@ -170,6 +189,38 @@ public class SharingPermissionImpl implements SharingPermission {
 				sharingEntry.getClassPK(), sharingEntry.getGroupId(),
 				Collections.singletonList(SharingEntryAction.UPDATE))) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean containsSharePermission(
+		PermissionChecker permissionChecker, long classNameId, long classPK,
+		long groupId) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isGroupAdmin(groupId) ||
+			permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(), assetEntry.getClassName(),
+				classPK, assetEntry.getUserId(), ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
+			permissionChecker.getUserId(), classNameId, classPK);
+
+		if ((sharingEntry != null) && sharingEntry.isShareable()) {
 			return true;
 		}
 

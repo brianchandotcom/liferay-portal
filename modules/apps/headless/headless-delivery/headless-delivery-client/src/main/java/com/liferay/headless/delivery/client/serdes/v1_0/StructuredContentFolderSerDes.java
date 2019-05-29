@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -80,7 +82,23 @@ public class StructuredContentFolderSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(structuredContentFolder.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0;
+				 i < structuredContentFolder.getCustomFields().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						structuredContentFolder.getCustomFields()[i]));
+
+				if ((i + 1) <
+						structuredContentFolder.getCustomFields().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (structuredContentFolder.getDateCreated() != null) {
@@ -382,8 +400,13 @@ public class StructuredContentFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					structuredContentFolder.setCustomFields(
-						StructuredContentFolderSerDes.toMap(
-							(String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

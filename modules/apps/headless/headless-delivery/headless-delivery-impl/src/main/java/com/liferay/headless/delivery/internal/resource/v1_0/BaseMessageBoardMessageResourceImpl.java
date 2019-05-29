@@ -134,11 +134,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getArticleBody());
 		}
 
-		if (messageBoardMessage.getCustomFields() != null) {
-			existingMessageBoardMessage.setCustomFields(
-				messageBoardMessage.getCustomFields());
-		}
-
 		if (messageBoardMessage.getDateCreated() != null) {
 			existingMessageBoardMessage.setDateCreated(
 				messageBoardMessage.getDateCreated());

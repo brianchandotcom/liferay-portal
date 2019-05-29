@@ -126,10 +126,6 @@ public abstract class BaseBlogPostingResourceImpl
 			existingBlogPosting.setArticleBody(blogPosting.getArticleBody());
 		}
 
-		if (blogPosting.getCustomFields() != null) {
-			existingBlogPosting.setCustomFields(blogPosting.getCustomFields());
-		}
-
 		if (blogPosting.getDateCreated() != null) {
 			existingBlogPosting.setDateCreated(blogPosting.getDateCreated());
 		}

@@ -186,11 +186,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getArticleBody());
 		}
 
-		if (messageBoardThread.getCustomFields() != null) {
-			existingMessageBoardThread.setCustomFields(
-				messageBoardThread.getCustomFields());
-		}
-
 		if (messageBoardThread.getDateCreated() != null) {
 			existingMessageBoardThread.setDateCreated(
 				messageBoardThread.getDateCreated());

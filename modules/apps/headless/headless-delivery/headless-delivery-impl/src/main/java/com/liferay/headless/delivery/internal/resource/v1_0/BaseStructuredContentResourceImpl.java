@@ -313,11 +313,6 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getContentStructureId());
 		}
 
-		if (structuredContent.getCustomFields() != null) {
-			existingStructuredContent.setCustomFields(
-				structuredContent.getCustomFields());
-		}
-
 		if (structuredContent.getDateCreated() != null) {
 			existingStructuredContent.setDateCreated(
 				structuredContent.getDateCreated());

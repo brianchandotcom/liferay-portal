@@ -279,11 +279,6 @@ public class TemporaryFileEntriesCapabilityImpl
 			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
 		return getDeepestFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_getFolderPath(temporaryFileEntriesScope));

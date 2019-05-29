@@ -170,8 +170,6 @@ public class DLFileEntryInfoDisplayContributorTest {
 						fileEntry.getSize(), LocaleUtil.getDefault()),
 					infoDisplayFieldsValues.get("size"));
 				Assert.assertEquals(
-					StringPool.BLANK, infoDisplayFieldsValues.get("summary"));
-				Assert.assertEquals(
 					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
 				Assert.assertEquals(
 					fileEntry.getTitle(), infoDisplayFieldsValues.get("title"));

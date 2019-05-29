@@ -554,8 +554,28 @@ public class CTEntryLocalServiceUtil {
 			ctEntryId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getRelatedOwnerCTEntries(
+			long companyId, long ctCollectionId, long ctEntryId,
+			String keywords,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return getService().getRelatedOwnerCTEntries(
+			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
+	}
+
 	public static int getRelatedOwnerCTEntriesCount(long ctEntryId) {
 		return getService().getRelatedOwnerCTEntriesCount(ctEntryId);
+	}
+
+	public static long getRelatedOwnerCTEntriesCount(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return getService().getRelatedOwnerCTEntriesCount(
+			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
 	}
 
 	public static boolean hasCTCollectionCTEntries(long ctCollectionId) {

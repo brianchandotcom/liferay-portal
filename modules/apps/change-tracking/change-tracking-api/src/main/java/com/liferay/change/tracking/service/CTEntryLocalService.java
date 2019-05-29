@@ -375,7 +375,17 @@ public interface CTEntryLocalService
 		OrderByComparator<CTEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getRelatedOwnerCTEntries(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getRelatedOwnerCTEntriesCount(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCTCollectionCTEntries(long ctCollectionId);

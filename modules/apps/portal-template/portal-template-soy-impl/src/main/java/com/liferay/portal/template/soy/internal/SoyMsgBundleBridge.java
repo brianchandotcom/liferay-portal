@@ -20,6 +20,8 @@ import com.google.template.soy.msgs.restricted.SoyMsgPart;
 import com.google.template.soy.msgs.restricted.SoyMsgPlaceholderPart;
 import com.google.template.soy.msgs.restricted.SoyMsgRawTextPart;
 
+import com.ibm.icu.util.ULocale;
+
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,6 +48,8 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 		_languageId = LanguageUtil.getLanguageId(locale);
 
+		_rtl = soyMsgBundle.isRtl();
+
 		for (SoyMsg soyMsg : soyMsgBundle) {
 			SoyMsg.Builder builder = SoyMsg.builder();
 
@@ -55,6 +59,13 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 			_soyMsgMap.put(soyMsg.getId(), builder.build());
 		}
+
+		_uLocale = soyMsgBundle.getLocale();
+	}
+
+	@Override
+	public ULocale getLocale() {
+		return _uLocale;
 	}
 
 	@Override
@@ -70,6 +81,11 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	@Override
 	public int getNumMsgs() {
 		return _soyMsgMap.size();
+	}
+
+	@Override
+	public boolean isRtl() {
+		return _rtl;
 	}
 
 	@Override
@@ -131,6 +147,8 @@ public class SoyMsgBundleBridge extends SoyMsgBundle {
 	private static final String _PLACEHOLDER = "__SOY_MSG_PLACEHOLDER__";
 
 	private final String _languageId;
+	private final boolean _rtl;
 	private final Map<Long, SoyMsg> _soyMsgMap = new HashMap<>();
+	private final ULocale _uLocale;
 
 }

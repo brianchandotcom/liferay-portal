@@ -2613,19 +2613,43 @@ public class JenkinsResultsParserUtil {
 			httpAuthorization);
 	}
 
-	public static void updateBuildDescription(
-		String buildDescription, int buildNumber, String jobName,
-		String masterHostname) {
+	public static void updateBuildData(
+		String buildDescription, int buildNumber, String buildResult,
+		String jobName, String masterHostname) {
 
-		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
-		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
+		if ((buildDescription == null) && (buildResult == null)) {
+			return;
+		}
 
 		String jenkinsScript = combine(
 			"def job = Jenkins.instance.getItemByFullName(\"", jobName, "\"); ",
 			"def build = job.getBuildByNumber(", String.valueOf(buildNumber),
-			"); ", "build.description = \"", buildDescription, "\";");
+			");");
+
+		if (buildDescription != null) {
+			buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
+			buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
+
+			jenkinsScript = combine(
+				jenkinsScript, " build.description = \"", buildDescription,
+				"\";");
+		}
+
+		if (buildResult != null) {
+			jenkinsScript = combine(
+				jenkinsScript, " build.@result = hudson.model.Result.",
+				buildResult, ";");
+		}
 
 		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
+	}
+
+	public static void updateBuildDescription(
+		String buildDescription, int buildNumber, String jobName,
+		String masterHostname) {
+
+		updateBuildData(
+			buildDescription, buildNumber, null, jobName, masterHostname);
 	}
 
 	public static void write(File file, String content) throws IOException {

@@ -114,7 +114,7 @@ public class MBMessageStagedModelDataHandler
 		return message.getSubject();
 	}
 
-	protected MBMessage addDiscussionMessage(
+	private MBMessage _addDiscussionMessage(
 			PortletDataContext portletDataContext, long userId, long threadId,
 			long parentMessageId, MBMessage message,
 			ServiceContext serviceContext)
@@ -293,7 +293,7 @@ public class MBMessageStagedModelDataHandler
 			message.getParentMessageId());
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			getAttachments(portletDataContext, messageElement, message);
+			_getAttachments(portletDataContext, messageElement, message);
 
 		try {
 			ServiceContext serviceContext =
@@ -309,7 +309,7 @@ public class MBMessageStagedModelDataHandler
 					serviceContext.setUuid(message.getUuid());
 
 					if (message.isDiscussion()) {
-						importedMessage = addDiscussionMessage(
+						importedMessage = _addDiscussionMessage(
 							portletDataContext, userId, threadId,
 							parentMessageId, message, serviceContext);
 					}
@@ -358,7 +358,7 @@ public class MBMessageStagedModelDataHandler
 			}
 			else {
 				if (message.isDiscussion()) {
-					importedMessage = addDiscussionMessage(
+					importedMessage = _addDiscussionMessage(
 						portletDataContext, userId, threadId, parentMessageId,
 						message, serviceContext);
 				}
@@ -457,7 +457,7 @@ public class MBMessageStagedModelDataHandler
 		}
 	}
 
-	protected List<ObjectValuePair<String, InputStream>> getAttachments(
+	private List<ObjectValuePair<String, InputStream>> _getAttachments(
 		PortletDataContext portletDataContext, Element messageElement,
 		MBMessage message) {
 

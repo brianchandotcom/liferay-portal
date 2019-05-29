@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -81,9 +83,10 @@ public class DDMStructureLayoutLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructureLayout addStructureLayout(
-			long userId, long groupId, long structureVersionId,
-			Map<Locale, String> name, Map<Locale, String> description,
-			String definition, ServiceContext serviceContext)
+			long userId, long groupId, long classNameId,
+			long structureVersionId, Map<Locale, String> name,
+			Map<Locale, String> description, String definition,
+			String structureLayoutKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -100,12 +103,36 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setUserName(user.getFullName());
 		structureLayout.setCreateDate(new Date());
 		structureLayout.setModifiedDate(new Date());
+		structureLayout.setClassNameId(classNameId);
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setNameMap(name);
 		structureLayout.setDescriptionMap(description);
 		structureLayout.setDefinition(definition);
 
+		if (Validator.isNull(structureLayoutKey)) {
+			structureLayout.setStructureLayoutKey(
+				String.valueOf(counterLocalService.increment()));
+		}
+		else {
+			structureLayout.setStructureLayoutKey(
+				StringUtil.toUpperCase(structureLayoutKey.trim()));
+		}
+
 		return ddmStructureLayoutPersistence.update(structureLayout);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMStructureLayout addStructureLayout(
+			long userId, long groupId, long structureVersionId,
+			Map<Locale, String> name, Map<Locale, String> description,
+			String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addStructureLayout(
+			userId, groupId, 0L, structureVersionId, name, description,
+			definition, String.valueOf(counterLocalService.increment()),
+			serviceContext);
 	}
 
 	@Override
@@ -125,11 +152,28 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Override
+	public DDMStructureLayout fetchStructureLayout(
+		long groupId, long classNameId, String structureLayoutKey) {
+
+		return ddmStructureLayoutPersistence.fetchByG_C_S(
+			groupId, classNameId, getStructureLayoutKey(structureLayoutKey));
+	}
+
+	@Override
 	public DDMStructureLayout getStructureLayout(long structureLayoutId)
 		throws PortalException {
 
 		return ddmStructureLayoutPersistence.findByPrimaryKey(
 			structureLayoutId);
+	}
+
+	@Override
+	public DDMStructureLayout getStructureLayout(
+			long groupId, long classNameId, String structureLayoutKey)
+		throws PortalException {
+
+		return ddmStructureLayoutPersistence.findByG_C_S(
+			groupId, classNameId, getStructureLayoutKey(structureLayoutKey));
 	}
 
 	@Override
@@ -238,6 +282,14 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setDefinition(definition);
 
 		return ddmStructureLayoutPersistence.update(structureLayout);
+	}
+
+	protected String getStructureLayoutKey(String structureLayoutKey) {
+		if (structureLayoutKey != null) {
+			return StringUtil.toUpperCase(structureLayoutKey.trim());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	protected String serialize(DDMFormLayout ddmFormLayout) {

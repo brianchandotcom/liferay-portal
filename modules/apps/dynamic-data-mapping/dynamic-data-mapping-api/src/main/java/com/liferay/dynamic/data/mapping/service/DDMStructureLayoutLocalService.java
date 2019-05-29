@@ -87,8 +87,9 @@ public interface DDMStructureLayoutLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructureLayout addStructureLayout(
 			long userId, long groupId, long structureVersionId,
-			Map<Locale, String> name, Map<Locale, String> description,
-			String definition, ServiceContext serviceContext)
+			long classNameId, Map<Locale, String> name,
+			Map<Locale, String> description, String definition,
+			String structureLayoutKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -310,6 +311,11 @@ public interface DDMStructureLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureLayout getStructureLayout(long structureLayoutId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructureLayout getStructureLayout(
+			long groupId, long classNameId, String structureLayoutKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -177,6 +177,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
 		<field name="structureVersionId" type="long" />
 		<field localized="true" name="name" type="String">
 			<hint-collection name="CLOB" />
@@ -187,6 +188,7 @@
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="structureLayoutKey" type="String" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLink">
 		<field name="structureLinkId" type="long" />

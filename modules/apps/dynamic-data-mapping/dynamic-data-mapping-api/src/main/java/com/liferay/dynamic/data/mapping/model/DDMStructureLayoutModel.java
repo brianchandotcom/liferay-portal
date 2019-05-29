@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.TypedModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMStructureLayoutModel
 	extends BaseModel<DDMStructureLayout>, GroupedModel, LocalizedModel,
-			ShardedModel, StagedAuditedModel {
+			ShardedModel, StagedAuditedModel, TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -207,6 +208,32 @@ public interface DDMStructureLayoutModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the fully qualified class name of this ddm structure layout.
+	 *
+	 * @return the fully qualified class name of this ddm structure layout
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this ddm structure layout.
+	 *
+	 * @return the class name ID of this ddm structure layout
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this ddm structure layout.
+	 *
+	 * @param classNameId the class name ID of this ddm structure layout
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
 	 * Returns the structure version ID of this ddm structure layout.
@@ -436,6 +463,21 @@ public interface DDMStructureLayoutModel
 	 * @param definition the definition of this ddm structure layout
 	 */
 	public void setDefinition(String definition);
+
+	/**
+	 * Returns the structure layout key of this ddm structure layout.
+	 *
+	 * @return the structure layout key of this ddm structure layout
+	 */
+	@AutoEscape
+	public String getStructureLayoutKey();
+
+	/**
+	 * Sets the structure layout key of this ddm structure layout.
+	 *
+	 * @param structureLayoutKey the structure layout key of this ddm structure layout
+	 */
+	public void setStructureLayoutKey(String structureLayoutKey);
 
 	@Override
 	public String[] getAvailableLanguageIds();

@@ -67,7 +67,7 @@ public class DDMStructureLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,6 +85,8 @@ public class DDMStructureLayoutCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", structureVersionId=");
 		sb.append(structureVersionId);
 		sb.append(", name=");
@@ -93,6 +95,8 @@ public class DDMStructureLayoutCacheModel
 		sb.append(description);
 		sb.append(", definition=");
 		sb.append(definition);
+		sb.append(", structureLayoutKey=");
+		sb.append(structureLayoutKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +140,7 @@ public class DDMStructureLayoutCacheModel
 			ddmStructureLayoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		ddmStructureLayoutImpl.setClassNameId(classNameId);
 		ddmStructureLayoutImpl.setStructureVersionId(structureVersionId);
 
 		if (name == null) {
@@ -157,6 +162,13 @@ public class DDMStructureLayoutCacheModel
 		}
 		else {
 			ddmStructureLayoutImpl.setDefinition(definition);
+		}
+
+		if (structureLayoutKey == null) {
+			ddmStructureLayoutImpl.setStructureLayoutKey("");
+		}
+		else {
+			ddmStructureLayoutImpl.setStructureLayoutKey(structureLayoutKey);
 		}
 
 		ddmStructureLayoutImpl.resetOriginalValues();
@@ -183,10 +195,13 @@ public class DDMStructureLayoutCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		classNameId = objectInput.readLong();
+
 		structureVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		definition = objectInput.readUTF();
+		structureLayoutKey = objectInput.readUTF();
 
 		_ddmFormLayout =
 			(com.liferay.dynamic.data.mapping.model.DDMFormLayout)
@@ -220,6 +235,8 @@ public class DDMStructureLayoutCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(classNameId);
+
 		objectOutput.writeLong(structureVersionId);
 
 		if (name == null) {
@@ -243,6 +260,13 @@ public class DDMStructureLayoutCacheModel
 			objectOutput.writeUTF(definition);
 		}
 
+		if (structureLayoutKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(structureLayoutKey);
+		}
+
 		objectOutput.writeObject(_ddmFormLayout);
 	}
 
@@ -254,10 +278,12 @@ public class DDMStructureLayoutCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long classNameId;
 	public long structureVersionId;
 	public String name;
 	public String description;
 	public String definition;
+	public String structureLayoutKey;
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout _ddmFormLayout;
 
 }

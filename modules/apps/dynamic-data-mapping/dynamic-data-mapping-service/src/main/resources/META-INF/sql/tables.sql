@@ -150,10 +150,12 @@ create table DDMStructureLayout (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	classNameId LONG,
 	structureVersionId LONG,
 	name TEXT null,
 	description TEXT null,
-	definition TEXT null
+	definition TEXT null,
+	structureLayoutKey VARCHAR(75) null
 );
 
 create table DDMStructureLink (

@@ -979,28 +979,53 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testUnique() {
+		byte[] bytes = {1, 2, 3};
+
 		Assert.assertArrayEquals(
-			new byte[] {1, 2, 3}, ArrayUtil.unique(new byte[] {1, 2, 3, 3, 2}));
+			bytes, ArrayUtil.unique(new byte[] {1, 2, 3, 3, 2}));
+		Assert.assertSame(bytes, ArrayUtil.unique(bytes));
+
+		double[] doubles = {1.0, 2.0, 3.0};
+
 		Assert.assertArrayEquals(
-			new double[] {1.0, 2.0, 3.0},
+			doubles,
 			ArrayUtil.unique(new double[] {1.0, 2.0, 3.0, 1.0, 2.0, 3.0}),
 			0.0001);
+		Assert.assertSame(doubles, ArrayUtil.unique(doubles));
+
+		float[] floats = {1.0F, 2.0F, 3.0F};
+
 		Assert.assertArrayEquals(
-			new float[] {1.0F, 2.0F, 3.0F},
+			floats,
 			ArrayUtil.unique(new float[] {1.0F, 2.0F, 3.0F, 3.0F, 2.0F}),
 			0.0001F);
+		Assert.assertSame(floats, ArrayUtil.unique(floats));
+
+		int[] ints = {1, 2, 3};
+
 		Assert.assertArrayEquals(
-			new int[] {1, 2, 3}, ArrayUtil.unique(new int[] {1, 2, 3, 3, 2}));
+			ints, ArrayUtil.unique(new int[] {1, 2, 3, 3, 2}));
+		Assert.assertSame(ints, ArrayUtil.unique(ints));
+
+		long[] longs = {1L, 2L, 3L};
+
 		Assert.assertArrayEquals(
-			new long[] {1L, 2L, 3L},
-			ArrayUtil.unique(new long[] {1L, 2L, 3L, 3L, 2L}));
+			longs, ArrayUtil.unique(new long[] {1L, 2L, 3L, 3L, 2L}));
+		Assert.assertSame(longs, ArrayUtil.unique(longs));
+
+		short[] shorts = {1, 2, 3};
+
 		Assert.assertArrayEquals(
-			new short[] {1, 2, 3},
-			ArrayUtil.unique(new short[] {1, 2, 3, 3, 2}));
+			shorts, ArrayUtil.unique(new short[] {1, 2, 3, 3, 2}));
+		Assert.assertSame(shorts, ArrayUtil.unique(shorts));
+
+		String[] strings = {"hello", "world"};
+
 		Assert.assertArrayEquals(
-			new String[] {"hello", "world"},
+			strings,
 			ArrayUtil.unique(
 				new String[] {"hello", "hello", "world", "world"}));
+		Assert.assertSame(strings, ArrayUtil.unique(strings));
 	}
 
 	private final Predicate<Double> _doublePredicate = d -> d >= 1.1;

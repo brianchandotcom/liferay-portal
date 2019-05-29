@@ -32,12 +32,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.query.field.FieldQueryFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -211,6 +213,20 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTEntry> getRelatedOwnerCTEntries(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		QueryDefinition<CTEntry> queryDefinition) {
+
+		Query query = _buildQuery(
+			companyId, ctCollectionId, ctEntryId, keywords);
+
+		SearchResponse searchResponse = _search(
+			companyId, query, queryDefinition);
+
+		return _getCTEntries(searchResponse);
+	}
+
+	@Override
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId) {
 		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
 
@@ -218,6 +234,20 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		return ctEntryFinder.countByRelatedCTEntries(
 			ctEntryId, queryDefinition);
+	}
+
+	@Override
+	public long getRelatedOwnerCTEntriesCount(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		QueryDefinition<CTEntry> queryDefinition) {
+
+		Query query = _buildQuery(
+			companyId, ctCollectionId, ctEntryId, keywords);
+
+		SearchResponse searchResponse = _search(
+			companyId, query, queryDefinition);
+
+		return searchResponse.getTotalHits();
 	}
 
 	@Override
@@ -378,6 +408,30 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return booleanQuery;
 	}
 
+	private Query _buildQuery(
+		long companyId, long ctCollectionId, long ctEntryId, String keywords) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("ctCollectionId", ctCollectionId));
+		booleanQuery.addFilterQueryClauses(
+			_queries.term(Field.COMPANY_ID, companyId));
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("affectedBy", ctEntryId));
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term(Field.STATUS, WorkflowConstants.STATUS_DRAFT));
+
+		if (Validator.isNotNull(keywords)) {
+			booleanQuery.addMustQueryClauses(
+				_fieldQueryFactory.createQuery(
+					Field.TITLE, keywords, true, false));
+		}
+
+		return booleanQuery;
+	}
+
 	private List<CTEntry> _getCTEntries(SearchResponse searchResponse) {
 		Stream<Document> documentsStream = searchResponse.getDocumentsStream();
 
@@ -513,6 +567,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			throw new IllegalArgumentException("Change type value is invalid");
 		}
 	}
+
+	@Reference
+	private FieldQueryFactory _fieldQueryFactory;
 
 	@Reference
 	private Portal _portal;

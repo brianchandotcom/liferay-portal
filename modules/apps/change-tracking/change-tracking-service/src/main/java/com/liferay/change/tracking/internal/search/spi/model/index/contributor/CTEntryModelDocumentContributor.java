@@ -18,13 +18,19 @@ import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryAggregate;
+import com.liferay.change.tracking.model.CTEntryModel;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +54,7 @@ public class CTEntryModelDocumentContributor
 		document.addDate(Field.MODIFIED_DATE, ctEntry.getModifiedDate());
 		document.addKeyword(Field.STATUS, ctEntry.getStatus());
 		document.addText(Field.TITLE, _getTitle(ctEntry));
+		document.addKeyword("affectedBy", _getAffectedBy(ctEntry));
 		document.addKeyword("changeType", ctEntry.getChangeType());
 		document.addKeyword("collision", ctEntry.isCollision());
 		document.addKeyword("ctCollectionId", _getCTCollectionIds(ctEntry));
@@ -58,6 +65,29 @@ public class CTEntryModelDocumentContributor
 		document.addKeyword("modelClassPK", ctEntry.getModelClassPK());
 		document.addKeyword(
 			"modelResourcePrimKey", ctEntry.getModelResourcePrimKey());
+	}
+
+	private long[] _getAffectedBy(CTEntry ctEntry) {
+		List<CTEntryAggregate> ctEntryAggregates =
+			ctEntry.getCTEntryAggregates();
+
+		Set<Long> affectedIds = new HashSet<>();
+
+		Stream<CTEntryAggregate> ctEntryAggregateStream =
+			ctEntryAggregates.stream();
+
+		ctEntryAggregateStream.map(
+			CTEntryAggregate::getRelatedCTEntries
+		).map(
+			ctEntries -> _getRelatedIdArray(ctEntries)
+		).forEach(
+			set -> affectedIds.addAll(set)
+		);
+
+		return affectedIds.stream(
+		).mapToLong(
+			Long::valueOf
+		).toArray();
 	}
 
 	private long[] _getCTCollectionIds(CTEntry ctEntry) {
@@ -79,6 +109,16 @@ public class CTEntryModelDocumentContributor
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 	}
 
+	private Set<Long> _getRelatedIdArray(List<CTEntry> ctEntries) {
+		Stream<CTEntry> ctEntryStream = ctEntries.stream();
+
+		return ctEntryStream.map(
+			CTEntryModel::getCtEntryId
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
 	private String _getTitle(CTEntry ctEntry) {
 		return CTConfigurationRegistryUtil.getVersionEntityTitle(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
@@ -86,6 +126,9 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -272,7 +272,7 @@ export default class MultiSelect extends React.Component {
 							))}
 
 							{dataFilteredLength === 0 && (
-								<li tabIndex="-1">
+								<li className="no-results" tabIndex="-1">
 									<a
 										className="dropdown-item"
 										data-senna-off

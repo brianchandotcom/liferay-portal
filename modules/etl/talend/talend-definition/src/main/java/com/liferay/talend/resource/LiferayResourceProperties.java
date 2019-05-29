@@ -34,13 +34,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.ISchemaListener;
+import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
-import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -53,7 +53,8 @@ import org.talend.daikon.properties.property.StringProperty;
  * @author Zoltán Takács
  */
 public class LiferayResourceProperties
-	extends PropertiesImpl implements LiferayConnectionPropertiesProvider {
+	extends ComponentPropertiesImpl
+	implements LiferayConnectionPropertiesProvider {
 
 	public LiferayResourceProperties(String name) {
 		super(name);
@@ -205,7 +206,8 @@ public class LiferayResourceProperties
 	}
 
 	public Property<String> condition = PropertyFactory.newString("condition");
-	public LiferayConnectionProperties connection;
+	public LiferayConnectionProperties connection =
+		new LiferayConnectionProperties("connection");
 	public StringProperty endpoint = new StringProperty("endpoint");
 
 	public SchemaProperties main = new SchemaProperties("main") {

@@ -14,6 +14,7 @@
 
 package com.liferay.talend.runtime;
 
+import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.reader.LiferayInputReader;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
@@ -44,6 +45,11 @@ public class LiferaySource
 
 			TLiferayInputProperties tLiferayInputProperties =
 				(TLiferayInputProperties)liferayConnectionPropertiesProvider;
+
+			LiferayConnectionProperties liferayConnectionProperties =
+				getEffectiveConnection(runtimeContainer);
+
+			tLiferayInputProperties.connection = liferayConnectionProperties;
 
 			return new LiferayInputReader(
 				runtimeContainer, this, tLiferayInputProperties);

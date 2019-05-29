@@ -490,13 +490,14 @@ public class LiferaySourceOrSink
 			}
 		}
 
-		return validateConnection(liferayConnectionProperties);
+		return validateConnection(
+			liferayConnectionProperties, runtimeContainer);
 	}
 
 	@Override
 	public ValidationResult validateConnection(
-		LiferayConnectionPropertiesProvider
-			liferayConnectionPropertiesProvider) {
+		LiferayConnectionPropertiesProvider liferayConnectionPropertiesProvider,
+		RuntimeContainer runtimeContainer) {
 
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
@@ -504,14 +505,7 @@ public class LiferaySourceOrSink
 		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		try {
-			LiferaySourceOrSink liferaySourceOrSink = new LiferaySourceOrSink();
-
-			liferaySourceOrSink.initialize(
-				null,
-				(LiferayConnectionProperties)
-					liferayConnectionPropertiesProvider);
-
-			doGetRequest((RuntimeContainer)null);
+			doGetRequest(runtimeContainer);
 
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage("success.validation.connection"));

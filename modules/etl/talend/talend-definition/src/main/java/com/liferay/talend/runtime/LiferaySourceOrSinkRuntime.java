@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.SourceOrSink;
+import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.ValidationResult;
 
@@ -40,7 +41,7 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 		throws IOException;
 
 	public ValidationResult validateConnection(
-		LiferayConnectionPropertiesProvider
-			liferayConnectionPropertiesProvider);
+		LiferayConnectionPropertiesProvider liferayConnectionPropertiesProvider,
+		RuntimeContainer runtimeContainer);
 
 }

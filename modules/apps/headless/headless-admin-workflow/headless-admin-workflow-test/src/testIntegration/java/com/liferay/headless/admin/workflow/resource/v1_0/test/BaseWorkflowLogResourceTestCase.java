@@ -156,6 +156,29 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		WorkflowLog workflowLog = randomWorkflowLog();
+
+		workflowLog.setCommentLog(regex);
+		workflowLog.setPreviousState(regex);
+		workflowLog.setState(regex);
+		workflowLog.setType(regex);
+
+		String json = WorkflowLogSerDes.toJSON(workflowLog);
+
+		Assert.assertFalse(json.contains(regex));
+
+		workflowLog = WorkflowLogSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, workflowLog.getCommentLog());
+		Assert.assertEquals(regex, workflowLog.getPreviousState());
+		Assert.assertEquals(regex, workflowLog.getState());
+		Assert.assertEquals(regex, workflowLog.getType());
+	}
+
+	@Test
 	public void testGetWorkflowLog() throws Exception {
 		WorkflowLog postWorkflowLog = testGetWorkflowLog_addWorkflowLog();
 

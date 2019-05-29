@@ -158,6 +158,25 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		KnowledgeBaseFolder knowledgeBaseFolder = randomKnowledgeBaseFolder();
+
+		knowledgeBaseFolder.setDescription(regex);
+		knowledgeBaseFolder.setName(regex);
+
+		String json = KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder);
+
+		Assert.assertFalse(json.contains(regex));
+
+		knowledgeBaseFolder = KnowledgeBaseFolderSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, knowledgeBaseFolder.getDescription());
+		Assert.assertEquals(regex, knowledgeBaseFolder.getName());
+	}
+
+	@Test
 	public void testDeleteKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();

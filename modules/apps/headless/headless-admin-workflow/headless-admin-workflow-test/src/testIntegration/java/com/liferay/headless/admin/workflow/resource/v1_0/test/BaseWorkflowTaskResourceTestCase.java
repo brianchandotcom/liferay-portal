@@ -156,6 +156,27 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		WorkflowTask workflowTask = randomWorkflowTask();
+
+		workflowTask.setDefinitionName(regex);
+		workflowTask.setDescription(regex);
+		workflowTask.setName(regex);
+
+		String json = WorkflowTaskSerDes.toJSON(workflowTask);
+
+		Assert.assertFalse(json.contains(regex));
+
+		workflowTask = WorkflowTaskSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, workflowTask.getDefinitionName());
+		Assert.assertEquals(regex, workflowTask.getDescription());
+		Assert.assertEquals(regex, workflowTask.getName());
+	}
+
+	@Test
 	public void testGetRoleWorkflowTasksPage() throws Exception {
 		Long roleId = testGetRoleWorkflowTasksPage_getRoleId();
 		Long irrelevantRoleId =

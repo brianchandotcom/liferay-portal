@@ -156,6 +156,25 @@ public abstract class BaseContentSetElementResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		ContentSetElement contentSetElement = randomContentSetElement();
+
+		contentSetElement.setContentType(regex);
+		contentSetElement.setTitle(regex);
+
+		String json = ContentSetElementSerDes.toJSON(contentSetElement);
+
+		Assert.assertFalse(json.contains(regex));
+
+		contentSetElement = ContentSetElementSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, contentSetElement.getContentType());
+		Assert.assertEquals(regex, contentSetElement.getTitle());
+	}
+
+	@Test
 	public void testGetContentSetContentSetElementsPage() throws Exception {
 		Long contentSetId =
 			testGetContentSetContentSetElementsPage_getContentSetId();

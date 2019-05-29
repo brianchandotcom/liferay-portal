@@ -160,6 +160,31 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			randomKnowledgeBaseAttachment();
+
+		knowledgeBaseAttachment.setContentUrl(regex);
+		knowledgeBaseAttachment.setEncodingFormat(regex);
+		knowledgeBaseAttachment.setFileExtension(regex);
+		knowledgeBaseAttachment.setTitle(regex);
+
+		String json = KnowledgeBaseAttachmentSerDes.toJSON(
+			knowledgeBaseAttachment);
+
+		Assert.assertFalse(json.contains(regex));
+
+		knowledgeBaseAttachment = KnowledgeBaseAttachmentSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, knowledgeBaseAttachment.getContentUrl());
+		Assert.assertEquals(regex, knowledgeBaseAttachment.getEncodingFormat());
+		Assert.assertEquals(regex, knowledgeBaseAttachment.getFileExtension());
+		Assert.assertEquals(regex, knowledgeBaseAttachment.getTitle());
+	}
+
+	@Test
 	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
 		throws Exception {
 

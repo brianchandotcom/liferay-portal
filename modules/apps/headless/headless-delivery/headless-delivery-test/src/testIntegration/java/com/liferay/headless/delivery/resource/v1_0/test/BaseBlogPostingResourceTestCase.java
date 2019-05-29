@@ -159,6 +159,33 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		BlogPosting blogPosting = randomBlogPosting();
+
+		blogPosting.setAlternativeHeadline(regex);
+		blogPosting.setArticleBody(regex);
+		blogPosting.setDescription(regex);
+		blogPosting.setEncodingFormat(regex);
+		blogPosting.setFriendlyUrlPath(regex);
+		blogPosting.setHeadline(regex);
+
+		String json = BlogPostingSerDes.toJSON(blogPosting);
+
+		Assert.assertFalse(json.contains(regex));
+
+		blogPosting = BlogPostingSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, blogPosting.getAlternativeHeadline());
+		Assert.assertEquals(regex, blogPosting.getArticleBody());
+		Assert.assertEquals(regex, blogPosting.getDescription());
+		Assert.assertEquals(regex, blogPosting.getEncodingFormat());
+		Assert.assertEquals(regex, blogPosting.getFriendlyUrlPath());
+		Assert.assertEquals(regex, blogPosting.getHeadline());
+	}
+
+	@Test
 	public void testDeleteBlogPosting() throws Exception {
 		BlogPosting blogPosting = testDeleteBlogPosting_addBlogPosting();
 

@@ -153,6 +153,27 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Phone phone = randomPhone();
+
+		phone.setExtension(regex);
+		phone.setPhoneNumber(regex);
+		phone.setPhoneType(regex);
+
+		String json = PhoneSerDes.toJSON(phone);
+
+		Assert.assertFalse(json.contains(regex));
+
+		phone = PhoneSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, phone.getExtension());
+		Assert.assertEquals(regex, phone.getPhoneNumber());
+		Assert.assertEquals(regex, phone.getPhoneType());
+	}
+
+	@Test
 	public void testGetOrganizationPhonesPage() throws Exception {
 		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
 		Long irrelevantOrganizationId =

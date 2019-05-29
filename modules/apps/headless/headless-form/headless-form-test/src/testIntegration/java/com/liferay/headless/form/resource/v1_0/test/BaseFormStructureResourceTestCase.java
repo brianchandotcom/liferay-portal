@@ -156,6 +156,25 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		FormStructure formStructure = randomFormStructure();
+
+		formStructure.setDescription(regex);
+		formStructure.setName(regex);
+
+		String json = FormStructureSerDes.toJSON(formStructure);
+
+		Assert.assertFalse(json.contains(regex));
+
+		formStructure = FormStructureSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, formStructure.getDescription());
+		Assert.assertEquals(regex, formStructure.getName());
+	}
+
+	@Test
 	public void testGetFormStructure() throws Exception {
 		FormStructure postFormStructure =
 			testGetFormStructure_addFormStructure();

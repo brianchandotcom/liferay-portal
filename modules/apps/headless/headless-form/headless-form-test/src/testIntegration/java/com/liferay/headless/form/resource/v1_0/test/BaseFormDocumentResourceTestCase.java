@@ -152,6 +152,31 @@ public abstract class BaseFormDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		FormDocument formDocument = randomFormDocument();
+
+		formDocument.setContentUrl(regex);
+		formDocument.setDescription(regex);
+		formDocument.setEncodingFormat(regex);
+		formDocument.setFileExtension(regex);
+		formDocument.setTitle(regex);
+
+		String json = FormDocumentSerDes.toJSON(formDocument);
+
+		Assert.assertFalse(json.contains(regex));
+
+		formDocument = FormDocumentSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, formDocument.getContentUrl());
+		Assert.assertEquals(regex, formDocument.getDescription());
+		Assert.assertEquals(regex, formDocument.getEncodingFormat());
+		Assert.assertEquals(regex, formDocument.getFileExtension());
+		Assert.assertEquals(regex, formDocument.getTitle());
+	}
+
+	@Test
 	public void testDeleteFormDocument() throws Exception {
 		FormDocument formDocument = testDeleteFormDocument_addFormDocument();
 

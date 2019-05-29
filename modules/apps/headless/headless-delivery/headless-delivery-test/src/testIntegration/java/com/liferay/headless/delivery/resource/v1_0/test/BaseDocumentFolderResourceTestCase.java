@@ -159,6 +159,25 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		DocumentFolder documentFolder = randomDocumentFolder();
+
+		documentFolder.setDescription(regex);
+		documentFolder.setName(regex);
+
+		String json = DocumentFolderSerDes.toJSON(documentFolder);
+
+		Assert.assertFalse(json.contains(regex));
+
+		documentFolder = DocumentFolderSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, documentFolder.getDescription());
+		Assert.assertEquals(regex, documentFolder.getName());
+	}
+
+	@Test
 	public void testDeleteDocumentFolder() throws Exception {
 		DocumentFolder documentFolder =
 			testDeleteDocumentFolder_addDocumentFolder();

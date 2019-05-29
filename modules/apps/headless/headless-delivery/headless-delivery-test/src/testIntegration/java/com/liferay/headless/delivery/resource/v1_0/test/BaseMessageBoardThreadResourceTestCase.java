@@ -160,6 +160,29 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		MessageBoardThread messageBoardThread = randomMessageBoardThread();
+
+		messageBoardThread.setArticleBody(regex);
+		messageBoardThread.setEncodingFormat(regex);
+		messageBoardThread.setHeadline(regex);
+		messageBoardThread.setThreadType(regex);
+
+		String json = MessageBoardThreadSerDes.toJSON(messageBoardThread);
+
+		Assert.assertFalse(json.contains(regex));
+
+		messageBoardThread = MessageBoardThreadSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, messageBoardThread.getArticleBody());
+		Assert.assertEquals(regex, messageBoardThread.getEncodingFormat());
+		Assert.assertEquals(regex, messageBoardThread.getHeadline());
+		Assert.assertEquals(regex, messageBoardThread.getThreadType());
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardThreadsPage()
 		throws Exception {
 

@@ -156,6 +156,27 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Segment segment = randomSegment();
+
+		segment.setCriteria(regex);
+		segment.setName(regex);
+		segment.setSource(regex);
+
+		String json = SegmentSerDes.toJSON(segment);
+
+		Assert.assertFalse(json.contains(regex));
+
+		segment = SegmentSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, segment.getCriteria());
+		Assert.assertEquals(regex, segment.getName());
+		Assert.assertEquals(regex, segment.getSource());
+	}
+
+	@Test
 	public void testGetSiteSegmentsPage() throws Exception {
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSegmentsPage_getIrrelevantSiteId();

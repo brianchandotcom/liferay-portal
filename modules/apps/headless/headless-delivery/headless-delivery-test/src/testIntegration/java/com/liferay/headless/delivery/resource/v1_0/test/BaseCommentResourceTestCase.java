@@ -159,6 +159,23 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Comment comment = randomComment();
+
+		comment.setText(regex);
+
+		String json = CommentSerDes.toJSON(comment);
+
+		Assert.assertFalse(json.contains(regex));
+
+		comment = CommentSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, comment.getText());
+	}
+
+	@Test
 	public void testGetBlogPostingCommentsPage() throws Exception {
 		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
 		Long irrelevantBlogPostingId =

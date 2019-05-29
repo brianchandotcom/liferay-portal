@@ -161,6 +161,29 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		BlogPostingImage blogPostingImage = randomBlogPostingImage();
+
+		blogPostingImage.setContentUrl(regex);
+		blogPostingImage.setEncodingFormat(regex);
+		blogPostingImage.setFileExtension(regex);
+		blogPostingImage.setTitle(regex);
+
+		String json = BlogPostingImageSerDes.toJSON(blogPostingImage);
+
+		Assert.assertFalse(json.contains(regex));
+
+		blogPostingImage = BlogPostingImageSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, blogPostingImage.getContentUrl());
+		Assert.assertEquals(regex, blogPostingImage.getEncodingFormat());
+		Assert.assertEquals(regex, blogPostingImage.getFileExtension());
+		Assert.assertEquals(regex, blogPostingImage.getTitle());
+	}
+
+	@Test
 	public void testDeleteBlogPostingImage() throws Exception {
 		BlogPostingImage blogPostingImage =
 			testDeleteBlogPostingImage_addBlogPostingImage();

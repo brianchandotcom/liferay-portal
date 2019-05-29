@@ -153,6 +153,25 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		WebUrl webUrl = randomWebUrl();
+
+		webUrl.setUrl(regex);
+		webUrl.setUrlType(regex);
+
+		String json = WebUrlSerDes.toJSON(webUrl);
+
+		Assert.assertFalse(json.contains(regex));
+
+		webUrl = WebUrlSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, webUrl.getUrl());
+		Assert.assertEquals(regex, webUrl.getUrlType());
+	}
+
+	@Test
 	public void testGetOrganizationWebUrlsPage() throws Exception {
 		Long organizationId =
 			testGetOrganizationWebUrlsPage_getOrganizationId();

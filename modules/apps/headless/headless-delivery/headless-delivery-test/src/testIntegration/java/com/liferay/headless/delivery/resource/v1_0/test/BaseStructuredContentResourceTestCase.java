@@ -160,6 +160,31 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setDescription(regex);
+		structuredContent.setFriendlyUrlPath(regex);
+		structuredContent.setKey(regex);
+		structuredContent.setTitle(regex);
+		structuredContent.setUuid(regex);
+
+		String json = StructuredContentSerDes.toJSON(structuredContent);
+
+		Assert.assertFalse(json.contains(regex));
+
+		structuredContent = StructuredContentSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, structuredContent.getDescription());
+		Assert.assertEquals(regex, structuredContent.getFriendlyUrlPath());
+		Assert.assertEquals(regex, structuredContent.getKey());
+		Assert.assertEquals(regex, structuredContent.getTitle());
+		Assert.assertEquals(regex, structuredContent.getUuid());
+	}
+
+	@Test
 	public void testGetContentStructureStructuredContentsPage()
 		throws Exception {
 

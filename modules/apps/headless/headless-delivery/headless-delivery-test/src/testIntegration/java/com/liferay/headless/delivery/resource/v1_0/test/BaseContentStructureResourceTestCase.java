@@ -159,6 +159,25 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		ContentStructure contentStructure = randomContentStructure();
+
+		contentStructure.setDescription(regex);
+		contentStructure.setName(regex);
+
+		String json = ContentStructureSerDes.toJSON(contentStructure);
+
+		Assert.assertFalse(json.contains(regex));
+
+		contentStructure = ContentStructureSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, contentStructure.getDescription());
+		Assert.assertEquals(regex, contentStructure.getName());
+	}
+
+	@Test
 	public void testGetContentStructure() throws Exception {
 		ContentStructure postContentStructure =
 			testGetContentStructure_addContentStructure();

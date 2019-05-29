@@ -153,6 +153,25 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		EmailAddress emailAddress = randomEmailAddress();
+
+		emailAddress.setEmailAddress(regex);
+		emailAddress.setType(regex);
+
+		String json = EmailAddressSerDes.toJSON(emailAddress);
+
+		Assert.assertFalse(json.contains(regex));
+
+		emailAddress = EmailAddressSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, emailAddress.getEmailAddress());
+		Assert.assertEquals(regex, emailAddress.getType());
+	}
+
+	@Test
 	public void testGetEmailAddress() throws Exception {
 		EmailAddress postEmailAddress = testGetEmailAddress_addEmailAddress();
 

@@ -153,6 +153,37 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		PostalAddress postalAddress = randomPostalAddress();
+
+		postalAddress.setAddressCountry(regex);
+		postalAddress.setAddressLocality(regex);
+		postalAddress.setAddressRegion(regex);
+		postalAddress.setAddressType(regex);
+		postalAddress.setPostalCode(regex);
+		postalAddress.setStreetAddressLine1(regex);
+		postalAddress.setStreetAddressLine2(regex);
+		postalAddress.setStreetAddressLine3(regex);
+
+		String json = PostalAddressSerDes.toJSON(postalAddress);
+
+		Assert.assertFalse(json.contains(regex));
+
+		postalAddress = PostalAddressSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, postalAddress.getAddressCountry());
+		Assert.assertEquals(regex, postalAddress.getAddressLocality());
+		Assert.assertEquals(regex, postalAddress.getAddressRegion());
+		Assert.assertEquals(regex, postalAddress.getAddressType());
+		Assert.assertEquals(regex, postalAddress.getPostalCode());
+		Assert.assertEquals(regex, postalAddress.getStreetAddressLine1());
+		Assert.assertEquals(regex, postalAddress.getStreetAddressLine2());
+		Assert.assertEquals(regex, postalAddress.getStreetAddressLine3());
+	}
+
+	@Test
 	public void testGetOrganizationPostalAddressesPage() throws Exception {
 		Long organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();

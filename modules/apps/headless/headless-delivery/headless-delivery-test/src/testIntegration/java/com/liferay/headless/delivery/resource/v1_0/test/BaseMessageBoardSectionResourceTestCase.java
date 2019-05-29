@@ -160,6 +160,25 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		MessageBoardSection messageBoardSection = randomMessageBoardSection();
+
+		messageBoardSection.setDescription(regex);
+		messageBoardSection.setTitle(regex);
+
+		String json = MessageBoardSectionSerDes.toJSON(messageBoardSection);
+
+		Assert.assertFalse(json.contains(regex));
+
+		messageBoardSection = MessageBoardSectionSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, messageBoardSection.getDescription());
+		Assert.assertEquals(regex, messageBoardSection.getTitle());
+	}
+
+	@Test
 	public void testDeleteMessageBoardSection() throws Exception {
 		MessageBoardSection messageBoardSection =
 			testDeleteMessageBoardSection_addMessageBoardSection();

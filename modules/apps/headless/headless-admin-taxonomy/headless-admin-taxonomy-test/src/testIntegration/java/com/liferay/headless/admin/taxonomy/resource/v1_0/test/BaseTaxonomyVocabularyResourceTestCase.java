@@ -160,6 +160,25 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
+
+		taxonomyVocabulary.setDescription(regex);
+		taxonomyVocabulary.setName(regex);
+
+		String json = TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary);
+
+		Assert.assertFalse(json.contains(regex));
+
+		taxonomyVocabulary = TaxonomyVocabularySerDes.toDTO(json);
+
+		Assert.assertEquals(regex, taxonomyVocabulary.getDescription());
+		Assert.assertEquals(regex, taxonomyVocabulary.getName());
+	}
+
+	@Test
 	public void testGetSiteTaxonomyVocabulariesPage() throws Exception {
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 		Long irrelevantSiteId =

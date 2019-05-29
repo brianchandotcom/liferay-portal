@@ -153,6 +153,27 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Role role = randomRole();
+
+		role.setDescription(regex);
+		role.setName(regex);
+		role.setRoleType(regex);
+
+		String json = RoleSerDes.toJSON(role);
+
+		Assert.assertFalse(json.contains(regex));
+
+		role = RoleSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, role.getDescription());
+		Assert.assertEquals(regex, role.getName());
+		Assert.assertEquals(regex, role.getRoleType());
+	}
+
+	@Test
 	public void testGetRolesPage() throws Exception {
 		Assert.assertTrue(true);
 	}

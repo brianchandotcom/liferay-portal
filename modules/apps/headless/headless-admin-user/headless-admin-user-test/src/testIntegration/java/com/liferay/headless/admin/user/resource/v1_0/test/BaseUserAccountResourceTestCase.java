@@ -159,6 +159,45 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		UserAccount userAccount = randomUserAccount();
+
+		userAccount.setAdditionalName(regex);
+		userAccount.setAlternateName(regex);
+		userAccount.setDashboardURL(regex);
+		userAccount.setEmailAddress(regex);
+		userAccount.setFamilyName(regex);
+		userAccount.setGivenName(regex);
+		userAccount.setHonorificPrefix(regex);
+		userAccount.setHonorificSuffix(regex);
+		userAccount.setImage(regex);
+		userAccount.setJobTitle(regex);
+		userAccount.setName(regex);
+		userAccount.setProfileURL(regex);
+
+		String json = UserAccountSerDes.toJSON(userAccount);
+
+		Assert.assertFalse(json.contains(regex));
+
+		userAccount = UserAccountSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, userAccount.getAdditionalName());
+		Assert.assertEquals(regex, userAccount.getAlternateName());
+		Assert.assertEquals(regex, userAccount.getDashboardURL());
+		Assert.assertEquals(regex, userAccount.getEmailAddress());
+		Assert.assertEquals(regex, userAccount.getFamilyName());
+		Assert.assertEquals(regex, userAccount.getGivenName());
+		Assert.assertEquals(regex, userAccount.getHonorificPrefix());
+		Assert.assertEquals(regex, userAccount.getHonorificSuffix());
+		Assert.assertEquals(regex, userAccount.getImage());
+		Assert.assertEquals(regex, userAccount.getJobTitle());
+		Assert.assertEquals(regex, userAccount.getName());
+		Assert.assertEquals(regex, userAccount.getProfileURL());
+	}
+
+	@Test
 	public void testGetMyUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 

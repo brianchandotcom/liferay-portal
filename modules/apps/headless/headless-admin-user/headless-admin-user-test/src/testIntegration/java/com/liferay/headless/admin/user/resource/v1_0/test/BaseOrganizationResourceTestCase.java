@@ -159,6 +159,27 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Organization organization = randomOrganization();
+
+		organization.setComment(regex);
+		organization.setImage(regex);
+		organization.setName(regex);
+
+		String json = OrganizationSerDes.toJSON(organization);
+
+		Assert.assertFalse(json.contains(regex));
+
+		organization = OrganizationSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, organization.getComment());
+		Assert.assertEquals(regex, organization.getImage());
+		Assert.assertEquals(regex, organization.getName());
+	}
+
+	@Test
 	public void testGetOrganizationsPage() throws Exception {
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());

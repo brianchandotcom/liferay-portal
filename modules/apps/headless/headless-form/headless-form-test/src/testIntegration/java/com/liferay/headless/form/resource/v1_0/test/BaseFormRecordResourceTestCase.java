@@ -156,6 +156,19 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		FormRecord formRecord = randomFormRecord();
+
+		String json = FormRecordSerDes.toJSON(formRecord);
+
+		Assert.assertFalse(json.contains(regex));
+
+		formRecord = FormRecordSerDes.toDTO(json);
+	}
+
+	@Test
 	public void testGetFormRecord() throws Exception {
 		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
 

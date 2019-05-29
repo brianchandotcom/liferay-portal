@@ -104,11 +104,6 @@
 /portal/ccpp-ri.jar
 /portal/cglib-nodep.jar
 /portal/chardet.jar
-/portal/chemistry-opencmis-client-api.jar
-/portal/chemistry-opencmis-client-bindings.jar
-/portal/chemistry-opencmis-client-impl.jar
-/portal/chemistry-opencmis-commons-api.jar
-/portal/chemistry-opencmis-commons-impl.jar
 /portal/closure-compiler.jar
 /portal/commons-beanutils.jar
 /portal/commons-chain.jar

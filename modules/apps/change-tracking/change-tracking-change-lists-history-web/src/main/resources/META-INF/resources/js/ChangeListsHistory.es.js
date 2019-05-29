@@ -126,6 +126,10 @@ class ChangeListsHistory extends PortletBase {
 
 				let filterByUserItems = managementToolbar.filterItems[filterByUserIndex].items;
 
+				let updatedFilterByUserItems = [];
+
+				updatedFilterByUserItems.push(filterByUserItems[filterByUserItems.findIndex(e => e.label === 'All')]);
+
 				processUsers.forEach(
 					processUser => {
 						const userFilterUrl = Liferay.PortletURL.createURL(this.baseURL);
@@ -135,7 +139,7 @@ class ChangeListsHistory extends PortletBase {
 						userFilterUrl.setParameter('orderByType', this.orderByType);
 						userFilterUrl.setParameter('user', processUser.userId);
 
-						filterByUserItems.push(
+						updatedFilterByUserItems.push(
 							{
 								'active': this.filterUser === processUser.userId.toString(),
 								'href': userFilterUrl.toString(),
@@ -145,6 +149,8 @@ class ChangeListsHistory extends PortletBase {
 						);
 					}
 				);
+
+				managementToolbar.filterItems[filterByUserIndex].items = updatedFilterByUserItems;
 			}
 		);
 	}

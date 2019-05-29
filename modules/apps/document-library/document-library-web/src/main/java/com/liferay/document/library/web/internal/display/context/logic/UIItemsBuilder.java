@@ -98,8 +98,20 @@ public class UIItemsBuilder {
 		throws PortalException {
 
 		this(
-			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil, versioningStrategy, dlURLHelper);
+			httpServletRequest, fileShortcut.getFileVersion(), null,
+			fileShortcut, resourceBundle, dlTrashUtil, versioningStrategy,
+			dlURLHelper);
+	}
+
+	public UIItemsBuilder(
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
+		FileEntry fileEntry, ResourceBundle resourceBundle,
+		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
+		DLURLHelper dlURLHelper) {
+
+		this(
+			httpServletRequest, fileVersion, fileEntry, null, resourceBundle,
+			dlTrashUtil, versioningStrategy, dlURLHelper);
 	}
 
 	public UIItemsBuilder(
@@ -108,8 +120,8 @@ public class UIItemsBuilder {
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
-			httpServletRequest, fileVersion, null, resourceBundle, dlTrashUtil,
-			versioningStrategy, dlURLHelper);
+			httpServletRequest, fileVersion, null, null, resourceBundle,
+			dlTrashUtil, versioningStrategy, dlURLHelper);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -1020,9 +1032,9 @@ public class UIItemsBuilder {
 
 	private UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		FileShortcut fileShortcut, ResourceBundle resourceBundle,
-		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy,
-		DLURLHelper dlURLHelper) {
+		FileEntry fileEntry, FileShortcut fileShortcut,
+		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
@@ -1033,9 +1045,7 @@ public class UIItemsBuilder {
 			_versioningStrategy = versioningStrategy;
 			_dlURLHelper = dlURLHelper;
 
-			FileEntry fileEntry = null;
-
-			if (fileVersion != null) {
+			if ((fileEntry == null) && (fileVersion != null)) {
 				fileEntry = fileVersion.getFileEntry();
 			}
 

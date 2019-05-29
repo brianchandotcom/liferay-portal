@@ -341,16 +341,17 @@ public class DefaultDLViewFileVersionDisplayContext
 			_dlPortletInstanceSettingsHelper =
 				new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
+			FileEntry fileEntry = _getFileEntry(fileVersion);
+
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-				dlRequestHelper.getPermissionChecker(),
-				_getFileEntry(fileVersion));
+				dlRequestHelper.getPermissionChecker(), fileEntry);
 
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
 
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
-					httpServletRequest, fileVersion, _resourceBundle,
+					httpServletRequest, fileVersion, fileEntry, _resourceBundle,
 					dlTrashUtil, versioningStrategy, dlURLHelper);
 			}
 			else {

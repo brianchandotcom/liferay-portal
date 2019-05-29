@@ -1019,12 +1019,12 @@ public class ArrayUtilTest {
 			shorts, ArrayUtil.unique(new short[] {1, 2, 3, 3, 2}));
 		Assert.assertSame(shorts, ArrayUtil.unique(shorts));
 
-		String[] strings = {"hello", "world"};
+		String[] strings = {"hello", null, "world"};
 
 		Assert.assertArrayEquals(
 			strings,
 			ArrayUtil.unique(
-				new String[] {"hello", "hello", "world", "world"}));
+				new String[] {"hello", null, "hello", null, "world", "world"}));
 		Assert.assertSame(strings, ArrayUtil.unique(strings));
 	}
 

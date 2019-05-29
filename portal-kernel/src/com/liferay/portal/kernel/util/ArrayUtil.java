@@ -1737,14 +1737,12 @@ public class ArrayUtil {
 		return newArray;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] toArray(String[] array) {
-		String[] newArray = new String[array.length];
-
-		for (int i = 0; i < array.length; i++) {
-			newArray[i] = array[i].toString();
-		}
-
-		return newArray;
+		return array.clone();
 	}
 
 	public static <T, A> A[] toArray(T[] list, Accessor<T, A> accessor) {
@@ -2253,7 +2251,7 @@ public class ArrayUtil {
 			return array;
 		}
 
-		return toArray(set.toArray(new String[0]));
+		return set.toArray(new String[0]);
 	}
 
 }

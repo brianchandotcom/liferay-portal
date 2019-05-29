@@ -8,7 +8,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
+import com.liferay.product.navigation.simulation.web.internal.application.list.SimulationPanelCategory;
 import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationPortletKeys;
 
 import java.util.Locale;

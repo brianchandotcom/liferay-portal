@@ -51,6 +51,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -251,7 +252,7 @@ public class MBMessageStagedModelDataHandler
 		if (!message.isRoot()) {
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, message, MBMessage.class,
-				message.getParentMessageId());
+				(Serializable)message.getParentMessageId());
 		}
 
 		long userId = portletDataContext.getUserId(message.getUserUuid());

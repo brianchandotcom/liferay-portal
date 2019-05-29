@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
@@ -79,7 +82,9 @@ public class SharedAssetsViewDisplayContext {
 		SharingEntryMenuItemContributorRegistry
 			sharingEntryMenuItemContributorRegistry,
 		SharingMenuItemFactory sharingMenuItemFactory,
-		SharingPermission sharingPermission) {
+		SharingPermission sharingPermission,
+		SharingConfigurationFactory sharingConfigurationFactory,
+		GroupLocalService groupLocalService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -90,6 +95,8 @@ public class SharedAssetsViewDisplayContext {
 			sharingEntryMenuItemContributorRegistry;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 		_sharingPermission = sharingPermission;
+		_sharingConfigurationFactory = sharingConfigurationFactory;
+		_groupLocalService = groupLocalService;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -278,11 +285,19 @@ public class SharedAssetsViewDisplayContext {
 			return false;
 		}
 
-		if (sharingEntryInterpreter.isVisible(sharingEntry)) {
-			return true;
+		if (!sharingEntryInterpreter.isVisible(sharingEntry)) {
+			return false;
 		}
 
-		return false;
+		SharingConfiguration groupSharingConfiguration =
+			_sharingConfigurationFactory.getGroupSharingConfiguration(
+				_groupLocalService.getGroup(sharingEntry.getGroupId()));
+
+		if (!groupSharingConfiguration.isEnabled()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
@@ -505,10 +520,12 @@ public class SharedAssetsViewDisplayContext {
 	}
 
 	private final PortletURL _currentURLObj;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final List<SharedAssetsFilterItem> _sharedAssetsFilterItems;
+	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;

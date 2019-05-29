@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.low.level.search.options.portlet;
+package com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
@@ -33,6 +33,30 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 		_portletPreferencesHelper = new PortletPreferencesHelper(
 			portletPreferencesOptional);
+	}
+
+	@Override
+	public Optional<String> getContributorsToExcludeOptional() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.
+				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE);
+	}
+
+	@Override
+	public String getContributorsToExcludeString() {
+		return getContributorsToExcludeOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
+	public Optional<String> getContributorsToIncludeOptional() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.
+				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE);
+	}
+
+	@Override
+	public String getContributorsToIncludeString() {
+		return getContributorsToIncludeOptional().orElse(StringPool.BLANK);
 	}
 
 	@Override

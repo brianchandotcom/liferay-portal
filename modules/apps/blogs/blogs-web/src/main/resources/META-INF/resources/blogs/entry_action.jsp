@@ -82,4 +82,12 @@ if (row != null) {
 			url="<%= deleteEntryURL %>"
 		/>
 	</c:if>
+
+	<liferay-ui:menu-item
+		menuItem="<%= BlogsEntrySharingUtil.createShareMenuItem(entry, request) %>"
+	/>
+
+	<liferay-ui:menu-item
+		menuItem="<%= BlogsEntrySharingUtil.createManageCollaboratorsMenuItem(entry, request) %>"
+	/>
 </liferay-ui:icon-menu>

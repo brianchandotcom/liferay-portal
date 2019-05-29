@@ -18,7 +18,9 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,11 +47,37 @@ public class BlogsEntrySharingUtil {
 		}
 	}
 
+	public static MenuItem createManageCollaboratorsMenuItem(
+		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
+
+		try {
+			return _sharingMenuItemFactory.createManageCollaboratorsMenuItem(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+				httpServletRequest);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
 	public static DropdownItem createShareDropdownItem(
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
 
 		try {
 			return _sharingDropdownItemFactory.createShareDropdownItem(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+				httpServletRequest);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	public static MenuItem createShareMenuItem(
+		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
+
+		try {
+			return _sharingMenuItemFactory.createShareMenuItem(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
@@ -65,6 +93,14 @@ public class BlogsEntrySharingUtil {
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSharingMenuItemFactory(
+		SharingMenuItemFactory sharingMenuItemFactory) {
+
+		_sharingMenuItemFactory = sharingMenuItemFactory;
+	}
+
 	private static SharingDropdownItemFactory _sharingDropdownItemFactory;
+	private static SharingMenuItemFactory _sharingMenuItemFactory;
 
 }

@@ -51,12 +51,12 @@ class CollectionInput extends React.Component {
 	 * @param {string} value A string with an '=' character.
 	 * @returns {Object} Object with key and value properties.
 	 */
-	_stringToKeyValueObject = value => {
-		const valueArray = value.split('=');
+	_stringToKeyValueObject = stringValue => {
+		const [key = '', value = ''] = (typeof stringValue == 'string') ? stringValue.split('=') : [];
 
 		return {
-			key: valueArray[0] || '',
-			value: valueArray[1] || ''
+			key,
+			value
 		};
 	}
 

@@ -112,6 +112,10 @@ liferayOSGi {
 }
 
 processResources {
+	dependsOn projectTemplateProjects.collect {
+		"${it.path}:install"
+	}
+	
 	from configurations.projectTemplates
 	from projectTemplateJarVersions
 }

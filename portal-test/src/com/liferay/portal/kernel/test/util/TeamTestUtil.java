@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 
 /**
+ * @author     Jonathan McCann
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class TeamTestUtil {
 
 	public static Team addTeam() throws Exception {

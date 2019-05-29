@@ -118,22 +118,23 @@
 		return parseInt(str, 10) || 0;
 	}
 
-	function SideNavigation($toggler, options) {
-		this.init($toggler, options);
+	function SideNavigation(toggler, options) {
+		toggler = getElement(toggler);
+		this.init(toggler, options);
 	};
 
 	SideNavigation.TRANSITION_DURATION = 500;
 
 	SideNavigation.prototype = {
-		init: function($toggler, options) {
+		init: function(toggler, options) {
 			const instance = this;
 
-			const useDataAttribute = $toggler.data('toggle') === 'sidenav';
+			const useDataAttribute = toggler.dataset.toggle === 'sidenav';
 
 			options = Object.assign({}, defaults, options);
 
 			options.breakpoint = toInt(options.breakpoint);
-			options.container = options.container || $toggler.data('target') || $toggler.attr('href');
+			options.container = options.container || toggler.dataset.target || toggler.getAttribute('href');
 			options.gutter = toInt(options.gutter);
 			options.rtl = document.dir === 'rtl';
 			options.width = toInt(options.width);
@@ -142,19 +143,17 @@
 			// instantiate using data attribute
 
 			if (useDataAttribute) {
-				options.closedClass = $toggler.data('closed-class') || 'closed';
-				options.content = $toggler.data('content');
-				options.loadingIndicatorTPL = $toggler.data('loading-indicator-tpl') || options.loadingIndicatorTPL;
-				options.openClass = $toggler.data('open-class') || 'open';
-				options.$toggler = $toggler;
-				options.type = $toggler.data('type');
-				options.typeMobile = $toggler.data('type-mobile');
-				options.url = $toggler.data('url');
+				options.closedClass = toggler.dataset.closedClass || 'closed';
+				options.content = toggler.dataset.content;
+				options.loadingIndicatorTPL = toggler.dataset.loadingIndicatorTpl || options.loadingIndicatorTPL;
+				options.openClass = toggler.dataset.openClass || 'open';
+				options.type = toggler.dataset.type;
+				options.typeMobile = toggler.dataset.typeMobile;
+				options.url = toggler.dataset.url;
 				options.width = '';
 			}
 
-			instance.$toggler = $toggler;
-			instance.toggler = getElement($toggler);
+			instance.toggler = toggler;
 			instance.options = options;
 			instance.useDataAttribute = useDataAttribute;
 
@@ -186,8 +185,6 @@
 
 			const options = instance.options;
 
-			const $container = $(options.container);
-
 			if (instance._sidenavCloseSubscription) {
 				instance._sidenavCloseSubscription.dispose();
 				instance._sidenavCloseSubscription = null;
@@ -198,9 +195,7 @@
 				instance._togglerSubscription = null;
 			}
 
-			// Remove Side Navigation
-
-			INSTANCE_MAP.delete(this.$toggler.get(0));
+			INSTANCE_MAP.delete(instance.toggler);
 		},
 
 		hide: function() {
@@ -263,9 +258,9 @@
 				const closedClass = options.closedClass;
 				const openClass = options.openClass;
 
-				const $toggler = instance.$toggler;
+				const toggler = instance.toggler;
 
-				const target = $toggler.attr('data-target') || $toggler.attr('href');
+				const target = toggler.dataset.target || toggler.getAttribute('href');
 
 				$sidenav.trigger({
 					type: 'closedStart.lexicon.sidenav'
@@ -273,7 +268,7 @@
 
 				instance._subscribeSidenavTransitionEnd($content, function() {
 					removeClass($sidenav, 'sidenav-transition');
-					removeClass($toggler, 'sidenav-transition');
+					removeClass(toggler, 'sidenav-transition');
 
 					$sidenav.trigger({
 						type: 'closed.lexicon.sidenav'
@@ -289,7 +284,7 @@
 				}
 
 				addClass($sidenav, 'sidenav-transition');
-				addClass($toggler, 'sidenav-transition');
+				addClass(toggler, 'sidenav-transition');
 
 				setClasses($sidenav, {
 					[closedClass]: true,
@@ -436,9 +431,9 @@
 				const closedClass = options.closedClass;
 				const openClass = options.openClass;
 
-				const $toggler = options.$toggler;
+				const toggler = instance.toggler;
 
-				const url = $toggler.data('url');
+				const url = toggler.dataset.url;
 
 				if (url) {
 					instance._loadUrl($sidenav, url);
@@ -450,7 +445,7 @@
 
 				instance._subscribeSidenavTransitionEnd($content, function() {
 					removeClass($sidenav, 'sidenav-transition');
-					removeClass($toggler, 'sidenav-transition');
+					removeClass(toggler, 'sidenav-transition');
 
 					$sidenav.trigger({
 						type: 'open.lexicon.sidenav'
@@ -467,7 +462,7 @@
 					[openClass]: true,
 					[closedClass]: false,
 				});
-				setClasses($toggler, {
+				setClasses(toggler, {
 					'sidenav-transition': true,
 					active: true,
 					[openClass]: true,
@@ -492,7 +487,7 @@
 
 			const $container = $(options.container);
 			const $menu = $container.find('.sidenav-menu').first();
-			const $toggler = instance.$toggler;
+			const toggler = instance.toggler;
 
 			const width = options.width;
 
@@ -516,7 +511,7 @@
 				if (hasClass($container, 'closed')) {
 					instance.clearHeight();
 
-					setClasses($toggler, {
+					setClasses(toggler, {
 						open: false,
 						'sidenav-transition': false,
 					});
@@ -526,7 +521,7 @@
 					});
 				}
 				else {
-					setClasses($toggler, {
+					setClasses(toggler, {
 						open: true,
 						'sidenav-transition': false,
 					});
@@ -559,7 +554,7 @@
 			}
 
 			addClass($container, 'sidenav-transition');
-			addClass($toggler, 'sidenav-transition');
+			addClass(toggler, 'sidenav-transition');
 
 			if (closed) {
 				instance.showSidenav();
@@ -571,7 +566,7 @@
 				closed: !closed,
 				open: closed,
 			});
-			setClasses($toggler, {
+			setClasses(toggler, {
 				active: closed,
 				open: closed,
 			});
@@ -805,7 +800,7 @@
 			const options = instance.options;
 
 			const $container = $(options.container);
-			const $toggler = instance.$toggler;
+			const toggler = instance.toggler;
 
 			const mobile = instance.mobile;
 			const type = mobile ? options.typeMobile : options.type;
@@ -816,7 +811,7 @@
 						closed: true,
 						open: false,
 					});
-					setClasses($toggler, {
+					setClasses(toggler, {
 						active: false,
 						open: false,
 					});
@@ -840,8 +835,7 @@
 		}
 	};
 
-	function initialize($toggler, options) {
-		const toggler = $toggler.get(0);
+	function initialize(toggler, options) {
 		let data = INSTANCE_MAP.get(toggler);
 
 		if (!data) {
@@ -849,7 +843,7 @@
 				options = {};
 			}
 
-			data = new SideNavigation($toggler, options);
+			data = new SideNavigation(toggler, options);
 
 			INSTANCE_MAP.set(toggler, data);
 		}
@@ -868,7 +862,8 @@
 		if (methodCall) {
 			this.each(
 				function() {
-					const data = INSTANCE_MAP.get(this);
+					const element = getElement(this);
+					const data = INSTANCE_MAP.get(element);
 
 					if (data) {
 						if (returnInstance) {
@@ -905,7 +900,8 @@
 		else {
 			this.each(
 				function() {
-					initialize($(this), options);
+					const element = getElement(this);
+					initialize(element, options);
 				}
 			);
 		}

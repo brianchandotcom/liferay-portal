@@ -52,10 +52,11 @@ CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayCont
 				title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 			>
 				<aui:form action="<%= customFilterDisplayContext.getSearchURL() %>" method="get" name="customFilterForm">
-					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
+					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
 					<clay:button
 						ariaLabel='<%= LanguageUtil.get(request, "apply") %>'
+						disabled="<%= customFilterDisplayContext.isImmutable() %>"
 						elementClasses="custom-filter-apply-button"
 						label='<%= LanguageUtil.get(request, "apply") %>'
 						size="sm"

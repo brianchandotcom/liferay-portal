@@ -37,6 +37,7 @@ public class CustomFilterDisplayBuilder {
 
 		customFilterDisplayContext.setFilterValue(getFilterValue());
 		customFilterDisplayContext.setHeading(getHeading());
+		customFilterDisplayContext.setImmutable(_immutable);
 		customFilterDisplayContext.setParameterName(_parameterName);
 		customFilterDisplayContext.setRenderNothing(isRenderNothing());
 		customFilterDisplayContext.setSearchURL(getURLCurrentPath());

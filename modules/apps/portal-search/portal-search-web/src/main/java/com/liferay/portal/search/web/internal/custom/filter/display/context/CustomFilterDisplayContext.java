@@ -35,6 +35,10 @@ public class CustomFilterDisplayContext {
 		return _searchURL;
 	}
 
+	public boolean isImmutable() {
+		return _immutable;
+	}
+
 	public boolean isRenderNothing() {
 		return _renderNothing;
 	}
@@ -45,6 +49,10 @@ public class CustomFilterDisplayContext {
 
 	public void setHeading(String heading) {
 		_heading = heading;
+	}
+
+	public void setImmutable(boolean immutable) {
+		_immutable = immutable;
 	}
 
 	public void setParameterName(String paramName) {
@@ -63,6 +71,7 @@ public class CustomFilterDisplayContext {
 	private String _heading;
 	private String _parameterName;
 	private boolean _renderNothing;
+	private boolean _immutable;
 	private String _searchURL;
 
 }

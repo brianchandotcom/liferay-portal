@@ -41,11 +41,15 @@ public interface SearchRequest {
 
 	public List<String> getEntryClassNames();
 
+	public List<String> getExcludeContributors();
+
 	public String getFederatedSearchKey();
 
 	public List<SearchRequest> getFederatedSearchRequests();
 
 	public Integer getFrom();
+
+	public List<String> getIncludeContributors();
 
 	public List<String> getIndexes();
 

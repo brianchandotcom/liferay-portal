@@ -42,7 +42,7 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("2.0.0", "2.1.0", new UpgradeSchema());
 
-		registry.register("2.0.0", "2.1.1", new UpgradeFragmentEntry());
+		registry.register("2.1.0", "2.1.1", new UpgradeFragmentEntry());
 	}
 
 }

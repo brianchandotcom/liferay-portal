@@ -14,11 +14,7 @@
  */
 --%>
 
-<%@ include file="/message_boards/init.jsp" %>
-
 <%
-String navItemSelected = ParamUtil.getString(request, "navItemSelected");
-
 boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER);
 %>
 

@@ -26,6 +26,8 @@ MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContex
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBSubscriptionUtil.getThreadSubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
+
+String navItemSelected = "threads";
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
@@ -36,9 +38,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="navItemSelected" value="threads" />
-</liferay-util:include>
+<%@ include file="/message_boards_admin/nav.jspf" %>
 
 <%
 MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);

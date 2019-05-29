@@ -23,7 +23,6 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = new MBEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj, trashHelper);
 
-request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBSubscriptionUtil.getThreadSubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
@@ -48,17 +47,17 @@ int entriesDelta = mbAdminListDisplayContext.getEntriesDelta();
 
 PortletURL portletURL = mbEntriesManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, entriesDelta, portletURL, null, "there-are-no-threads-or-categories");
+SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, entriesDelta, portletURL, null, "there-are-no-threads-or-categories");
 
-mbAdminListDisplayContext.setEntriesDelta(searchContainer);
+mbAdminListDisplayContext.setEntriesDelta(entriesSearchContainer);
 
-searchContainer.setId("mbEntries");
+entriesSearchContainer.setId("mbEntries");
 
-mbEntriesManagementToolbarDisplayContext.populateOrder(searchContainer);
+mbEntriesManagementToolbarDisplayContext.populateOrder(entriesSearchContainer);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
-searchContainer.setRowChecker(entriesChecker);
+entriesSearchContainer.setRowChecker(entriesChecker);
 
 if (categoryId == 0) {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mvcRenderCommandName=/message_boards/view(&.|$)");
@@ -67,7 +66,7 @@ else {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
 
-mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
+mbAdminListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
 
 String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
 %>
@@ -77,10 +76,10 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	componentId="mbEntriesManagementToolbar"
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled='<%= (searchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
+	disabled='<%= (entriesSearchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
 	filterDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= searchContainer.getTotal() %>"
+	itemsTotal="<%= entriesSearchContainer.getTotal() %>"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
 	searchFormName="searchFm"
@@ -89,13 +88,7 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	sortingURL="<%= String.valueOf(mbEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
-<%
-request.setAttribute("view.jsp-mbEntriesManagementToolbarDisplayContext", mbEntriesManagementToolbarDisplayContext);
-
-request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
-%>
-
-<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
+<%@ include file="/message_boards_admin/view_entries.jspf" %>
 
 <%
 if (category != null) {

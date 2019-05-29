@@ -24,12 +24,14 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.util.test.PortletKeys;
@@ -80,7 +83,9 @@ public class CleanUpPortletPreferencesUtilTest {
 
 		Assert.assertNotNull(portletPreferences);
 
-		CleanUpPortletPreferencesUtil.cleanUpLayoutRevisionPortletPreferences();
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
+			new Class<?>[0]);
 
 		portletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
@@ -121,7 +126,9 @@ public class CleanUpPortletPreferencesUtilTest {
 
 		Assert.assertTrue(portletIds.isEmpty());
 
-		CleanUpPortletPreferencesUtil.cleanUpLayoutRevisionPortletPreferences();
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "cleanUpLayoutRevisionPortletPreferences",
+			new Class<?>[0]);
 
 		portletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
@@ -153,5 +160,8 @@ public class CleanUpPortletPreferencesUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(filter = "mvc.command.name=/server_admin/edit_server")
+	private MVCActionCommand _mvcActionCommand;
 
 }

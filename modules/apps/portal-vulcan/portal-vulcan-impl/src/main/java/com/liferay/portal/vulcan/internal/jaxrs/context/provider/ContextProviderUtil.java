@@ -19,8 +19,10 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.cxf.jaxrs.impl.ResourceContextImpl;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.cxf.jaxrs.model.ClassResourceInfo;
@@ -73,7 +75,14 @@ public class ContextProviderUtil {
 		ResourceProvider resourceProvider =
 			classResourceInfo.getResourceProvider();
 
-		return resourceProvider.getInstance(message);
+		Object instance = resourceProvider.getInstance(message);
+
+		ResourceContext resourceContext = new ResourceContextImpl(
+			message, operationResourceInfo);
+
+		resourceContext.initResource(instance);
+
+		return instance;
 	}
 
 	private static MultivaluedMap<String, String> _getPathParameters(

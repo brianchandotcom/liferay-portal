@@ -21,12 +21,14 @@ import com.liferay.layout.page.template.internal.upgrade.v1_2_0.UpgradeLayoutPag
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_1_0.UpgradeLayout;
+import com.liferay.layout.page.template.internal.upgrade.v3_0_1.util.LayoutPageTemplateStructureRelTable;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +76,12 @@ public class LayoutPageTemplateServiceUpgrade
 			"2.1.0", "3.0.0",
 			new com.liferay.layout.page.template.internal.upgrade.v3_0_0.
 				UpgradeLayoutPageTemplateStructure());
+
+		registry.register(
+			"3.0.0", "3.0.1",
+			UpgradeStepFactory.alterColumnTypes(
+				LayoutPageTemplateStructureRelTable.class, "TEXT null",
+				"data_"));
 	}
 
 	@Reference

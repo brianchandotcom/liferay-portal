@@ -429,9 +429,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
-		}
+		GroupPermissionUtil.check(permissionChecker, ActionKeys.VIEW);
 
 		return groupPersistence.findByG_C_P_S(
 			gtGroupId, companyId, parentGroupId, site, 0, size,

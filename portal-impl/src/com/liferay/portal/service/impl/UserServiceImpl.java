@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
@@ -679,8 +680,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, User.class.getName(), companyId, ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, User.class.getName(), 0, ActionKeys.VIEW);
 		}
 
 		return userPersistence.findByCompanyId(companyId, start, end);
@@ -690,8 +694,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public int getCompanyUsersCount(long companyId) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, User.class.getName(), companyId, ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, User.class.getName(), 0, ActionKeys.VIEW);
 		}
 
 		return userPersistence.countByCompanyId(companyId);
@@ -794,8 +801,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, User.class.getName(), companyId, ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, User.class.getName(), 0, ActionKeys.VIEW);
 		}
 
 		return userPersistence.findByU_C(
@@ -812,8 +822,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(organization.getCompanyId())) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, Organization.class.getName(), organization.getCompanyId(),
+				ActionKeys.VIEW_MEMBERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Organization.class.getName(), 0,
+				ActionKeys.VIEW_MEMBERS);
 		}
 
 		return userFinder.findByUsersOrgsGtUserId(
@@ -830,8 +845,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(userGroup.getCompanyId())) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, UserGroup.class.getName(), userGroup.getCompanyId(),
+				ActionKeys.VIEW_MEMBERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, UserGroup.class.getName(), 0,
+				ActionKeys.VIEW_MEMBERS);
 		}
 
 		return userFinder.findByUsersUserGroupsGtUserId(
@@ -845,8 +865,22 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		if (!permissionChecker.hasPermission(
+				null, Organization.class.getName(),
+				CompanyThreadLocal.getCompanyId(), ActionKeys.VIEW_MEMBERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Organization.class.getName(), 0,
+				ActionKeys.VIEW_MEMBERS);
+		}
+
+		if (!permissionChecker.hasPermission(
+				null, UserGroup.class.getName(),
+				CompanyThreadLocal.getCompanyId(), ActionKeys.VIEW_MEMBERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, UserGroup.class.getName(), 0,
+				ActionKeys.VIEW_MEMBERS);
 		}
 
 		return userLocalService.getOrganizationsAndUserGroupsUsersCount(

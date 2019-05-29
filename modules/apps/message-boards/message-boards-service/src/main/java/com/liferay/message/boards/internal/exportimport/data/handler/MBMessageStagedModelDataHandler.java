@@ -50,8 +50,8 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -112,34 +112,6 @@ public class MBMessageStagedModelDataHandler
 	@Override
 	public String getDisplayName(MBMessage message) {
 		return message.getSubject();
-	}
-
-	private MBMessage _addDiscussionMessage(
-			PortletDataContext portletDataContext, long userId, long threadId,
-			long parentMessageId, MBMessage message,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		MBMessage importedMessage = null;
-
-		if (!message.isRoot()) {
-			MBDiscussion discussion =
-				_mbDiscussionLocalService.getThreadDiscussion(threadId);
-
-			importedMessage = _mbMessageLocalService.addDiscussionMessage(
-				userId, message.getUserName(),
-				portletDataContext.getScopeGroupId(), discussion.getClassName(),
-				discussion.getClassPK(), threadId, parentMessageId,
-				message.getSubject(), message.getBody(), serviceContext);
-		}
-		else {
-			MBThread thread = _mbThreadLocalService.getThread(threadId);
-
-			importedMessage = _mbMessageLocalService.getMBMessage(
-				thread.getRootMessageId());
-		}
-
-		return importedMessage;
 	}
 
 	@Override
@@ -455,6 +427,34 @@ public class MBMessageStagedModelDataHandler
 					userId, existingThread.getThreadId());
 			}
 		}
+	}
+
+	private MBMessage _addDiscussionMessage(
+			PortletDataContext portletDataContext, long userId, long threadId,
+			long parentMessageId, MBMessage message,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage importedMessage = null;
+
+		if (!message.isRoot()) {
+			MBDiscussion discussion =
+				_mbDiscussionLocalService.getThreadDiscussion(threadId);
+
+			importedMessage = _mbMessageLocalService.addDiscussionMessage(
+				userId, message.getUserName(),
+				portletDataContext.getScopeGroupId(), discussion.getClassName(),
+				discussion.getClassPK(), threadId, parentMessageId,
+				message.getSubject(), message.getBody(), serviceContext);
+		}
+		else {
+			MBThread thread = _mbThreadLocalService.getThread(threadId);
+
+			importedMessage = _mbMessageLocalService.getMBMessage(
+				thread.getRootMessageId());
+		}
+
+		return importedMessage;
 	}
 
 	private List<ObjectValuePair<String, InputStream>> _getAttachments(

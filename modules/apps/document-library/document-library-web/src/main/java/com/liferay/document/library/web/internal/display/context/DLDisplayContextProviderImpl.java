@@ -168,10 +168,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 					_dlTrashUtil, dlPreviewRendererProvider,
 					_versioningStrategy, _dlURLHelper);
 
-			if (fileShortcut == null) {
-				return dlViewFileVersionDisplayContext;
-			}
-
 			for (DLDisplayContextFactory dlDisplayContextFactory :
 					_dlDisplayContextFactories) {
 
@@ -209,10 +205,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 				_dlMimeTypeDisplayContext, resourceBundle, _storageEngine,
 				_dlTrashUtil, dlPreviewRendererProvider, _versioningStrategy,
 				_dlURLHelper);
-
-		if (fileVersion == null) {
-			return dlViewFileVersionDisplayContext;
-		}
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {

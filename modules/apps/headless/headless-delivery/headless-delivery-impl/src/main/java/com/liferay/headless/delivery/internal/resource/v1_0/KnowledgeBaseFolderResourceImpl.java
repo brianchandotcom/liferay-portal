@@ -15,9 +15,9 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,10 +111,8 @@ public class KnowledgeBaseFolderResourceImpl
 				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					KBFolder.class, contextCompany.getCompanyId(),
-					knowledgeBaseFolder.getCustomFields(),
+					_getExpandoBridgeAttributes(knowledgeBaseFolder),
 					parentKBFolder.getGroupId(),
-					contextAcceptLanguage.getPreferredLocale(),
 					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
@@ -124,9 +126,7 @@ public class KnowledgeBaseFolderResourceImpl
 				siteId, _getClassNameId(), 0, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					KBFolder.class, contextCompany.getCompanyId(),
-					knowledgeBaseFolder.getCustomFields(), siteId,
-					contextAcceptLanguage.getPreferredLocale(),
+					_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
 					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
@@ -148,13 +148,21 @@ public class KnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					KBFolder.class, contextCompany.getCompanyId(),
-					knowledgeBaseFolder.getCustomFields(), 0,
-					contextAcceptLanguage.getPreferredLocale(), null)));
+					_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
+					null)));
 	}
 
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		KnowledgeBaseFolder knowledgeBaseFolder) {
+
+		return CustomFieldsUtil.toMap(
+			KBFolder.class, contextCompany.getCompanyId(),
+			knowledgeBaseFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
@@ -169,8 +177,9 @@ public class KnowledgeBaseFolderResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					kbFolder.getCompanyId(), kbFolder.getKbFolderId(),
-					KBFolder.class, contextAcceptLanguage.getPreferredLocale());
+					kbFolder.getKbFolderId(), KBFolder.class,
+					kbFolder.getCompanyId(),
+					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();
 				description = kbFolder.getDescription();

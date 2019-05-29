@@ -253,7 +253,7 @@
 
 			if (!simpleSidenavClosed) {
 				const $content = $(options.content).first();
-				const $sidenav = $(options.container);
+				const $container = $(options.container);
 
 				const closedClass = options.closedClass;
 				const openClass = options.openClass;
@@ -262,15 +262,15 @@
 
 				const target = toggler.dataset.target || toggler.getAttribute('href');
 
-				$sidenav.trigger({
+				$container.trigger({
 					type: 'closedStart.lexicon.sidenav'
 				});
 
 				instance._subscribeSidenavTransitionEnd($content, function() {
-					removeClass($sidenav, 'sidenav-transition');
+					removeClass($container, 'sidenav-transition');
 					removeClass(toggler, 'sidenav-transition');
 
-					$sidenav.trigger({
+					$container.trigger({
 						type: 'closed.lexicon.sidenav'
 					});
 				});
@@ -283,10 +283,10 @@
 					});
 				}
 
-				addClass($sidenav, 'sidenav-transition');
+				addClass($container, 'sidenav-transition');
 				addClass(toggler, 'sidenav-transition');
 
-				setClasses($sidenav, {
+				setClasses($container, {
 					[closedClass]: true,
 					[openClass]: false,
 				});
@@ -308,28 +308,26 @@
 			const options = instance.options;
 
 			const $container = $(options.container);
-			const content = options.content;
-			const navigation = options.navigation;
 
 			const type = instance.mobile ? options.typeMobile : options.type;
 
 			if (type !== 'fixed' && type !== 'fixed-push') {
-				const $contentNode = $container.find(content).first();
-				const $navNode = $container.find(navigation).first();
-				const $sideNavMenuNode = $container.find('.sidenav-menu').first();
+				const $content= $container.find(options.content).first();
+				const $navigation = $container.find(options.navigation).first();
+				const $menu = $container.find('.sidenav-menu').first();
 
-				const tallest = px(Math.max($contentNode.outerHeight(), $navNode.outerHeight()));
+				const tallest = px(Math.max($content.outerHeight(), $navigation.outerHeight()));
 
-				setStyles($contentNode, {
+				setStyles($content, {
 					'min-height': tallest,
 				});
 
-				setStyles($navNode, {
+				setStyles($navigation, {
 					height: '100%',
 					'min-height': tallest,
 				});
 
-				setStyles($sideNavMenuNode, {
+				setStyles($menu, {
 					height: '100%',
 					'min-height': tallest,
 				});
@@ -426,7 +424,7 @@
 
 			if (simpleSidenavClosed) {
 				const $content = $(options.content).first();
-				const $sidenav = $(options.container);
+				const $container = $(options.container);
 
 				const closedClass = options.closedClass;
 				const openClass = options.openClass;
@@ -436,18 +434,18 @@
 				const url = toggler.dataset.url;
 
 				if (url) {
-					instance._loadUrl($sidenav, url);
+					instance._loadUrl($container, url);
 				}
 
-				$sidenav.trigger({
+				$container.trigger({
 					type: 'openStart.lexicon.sidenav'
 				});
 
 				instance._subscribeSidenavTransitionEnd($content, function() {
-					removeClass($sidenav, 'sidenav-transition');
+					removeClass($container, 'sidenav-transition');
 					removeClass(toggler, 'sidenav-transition');
 
-					$sidenav.trigger({
+					$container.trigger({
 						type: 'open.lexicon.sidenav'
 					});
 				});
@@ -457,7 +455,7 @@
 					[openClass]: true,
 					[closedClass]: false,
 				});
-				setClasses($sidenav, {
+				setClasses($container, {
 					'sidenav-transition': true,
 					[openClass]: true,
 					[closedClass]: false,
@@ -769,8 +767,8 @@
 			const options = instance.options;
 
 			const $container = $(options.container);
-			const $slider = $container.find(options.navigation).first();
-			const $menu = $slider.find('.sidenav-menu').first();
+			const $navigation = $container.find(options.navigation).first();
+			const $menu = $navigation.find('.sidenav-menu').first();
 
 			const closed = hasClass($container, 'closed');
 			const sidenavRight = instance._isSidenavRight();

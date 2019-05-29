@@ -42,6 +42,8 @@ public interface SearchRequest {
 
 	public List<String> getEntryClassNames();
 
+	public List<String> getExcludeContributors();
+
 	public String getFederatedSearchKey();
 
 	public List<SearchRequest> getFederatedSearchRequests();
@@ -57,6 +59,8 @@ public interface SearchRequest {
 	 * @review
 	 */
 	public List<GroupByRequest> getGroupByRequests();
+
+	public List<String> getIncludeContributors();
 
 	public List<String> getIndexes();
 

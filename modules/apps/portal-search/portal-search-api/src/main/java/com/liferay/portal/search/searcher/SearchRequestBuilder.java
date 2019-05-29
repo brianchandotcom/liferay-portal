@@ -72,6 +72,8 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder entryClassNames(String... entryClassNames);
 
+	public SearchRequestBuilder excludeContributors(String... ids);
+
 	/**
 	 * Enables explanation of how each hit's score was computed.
 	 *
@@ -103,6 +105,8 @@ public interface SearchRequestBuilder {
 	public SearchRequestBuilder highlightEnabled(boolean highlightEnabled);
 
 	public SearchRequestBuilder highlightFields(String... highlightFields);
+
+	public SearchRequestBuilder includeContributors(String... ids);
 
 	/**
 	 * Enables inclusion of the search engine's response string with the

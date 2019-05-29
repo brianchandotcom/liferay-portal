@@ -39,12 +39,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -60,10 +66,14 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -165,7 +175,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			cacheSingle();
 		}
 		else if (cmd.equals("cleanUpPermissions")) {
-			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
+			cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.equals("cleanUpPortletPreferences")) {
 			cleanUpLayoutRevisionPortletPreferences();
@@ -238,6 +248,24 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void cacheSingle() throws Exception {
 		_singleVMPool.clear();
+	}
+
+	protected void cleanUpAddToPagePermissions(ActionRequest actionRequest)
+		throws Exception {
+
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		Role role = _roleLocalService.getRole(companyId, RoleConstants.GUEST);
+
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
+
+		role = _roleLocalService.getRole(companyId, RoleConstants.POWER_USER);
+
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), true);
+
+		role = _roleLocalService.getRole(companyId, RoleConstants.USER);
+
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
 	}
 
 	protected void cleanUpLayoutRevisionPortletPreferences() throws Exception {
@@ -577,6 +605,39 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		_serviceComponentLocalService.verifyDB();
 	}
 
+	private void _cleanUpAddToPagePermissions(
+			long companyId, long roleId, boolean limitScope)
+		throws Exception {
+
+		List<ResourcePermission> roleResourcePermissions =
+			_resourcePermissionLocalService.getRoleResourcePermissions(roleId);
+
+		Group userPersonalSite = _groupLocalService.getGroup(
+			companyId, GroupConstants.USER_PERSONAL_SITE);
+
+		String groupIdString = String.valueOf(userPersonalSite.getGroupId());
+
+		for (ResourcePermission resourcePermission : roleResourcePermissions) {
+			if (!resourcePermission.hasActionId(ActionKeys.ADD_TO_PAGE)) {
+				continue;
+			}
+
+			_resourcePermissionLocalService.removeResourcePermission(
+				companyId, resourcePermission.getName(),
+				resourcePermission.getScope(), resourcePermission.getPrimKey(),
+				roleId, ActionKeys.ADD_TO_PAGE);
+
+			if (!limitScope) {
+				continue;
+			}
+
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, resourcePermission.getName(),
+				ResourceConstants.SCOPE_GROUP, groupIdString, roleId,
+				ActionKeys.ADD_TO_PAGE);
+		}
+	}
+
 	private boolean _containsPortlet(Layout layout, String portletId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -666,6 +727,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	private DirectServletRegistry _directServletRegistry;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -682,7 +746,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		_organizationMembershipPolicyFactory;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;

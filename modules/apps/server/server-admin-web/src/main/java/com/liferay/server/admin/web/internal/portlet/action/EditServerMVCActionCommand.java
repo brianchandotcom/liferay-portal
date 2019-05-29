@@ -273,7 +273,69 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			ActionableDynamicQuery actionableDynamicQuery =
-				_getPortletPreferencesActionableDynamicQuery();
+				_portletPreferencesLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property plidProperty = PropertyFactoryUtil.forName("plid");
+
+					DynamicQuery layoutRevisionDynamicQuery =
+						_layoutRevisionLocalService.dynamicQuery();
+
+					layoutRevisionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("layoutRevisionId"));
+
+					dynamicQuery.add(
+						plidProperty.in(layoutRevisionDynamicQuery));
+				});
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(com.liferay.portal.kernel.model.PortletPreferences
+					portletPreferences) -> {
+
+					LayoutRevision layoutRevision =
+						_layoutRevisionLocalService.getLayoutRevision(
+							portletPreferences.getPlid());
+
+					Layout layout = _layoutLocalService.getLayout(
+						layoutRevision.getPlid());
+
+					if (!layout.isTypePortlet()) {
+						return;
+					}
+
+					if (_containsPortlet(
+							layout, portletPreferences.getPortletId())) {
+
+						return;
+					}
+
+					LayoutStagingHandler layoutStagingHandler =
+						new LayoutStagingHandler(layout);
+
+					layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+					if (_containsPortlet(
+							(Layout)ProxyUtil.newProxyInstance(
+								PortalClassLoaderUtil.getClassLoader(),
+								new Class<?>[] {
+									Layout.class, ModelWrapper.class
+								},
+								layoutStagingHandler),
+							portletPreferences.getPortletId())) {
+
+						return;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Removing portlet preferences " +
+								portletPreferences.getPortletPreferencesId());
+					}
+
+					_portletPreferencesLocalService.deletePortletPreferences(
+						portletPreferences);
+				});
 
 			actionableDynamicQuery.setParallel(true);
 
@@ -609,15 +671,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			long companyId, long roleId, boolean limitScope)
 		throws Exception {
 
-		List<ResourcePermission> roleResourcePermissions =
-			_resourcePermissionLocalService.getRoleResourcePermissions(roleId);
-
 		Group userPersonalSite = _groupLocalService.getGroup(
 			companyId, GroupConstants.USER_PERSONAL_SITE);
 
 		String groupIdString = String.valueOf(userPersonalSite.getGroupId());
 
-		for (ResourcePermission resourcePermission : roleResourcePermissions) {
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getRoleResourcePermissions(
+					roleId)) {
+
 			if (!resourcePermission.hasActionId(ActionKeys.ADD_TO_PAGE)) {
 				continue;
 			}
@@ -642,82 +704,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
-
 		List<String> portletIds = ListUtil.toList(
-			portlets, Portlet.PORTLET_ID_ACCESSOR);
+			layoutTypePortlet.getAllPortlets(), Portlet.PORTLET_ID_ACCESSOR);
 
 		return portletIds.contains(portletId);
-	}
-
-	private ActionableDynamicQuery
-		_getPortletPreferencesActionableDynamicQuery() {
-
-		ActionableDynamicQuery portletPreferencesActionableDynamicQuery =
-			_portletPreferencesLocalService.getActionableDynamicQuery();
-
-		portletPreferencesActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property plidProperty = PropertyFactoryUtil.forName("plid");
-
-				DynamicQuery layoutRevisionDynamicQuery =
-					_layoutRevisionLocalService.dynamicQuery();
-
-				layoutRevisionDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("layoutRevisionId"));
-
-				dynamicQuery.add(plidProperty.in(layoutRevisionDynamicQuery));
-			});
-		portletPreferencesActionableDynamicQuery.setPerformActionMethod(
-			(com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences) -> {
-
-				long layoutRevisionId = portletPreferences.getPlid();
-
-				LayoutRevision layoutRevision =
-					_layoutRevisionLocalService.getLayoutRevision(
-						layoutRevisionId);
-
-				Layout layout = _layoutLocalService.getLayout(
-					layoutRevision.getPlid());
-
-				if (!layout.isTypePortlet()) {
-					return;
-				}
-
-				if (_containsPortlet(
-						layout, portletPreferences.getPortletId())) {
-
-					return;
-				}
-
-				LayoutStagingHandler layoutStagingHandler =
-					new LayoutStagingHandler(layout);
-
-				layoutStagingHandler.setLayoutRevision(layoutRevision);
-
-				Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
-					PortalClassLoaderUtil.getClassLoader(),
-					new Class<?>[] {Layout.class, ModelWrapper.class},
-					layoutStagingHandler);
-
-				if (_containsPortlet(
-						proxiedLayout, portletPreferences.getPortletId())) {
-
-					return;
-				}
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Removing portlet preferences " +
-							portletPreferences.getPortletPreferencesId());
-				}
-
-				_portletPreferencesLocalService.deletePortletPreferences(
-					portletPreferences);
-			});
-
-		return portletPreferencesActionableDynamicQuery;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

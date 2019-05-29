@@ -140,11 +140,6 @@
 	<classpathentry kind="lib" path="lib/portal/ccpp-ri.jar"/>
 	<classpathentry kind="lib" path="lib/portal/cglib-nodep.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chardet.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-client-api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-client-bindings.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-client-impl.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>

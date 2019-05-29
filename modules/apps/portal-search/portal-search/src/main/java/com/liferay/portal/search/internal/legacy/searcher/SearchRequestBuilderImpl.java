@@ -58,6 +58,17 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		_searchContext = searchContext;
 	}
 
+	public SearchRequestBuilderImpl(
+		SearchRequestBuilderFactory searchRequestBuilderFactory,
+		SearchRequest searchRequest) {
+
+		this(
+			searchRequestBuilderFactory,
+			new SearchRequestImpl(
+				(SearchRequestImpl)searchRequest
+			).getSearchContext());
+	}
+
 	@Override
 	public SearchRequestBuilder addAggregation(Aggregation aggregation) {
 		withSearchRequestImpl(
@@ -70,9 +81,11 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder addComplexQueryPart(
 		ComplexQueryPart complexQueryPart) {
 
-		withSearchRequestImpl(
-			searchRequestImpl -> searchRequestImpl.addComplexQueryPart(
-				complexQueryPart));
+		if (complexQueryPart != null) {
+			withSearchRequestImpl(
+				searchRequestImpl -> searchRequestImpl.addComplexQueryPart(
+					complexQueryPart));
+		}
 
 		return this;
 	}
@@ -156,6 +169,14 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder excludeContributors(String... ids) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addExcludeContributors(ids));
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder explain(boolean explain) {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setExplain(explain));
@@ -215,6 +236,14 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setHighlightFields(
 				highlightFields));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder includeContributors(String... ids) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addIncludeContributors(ids));
 
 		return this;
 	}
@@ -389,6 +418,9 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		return _searchRequestBuilderFactory.builder(
 		).federatedSearchKey(
 			federatedSearchKey
+		).withSearchContext(
+			searchContext -> searchContext.setCompanyId(
+				_searchContext.getCompanyId())
 		);
 	}
 

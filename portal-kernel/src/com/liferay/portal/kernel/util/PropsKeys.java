@@ -1855,6 +1855,10 @@ public interface PropsKeys {
 	public static final String LIFERAY_WEB_PORTAL_DIR =
 		"liferay.web.portal.dir";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String LIVE_USERS_ENABLED = "live.users.enabled";
 
 	public static final String LOCALE_DEFAULT_REQUEST =
@@ -3103,15 +3107,31 @@ public interface PropsKeys {
 	public static final String SESSION_TIMEOUT_WARNING =
 		"session.timeout.warning";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SESSION_TRACKER_FRIENDLY_PATHS_ENABLED =
 		"session.tracker.friendly.paths.enabled";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SESSION_TRACKER_IGNORE_PATHS =
 		"session.tracker.ignore.paths";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SESSION_TRACKER_MEMORY_ENABLED =
 		"session.tracker.memory.enabled";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SESSION_TRACKER_PERSISTENCE_ENABLED =
 		"session.tracker.persistence.enabled";
 

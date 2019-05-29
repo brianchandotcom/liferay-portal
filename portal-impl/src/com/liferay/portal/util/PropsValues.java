@@ -1628,6 +1628,10 @@ public class PropsValues {
 	public static final String LIFERAY_WEB_PORTAL_DIR = PropsUtil.get(
 		PropsKeys.LIFERAY_WEB_PORTAL_DIR);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean LIVE_USERS_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.LIVE_USERS_ENABLED));
 
@@ -2804,14 +2808,26 @@ public class PropsValues {
 	public static final int SESSION_TIMEOUT_WARNING = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SESSION_TIMEOUT_WARNING));
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean SESSION_TRACKER_FRIENDLY_PATHS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_TRACKER_FRIENDLY_PATHS_ENABLED));
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean SESSION_TRACKER_MEMORY_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_TRACKER_MEMORY_ENABLED));
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean SESSION_TRACKER_PERSISTENCE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_TRACKER_PERSISTENCE_ENABLED));

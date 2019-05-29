@@ -18,6 +18,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentFolderDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
@@ -35,6 +36,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -149,10 +154,8 @@ public class StructuredContentFolderResourceImpl
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
 				ServiceContextUtil.createServiceContext(
-					JournalFolder.class, contextCompany.getCompanyId(),
-					structuredContentFolder.getCustomFields(),
+					_getExpandoBridgeAttributes(structuredContentFolder),
 					journalFolder.getGroupId(),
-					contextAcceptLanguage.getPreferredLocale(),
 					structuredContentFolder.getViewableByAsString())));
 	}
 
@@ -166,10 +169,17 @@ public class StructuredContentFolderResourceImpl
 				siteId, parentFolderId, structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					JournalFolder.class, contextCompany.getCompanyId(),
-					structuredContentFolder.getCustomFields(), siteId,
-					contextAcceptLanguage.getPreferredLocale(),
-					structuredContentFolder.getViewableByAsString())));
+					_getExpandoBridgeAttributes(structuredContentFolder),
+					siteId, structuredContentFolder.getViewableByAsString())));
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		StructuredContentFolder structuredContentFolder) {
+
+		return CustomFieldsUtil.toMap(
+			JournalFolder.class, contextCompany.getCompanyId(),
+			structuredContentFolder.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(

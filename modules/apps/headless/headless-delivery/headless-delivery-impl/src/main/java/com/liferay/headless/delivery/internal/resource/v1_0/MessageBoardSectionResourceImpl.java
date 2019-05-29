@@ -15,9 +15,9 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
@@ -39,6 +39,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -160,10 +164,8 @@ public class MessageBoardSectionResourceImpl
 				mbCategory.getDisplayStyle(), "", "", "", 0, false, "", "", 0,
 				"", false, "", 0, false, "", "", false, false, false,
 				ServiceContextUtil.createServiceContext(
-					MBCategory.class, contextCompany.getCompanyId(),
-					messageBoardSection.getCustomFields(),
-					mbCategory.getGroupId(),
-					contextAcceptLanguage.getPreferredLocale(), null)));
+					_getExpandoBridgeAttributes(messageBoardSection),
+					mbCategory.getGroupId(), null)));
 	}
 
 	private MessageBoardSection _addMessageBoardSection(
@@ -177,10 +179,17 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
 				ServiceContextUtil.createServiceContext(
-					MBCategory.class, contextCompany.getCompanyId(),
-					messageBoardSection.getCustomFields(), siteId,
-					contextAcceptLanguage.getPreferredLocale(),
+					_getExpandoBridgeAttributes(messageBoardSection), siteId,
 					messageBoardSection.getViewableByAsString())));
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		MessageBoardSection messageBoardSection) {
+
+		return CustomFieldsUtil.toMap(
+			MBCategory.class, contextCompany.getCompanyId(),
+			messageBoardSection.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Page<MessageBoardSection> _getSiteMessageBoardSectionsPage(
@@ -213,8 +222,8 @@ public class MessageBoardSectionResourceImpl
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					mbCategory.getCompanyId(), mbCategory.getCategoryId(),
-					MBCategory.class,
+					mbCategory.getCategoryId(), MBCategory.class,
+					mbCategory.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = mbCategory.getCreateDate();
 				dateModified = mbCategory.getModifiedDate();

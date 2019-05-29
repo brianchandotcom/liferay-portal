@@ -14,11 +14,11 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
-import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
@@ -58,8 +58,9 @@ public class StructuredContentFolderDTOConverter implements DTOConverter {
 					_portal,
 					_userLocalService.getUser(journalFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
-					journalFolder.getCompanyId(), journalFolder.getFolderId(),
-					JournalFolder.class, dtoConverterContext.getLocale());
+					journalFolder.getFolderId(), JournalFolder.class,
+					journalFolder.getCompanyId(),
+					dtoConverterContext.getLocale());
 				dateCreated = journalFolder.getCreateDate();
 				dateModified = journalFolder.getModifiedDate();
 				description = journalFolder.getDescription();

@@ -25,13 +25,13 @@ import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
-import com.liferay.headless.common.spi.util.CustomFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -260,7 +260,7 @@ public class UserAccountResourceImpl
 					}
 				};
 				customFields = CustomFieldsUtil.toCustomFields(
-					user.getCompanyId(), user.getUserId(), User.class,
+					user.getUserId(), User.class, user.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = user.getCreateDate();
 				dateModified = user.getModifiedDate();

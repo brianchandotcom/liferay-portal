@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.storage.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -35,7 +36,11 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin()) {
+		if (!(permissionChecker.isCompanyAdmin() ||
+			  userLocalService.hasRoleUser(
+				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  permissionChecker.getUserId(), true))) {
+
 			throw new PrincipalException();
 		}
 
@@ -50,7 +55,11 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin()) {
+		if (!(permissionChecker.isCompanyAdmin() ||
+			  userLocalService.hasRoleUser(
+				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  permissionChecker.getUserId(), true))) {
+
 			throw new PrincipalException();
 		}
 
@@ -69,7 +78,11 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin()) {
+		if (!(permissionChecker.isCompanyAdmin() ||
+			  userLocalService.hasRoleUser(
+				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  permissionChecker.getUserId(), true))) {
+
 			throw new PrincipalException();
 		}
 
@@ -91,7 +104,11 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin()) {
+		if (!(permissionChecker.isCompanyAdmin() ||
+			  userLocalService.hasRoleUser(
+				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  permissionChecker.getUserId(), true))) {
+
 			throw new PrincipalException();
 		}
 

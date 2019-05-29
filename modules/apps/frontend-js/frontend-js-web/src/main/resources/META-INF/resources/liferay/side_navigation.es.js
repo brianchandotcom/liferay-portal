@@ -112,68 +112,6 @@
 		return null;
 	}
 
-	var debounce = function(fn, delay) {
-		var id;
-
-		return function() {
-			var instance = this;
-
-			var args = arguments;
-
-			var later = function() {
-				id = null;
-
-				fn.apply(instance, args);
-			};
-
-			clearTimeout(id);
-
-			id = setTimeout(later, delay);
-		};
-	};
-
-	// One shared resize listener per page,
-	// no matter how many components we have
-	subscribe(
-		window,
-		'resize',
-		debounce(
-			function resizeHandler(event) {
-				Liferay.fire('screenChange.lexicon.sidenav');
-			},
-			150
-		)
-	);
-
-
-	var getBreakpointRegion = function() {
-		var screenXs = 480;
-		var screenSm = 768;
-		var screenMd = 992;
-		var screenLg = 1200;
-
-		var windowWidth = window.innerWidth;
-		var region = '';
-
-		if (windowWidth >= screenLg) {
-			region = 'lg';
-		}
-		else if (windowWidth >= screenMd) {
-			region = 'md';
-		}
-		else if (windowWidth >= screenSm) {
-			region = 'sm';
-		}
-		else if (windowWidth >= screenXs) {
-			region = 'xs';
-		}
-		else {
-			region = 'xxs';
-		}
-
-		return region;
-	};
-
 	let selectorCounter = 0;
 
 	/**
@@ -697,10 +635,6 @@
 		_bindUI: function() {
 			var instance = this;
 
-			if (!instance.useDataAttribute) {
-				instance._subscribeScreenChange();
-			}
-
 			instance._subscribeClickTrigger();
 
 			instance._subscribeClickSidenavClose();
@@ -842,99 +776,6 @@
 			instance.togglerSelector = togglerSelector;
 		},
 
-		_subscribeScreenChange: function() {
-			var instance = this;
-			var options = instance.options;
-
-			var $container = $(options.container);
-			var $toggler = instance.$toggler;
-
-			var screenStartDesktop = instance._setScreenSize();
-
-			var screenChangeSubscription = Liferay.on('screenChange.lexicon.sidenav', function(event) {
-				var desktop = instance._setScreenSize();
-				var sidenavRight = instance._isSidenavRight();
-				var type = desktop ? options.type : options.typeMobile;
-
-				var fixedMenu = type === 'fixed' || type === 'fixed-push';
-
-				var $menu = $container.find('.sidenav-menu').first();
-
-				var menuWidth;
-
-				var originalMenuWidth = options.widthOriginal;
-
-				var positionDirection = options.rtl ? 'left' : 'right';
-
-				setClasses($container, {
-					'sidenav-fixed': fixedMenu,
-				});
-
-				if ((!desktop && screenStartDesktop) || (desktop && !screenStartDesktop)) {
-					instance.hideSidenav();
-
-					instance.clearHeight();
-
-					setClasses($container, {
-						closed: true,
-						open: false,
-					});
-					setClasses($toggler, {
-						active: false,
-						open: false,
-					});
-
-					screenStartDesktop = false;
-
-					if (desktop) {
-						if (sidenavRight) {
-							setStyles($menu, {
-								[positionDirection]: px(originalMenuWidth),
-								width: px(originalMenuWidth),
-							});
-						}
-
-						screenStartDesktop = true;
-					}
-				}
-
-				var closed = hasClass($container, 'closed');
-
-				if (!desktop) {
-					menuWidth = originalMenuWidth;
-
-					if (window.innerWidth <= originalMenuWidth) {
-						menuWidth = window.innerWidth - options.gutter - 25;
-					}
-
-					if (sidenavRight) {
-						if (closed) {
-							setStyles($menu, {
-								[positionDirection]: px(menuWidth),
-							});
-						}
-
-						setStyles($menu, {
-							width: px(menuWidth),
-						});
-					}
-
-					screenStartDesktop = false;
-				}
-
-				if (!closed) {
-					instance.clearHeight();
-
-					instance.showSidenav();
-					instance.setHeight();
-				}
-			});
-
-			Liferay.once('beforeScreenFlip', () => {
-				screenChangeSubscription.detach();
-			});
-		},
-
 		_subscribeSidenavTransitionEnd: function($el, fn) {
 			var instance = this;
 
@@ -1027,19 +868,6 @@
 			setStyles($container, {
 				display: '',
 			});
-		},
-
-		_setScreenSize: function() {
-			var instance = this;
-
-			var screenSize = getBreakpointRegion();
-
-			var desktop = screenSize === 'sm' || screenSize === 'md' || screenSize === 'lg';
-
-			instance.mobile = !desktop;
-			instance.desktop = desktop;
-
-			return desktop;
 		}
 	};
 

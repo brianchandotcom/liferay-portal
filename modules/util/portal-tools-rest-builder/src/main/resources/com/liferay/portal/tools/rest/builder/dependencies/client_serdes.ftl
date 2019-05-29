@@ -284,7 +284,7 @@ public class ${schemaName}SerDes {
 						<#elseif stringUtil.equals(propertyType, "Long[]")>
 							toLongs((Object[])jsonParserFieldValue)
 						<#elseif stringUtil.startsWith(propertyType, "Map<")>
-							${schemaName}SerDes.toMap((String)jsonParserFieldValue)
+							(Map)${schemaName}SerDes.toMap((String)jsonParserFieldValue)
 						<#elseif stringUtil.equals(propertyType, "Number")>
 							Integer.valueOf((String)jsonParserFieldValue)
 						<#elseif stringUtil.equals(propertyType, "Number[]")>

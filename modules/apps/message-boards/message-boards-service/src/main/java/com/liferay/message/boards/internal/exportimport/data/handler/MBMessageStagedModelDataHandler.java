@@ -525,34 +525,6 @@ public class MBMessageStagedModelDataHandler
 		return inputStreamOVPs;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
 	private MBMessage _updateAnswer(
 			MBMessage message, MBMessage importedMessage)
 		throws PortalException {
@@ -579,9 +551,16 @@ public class MBMessageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageStagedModelDataHandler.class);
 
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

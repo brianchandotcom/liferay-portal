@@ -514,7 +514,9 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	private String _unescape(String substring) {
-		return substring.replace("\\\\", "\\");
+		String replace = substring.replace("\\\\", "\\");
+
+		return replace.replace("\\\"", "\"");
 	}
 
 	private Stack<Integer> _captureStartStack;

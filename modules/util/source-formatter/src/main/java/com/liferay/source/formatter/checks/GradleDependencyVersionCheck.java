@@ -79,7 +79,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
-					"(compileOnly group: \"", artifactParts[0], "\", name: \"",
+					"(group: \"", artifactParts[0], "\", name: \"",
 					artifactParts[1], "\",.* version: \").*?(\")"));
 
 			Matcher matcher = pattern.matcher(content);

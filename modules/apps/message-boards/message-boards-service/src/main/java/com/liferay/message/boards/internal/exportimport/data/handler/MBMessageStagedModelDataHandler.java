@@ -101,7 +101,7 @@ public class MBMessageStagedModelDataHandler
 
 		return _mbMessageLocalService.getMBMessagesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<MBMessage>());
+			new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
@@ -227,9 +227,8 @@ public class MBMessageStagedModelDataHandler
 
 	@Override
 	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long messageId)
-		throws Exception {
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long messageId) {
 
 		MBMessage existingMessage = fetchMissingReference(uuid, groupId);
 

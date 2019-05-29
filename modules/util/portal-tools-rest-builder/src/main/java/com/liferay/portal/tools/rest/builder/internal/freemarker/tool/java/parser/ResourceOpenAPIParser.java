@@ -515,7 +515,7 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		return StringUtil.merge(methodNameSegments, "");
+		return String.join("", methodNameSegments);
 	}
 
 	private static String _getParameterAnnotation(

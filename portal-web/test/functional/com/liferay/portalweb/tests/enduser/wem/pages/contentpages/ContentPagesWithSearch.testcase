@@ -108,8 +108,6 @@ definition {
 	@description = "This is a test for LPS-91405. Content page associated with category will not display after category deleted."
 	@priority = "3"
 	test SearchContentPagesWithDeletedCategory {
-		property portal.acceptance = "true";
-
 		task ("Add a a vocabulary with a category") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 

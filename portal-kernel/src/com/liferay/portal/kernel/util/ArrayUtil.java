@@ -2165,6 +2165,10 @@ public class ArrayUtil {
 			set.add(b);
 		}
 
+		if (array.length == set.size()) {
+			return array;
+		}
+
 		return toArray(set.toArray(new Byte[0]));
 	}
 
@@ -2173,6 +2177,10 @@ public class ArrayUtil {
 
 		for (double d : array) {
 			set.add(d);
+		}
+
+		if (array.length == set.size()) {
+			return array;
 		}
 
 		return toArray(set.toArray(new Double[0]));
@@ -2185,6 +2193,10 @@ public class ArrayUtil {
 			set.add(f);
 		}
 
+		if (array.length == set.size()) {
+			return array;
+		}
+
 		return toArray(set.toArray(new Float[0]));
 	}
 
@@ -2193,6 +2205,10 @@ public class ArrayUtil {
 
 		for (int i : array) {
 			set.add(i);
+		}
+
+		if (array.length == set.size()) {
+			return array;
 		}
 
 		return toArray(set.toArray(new Integer[0]));
@@ -2205,6 +2221,10 @@ public class ArrayUtil {
 			set.add(l);
 		}
 
+		if (array.length == set.size()) {
+			return array;
+		}
+
 		return toArray(set.toArray(new Long[0]));
 	}
 
@@ -2215,6 +2235,10 @@ public class ArrayUtil {
 			set.add(s);
 		}
 
+		if (array.length == set.size()) {
+			return array;
+		}
+
 		return toArray(set.toArray(new Short[0]));
 	}
 
@@ -2223,6 +2247,10 @@ public class ArrayUtil {
 
 		for (String s : array) {
 			set.add(s);
+		}
+
+		if (array.length == set.size()) {
+			return array;
 		}
 
 		return toArray(set.toArray(new String[0]));

@@ -38,7 +38,9 @@ import java.util.stream.Stream;
  */
 public class StructuredContentEntityModel implements EntityModel {
 
-	public StructuredContentEntityModel(List<EntityField> entityFields) {
+	public StructuredContentEntityModel(
+		List<EntityField> entityFields, List<EntityField> customEntityFields) {
+
 		_entityFieldsMap = Stream.of(
 			new CollectionEntityField(
 				new IntegerEntityField(
@@ -46,7 +48,8 @@ public class StructuredContentEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
-			new ComplexEntityField("values", entityFields),
+			new ComplexEntityField("contentFields", entityFields),
+			new ComplexEntityField("customFields", customEntityFields),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

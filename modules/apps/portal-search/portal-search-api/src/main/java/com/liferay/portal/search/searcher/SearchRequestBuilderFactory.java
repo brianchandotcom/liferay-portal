@@ -32,4 +32,6 @@ public interface SearchRequestBuilderFactory {
 	 */
 	public SearchRequestBuilder builder();
 
+	public SearchRequestBuilder builder(SearchRequest searchRequest);
+
 }

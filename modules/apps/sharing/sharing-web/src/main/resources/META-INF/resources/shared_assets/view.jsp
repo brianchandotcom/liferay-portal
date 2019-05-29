@@ -80,11 +80,13 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 				name="status"
 				orderable="<%= false %>"
 			>
-				<span class="label label-info">
-					<span class="label-item label-item-expand">
-						<%= sharedAssetsViewDisplayContext.isVisible(sharingEntry) ? LanguageUtil.get(request, "visible") : LanguageUtil.get(request, "not-visible") %>
+				<c:if test="<%= !sharedAssetsViewDisplayContext.isVisible(sharingEntry) %>">
+					<span class="label label-info">
+						<span class="label-item label-item-expand">
+							<liferay-ui:message key="not-visible" />
+						</span>
 					</span>
-				</span>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date

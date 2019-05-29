@@ -87,9 +87,7 @@ public class ElasticsearchEngineConfigurator
 	@Override
 	protected void initialize() {
 		Thread thread = new Thread(
-			() -> {
-				_elasticsearchConnectionManager.connect();
-			},
+			() -> _elasticsearchConnectionManager.connect(),
 			"Elasticsearch initialization thread");
 
 		thread.setDaemon(true);

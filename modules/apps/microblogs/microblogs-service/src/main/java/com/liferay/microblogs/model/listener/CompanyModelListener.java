@@ -39,10 +39,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 			actionableDynamicQuery.setCompanyId(company.getCompanyId());
 			actionableDynamicQuery.setPerformActionMethod(
-				(MicroblogsEntry microblogsEntry) -> {
+				(MicroblogsEntry microblogsEntry) ->
 					_microblogsEntryLocalService.deleteMicroblogsEntry(
-						microblogsEntry);
-				});
+						microblogsEntry));
 
 			actionableDynamicQuery.performActions();
 		}

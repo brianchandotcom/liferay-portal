@@ -105,17 +105,12 @@ public class JournalArticleVersionVerticalCard extends BaseVerticalCard {
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> {
-						labelItem.setLabel(
-							LanguageUtil.format(
-								_httpServletRequest, "version-x",
-								String.valueOf(_article.getVersion()), false));
-					});
+					labelItem -> labelItem.setLabel(
+						LanguageUtil.format(
+							_httpServletRequest, "version-x",
+							String.valueOf(_article.getVersion()), false)));
 
-				add(
-					labelItem -> {
-						labelItem.setStatus(_article.getStatus());
-					});
+				add(labelItem -> labelItem.setStatus(_article.getStatus()));
 			}
 		};
 	}

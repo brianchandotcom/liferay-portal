@@ -43,10 +43,8 @@ public class ContactBatchReindexerImpl implements ContactBatchReindexer {
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(Contact contact) -> {
-				batchIndexingActionable.addDocuments(
-					indexerDocumentBuilder.getDocument(contact));
-			});
+			(Contact contact) -> batchIndexingActionable.addDocuments(
+				indexerDocumentBuilder.getDocument(contact)));
 
 		batchIndexingActionable.performActions();
 	}

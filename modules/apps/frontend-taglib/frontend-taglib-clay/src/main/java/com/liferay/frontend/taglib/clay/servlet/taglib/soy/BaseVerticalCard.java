@@ -61,9 +61,8 @@ public abstract class BaseVerticalCard
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> {
-						labelItem.setStatus(workflowedModel.getStatus());
-					});
+					labelItem -> labelItem.setStatus(
+						workflowedModel.getStatus()));
 			}
 		};
 	}

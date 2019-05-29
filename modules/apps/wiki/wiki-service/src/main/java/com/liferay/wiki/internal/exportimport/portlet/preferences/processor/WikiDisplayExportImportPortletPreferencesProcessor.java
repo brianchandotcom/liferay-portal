@@ -193,10 +193,9 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(WikiPage page) -> {
+			(WikiPage page) ->
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, page);
-			});
+					portletDataContext, portletId, page));
 
 		return actionableDynamicQuery;
 	}

@@ -100,9 +100,8 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 						modifiedTime.le(latestModifiedTime - Time.HOUR));
 				});
 			actionableDynamicQuery.setPerformActionMethod(
-				(DLSyncEvent dlSyncEvent) -> {
-					_dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent);
-				});
+				(DLSyncEvent dlSyncEvent) ->
+					_dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent));
 
 			actionableDynamicQuery.performActions();
 		}

@@ -146,11 +146,9 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 						});
 					actionableDynamicQuery.setGroupId(category.getGroupId());
 					actionableDynamicQuery.setPerformActionMethod(
-						(MBMessage message) -> {
-							propagateMessageRolePermissions(
-								actionRequest, className, categoryId,
-								message.getMessageId(), roleIds);
-						});
+						(MBMessage message) -> propagateMessageRolePermissions(
+							actionRequest, className, categoryId,
+							message.getMessageId(), roleIds));
 
 					actionableDynamicQuery.performActions();
 				}
@@ -179,11 +177,9 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
-			(MBMessage message) -> {
-				propagateMessageRolePermissions(
-					actionRequest, className, groupId, message.getMessageId(),
-					roleIds);
-			});
+			(MBMessage message) -> propagateMessageRolePermissions(
+				actionRequest, className, groupId, message.getMessageId(),
+				roleIds));
 
 		actionableDynamicQuery.performActions();
 	}

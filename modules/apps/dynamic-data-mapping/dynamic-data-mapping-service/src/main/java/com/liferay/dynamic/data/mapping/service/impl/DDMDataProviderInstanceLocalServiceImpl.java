@@ -152,9 +152,8 @@ public class DDMDataProviderInstanceLocalServiceImpl
 				dynamicQuery.add(groupIdProperty.eq(groupId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(DDMDataProviderInstance ddmDataProviderInstance) -> {
-				deleteDataProviderInstance(ddmDataProviderInstance);
-			});
+			(DDMDataProviderInstance ddmDataProviderInstance) ->
+				deleteDataProviderInstance(ddmDataProviderInstance));
 
 		actionableDynamicQuery.setCompanyId(companyId);
 

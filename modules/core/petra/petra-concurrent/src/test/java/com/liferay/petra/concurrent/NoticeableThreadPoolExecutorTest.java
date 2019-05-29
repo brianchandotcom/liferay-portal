@@ -248,9 +248,8 @@ public class NoticeableThreadPoolExecutorTest {
 			new NoticeableThreadPoolExecutor(
 				1, 1, 1, TimeUnit.NANOSECONDS, dispatchTaskQueue,
 				new MethodNameThreadFactory(),
-				(runnable, threadPoolExecutor) -> {
-					rejectedTaskQueue.add(runnable);
-				},
+				(runnable, threadPoolExecutor) -> rejectedTaskQueue.add(
+					runnable),
 				new ThreadPoolHandlerAdapter());
 
 		Semaphore semaphore = new Semaphore(0);
@@ -295,9 +294,7 @@ public class NoticeableThreadPoolExecutorTest {
 			new NoticeableThreadPoolExecutor(
 				1, 1, 1, TimeUnit.NANOSECONDS, new SynchronousQueue<>(),
 				new MethodNameThreadFactory(),
-				(runnable, threadPoolExecutor) -> {
-					rejectedTasks.add(runnable);
-				},
+				(runnable, threadPoolExecutor) -> rejectedTasks.add(runnable),
 				new ThreadPoolHandlerAdapter());
 
 		ThreadPoolExecutor workerThreadPoolExecutor =

@@ -310,10 +310,9 @@ public class DummyFolderStagedModelRepository
 			portletDataContext.getScopeGroupId());
 
 		exportActionableDynamicQuery.setPerformActionMethod(
-			(DummyFolder dummyFolder) -> {
+			(DummyFolder dummyFolder) ->
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, dummyFolder);
-			});
+					portletDataContext, dummyFolder));
 
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(

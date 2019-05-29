@@ -225,9 +225,8 @@ public abstract class BaseOrganizationMembershipPolicy
 				userGroupRoleActionableDynamicQuery.setGroupId(
 					organization.getGroupId());
 				userGroupRoleActionableDynamicQuery.setPerformActionMethod(
-					(UserGroupRole userGroupRole) -> {
-						verifyPolicy(userGroupRole.getRole());
-					});
+					(UserGroupRole userGroupRole) -> verifyPolicy(
+						userGroupRole.getRole()));
 
 				userGroupRoleActionableDynamicQuery.performActions();
 			});

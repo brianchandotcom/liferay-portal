@@ -41,10 +41,8 @@ public class DDMStructureModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DDMStructure ddmStructure) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(ddmStructure));
-			});
+			(DDMStructure ddmStructure) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(ddmStructure)));
 	}
 
 	@Override

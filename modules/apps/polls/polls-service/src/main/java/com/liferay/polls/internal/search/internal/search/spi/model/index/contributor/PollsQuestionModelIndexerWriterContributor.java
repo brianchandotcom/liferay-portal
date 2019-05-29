@@ -41,11 +41,10 @@ public class PollsQuestionModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(PollsQuestion pollsQuestion) -> {
+			(PollsQuestion pollsQuestion) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						pollsQuestion));
-			});
+						pollsQuestion)));
 	}
 
 	@Override

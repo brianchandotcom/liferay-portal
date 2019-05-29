@@ -90,12 +90,11 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 				indexingTestHelper.search();
 
 				indexingTestHelper.verifyResponse(
-					searchResponse -> {
+					searchResponse ->
 						DocumentsAssert.assertValuesIgnoreRelevance(
 							searchResponse.getRequestString(),
 							searchResponse.getDocumentsStream(),
-							Field.USER_NAME, expected);
-					});
+							Field.USER_NAME, expected));
 			});
 	}
 

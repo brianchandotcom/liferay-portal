@@ -41,11 +41,10 @@ public class KaleoTaskInstanceTokenModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(KaleoTaskInstanceToken kaleoTaskInstanceToken) -> {
+			(KaleoTaskInstanceToken kaleoTaskInstanceToken) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						kaleoTaskInstanceToken));
-			});
+						kaleoTaskInstanceToken)));
 	}
 
 	@Override

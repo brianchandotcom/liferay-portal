@@ -116,9 +116,8 @@ public class CreationMenu extends HashMap {
 
 		if (!_restDropdownItems.isEmpty()) {
 			secondaryDropdownItemList.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(_restDropdownItems);
-				});
+				dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+					_restDropdownItems));
 		}
 
 		return secondaryDropdownItemList;

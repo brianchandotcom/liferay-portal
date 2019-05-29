@@ -44,10 +44,8 @@ public class LayoutModelIndexerWriterContributor
 		batchIndexingActionable.setInterval(
 			_batchIndexingHelper.getBulkSize(Layout.class.getName()));
 		batchIndexingActionable.setPerformActionMethod(
-			(Layout layout) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(layout));
-			});
+			(Layout layout) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(layout)));
 	}
 
 	@Override

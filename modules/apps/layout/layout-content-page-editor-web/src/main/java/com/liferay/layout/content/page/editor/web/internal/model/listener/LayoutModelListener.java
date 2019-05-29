@@ -148,14 +148,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		ServiceContext serviceContext = new ServiceContext();
 
 		assetEntryUsages.forEach(
-			assetEntryUsage -> {
-				_assetEntryUsageLocalService.addAssetEntryUsage(
-					assetEntryUsage.getGroupId(),
-					assetEntryUsage.getAssetEntryId(),
-					assetEntryUsage.getContainerType(),
-					assetEntryUsage.getContainerKey(), layout.getPlid(),
-					serviceContext);
-			});
+			assetEntryUsage -> _assetEntryUsageLocalService.addAssetEntryUsage(
+				assetEntryUsage.getGroupId(), assetEntryUsage.getAssetEntryId(),
+				assetEntryUsage.getContainerType(),
+				assetEntryUsage.getContainerKey(), layout.getPlid(),
+				serviceContext));
 
 		return null;
 	}

@@ -212,10 +212,9 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 
 		recordActionableDynamicQuery.setGroupId(recordSet.getGroupId());
 		recordActionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord record) -> {
+			(DDLRecord record) ->
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, record);
-			});
+					portletDataContext, portletId, record));
 
 		return recordActionableDynamicQuery;
 	}

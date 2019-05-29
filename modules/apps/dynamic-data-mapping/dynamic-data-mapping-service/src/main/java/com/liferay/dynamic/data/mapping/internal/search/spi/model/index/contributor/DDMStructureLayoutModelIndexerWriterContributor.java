@@ -41,11 +41,10 @@ public class DDMStructureLayoutModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DDMStructureLayout ddmStructureLayout) -> {
+			(DDMStructureLayout ddmStructureLayout) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						ddmStructureLayout));
-			});
+						ddmStructureLayout)));
 	}
 
 	@Override

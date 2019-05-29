@@ -41,11 +41,10 @@ public class SegmentsEntryModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(SegmentsEntry segmentsEntry) -> {
+			(SegmentsEntry segmentsEntry) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						segmentsEntry));
-			});
+						segmentsEntry)));
 	}
 
 	@Override

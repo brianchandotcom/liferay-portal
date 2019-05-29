@@ -208,9 +208,8 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 				userGroupRoleActionableDynamicQuery.setGroupId(
 					group.getGroupId());
 				userGroupRoleActionableDynamicQuery.setPerformActionMethod(
-					(UserGroupRole userGroupRole) -> {
-						verifyPolicy(userGroupRole.getRole());
-					});
+					(UserGroupRole userGroupRole) -> verifyPolicy(
+						userGroupRole.getRole()));
 
 				userGroupRoleActionableDynamicQuery.performActions();
 			});

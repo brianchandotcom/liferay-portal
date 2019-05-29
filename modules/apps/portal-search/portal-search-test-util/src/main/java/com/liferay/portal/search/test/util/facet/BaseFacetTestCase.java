@@ -51,9 +51,8 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 		throws Exception {
 
 		assertSearch(
-			indexingTestHelper -> {
-				consumer.accept(new FacetTestHelper(indexingTestHelper));
-			});
+			indexingTestHelper -> consumer.accept(
+				new FacetTestHelper(indexingTestHelper)));
 	}
 
 	protected abstract String getField();

@@ -97,9 +97,7 @@ public class UIActionService {
 		List<SuggestionValues.Item> items = new ArrayList<>();
 
 		values.forEach(
-			path -> {
-				items.add(new SuggestionValues.Item(path, path));
-			});
+			path -> items.add(new SuggestionValues.Item(path, path)));
 
 		return new SuggestionValues(true, items);
 	}

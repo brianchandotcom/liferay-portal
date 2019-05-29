@@ -125,9 +125,8 @@ public class FragmentEntryVerticalCard
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> {
-						labelItem.setStatus(_fragmentEntry.getStatus());
-					});
+					labelItem -> labelItem.setStatus(
+						_fragmentEntry.getStatus()));
 			}
 		};
 	}

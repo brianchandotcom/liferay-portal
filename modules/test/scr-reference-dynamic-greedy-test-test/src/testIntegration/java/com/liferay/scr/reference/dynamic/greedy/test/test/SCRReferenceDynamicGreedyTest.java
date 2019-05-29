@@ -57,15 +57,13 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyAtLeastOneComponent",
 			"at_least_one",
-			bindingCalls -> {
-				Assert.assertEquals(
-					bindingCalls,
-					Arrays.asList(
-						"bindAtLeastOneDependency-" + _SERVICE_1, "step1",
-						"bindAtLeastOneDependency-" + _SERVICE_2, "step2",
-						"unbindAtLeastOneDependency-" + _SERVICE_1, "step3",
-						"unbindAtLeastOneDependency-" + _SERVICE_2));
-			});
+			bindingCalls -> Assert.assertEquals(
+				bindingCalls,
+				Arrays.asList(
+					"bindAtLeastOneDependency-" + _SERVICE_1, "step1",
+					"bindAtLeastOneDependency-" + _SERVICE_2, "step2",
+					"unbindAtLeastOneDependency-" + _SERVICE_1, "step3",
+					"unbindAtLeastOneDependency-" + _SERVICE_2)));
 	}
 
 	@Test
@@ -84,15 +82,13 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyMandatoryComponent",
 			"mandatory",
-			bindingCalls -> {
-				Assert.assertEquals(
-					bindingCalls,
-					Arrays.asList(
-						"bindMandatoryDependency-" + _SERVICE_1, "step1",
-						"bindMandatoryDependency-" + _SERVICE_2,
-						"unbindMandatoryDependency-" + _SERVICE_1, "step2",
-						"step3", "unbindMandatoryDependency-" + _SERVICE_2));
-			});
+			bindingCalls -> Assert.assertEquals(
+				bindingCalls,
+				Arrays.asList(
+					"bindMandatoryDependency-" + _SERVICE_1, "step1",
+					"bindMandatoryDependency-" + _SERVICE_2,
+					"unbindMandatoryDependency-" + _SERVICE_1, "step2", "step3",
+					"unbindMandatoryDependency-" + _SERVICE_2)));
 	}
 
 	@Test
@@ -101,15 +97,13 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyMultipleComponent",
 			"multiple",
-			bindingCalls -> {
-				Assert.assertEquals(
-					bindingCalls,
-					Arrays.asList(
-						"bindMultipleDependency-" + _SERVICE_1, "step1",
-						"bindMultipleDependency-" + _SERVICE_2, "step2",
-						"unbindMultipleDependency-" + _SERVICE_1, "step3",
-						"unbindMultipleDependency-" + _SERVICE_2));
-			});
+			bindingCalls -> Assert.assertEquals(
+				bindingCalls,
+				Arrays.asList(
+					"bindMultipleDependency-" + _SERVICE_1, "step1",
+					"bindMultipleDependency-" + _SERVICE_2, "step2",
+					"unbindMultipleDependency-" + _SERVICE_1, "step3",
+					"unbindMultipleDependency-" + _SERVICE_2)));
 	}
 
 	@Test
@@ -118,15 +112,13 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyOptionalComponent",
 			"optional",
-			bindingCalls -> {
-				Assert.assertEquals(
-					bindingCalls,
-					Arrays.asList(
-						"bindOptionalDependency-" + _SERVICE_1, "step1",
-						"bindOptionalDependency-" + _SERVICE_2,
-						"unbindOptionalDependency-" + _SERVICE_1, "step2",
-						"step3", "unbindOptionalDependency-" + _SERVICE_2));
-			});
+			bindingCalls -> Assert.assertEquals(
+				bindingCalls,
+				Arrays.asList(
+					"bindOptionalDependency-" + _SERVICE_1, "step1",
+					"bindOptionalDependency-" + _SERVICE_2,
+					"unbindOptionalDependency-" + _SERVICE_1, "step2", "step3",
+					"unbindOptionalDependency-" + _SERVICE_2)));
 	}
 
 	private void _testDynamicGreedyComponent(

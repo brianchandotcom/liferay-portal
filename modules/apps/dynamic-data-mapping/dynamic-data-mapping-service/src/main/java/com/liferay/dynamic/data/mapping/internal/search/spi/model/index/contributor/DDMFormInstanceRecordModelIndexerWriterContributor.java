@@ -74,11 +74,10 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 					ddmFormInstanceProperty.in(ddmFormInstanceDynamicQuery));
 			});
 		batchIndexingActionable.setPerformActionMethod(
-			(DDMFormInstanceRecord ddmFormInstanceRecord) -> {
+			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						ddmFormInstanceRecord));
-			});
+						ddmFormInstanceRecord)));
 	}
 
 	@Override

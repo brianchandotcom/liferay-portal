@@ -319,10 +319,8 @@ public class DummyStagedModelRepository
 			portletDataContext.getScopeGroupId());
 
 		exportActionableDynamicQuery.setPerformActionMethod(
-			(Dummy dummy) -> {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, dummy);
-			});
+			(Dummy dummy) -> StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, dummy));
 
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(

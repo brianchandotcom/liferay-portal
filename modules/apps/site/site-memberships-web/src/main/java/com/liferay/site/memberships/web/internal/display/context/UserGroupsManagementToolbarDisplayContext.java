@@ -226,10 +226,8 @@ public class UserGroupsManagementToolbarDisplayContext
 			{
 				if (role != null) {
 					add(
-						labelItem -> {
-							labelItem.setLabel(
-								role.getTitle(themeDisplay.getLocale()));
-						});
+						labelItem -> labelItem.setLabel(
+							role.getTitle(themeDisplay.getLocale())));
 				}
 			}
 		};

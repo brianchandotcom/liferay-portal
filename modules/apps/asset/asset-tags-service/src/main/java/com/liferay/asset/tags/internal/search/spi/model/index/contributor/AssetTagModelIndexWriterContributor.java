@@ -42,10 +42,8 @@ public class AssetTagModelIndexWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(AssetTag assetTag) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(assetTag));
-			});
+			(AssetTag assetTag) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(assetTag)));
 	}
 
 	@Override

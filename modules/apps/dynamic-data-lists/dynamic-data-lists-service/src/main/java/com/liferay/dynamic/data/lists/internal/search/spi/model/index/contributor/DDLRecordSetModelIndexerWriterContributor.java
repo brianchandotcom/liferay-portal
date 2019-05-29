@@ -42,10 +42,8 @@ public class DDLRecordSetModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecordSet ddlRecordSet) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(ddlRecordSet));
-			});
+			(DDLRecordSet ddlRecordSet) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(ddlRecordSet)));
 	}
 
 	@Override

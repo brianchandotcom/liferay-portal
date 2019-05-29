@@ -58,9 +58,8 @@ public class BeanMethodIndexUtil {
 		}
 
 		beanMethodsEnumMap.forEach(
-			(methodType, valueBeanMethods) -> {
-				Collections.sort(valueBeanMethods);
-			});
+			(methodType, valueBeanMethods) -> Collections.sort(
+				valueBeanMethods));
 
 		return beanMethodsEnumMap;
 	}

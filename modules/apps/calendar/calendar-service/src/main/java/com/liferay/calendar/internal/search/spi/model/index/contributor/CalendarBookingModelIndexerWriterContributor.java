@@ -57,11 +57,10 @@ public class CalendarBookingModelIndexerWriterContributor
 				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		batchIndexingActionable.setPerformActionMethod(
-			(CalendarBooking calendarBooking) -> {
+			(CalendarBooking calendarBooking) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						calendarBooking));
-			});
+						calendarBooking)));
 	}
 
 	@Override

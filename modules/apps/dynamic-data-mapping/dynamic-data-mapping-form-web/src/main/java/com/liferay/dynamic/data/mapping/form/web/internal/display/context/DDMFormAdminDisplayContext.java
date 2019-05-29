@@ -704,9 +704,8 @@ public class DDMFormAdminDisplayContext {
 					});
 
 				add(
-					navigationItem -> {
-						_populateDDMDataProviderNavigationItem(navigationItem);
-					});
+					navigationItem -> _populateDDMDataProviderNavigationItem(
+						navigationItem));
 			}
 		};
 	}

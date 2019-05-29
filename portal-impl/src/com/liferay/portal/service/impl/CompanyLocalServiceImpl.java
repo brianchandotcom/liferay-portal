@@ -1343,10 +1343,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutPrototypeActionableDynamicQuery.setPerformActionMethod(
-			(LayoutPrototype layoutPrototype) -> {
+			(LayoutPrototype layoutPrototype) ->
 				layoutPrototypeLocalService.deleteLayoutPrototype(
-					layoutPrototype);
-			});
+					layoutPrototype));
 
 		layoutPrototypeActionableDynamicQuery.performActions();
 
@@ -1357,10 +1356,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutSetPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutSetPrototypeActionableDynamicQuery.setPerformActionMethod(
-			(LayoutSetPrototype layoutSetPrototype) -> {
+			(LayoutSetPrototype layoutSetPrototype) ->
 				layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
-					layoutSetPrototype);
-			});
+					layoutSetPrototype));
 
 		layoutSetPrototypeActionableDynamicQuery.performActions();
 
@@ -1381,9 +1379,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		roleActionableDynamicQuery.setCompanyId(companyId);
 		roleActionableDynamicQuery.setPerformActionMethod(
-			(Role role) -> {
-				roleLocalService.deleteRole(role);
-			});
+			(Role role) -> roleLocalService.deleteRole(role));
 
 		roleActionableDynamicQuery.performActions();
 
@@ -1783,9 +1779,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					dynamicQuery.add(property.eq(_parentOrganizationId));
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
-				(Organization organization) -> {
-					deleteOrganization(organization);
-				});
+				(Organization organization) -> deleteOrganization(
+					organization));
 		}
 
 		protected void deleteOrganization(Organization organization)
@@ -1847,9 +1842,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_actionableDynamicQuery.setCompanyId(companyId);
 			_actionableDynamicQuery.setPerformActionMethod(
-				(UserGroup userGroup) -> {
-					userGroupLocalService.deleteUserGroup(userGroup);
-				});
+				(UserGroup userGroup) -> userGroupLocalService.deleteUserGroup(
+					userGroup));
 		}
 
 		protected void performActions() throws PortalException {

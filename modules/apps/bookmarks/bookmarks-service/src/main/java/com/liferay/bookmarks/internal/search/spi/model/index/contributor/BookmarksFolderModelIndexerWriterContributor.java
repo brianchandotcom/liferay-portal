@@ -41,11 +41,10 @@ public class BookmarksFolderModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(BookmarksFolder bookmarksFolder) -> {
+			(BookmarksFolder bookmarksFolder) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						bookmarksFolder));
-			});
+						bookmarksFolder)));
 	}
 
 	@Override

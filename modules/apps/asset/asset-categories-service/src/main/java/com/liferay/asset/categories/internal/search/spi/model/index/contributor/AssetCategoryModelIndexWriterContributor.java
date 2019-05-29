@@ -42,11 +42,10 @@ public class AssetCategoryModelIndexWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(AssetCategory assetCategory) -> {
+			(AssetCategory assetCategory) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						assetCategory));
-			});
+						assetCategory)));
 	}
 
 	@Override

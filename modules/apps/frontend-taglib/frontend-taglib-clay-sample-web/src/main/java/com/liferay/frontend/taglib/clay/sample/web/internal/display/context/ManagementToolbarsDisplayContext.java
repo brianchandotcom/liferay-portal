@@ -160,15 +160,9 @@ public class ManagementToolbarsDisplayContext {
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{
-				add(
-					labelItem -> {
-						labelItem.setLabel("Filter 1");
-					});
+				add(labelItem -> labelItem.setLabel("Filter 1"));
 
-				add(
-					labelItem -> {
-						labelItem.setLabel("Filter 2");
-					});
+				add(labelItem -> labelItem.setLabel("Filter 2"));
 			}
 		};
 	}
@@ -187,14 +181,10 @@ public class ManagementToolbarsDisplayContext {
 					});
 
 				addListViewTypeItem(
-					viewTypeItem -> {
-						viewTypeItem.setLabel("List");
-					});
+					viewTypeItem -> viewTypeItem.setLabel("List"));
 
 				addTableViewTypeItem(
-					viewTypeItem -> {
-						viewTypeItem.setLabel("Table");
-					});
+					viewTypeItem -> viewTypeItem.setLabel("Table"));
 			}
 		};
 

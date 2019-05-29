@@ -709,10 +709,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			_systemEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				doAddCriteria(
-					portletDataContext, stagedModelType, dynamicQuery);
-			});
+			dynamicQuery -> doAddCriteria(
+				portletDataContext, stagedModelType, dynamicQuery));
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
 		return actionableDynamicQuery.performCount();

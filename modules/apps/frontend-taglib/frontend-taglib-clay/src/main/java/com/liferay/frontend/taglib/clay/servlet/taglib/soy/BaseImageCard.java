@@ -60,9 +60,8 @@ public abstract class BaseImageCard
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> {
-						labelItem.setStatus(workflowedModel.getStatus());
-					});
+					labelItem -> labelItem.setStatus(
+						workflowedModel.getStatus()));
 			}
 		};
 	}

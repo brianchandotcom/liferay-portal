@@ -53,10 +53,8 @@ public class DLFileEntryModelIndexerWriterContributor
 
 		batchIndexingActionable.setInterval(_dlFileIndexingInterval);
 		batchIndexingActionable.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(dlFileEntry));
-			});
+			(DLFileEntry dlFileEntry) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(dlFileEntry)));
 	}
 
 	@Override

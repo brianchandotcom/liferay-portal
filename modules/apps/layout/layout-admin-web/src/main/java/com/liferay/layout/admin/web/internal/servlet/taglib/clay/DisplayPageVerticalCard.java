@@ -160,10 +160,8 @@ public class DisplayPageVerticalCard
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> {
-						labelItem.setStatus(
-							_layoutPageTemplateEntry.getStatus());
-					});
+					labelItem -> labelItem.setStatus(
+						_layoutPageTemplateEntry.getStatus()));
 			}
 		};
 	}

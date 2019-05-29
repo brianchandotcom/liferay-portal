@@ -130,17 +130,13 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 				if (active != null) {
 					if (active) {
 						add(
-							labelItem -> {
-								labelItem.setLabel(
-									LanguageUtil.get(request, "active"));
-							});
+							labelItem -> labelItem.setLabel(
+								LanguageUtil.get(request, "active")));
 					}
 					else {
 						add(
-							labelItem -> {
-								labelItem.setLabel(
-									LanguageUtil.get(request, "inactive"));
-							});
+							labelItem -> labelItem.setLabel(
+								LanguageUtil.get(request, "inactive")));
 					}
 				}
 			}

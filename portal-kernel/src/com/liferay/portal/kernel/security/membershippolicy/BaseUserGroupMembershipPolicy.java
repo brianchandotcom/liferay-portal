@@ -62,9 +62,7 @@ public abstract class BaseUserGroupMembershipPolicy
 			UserGroupLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(UserGroup userGroup) -> {
-				verifyPolicy(userGroup);
-			});
+			(UserGroup userGroup) -> verifyPolicy(userGroup));
 
 		actionableDynamicQuery.performActions();
 	}

@@ -345,11 +345,9 @@ public class ObjectServiceTrackerMapTest {
 	public void testGetServiceWithCustomServiceReferenceMapper() {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, TrackedOne.class, "(&(other=*)(target=*))",
-			(serviceReference, keys) -> {
-				keys.emit(
-					serviceReference.getProperty("other") + " - " +
-						serviceReference.getProperty("target"));
-			});
+			(serviceReference, keys) -> keys.emit(
+				serviceReference.getProperty("other") + " - " +
+					serviceReference.getProperty("target")));
 
 		Dictionary<String, String> properties = new Hashtable<>();
 

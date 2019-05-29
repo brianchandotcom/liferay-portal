@@ -43,11 +43,10 @@ public class ExportImportConfigurationModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(ExportImportConfiguration exportImportConfiguration) -> {
+			(ExportImportConfiguration exportImportConfiguration) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						exportImportConfiguration));
-			});
+						exportImportConfiguration)));
 	}
 
 	@Override

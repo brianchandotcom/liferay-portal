@@ -160,16 +160,11 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 			{
 				if (!_article.isApproved() && _article.hasApprovedVersion()) {
 					add(
-						labelItem -> {
-							labelItem.setStatus(
-								WorkflowConstants.STATUS_APPROVED);
-						});
+						labelItem -> labelItem.setStatus(
+							WorkflowConstants.STATUS_APPROVED));
 				}
 
-				add(
-					labelItem -> {
-						labelItem.setStatus(_article.getStatus());
-					});
+				add(labelItem -> labelItem.setStatus(_article.getStatus()));
 			}
 		};
 	}

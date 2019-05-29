@@ -54,13 +54,11 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 		assertSearch(
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
-					searchRequestBuilder -> {
-						searchRequestBuilder.query(
-							termsQuery
-						).sorts(
-							sort
-						);
-					});
+					searchRequestBuilder -> searchRequestBuilder.query(
+						termsQuery
+					).sorts(
+						sort
+					));
 
 				indexingTestHelper.search();
 

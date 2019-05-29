@@ -580,9 +580,8 @@ public class SearchResultSummaryDisplayBuilder {
 		};
 
 		_searchResultImageContributorsStream.forEach(
-			searchResultImageContributor -> {
-				searchResultImageContributor.contribute(searchResultImage);
-			});
+			searchResultImageContributor ->
+				searchResultImageContributor.contribute(searchResultImage));
 	}
 
 	protected void buildLocaleReminder(

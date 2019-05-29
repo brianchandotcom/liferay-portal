@@ -2221,10 +2221,8 @@ public class DataFactory {
 			layoutSetModels.size());
 
 		layoutSetModels.forEach(
-			layoutSetModel -> {
-				layoutSetVersionModels.add(
-					newLayoutSetVersionModel(layoutSetModel));
-			});
+			layoutSetModel -> layoutSetVersionModels.add(
+				newLayoutSetVersionModel(layoutSetModel)));
 
 		return layoutSetVersionModels;
 	}

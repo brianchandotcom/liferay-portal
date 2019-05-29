@@ -42,11 +42,10 @@ public class AssetVocabularyModelIndexWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(AssetVocabulary assetVocabulary) -> {
+			(AssetVocabulary assetVocabulary) ->
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
-						assetVocabulary));
-			});
+						assetVocabulary)));
 	}
 
 	@Override

@@ -70,19 +70,15 @@ public class DLAdminNavigationDisplayContext {
 		return new NavigationItemList() {
 			{
 				add(
-					navigationItem -> {
-						_populateDocumentLibraryNavigationItem(
-							navigationItem, navigation);
-					});
+					navigationItem -> _populateDocumentLibraryNavigationItem(
+						navigationItem, navigation));
 
 				if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
 						_dlRequestHelper.getPortletName())) {
 
 					add(
-						navigationItem -> {
-							_populateFileEntryTypesNavigationItem(
-								navigationItem, navigation);
-						});
+						navigationItem -> _populateFileEntryTypesNavigationItem(
+							navigationItem, navigation));
 
 					add(
 						DLAdminNavigationDisplayContext.this::

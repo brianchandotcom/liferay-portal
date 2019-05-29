@@ -64,16 +64,13 @@ public class CalculateReadingTimeMVCResourceCommand
 				content, contentType, resourceRequest.getLocale());
 
 		readingTimeDurationOptional.ifPresent(
-			readingTimeDuration -> {
-				jsonObject.put(
-					"readingTimeInSeconds",
-					(float)readingTimeDuration.getSeconds()
-				).put(
-					"readingTimeMessage",
-					_readingTimeMessageProvider.provide(
-						readingTimeDuration, resourceRequest.getLocale())
-				);
-			});
+			readingTimeDuration -> jsonObject.put(
+				"readingTimeInSeconds", (float)readingTimeDuration.getSeconds()
+			).put(
+				"readingTimeMessage",
+				_readingTimeMessageProvider.provide(
+					readingTimeDuration, resourceRequest.getLocale())
+			));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

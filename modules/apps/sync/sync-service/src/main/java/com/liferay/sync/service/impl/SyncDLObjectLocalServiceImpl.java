@@ -288,12 +288,10 @@ public class SyncDLObjectLocalServiceImpl
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.like(
-						"treePath",
-						StringUtil.quote(searchTreePath, StringPool.PERCENT)));
-			});
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.like(
+					"treePath",
+					StringUtil.quote(searchTreePath, StringPool.PERCENT))));
 		actionableDynamicQuery.setPerformActionMethod(
 			(SyncDLObject syncDLObject) -> {
 				syncDLObject.setUserId(parentSyncDLObject.getUserId());

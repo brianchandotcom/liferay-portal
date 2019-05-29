@@ -167,10 +167,8 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			};
 
 		_searchContextContributors.forEach(
-			searchContextContributor -> {
-				searchContextContributor.contribute(
-					searchContext, searchContextContributorHelper);
-			});
+			searchContextContributor -> searchContextContributor.contribute(
+				searchContext, searchContextContributorHelper));
 
 		_modelSearchContextContributors.forEach(
 			modelSearchContextContributor ->

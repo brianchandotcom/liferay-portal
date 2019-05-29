@@ -99,10 +99,8 @@ public class FormNavigatorOSGiCommands {
 		Set<String> allFormNavigatorIds = new HashSet<>();
 
 		_formNavigatorEntries.forEach(
-			formNavigatorEntry -> {
-				allFormNavigatorIds.add(
-					formNavigatorEntry.getFormNavigatorId());
-			});
+			formNavigatorEntry -> allFormNavigatorIds.add(
+				formNavigatorEntry.getFormNavigatorId()));
 
 		return allFormNavigatorIds;
 	}

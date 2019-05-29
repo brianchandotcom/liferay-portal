@@ -50,10 +50,8 @@ public class DLFolderModelIndexerWriterContributor
 			});
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DLFolder dlFolder) -> {
-				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(dlFolder));
-			});
+			(DLFolder dlFolder) -> batchIndexingActionable.addDocuments(
+				modelIndexerWriterDocumentHelper.getDocument(dlFolder)));
 	}
 
 	@Override

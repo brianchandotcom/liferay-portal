@@ -270,9 +270,8 @@ public class MessageBoardMessageResourceImpl
 			filter, MBMessage.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
